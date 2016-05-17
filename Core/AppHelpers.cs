@@ -5,20 +5,47 @@ using Fclp;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace SysCommand
 {
     public static class AppHelpers
     {
-        public static string[] StringToArgs(string value)
-        {
-            var result = value.Split('"')
-                     .Select((element, index) => index % 2 == 0  // If even index
-                                           ? element.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)  // Split the item
-                                           : new string[] { element })  // Keep the entire item
-                     .SelectMany(element => element).ToArray();
+        //public static string[] StringToArgs(string value)
+        //{
+        //    var result = value.Split('"')
+        //             .Select((element, index) => index % 2 == 0  // If even index
+        //                                   ? element.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)  // Split the item
+        //                                   : new string[] { element })  // Keep the entire item
+        //             .SelectMany(element => element).ToArray();
 
-            return result;
+        //    return result;
+        //}
+
+        [DllImport("shell32.dll", SetLastError = true)]
+        static extern IntPtr CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
+
+        public static string[] CommandLineToArgs(string commandLine)
+        {
+            int argc;
+            var argv = CommandLineToArgvW(commandLine, out argc);
+            if (argv == IntPtr.Zero)
+                throw new System.ComponentModel.Win32Exception();
+            try
+            {
+                var args = new string[argc];
+                for (var i = 0; i < args.Length; i++)
+                {
+                    var p = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
+                    args[i] = Marshal.PtrToStringUni(p);
+                }
+
+                return args;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(argv);
+            }
         }
 
         public static object GetDefaultValueForArgs<TArgs>(Expression<Func<TArgs, object>> expression) where TArgs : class

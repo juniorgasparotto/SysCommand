@@ -16,6 +16,7 @@ namespace SysCommand
         public bool DebugShowArgsInput = true;
         public bool DebugShowExitConfirm = true;
         public bool DebugSaveConfigsInRootFolder = true;
+        public bool PreventEmptyInputGetPathInArg0 = true;
 
         public string CurrentCommandName { get; set; }
         public bool InStopPropagation { get; private set; }
@@ -32,18 +33,23 @@ namespace SysCommand
         public virtual void Run()
         {            
             var args = Environment.GetCommandLineArgs();
-
+            
 #if DEBUG
             if (DebugShowArgsInput)
             {
                 Console.WriteLine("Enter with args:");
-                args = AppHelpers.StringToArgs(Console.ReadLine());
+                var read = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(read))
+                    args = AppHelpers.CommandLineToArgs(read);
             }
 #endif
 
+            if (PreventEmptyInputGetPathInArg0 && args.Length == 1 && System.IO.File.Exists(args[0]))
+                args = null;
+
             // retorna o nome do comando ou utiliza o padrão
             this.CurrentCommandName = App.COMMAND_NAME_DEFAULT;
-            if (args != null && args.Length > 0 && args[0][0] != '-')
+            if (args != null && args.Length > 0 && args[0].Length > 0 && args[0][0] != '-')
                 this.CurrentCommandName = args[0];
 
             LoadCommands();

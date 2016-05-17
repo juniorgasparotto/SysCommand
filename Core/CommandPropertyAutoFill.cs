@@ -50,7 +50,7 @@ namespace SysCommand
             var argsUseds = default(string);
             foreach (var arg in this.CommandsParseds)
             {
-                var command = string.Format("--{0} \"{1}\"", arg.Key, arg.Value);
+                var command = string.Format("{0} \"{1}\"", arg.Key, arg.Value.Replace("\\\"", "\\\"").Replace("'", "\'"));
                 argsUseds += (argsUseds == null) ? command : " " + command;
             }
 
@@ -101,7 +101,13 @@ namespace SysCommand
                 setup.Callback(value =>
                     {
                         if (!value.Equals(attribute.Default))
-                            this.parent.CommandsParseds[attribute.LongName ?? attribute.ShortName.ToString()] = value.ToString();
+                        {
+                            if (!string.IsNullOrWhiteSpace(attribute.LongName))
+                                this.parent.CommandsParseds["--" + attribute.LongName] = value.ToString();
+                            else 
+                                this.parent.CommandsParseds["-" + attribute.ShortName.ToString()] = value.ToString();
+                        }
+
                         property.SetValue(this.parent.arguments, value, null); // null means no indexes
                     });
 
