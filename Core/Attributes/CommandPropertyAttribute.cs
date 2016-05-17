@@ -13,5 +13,6 @@ namespace SysCommand
         public string LongName { get; set; }
         public bool IsRequired { get; set; }
         public string Help { get; set; }
+        public object Default { get; set; }
     }
 }

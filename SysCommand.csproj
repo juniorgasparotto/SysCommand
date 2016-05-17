@@ -7,8 +7,8 @@
     <ProjectGuid>{4B7472B5-D979-455F-9613-4F64B98C67F4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SysCommnad</RootNamespace>
-    <AssemblyName>SysCommnad</AssemblyName>
+    <RootNamespace>SysCommand</RootNamespace>
+    <AssemblyName>SysCommand</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\GITBUCKET\QuotationAnalysis\</SolutionDir>
@@ -50,15 +50,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Core\Attributes\ConfigClassAttribute.cs" />
+    <Compile Include="Default\ClearCommand.cs" />
+    <Compile Include="Default\HelperCommand.cs" />
+    <Compile Include="Default\LogCommand.cs" />
+    <Compile Include="Default\ManagerCommand.cs" />
     <Compile Include="Core\AppHelpers.cs" />
-    <Compile Include="Attributes\CommandClassAttribute.cs" />
-    <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Core\Attributes\CommandClassAttribute.cs" />
+    <Compile Include="Core\Config.cs" />
+    <Compile Include="Core\TypeNameSerializationBinder.cs" />
+    <Compile Include="Default\ArgumentsHistory.cs" />
     <Compile Include="Core\ArgumentsToDictionary.cs" />
     <Compile Include="Core\Command.cs" />
     <Compile Include="Core\CommandPropertyAutoFill.cs" />
-    <Compile Include="Attributes\CommandPropertyAttribute.cs" />
-    <Compile Include="Interfaces\IArguments.cs" />
-    <Compile Include="Interfaces\ICommand.cs" />
+    <Compile Include="Core\Attributes\CommandPropertyAttribute.cs" />
+    <Compile Include="Core\Interfaces\IArguments.cs" />
+    <Compile Include="Core\Interfaces\ICommand.cs" />
+    <Compile Include="ConsoleWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

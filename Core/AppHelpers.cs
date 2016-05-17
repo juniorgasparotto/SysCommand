@@ -28,7 +28,7 @@ namespace SysCommand
 
         public static TProp GetDefaultArgsPropValue<TArgs, TProp>(Expression<Func<TArgs, object>> expression) where TArgs : class
         {
-            var args = App.CurrentConfiguration.GetCommandParameters(App.CurrentCommandName, typeof(TArgs)) as TArgs;
+            var args = App.Current.GetConfig<ArgumentsHistory>().GetCommandArguments(App.Current.CurrentCommandName, typeof(TArgs)) as TArgs;
             
             if (args != null)
             {
@@ -142,7 +142,6 @@ namespace SysCommand
             }
             return sb.ToString();
         }
-
 
         public static string GetConsoleHelper(Dictionary<string, string> helps, int chunkSize = 80)
         {

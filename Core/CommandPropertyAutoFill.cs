@@ -10,13 +10,13 @@ namespace SysCommand
         private FluentCommandLineParser parser;
         private IArguments arguments;
         private string[] args;
-        private Dictionary<string, string> CommandsKeysValues = new Dictionary<string, string>();
+        private Dictionary<string, string> CommandsParseds = new Dictionary<string, string>();
 
         public bool HasFill 
         {
             get
             {
-                if (this.CommandsKeysValues.Count > 0)
+                if (this.CommandsParseds.Count > 0)
                     return true;
                 return false;
             }
@@ -43,26 +43,24 @@ namespace SysCommand
                 if (attribute != null)
                     this.Set(property, attribute);
             }
-
-            this.arguments.Command = this.GetCommandsUsed();
         }
 
-        private string GetCommandsUsed()
+        public void UpdateUsedCommandsInArgs()
         {
             var argsUseds = default(string);
-            foreach (var arg in this.CommandsKeysValues)
+            foreach (var arg in this.CommandsParseds)
             {
                 var command = string.Format("--{0} \"{1}\"", arg.Key, arg.Value);
                 argsUseds += (argsUseds == null) ? command : " " + command;
             }
 
-            return argsUseds;
+            this.arguments.Command = argsUseds;
         }
 
         private void Set(PropertyInfo property, CommandPropertyAttribute attribute)
         {
             // create the type-specific type of the helper
-            var helperType = typeof(CommandLineParserAutoSetupGeneric<>).MakeGenericType(property.PropertyType);
+            var helperType = typeof(CommandPropertyAutoFillGeneric<>).MakeGenericType(property.PropertyType);
             // create an instance of the helper
             // and upcast to base class
             var helper = (CommandPropertyAutoFill)Activator.CreateInstance(helperType, this);
@@ -71,11 +69,11 @@ namespace SysCommand
         }
 
         // A subclass with a static type parameter
-        private class CommandLineParserAutoSetupGeneric<TProperty> : CommandPropertyAutoFill
+        private class CommandPropertyAutoFillGeneric<TProperty> : CommandPropertyAutoFill
         {
             private CommandPropertyAutoFill parent;
 
-            public CommandLineParserAutoSetupGeneric(CommandPropertyAutoFill parent)
+            public CommandPropertyAutoFillGeneric(CommandPropertyAutoFill parent)
                 : base(null, null, null)
             {
                 this.parent = parent;
@@ -83,20 +81,27 @@ namespace SysCommand
 
             protected override void Setup(PropertyInfo property, CommandPropertyAttribute attribute)
             {
-                // create an Action<T> and downcast
                 ICommandLineOptionFluent<TProperty> setup;
 
-                if (attribute.ShortName != default(char))
+                if (attribute.ShortName != default(char) && !string.IsNullOrWhiteSpace(attribute.LongName))
                     setup = this.parent.parser.Setup<TProperty>(attribute.ShortName, attribute.LongName);
-                else 
+                else if (attribute.ShortName != default(char))
+                    setup = this.parent.parser.Setup<TProperty>(attribute.ShortName);
+                else if (!string.IsNullOrWhiteSpace(attribute.LongName))
                     setup = this.parent.parser.Setup<TProperty>(attribute.LongName);
+                else
+                    throw new Exception(string.Format("No parameter setting found to '{0}'", property.Name));
 
                 if (attribute.IsRequired)
                     setup.Required();
 
+                if (attribute.Default != null)
+                    setup.SetDefault((TProperty)attribute.Default);
+
                 setup.Callback(value =>
                     {
-                        this.parent.CommandsKeysValues[attribute.LongName] = value.ToString();
+                        if (!value.Equals(attribute.Default))
+                            this.parent.CommandsParseds[attribute.LongName ?? attribute.ShortName.ToString()] = value.ToString();
                         property.SetValue(this.parent.arguments, value, null); // null means no indexes
                     });
 
