@@ -6,56 +6,55 @@ using System.Linq;
 
 namespace SysCommand
 {
-    public abstract class ObjectFile
+    public class ObjectFile<TOFile>
     {
         private static TypeNameSerializationBinder binder = new TypeNameSerializationBinder();
-        private string fileName;
+        public string FileName { get; private set; }
+        public TOFile Object { get; private set; }
 
-        public ObjectFile(string fileName)
+        private ObjectFile(string fileName)
         {
-            this.fileName = fileName;
+            this.FileName = fileName;
         }
 
         public void Save()
         {
-            string json = JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
+            Save(this.Object, this.FileName);
+        }
+
+        public static void Save(TOFile obj, string fileName)
+        {
+            string json = JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Auto,
                 Binder = binder
             });
 
-            AppHelpers.CreateFolderIfNeeded(this.fileName);
-            File.WriteAllText(this.fileName, json);
+            AppHelpers.CreateFolderIfNeeded(fileName);
+            File.WriteAllText(fileName, json);
         }
 
-        public static TConfig Get<TConfig>(string fileName)
+        public static ObjectFile<TOFile> GetOrCreate(string fileName, bool onlyGet = false)
         {
-            var config = default(TConfig);
+            var objFile = new ObjectFile<TOFile>(fileName);
 
             if (File.Exists(fileName))
             {
-                config = JsonConvert.DeserializeObject<TConfig>(File.ReadAllText(fileName), new JsonSerializerSettings
+                var obj = JsonConvert.DeserializeObject<TOFile>(File.ReadAllText(fileName), new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Auto,
                     Binder = binder
                 });
-                //if (config != null)
-                //    config.fileName = fileName;
+                objFile.Object = obj;
             }
 
-            if (config == null)
-            {
-                var ctors = typeof(TConfig).GetConstructors();
-                if (ctors.Any(f => f.GetParameters().Length == 1 && f.GetParameters()[0].ParameterType == typeof(string)))
-                    config = (TConfig)Activator.CreateInstance(typeof(TConfig), fileName);
-                else
-                    throw new Exception("The '" + typeof(TConfig).Name + " must contain an empty constructor or a parameter string to determine the file name.");
+            if (onlyGet)
+                return objFile;
 
-                //if (config.fileName != fileName)
-                //    throw new Exception("The name of the requested file is not equal to the specified file name in the instance of type '" + typeof(TConfig).Name + "'");
-            }
+            if (objFile.Object == null)
+                objFile.Object = Activator.CreateInstance<TOFile>();
 
-            return config;
+            return objFile;
         }
     }
 }

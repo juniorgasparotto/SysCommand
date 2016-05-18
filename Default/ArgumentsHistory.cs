@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace SysCommand
 {
-    public class ArgumentsHistory : ObjectFile
+    public class ArgumentsHistory
     {
         public Dictionary<string, Dictionary<string, ArgumentsHistoryItem>> CommandsHistories { get; private set; }
 
@@ -15,7 +15,7 @@ namespace SysCommand
             public object Object { get; set; }
         }
 
-        public ArgumentsHistory(string fileName) : base(fileName)
+        public ArgumentsHistory()
         {
             this.CommandsHistories = new Dictionary<string, Dictionary<string, ArgumentsHistoryItem>>();
         }

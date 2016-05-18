@@ -11,7 +11,7 @@ namespace SysCommand
     {
         private const string COMMAND_NAME_DEFAULT = "default";
         private List<Type> IgnoredCommands = new List<Type>();
-        private Dictionary<string, ObjectFile> ObjectsFiles = new Dictionary<string,ObjectFile>();
+        private Dictionary<string, object> ObjectsFilesLoadeds = new Dictionary<string, object>();
         private List<ICommand> Commands { get; set; }
 
         public string CurrentCommandName { get; private set; }
@@ -169,19 +169,31 @@ namespace SysCommand
             Console.WriteLine(AppHelpers.GetConsoleHelper(dic));
         }
 
-        public virtual TOFile GetObjectFile<TOFile>(string fileName = null, bool refresh = false) where TOFile : ObjectFile
+        public virtual void SaveObjectFile<TOFile>(TOFile obj, string fileName = null)
         {
             if (string.IsNullOrWhiteSpace(fileName))
                 fileName = this.AutoGenerateObjectFileName(typeof(TOFile));
 
-            if (ObjectsFiles.ContainsKey(fileName) && !refresh)
-                return (TOFile)ObjectsFiles[fileName];
+            ObjectFile<TOFile>.Save(obj, fileName);
 
-            var config = ObjectFile.Get<TOFile>(fileName);
-            if (config != null)
-                ObjectsFiles[fileName] = config;
+            if (ObjectsFilesLoadeds.ContainsKey(fileName))
+                ObjectsFilesLoadeds.Remove(fileName);
+            //ObjectsFiles.Add(fileName, obj);
+        }
 
-            return config;
+        public virtual ObjectFile<TOFile> GetObjectFile<TOFile>(string fileName = null, bool refresh = false)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                fileName = this.AutoGenerateObjectFileName(typeof(TOFile));
+
+            if (ObjectsFilesLoadeds.ContainsKey(fileName) && !refresh)
+                return (ObjectFile<TOFile>)ObjectsFilesLoadeds[fileName];
+
+            var objFile = ObjectFile<TOFile>.GetOrCreate(fileName);
+            if (objFile != null)
+                ObjectsFilesLoadeds[fileName] = objFile;
+
+            return objFile;
         }
 
         public void IgnoreCommmand<T>()

@@ -15,7 +15,7 @@ namespace SysCommand
 
         public virtual void ParseArgs(string[] args)
         {
-            var itemHistory = App.Current.GetObjectFile<ArgumentsHistory>().GetCommandArguments(App.Current.CurrentCommandName, typeof(TArgs));
+            var itemHistory = App.Current.GetObjectFile<ArgumentsHistory>().Object.GetCommandArguments(App.Current.CurrentCommandName, typeof(TArgs));
             if (itemHistory == null || itemHistory.Object == null)
             {
                 this.Args = Activator.CreateInstance<TArgs>();
@@ -42,7 +42,7 @@ namespace SysCommand
                 if (!this.IgnoreSaveInHistory)
                 {
                     itemHistory.Command = autoFill.GetCommandsParsed();
-                    App.Current.GetObjectFile<ArgumentsHistory>().SetCommandArguments(App.Current.CurrentCommandName, itemHistory);
+                    App.Current.GetObjectFile<ArgumentsHistory>().Object.SetCommandArguments(App.Current.CurrentCommandName, itemHistory);
                 }
             }
         }

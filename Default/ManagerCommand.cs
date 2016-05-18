@@ -28,7 +28,7 @@ namespace SysCommand
 
         public void Save()
         {
-            if (!App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories.ContainsKey(App.Current.CurrentCommandName))
+            if (!App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories.ContainsKey(App.Current.CurrentCommandName))
             {
                 Console.WriteLine("The command has no argument to save.");
                 App.Current.StopPropagation();
@@ -42,14 +42,14 @@ namespace SysCommand
 
         public void Remove()
         {
-            if (!App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories.ContainsKey(App.Current.CurrentCommandName))
+            if (!App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories.ContainsKey(App.Current.CurrentCommandName))
             {
                 Console.WriteLine("Command name '{0}' dosen't exists", App.Current.CurrentCommandName);
                 App.Current.StopPropagation();
                 return;
             }
 
-            App.Current.GetObjectFile<ArgumentsHistory>().DeleteCommand(App.Current.CurrentCommandName);
+            App.Current.GetObjectFile<ArgumentsHistory>().Object.DeleteCommand(App.Current.CurrentCommandName);
             App.Current.GetObjectFile<ArgumentsHistory>().Save();
             App.Current.StopPropagation();
             Console.WriteLine("The command '{0}' was successfully removed.", App.Current.CurrentCommandName);
@@ -57,14 +57,14 @@ namespace SysCommand
 
         public void Show()
         {
-            if (App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories.Count == 0)
+            if (App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories.Count == 0)
             {
                 Console.WriteLine("No command was found to display.");
                 App.Current.StopPropagation();
                 return;
             }
 
-            foreach (var commandKeyValue in App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories)
+            foreach (var commandKeyValue in App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories)
             {   
                 var argsOutput = "";
                 foreach (var args in commandKeyValue.Value)
@@ -80,14 +80,14 @@ namespace SysCommand
 
         public void Show(string commandName)
         {
-            if (!App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories.ContainsKey(commandName))
+            if (!App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories.ContainsKey(commandName))
             {
                 Console.WriteLine("Command name '{0}' dosen't exists", commandName);
                 App.Current.StopPropagation();
                 return;
             }
 
-            var command = App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories[commandName];
+            var command = App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories[commandName];
             var argsOutput = "";
             foreach (var args in command.Values)
             {
