@@ -172,7 +172,7 @@ namespace SysCommand
         public virtual TOFile GetObjectFile<TOFile>(string fileName = null, bool refresh = false) where TOFile : ObjectFile
         {
             if (string.IsNullOrWhiteSpace(fileName))
-                fileName = ObjectFile.GetObjectFileNameDefault(typeof(TOFile));
+                fileName = this.AutoGenerateObjectFileName(typeof(TOFile));
 
             if (ObjectsFiles.ContainsKey(fileName) && !refresh)
                 return (TOFile)ObjectsFiles[fileName];
@@ -187,6 +187,26 @@ namespace SysCommand
         public void IgnoreCommmand<T>()
         {
             IgnoredCommands.Add(typeof(T));
+        }
+
+        private string AutoGenerateObjectFileName(Type type)
+        {
+            string fileName;
+            var attr = type.GetCustomAttributes(typeof(ObjectFileClassAttribute), true).FirstOrDefault() as ObjectFileClassAttribute;
+            if (attr != null && !string.IsNullOrWhiteSpace(attr.FileName))
+            {
+                fileName = attr.FileName;
+            }
+            else
+            {
+                fileName = "syscmd." + AppHelpers.ToLowerSeparate(type.Name, ".") + ".object";
+            }
+
+            string folder = this.ObjectsFilesFolder;
+            if (attr != null && !string.IsNullOrWhiteSpace(attr.Folder))
+                folder = attr.Folder;
+
+            return AppHelpers.GetPathFromRoot(folder, fileName);
         }
     }
 }

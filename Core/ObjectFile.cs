@@ -28,7 +28,7 @@ namespace SysCommand
             File.WriteAllText(this.fileName, json);
         }
 
-        public static TConfig Get<TConfig>(string fileName) where TConfig : ObjectFile
+        public static TConfig Get<TConfig>(string fileName)
         {
             var config = default(TConfig);
 
@@ -39,8 +39,8 @@ namespace SysCommand
                     TypeNameHandling = TypeNameHandling.Auto,
                     Binder = binder
                 });
-                if (config != null)
-                    config.fileName = fileName;
+                //if (config != null)
+                //    config.fileName = fileName;
             }
 
             if (config == null)
@@ -51,38 +51,11 @@ namespace SysCommand
                 else
                     throw new Exception("The '" + typeof(TConfig).Name + " must contain an empty constructor or a parameter string to determine the file name.");
 
-                if (config.fileName != fileName)
-                    throw new Exception("The name of the requested file is not equal to the specified file name in the instance of type '" + typeof(TConfig).Name + "'");
+                //if (config.fileName != fileName)
+                //    throw new Exception("The name of the requested file is not equal to the specified file name in the instance of type '" + typeof(TConfig).Name + "'");
             }
 
             return config;
-        }
-
-        public static string GetObjectFileNameDefault(Type type)
-        {
-            string fileName;
-            var attr = type.GetCustomAttributes(typeof(ObjectFileClassAttribute), true).FirstOrDefault() as ObjectFileClassAttribute;
-            if (attr != null && !string.IsNullOrWhiteSpace(attr.FileName))
-            {
-                fileName = attr.FileName;
-            }
-            else
-            {
-                fileName = "syscmd." + AppHelpers.ToLowerSeparate(type.Name, ".") + ".object";
-            }
-
-            string folder = App.Current.ObjectsFilesFolder;
-            if (attr != null && !string.IsNullOrWhiteSpace(attr.Folder))
-                folder = attr.Folder;
-
-            if (App.Current.DebugSaveConfigsInRootFolder)
-            {
-#if DEBUG
-                fileName = Path.Combine(@"..\..\", folder, fileName);
-#endif
-            }
-
-            return fileName;
         }
     }
 }

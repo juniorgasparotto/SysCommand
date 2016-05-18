@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace SysCommand
 {
@@ -217,6 +218,20 @@ namespace SysCommand
             }
 
             return str;
+        }
+
+        public static string GetPathFromRoot(params string[] paths)
+        {
+            if (App.Current.DebugSaveConfigsInRootFolder)
+            {
+#if DEBUG
+                var paths2 = paths.ToList();
+                paths2.Insert(0, @"..\..\");
+                return Path.Combine(paths2.ToArray());
+#endif
+            }
+
+            return Path.Combine(paths);
         }
     }
 }
