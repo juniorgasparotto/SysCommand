@@ -2,9 +2,8 @@
 
 namespace SysCommand
 {
-    public interface IArguments
+    public interface IHelp
     {
-        string Command { get; set; }
         string GetHelp(string propName);
     }
 }

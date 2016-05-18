@@ -3,7 +3,7 @@ using System;
 
 namespace SysCommand
 {
-    public abstract class Command<TArgs> : ICommand where TArgs : class, IArguments
+    public abstract class Command<TArgs> : ICommand
     {
         public bool HasParsed { get; protected set; }
         public bool HasLoadedFromConfig { get; protected set; }
@@ -15,14 +15,17 @@ namespace SysCommand
 
         public virtual void ParseArgs(string[] args)
         {
-            this.Args = App.Current.GetConfig<ArgumentsHistory>().GetCommandArguments(App.Current.CurrentCommandName, typeof(TArgs)) as TArgs;
-            if (this.Args == null)
+            var itemHistory = App.Current.GetObjectFile<ArgumentsHistory>().GetCommandArguments(App.Current.CurrentCommandName, typeof(TArgs));
+            if (itemHistory == null || itemHistory.Object == null)
             {
                 this.Args = Activator.CreateInstance<TArgs>();
+                itemHistory = itemHistory ?? new ArgumentsHistory.ArgumentsHistoryItem();
+                itemHistory.Object = this.Args;
             }
             else
             {
                 this.HasLoadedFromConfig = true;
+                this.Args = (TArgs)itemHistory.Object;
             }
 
             this.Parser = new FluentCommandLineParser();
@@ -38,8 +41,8 @@ namespace SysCommand
                 // Only update 'Args.Command' and set the args in config if has success
                 if (!this.IgnoreSaveInHistory)
                 {
-                    autoFill.UpdateUsedCommandsInArgs();
-                    App.Current.GetConfig<ArgumentsHistory>().SetCommandArguments(App.Current.CurrentCommandName, this.Args);
+                    itemHistory.Command = autoFill.GetCommandsParsed();
+                    App.Current.GetObjectFile<ArgumentsHistory>().SetCommandArguments(App.Current.CurrentCommandName, itemHistory);
                 }
             }
         }

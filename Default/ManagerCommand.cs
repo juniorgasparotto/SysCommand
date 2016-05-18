@@ -28,43 +28,43 @@ namespace SysCommand
 
         public void Save()
         {
-            if (!App.Current.GetConfig<ArgumentsHistory>().CommandsHistories.ContainsKey(App.Current.CurrentCommandName))
+            if (!App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories.ContainsKey(App.Current.CurrentCommandName))
             {
                 Console.WriteLine("The command has no argument to save.");
                 App.Current.StopPropagation();
                 return;
             }
 
-            App.Current.GetConfig<ArgumentsHistory>().Save();
+            App.Current.GetObjectFile<ArgumentsHistory>().Save();
             App.Current.StopPropagation();
             Console.WriteLine("The command '{0}' was successfully saved", App.Current.CurrentCommandName);
         }
 
         public void Remove()
         {
-            if (!App.Current.GetConfig<ArgumentsHistory>().CommandsHistories.ContainsKey(App.Current.CurrentCommandName))
+            if (!App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories.ContainsKey(App.Current.CurrentCommandName))
             {
                 Console.WriteLine("Command name '{0}' dosen't exists", App.Current.CurrentCommandName);
                 App.Current.StopPropagation();
                 return;
             }
 
-            App.Current.GetConfig<ArgumentsHistory>().DeleteCommand(App.Current.CurrentCommandName);
-            App.Current.GetConfig<ArgumentsHistory>().Save();
+            App.Current.GetObjectFile<ArgumentsHistory>().DeleteCommand(App.Current.CurrentCommandName);
+            App.Current.GetObjectFile<ArgumentsHistory>().Save();
             App.Current.StopPropagation();
             Console.WriteLine("The command '{0}' was successfully removed.", App.Current.CurrentCommandName);
         }
 
         public void Show()
         {
-            if (App.Current.GetConfig<ArgumentsHistory>().CommandsHistories.Count == 0)
+            if (App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories.Count == 0)
             {
                 Console.WriteLine("No command was found to display.");
                 App.Current.StopPropagation();
                 return;
             }
 
-            foreach (var commandKeyValue in App.Current.GetConfig<ArgumentsHistory>().CommandsHistories)
+            foreach (var commandKeyValue in App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories)
             {   
                 var argsOutput = "";
                 foreach (var args in commandKeyValue.Value)
@@ -80,14 +80,14 @@ namespace SysCommand
 
         public void Show(string commandName)
         {
-            if (!App.Current.GetConfig<ArgumentsHistory>().CommandsHistories.ContainsKey(commandName))
+            if (!App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories.ContainsKey(commandName))
             {
                 Console.WriteLine("Command name '{0}' dosen't exists", commandName);
                 App.Current.StopPropagation();
                 return;
             }
 
-            var command = App.Current.GetConfig<ArgumentsHistory>().CommandsHistories[commandName];
+            var command = App.Current.GetObjectFile<ArgumentsHistory>().CommandsHistories[commandName];
             var argsOutput = "";
             foreach (var args in command.Values)
             {
@@ -99,7 +99,7 @@ namespace SysCommand
         }
 
         #region Internal Parameters
-        public class Arguments : IArguments
+        public class Arguments
         {
             [CommandPropertyAttribute(LongName = "cmd-save", Help = "Save current command to the history commands")]
             public bool Save { get; set; }
@@ -112,14 +112,6 @@ namespace SysCommand
 
             [CommandPropertyAttribute(LongName = "cmd-show", Help = "Show the specific command, if exists, from the history.")]
             public string Show { get; set; }
-
-            #region IArguments
-            public string Command { get; set; }
-            public string GetHelp(string propName)
-            {
-                return null;
-            }
-            #endregion
         }
         #endregion
     }

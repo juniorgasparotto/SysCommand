@@ -3,23 +3,25 @@ using System.Linq;
 using System;
 using Fclp;
 using System.Linq.Expressions;
+using System.IO;
 
 namespace SysCommand
 {
     public class App
     {
-        private List<Type> IgnoredCommands = new List<Type>();
-        private Dictionary<string, Config> Configs = new Dictionary<string,Config>();
-        private List<ICommand> Commands { get; set; }
         private const string COMMAND_NAME_DEFAULT = "default";
+        private List<Type> IgnoredCommands = new List<Type>();
+        private Dictionary<string, ObjectFile> ObjectsFiles = new Dictionary<string,ObjectFile>();
+        private List<ICommand> Commands { get; set; }
 
-        public bool DebugShowArgsInput = true;
-        public bool DebugShowExitConfirm = true;
-        public bool DebugSaveConfigsInRootFolder = true;
-        public bool PreventEmptyInputGetPathInArg0 = true;
-
-        public string CurrentCommandName { get; set; }
+        public string CurrentCommandName { get; private set; }
         public bool InStopPropagation { get; private set; }
+
+        public bool DebugShowArgsInput { get; set; }
+        public bool DebugShowExitConfirm { get; set; }
+        public bool DebugSaveConfigsInRootFolder  { get; set; }
+        public bool PreventEmptyInputGetPathInArg0 { get; set; }
+        public string ObjectsFilesFolder { get; set; }
 
         public static App Current { get; private set; }
 
@@ -28,6 +30,11 @@ namespace SysCommand
         public static void Initialize()
         {
             App.Current = new App();
+            App.Current.DebugShowArgsInput = true;
+            App.Current.DebugShowExitConfirm = true;
+            App.Current.DebugSaveConfigsInRootFolder  = true;
+            App.Current.PreventEmptyInputGetPathInArg0 = true;
+            App.Current.ObjectsFilesFolder = "Objects";
         }
 
         public virtual void Run()
@@ -162,24 +169,17 @@ namespace SysCommand
             Console.WriteLine(AppHelpers.GetConsoleHelper(dic));
         }
 
-        public virtual TConfig GetConfig<TConfig>(string fileName = null, bool refresh = false) where TConfig : Config
+        public virtual TOFile GetObjectFile<TOFile>(string fileName = null, bool refresh = false) where TOFile : ObjectFile
         {
             if (string.IsNullOrWhiteSpace(fileName))
-                fileName = GetConfigNameDefault(typeof(TConfig));
+                fileName = ObjectFile.GetObjectFileNameDefault(typeof(TOFile));
 
-            if (Configs.ContainsKey(fileName) && !refresh)
-                return (TConfig)Configs[fileName];
+            if (ObjectsFiles.ContainsKey(fileName) && !refresh)
+                return (TOFile)ObjectsFiles[fileName];
 
-            var fileName2 = fileName;
-            if (this.DebugSaveConfigsInRootFolder)
-            {
-#if DEBUG
-                fileName2 = @"..\..\" + fileName2;
-#endif
-            }
-
-            var config = Config.Get<TConfig>(fileName2);
-            Configs[fileName] = config;
+            var config = ObjectFile.Get<TOFile>(fileName);
+            if (config != null)
+                ObjectsFiles[fileName] = config;
 
             return config;
         }
@@ -187,18 +187,6 @@ namespace SysCommand
         public void IgnoreCommmand<T>()
         {
             IgnoredCommands.Add(typeof(T));
-        }
-
-        private string GetConfigNameDefault(Type type)
-        {
-            var attr = type.GetCustomAttributes(typeof(ConfigClassAttribute), true).FirstOrDefault() as ConfigClassAttribute;
-            if (attr != null && !string.IsNullOrWhiteSpace(attr.FileName))
-                return attr.FileName;
-
-            var name = Char.ToLowerInvariant(type.Name[0]) + type.Name.Substring(1);
-            var configName = "syscmd." + name + ".config";
-            configName = System.Text.RegularExpressions.Regex.Replace(configName, @"(?<!_)([A-Z])", ".$1").ToLower();
-            return configName;
         }
     }
 }

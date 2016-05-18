@@ -14,18 +14,10 @@ namespace SysCommand
         }
 
         #region Internal Parameters
-        public class Arguments : IArguments
+        public class Arguments
         {
             [CommandPropertyAttribute(LongName = "clear", Help = "Clear the prompt")]
             public bool Clear { get; set; }
-
-            #region IArguments
-            public string Command { get; set; }
-            public string GetHelp(string propName)
-            {
-                return null;
-            }
-            #endregion
         }
         #endregion
     }

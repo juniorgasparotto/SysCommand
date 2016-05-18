@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace SysCommand
 {
-    public abstract class Config
+    public abstract class ObjectFile
     {
         private static TypeNameSerializationBinder binder = new TypeNameSerializationBinder();
         private string fileName;
 
-        public Config(string fileName)
+        public ObjectFile(string fileName)
         {
             this.fileName = fileName;
         }
@@ -24,11 +24,11 @@ namespace SysCommand
                 Binder = binder
             });
 
+            AppHelpers.CreateFolderIfNeeded(this.fileName);
             File.WriteAllText(this.fileName, json);
         }
 
-
-        public static TConfig Get<TConfig>(string fileName) where TConfig : Config
+        public static TConfig Get<TConfig>(string fileName) where TConfig : ObjectFile
         {
             var config = default(TConfig);
 
@@ -39,8 +39,8 @@ namespace SysCommand
                     TypeNameHandling = TypeNameHandling.Auto,
                     Binder = binder
                 });
-
-                config.fileName = fileName;
+                if (config != null)
+                    config.fileName = fileName;
             }
 
             if (config == null)
@@ -56,6 +56,33 @@ namespace SysCommand
             }
 
             return config;
+        }
+
+        public static string GetObjectFileNameDefault(Type type)
+        {
+            string fileName;
+            var attr = type.GetCustomAttributes(typeof(ObjectFileClassAttribute), true).FirstOrDefault() as ObjectFileClassAttribute;
+            if (attr != null && !string.IsNullOrWhiteSpace(attr.FileName))
+            {
+                fileName = attr.FileName;
+            }
+            else
+            {
+                fileName = "syscmd." + AppHelpers.ToLowerSeparate(type.Name, ".") + ".object";
+            }
+
+            string folder = App.Current.ObjectsFilesFolder;
+            if (attr != null && !string.IsNullOrWhiteSpace(attr.Folder))
+                folder = attr.Folder;
+
+            if (App.Current.DebugSaveConfigsInRootFolder)
+            {
+#if DEBUG
+                fileName = Path.Combine(@"..\..\", folder, fileName);
+#endif
+            }
+
+            return fileName;
         }
     }
 }

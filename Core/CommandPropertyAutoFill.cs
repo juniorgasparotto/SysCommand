@@ -8,7 +8,7 @@ namespace SysCommand
     public class CommandPropertyAutoFill
     {
         private FluentCommandLineParser parser;
-        private IArguments arguments;
+        private object arguments;
         private string[] args;
         private Dictionary<string, string> CommandsParseds = new Dictionary<string, string>();
 
@@ -22,17 +22,15 @@ namespace SysCommand
             }
         }
 
-        public CommandPropertyAutoFill(FluentCommandLineParser parser, IArguments argumentsToUpdate, string[] args)
+        public CommandPropertyAutoFill(FluentCommandLineParser parser, object argumentsToUpdate, string[] args)
         {
             this.parser = parser;
             this.arguments = argumentsToUpdate;
             this.args = args;
         }
 
-        protected virtual void Setup(PropertyInfo property, CommandPropertyAttribute attribute)
-        {
-
-        }
+        protected virtual void Setup(PropertyInfo property, CommandPropertyAttribute attribute) {}
+        protected virtual void Setup(PropertyInfo property) {}
 
         public void AutoSetup()
         {
@@ -40,12 +38,11 @@ namespace SysCommand
             foreach (PropertyInfo property in properties)
             {
                 var attribute = Attribute.GetCustomAttribute(property, typeof(CommandPropertyAttribute)) as CommandPropertyAttribute;
-                if (attribute != null)
-                    this.Set(property, attribute);
+                this.Set(property, attribute);
             }
         }
 
-        public void UpdateUsedCommandsInArgs()
+        public string GetCommandsParsed()
         {
             var argsUseds = default(string);
             foreach (var arg in this.CommandsParseds)
@@ -54,7 +51,7 @@ namespace SysCommand
                 argsUseds += (argsUseds == null) ? command : " " + command;
             }
 
-            this.arguments.Command = argsUseds;
+            return argsUseds;
         }
 
         private void Set(PropertyInfo property, CommandPropertyAttribute attribute)
@@ -65,7 +62,10 @@ namespace SysCommand
             // and upcast to base class
             var helper = (CommandPropertyAutoFill)Activator.CreateInstance(helperType, this);
             // call base method
-            helper.Setup(property, attribute);
+            if (attribute != null)
+                helper.Setup(property, attribute);
+            else
+                helper.Setup(property);
         }
 
         // A subclass with a static type parameter
@@ -90,7 +90,10 @@ namespace SysCommand
                 else if (!string.IsNullOrWhiteSpace(attribute.LongName))
                     setup = this.parent.parser.Setup<TProperty>(attribute.LongName);
                 else
-                    throw new Exception(string.Format("No parameter setting found to '{0}'", property.Name));
+                {
+                    attribute.LongName = AppHelpers.ToLowerSeparate(property.Name, "-");                
+                    setup = this.parent.parser.Setup<TProperty>(attribute.LongName);
+                }
 
                 if (attribute.IsRequired)
                     setup.Required();
@@ -113,8 +116,27 @@ namespace SysCommand
 
                 if (!string.IsNullOrWhiteSpace(attribute.Help))
                     setup.WithDescription(attribute.Help);
-                else
-                    setup.WithDescription(this.parent.arguments.GetHelp(property.Name));
+                else if (this.parent.arguments is IHelp)
+                    setup.WithDescription(((IHelp)this.parent.arguments).GetHelp(property.Name));
+            }
+
+            protected override void Setup(PropertyInfo property)
+            {
+                ICommandLineOptionFluent<TProperty> setup;
+                var name = AppHelpers.ToLowerSeparate(property.Name, "-");
+
+                setup = this.parent.parser.Setup<TProperty>(name);
+                setup.Callback(value =>
+                {
+                    this.parent.CommandsParseds["--" + name] = value.ToString();
+                    property.SetValue(this.parent.arguments, value, null); // null means no indexes
+                });
+
+                string help = null;
+                if (this.parent.arguments is IHelp)
+                    help = ((IHelp)this.parent.arguments).GetHelp(property.Name);
+                
+                setup.WithDescription(help ?? "?");
             }
         }
     }

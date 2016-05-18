@@ -2,8 +2,9 @@
 
 namespace SysCommand
 {
-    public class ConfigClassAttribute : Attribute
+    public class ObjectFileClassAttribute : Attribute
     {
         public string FileName { get; set; }
+        public string Folder { get; set; }
     }
 }

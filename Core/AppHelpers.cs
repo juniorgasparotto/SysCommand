@@ -55,7 +55,7 @@ namespace SysCommand
 
         public static TProp GetDefaultArgsPropValue<TArgs, TProp>(Expression<Func<TArgs, object>> expression) where TArgs : class
         {
-            var args = App.Current.GetConfig<ArgumentsHistory>().GetCommandArguments(App.Current.CurrentCommandName, typeof(TArgs)) as TArgs;
+            var args = App.Current.GetObjectFile<ArgumentsHistory>().GetCommandArguments(App.Current.CurrentCommandName, typeof(TArgs)) as TArgs;
             
             if (args != null)
             {
@@ -95,6 +95,8 @@ namespace SysCommand
 
         public static IEnumerable<string> ChunksWords(string str, int chunkSize)
         {
+            str = str ?? "";
+
             int partLength = chunkSize;
             string sentence = str;
             string[] words = sentence.Split(' ');
@@ -191,6 +193,30 @@ namespace SysCommand
             }
 
             return AppHelpers.PadElementsInLines(helpPrintList, 2);
+        }
+
+        /// <summary>
+        /// Create the folder if not existing for a full file name
+        /// </summary>
+        /// <param name="filename">full path of the file</param>
+        public static void CreateFolderIfNeeded(string filename)
+        {
+            string folder = System.IO.Path.GetDirectoryName(filename);
+            if (!System.IO.Directory.Exists(folder))
+            {
+                System.IO.Directory.CreateDirectory(folder);
+            }
+        }
+
+        public static string ToLowerSeparate(string str, string separate)
+        {
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+                str = Char.ToLowerInvariant(str[0]) + str.Substring(1);
+                str = System.Text.RegularExpressions.Regex.Replace(str, @"(?<!_)([A-Z])", separate + "$1").ToLower();
+            }
+
+            return str;
         }
     }
 }

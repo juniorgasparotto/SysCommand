@@ -14,7 +14,7 @@ namespace SysCommand
         }
 
         #region Internal Parameters
-        public class Arguments : IArguments
+        public class Arguments : IHelp
         {
             [CommandPropertyAttribute(ShortName = 'v', LongName = "verbose")]
             public string Verbose { get; set; }
@@ -22,8 +22,7 @@ namespace SysCommand
             [CommandPropertyAttribute(ShortName = 'q', LongName = "quiet")]
             public bool Quiet { get; set; }
 
-            #region IArguments
-            public string Command { get; set; }
+            #region IHelp
             public string GetHelp(string propName)
             {
                 if (propName == AppHelpers.GetPropertyInfo<Arguments>(f => f.Verbose).Name)
