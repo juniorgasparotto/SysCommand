@@ -15,11 +15,11 @@ namespace SysCommand
 
         public virtual void ParseArgs(string[] args)
         {
-            var itemHistory = App.Current.GetObjectFile<ArgumentsHistory>().Object.GetCommandArguments(App.Current.CurrentCommandName, typeof(TArgs));
+            var itemHistory = App.Current.GetOrCreateObjectFile<CommandStorage>().GetArguments(App.Current.CurrentCommandName, typeof(TArgs));
             if (itemHistory == null || itemHistory.Object == null)
             {
                 this.Args = Activator.CreateInstance<TArgs>();
-                itemHistory = itemHistory ?? new ArgumentsHistory.ArgumentsHistoryItem();
+                itemHistory = itemHistory ?? new CommandStorage.Item();
                 itemHistory.Object = this.Args;
             }
             else
@@ -42,7 +42,7 @@ namespace SysCommand
                 if (!this.IgnoreSaveInHistory)
                 {
                     itemHistory.Command = autoFill.GetCommandsParsed();
-                    App.Current.GetObjectFile<ArgumentsHistory>().Object.SetCommandArguments(App.Current.CurrentCommandName, itemHistory);
+                    App.Current.GetOrCreateObjectFile<CommandStorage>().SetArguments(App.Current.CurrentCommandName, itemHistory);
                 }
             }
         }

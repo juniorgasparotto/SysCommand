@@ -2,7 +2,7 @@
 
 namespace SysCommand
 {
-    public class CommandClassAttribute : Attribute
+    public class CommandAttribute : Attribute
     {
         public int OrderExecution { get; set; }
     }

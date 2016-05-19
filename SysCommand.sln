@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysCommand", "SysCommand.csproj", "{4B7472B5-D979-455F-9613-4F64B98C67F4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{ED55B56E-4767-42AB-AAC4-617C50543A9C}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -12,7 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{ED55B5
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysCommand.Tests", "..\SysCommand.Tests\SysCommand.Tests.csproj", "{02698A17-EF4F-46D5-8165-55131075439F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysCommand", "SysCommand\SysCommand.csproj", "{4B7472B5-D979-455F-9613-4F64B98C67F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysCommand.Tests", "SysCommand.Tests\SysCommand.Tests.csproj", "{02698A17-EF4F-46D5-8165-55131075439F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

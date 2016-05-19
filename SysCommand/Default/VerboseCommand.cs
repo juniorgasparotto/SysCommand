@@ -4,8 +4,8 @@ using System.Linq.Expressions;
 
 namespace SysCommand
 {
-    [CommandClassAttribute(OrderExecution = -1)]
-    public class LogCommand : Command<LogCommand.Arguments>
+    [Command(OrderExecution = -1)]
+    public class VerboseCommand : Command<VerboseCommand.Arguments>
     {
         public override void Execute()
         {
@@ -16,7 +16,7 @@ namespace SysCommand
         #region Internal Parameters
         public class Arguments : IHelp
         {
-            [CommandPropertyAttribute(ShortName = 'v', LongName = "verbose")]
+            [CommandPropertyAttribute(ShortName = 'v', LongName = "verbose", Default="all")]
             public string Verbose { get; set; }
 
             [CommandPropertyAttribute(ShortName = 'q', LongName = "quiet")]
@@ -26,9 +26,9 @@ namespace SysCommand
             public string GetHelp(string propName)
             {
                 if (propName == AppHelpers.GetPropertyInfo<Arguments>(f => f.Verbose).Name)
-                    return string.Format("Specify the log level. The options are: none|success|info|critical|warning|error. Default is '{0}'", AppHelpers.GetDefaultValueForArgs<Arguments>(f => f.Verbose));
+                    return string.Format("Specify the log level. The options are: none|success|info|critical|warning|error. Default is '{0}'", CommandStorage.GetValueForArgsType<Arguments>(f => f.Verbose));
                 else if (propName == AppHelpers.GetPropertyInfo<Arguments>(f => f.Quiet).Name)
-                    return string.Format("Display nothing in the output: Default is '{0}'", AppHelpers.GetDefaultValueForArgs<Arguments>(f => f.Quiet));
+                    return string.Format("Display nothing in the output: Default is '{0}'", CommandStorage.GetValueForArgsType<Arguments>(f => f.Quiet));
                 return null;
             }
             #endregion

@@ -53,13 +53,13 @@
     <Compile Include="Core\Attributes\ObjectFileClassAttribute.cs" />
     <Compile Include="Default\ClearCommand.cs" />
     <Compile Include="Default\HelperCommand.cs" />
-    <Compile Include="Default\LogCommand.cs" />
+    <Compile Include="Default\VerboseCommand.cs" />
     <Compile Include="Default\ManagerCommand.cs" />
     <Compile Include="Core\AppHelpers.cs" />
     <Compile Include="Core\Attributes\CommandClassAttribute.cs" />
     <Compile Include="Core\ObjectFile.cs" />
     <Compile Include="Core\TypeNameSerializationBinder.cs" />
-    <Compile Include="Default\ArgumentsHistory.cs" />
+    <Compile Include="Core\CommandStorage.cs" />
     <Compile Include="Core\ArgumentsToDictionary.cs" />
     <Compile Include="Core\Command.cs" />
     <Compile Include="Core\CommandPropertyAutoFill.cs" />

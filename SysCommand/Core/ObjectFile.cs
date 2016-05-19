@@ -6,23 +6,16 @@ using System.Linq;
 
 namespace SysCommand
 {
-    public class ObjectFile<TOFile>
+    public abstract class ObjectFile
     {
         private static TypeNameSerializationBinder binder = new TypeNameSerializationBinder();
-        public string FileName { get; private set; }
-        public TOFile Object { get; private set; }
 
-        private ObjectFile(string fileName)
+        public void Save(string fileName)
         {
-            this.FileName = fileName;
+            Save(this, fileName);
         }
 
-        public void Save()
-        {
-            Save(this.Object, this.FileName);
-        }
-
-        public static void Save(TOFile obj, string fileName)
+        public static void Save<TOFile>(TOFile obj, string fileName)
         {
             string json = JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings
             {
@@ -34,27 +27,26 @@ namespace SysCommand
             File.WriteAllText(fileName, json);
         }
 
-        public static ObjectFile<TOFile> GetOrCreate(string fileName, bool onlyGet = false)
+        public static TOFile Get<TOFile>(string fileName)
         {
-            var objFile = new ObjectFile<TOFile>(fileName);
+            var objFile = default(TOFile);
 
             if (File.Exists(fileName))
             {
-                var obj = JsonConvert.DeserializeObject<TOFile>(File.ReadAllText(fileName), new JsonSerializerSettings
+                objFile = JsonConvert.DeserializeObject<TOFile>(File.ReadAllText(fileName), new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Auto,
                     Binder = binder
                 });
-                objFile.Object = obj;
             }
 
-            if (onlyGet)
-                return objFile;
-
-            if (objFile.Object == null)
-                objFile.Object = Activator.CreateInstance<TOFile>();
-
             return objFile;
+        }
+
+        public static void Remove(string fileName)
+        {
+            if (File.Exists(fileName))
+                File.Delete(fileName);
         }
     }
 }

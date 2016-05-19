@@ -3,7 +3,7 @@ using System;
 
 namespace SysCommand
 {
-    [CommandClassAttribute(OrderExecution = -1000)]
+    [Command(OrderExecution = -1000)]
     public class ManagerCommand : Command<ManagerCommand.Arguments>
     {
         public ManagerCommand()
@@ -28,43 +28,48 @@ namespace SysCommand
 
         public void Save()
         {
-            if (!App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories.ContainsKey(App.Current.CurrentCommandName))
+            var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
+
+            if (!histories.All.ContainsKey(App.Current.CurrentCommandName))
             {
                 Console.WriteLine("The command has no argument to save.");
                 App.Current.StopPropagation();
                 return;
             }
 
-            App.Current.GetObjectFile<ArgumentsHistory>().Save();
+            App.Current.SaveObjectFile<CommandStorage>(histories);
             App.Current.StopPropagation();
             Console.WriteLine("The command '{0}' was successfully saved", App.Current.CurrentCommandName);
         }
 
         public void Remove()
         {
-            if (!App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories.ContainsKey(App.Current.CurrentCommandName))
+            var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
+
+            if (!histories.All.ContainsKey(App.Current.CurrentCommandName))
             {
                 Console.WriteLine("Command name '{0}' dosen't exists", App.Current.CurrentCommandName);
                 App.Current.StopPropagation();
                 return;
             }
 
-            App.Current.GetObjectFile<ArgumentsHistory>().Object.DeleteCommand(App.Current.CurrentCommandName);
-            App.Current.GetObjectFile<ArgumentsHistory>().Save();
+            histories.Remove(App.Current.CurrentCommandName);
+            App.Current.SaveObjectFile<CommandStorage>(histories);
             App.Current.StopPropagation();
             Console.WriteLine("The command '{0}' was successfully removed.", App.Current.CurrentCommandName);
         }
 
         public void Show()
         {
-            if (App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories.Count == 0)
+            var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
+            if (histories.All.Count == 0)
             {
                 Console.WriteLine("No command was found to display.");
                 App.Current.StopPropagation();
                 return;
             }
 
-            foreach (var commandKeyValue in App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories)
+            foreach (var commandKeyValue in histories.All)
             {   
                 var argsOutput = "";
                 foreach (var args in commandKeyValue.Value)
@@ -80,14 +85,18 @@ namespace SysCommand
 
         public void Show(string commandName)
         {
-            if (!App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories.ContainsKey(commandName))
+            var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
+            if (histories == null)
+                App.Current.SaveObjectFile<CommandStorage>(new CommandStorage());
+
+            if (!histories.All.ContainsKey(commandName))
             {
                 Console.WriteLine("Command name '{0}' dosen't exists", commandName);
                 App.Current.StopPropagation();
                 return;
             }
 
-            var command = App.Current.GetObjectFile<ArgumentsHistory>().Object.CommandsHistories[commandName];
+            var command = histories.All[commandName];
             var argsOutput = "";
             foreach (var args in command.Values)
             {

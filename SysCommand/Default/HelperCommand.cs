@@ -3,7 +3,7 @@ using System;
 
 namespace SysCommand
 {
-    [CommandClassAttribute(OrderExecution = -1)]
+    [Command(OrderExecution = -1)]
     public class HelperCommand : Command<HelperCommand.Arguments>
     {
         public override void Execute()

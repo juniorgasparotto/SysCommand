@@ -9,9 +9,11 @@ namespace SysCommand
 {
     public class App
     {
-        private const string COMMAND_NAME_DEFAULT = "default";
+        public const string COMMAND_NAME_DEFAULT = "default";
+
         private List<Type> IgnoredCommands = new List<Type>();
-        private Dictionary<string, object> ObjectsFilesLoadeds = new Dictionary<string, object>();
+        private Dictionary<string, object> ObjectsFiles = new Dictionary<string, object>();
+        private Dictionary<string, object> ObjectsMemory = new Dictionary<string, object>();
         private List<ICommand> Commands { get; set; }
 
         public string CurrentCommandName { get; private set; }
@@ -80,7 +82,7 @@ namespace SysCommand
                                   select new
                                   {
                                       type = assemblyType,
-                                      attr = assemblyType.GetCustomAttributes(typeof(CommandClassAttribute), true).FirstOrDefault() as CommandClassAttribute
+                                      attr = assemblyType.GetCustomAttributes(typeof(CommandAttribute), true).FirstOrDefault() as CommandAttribute
                                   }).ToList();
 
             listOfCommands = listOfCommands.OrderBy(f => f.attr == null ? 0 : f.attr.OrderExecution).ToList();
@@ -169,54 +171,97 @@ namespace SysCommand
             Console.WriteLine(AppHelpers.GetConsoleHelper(dic));
         }
 
-        public virtual void SaveObjectFile<TOFile>(TOFile obj, string fileName = null)
-        {
-            if (string.IsNullOrWhiteSpace(fileName))
-                fileName = this.AutoGenerateObjectFileName(typeof(TOFile));
-
-            ObjectFile<TOFile>.Save(obj, fileName);
-
-            if (ObjectsFilesLoadeds.ContainsKey(fileName))
-                ObjectsFilesLoadeds.Remove(fileName);
-            //ObjectsFiles.Add(fileName, obj);
-        }
-
-        public virtual ObjectFile<TOFile> GetObjectFile<TOFile>(string fileName = null, bool refresh = false)
-        {
-            if (string.IsNullOrWhiteSpace(fileName))
-                fileName = this.AutoGenerateObjectFileName(typeof(TOFile));
-
-            if (ObjectsFilesLoadeds.ContainsKey(fileName) && !refresh)
-                return (ObjectFile<TOFile>)ObjectsFilesLoadeds[fileName];
-
-            var objFile = ObjectFile<TOFile>.GetOrCreate(fileName);
-            if (objFile != null)
-                ObjectsFilesLoadeds[fileName] = objFile;
-
-            return objFile;
-        }
-
         public void IgnoreCommmand<T>()
         {
             IgnoredCommands.Add(typeof(T));
         }
 
-        private string AutoGenerateObjectFileName(Type type)
+        public virtual void SaveObjectMemory<TOMemory>(TOMemory obj, string name)
         {
-            string fileName;
-            var attr = type.GetCustomAttributes(typeof(ObjectFileClassAttribute), true).FirstOrDefault() as ObjectFileClassAttribute;
-            if (attr != null && !string.IsNullOrWhiteSpace(attr.FileName))
-            {
-                fileName = attr.FileName;
-            }
-            else
-            {
-                fileName = "syscmd." + AppHelpers.ToLowerSeparate(type.Name, ".") + ".object";
-            }
+            ObjectsMemory[name] = obj;
+        }
 
-            string folder = this.ObjectsFilesFolder;
-            if (attr != null && !string.IsNullOrWhiteSpace(attr.Folder))
-                folder = attr.Folder;
+        public virtual void RemoveObjectMemory<TOMemory>(string name) where TOMemory : class
+        {
+            if (this.ObjectsMemory.ContainsKey(name))
+                this.ObjectsMemory.Remove(name);
+        }
+
+        public virtual TOMemory GetObjectMemory<TOMemory>(string name) where TOMemory : class
+        {
+            return GetOrCreateObjectMemory<TOMemory>(name, true);
+        }
+
+        public virtual TOMemory GetOrCreateObjectMemory<TOMemory>(string name, bool onlyGet = false) where TOMemory : class
+        {
+            TOMemory obj = null;
+            if (this.ObjectsMemory.ContainsKey(name))
+                obj = this.ObjectsMemory[name] as TOMemory;
+            else if (!onlyGet)
+                obj = Activator.CreateInstance<TOMemory>();
+            return obj;
+        }
+
+        public virtual void SaveObjectFile<TOFile>(TOFile obj, string fileName = null)
+        {
+            fileName = this.GetObjectFileName(typeof(TOFile), fileName);
+
+            if (obj != null)
+            {
+                ObjectFile.Save<TOFile>(obj, fileName);
+                this.ObjectsFiles[fileName] = obj;
+            }
+        }
+
+        public virtual void RemoveObjectFile<TOFile>(string fileName = null)
+        {
+            fileName = this.GetObjectFileName(typeof(TOFile), fileName);
+            ObjectFile.Remove(fileName);
+            if (this.ObjectsFiles.ContainsKey(fileName))
+                this.ObjectsFiles.Remove(fileName);
+        }
+
+        public virtual TOFile GetObjectFile<TOFile>(string fileName = null, bool refresh = false) where TOFile : class
+        {
+            return GetOrCreateObjectFile<TOFile>(fileName, true, refresh);
+        }
+
+        public virtual TOFile GetOrCreateObjectFile<TOFile>(string fileName = null, bool onlyGet = false, bool refresh = false) where TOFile : class
+        {
+            fileName = this.GetObjectFileName(typeof(TOFile), fileName);
+
+            if (this.ObjectsFiles.ContainsKey(fileName) && !refresh)
+                return this.ObjectsFiles[fileName] as TOFile;
+
+            var objFile = ObjectFile.Get<TOFile>(fileName);
+
+            if (objFile == null && !onlyGet)
+                objFile = Activator.CreateInstance<TOFile>();
+
+            this.ObjectsFiles[fileName] = objFile;
+
+            return objFile;
+        }
+
+        public string GetObjectFileName(Type type, string fileName = null)
+        {
+            string folder = null;
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                var attr = type.GetCustomAttributes(typeof(ObjectFileAttribute), true).FirstOrDefault() as ObjectFileAttribute;
+                if (attr != null && !string.IsNullOrWhiteSpace(attr.FileName))
+                {
+                    fileName = attr.FileName;
+                }
+                else
+                {
+                    fileName = "syscmd." + AppHelpers.ToLowerSeparate(type.Name, ".") + ".object";
+                }
+
+                folder = this.ObjectsFilesFolder;
+                if (attr != null && !string.IsNullOrWhiteSpace(attr.Folder))
+                    folder = attr.Folder;
+            }
 
             return AppHelpers.GetPathFromRoot(folder, fileName);
         }

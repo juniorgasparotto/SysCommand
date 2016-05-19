@@ -1,0 +1,31 @@
+{
+  "All": {
+    "default": {
+      "SysCommand.HelperCommand+Arguments": {
+        "Command": "--help \"True\"",
+        "Object": {
+          "$type": "SysCommand.HelperCommand+Arguments, SysCommand",
+          "Show": true
+        }
+      },
+      "SysCommand.Tests.TestCommand+Arguments": {
+        "Command": "-t \"2\"",
+        "Object": {
+          "$type": "SysCommand.Tests.TestCommand+Arguments, SysCommand.Tests",
+          "Test": 2,
+          "Test2": null,
+          "Test3": "default: abc",
+          "Test4": null
+        }
+      },
+      "SysCommand.VerboseCommand+Arguments": {
+        "Command": "--verbose \"all\"",
+        "Object": {
+          "$type": "SysCommand.VerboseCommand+Arguments, SysCommand",
+          "Verbose": "all",
+          "Quiet": false
+        }
+      }
+    }
+  }
+}

@@ -49,24 +49,6 @@ namespace SysCommand
             }
         }
 
-        public static object GetDefaultValueForArgs<TArgs>(Expression<Func<TArgs, object>> expression) where TArgs : class
-        {
-            return GetDefaultArgsPropValue<TArgs, object>(expression);
-        }
-
-        public static TProp GetDefaultArgsPropValue<TArgs, TProp>(Expression<Func<TArgs, object>> expression) where TArgs : class
-        {
-            var args = App.Current.GetObjectFile<ArgumentsHistory>().Object.GetCommandArguments(App.Current.CurrentCommandName, typeof(TArgs)) as TArgs;
-            
-            if (args != null)
-            {
-                var prop = GetPropertyInfo<TArgs>(expression);
-                return (TProp)prop.GetValue(args);
-            }
-
-            return default(TProp);
-        }
-
         public static PropertyInfo GetPropertyInfo<TSource>(Expression<Func<TSource, object>> propertyLambda)
         {
             MemberExpression Exp = null;

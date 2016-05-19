@@ -8,7 +8,7 @@ namespace SysCommand
 
         public static bool CheckIfWrite(string verb, bool forceLog)
         {
-            if (string.IsNullOrWhiteSpace(Verbose) || Verbose.Contains(verb) || forceLog)
+            if (string.IsNullOrWhiteSpace(Verbose) || Verbose.Contains(verb) || Verbose.Contains("all") || forceLog)
                 return true;
             return false;
         }
