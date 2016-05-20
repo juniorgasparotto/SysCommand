@@ -10,7 +10,7 @@ namespace SysCommand
     public class App
     {
         public const string COMMAND_NAME_DEFAULT = "default";
-
+        
         private List<Type> IgnoredCommands = new List<Type>();
         private Dictionary<string, object> ObjectsFiles = new Dictionary<string, object>();
         private Dictionary<string, object> ObjectsMemory = new Dictionary<string, object>();
@@ -22,8 +22,12 @@ namespace SysCommand
         public bool DebugShowArgsInput { get; set; }
         public bool DebugShowExitConfirm { get; set; }
         public bool DebugSaveConfigsInRootFolder  { get; set; }
-        public bool PreventEmptyInputGetPathInArg0 { get; set; }
+        //public bool PreventEmptyInputGetPathInArg0 { get; set; }
         public string ObjectsFilesFolder { get; set; }
+        public string ObjectsFilesPrefix { get; set; }
+        public string ObjectsFilesExtension { get; set; }
+        public bool ObjectsFilesUseTypeFullName { get; set; }
+        public bool InDebug { get { return System.Diagnostics.Debugger.IsAttached; } }
 
         public static App Current { get; private set; }
 
@@ -31,34 +35,43 @@ namespace SysCommand
 
         public static void Initialize()
         {
-            App.Current = new App();
+            Initialize<App>();
+        }
+
+        public static void Initialize<TApp>() where TApp : App
+        {
+            App.Current = Activator.CreateInstance<TApp>();
             App.Current.DebugShowArgsInput = true;
             App.Current.DebugShowExitConfirm = true;
             App.Current.DebugSaveConfigsInRootFolder  = true;
-            App.Current.PreventEmptyInputGetPathInArg0 = true;
-            App.Current.ObjectsFilesFolder = "Objects";
+            //App.Current.PreventEmptyInputGetPathInArg0 = true;
+            App.Current.ObjectsFilesFolder = ".app";
+            App.Current.ObjectsFilesPrefix = ""; // "syscmd.";
+            App.Current.ObjectsFilesExtension = ".object";
         }
 
         public virtual void Run()
         {            
             var args = Environment.GetCommandLineArgs();
             
-#if DEBUG
-            if (DebugShowArgsInput)
+            if (this.InDebug && DebugShowArgsInput)
             {
                 Console.WriteLine("Enter with args:");
                 var read = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(read))
                     args = AppHelpers.CommandLineToArgs(read);
             }
-#endif
+            
+            //foreach (var i in args)
+            //    Console.WriteLine(i);
+            //return;
 
-            if (PreventEmptyInputGetPathInArg0 && args.Length == 1 && System.IO.File.Exists(args[0]))
-                args = null;
+            //if (PreventEmptyInputGetPathInArg0 && args.Length == 1 && System.IO.File.Exists(args[0]))
+            //    args = null;
 
-            // retorna o nome do comando ou utiliza o padrão
+            // ignore args0 because is exe path
             this.CurrentCommandName = App.COMMAND_NAME_DEFAULT;
-            if (args != null && args.Length > 0 && args[0].Length > 0 && args[0][0] != '-')
+            if (args != null && args.Length > 1 && args[1].Length > 0 && args[1][0] != '-')
                 this.CurrentCommandName = args[0];
 
             LoadCommands();
@@ -86,6 +99,10 @@ namespace SysCommand
                                   }).ToList();
 
             listOfCommands = listOfCommands.OrderBy(f => f.attr == null ? 0 : f.attr.OrderExecution).ToList();
+            
+            if (!this.InDebug)
+                listOfCommands.RemoveAll(f => f.attr != null && f.attr.OnlyInDebug);
+
             this.Commands = listOfCommands.Select(f => (ICommand)Activator.CreateInstance(f.type)).ToList();
             this.Commands.RemoveAll(f => IgnoredCommands.Contains(f.GetType()));
         }
@@ -132,10 +149,11 @@ namespace SysCommand
 
         private void ExitWithKeyEnterInDebug()
         {
-#if DEBUG
-            Console.WriteLine("Press ENTER to Exit");
-            Console.ReadLine();
-#endif
+            if (this.InDebug)
+            {
+                Console.WriteLine("Press ENTER to Exit");
+                Console.ReadLine();
+            }
         }
 
         public virtual void Exit(int code)
@@ -204,7 +222,8 @@ namespace SysCommand
 
         public virtual void SaveObjectFile<TOFile>(TOFile obj, string fileName = null)
         {
-            fileName = this.GetObjectFileName(typeof(TOFile), fileName);
+            if (string.IsNullOrWhiteSpace(fileName))
+                fileName = this.GetObjectFileName(typeof(TOFile), fileName);
 
             if (obj != null)
             {
@@ -215,7 +234,9 @@ namespace SysCommand
 
         public virtual void RemoveObjectFile<TOFile>(string fileName = null)
         {
-            fileName = this.GetObjectFileName(typeof(TOFile), fileName);
+            if (string.IsNullOrWhiteSpace(fileName))
+                fileName = this.GetObjectFileName(typeof(TOFile), fileName);
+
             ObjectFile.Remove(fileName);
             if (this.ObjectsFiles.ContainsKey(fileName))
                 this.ObjectsFiles.Remove(fileName);
@@ -228,7 +249,8 @@ namespace SysCommand
 
         public virtual TOFile GetOrCreateObjectFile<TOFile>(string fileName = null, bool onlyGet = false, bool refresh = false) where TOFile : class
         {
-            fileName = this.GetObjectFileName(typeof(TOFile), fileName);
+            if (string.IsNullOrWhiteSpace(fileName))
+                fileName = this.GetObjectFileName(typeof(TOFile), fileName);
 
             if (this.ObjectsFiles.ContainsKey(fileName) && !refresh)
                 return this.ObjectsFiles[fileName] as TOFile;
@@ -243,7 +265,7 @@ namespace SysCommand
             return objFile;
         }
 
-        public string GetObjectFileName(Type type, string fileName = null)
+        public string GetObjectFileName(Type type, string fileName = null, bool useTypeFullName = false)
         {
             string folder = null;
             if (string.IsNullOrWhiteSpace(fileName))
@@ -255,7 +277,9 @@ namespace SysCommand
                 }
                 else
                 {
-                    fileName = "syscmd." + AppHelpers.ToLowerSeparate(type.Name, ".") + ".object";
+                    useTypeFullName = !useTypeFullName ? this.ObjectsFilesUseTypeFullName : useTypeFullName;
+                    fileName = AppHelpers.CSharpName(type, useTypeFullName).Replace("<", "[").Replace(">", "]").Replace(@"\", "");
+                    fileName = App.Current.ObjectsFilesPrefix + AppHelpers.ToLowerSeparate(fileName, '.') + this.ObjectsFilesExtension;
                 }
 
                 folder = this.ObjectsFilesFolder;
@@ -263,7 +287,10 @@ namespace SysCommand
                     folder = attr.Folder;
             }
 
-            return AppHelpers.GetPathFromRoot(folder, fileName);
+            if (string.IsNullOrWhiteSpace(folder))
+                return AppHelpers.GetPathFromRoot(fileName);
+            else
+                return AppHelpers.GetPathFromRoot(folder, fileName);
         }
     }
 }

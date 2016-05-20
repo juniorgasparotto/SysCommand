@@ -76,12 +76,17 @@ namespace SysCommand
             public CommandPropertyAutoFillGeneric(CommandPropertyAutoFill parent)
                 : base(null, null, null)
             {
-                this.parent = parent;
+                this.parent = parent;                
             }
 
             protected override void Setup(PropertyInfo property, CommandPropertyAttribute attribute)
             {
                 ICommandLineOptionFluent<TProperty> setup;
+                
+                var propertyValueObj = property.GetValue(this.parent.arguments);
+                var propertyValue = default(TProperty);
+                if (propertyValueObj != null)
+                    propertyValue = (TProperty)propertyValueObj;
 
                 if (attribute.ShortName != default(char) && !string.IsNullOrWhiteSpace(attribute.LongName))
                     setup = this.parent.parser.Setup<TProperty>(attribute.ShortName, attribute.LongName);
@@ -91,14 +96,14 @@ namespace SysCommand
                     setup = this.parent.parser.Setup<TProperty>(attribute.LongName);
                 else
                 {
-                    attribute.LongName = AppHelpers.ToLowerSeparate(property.Name, "-");                
+                    attribute.LongName = AppHelpers.ToLowerSeparate(property.Name, '-');                
                     setup = this.parent.parser.Setup<TProperty>(attribute.LongName);
                 }
 
                 if (attribute.IsRequired)
                     setup.Required();
 
-                if (attribute.Default != null)
+                if (attribute.Default != null && (propertyValue == null || propertyValue.Equals(default(TProperty))))
                     setup.SetDefault((TProperty)attribute.Default);
 
                 setup.Callback(value =>
@@ -123,7 +128,7 @@ namespace SysCommand
             protected override void Setup(PropertyInfo property)
             {
                 ICommandLineOptionFluent<TProperty> setup;
-                var name = AppHelpers.ToLowerSeparate(property.Name, "-");
+                var name = AppHelpers.ToLowerSeparate(property.Name, '-');
 
                 setup = this.parent.parser.Setup<TProperty>(name);
                 setup.Callback(value =>

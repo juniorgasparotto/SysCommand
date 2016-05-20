@@ -1,0 +1,14 @@
+{
+  "All": {
+    "default": {
+      "SysCommand.VerboseCommand+Arguments": {
+        "Command": "--verbose \"Error,Success,Info\"",
+        "Object": {
+          "$type": "SysCommand.VerboseCommand+Arguments, SysCommand",
+          "Verbose": "Error,Success,Info",
+          "Quiet": false
+        }
+      }
+    }
+  }
+}

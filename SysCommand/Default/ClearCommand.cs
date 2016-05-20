@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace SysCommand
 {
-    [Command(OrderExecution = -1)]
+    [Command(OrderExecution = -1, OnlyInDebug = true)]
     public class ClearCommand : Command<ClearCommand.Arguments>
     {
         public override void Execute()

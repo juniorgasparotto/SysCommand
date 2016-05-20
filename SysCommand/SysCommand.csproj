@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="VerboseEnum.cs" />
     <Compile Include="Core\Attributes\ObjectFileClassAttribute.cs" />
     <Compile Include="Default\ClearCommand.cs" />
     <Compile Include="Default\HelperCommand.cs" />

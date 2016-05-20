@@ -12,16 +12,19 @@ namespace SysCommand
 {
     public static class AppHelpers
     {
-        //public static string[] StringToArgs(string value)
-        //{
-        //    var result = value.Split('"')
-        //             .Select((element, index) => index % 2 == 0  // If even index
-        //                                   ? element.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)  // Split the item
-        //                                   : new string[] { element })  // Keep the entire item
-        //             .SelectMany(element => element).ToArray();
-
-        //    return result;
-        //}
+        public static string CSharpName(Type type, bool showFullName = false)
+        {
+            var sb = new StringBuilder();
+            var name = showFullName ? type.FullName : type.Name;
+            //return name;
+            if (!type.IsGenericType || name.IndexOf('`') == -1) return name;
+            sb.Append(name.Substring(0, name.IndexOf('`')));
+            sb.Append("<");
+            sb.Append(string.Join(", ", type.GetGenericArguments()
+                                            .Select(t => CSharpName(t, showFullName))));
+            sb.Append(">");
+            return sb.ToString();
+        }
 
         [DllImport("shell32.dll", SetLastError = true)]
         static extern IntPtr CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
@@ -191,12 +194,23 @@ namespace SysCommand
             }
         }
 
-        public static string ToLowerSeparate(string str, string separate)
+        public static string ToLowerSeparate(string str, char separate)
         {
             if (!string.IsNullOrWhiteSpace(str))
             {
-                str = Char.ToLowerInvariant(str[0]) + str.Substring(1);
-                str = System.Text.RegularExpressions.Regex.Replace(str, @"(?<!_)([A-Z])", separate + "$1").ToLower();
+                var newStr = "";
+                for (var i = 0; i < str.Length; i++)
+                {
+                    var c = str[i];
+                    if (i > 0 && separate != str[i - 1] && char.IsLetterOrDigit(str[i - 1]) && char.IsUpper(c) && !char.IsUpper(str[i - 1]))
+                        newStr += separate + c.ToString().ToLower();
+                    else
+                        newStr += c.ToString().ToLower();
+                }
+
+                return newStr;
+                //str = Char.ToLowerInvariant(str[0]) + str.Substring(1);
+                //str = System.Text.RegularExpressions.Regex.Replace(str, @"(?<!_)([A-Z])", separate + "$1").ToLower();
             }
 
             return str;
@@ -204,13 +218,11 @@ namespace SysCommand
 
         public static string GetPathFromRoot(params string[] paths)
         {
-            if (App.Current.DebugSaveConfigsInRootFolder)
+            if (App.Current.InDebug && App.Current.DebugSaveConfigsInRootFolder)
             {
-#if DEBUG
                 var paths2 = paths.ToList();
                 paths2.Insert(0, @"..\..\");
                 return Path.Combine(paths2.ToArray());
-#endif
             }
 
             return Path.Combine(paths);

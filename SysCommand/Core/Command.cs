@@ -7,7 +7,7 @@ namespace SysCommand
     {
         public bool HasParsed { get; protected set; }
         public bool HasLoadedFromConfig { get; protected set; }
-        public bool IgnoreSaveInHistory { get; protected set; }
+        public bool AllowSaveArgsInStorage { get; protected set; }
 
         public TArgs Args { get; protected set; }
         public FluentCommandLineParser Parser { get; protected set; }
@@ -39,7 +39,7 @@ namespace SysCommand
                 this.HasParsed = true;
                 
                 // Only update 'Args.Command' and set the args in config if has success
-                if (!this.IgnoreSaveInHistory)
+                if (this.AllowSaveArgsInStorage)
                 {
                     itemHistory.Command = autoFill.GetCommandsParsed();
                     App.Current.GetOrCreateObjectFile<CommandStorage>().SetArguments(App.Current.CurrentCommandName, itemHistory);

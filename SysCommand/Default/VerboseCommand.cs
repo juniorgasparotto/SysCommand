@@ -7,16 +7,33 @@ namespace SysCommand
     [Command(OrderExecution = -1)]
     public class VerboseCommand : Command<VerboseCommand.Arguments>
     {
+        public VerboseCommand()
+        {
+            this.AllowSaveArgsInStorage = true;
+        }
+
         public override void Execute()
         {
-            ConsoleWriter.Verbose = this.Args.Verbose;
+            var v = this.Args.Verbose.ToLower();
+            if (v.Contains("info"))
+                ConsoleWriter.Verbose |= VerboseEnum.Info;
+            if (v.Contains("success"))
+                ConsoleWriter.Verbose |= VerboseEnum.Success;
+            if (v.Contains("warning"))
+                ConsoleWriter.Verbose |= VerboseEnum.Warning;
+            if (v.Contains("critical"))
+                ConsoleWriter.Verbose |= VerboseEnum.Critical;
+            if (v.Contains("error"))
+                ConsoleWriter.Verbose |= VerboseEnum.Error;
+            if (v.Contains("question"))
+                ConsoleWriter.Verbose |= VerboseEnum.Question;
             ConsoleWriter.Quiet = this.Args.Quiet;
         }
 
         #region Internal Parameters
         public class Arguments : IHelp
         {
-            [CommandPropertyAttribute(ShortName = 'v', LongName = "verbose", Default="all")]
+            [CommandPropertyAttribute(ShortName = 'v', LongName = "verbose", Default = "all")]
             public string Verbose { get; set; }
 
             [CommandPropertyAttribute(ShortName = 'q', LongName = "quiet")]

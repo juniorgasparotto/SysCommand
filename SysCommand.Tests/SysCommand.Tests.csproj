@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\TaskCommand.cs" />
-    <Compile Include="Commands\TestCommand.cs" />
+    <Compile Include="Commands\TestVerboseCommand.cs" />
     <Compile Include="Classes\Tasks.cs" />
     <Compile Include="Classes\AppConfig.cs" />
     <Compile Include="Program.cs" />

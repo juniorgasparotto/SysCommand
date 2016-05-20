@@ -5,12 +5,7 @@ namespace SysCommand
 {
     [Command(OrderExecution = -1000)]
     public class ManagerCommand : Command<ManagerCommand.Arguments>
-    {
-        public ManagerCommand()
-        {
-            this.IgnoreSaveInHistory = true;
-        }
-
+    {   
         public override void Execute()
         {
             if (this.Args.ShowAll)

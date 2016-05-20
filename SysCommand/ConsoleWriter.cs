@@ -3,37 +3,43 @@ namespace SysCommand
 {
     public class ConsoleWriter
     {
-        public static string Verbose { get; set; }
+        public static VerboseEnum Verbose { get; set; }
         public static bool Quiet { get; set; }
 
-        public static bool CheckIfWrite(string verb, bool forceLog)
+        public static bool CheckIfWrite(VerboseEnum verb, bool forceLog)
         {
-            if (string.IsNullOrWhiteSpace(Verbose) || Verbose.Contains(verb) || Verbose.Contains("all") || forceLog)
+            if (Verbose == VerboseEnum.All || Verbose.HasFlag(verb) || forceLog)
                 return true;
             return false;
         }
 
         public static void Info(string msg, bool forceLog = false, bool breakLine = true)
         {
-            if (CheckIfWrite("info", forceLog))
+            if (CheckIfWrite(VerboseEnum.Info, forceLog))
+                Write(msg, ConsoleColor.DarkGray, breakLine);
+        }
+
+        public static void Critical(string msg, bool forceLog = false, bool breakLine = true)
+        {
+            if (CheckIfWrite(VerboseEnum.Critical, forceLog))
                 Write(msg, ConsoleColor.DarkGray, breakLine);
         }
 
         public static void Error(string msg, bool forceLog = false, bool breakLine = true)
         {
-            if (CheckIfWrite("error", forceLog))
+            if (CheckIfWrite(VerboseEnum.Error, forceLog))
                 Write(msg, ConsoleColor.Red, breakLine);
         }
 
         public static void Success(string msg, bool forceLog = false, bool breakLine = true)
         {
-            if (CheckIfWrite("success", forceLog))
+            if (CheckIfWrite(VerboseEnum.Success, forceLog))
                 Write(msg, ConsoleColor.Blue, breakLine);
         }
 
         public static void Warning(string msg, bool forceLog = false, bool breakLine = true)
         {
-            if (CheckIfWrite("warning", forceLog))
+            if (CheckIfWrite(VerboseEnum.Warning, forceLog))
                 Write(msg, ConsoleColor.Yellow, breakLine);
         }
 
@@ -56,6 +62,5 @@ namespace SysCommand
 
             Console.ForegroundColor = color;
         }
-
     }
 }

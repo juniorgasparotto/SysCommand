@@ -4,7 +4,7 @@ using System;
 
 namespace SysCommand.Tests
 {
-    [ObjectFile(FileName = "all.json", Folder = @"Tasks")]
+    [ObjectFile(FileName = "all.json", Folder = @".app\tasks\")]
     public class Tasks
     {
         public List<Task> AllTasks = new List<Task>();
