@@ -3,6 +3,7 @@ using System.IO;
 using System;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace SysCommand
 {
@@ -59,6 +60,34 @@ namespace SysCommand
             {
                 var prop = AppHelpers.GetPropertyInfo<TArgs>(expression);
                 return (TProp)prop.GetValue(argsItem.Object);
+            }
+            else
+            {
+                var prop = AppHelpers.GetPropertyInfo<TArgs>(expression);
+                var attribute = Attribute.GetCustomAttribute(prop, typeof(ArgumentAttribute)) as ArgumentAttribute;
+                if (attribute != null && attribute.Default != null)
+                    return (TProp)attribute.Default;
+            }
+
+            return default(TProp);
+        }
+
+        public static TProp GetValueForArgsType<TProp>(PropertyInfo prop, string commandName = null)
+        {
+            if (commandName == null)
+                commandName = App.COMMAND_NAME_DEFAULT;
+
+            var argsItem = App.Current.GetOrCreateObjectFile<CommandStorage>().GetArguments(commandName, prop.DeclaringType);
+
+            if (argsItem != null && argsItem.Object != null)
+            {
+                return (TProp)prop.GetValue(argsItem.Object);
+            }
+            else
+            {
+                var attribute = Attribute.GetCustomAttribute(prop, typeof(ArgumentAttribute)) as ArgumentAttribute;
+                if (attribute != null && attribute.Default != null)
+                    return (TProp)attribute.Default;
             }
 
             return default(TProp);

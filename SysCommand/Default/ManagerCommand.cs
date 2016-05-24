@@ -3,25 +3,47 @@ using System;
 
 namespace SysCommand
 {
-    [Command(OrderExecution = -1000)]
+    //[Command(OrderExecution = -1000)]
     public class ManagerCommand : Command<ManagerCommand.Arguments>
-    {   
+    {
+        public ManagerCommand()
+        {
+            this.OrderExecution = -1000;
+        }
+
+        public override void Load(string[] args)
+        {
+            base.Load(args);
+            this.Parse();
+            
+            if (string.IsNullOrWhiteSpace(this.ArgsObject.Name))
+            {
+                App.Current.CurrentCommandName = App.COMMAND_NAME_DEFAULT;
+                if (args != null && args.Length > 0 && args[0].Length > 0 && args[0][0] != '-')
+                    App.Current.CurrentCommandName = args[0];
+            }
+            else
+            {
+                App.Current.CurrentCommandName = this.ArgsObject.Name;
+            }
+        }
+
         public override void Execute()
         {
-            if (this.Args.ShowAll)
+            if (this.ArgsObject.ShowAll)
                 this.Show();
 
-            if (!string.IsNullOrWhiteSpace(this.Args.Show))
-                this.Show(this.Args.Show);
+            if (!string.IsNullOrWhiteSpace(this.ArgsObject.Show))
+                this.Show(this.ArgsObject.Show);
 
-            if (this.Args.Save)
+            if (this.ArgsObject.Save)
                 this.Save();
 
-            if (this.Args.Remove)
+            if (this.ArgsObject.Remove)
                 this.Remove();
         }
 
-        public void Save()
+        private void Save()
         {
             var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
 
@@ -37,7 +59,7 @@ namespace SysCommand
             Console.WriteLine("The command '{0}' was successfully saved", App.Current.CurrentCommandName);
         }
 
-        public void Remove()
+        private void Remove()
         {
             var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
 
@@ -54,7 +76,7 @@ namespace SysCommand
             Console.WriteLine("The command '{0}' was successfully removed.", App.Current.CurrentCommandName);
         }
 
-        public void Show()
+        private void Show()
         {
             var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
             if (histories.All.Count == 0)
@@ -78,7 +100,7 @@ namespace SysCommand
             App.Current.StopPropagation();
         }
 
-        public void Show(string commandName)
+        private void Show(string commandName)
         {
             var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
             if (histories == null)
@@ -105,16 +127,19 @@ namespace SysCommand
         #region Internal Parameters
         public class Arguments
         {
-            [CommandPropertyAttribute(LongName = "cmd-save", Help = "Save current command to the history commands")]
+            [Argument(LongName = "cmd-name", Help = "Specify the command name")]
+            public string Name { get; set; }
+
+            [Argument(LongName = "cmd-save", Help = "Save current command to the history commands")]
             public bool Save { get; set; }
 
-            [CommandPropertyAttribute(LongName = "cmd-remove", Help = "Remove current command from the history commands")]
+            [Argument(LongName = "cmd-remove", Help = "Remove current command from the history commands")]
             public bool Remove { get; set; }
 
-            [CommandPropertyAttribute(LongName = "cmd-show-all", Help = "Show all commands from the history.")]
+            [Argument(LongName = "cmd-show-all", Help = "Show all commands from the history.")]
             public bool ShowAll { get; set; }
 
-            [CommandPropertyAttribute(LongName = "cmd-show", Help = "Show the specific command, if exists, from the history.")]
+            [Argument(LongName = "cmd-show", Help = "Show the specific command, if exists, from the history.")]
             public string Show { get; set; }
         }
         #endregion

@@ -9,27 +9,30 @@ namespace SysCommand.Tests
     {
         public override void Execute()
         {
-            App.Current.GetOrCreateObjectFile<AppConfig>().LastExecuteDate = DateTime.Now;
-            App.Current.SaveObjectFile<AppConfig>(App.Current.GetOrCreateObjectFile<AppConfig>());
+            if (this.ArgsObject.TestVerbose)
+            {
+                App.Current.GetOrCreateObjectFile<AppConfig>().LastExecuteDate = DateTime.Now;
+                App.Current.SaveObjectFile<AppConfig>(App.Current.GetOrCreateObjectFile<AppConfig>());
 
-            ConsoleWriter.Info(string.Format("Info '{0}'", (int)VerboseEnum.Info));
-            ConsoleWriter.Success(string.Format("Success '{0}'", (int)VerboseEnum.Success));
-            ConsoleWriter.Critical(string.Format("Critical '{0}'", (int)VerboseEnum.Critical));
-            ConsoleWriter.Warning(string.Format("Warning '{0}'", (int)VerboseEnum.Warning));
-            ConsoleWriter.Error(string.Format("Error '{0}'", (int)VerboseEnum.Error));
-            ConsoleWriter.Question(string.Format("Question? '{0}'", (int)VerboseEnum.Question));
+                ConsoleWriter.Info(string.Format("Info '{0}'", (int)VerboseEnum.Info));
+                ConsoleWriter.Success(string.Format("Success '{0}'", (int)VerboseEnum.Success));
+                ConsoleWriter.Critical(string.Format("Critical '{0}'", (int)VerboseEnum.Critical));
+                ConsoleWriter.Warning(string.Format("Warning '{0}'", (int)VerboseEnum.Warning));
+                ConsoleWriter.Error(string.Format("Error '{0}'", (int)VerboseEnum.Error));
+                ConsoleWriter.Question(string.Format("Question? '{0}'", (int)VerboseEnum.Question));
+            }
         }
 
         #region Internal Parameters
         public class Arguments : IHelp
         {
-            [CommandPropertyAttribute(ShortName = 't')]
+            [ArgumentAttribute(ShortName = 't')]
             public bool TestVerbose { get; set; }
 
-            [CommandPropertyAttribute()]
+            [ArgumentAttribute()]
             public string Test2 { get; set; }
 
-            [CommandPropertyAttribute(LongName = "test3", Help = "test3. Simple help", Default = "default: abc")]
+            [ArgumentAttribute(LongName = "test3", Help = "test3. Simple help", Default = "default: abc", ShowDefaultValueInHelp = true)]
             public string Test3 { get; set; }
 
             public string Test4 { get; set; }

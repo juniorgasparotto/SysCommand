@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 namespace SysCommand
 {
@@ -12,15 +13,7 @@ namespace SysCommand
         private string[] args;
         private Dictionary<string, string> CommandsParseds = new Dictionary<string, string>();
 
-        public bool HasFill 
-        {
-            get
-            {
-                if (this.CommandsParseds.Count > 0)
-                    return true;
-                return false;
-            }
-        }
+        public bool HasFill { get; private set; }
 
         public CommandPropertyAutoFill(FluentCommandLineParser parser, object argumentsToUpdate, string[] args)
         {
@@ -29,7 +22,7 @@ namespace SysCommand
             this.args = args;
         }
 
-        protected virtual void Setup(PropertyInfo property, CommandPropertyAttribute attribute) {}
+        protected virtual void Setup(PropertyInfo property, ArgumentAttribute attribute) {}
         protected virtual void Setup(PropertyInfo property) {}
 
         public void AutoSetup()
@@ -37,7 +30,7 @@ namespace SysCommand
             PropertyInfo[] properties = arguments.GetType().GetProperties();
             foreach (PropertyInfo property in properties)
             {
-                var attribute = Attribute.GetCustomAttribute(property, typeof(CommandPropertyAttribute)) as CommandPropertyAttribute;
+                var attribute = Attribute.GetCustomAttribute(property, typeof(ArgumentAttribute)) as ArgumentAttribute;
                 this.Set(property, attribute);
             }
         }
@@ -54,7 +47,7 @@ namespace SysCommand
             return argsUseds;
         }
 
-        private void Set(PropertyInfo property, CommandPropertyAttribute attribute)
+        private void Set(PropertyInfo property, ArgumentAttribute attribute)
         {
             // create the type-specific type of the helper
             var helperType = typeof(CommandPropertyAutoFillGeneric<>).MakeGenericType(property.PropertyType);
@@ -79,7 +72,7 @@ namespace SysCommand
                 this.parent = parent;                
             }
 
-            protected override void Setup(PropertyInfo property, CommandPropertyAttribute attribute)
+            protected override void Setup(PropertyInfo property, ArgumentAttribute attribute)
             {
                 ICommandLineOptionFluent<TProperty> setup;
                 
@@ -116,13 +109,22 @@ namespace SysCommand
                                 this.parent.CommandsParseds["-" + attribute.ShortName.ToString()] = value.ToString();
                         }
 
+                        this.parent.HasFill = true;
                         property.SetValue(this.parent.arguments, value, null); // null means no indexes
                     });
 
+                var help = default(string);
                 if (!string.IsNullOrWhiteSpace(attribute.Help))
-                    setup.WithDescription(attribute.Help);
+                    help = attribute.Help;
                 else if (this.parent.arguments is IHelp)
-                    setup.WithDescription(((IHelp)this.parent.arguments).GetHelp(property.Name));
+                    help = ((IHelp)this.parent.arguments).GetHelp(property.Name);
+                    
+                if (help != null)
+                {
+                    if (attribute.ShowDefaultValueInHelp)
+                        help = this.ConcatHelpWithDefaultValue(help, CommandStorage.GetValueForArgsType<TProperty>(property));
+                    setup.WithDescription(help);
+                }
             }
 
             protected override void Setup(PropertyInfo property)
@@ -133,6 +135,7 @@ namespace SysCommand
                 setup = this.parent.parser.Setup<TProperty>(name);
                 setup.Callback(value =>
                 {
+                    this.parent.HasFill = true;
                     this.parent.CommandsParseds["--" + name] = value.ToString();
                     property.SetValue(this.parent.arguments, value, null); // null means no indexes
                 });
@@ -140,8 +143,28 @@ namespace SysCommand
                 string help = null;
                 if (this.parent.arguments is IHelp)
                     help = ((IHelp)this.parent.arguments).GetHelp(property.Name);
-                
-                setup.WithDescription(help ?? "?");
+
+                var helpDefaultValue = CommandStorage.GetValueForArgsType<TProperty>(property);
+                if (helpDefaultValue != null && !helpDefaultValue.Equals(default(TProperty)))
+                    setup.WithDescription(this.ConcatHelpWithDefaultValue(help, helpDefaultValue));
+                else
+                    setup.WithDescription(help);
+            }
+
+            private string ConcatHelpWithDefaultValue(string help, object defaultValue)
+            {
+                if (string.IsNullOrWhiteSpace(help))
+                    help = "";
+
+                help = help.Trim();
+                var defaultValueStr = "The default value is '" + defaultValue + "'.";
+
+                if (help.LastOrDefault() == '.')
+                    return help + " " + defaultValueStr;
+                else if (help.Length > 0)
+                    return help + ". " + defaultValueStr;
+                else
+                    return defaultValueStr;
             }
         }
     }

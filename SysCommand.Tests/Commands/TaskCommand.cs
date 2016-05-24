@@ -8,27 +8,32 @@ namespace SysCommand.Tests
 {
     public class TaskCommand : Command<Task>
     {
+        public TaskCommand()
+        {
+            this.AllowSaveArgsInStorage = true;
+        }
+
         public override void Execute()
         {
-            if (this.Args.DateAndTime == default(DateTime))
-                this.Args.DateAndTime = DateTime.Now;
+            if (this.ArgsObject.DateAndTime == default(DateTime))
+                this.ArgsObject.DateAndTime = DateTime.Now;
 
-            ConsoleWriter.Info("Title: " + this.Args.Title);
-            ConsoleWriter.Info("Date: " + this.Args.DateAndTime);
-            ConsoleWriter.Info("Description: " + this.Args.Description);
+            ConsoleWriter.Info("Title: " + this.ArgsObject.Title);
+            ConsoleWriter.Info("Date: " + this.ArgsObject.DateAndTime);
+            ConsoleWriter.Info("Description: " + this.ArgsObject.Description);
 
             // get with manage instances
             var tasksPath = App.Current.GetObjectFileName(typeof(List<Task>), useTypeFullName: true);
             var tasks = App.Current.GetOrCreateObjectFile<List<Task>>(tasksPath);
-            tasks.Add(this.Args);
+            tasks.Add(this.ArgsObject);
             App.Current.SaveObjectFile<List<Task>>(tasks, tasksPath);
 
             // save with manage instances
-            App.Current.SaveObjectFile<Task>(this.Args);
+            App.Current.SaveObjectFile<Task>(this.ArgsObject);
 
             // save without manage instances
-            ObjectFile.Save<Task>(this.Args, AppHelpers.GetPathFromRoot(@".app\tasks\task-" + DateTime.Now.Ticks + ".object"));
-            ConsoleWriter.Success(string.Format("Task {0} saved", this.Args.Title));
+            ObjectFile.Save<Task>(this.ArgsObject, AppHelpers.GetPathFromRoot(@".app\tasks\task-" + DateTime.Now.Ticks + ".object"));
+            ConsoleWriter.Success(string.Format("Task {0} saved", this.ArgsObject.Title));
         }
     }
 }

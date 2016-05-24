@@ -12,7 +12,9 @@ namespace SysCommand.Tests
 
     public class Task
     {
-        [CommandPropertyAttribute(Help = "Date help")]
+        public int Id { get; set; }
+
+        [ArgumentAttribute(Help = "Date help")]
         public DateTime DateAndTime { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

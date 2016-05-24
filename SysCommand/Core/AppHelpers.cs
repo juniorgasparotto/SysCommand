@@ -7,11 +7,36 @@ using System.Reflection;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SysCommand
 {
     public static class AppHelpers
     {
+        #region reflection helpers
+
+        public static object InvokeWithNamedParameters(this MethodBase self, object obj, IDictionary<string, object> namedParameters)
+        {
+            return self.Invoke(obj, MapParameters(self, namedParameters));
+        }
+
+        public static object[] MapParameters(MethodBase method, IDictionary<string, object> namedParameters)
+        {
+            string[] paramNames = method.GetParameters().Select(p => p.Name).ToArray();
+            object[] parameters = new object[paramNames.Length];
+            for (int i = 0; i < parameters.Length; ++i)
+            {
+                parameters[i] = Type.Missing;
+            }
+            foreach (var item in namedParameters)
+            {
+                var paramName = item.Key;
+                var paramIndex = Array.IndexOf(paramNames, paramName);
+                parameters[paramIndex] = item.Value;
+            }
+            return parameters;
+        }
+
         public static string CSharpName(Type type, bool showFullName = false)
         {
             var sb = new StringBuilder();
@@ -24,32 +49,6 @@ namespace SysCommand
                                             .Select(t => CSharpName(t, showFullName))));
             sb.Append(">");
             return sb.ToString();
-        }
-
-        [DllImport("shell32.dll", SetLastError = true)]
-        static extern IntPtr CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
-
-        public static string[] CommandLineToArgs(string commandLine)
-        {
-            int argc;
-            var argv = CommandLineToArgvW(commandLine, out argc);
-            if (argv == IntPtr.Zero)
-                throw new System.ComponentModel.Win32Exception();
-            try
-            {
-                var args = new string[argc];
-                for (var i = 0; i < args.Length; i++)
-                {
-                    var p = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
-                    args[i] = Marshal.PtrToStringUni(p);
-                }
-
-                return args;
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(argv);
-            }
         }
 
         public static PropertyInfo GetPropertyInfo<TSource>(Expression<Func<TSource, object>> propertyLambda)
@@ -77,6 +76,29 @@ namespace SysCommand
             }
 
             return (PropertyInfo)Exp.Member;
+        }
+        #endregion
+
+        #region string helpers
+
+        public static string ToLowerSeparate(string str, char separate)
+        {
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+                var newStr = "";
+                for (var i = 0; i < str.Length; i++)
+                {
+                    var c = str[i];
+                    if (i > 0 && separate != str[i - 1] && char.IsLetterOrDigit(str[i - 1]) && char.IsUpper(c) && !char.IsUpper(str[i - 1]))
+                        newStr += separate + c.ToString().ToLower();
+                    else
+                        newStr += c.ToString().ToLower();
+                }
+
+                return newStr;
+            }
+
+            return str;
         }
 
         public static IEnumerable<string> ChunksWords(string str, int chunkSize)
@@ -158,6 +180,153 @@ namespace SysCommand
             return sb.ToString();
         }
 
+        #endregion
+
+        #region file helpers
+
+        /// <summary>
+        /// Create the folder if not existing for a full file name
+        /// </summary>
+        /// <param name="filename">full path of the file</param>
+        public static void CreateFolderIfNeeded(string filename)
+        {
+            string folder = System.IO.Path.GetDirectoryName(filename);
+            if (!System.IO.Directory.Exists(folder))
+            {
+                System.IO.Directory.CreateDirectory(folder);
+            }
+        }
+
+        public static string GetPathFromRoot(params string[] paths)
+        {
+            if (App.Current.InDebug && App.Current.DebugObjectsFilesSaveInRootFolder)
+            {
+                var paths2 = paths.ToList();
+                paths2.Insert(0, @"..\..\");
+                return Path.Combine(paths2.ToArray());
+            }
+
+            return Path.Combine(paths);
+        }
+
+        #endregion
+
+        #region Console app helpers
+
+        public static Dictionary<string, string> ArgsToDictionary(string[] Args)
+        {
+            var Parameters = new Dictionary<string, string>();
+            Regex Spliter = new Regex(@"^-{1,2}|^/|=|:", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+            // original
+            // Regex Remover = new Regex(@"^['""]?(.*?)['""]?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            // fix to command: "test \"blabla\""
+            // the result without the fix is: test "blabla
+            Regex Remover = new Regex(@"^['""]?(.*?)['""]?", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+            string Parameter = null;
+            string[] Parts;
+
+            // Valid parameters forms:
+            // {-,/,--}param{ ,=,:}((",')value(",'))
+            // Examples: 
+            // -param1 value1 --param2 /param3:"Test-:-work" 
+            //   /param4=happy -param5 '--=nice=--'
+            foreach (string Txt in Args)
+            {
+                // Look for new parameters (-,/ or --) and a
+                // possible enclosed value (=,:)
+                Parts = Spliter.Split(Txt, 3);
+
+                switch (Parts.Length)
+                {
+                    // Found a value (for the last parameter 
+                    // found (space separator))
+                    case 1:
+                        if (Parameter != null)
+                        {
+                            if (!Parameters.ContainsKey(Parameter))
+                            {
+                                Parts[0] =
+                                    Remover.Replace(Parts[0], "$1");
+
+                                Parameters.Add(Parameter, Parts[0]);
+                            }
+                            Parameter = null;
+                        }
+                        // else Error: no parameter waiting for a value (skipped)
+                        break;
+
+                    // Found just a parameter
+                    case 2:
+                        // The last parameter is still waiting. 
+                        // With no value, set it to true.
+                        if (Parameter != null)
+                        {
+                            if (!Parameters.ContainsKey(Parameter))
+                                Parameters.Add(Parameter, "true");
+                        }
+                        Parameter = Parts[1];
+                        break;
+
+                    // Parameter with enclosed value
+                    case 3:
+                        // The last parameter is still waiting. 
+                        // With no value, set it to true.
+                        if (Parameter != null)
+                        {
+                            if (!Parameters.ContainsKey(Parameter))
+                                Parameters.Add(Parameter, "true");
+                        }
+
+                        Parameter = Parts[1];
+
+                        // Remove possible enclosing characters (",')
+                        if (!Parameters.ContainsKey(Parameter))
+                        {
+                            Parts[2] = Remover.Replace(Parts[2], "$1");
+                            Parameters.Add(Parameter, Parts[2]);
+                        }
+
+                        Parameter = null;
+                        break;
+                }
+            }
+            // In case a parameter is still waiting
+            if (Parameter != null)
+            {
+                if (!Parameters.ContainsKey(Parameter))
+                    Parameters.Add(Parameter, "true");
+            }
+            return Parameters;
+        }
+
+        [DllImport("shell32.dll", SetLastError = true)]
+        static extern IntPtr CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
+
+        public static string[] CommandLineToArgs(string commandLine)
+        {
+            int argc;
+            var argv = CommandLineToArgvW(commandLine, out argc);
+            if (argv == IntPtr.Zero)
+                throw new System.ComponentModel.Win32Exception();
+            try
+            {
+                var args = new string[argc];
+                for (var i = 0; i < args.Length; i++)
+                {
+                    var p = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
+                    args[i] = Marshal.PtrToStringUni(p);
+                }
+
+                return args;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(argv);
+            }
+        }
+
         public static string GetConsoleHelper(Dictionary<string, string> helps, int chunkSize = 80)
         {
             var helpPrintList = new List<string[]>();
@@ -181,51 +350,40 @@ namespace SysCommand
             return AppHelpers.PadElementsInLines(helpPrintList, 2);
         }
 
-        /// <summary>
-        /// Create the folder if not existing for a full file name
-        /// </summary>
-        /// <param name="filename">full path of the file</param>
-        public static void CreateFolderIfNeeded(string filename)
+        #endregion
+
+        #region Comparations
+
+        public static bool In<TItem>(this TItem source, Func<TItem, TItem, bool> comparer, IEnumerable<TItem> items)
         {
-            string folder = System.IO.Path.GetDirectoryName(filename);
-            if (!System.IO.Directory.Exists(folder))
-            {
-                System.IO.Directory.CreateDirectory(folder);
-            }
+            return items.Any(item => comparer(source, item));
         }
 
-        public static string ToLowerSeparate(string str, char separate)
+        public static bool In<TItem, T>(this TItem source, Func<TItem, T> selector, IEnumerable<TItem> items)
         {
-            if (!string.IsNullOrWhiteSpace(str))
-            {
-                var newStr = "";
-                for (var i = 0; i < str.Length; i++)
-                {
-                    var c = str[i];
-                    if (i > 0 && separate != str[i - 1] && char.IsLetterOrDigit(str[i - 1]) && char.IsUpper(c) && !char.IsUpper(str[i - 1]))
-                        newStr += separate + c.ToString().ToLower();
-                    else
-                        newStr += c.ToString().ToLower();
-                }
-
-                return newStr;
-                //str = Char.ToLowerInvariant(str[0]) + str.Substring(1);
-                //str = System.Text.RegularExpressions.Regex.Replace(str, @"(?<!_)([A-Z])", separate + "$1").ToLower();
-            }
-
-            return str;
+            return items.Select(selector).Contains(selector(source));
         }
 
-        public static string GetPathFromRoot(params string[] paths)
+        public static bool In<T>(this T source, IEnumerable<T> items)
         {
-            if (App.Current.InDebug && App.Current.DebugSaveConfigsInRootFolder)
-            {
-                var paths2 = paths.ToList();
-                paths2.Insert(0, @"..\..\");
-                return Path.Combine(paths2.ToArray());
-            }
-
-            return Path.Combine(paths);
+            return items.Contains(source);
         }
+
+        public static bool In<TItem>(this TItem source, Func<TItem, TItem, bool> comparer, params TItem[] items)
+        {
+            return source.In(comparer, (IEnumerable<TItem>)items);
+        }
+
+        public static bool In<TItem, T>(this TItem source, Func<TItem, T> selector, params TItem[] items)
+        {
+            return source.In(selector, (IEnumerable<TItem>)items);
+        }
+
+        public static bool In<T>(this T source, params T[] items)
+        {
+            return source.In((IEnumerable<T>)items);
+        }
+
+        #endregion
     }
 }

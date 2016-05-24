@@ -8,16 +8,16 @@ namespace SysCommand.Tests
 {
     class Program : App
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {   
             while (true)
             {
                 App.Initialize<Program>();
                 App.Current.DebugShowExitConfirm = false;
-                //App.Current.IgnoreCommmand<ClearCommand>();
+                //App.Current.ActionCharPrefix = '$';
                 App.Current.Run();
                 if (!App.Current.InDebug)
-                    break;
+                    return App.Current.Response.Code;
             }
         }
     }

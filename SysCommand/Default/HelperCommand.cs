@@ -3,19 +3,21 @@ using System;
 
 namespace SysCommand
 {
-    [Command(OrderExecution = -1)]
+    //[Command(OrderExecution = -1)]
     public class HelperCommand : Command<HelperCommand.Arguments>
     {
         public HelperCommand()
         {
             this.AllowSaveArgsInStorage = true;
+            this.OrderExecution = -1;
         }
 
         public override void Execute()
         {
-            if (this.Args.Show)
+            if (this.ArgsObject.Show)
             {
                 App.Current.ShowHelp();
+                App.Current.ShowHelp2();
                 App.Current.StopPropagation();
             }
         }
@@ -23,7 +25,7 @@ namespace SysCommand
         #region Internal Parameters
         public class Arguments
         {
-            [CommandPropertyAttribute(ShortName='?', LongName="help", Help="Show help")]
+            [Argument(ShortName = '?', LongName = "help", Help = "Show help")]
             public bool Show { get; set; }
         }
         #endregion        
