@@ -16,14 +16,14 @@ namespace SysCommand
         public string GetRaw { get; private set; }
         public string PostRaw { get; private set; }
         public Dictionary<string, string> Get { get; private set; }
-        public List<SubCommand> SubCommands { get; private set; }
+        public List<RequestAction> Actions { get; private set; }
         
         public Request(string[] args)
         {
             this.Arguments = args;
             this.GetRaw = string.Join(" ", args);
             this.Get = AppHelpers.ArgsToDictionary(args);
-            this.SubCommands = GetSubCommands(args);
+            this.Actions = GetActions(args);
             if (Console.IsInputRedirected && Console.In != null)
                 this.PostRaw = Console.In.ReadToEnd();
         }
@@ -44,36 +44,40 @@ namespace SysCommand
             return objFile;
         }
 
-        public static List<SubCommand> GetSubCommands(string[] args)
+        public static List<RequestAction> GetActions(string[] args)
         {
-            var subCommands = new List<SubCommand>();
+            var actions = new List<RequestAction>();
 
             if (App.Current.ActionCharPrefix != null)
             {
-                var currentSubCommand = default(SubCommand);
+                var currentAction = default(RequestAction);
                 for (var i = 0; i < args.Length; i++)
                 {
                     var arg = args[i];
                     {
                         if (arg[0].In(App.Current.ActionCharPrefix.Value))
                         {
-                            currentSubCommand = new SubCommand();
-                            currentSubCommand.Name = arg.Substring(1);
-                            currentSubCommand.Position = i;
-                            subCommands.Add(currentSubCommand);
+                            currentAction = new RequestAction();
+                            currentAction.Name = arg.Substring(1);
+                            currentAction.Position = i;
+                            actions.Add(currentAction);
                         }
                         else
                         {
-                            if (currentSubCommand != null)
-                                currentSubCommand.Arguments.Add(arg);
+                            if (currentAction != null)
+                            {
+                                if (arg.Length > 2)
+                                    arg = (arg[0] == '\\' && arg[1] == App.Current.ActionCharPrefix.Value) ? arg.Substring(1) : arg;
+                                currentAction.Add(arg);
+                            }
                         }
                     }
                 }
             }
             else
             {
-                var currentSubCommand = new SubCommand();
-                subCommands.Add(currentSubCommand);
+                var currentSubCommand = new RequestAction();
+                actions.Add(currentSubCommand);
 
                 for (var i = 0; i < args.Length; i++)
                 {
@@ -86,12 +90,19 @@ namespace SysCommand
                     else
                     {
                         if (currentSubCommand != null)
-                            currentSubCommand.Arguments.Add(arg);
+                            currentSubCommand.Add(arg);
                     }
                 }
             }
 
-            return subCommands;
+            foreach (var action in actions)
+            {
+                var argsAction = action.Arguments;
+                if (argsAction != null && argsAction.Length > 0)
+                    action.Get = AppHelpers.ArgsToDictionary(argsAction);
+            }
+
+            return actions;
         }
     }
 }

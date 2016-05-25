@@ -50,13 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Attributes\ActionAttribute.cs" />
-    <Compile Include="Core\Command2.cs" />
+    <Compile Include="Core\CommandAction.cs" />
     <Compile Include="Core\CommandMethodAutoFill.cs" />
-    <Compile Include="Response.cs" />
-    <Compile Include="SubCommand.cs" />
-    <Compile Include="Request.cs" />
+    <Compile Include="Core\RequestAction.cs" />
+    <Compile Include="Core\Request.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="VerboseEnum.cs" />
+    <Compile Include="Core\VerboseEnum.cs" />
     <Compile Include="Core\Attributes\ObjectFileAttribute.cs" />
     <Compile Include="Default\ClearCommand.cs" />
     <Compile Include="Default\HelperCommand.cs" />
@@ -66,12 +65,12 @@
     <Compile Include="Core\ObjectFile.cs" />
     <Compile Include="Core\TypeNameSerializationBinder.cs" />
     <Compile Include="Core\CommandStorage.cs" />
-    <Compile Include="Core\Command.cs" />
+    <Compile Include="Core\CommandArguments.cs" />
     <Compile Include="Core\CommandPropertyAutoFill.cs" />
     <Compile Include="Core\Attributes\ArgumentAttribute.cs" />
     <Compile Include="Core\Interfaces\IHelp.cs" />
     <Compile Include="Core\Interfaces\ICommand.cs" />
-    <Compile Include="ConsoleWriter.cs" />
+    <Compile Include="Core\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

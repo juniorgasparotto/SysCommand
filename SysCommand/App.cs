@@ -15,8 +15,11 @@ namespace SysCommand
         private Dictionary<string, object> ObjectsFiles = new Dictionary<string, object>();
         private Dictionary<string, object> ObjectsMemory = new Dictionary<string, object>();
 
+        public VerboseEnum Verbose { get; set; }
+        public bool Quiet { get; set; }
+
         public List<ICommand> Commands { get; set; }
-        public List<Command2> Commands2 { get; set; }
+        public List<CommandAction> Commands2 { get; set; }
 
         public string CurrentCommandName { get; set; }
         public char? ActionCharPrefix { get; set; }
@@ -77,21 +80,22 @@ namespace SysCommand
             var listOfCommands = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()
                                   where
-                                         typeof(Command2).IsAssignableFrom(assemblyType)
+                                         typeof(CommandAction).IsAssignableFrom(assemblyType)
                                       && assemblyType.IsInterface == false
                                       && assemblyType.IsAbstract == false
                                   select assemblyType).ToList();
 
-            this.Commands2 = listOfCommands.Select(f => (Command2)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
+            this.Commands2 = listOfCommands.Select(f => (CommandAction)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
             this.Commands2.RemoveAll(f => IgnoredCommands.Contains(f.GetType()) || (!this.InDebug && f.OnlyInDebug));
 
             foreach (var cmd in this.Commands2)
                 cmd.Parse();
 
+            var hasError = false;
             if (ValidateParserErrors2())
-            {
                 this.ExecuteAll2();
-            }
+            else
+                hasError = true;
 
             this.LoadCommands();
             this.LoadAll(args);
@@ -99,6 +103,14 @@ namespace SysCommand
 
             if (ValidateParserErrors())
                 this.ExecuteAll();
+            else
+                hasError = true;
+            
+            if (hasError)
+            {
+                this.ShowHelp();
+                this.ShowHelp2();
+            }
 
             if (DebugShowExitConfirm)
                 this.ExitWithKeyEnterInDebug();
@@ -142,10 +154,7 @@ namespace SysCommand
                     Console.WriteLine(cmd.ParserResult.ErrorText);
                 }
             }
-
-            if (hasError)
-                ShowHelp();
-
+            
             return !hasError;
         }
 
@@ -157,17 +166,13 @@ namespace SysCommand
             {
                 foreach (var action in cmd.Actions)
                 {
-                    if (action.Result.HasErrors)
+                    if (action.Result != null && action.Result.HasErrors)
                     {
                         hasError = true;
-                        Console.WriteLine(action.Result.ErrorText.Trim());
+                        Console.WriteLine(string.Format("Action '{0}({1} params)': {2}", action.Name, action.MethodInfo.GetParameters().Length, action.Result.ErrorText.Trim()));
                     }
                 }
             }
-
-            if (hasError)
-                ShowHelp2();
-
             return !hasError;
         }
 
@@ -251,8 +256,7 @@ namespace SysCommand
                 {
                     var dic = new Dictionary<string, string>();
 
-                    if (action.Parser.Options.Count > 0)
-                        Console.WriteLine("Action: {0}", action.Name);
+                    Console.WriteLine("Action: {0}", this.ActionCharPrefix + action.Name);
 
                     foreach (var opt in action.Parser.Options)
                     {

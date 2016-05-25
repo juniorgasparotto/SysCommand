@@ -4,7 +4,7 @@ using System;
 namespace SysCommand
 {
     //[Command(OrderExecution = -1)]
-    public class HelperCommand : Command<HelperCommand.Arguments>
+    public class HelperCommand : CommandArguments<HelperCommand.Arguments>
     {
         public HelperCommand()
         {

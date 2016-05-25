@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace SysCommand
 {
     //[Command(OrderExecution = -1, OnlyInDebug = true)]
-    public class ClearCommand : Command<ClearCommand.Arguments>
+    public class ClearCommand : CommandArguments<ClearCommand.Arguments>
     {
         public ClearCommand()
         {
@@ -16,7 +16,10 @@ namespace SysCommand
         public override void Execute()
         {
             if (this.ArgsObject.Clear)
+            {
                 Console.Clear();
+                App.Current.StopPropagation();
+            }
         }
 
         #region Internal Parameters

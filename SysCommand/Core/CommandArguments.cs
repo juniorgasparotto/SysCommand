@@ -3,7 +3,7 @@ using System;
 
 namespace SysCommand
 {
-    public abstract class Command<TArgs> : ICommand
+    public abstract class CommandArguments<TArgs> : ICommand
     {
         public bool HasParsed { get; protected set; }
         public bool HasLoadedFromConfig { get; protected set; }

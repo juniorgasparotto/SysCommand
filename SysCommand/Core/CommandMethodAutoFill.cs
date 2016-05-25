@@ -8,10 +8,10 @@ namespace SysCommand
 {
     public class CommandMethodAutoFill
     {
-        private Command2.ActionDefinition action;
+        private CommandAction.InstanceAction action;
         private Dictionary<string, string> CommandsParseds = new Dictionary<string, string>();
 
-        public CommandMethodAutoFill(Command2.ActionDefinition action)
+        public CommandMethodAutoFill(CommandAction.InstanceAction action)
         {
             this.action = action;
         }
@@ -96,13 +96,13 @@ namespace SysCommand
                 else
                 {
                     setup.WithDescription(this.ConcatHelpWithRequired(help));
-                    if (this.parent.action.ActionInput != null)
+                    if (this.parent.action.RequestAction != null)
                         setup.Required();
                 }
 
                 setup.Callback(value =>
                 {
-                    if (!value.Equals(propertyValue))
+                    if (value != null && !value.Equals(propertyValue))
                     {
                         if (!string.IsNullOrWhiteSpace(attribute.LongName))
                             this.parent.CommandsParseds["--" + attribute.LongName] = value.ToString();
@@ -110,7 +110,7 @@ namespace SysCommand
                             this.parent.CommandsParseds["-" + attribute.ShortName.ToString()] = value.ToString();
                     }
 
-                    this.parent.action.ParametersValues[parameter] = value;
+                    this.parent.action.ParametersParseds[parameter] = value;
                 });
             }
 

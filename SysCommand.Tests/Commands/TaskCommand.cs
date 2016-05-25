@@ -6,34 +6,60 @@ using System.Collections.Generic;
 
 namespace SysCommand.Tests
 {
-    public class TaskCommand : Command<Task>
+    public class TaskCommand : CommandAction
     {
         public TaskCommand()
         {
             this.AllowSaveArgsInStorage = true;
         }
 
-        public override void Execute()
+        public void Get(int id)
         {
-            if (this.ArgsObject.DateAndTime == default(DateTime))
-                this.ArgsObject.DateAndTime = DateTime.Now;
+            App.Current.Response.WriteLine("Executing: TaskCommand/Get");
+            var tasks = App.Current.GetOrCreateObjectFile<List<Task>>();
+            App.Current.Response.Write(tasks.FirstOrDefault(f=>f.Id == id));
+        }
 
-            ConsoleWriter.Info("Title: " + this.ArgsObject.Title);
-            ConsoleWriter.Info("Date: " + this.ArgsObject.DateAndTime);
-            ConsoleWriter.Info("Description: " + this.ArgsObject.Description);
+        public void Save()
+        {
+            App.Current.Response.WriteLine("Executing: TaskCommand/Save");
+        }
 
-            // get with manage instances
-            var tasksPath = App.Current.GetObjectFileName(typeof(List<Task>), useTypeFullName: true);
-            var tasks = App.Current.GetOrCreateObjectFile<List<Task>>(tasksPath);
-            tasks.Add(this.ArgsObject);
-            App.Current.SaveObjectFile<List<Task>>(tasks, tasksPath);
+        public void Save(string title)
+        {
+            App.Current.Response.WriteLine("Executing: TaskCommand/Save/title");
+            var tasks = App.Current.GetOrCreateObjectFile<List<Task>>();
+            var task = new Task
+            {
+                Id = tasks.Count + 1,
+                Title = title,
+                DateAndTime = DateTime.Now
+            };
+            tasks.Add(task);
+            App.Current.SaveObjectFile(tasks);
+        }
 
-            // save with manage instances
-            App.Current.SaveObjectFile<Task>(this.ArgsObject);
+        public void Save(string title, string description = null, DateTime? date = null)
+        {
+            App.Current.Response.WriteLine("Executing: TaskCommand/Save/title/description/date");
+            var tasks = App.Current.GetOrCreateObjectFile<List<Task>>();
+            var task = new Task
+            {
+                Id = tasks.Count + 1,
+                Title = title,
+                Description = description,
+                DateAndTime = date ?? DateTime.Now
+            };
+            tasks.Add(task);
+            App.Current.SaveObjectFile(tasks);
+        }
 
-            // save without manage instances
-            ObjectFile.Save<Task>(this.ArgsObject, AppHelpers.GetPathFromRoot(@".app\tasks\task-" + DateTime.Now.Ticks + ".object"));
-            ConsoleWriter.Success(string.Format("Task {0} saved", this.ArgsObject.Title));
+        public void Delete(int id)
+        {
+            App.Current.Response.WriteLine("Executing: TaskCommand/Delete/id");
+            var tasks = App.Current.GetOrCreateObjectFile<List<Task>>();
+            tasks.RemoveAll(t => t.Id == id);
+            App.Current.SaveObjectFile(tasks);
         }
     }
 }

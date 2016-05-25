@@ -4,11 +4,11 @@ using System;
 namespace SysCommand
 {
     //[Command(OrderExecution = -1000)]
-    public class ManagerCommand : Command<ManagerCommand.Arguments>
+    public class ManagerCommand : CommandArguments<ManagerCommand.Arguments>
     {
         public ManagerCommand()
         {
-            this.OrderExecution = -1000;
+            this.OrderExecution = int.MinValue;
         }
 
         public override void Load(string[] args)

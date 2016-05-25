@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace SysCommand
 {
     //[Command(OrderExecution = -1)]
-    public class VerboseCommand : Command<VerboseCommand.Arguments>
+    public class VerboseCommand : CommandArguments<VerboseCommand.Arguments>
     {
         public VerboseCommand()
         {
@@ -16,25 +16,25 @@ namespace SysCommand
         public override void Execute()
         {
             var v = this.ArgsObject.Verbose.ToLower();
-            ConsoleWriter.Verbose = 0;
+            App.Current.Verbose = 0;
+            App.Current.Quiet = this.ArgsObject.Quiet;
 
             if (v.Contains("all"))
-                ConsoleWriter.Verbose |= VerboseEnum.All;
+                App.Current.Verbose |= VerboseEnum.All;
             if (v.Contains("none"))
-                ConsoleWriter.Verbose |= VerboseEnum.None;
+                App.Current.Verbose |= VerboseEnum.None;
             if (v.Contains("info"))
-                ConsoleWriter.Verbose |= VerboseEnum.Info;
+                App.Current.Verbose |= VerboseEnum.Info;
             if (v.Contains("success"))
-                ConsoleWriter.Verbose |= VerboseEnum.Success;
+                App.Current.Verbose |= VerboseEnum.Success;
             if (v.Contains("warning"))
-                ConsoleWriter.Verbose |= VerboseEnum.Warning;
+                App.Current.Verbose |= VerboseEnum.Warning;
             if (v.Contains("critical"))
-                ConsoleWriter.Verbose |= VerboseEnum.Critical;
+                App.Current.Verbose |= VerboseEnum.Critical;
             if (v.Contains("error"))
-                ConsoleWriter.Verbose |= VerboseEnum.Error;
+                App.Current.Verbose |= VerboseEnum.Error;
             if (v.Contains("question"))
-                ConsoleWriter.Verbose |= VerboseEnum.Question;
-            ConsoleWriter.Quiet = this.ArgsObject.Quiet;
+                App.Current.Verbose |= VerboseEnum.Question;
         }
 
         #region Internal Parameters
