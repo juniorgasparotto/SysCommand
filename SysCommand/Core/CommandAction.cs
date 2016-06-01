@@ -8,71 +8,79 @@ namespace SysCommand
 {
     public abstract class CommandAction
     {
-        public List<InstanceAction> Actions;
+        private List<ActionInstance> actions;
+        public IEnumerable<ActionInstance> Actions { get { return actions;  } }
         public bool AllowSaveArgsInStorage { get; protected set; }
         public int OrderExecution { get; set; }
         public bool OnlyInDebug { get; set; }
-
-        public class InstanceAction
-        {
-            public string Name { get; set; }
-            public RequestAction RequestAction { get; set; }
-            public CommandAction Object { get; set; }
-            public ActionAttribute Attribute { get; set; }
-            public MethodInfo MethodInfo { get; set; }
-            public Dictionary<ParameterInfo, object> ParametersParseds { get; set; }
-            public FluentCommandLineParser Parser { get; set; }
-            public ICommandLineParserResult Result { get; set; }
-            public bool HasParsed { get; set; }
-        }
+        public bool AddPrefixInActions { get; set; }
+        public string PrefixActions { get; set; }
 
         public CommandAction()
         {
-            this.Actions = new List<InstanceAction>();
+            this.actions = new List<ActionInstance>();
+        }
+
+        public virtual void Setup()
+        {
+            var methods = this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(f => f.IsPublic).ToList();
+            var fluentCmdParserSetup = new FclpActionArgumentSetup();
+            foreach (var method in methods)
+            {
+                var setup = new ActionSetup();
+                var action = setup.CreateAction(this, method);
+                if (action != null)
+                {
+                    this.actions.Add(action);
+                    foreach (var arg in action.ActionArguments)
+                        fluentCmdParserSetup.Setup(arg);
+                }
+            }
+
+            if (this.actions.Count(f => f.IsDefault) != this.actions.Count)
+                throw new Exception("You can not coexist standard actions and named actions.");
         }
 
         public virtual void Parse()
         {
-            if (this.Actions.Count > 0)
-                return;
-
-            var methods = this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(f => f.IsPublic).ToList();
-            foreach (var method in methods)
+            foreach (var action in this.Actions)
             {
-                var methodParameters = method.GetParameters();
-                var methodAttr = Attribute.GetCustomAttribute(method, typeof(ActionAttribute)) as ActionAttribute;
-                var actionName = "";
+                // 1) action.RequestAction != null: The action sent in input has match with action defined in current method.
+                // 1.1) The number of input parameters must be equal or greater than the amount of required method parameters 
+                //    and can not exceed the total amount of the method parameters.
+                // 1.1.1) action.RequestAction.Get.Count: Count input
+                // 1.1.2) action.ParametersParseds.Count: Count parseds input
+                // 2) action.RequestAction && action.IsDefault: Any action is sent and the action is defined has default.
 
-                if (methodAttr != null && !string.IsNullOrWhiteSpace(methodAttr.ActionName))
-                    actionName = methodAttr.ActionName;
-                else
-                    actionName = AppHelpers.ToLowerSeparate(method.Name, '-');
+                var methodParameters = action.MethodInfo.GetParameters();
+                var countTotal = methodParameters.Length;
+                var countRequired = methodParameters.Count(f => !f.IsOptional);
+                var actionIsCanditade = action.RequestAction != null && (action.RequestAction.Get.Count >= countRequired && action.RequestAction.Get.Count <= countTotal);
+                var actionIsDefault = action.RequestAction == null && action.IsDefault;
 
-                var requestAction = App.Current.Request.Actions.FirstOrDefault(f => f.Name == actionName);
-                var action = new InstanceAction()
+                if (actionIsCanditade || actionIsDefault)
                 {
-                    Name = actionName,
-                    RequestAction = requestAction,
-                    Attribute = methodAttr,
-                    Parser = new FluentCommandLineParser(),
-                    ParametersParseds = new Dictionary<ParameterInfo, object>(),
-                    MethodInfo = method,
-                    Object = this,
-                };
+                    string[] args;
 
-                this.Actions.Add(action);
+                    if (action.RequestAction != null)
+                        args = action.RequestAction.Arguments;
+                    else if (actionIsDefault && App.Current.Request.Actions.Count == 0)
+                        args = App.Current.Request.Arguments;
+                    else
+                        args = new string[0];
 
-                var autoFill = new CommandMethodAutoFill(action);
-                autoFill.AutoSetup();
+                    //var parameters = action.MethodInfo.GetParameters();
+                    //for(var i = 0; i < parameters.Length; i++)
+                    //{
+                    //    if (!App.Current.Request.IsArgumentFormat(args[i]))
+                    //    {
 
-                // action.ActionInput.Get: No parsed with method, simple get
-                // action.ParametersParseds: parameters parsed with method
-                if (action.RequestAction != null && action.RequestAction.Get.Count == methodParameters.Count(f => !f.IsOptional))
-                {
-                    string[] args = requestAction != null ? requestAction.Arguments : new string[0];
+                    //    }
+                    //}
+
                     action.Result = action.Parser.Parse(args);
-
-                    if (action.Result.HasErrors == false && methodParameters.Length == action.ParametersParseds.Count)
+                    var countArgsParsed = action.ActionArguments.Count(f => f.HasParsed);
+                    if (action.Result.HasErrors == false && methodParameters.Length == countArgsParsed)
                     {
                         action.HasParsed = true;
 
@@ -98,14 +106,15 @@ namespace SysCommand
             }
         }
 
-        private List<InstanceAction> GetActionsToExecute()
+        private List<ActionInstance> GetActionsToExecute()
         {
             // Run only the action that has fewest amount of parameters in case of parse duplicity.
             var actions = this.Actions.ToList();
             var duplicates = actions.Where(f => f.HasParsed).GroupBy(f => f.Name).Where(f => f.Count() > 1);
             foreach (var groupSameName in duplicates)
             {
-                var list = groupSameName.OrderBy(f => f.MethodInfo.GetParameters().Length).ToList();
+                // just keep the action that has more correspondence with input.
+                var list = groupSameName.OrderBy(f => f.Result.UnMatchedOptions.Count()).ToList();
                 list.Remove(list.FirstOrDefault());
 
                 foreach (var actionRemove in list)
@@ -113,5 +122,6 @@ namespace SysCommand
             }
             return actions;
         }
+
     }
 }

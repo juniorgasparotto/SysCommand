@@ -89,8 +89,16 @@ namespace SysCommand
                     setup = this.parent.parser.Setup<TProperty>(attribute.LongName);
                 else
                 {
-                    attribute.LongName = AppHelpers.ToLowerSeparate(property.Name, '-');                
-                    setup = this.parent.parser.Setup<TProperty>(attribute.LongName);
+                    if (property.Name.Length > 1)
+                    {
+                        attribute.LongName = AppHelpers.ToLowerSeparate(property.Name, '-');
+                        setup = this.parent.parser.Setup<TProperty>(attribute.LongName);
+                    }
+                    else
+                    {
+                        attribute.ShortName = property.Name[0];
+                        setup = this.parent.parser.Setup<TProperty>(attribute.ShortName);
+                    }
                 }
 
                 if (attribute.IsRequired)
@@ -121,7 +129,7 @@ namespace SysCommand
                     
                 if (help != null)
                 {
-                    if (attribute.ShowDefaultValueInHelp)
+                    if (attribute.ShowHelpComplement)
                         help = this.ConcatHelpWithDefaultValue(help, CommandStorage.GetValueForArgsType<TProperty>(property));
                     setup.WithDescription(help);
                 }
@@ -153,18 +161,12 @@ namespace SysCommand
 
             private string ConcatHelpWithDefaultValue(string help, object defaultValue)
             {
-                if (string.IsNullOrWhiteSpace(help))
-                    help = "";
+                return AppHelpers.ConcatFinalPhase(help, "Is optional (default \"" + defaultValue + "\").");
+            }
 
-                help = help.Trim();
-                var defaultValueStr = "The default value is '" + defaultValue + "'.";
-
-                if (help.LastOrDefault() == '.')
-                    return help + " " + defaultValueStr;
-                else if (help.Length > 0)
-                    return help + ". " + defaultValueStr;
-                else
-                    return defaultValueStr;
+            private string ConcatHelpWithRequired(string help)
+            {
+                return AppHelpers.ConcatFinalPhase(help, "Is required.");
             }
         }
     }

@@ -6,40 +6,42 @@ using System.Collections.Generic;
 
 namespace SysCommand.Tests
 {
-    public class TaskCommand : CommandAction
+    public class TestPrefixCommand : CommandAction
     {
-        public TaskCommand()
+        public TestPrefixCommand()
         {
             this.AllowSaveArgsInStorage = true;
+            this.AddPrefixInActions = true;
+            this.PrefixActions = "custom-prefix";
         }
 
         public void Get(string title = null, string description = null, DateTime? date = null)
         {
-            App.Current.Response.WriteLine("Executing: TaskCommand/title/description/date");
+            App.Current.Response.WriteLine("Executing: Task2Command/title/description/date");
         }
 
         public void Get(int? id = null)
         {
-            App.Current.Response.WriteLine("Executing: TaskCommand/Get/id");
+            App.Current.Response.WriteLine("Executing: Task2Command/Get/id");
             var tasks = App.Current.GetOrCreateObjectFile<List<Task>>();
             App.Current.Response.Write(tasks.FirstOrDefault(f=>f.Id == id));
         }
 
         public void Get(string title = null)
         {
-            App.Current.Response.WriteLine("Executing: TaskCommand/Get/title");
+            App.Current.Response.WriteLine("Executing: Task2Command/Get/title");
             var tasks = App.Current.GetOrCreateObjectFile<List<Task>>();
             App.Current.Response.Write(tasks.FirstOrDefault(f => f.Title == title));
         }
 
         public void Save()
         {
-            App.Current.Response.WriteLine("Executing: TaskCommand/Save");
+            App.Current.Response.WriteLine("Executing: Task2Command/Save");
         }
 
         public void Save(string title)
         {
-            App.Current.Response.WriteLine("Executing: TaskCommand/Save/title");
+            App.Current.Response.WriteLine("Executing: Task2Command/Save/title");
             var tasks = App.Current.GetOrCreateObjectFile<List<Task>>();
             var task = new Task
             {
@@ -53,7 +55,7 @@ namespace SysCommand.Tests
 
         public void Save(string title, string description = null, DateTime? date = null)
         {
-            App.Current.Response.WriteLine("Executing: TaskCommand/Save/title/description/date");
+            App.Current.Response.WriteLine("Executing: Task2Command/Save/title/description/date");
             var tasks = App.Current.GetOrCreateObjectFile<List<Task>>();
             var task = new Task
             {
@@ -68,22 +70,29 @@ namespace SysCommand.Tests
 
         public void Delete(int id)
         {
-            App.Current.Response.WriteLine("Executing: TaskCommand/Delete/id(int)");
+            App.Current.Response.WriteLine("Executing: Task2Command/Delete/id(int)");
             var tasks = App.Current.GetOrCreateObjectFile<List<Task>>();
             tasks.RemoveAll(t => t.Id == id);
             App.Current.SaveObjectFile(tasks);
         }
 
-        [Action(Name="delete2")]
+        [Action(Name = "ignored-prefix", AddPrefix = false)]
         public void Delete(
-            [Argument(LongName="id", ShortName='i', Help="My ID", Default="not work here", ShowHelpComplement=true)]
+            [Argument(LongName="id", ShortName='i', Help="My ID", Default="not work here", ShowHelpComplement=false)]
             string id
         )
         {
-            App.Current.Response.WriteLine("Executing: TaskCommand/Delete/id(string)");
+            App.Current.Response.WriteLine("Executing: Task2Command/Delete/id(string)");
             var tasks = App.Current.GetOrCreateObjectFile<List<Task>>();
             tasks.RemoveAll(t => t.Title == id);
             App.Current.SaveObjectFile(tasks);
         }
+
+        [Action(Ignore = true)]
+        public void NotAction(string id)
+        {
+            App.Current.Response.WriteLine("Executing: Task2Command/Ignored");
+        }
+
     }
 }

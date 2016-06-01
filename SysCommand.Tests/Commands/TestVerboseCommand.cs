@@ -33,7 +33,7 @@ namespace SysCommand.Tests
             [ArgumentAttribute()]
             public string Test2 { get; set; }
 
-            [ArgumentAttribute(LongName = "test3", Help = "test3. Simple help", Default = "default: abc", ShowDefaultValueInHelp = true)]
+            [ArgumentAttribute(LongName = "test3", Help = "test3. Simple help", Default = "default: abc", ShowHelpComplement = true)]
             public string Test3 { get; set; }
 
             public string Test4 { get; set; }

@@ -9,7 +9,8 @@ namespace SysCommand
 {
     public class App
     {
-        public const string COMMAND_NAME_DEFAULT = "default";
+        public static readonly string CommandNameDefault = "default";
+        public static readonly char[] ArgsDelimiter = new char[] { '-', '/', ':', '=' };
         
         private List<Type> IgnoredCommands = new List<Type>();
         private Dictionary<string, object> ObjectsFiles = new Dictionary<string, object>();
@@ -59,7 +60,9 @@ namespace SysCommand
         }
 
         public virtual void Run()
-        {            
+        {
+            this.Validate();
+
             var args = Environment.GetCommandLineArgs();
             var listArgs = args.ToList();
             listArgs.RemoveAt(0);
@@ -76,6 +79,7 @@ namespace SysCommand
             this.Request = new Request(args);
             this.Response = new Response();
 
+            return;
 
             var listOfCommands = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()
@@ -87,6 +91,9 @@ namespace SysCommand
 
             this.Commands2 = listOfCommands.Select(f => (CommandAction)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
             this.Commands2.RemoveAll(f => IgnoredCommands.Contains(f.GetType()) || (!this.InDebug && f.OnlyInDebug));
+
+            foreach (var cmd in this.Commands2)
+                cmd.Setup();
 
             foreach (var cmd in this.Commands2)
                 cmd.Parse();
@@ -169,11 +176,40 @@ namespace SysCommand
                     if (action.Result != null && action.Result.HasErrors)
                     {
                         hasError = true;
-                        Console.WriteLine(string.Format("Action '{0}({1} params)': {2}", action.Name, action.MethodInfo.GetParameters().Length, action.Result.ErrorText.Trim()));
+                        Console.WriteLine(string.Format("Action '{0}({1} args)': {2}", action.Name, action.MethodInfo.GetParameters().Length, action.Result.ErrorText.Trim()));
                     }
                 }
             }
             return !hasError;
+        }
+
+        public virtual void ShowHelp2()
+        {
+            foreach (var cmd in this.Commands2)
+            {
+                foreach (var action in cmd.Actions)
+                {
+                    var dic = new Dictionary<string, string>();
+                    var defaultHelp = action.IsDefault ? "[default], " : "";
+                    Console.WriteLine(string.Format("    {0}{1}", defaultHelp, action.Name));
+
+                    foreach (var opt in action.Parser.Options)
+                    {
+                        var key = "";
+                        if (!string.IsNullOrWhiteSpace(opt.ShortName) && !string.IsNullOrWhiteSpace(opt.LongName))
+                            key = "-" + opt.ShortName + ", --" + opt.LongName;
+                        else if (!string.IsNullOrWhiteSpace(opt.ShortName))
+                            key = "-" + opt.ShortName;
+                        else if (!string.IsNullOrWhiteSpace(opt.LongName))
+                            key = "--" + opt.LongName;
+
+                        dic[key] = opt.Description;
+                    }
+
+                    if (dic.Count > 0)
+                        Console.WriteLine(AppHelpers.GetConsoleHelper(dic, 10));
+                }
+            }
         }
 
         protected virtual void ExecuteAll()
@@ -245,37 +281,9 @@ namespace SysCommand
             }
 
             if (dic.Count > 0)
-                Console.WriteLine(AppHelpers.GetConsoleHelper(dic));
+                Console.WriteLine(AppHelpers.GetConsoleHelper(dic, 4));
         }
 
-        public virtual void ShowHelp2()
-        {
-            foreach (var cmd in this.Commands2)
-            {
-                foreach (var action in cmd.Actions)
-                {
-                    var dic = new Dictionary<string, string>();
-
-                    Console.WriteLine("Action: {0}", this.ActionCharPrefix + action.Name);
-
-                    foreach (var opt in action.Parser.Options)
-                    {
-                        var key = "";
-                        if (!string.IsNullOrWhiteSpace(opt.ShortName) && !string.IsNullOrWhiteSpace(opt.LongName))
-                            key = "-" + opt.ShortName + ", --" + opt.LongName;
-                        else if (!string.IsNullOrWhiteSpace(opt.ShortName))
-                            key = "-" + opt.ShortName;
-                        else if (!string.IsNullOrWhiteSpace(opt.LongName))
-                            key = "--" + opt.LongName;
-
-                        dic[key] = opt.Description;
-                    }
-
-                    if (dic.Count > 0)
-                        Console.WriteLine(AppHelpers.GetConsoleHelper(dic));
-                }
-            }
-        }
 
         public void IgnoreCommmand<T>()
         {
@@ -379,6 +387,12 @@ namespace SysCommand
                 return AppHelpers.GetPathFromRoot(fileName);
             else
                 return AppHelpers.GetPathFromRoot(folder, fileName);
+        }
+
+        private void Validate()
+        {
+            if (App.Current.ActionCharPrefix != null && AppHelpers.IsArgumentFormat(App.Current.ActionCharPrefix.ToString()))
+                throw new Exception("Is not possible use the action prefix '" + App.Current.ActionCharPrefix + "' because this char is used like of argument delimiter.");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SysCommand
 {
     public static class AppHelpers
     {
-        #region reflection helpers
+        #region reflection
 
         public static object InvokeWithNamedParameters(this MethodBase self, object obj, IDictionary<string, object> namedParameters)
         {
@@ -79,7 +79,7 @@ namespace SysCommand
         }
         #endregion
 
-        #region string helpers
+        #region string
 
         public static string ToLowerSeparate(string str, char separate)
         {
@@ -180,9 +180,25 @@ namespace SysCommand
             return sb.ToString();
         }
 
+        public static string ConcatFinalPhase(string phase, string phaseAdd)
+        {
+            if (string.IsNullOrWhiteSpace(phase))
+                phase = "";
+
+            phase = phase.Trim();
+            var defaultValueStr = phaseAdd;
+
+            if (phase.LastOrDefault() == '.')
+                return phase + " " + defaultValueStr;
+            else if (phase.Length > 0)
+                return phase + ". " + defaultValueStr;
+            else
+                return defaultValueStr;
+        }
+
         #endregion
 
-        #region file helpers
+        #region file
 
         /// <summary>
         /// Create the folder if not existing for a full file name
@@ -211,7 +227,7 @@ namespace SysCommand
 
         #endregion
 
-        #region Console app helpers
+        #region console application
 
         public static Dictionary<string, string> ArgsToDictionary(string[] Args)
         {
@@ -327,7 +343,7 @@ namespace SysCommand
             }
         }
 
-        public static string GetConsoleHelper(Dictionary<string, string> helps, int chunkSize = 80)
+        public static string GetConsoleHelper(Dictionary<string, string> helps, int padding = 4, int chunkSize = 80)
         {
             var helpPrintList = new List<string[]>();
             var helpFormated = new List<Tuple<string, string>>();
@@ -347,12 +363,12 @@ namespace SysCommand
                 helpPrintList.Add(new string[] { "", help.Item1, help.Item2 });
             }
 
-            return AppHelpers.PadElementsInLines(helpPrintList, 2);
+            return AppHelpers.PadElementsInLines(helpPrintList, padding);
         }
 
         #endregion
 
-        #region Comparations
+        #region comparations
 
         public static bool In<TItem>(this TItem source, Func<TItem, TItem, bool> comparer, IEnumerable<TItem> items)
         {
@@ -384,6 +400,29 @@ namespace SysCommand
             return source.In((IEnumerable<T>)items);
         }
 
+        #endregion
+
+        #region syscommand
+
+        public static bool IsArgumentFormat(string value)
+        {
+            if (value == null || value.Length == 0)
+                return false;
+
+            return value[0].In(App.ArgsDelimiter);
+        }
+
+        public static bool IsActionFormat(string value)
+        {
+            if (value == null || value.Length == 0)
+                return false;
+
+            var isArgumentFormat = AppHelpers.IsArgumentFormat(value);
+            if (App.Current.ActionCharPrefix == null)
+                return !isArgumentFormat;
+            else
+                return !isArgumentFormat && value[0].In(App.Current.ActionCharPrefix.Value);
+        }
         #endregion
     }
 }

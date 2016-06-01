@@ -14,7 +14,7 @@ namespace SysCommand.Tests
             {
                 App.Initialize<Program>();
                 App.Current.DebugShowExitConfirm = false;
-                //App.Current.ActionCharPrefix = '$';
+                App.Current.ActionCharPrefix = '$';
                 App.Current.Run();
                 if (!App.Current.InDebug)
                     return App.Current.Response.Code;

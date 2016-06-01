@@ -40,10 +40,10 @@ namespace SysCommand
         #region Internal Parameters
         public class Arguments
         {
-            [Argument(ShortName = 'v', LongName = "verbose", Help = "Specify the log level. The options are: all,info,success,warning,critical,error.", ShowDefaultValueInHelp = true, Default = "all")]
+            [Argument(ShortName = 'v', LongName = "verbose", Help = "Specify the log level. The options are: all,info,success,warning,critical,error.", ShowHelpComplement = true, Default = "all")]
             public string Verbose { get; set; }
 
-            [Argument(ShortName = 'q', LongName = "quiet", Help = "Display nothing in the output.", ShowDefaultValueInHelp = true)]
+            [Argument(ShortName = 'q', LongName = "quiet", Help = "Display nothing in the output.", ShowHelpComplement = true)]
             public bool Quiet { get; set; }
         }
         #endregion

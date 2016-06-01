@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\TestPrefixCommand.cs" />
+    <Compile Include="Commands\DefaultCommand.cs" />
     <Compile Include="Commands\TaskCommand.cs" />
     <Compile Include="Commands\SampleArgsCommand.cs" />
     <Compile Include="Commands\TestVerboseCommand.cs" />

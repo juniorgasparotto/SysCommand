@@ -15,7 +15,7 @@ namespace SysCommand
         public int Position { get; set; }
         public string[] Arguments { get { return arguments.ToArray(); } }
         public Dictionary<string, string> Get { get; set; }
-
+        
         public RequestAction()
         {
             this.arguments = new List<string>();

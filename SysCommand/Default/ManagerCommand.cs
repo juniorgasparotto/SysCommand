@@ -16,9 +16,9 @@ namespace SysCommand
             base.Load(args);
             this.Parse();
             
-            if (string.IsNullOrWhiteSpace(this.ArgsObject.Name))
+            if (string.IsNullOrWhiteSpace(this.ArgsObject.Name))    
             {
-                App.Current.CurrentCommandName = App.COMMAND_NAME_DEFAULT;
+                App.Current.CurrentCommandName = App.CommandNameDefault;
                 if (args != null && args.Length > 0 && args[0].Length > 0 && args[0][0] != '-')
                     App.Current.CurrentCommandName = args[0];
             }

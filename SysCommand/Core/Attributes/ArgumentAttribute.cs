@@ -14,6 +14,15 @@ namespace SysCommand
         public bool IsRequired { get; set; }
         public string Help { get; set; }
         public object Default { get; set; }
-        public bool ShowDefaultValueInHelp { get; set; }
+
+        /// <summary>
+        /// Displays the default value or the label "required" at the end of the sentence help.
+        /// </summary>
+        public bool ShowHelpComplement { get; set; }
+
+        public ArgumentAttribute()
+        {
+            this.ShowHelpComplement = true;
+        }
     }
 }
