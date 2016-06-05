@@ -17,14 +17,15 @@ namespace SysCommand
         public string GetRaw { get; private set; }
         public string PostRaw { get; private set; }
         public Dictionary<string, string> Get { get; private set; }
-        public List<RequestAction> Actions { get; private set; }
+        public List<RequestAction> RequestActions { get; private set; }
         
         public Request(string[] args)
         {
             this.Arguments = args;
             this.GetRaw = string.Join(" ", args);
             this.Get = AppHelpers.ArgsToDictionary(args);
-            this.Actions = GetActions(args);
+            this.LoadRequestActions();
+
             if (Console.IsInputRedirected && Console.In != null)
                 this.PostRaw = Console.In.ReadToEnd();
         }
@@ -45,119 +46,171 @@ namespace SysCommand
             return objFile;
         }
 
-        private List<RequestAction> GetActions(string[] args)
+        private void LoadRequestActions()
         {
-            var actions = new List<RequestAction>();
-            
-            if (args.Length == 0)
-                return actions;
+            this.RequestActions = new List<RequestAction>();
 
-            var isAction = AppHelpers.IsActionFormat(args[0]);
+            if (this.Arguments.Length == 0)
+                return;
 
-            // eg: [save --p1 "a" --p2 "b"]
-            if (isAction && App.Current.ActionCharPrefix == null)
-            {
-                var currentAction = new RequestAction();
-                currentAction.Name = args[0];
-                currentAction.Position = 0;
-                foreach (var arg in args.Skip(1))
-                    currentAction.Add(arg);
-                actions.Add(currentAction);
-            }            
-            // eg: [$save --p1 "a" --p2 "b" $delete --p1 "a"]
-            else if (isAction && App.Current.ActionCharPrefix != null)
-            {
-                var currentAction = default(RequestAction);
-                for (var i = 0; i < args.Length; i++)
-                {
-                    var arg = args[i];
-                    if (AppHelpers.IsActionFormat(arg))
-                    {
-                        currentAction = new RequestAction();
-                        currentAction.Name = arg.Substring(1);
-                        currentAction.Position = i;
-                        actions.Add(currentAction);
-                    }
-                    else
-                    {
-                        if (currentAction != null)
-                        {
-                            if (arg.Length > 2)
-                                arg = (arg[0] == '\\' && arg[1] == App.Current.ActionCharPrefix.Value) ? arg.Substring(1) : arg;
-                            currentAction.Add(arg);
-                        }
-                    }
-                }
-            }
-            // eg: [--p1 "a" --p2 "b"]
-            else if (!isAction)
-            {
-                var currentAction = new RequestAction();
-                currentAction.Name = null;
-                currentAction.Position = 0;
-                foreach (var arg in args)
-                {
-                    // when action prefix is used and is scape: \$save
-                    if (App.Current.ActionCharPrefix != null && arg.Length > 2)
-                        currentAction.Add((arg[0] == '\\' && arg[1] == App.Current.ActionCharPrefix.Value) ? arg.Substring(1) : arg);
-                    else
-                        currentAction.Add(arg);
-                }
+            if (App.Current.ActionCharPrefix == null)
+                this.LoadRequestActionsWithoutPrefix();
+            else
+                this.LoadRequestActionsWithPrefix();
 
-                actions.Add(currentAction);
-            }
-
-            foreach (var action in actions)
+            foreach (var action in this.RequestActions)
                 action.Get = AppHelpers.ArgsToDictionary(action.Arguments);
-
-            return actions;
-
-            //if (1==1)
-            //{
-            //    var currentAction = default(RequestAction);
-            //    for (var i = 0; i < args.Length; i++)
-            //    {
-            //        var arg = args[i];
-            //        if (AppHelpers.IsActionFormat(arg))
-            //        {
-            //            currentAction = new RequestAction();
-            //            currentAction.Name = arg.Substring(1);
-            //            currentAction.Position = i;
-            //            actions.Add(currentAction);
-            //        }
-            //        else
-            //        {
-            //            if (currentAction != null)
-            //            {
-            //                if (arg.Length > 2)
-            //                    arg = (arg[0] == '\\' && arg[1] == App.Current.ActionCharPrefix.Value) ? arg.Substring(1) : arg;
-            //                currentAction.Add(arg);
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    var currentSubCommand = new RequestAction();
-            //    actions.Add(currentSubCommand);
-
-            //    for (var i = 0; i < args.Length; i++)
-            //    {
-            //        var arg = args[i];
-            //        if (i == 0 && !AppHelpers.IsArgumentFormat(arg))
-            //        {
-            //            currentSubCommand.Name = arg;
-            //            currentSubCommand.Position = i;
-            //        }
-            //        else
-            //        {
-            //            if (currentSubCommand != null)
-            //                currentSubCommand.Add(arg);
-            //        }
-            //    }
-            //}
-            //actions.RemoveAll(f => string.IsNullOrWhiteSpace(f.Name));
-
         }
+
+        private void LoadRequestActionsWithoutPrefix()
+        {
+            // model: action-name --p1 "a" --p2 "b"
+
+            var argZero = this.Arguments[0];
+            var argZeroScaped = AppHelpers.RemoveScape(argZero);
+            var existsAction = App.Current.Actions.Any(f => f.Name == argZeroScaped);
+            var isScaped = AppHelpers.IsScaped(argZero);
+
+            var requestAction = new RequestAction();
+            requestAction.Position = 0;
+            requestAction.Name = null;
+            this.RequestActions.Add(requestAction);
+
+            if (existsAction && !isScaped)
+            {
+                // eg: save --p1 abc
+                requestAction.Name = argZero;
+            }
+            else
+            {
+                // eg: \save --p1 abc            -> add: save                    
+                if (existsAction)
+                    requestAction.Add(argZeroScaped);
+
+                // eg: \save-not-exists --p1 abc -> add: \save-not-exists
+                // eg: save-not-exists --p1 abc  -> add: save-not-exists
+                else
+                    requestAction.Add(argZero);
+            }
+
+            foreach (var arg in this.Arguments.Skip(1))
+                requestAction.Add(arg);
+        }
+
+        private void LoadRequestActionsWithPrefix()
+        {
+            // model1: $action-name --p1 a $delete --p2 b \$other --p3 c
+
+            var prefix = App.Current.ActionCharPrefix.Value;
+            var argZero = this.Arguments[0];
+
+            // check if "$" exists
+            var argZeroHasPrefix = AppHelpers.HasCharAtFirst(argZero, prefix);
+
+            // remove "\" if exists
+            var argZeroScaped = AppHelpers.RemoveScape(argZero);
+
+            // remove "$" if exists
+            var argZeroScapedWithoutPrefix = AppHelpers.RemoveFirstCharIfFound(argZeroScaped, prefix);
+
+            // check if "save" action exists
+            var existsAction = App.Current.Actions.Any(f => f.Name == argZeroScapedWithoutPrefix);
+
+            // if has prefix "$" and action exists
+            if (argZeroHasPrefix && existsAction)
+            {
+                // eg: $save --p1 a
+
+                var requestAction = new RequestAction();
+                requestAction.Name = argZeroScapedWithoutPrefix;
+                requestAction.Position = 0;
+                this.RequestActions.Add(requestAction);
+
+                var i = 1;
+                foreach (var arg in this.Arguments.Skip(1))
+                {
+                    var argHasPrefix = AppHelpers.HasCharAtFirst(arg, prefix);
+                    var argScaped = AppHelpers.RemoveScape(arg);
+                    var argScapedWithoutPrefix = AppHelpers.RemoveFirstCharIfFound(argScaped, prefix);
+                    var argExistsAction = App.Current.Actions.Any(f => f.Name == argScapedWithoutPrefix);
+
+                    if (argHasPrefix && argExistsAction)
+                    {
+                        requestAction = new RequestAction();
+                        requestAction.Name = argScapedWithoutPrefix;
+                        requestAction.Position = i;
+                        this.RequestActions.Add(requestAction);
+                    }
+                    else
+                    {
+                        var isScaped = AppHelpers.IsScaped(arg);
+                        var hasPrefixInArgScaped = AppHelpers.HasCharAtFirst(argScaped, prefix);
+
+                        // eg: \$save             -> add: $save
+                        if (isScaped && hasPrefixInArgScaped && argExistsAction)
+                            requestAction.Add(argScaped);
+                        // eg: save               -> add: save
+                        // eg: \$save-not-exists  -> add: \$save-not-exists
+                        // eg: $save-not-exists   -> add: $save-not-exists
+                        else
+                            requestAction.Add(arg);
+                    }
+
+                    i++;
+                }
+            }
+            else
+            {
+                var requestAction = new RequestAction();
+                requestAction.Name = null;
+                requestAction.Position = 0;
+                this.RequestActions.Add(requestAction);
+
+                var isScaped = AppHelpers.IsScaped(argZero);
+                var hasPrefixInArgScaped = AppHelpers.HasCharAtFirst(argZeroScaped, prefix);
+
+                // eg: \$save             -> add: $save
+                if (isScaped && hasPrefixInArgScaped && existsAction)
+                    requestAction.Add(argZeroScaped);
+
+                // eg: --p1               -> add: --p1
+                // eg: save               -> add: save
+                // eg: \save              -> add: \save
+                // eg: save-not-exists    -> add: save-not-exists
+                // eg: \save-not-exists   -> add: \save-not-exists
+                // eg: \$save-not-exists  -> add: \$save-not-exists
+                // eg: $save-not-exists   -> add: $save-not-exists
+                else
+                    requestAction.Add(argZero);
+
+                foreach (var arg in this.Arguments.Skip(1))
+                    requestAction.Add(arg);
+            }
+        }
+
+        //private RequestAction GetRequestActionDefault(int i, string arg)
+        //{
+        //    var prefix = App.Current.ActionCharPrefix.Value;
+        //    var hasPrefix = AppHelpers.HasCharAtFirst(arg, prefix);
+        //    var argScaped = AppHelpers.RemoveScape(arg);
+        //    var argScapedWithoutPrefix = AppHelpers.RemoveFirstCharIfFound(argScaped, prefix);
+        //    var existsAction2 = App.Current.Actions.Any(f => f.Name == argScapedWithoutPrefix);
+        //    RequestAction requestAction = new RequestAction();
+
+        //    if (hasPrefix && existsAction2)
+        //    {
+        //        requestAction.Name = argScapedWithoutPrefix;
+        //        requestAction.Position = i;
+        //    }
+        //    else
+        //    {
+        //        if (!hasPrefix || !existsAction2)
+        //            requestAction.Add(arg);
+        //        else
+        //            requestAction.Add(argScaped);
+        //    }
+
+        //    return requestAction;
+        //}
     }
 }

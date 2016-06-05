@@ -37,37 +37,27 @@ namespace SysCommand
                 }
             }
 
-            if (this.actions.Count(f => f.IsDefault) != this.actions.Count)
-                throw new Exception("You can not coexist standard actions and named actions.");
+            //if (this.actions.Count(f => f.IsDefault) != this.actions.Count)
+            //    throw new Exception("You can not coexist standard actions and named actions.");
         }
 
         public virtual void Parse()
         {
             foreach (var action in this.Actions)
             {
-                // 1) action.RequestAction != null: The action sent in input has match with action defined in current method.
-                // 1.1) The number of input parameters must be equal or greater than the amount of required method parameters 
-                //    and can not exceed the total amount of the method parameters.
-                // 1.1.1) action.RequestAction.Get.Count: Count input
-                // 1.1.2) action.ParametersParseds.Count: Count parseds input
-                // 2) action.RequestAction && action.IsDefault: Any action is sent and the action is defined has default.
+                action.RequestAction = App.Current.Request.RequestActions.FirstOrDefault(f => f.Name == action.Name);
+                if (action.RequestAction == null && action.IsDefault)
+                    action.RequestAction = App.Current.Request.RequestActions.FirstOrDefault(f => f.Name == null);
 
                 var methodParameters = action.MethodInfo.GetParameters();
                 var countTotal = methodParameters.Length;
                 var countRequired = methodParameters.Count(f => !f.IsOptional);
                 var actionIsCanditade = action.RequestAction != null && (action.RequestAction.Get.Count >= countRequired && action.RequestAction.Get.Count <= countTotal);
-                var actionIsDefault = action.RequestAction == null && action.IsDefault;
+                //var actionIsDefault = action.RequestAction == null && action.IsDefault;
 
-                if (actionIsCanditade || actionIsDefault)
+                if (action.RequestAction != null && actionIsCanditade)
                 {
-                    string[] args;
-
-                    if (action.RequestAction != null)
-                        args = action.RequestAction.Arguments;
-                    else if (actionIsDefault && App.Current.Request.Actions.Count == 0)
-                        args = App.Current.Request.Arguments;
-                    else
-                        args = new string[0];
+                    var args = action.RequestAction.Arguments;
 
                     //var parameters = action.MethodInfo.GetParameters();
                     //for(var i = 0; i < parameters.Length; i++)

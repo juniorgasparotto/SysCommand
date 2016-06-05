@@ -77,6 +77,16 @@ namespace SysCommand
 
             return (PropertyInfo)Exp.Member;
         }
+
+        public static T Construct<T>(Type[] paramTypes, object[] paramValues)
+        {
+            Type t = typeof(T);
+
+            ConstructorInfo ci = t.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, paramTypes, null);
+
+            return (T)ci.Invoke(paramValues);
+        }
+
         #endregion
 
         #region string
@@ -416,6 +426,9 @@ namespace SysCommand
         {
             if (value == null || value.Length == 0)
                 return false;
+            
+            if (AppHelpers.IsScaped(value))
+                return false;
 
             var isArgumentFormat = AppHelpers.IsArgumentFormat(value);
             if (App.Current.ActionCharPrefix == null)
@@ -423,6 +436,32 @@ namespace SysCommand
             else
                 return !isArgumentFormat && value[0].In(App.Current.ActionCharPrefix.Value);
         }
+
+        public static bool HasCharAtFirst(string value, char firstChar)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return false;
+
+            return (value[0] == firstChar);
+        }
+
+        public static string RemoveFirstCharIfFound(string value, char charFind)
+        {
+            if (AppHelpers.IsScaped(value))
+                return value.Substring(1);
+            return value;
+        }
+
+        public static bool IsScaped(string value, char scapeChar = '\\')
+        {
+            return AppHelpers.HasCharAtFirst(value, scapeChar);
+        }
+
+        public static string RemoveScape(string value, char scapeChar = '\\')
+        {
+            return AppHelpers.RemoveFirstCharIfFound(value, scapeChar);
+        }
+
         #endregion
     }
 }

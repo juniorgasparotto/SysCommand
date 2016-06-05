@@ -30,10 +30,7 @@ namespace SysCommand
             if (method.Name.ToLower() == "default" || (methodAttr != null && methodAttr.IsDefault == true))
                 hasDefaultAction = true;
 
-            var requestAction = App.Current.Request.Actions.FirstOrDefault(f => f.Name == actionName);
-
             action.Name = actionName;
-            action.RequestAction = requestAction;
             action.Attribute = methodAttr;
             action.Parser = new FluentCommandLineParser();
             action.MethodInfo = method;

@@ -12,15 +12,27 @@ namespace SysCommand
         public static readonly string CommandNameDefault = "default";
         public static readonly char[] ArgsDelimiter = new char[] { '-', '/', ':', '=' };
         
-        private List<Type> IgnoredCommands = new List<Type>();
-        private Dictionary<string, object> ObjectsFiles = new Dictionary<string, object>();
-        private Dictionary<string, object> ObjectsMemory = new Dictionary<string, object>();
+        private List<Type> ignoredCommands = new List<Type>();
+        private Dictionary<string, object> objectsFiles = new Dictionary<string, object>();
+        private Dictionary<string, object> objectsMemory = new Dictionary<string, object>();
+        private List<ActionInstance> actions;
+        private TextWriter output;
+        private string[] args;
 
         public VerboseEnum Verbose { get; set; }
         public bool Quiet { get; set; }
 
-        public List<ICommand> Commands { get; set; }
-        public List<CommandAction> Commands2 { get; set; }
+        public List<ICommand> Commands2 { get; set; }
+        public List<CommandAction> Commands { get; set; }
+        public IEnumerable<ActionInstance> Actions
+        {
+            get
+            {
+                if (actions == null)
+                    actions = Commands.SelectMany(f => f.Actions).ToList();
+                return actions;
+            }
+        }
 
         public string CurrentCommandName { get; set; }
         public char? ActionCharPrefix { get; set; }
@@ -50,7 +62,7 @@ namespace SysCommand
 
         public static void Initialize<TApp>() where TApp : App
         {
-            App.Current = Activator.CreateInstance<TApp>();
+            App.Current = (TApp)Activator.CreateInstance(typeof(TApp), true);
             App.Current.DebugGetInputArgs = true;
             App.Current.DebugShowExitConfirm = true;
             App.Current.DebugObjectsFilesSaveInRootFolder  = true;
@@ -59,28 +71,51 @@ namespace SysCommand
             App.Current.ObjectsFilesExtension = ".object";
         }
 
-        public virtual void Run()
+        public void SetArgs(string[] args)
         {
-            this.Validate();
+            //this.output = output ?? Console.Out;
+            this.args = args;
+        }
 
-            var args = Environment.GetCommandLineArgs();
-            var listArgs = args.ToList();
-            listArgs.RemoveAt(0);
-            args = listArgs.ToArray();
+        public void SetArgs(string args)
+        {
+            if (!string.IsNullOrWhiteSpace(args))
+                this.args = AppHelpers.CommandLineToArgs(args);
+            else
+                this.args = new string[0];
+        }
+
+        private string[] GetOrCreateArgs()
+        {
+            if (this.args != null)
+                return this.args;
 
             if (this.InDebug && DebugGetInputArgs)
             {
                 Console.WriteLine("Enter with args:");
-                var read = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(read))
-                    args = AppHelpers.CommandLineToArgs(read);
+                this.SetArgs(Console.ReadLine());
+            }
+            else
+            {
+                this.args = Environment.GetCommandLineArgs();
+                var listArgs = this.args.ToList();
+                // remove the app path that added auto by .net
+                listArgs.RemoveAt(0);
+                this.SetArgs(listArgs.ToArray());
             }
 
+            return this.args;
+        }
+
+        private void LoadRequestResponse()
+        {
+            var args = this.GetOrCreateArgs();
             this.Request = new Request(args);
             this.Response = new Response();
+        }
 
-            return;
-
+        private void LoadCommandActions()
+        {
             var listOfCommands = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()
                                   where
@@ -89,23 +124,70 @@ namespace SysCommand
                                       && assemblyType.IsAbstract == false
                                   select assemblyType).ToList();
 
-            this.Commands2 = listOfCommands.Select(f => (CommandAction)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
-            this.Commands2.RemoveAll(f => IgnoredCommands.Contains(f.GetType()) || (!this.InDebug && f.OnlyInDebug));
+            this.Commands = listOfCommands.Select(f => (CommandAction)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
+            this.Commands.RemoveAll(f => ignoredCommands.Contains(f.GetType()) || (!this.InDebug && f.OnlyInDebug));
+        }
 
-            foreach (var cmd in this.Commands2)
+        private void SetupCommandActions()
+        {
+            foreach (var cmd in this.Commands)
                 cmd.Setup();
+        }
 
-            foreach (var cmd in this.Commands2)
+        private void ParseCommandActions()
+        {
+            foreach (var cmd in this.Commands)
                 cmd.Parse();
+        }
+
+        protected virtual bool ValidateCommandActions()
+        {
+            var hasError = false;
+
+            foreach (var cmd in this.Commands)
+            {
+                foreach (var action in cmd.Actions)
+                {
+                    if (action.Result != null && action.Result.HasErrors)
+                    {
+                        hasError = true;
+                        Console.WriteLine(string.Format("Action '{0}({1} args)': {2}", action.Name, action.MethodInfo.GetParameters().Length, action.Result.ErrorText.Trim()));
+                    }
+                }
+            }
+            return !hasError;
+        }
+
+        protected virtual void ExecuteCommandActions()
+        {
+            foreach (var cmd in this.Commands)
+            {
+                cmd.Execute();
+
+                if (this.InStopPropagation)
+                {
+                    this.InStopPropagation = false;
+                    break;
+                }
+            }
+        }
+
+        public virtual void Run()
+        {
+            this.Validate();
+            this.LoadCommandActions();
+            this.SetupCommandActions();
+            this.LoadRequestResponse();
+            this.ParseCommandActions();
 
             var hasError = false;
-            if (ValidateParserErrors2())
-                this.ExecuteAll2();
+            if (this.ValidateCommandActions())
+                this.ExecuteCommandActions();
             else
                 hasError = true;
-
+            return;
             this.LoadCommands();
-            this.LoadAll(args);
+            this.LoadAll(this.Request.Arguments);
             this.ParseAll();
 
             if (ValidateParserErrors())
@@ -133,19 +215,19 @@ namespace SysCommand
                                       && assemblyType.IsAbstract == false
                                   select assemblyType).ToList();
 
-            this.Commands = listOfCommands.Select(f => (ICommand)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
-            this.Commands.RemoveAll(f => IgnoredCommands.Contains(f.GetType()) || (!this.InDebug && f.OnlyInDebug));
+            this.Commands2 = listOfCommands.Select(f => (ICommand)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
+            this.Commands2.RemoveAll(f => ignoredCommands.Contains(f.GetType()) || (!this.InDebug && f.OnlyInDebug));
         }
 
         protected virtual void LoadAll(string[] args)
         {
-            foreach (var cmd in this.Commands)
+            foreach (var cmd in this.Commands2)
                 cmd.Load(args);
         }
 
         protected virtual void ParseAll()
         {
-            foreach (var cmd in this.Commands)
+            foreach (var cmd in this.Commands2)
                 cmd.Parse();
         }
 
@@ -153,7 +235,7 @@ namespace SysCommand
         {
             var hasError = false;
 
-            foreach (var cmd in this.Commands)
+            foreach (var cmd in this.Commands2)
             {
                 if (cmd.ParserResult.HasErrors)
                 {
@@ -165,27 +247,10 @@ namespace SysCommand
             return !hasError;
         }
 
-        protected virtual bool ValidateParserErrors2()
-        {
-            var hasError = false;
-
-            foreach (var cmd in this.Commands2)
-            {
-                foreach (var action in cmd.Actions)
-                {
-                    if (action.Result != null && action.Result.HasErrors)
-                    {
-                        hasError = true;
-                        Console.WriteLine(string.Format("Action '{0}({1} args)': {2}", action.Name, action.MethodInfo.GetParameters().Length, action.Result.ErrorText.Trim()));
-                    }
-                }
-            }
-            return !hasError;
-        }
 
         public virtual void ShowHelp2()
         {
-            foreach (var cmd in this.Commands2)
+            foreach (var cmd in this.Commands)
             {
                 foreach (var action in cmd.Actions)
                 {
@@ -214,7 +279,7 @@ namespace SysCommand
 
         protected virtual void ExecuteAll()
         {
-            foreach (var cmd in this.Commands)
+            foreach (var cmd in this.Commands2)
             {
                 if ((cmd.HasParsed || cmd.HasLoadedFromConfig) && !this.InStopPropagation)
                     cmd.Execute();
@@ -227,19 +292,6 @@ namespace SysCommand
             }
         }
 
-        protected virtual void ExecuteAll2()
-        {
-            foreach (var cmd in this.Commands2)
-            {
-                cmd.Execute();
-
-                if (this.InStopPropagation)
-                {
-                    this.InStopPropagation = false;
-                    break;
-                }
-            }
-        }
 
         private void ExitWithKeyEnterInDebug()
         {
@@ -264,7 +316,7 @@ namespace SysCommand
         public virtual void ShowHelp()
         {
             var dic = new Dictionary<string, string>();
-            foreach (var cmd in this.Commands)
+            foreach (var cmd in this.Commands2)
             {
                 foreach (var opt in cmd.Parser.Options)
                 {
@@ -287,18 +339,18 @@ namespace SysCommand
 
         public void IgnoreCommmand<T>()
         {
-            IgnoredCommands.Add(typeof(T));
+            ignoredCommands.Add(typeof(T));
         }
 
         public virtual void SaveObjectMemory<TOMemory>(TOMemory obj, string name)
         {
-            ObjectsMemory[name] = obj;
+            objectsMemory[name] = obj;
         }
 
         public virtual void RemoveObjectMemory<TOMemory>(string name) where TOMemory : class
         {
-            if (this.ObjectsMemory.ContainsKey(name))
-                this.ObjectsMemory.Remove(name);
+            if (this.objectsMemory.ContainsKey(name))
+                this.objectsMemory.Remove(name);
         }
 
         public virtual TOMemory GetObjectMemory<TOMemory>(string name) where TOMemory : class
@@ -309,8 +361,8 @@ namespace SysCommand
         public virtual TOMemory GetOrCreateObjectMemory<TOMemory>(string name, bool onlyGet = false) where TOMemory : class
         {
             TOMemory obj = null;
-            if (this.ObjectsMemory.ContainsKey(name))
-                obj = this.ObjectsMemory[name] as TOMemory;
+            if (this.objectsMemory.ContainsKey(name))
+                obj = this.objectsMemory[name] as TOMemory;
             else if (!onlyGet)
                 obj = Activator.CreateInstance<TOMemory>();
             return obj;
@@ -324,7 +376,7 @@ namespace SysCommand
             if (obj != null)
             {
                 ObjectFile.Save<TOFile>(obj, fileName);
-                this.ObjectsFiles[fileName] = obj;
+                this.objectsFiles[fileName] = obj;
             }
         }
 
@@ -334,8 +386,8 @@ namespace SysCommand
                 fileName = this.GetObjectFileName(typeof(TOFile), fileName);
 
             ObjectFile.Remove(fileName);
-            if (this.ObjectsFiles.ContainsKey(fileName))
-                this.ObjectsFiles.Remove(fileName);
+            if (this.objectsFiles.ContainsKey(fileName))
+                this.objectsFiles.Remove(fileName);
         }
 
         public virtual TOFile GetObjectFile<TOFile>(string fileName = null, bool refresh = false) where TOFile : class
@@ -348,15 +400,15 @@ namespace SysCommand
             if (string.IsNullOrWhiteSpace(fileName))
                 fileName = this.GetObjectFileName(typeof(TOFile), fileName);
 
-            if (this.ObjectsFiles.ContainsKey(fileName) && !refresh)
-                return this.ObjectsFiles[fileName] as TOFile;
+            if (this.objectsFiles.ContainsKey(fileName) && !refresh)
+                return this.objectsFiles[fileName] as TOFile;
 
             var objFile = ObjectFile.Get<TOFile>(fileName);
 
             if (objFile == null && !onlyGet)
                 objFile = Activator.CreateInstance<TOFile>();
 
-            this.ObjectsFiles[fileName] = objFile;
+            this.objectsFiles[fileName] = objFile;
 
             return objFile;
         }
