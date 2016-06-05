@@ -447,7 +447,7 @@ namespace SysCommand
 
         public static string RemoveFirstCharIfFound(string value, char charFind)
         {
-            if (AppHelpers.IsScaped(value))
+            if (AppHelpers.IsScaped(value, charFind))
                 return value.Substring(1);
             return value;
         }
