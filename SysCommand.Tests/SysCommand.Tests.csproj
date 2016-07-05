@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\PositionCommand.cs" />
     <Compile Include="Commands\TestPrefixCommand.cs" />
     <Compile Include="Commands\DefaultCommand.cs" />
     <Compile Include="Commands\TaskCommand.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Commands\TestVerboseCommand.cs" />
     <Compile Include="Classes\Tasks.cs" />
     <Compile Include="Classes\AppConfig.cs" />
+    <Compile Include="Program - Copy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

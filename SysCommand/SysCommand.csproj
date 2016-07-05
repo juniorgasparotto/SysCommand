@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mono.Options.cs" />
     <Compile Include="Core\Attributes\ActionAttribute.cs" />
     <Compile Include="Core\ActionInstance.cs" />
     <Compile Include="Core\CommandAction.cs" />

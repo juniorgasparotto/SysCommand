@@ -19,12 +19,14 @@ namespace SysCommand.Tests
         }
 
         static int Main(string[] args)
-        {   
+        {
             while (true)
             {
                 App.Initialize<Program>();
                 App.Current.DebugShowExitConfirm = false;
                 App.Current.ActionCharPrefix = null;
+                App.Current.DebugGetInputArgs = false;
+                App.Current.SetArgs("position --teste -xyz+ --bla -u false -i+ teste");
                 App.Current.Run();
                 if (!App.Current.InDebug)
                     return App.Current.Response.Code;

@@ -7,10 +7,10 @@ using SysCommand.Tests;
 namespace SysCommand.UnitTests
 {
     [TestClass]
-    public class Tests
+    public class TestRequest
     {
         #region Aux
-        public Tests()
+        public TestRequest()
         {
             // Only to load all actions in 'console application test project'.
             Program.LoadAssembly();
@@ -28,15 +28,7 @@ namespace SysCommand.UnitTests
             App.Current.Run();
         }
         #endregion
-
-        [TestMethod]
-        public void TestRun()
-        {
-            var output = new StringWriter();
-            this.InitializeApp("save");
-            output.ToString();
-        }
-
+        
         #region Without prefix
 
         [TestMethod]

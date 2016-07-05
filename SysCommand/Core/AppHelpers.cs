@@ -239,7 +239,92 @@ namespace SysCommand
 
         #region console application
 
-        public static Dictionary<string, string> ArgsToDictionary(string[] Args)
+        public static Dictionary<string, string> ArgsToDictionary(string[] args)
+        {
+            var dictionary = new Dictionary<string, string>();
+            var trueChar = '+';
+            var falseChar = '-';
+            var enumerator = args.GetEnumerator();
+            string value;
+
+            var i = 0;
+            while (enumerator.MoveNext())
+            {
+                // if is non parameter: [value] [123] [true] [\--scape-parameter]
+                var arg = (string)enumerator.Current;
+                if (!AppHelpers.IsArgumentFormat(arg))
+                {
+                    dictionary.Add(i.ToString(), arg);
+                    continue;
+                }
+
+                // -x=true     -> posLeft = -x; posRight = true
+                // -x          -> posLeft = -x; posRight = null
+                // --x:true    -> posLeft = -x; posRight = true
+                
+                var split = arg.Split(new char[] { '=', ':' }, 1, StringSplitOptions.RemoveEmptyEntries);
+                var posLeft = split.Length > 0 ? split[0] : null;
+                var posRight = split.Length > 1 ? split[1] : null;
+
+                var char0 = (posLeft.Length > 0) ? posLeft[0] : default(char);
+                var char1 = (posLeft.Length > 1) ? posLeft[1] : default(char);                
+                var lastChar = posLeft.Last();
+
+                // check if exists "+" or "-": [-x+] or [-x-]
+                if (lastChar.In(trueChar, falseChar))
+                {
+                    posLeft = posLeft.Remove(posLeft.Length - 1);
+                    value = lastChar == trueChar ? "true" : "false";
+                }
+                else if (posRight == null)
+                {
+                    // get next arg
+                    value = args.Length >= (i + 1) ? args[i + 1] : null;
+
+                    // ignore if next arg is parameter: [-xyz --next-parameter ...]
+                    if (AppHelpers.IsArgumentFormat(value))
+                        value = null;
+                    // jump next arg if is value: [-xyz value]
+                    else
+                        enumerator.MoveNext();
+                }
+                else
+                {
+                    value = posRight;
+                }
+
+                //if (string.IsNullOrWhiteSpace(value))
+                //    value = "true";
+
+                // -x -> single parameter
+                if (char0 == '-' && char1 != '-')
+                {
+                    // remove "-": -xyz -> xyz
+                    var keys = posLeft.Remove(0);
+                    foreach (var key in keys)
+                        dictionary.Add(key.ToString(), value);
+                }
+                else
+                {
+                    string key;
+
+                    // remove "--": --xyz -> xyz
+                    if (char0 == '-' && char1 == '-')
+                        key = arg.Remove(0).Remove(0);
+                    // remove "/": /xyz -> xyz
+                    else
+                        key = arg.Remove(0);
+
+                    dictionary.Add(key, value);
+                }
+
+                i++;
+            }
+
+            return dictionary;
+        }
+
+        public static Dictionary<string, string> ArgsToDictionary2(string[] Args)
         {
             var Parameters = new Dictionary<string, string>();
             Regex Spliter = new Regex(@"^-{1,2}|^/|=|:", RegexOptions.IgnoreCase | RegexOptions.Compiled);
