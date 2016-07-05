@@ -258,9 +258,11 @@ namespace SysCommand
                     continue;
                 }
 
-                // -x=true     -> posLeft = -x; posRight = true
-                // -x          -> posLeft = -x; posRight = null
-                // --x:true    -> posLeft = -x; posRight = true
+                // -x=true     -> posLeft = "-x"; posRight = "true"
+                // -x          -> posLeft = "-x"; posRight = null
+                // --x:true    -> posLeft = "-x"; posRight = "true"
+                // --x:=true   -> posLeft = "-x"; posRight = "=true"
+                // --x=:true   -> posLeft = "-x"; posRight = ":true"
                 
                 var split = arg.Split(new char[] { '=', ':' }, 1, StringSplitOptions.RemoveEmptyEntries);
                 var posLeft = split.Length > 0 ? split[0] : null;
@@ -268,13 +270,13 @@ namespace SysCommand
 
                 var char0 = (posLeft.Length > 0) ? posLeft[0] : default(char);
                 var char1 = (posLeft.Length > 1) ? posLeft[1] : default(char);                
-                var lastChar = posLeft.Last();
+                var lastLeftChar = posLeft.Last();
 
                 // check if exists "+" or "-": [-x+] or [-x-]
-                if (lastChar.In(trueChar, falseChar))
+                if (lastLeftChar.In(trueChar, falseChar))
                 {
                     posLeft = posLeft.Remove(posLeft.Length - 1);
-                    value = lastChar == trueChar ? "true" : "false";
+                    value = lastLeftChar == trueChar ? "true" : "false";
                 }
                 else if (posRight == null)
                 {
@@ -284,7 +286,7 @@ namespace SysCommand
                     // ignore if next arg is parameter: [-xyz --next-parameter ...]
                     if (AppHelpers.IsArgumentFormat(value))
                         value = null;
-                    // jump next arg if is value: [-xyz value]
+                    // jump the next arg if is value: [-xyz value]
                     else
                         enumerator.MoveNext();
                 }
@@ -302,7 +304,7 @@ namespace SysCommand
                     // remove "-": -xyz -> xyz
                     var keys = posLeft.Remove(0);
                     foreach (var key in keys)
-                        dictionary.Add(key.ToString(), value);
+                        dictionary[key.ToString()] = value;
                 }
                 else
                 {
@@ -315,7 +317,7 @@ namespace SysCommand
                     else
                         key = arg.Remove(0);
 
-                    dictionary.Add(key, value);
+                    dictionary[key] = value;
                 }
 
                 i++;
