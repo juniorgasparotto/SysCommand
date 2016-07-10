@@ -10,7 +10,6 @@ namespace SysCommand
     public class App
     {
         public static readonly string CommandNameDefault = "default";
-        public static readonly char[] ArgsDelimiter = new char[] { '-', '/', ':', '=' };
         
         private List<Type> ignoredCommands = new List<Type>();
         private Dictionary<string, object> objectsFiles = new Dictionary<string, object>();
@@ -342,71 +341,71 @@ namespace SysCommand
             ignoredCommands.Add(typeof(T));
         }
 
-        public virtual void SaveObjectMemory<TOMemory>(TOMemory obj, string name)
+        public virtual void SaveObjectMemory<TMemory>(TMemory obj, string name)
         {
             objectsMemory[name] = obj;
         }
 
-        public virtual void RemoveObjectMemory<TOMemory>(string name) where TOMemory : class
+        public virtual void RemoveObjectMemory<TMemory>(string name) where TMemory : class
         {
             if (this.objectsMemory.ContainsKey(name))
                 this.objectsMemory.Remove(name);
         }
 
-        public virtual TOMemory GetObjectMemory<TOMemory>(string name) where TOMemory : class
+        public virtual TMemory GetObjectMemory<TMemory>(string name) where TMemory : class
         {
-            return GetOrCreateObjectMemory<TOMemory>(name, true);
+            return GetOrCreateObjectMemory<TMemory>(name, true);
         }
 
-        public virtual TOMemory GetOrCreateObjectMemory<TOMemory>(string name, bool onlyGet = false) where TOMemory : class
+        public virtual TMemory GetOrCreateObjectMemory<TMemory>(string name, bool onlyGet = false) where TMemory : class
         {
-            TOMemory obj = null;
+            TMemory obj = null;
             if (this.objectsMemory.ContainsKey(name))
-                obj = this.objectsMemory[name] as TOMemory;
+                obj = this.objectsMemory[name] as TMemory;
             else if (!onlyGet)
-                obj = Activator.CreateInstance<TOMemory>();
+                obj = Activator.CreateInstance<TMemory>();
             return obj;
         }
 
-        public virtual void SaveObjectFile<TOFile>(TOFile obj, string fileName = null)
+        public virtual void SaveObjectFile<TFile>(TFile obj, string fileName = null)
         {
             if (string.IsNullOrWhiteSpace(fileName))
-                fileName = this.GetObjectFileName(typeof(TOFile), fileName);
+                fileName = this.GetObjectFileName(typeof(TFile), fileName);
 
             if (obj != null)
             {
-                ObjectFile.Save<TOFile>(obj, fileName);
+                FileHelper.SaveObjectToFileJson(obj, fileName);
                 this.objectsFiles[fileName] = obj;
             }
         }
 
-        public virtual void RemoveObjectFile<TOFile>(string fileName = null)
+        public virtual void RemoveObjectFile<TFile>(string fileName = null)
         {
             if (string.IsNullOrWhiteSpace(fileName))
-                fileName = this.GetObjectFileName(typeof(TOFile), fileName);
+                fileName = this.GetObjectFileName(typeof(TFile), fileName);
 
-            ObjectFile.Remove(fileName);
+            FileHelper.RemoveFile(fileName);
             if (this.objectsFiles.ContainsKey(fileName))
                 this.objectsFiles.Remove(fileName);
         }
 
-        public virtual TOFile GetObjectFile<TOFile>(string fileName = null, bool refresh = false) where TOFile : class
+        public virtual TFile GetObjectFile<TFile>(string fileName = null, bool refresh = false) 
         {
-            return GetOrCreateObjectFile<TOFile>(fileName, true, refresh);
+            return GetOrCreateObjectFile<TFile>(fileName, true, refresh);
         }
 
-        public virtual TOFile GetOrCreateObjectFile<TOFile>(string fileName = null, bool onlyGet = false, bool refresh = false) where TOFile : class
+        public virtual TFile GetOrCreateObjectFile<TFile>(string fileName = null, bool onlyGet = false, bool refresh = false) 
         {
             if (string.IsNullOrWhiteSpace(fileName))
-                fileName = this.GetObjectFileName(typeof(TOFile), fileName);
+                fileName = this.GetObjectFileName(typeof(TFile), fileName);
 
             if (this.objectsFiles.ContainsKey(fileName) && !refresh)
-                return this.objectsFiles[fileName] as TOFile;
+                return this.objectsFiles[fileName] == null ? default(TFile) : (TFile)this.objectsFiles[fileName];
 
-            var objFile = ObjectFile.Get<TOFile>(fileName);
+            var objFile = FileHelper.GetObjectFromFileJson<TFile>(fileName);
 
             if (objFile == null && !onlyGet)
-                objFile = Activator.CreateInstance<TOFile>();
+                objFile = Activator.CreateInstance<TFile>();
 
             this.objectsFiles[fileName] = objFile;
 
@@ -436,9 +435,21 @@ namespace SysCommand
             }
 
             if (string.IsNullOrWhiteSpace(folder))
-                return AppHelpers.GetPathFromRoot(fileName);
+                return this.GetPathFromRoot(fileName);
             else
-                return AppHelpers.GetPathFromRoot(folder, fileName);
+                return this.GetPathFromRoot(folder, fileName);
+        }
+
+        public string GetPathFromRoot(params string[] paths)
+        {
+            if (this.InDebug && this.DebugObjectsFilesSaveInRootFolder)
+            {
+                var paths2 = paths.ToList();
+                paths2.Insert(0, @"..\..\");
+                return Path.Combine(paths2.ToArray());
+            }
+
+            return Path.Combine(paths);
         }
 
         private void Validate()

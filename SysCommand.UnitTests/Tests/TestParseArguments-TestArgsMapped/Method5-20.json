@@ -1,0 +1,237 @@
+{
+  "input": "method5 --enum1 Enum1Value1 2 enum1value3 8 --enum2 Enum2Value1 Enum2value2 Enum2value2Error --enum3 value1 Value2 Value3 --lst 1 2 3 4 5 a 8",
+  "maps": {
+    "$type": "SysCommand.ArgumentsParser+<GetArgumentMaps>d__18, SysCommand",
+    "$values": [
+      {
+        "Key": "enum1",
+        "Type": "SysCommand.UnitTests.TestParseArguments+EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "DefaultValue": null,
+        "IsOptional": false
+      },
+      {
+        "Key": "enum2",
+        "Type": "SysCommand.UnitTests.TestParseArguments+EnumTest2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "DefaultValue": null,
+        "IsOptional": false
+      },
+      {
+        "Key": "enum3",
+        "Type": "SysCommand.UnitTests.TestParseArguments+EnumTestNoFlag, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "DefaultValue": null,
+        "IsOptional": false
+      },
+      {
+        "Key": "lst",
+        "Type": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValue": null,
+        "IsOptional": false
+      }
+    ]
+  },
+  "argsMappeds": [
+    {
+      "Key": "enum1",
+      "ValueRaw": "method5",
+      "Value": null,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": true,
+      "Type": "SysCommand.UnitTests.TestParseArguments+EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "enum1",
+      "ValueRaw": "Enum1Value1",
+      "Value": "Enum1Value1",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": "enum2",
+      "ValueRaw": "2",
+      "Value": "Enum2Value2",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "SysCommand.UnitTests.TestParseArguments+EnumTest2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "enum3",
+      "ValueRaw": "enum1value3",
+      "Value": null,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": true,
+      "Type": "SysCommand.UnitTests.TestParseArguments+EnumTestNoFlag, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "lst",
+      "ValueRaw": "8",
+      "Value": {
+        "$type": "System.Int32[], mscorlib",
+        "$values": [
+          8
+        ]
+      },
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "enum2",
+      "ValueRaw": "Enum2Value1",
+      "Value": "Enum2Value1",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": null,
+      "ValueRaw": "Enum2value2",
+      "Value": "Enum2value2",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": null,
+      "ValueRaw": "Enum2value2Error",
+      "Value": "Enum2value2Error",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": "enum3",
+      "ValueRaw": "value1",
+      "Value": "value1",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": null,
+      "ValueRaw": "Value2",
+      "Value": "Value2",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": null,
+      "ValueRaw": "Value3",
+      "Value": "Value3",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": "lst",
+      "ValueRaw": "1",
+      "Value": "1",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": null,
+      "ValueRaw": "2",
+      "Value": "2",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": null,
+      "ValueRaw": "3",
+      "Value": "3",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": null,
+      "ValueRaw": "4",
+      "Value": "4",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": null,
+      "ValueRaw": "5",
+      "Value": "5",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": null,
+      "ValueRaw": "a",
+      "Value": "a",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Key": null,
+      "ValueRaw": "8",
+      "Value": "8",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    }
+  ]
+}

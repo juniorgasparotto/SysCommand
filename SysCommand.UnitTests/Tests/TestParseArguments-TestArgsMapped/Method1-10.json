@@ -1,0 +1,61 @@
+{
+  "input": "value1 value2 value3",
+  "maps": {
+    "$type": "SysCommand.ArgumentsParser+<GetArgumentMaps>d__18, SysCommand",
+    "$values": [
+      {
+        "Key": "a",
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValue": null,
+        "IsOptional": false
+      },
+      {
+        "Key": "b",
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValue": null,
+        "IsOptional": false
+      },
+      {
+        "Key": "c",
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValue": null,
+        "IsOptional": false
+      }
+    ]
+  },
+  "argsMappeds": [
+    {
+      "Key": "a",
+      "ValueRaw": "value1",
+      "Value": "value1",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "b",
+      "ValueRaw": "value2",
+      "Value": "value2",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "c",
+      "ValueRaw": "value3",
+      "Value": "value3",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

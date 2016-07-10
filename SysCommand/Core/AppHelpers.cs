@@ -208,125 +208,97 @@ namespace SysCommand
 
         #endregion
 
-        #region file
-
-        /// <summary>
-        /// Create the folder if not existing for a full file name
-        /// </summary>
-        /// <param name="filename">full path of the file</param>
-        public static void CreateFolderIfNeeded(string filename)
-        {
-            string folder = System.IO.Path.GetDirectoryName(filename);
-            if (!System.IO.Directory.Exists(folder))
-            {
-                System.IO.Directory.CreateDirectory(folder);
-            }
-        }
-
-        public static string GetPathFromRoot(params string[] paths)
-        {
-            if (App.Current.InDebug && App.Current.DebugObjectsFilesSaveInRootFolder)
-            {
-                var paths2 = paths.ToList();
-                paths2.Insert(0, @"..\..\");
-                return Path.Combine(paths2.ToArray());
-            }
-
-            return Path.Combine(paths);
-        }
-
-        #endregion
-
         #region console application
 
-        public static Dictionary<string, string> ArgsToDictionary(string[] args)
-        {
-            var dictionary = new Dictionary<string, string>();
-            var trueChar = '+';
-            var falseChar = '-';
-            var enumerator = args.GetEnumerator();
-            string value;
+        //public static Dictionary<string, string> ArgsToDictionary(string[] args)
+        //{
+        //    var dictionary = new Dictionary<string, string>();
+        //    var trueChar = '+';
+        //    var falseChar = '-';
+        //    var enumerator = args.GetEnumerator();
+        //    string value;
 
-            var i = 0;
-            while (enumerator.MoveNext())
-            {
-                // if is non parameter: [value] [123] [true] [\--scape-parameter]
-                var arg = (string)enumerator.Current;
-                if (!AppHelpers.IsArgumentFormat(arg))
-                {
-                    dictionary.Add(i.ToString(), arg);
-                    continue;
-                }
+        //    var i = 0;
+        //    while (enumerator.MoveNext())
+        //    {
+        //        // if is non parameter: [value] [123] [true] [\--scape-parameter]
+        //        var arg = (string)enumerator.Current;
+        //        if (!AppHelpers.IsArgumentFormat(arg))
+        //        {
+        //            dictionary.Add(i.ToString(), arg);
+        //            i++;
+        //            continue;
+        //        }
 
-                // -x=true     -> posLeft = "-x"; posRight = "true"
-                // -x          -> posLeft = "-x"; posRight = null
-                // --x:true    -> posLeft = "-x"; posRight = "true"
-                // --x:=true   -> posLeft = "-x"; posRight = "=true"
-                // --x=:true   -> posLeft = "-x"; posRight = ":true"
+        //        // -x=true     -> posLeft = "-x"; posRight = "true"
+        //        // -x          -> posLeft = "-x"; posRight = null
+        //        // --x:true    -> posLeft = "-x"; posRight = "true"
+        //        // --x:=true   -> posLeft = "-x"; posRight = "=true"
+        //        // --x=:true   -> posLeft = "-x"; posRight = ":true"
                 
-                var split = arg.Split(new char[] { '=', ':' }, 1, StringSplitOptions.RemoveEmptyEntries);
-                var posLeft = split.Length > 0 ? split[0] : null;
-                var posRight = split.Length > 1 ? split[1] : null;
+        //        var split = arg.Split(new char[] { '=', ':' }, 2, StringSplitOptions.RemoveEmptyEntries);
+        //        var posLeft = split.Length > 0 ? split[0] : null;
+        //        var posRight = split.Length > 1 ? split[1] : null;
 
-                var char0 = (posLeft.Length > 0) ? posLeft[0] : default(char);
-                var char1 = (posLeft.Length > 1) ? posLeft[1] : default(char);                
-                var lastLeftChar = posLeft.Last();
+        //        var char0 = (posLeft.Length > 0) ? posLeft[0] : default(char);
+        //        var char1 = (posLeft.Length > 1) ? posLeft[1] : default(char);                
+        //        var lastLeftChar = posLeft.Last();
 
-                // check if exists "+" or "-": [-x+] or [-x-]
-                if (lastLeftChar.In(trueChar, falseChar))
-                {
-                    posLeft = posLeft.Remove(posLeft.Length - 1);
-                    value = lastLeftChar == trueChar ? "true" : "false";
-                }
-                else if (posRight == null)
-                {
-                    // get next arg
-                    value = args.Length >= (i + 1) ? args[i + 1] : null;
+        //        // check if exists "+" or "-": [-x+] or [-x-]
+        //        if (lastLeftChar.In(trueChar, falseChar))
+        //        {
+        //            posLeft = posLeft.Remove(posLeft.Length - 1);
+        //            value = lastLeftChar == trueChar ? "true" : "false";
+        //        }
+        //        else if (posRight == null)
+        //        {
+        //            // get next arg
+        //            value = args.Length >= (i + 1) ? args[i + 1] : null;
 
-                    // ignore if next arg is parameter: [-xyz --next-parameter ...]
-                    if (AppHelpers.IsArgumentFormat(value))
-                        value = null;
-                    // jump the next arg if is value: [-xyz value]
-                    else
-                        enumerator.MoveNext();
-                }
-                else
-                {
-                    value = posRight;
-                }
+        //            // ignore if next arg is parameter: [-xyz --next-parameter ...]
+        //            if (AppHelpers.IsArgumentFormat(value))
+        //                value = null;
+        //            // jump the next arg if is value: [-xyz value]
+        //            else
+        //                enumerator.MoveNext();
+        //        }
+        //        else
+        //        {
+        //            value = posRight;
+        //        }
 
-                //if (string.IsNullOrWhiteSpace(value))
-                //    value = "true";
+        //        //if (string.IsNullOrWhiteSpace(value))
+        //        //    value = "true";
 
-                // -x -> single parameter
-                if (char0 == '-' && char1 != '-')
-                {
-                    // remove "-": -xyz -> xyz
-                    var keys = posLeft.Remove(0);
-                    foreach (var key in keys)
-                        dictionary[key.ToString()] = value;
-                }
-                else
-                {
-                    string key;
+        //        // -x -> single parameter
+        //        if (char0 == '-' && char1 != '-')
+        //        {
+        //            // remove "-": -xyz -> xyz
+        //            var keys = posLeft.Substring(1);
+        //            foreach (var key in keys)
+        //                dictionary[key.ToString()] = value;
+        //        }
+        //        else
+        //        {
+        //            string key = posLeft;
 
-                    // remove "--": --xyz -> xyz
-                    if (char0 == '-' && char1 == '-')
-                        key = arg.Remove(0).Remove(0);
-                    // remove "/": /xyz -> xyz
-                    else
-                        key = arg.Remove(0);
+        //            // remove "--": --xyz -> xyz
+        //            if (char0 == '-' && char1 == '-')
+        //                key = key.Substring(1).Substring(1);
+        //            // remove "/": /xyz -> xyz
+        //            else
+        //                key = arg.Substring(1);
 
-                    dictionary[key] = value;
-                }
+        //            dictionary[key] = value;
+        //        }
 
-                i++;
-            }
+        //        i++;
+        //    }
 
-            return dictionary;
-        }
+        //    return dictionary;
+        //}
 
-        public static Dictionary<string, string> ArgsToDictionary2(string[] Args)
+        public static Dictionary<string, string> ArgsToDictionary(string[] Args)
         {
             var Parameters = new Dictionary<string, string>();
             Regex Spliter = new Regex(@"^-{1,2}|^/|=|:", RegexOptions.IgnoreCase | RegexOptions.Compiled);
@@ -503,10 +475,12 @@ namespace SysCommand
 
         public static bool IsArgumentFormat(string value)
         {
+            var argsDelimiter = new char[] { '-', '/' };
+
             if (value == null || value.Length == 0)
                 return false;
 
-            return value[0].In(App.ArgsDelimiter);
+            return value[0].In(argsDelimiter);
         }
 
         public static bool IsActionFormat(string value)

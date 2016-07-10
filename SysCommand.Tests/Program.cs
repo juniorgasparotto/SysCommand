@@ -25,7 +25,6 @@ namespace SysCommand.Tests
                 App.Initialize<Program>();
                 App.Current.DebugShowExitConfirm = false;
                 App.Current.ActionCharPrefix = null;
-                App.Current.DebugGetInputArgs = false;
                 App.Current.SetArgs("position --teste -xyz+ --bla -u false -i+ teste");
                 App.Current.Run();
                 if (!App.Current.InDebug)
