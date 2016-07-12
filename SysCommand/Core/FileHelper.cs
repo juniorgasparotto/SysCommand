@@ -12,6 +12,9 @@ namespace SysCommand
 
         public static string GetContentFromFile(string fileName)
         {
+            if (!File.Exists(fileName))
+                return null;
+
             return File.ReadAllText(fileName);
         }
         

@@ -1,0 +1,73 @@
+{
+  "input": "--lst 1 2 3 4 --lst2 10 10.1 10.2 10.333 --lst3 a b c \"1 2 3 4\"",
+  "maps": [
+    {
+      "Key": "lst",
+      "Type": "System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    },
+    {
+      "Key": "lst2",
+      "Type": "System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    },
+    {
+      "Key": "lst3",
+      "Type": "System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Key": "lst",
+      "ValueRaw": "1 2 3 4",
+      "Value": [
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "lst2",
+      "ValueRaw": "10 10.1 10.2 10.333",
+      "Value": [
+        10.0,
+        10.1,
+        10.2,
+        10.333
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "lst3",
+      "ValueRaw": "a b c \"1 2 3 4\"",
+      "Value": [
+        "a",
+        "b",
+        "c",
+        "1 2 3 4"
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

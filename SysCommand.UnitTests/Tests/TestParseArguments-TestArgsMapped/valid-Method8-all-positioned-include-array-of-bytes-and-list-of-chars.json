@@ -1,0 +1,103 @@
+{
+  "input": "-10 -10.10 2000 0 1 0 1 0 1 a b c",
+  "maps": [
+    {
+      "Key": "v1",
+      "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    },
+    {
+      "Key": "v2",
+      "Type": "System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    },
+    {
+      "Key": "v3",
+      "Type": "System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    },
+    {
+      "Key": "v4",
+      "Type": "System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    },
+    {
+      "Key": "v5",
+      "Type": "System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Key": "v1",
+      "ValueRaw": "-10",
+      "Value": -10,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "v2",
+      "ValueRaw": "-10.10",
+      "Value": -10.10,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "v3",
+      "ValueRaw": "2000",
+      "Value": 2000,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "v4",
+      "ValueRaw": "0 1 0 1 0 1 a b c",
+      "Value": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "v5",
+      "ValueRaw": "a b c",
+      "Value": [
+        "a",
+        "b",
+        "c"
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

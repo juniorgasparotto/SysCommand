@@ -1,0 +1,50 @@
+{
+  "input": "-0.1 2 0.1000 4 a b c",
+  "maps": [
+    {
+      "Key": "lst",
+      "Type": "System.Collections.Generic.List`1[[System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    },
+    {
+      "Key": "lst2",
+      "Type": "System.Collections.Generic.List`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Key": "lst",
+      "ValueRaw": "-0.1 2 0.1000 4 a b c",
+      "Value": [
+        -0.1,
+        2.0,
+        0.1,
+        4.0
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Collections.Generic.List`1[[System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "lst2",
+      "ValueRaw": "a b c",
+      "Value": [
+        "a",
+        "b",
+        "c"
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Collections.Generic.List`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "input": "--value1 10.12 --value2 10 --value3 0",
+  "maps": [
+    {
+      "Key": "value1",
+      "Type": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    },
+    {
+      "Key": "value2",
+      "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    },
+    {
+      "Key": "value3",
+      "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Key": "value1",
+      "ValueRaw": "10.12",
+      "Value": 10.12,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "value2",
+      "ValueRaw": "10",
+      "Value": 10,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "value3",
+      "ValueRaw": "0",
+      "Value": false,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

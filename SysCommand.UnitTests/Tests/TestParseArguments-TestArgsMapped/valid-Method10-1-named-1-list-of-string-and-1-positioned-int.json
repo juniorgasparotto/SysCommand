@@ -1,0 +1,47 @@
+{
+  "input": "--v1 \"abc\" a b c 20",
+  "maps": [
+    {
+      "Key": "v1",
+      "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    },
+    {
+      "Key": "v2",
+      "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Key": "v1",
+      "ValueRaw": "abc a b c 20",
+      "Value": [
+        "abc",
+        "a",
+        "b",
+        "c",
+        "20"
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Key": "v2",
+      "ValueRaw": null,
+      "Value": null,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "HasNoInput",
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    }
+  ]
+}

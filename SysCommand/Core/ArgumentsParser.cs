@@ -121,7 +121,7 @@ namespace SysCommand
 
         }
 
-        public IEnumerable<ArgumentMapped> Parser(string[] args, params ArgumentMap[] maps)
+        public IEnumerable<ArgumentMapped> Parser(string[] args, bool enablePositionedArgs = true, params ArgumentMap[] maps)
         {
             var argumentsMappeds = new List<ArgumentMapped>();
             var argumentsSimples = this.Parser(args).ToList();
@@ -135,21 +135,19 @@ namespace SysCommand
                     var argSimple = enumerator.Current;
                     var map = mapsUseds.FirstOrDefault(f => f.Key == argSimple.Key);
 
-                    if (map == null && argSimple.Key == null)
+                    if (enablePositionedArgs && map == null && argSimple.Key == null)
                         map = mapsUseds.FirstOrDefault();
                     
                     if (map != null)
                     {
-                        var argMapped = new ArgumentMapped(map.Key, argSimple.Value, null, map.Type);
+                        var argMapped = new ArgumentMapped(map.Key, this.GetValueRaw(argSimple.Value), null, map.Type);
 
                         if (argSimple.Key == null)
                         {
-                            //argMapped.HasValueAssignByPosition = true;
                             argMapped.MappingType = ArgumentMappingType.Position;
                         }
                         else
                         {
-                            //argMapped.HasValueAssignByName = true;
                             argMapped.MappingType = ArgumentMappingType.Name;
                         }
 
@@ -160,8 +158,7 @@ namespace SysCommand
                     }
                     else
                     {
-                        var argMapped = new ArgumentMapped(argSimple.Key, argSimple.Value, argSimple.Value, typeof(string));
-                        //argMapped.HasValueAssignByValueRaw = true;
+                        var argMapped = new ArgumentMapped(argSimple.Key, this.GetValueRaw(argSimple.Value), argSimple.Value, typeof(string));
                         argMapped.MappingType = ArgumentMappingType.NotMapped;
                         argumentsMappeds.Add(argMapped);
                     }
@@ -180,14 +177,12 @@ namespace SysCommand
 
                     if (map.IsOptional)
                     {
-                        //argMapped.HasValueAssignByDefaultValue = true;
                         argMapped.MappingType = ArgumentMappingType.DefaultValue;
                         argMapped.Value = map.DefaultValue;
                         argMapped.ValueRaw = map.DefaultValue;
                     }
                     else
                     {
-                        //argMapped.HasNoneValueAssign = true;
                         argMapped.MappingType = ArgumentMappingType.HasNoInput;
                     }
                 }
@@ -221,18 +216,23 @@ namespace SysCommand
                     }
                 };
 
-                if (map.Type.IsEnum)
+                if (IsEnum(map.Type))
                 {
                     var values = new List<string>() { argSimple.Value };
                     values.AddRange(this.GetArgumentSimplesOrphans(argumentsSimples, i + 1));
-                    valueConverted = this.TryConvertEnum(map.Type, values.ToArray(), out hasInvalidInput, actionConvertSuccess);
+                    var valueArray = values.ToArray();
+                    argMapped.ValueRaw = this.GetValueRaw(valueArray);
+                    valueConverted = this.TryConvertEnum(map.Type, valueArray, out hasInvalidInput, actionConvertSuccess);
                     i = iDelegate;
                 }
                 else if (map.Type != typeof(string) && typeof(IEnumerable).IsAssignableFrom(map.Type))
                 {
                     var values = new List<string>() { argSimple.Value };
                     values.AddRange(this.GetArgumentSimplesOrphans(argumentsSimples, i + 1));
-                    valueConverted = this.TryConvertCollection(map.Type, values.ToArray(), out hasInvalidInput, out hasUnsuporttedType, actionConvertSuccess);
+                    var valueArray = values.ToArray();
+                    argMapped.ValueRaw = this.GetValueRaw(valueArray);
+
+                    valueConverted = this.TryConvertCollection(map.Type, valueArray, out hasInvalidInput, out hasUnsuporttedType, actionConvertSuccess);
                     i = iDelegate;
                 }
                 else
@@ -260,12 +260,12 @@ namespace SysCommand
 
         private object TryConvertEnum(Type type, string[] values, out bool hasInvalidInput, Action<int> successConvertCallback = null)
         {
+            Type typeOriginal = this.GetTypeOrTypeOfNullable(type);
             int valueConverted = 0;
+            var enumNames = Enum.GetNames(typeOriginal);
+            var enumValues = Enum.GetValues(typeOriginal).Cast<int>().Select(f => f.ToString()).ToList();
+            var hasFlags = typeOriginal.IsDefined(typeof(FlagsAttribute), false);
             hasInvalidInput = false;
-
-            var enumNames = Enum.GetNames(type);
-            var enumValues = Enum.GetValues(type).Cast<int>().Select(f => f.ToString()).ToList();
-            var hasFlags = type.IsDefined(typeof(FlagsAttribute), false);
 
             // get next enum value
             // --enum1 value1 value2 --enum2 value1
@@ -275,15 +275,25 @@ namespace SysCommand
             // [next+1]: Has key, is not possible value
             for (var i = 0; values.Length > i; i++)
             {
-                var current = values[i];
-                var currentIsNamedValue = enumNames.Any(f => f.ToLower() == current.ToLower());
-                var currentIsIntegerValue = !currentIsNamedValue && enumValues.Any(f => f == current);
+                string enumValue = values[i];
+                var currentIsIntegerValue = false;
+                var currentIsNamedValue = enumNames.Any(f => f.ToLower() == enumValue.ToLower());
+
+                // try in value
+                if (!currentIsNamedValue)
+                {
+                    // if is char, try convert to int because can be a enum of char
+                    if (enumValue.Length == 1 && !char.IsDigit(enumValue[0]))
+                        enumValue = ((int)enumValue[0]).ToString();
+
+                    currentIsIntegerValue = enumValues.Any(f => f == enumValue);
+                }
 
                 if (currentIsNamedValue || currentIsIntegerValue)
                 {
                     // (1 + 2) + (1 + 2) = 6
                     // (1 | 2) | (1 | 2) = 3
-                    var valueParsed = (int)Enum.Parse(type, current, true);
+                    var valueParsed = (int)Enum.Parse(typeOriginal, enumValue, true);
                     if (valueConverted == 0)
                         valueConverted = valueParsed;
                     else
@@ -305,7 +315,7 @@ namespace SysCommand
             }
 
             if (!hasInvalidInput)
-                return Enum.Parse(type, valueConverted.ToString());
+                return Enum.Parse(typeOriginal, valueConverted.ToString());
 
             return valueConverted;
         }
@@ -372,14 +382,15 @@ namespace SysCommand
             object valueConverted = null;
             hasInvalidInput = false;
             hasUnsuporttedType = false;
+            Type typeOriginal = this.GetTypeOrTypeOfNullable(type);
 
-            if (value == null && type != typeof(bool))
+            if (value == null && typeOriginal != typeof(bool))
             {
                 valueConverted = GetDefaultForType(type);
             }
             else
             {
-                if (type == typeof(decimal))
+                if (typeOriginal == typeof(decimal))
                 {
                     decimal valueType;
                     if (decimal.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out valueType))
@@ -387,7 +398,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(int))
+                else if (typeOriginal == typeof(int))
                 {
                     int valueType;
                     if (int.TryParse(value, out valueType))
@@ -395,7 +406,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(double))
+                else if (typeOriginal == typeof(double))
                 {
                     double valueType;
                     if (double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out valueType))
@@ -403,7 +414,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(DateTime))
+                else if (typeOriginal == typeof(DateTime))
                 {
                     DateTime valueType;
                     if (DateTime.TryParse(value, CultureInfo.CurrentCulture, DateTimeStyles.None, out valueType))
@@ -411,7 +422,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(bool))
+                else if (typeOriginal == typeof(bool))
                 {
                     bool valueType;
                     if (string.IsNullOrWhiteSpace(value))
@@ -425,7 +436,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(byte))
+                else if (typeOriginal == typeof(byte))
                 {
                     byte valueType;
                     if (byte.TryParse(value, out valueType))
@@ -433,7 +444,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(short))
+                else if (typeOriginal == typeof(short))
                 {
                     short valueType;
                     if (short.TryParse(value, out valueType))
@@ -441,7 +452,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(ushort))
+                else if (typeOriginal == typeof(ushort))
                 {
                     ushort valueType;
                     if (ushort.TryParse(value, out valueType))
@@ -449,7 +460,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(long))
+                else if (typeOriginal == typeof(long))
                 {
                     long valueType;
                     if (long.TryParse(value, out valueType))
@@ -457,7 +468,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(ulong))
+                else if (typeOriginal == typeof(ulong))
                 {
                     ulong valueType;
                     if (ulong.TryParse(value, out valueType))
@@ -465,7 +476,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(float))
+                else if (typeOriginal == typeof(float))
                 {
                     float valueType;
                     if (float.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out valueType))
@@ -473,7 +484,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(char))
+                else if (typeOriginal == typeof(char))
                 {
                     char valueType;
                     if (char.TryParse(value, out valueType))
@@ -481,7 +492,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(uint))
+                else if (typeOriginal == typeof(uint))
                 {
                     uint valueType;
                     if (uint.TryParse(value, out valueType))
@@ -489,7 +500,7 @@ namespace SysCommand
                     else
                         hasInvalidInput = true;
                 }
-                else if (type == typeof(string))
+                else if (typeOriginal == typeof(string))
                 {
                     valueConverted = value;
                 }
@@ -517,7 +528,7 @@ namespace SysCommand
                 var arg = (string)enumerator.Current;
                 if (!IsArgumentFormat(arg))
                 {
-                    argsItems.Add(new ArgumentSimple(null, arg));
+                    argsItems.Add(new ArgumentSimple(null, GetValueScaped(arg)));
                     i++;
                     continue;
                 }
@@ -533,7 +544,7 @@ namespace SysCommand
                 var posRight = split.Length > 1 ? split[1] : null;
 
                 var char0 = (posLeft.Length > 0) ? posLeft[0] : default(char);
-                var char1 = (posLeft.Length > 1) ? posLeft[1] : default(char);                
+                var char1 = (posLeft.Length > 1) ? posLeft[1] : default(char);            
                 var lastLeftChar = posLeft.Last();
 
                 // check if exists "+" or "-": [-x+] or [-x-]
@@ -563,6 +574,8 @@ namespace SysCommand
                 {
                     value = posRight;
                 }
+
+                value = GetValueScaped(value);
 
                 //if (string.IsNullOrWhiteSpace(value))
                 //    value = "true";
@@ -615,17 +628,85 @@ namespace SysCommand
 
         public static bool IsArgumentFormat(string value)
         {
-            var argsDelimiter = new char[] { '-', '/' };
-
-            if (value == null || value.Length == 0)
+            if (value == null || value.In("-", "--", "/"))
                 return false;
 
-            return value[0].In(argsDelimiter);
+            var isChar1Digit = (value.Length > 1) ? char.IsDigit(value[1]) : false;
+
+            return value[0].In('-', '/') && !isChar1Digit;
+        }
+
+        public static string GetValueScaped(string value)
+        {
+            // "-"       = "-"
+            // "/"       = "/"
+            if (string.IsNullOrWhiteSpace(value) || value.Length <= 1)
+                return value;
+
+            var char0 = value[0];
+            var char1 = value[1];
+            var char3 = value.Length > 2 ? value[2] : default(char);
+
+            // "\-"      = "-"
+            // "\-test"  = "-test"
+            var existsScape = char0 == '\\' && char1.In('-', '/');
+
+            // "\\-"     = "\-"
+            // "\\-test" = "\-test"
+            var existsScapeAndBackslashInValue = char0 == '\\' && char1 == '\\' && char3.In('-', '/');
+
+            if (existsScape || existsScapeAndBackslashInValue)
+                value = value.Substring(1);
+
+            return value;
         }
 
         public static object GetDefaultForType(Type targetType)
         {
             return targetType.IsValueType ? Activator.CreateInstance(targetType) : null;
+        }
+
+        private string GetValueRaw(params string[] values)
+        {
+            if (values.Length == 1)
+                return values[0];
+
+            var hasString = false;
+            var strBuilder = new StringBuilder();
+            foreach (var value in values)
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    hasString = true;
+                    if (strBuilder.Length > 0)
+                        strBuilder.Append(" ");
+
+                    if (value.Contains(" "))
+                    {
+                        strBuilder.Append("\"");
+                        strBuilder.Append(value);
+                        strBuilder.Append("\"");
+                    }
+                    else
+                    {
+                        strBuilder.Append(value);
+                    }
+                }
+            }
+
+            return hasString ? strBuilder.ToString() : null;
+        }
+
+        private bool IsEnum(Type type)
+        {   
+            return this.GetTypeOrTypeOfNullable(type).IsEnum;
+        }
+
+        private Type GetTypeOrTypeOfNullable(Type type)
+        {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                return type.GetGenericArguments()[0];
+            return type;
         }
     }
 }
