@@ -1,5 +1,5 @@
 {
-  "input": "1 2 3 4 10 10.1 10.2 10.333 a b c \"1 2 3 4\"",
+  "input": "1 2 3 4 10 10.1 10.2 10.333 a b c \"\\\"quotes in content\\\"\"",
   "maps": [
     {
       "Key": "lst",
@@ -23,7 +23,7 @@
   "argsMappeds": [
     {
       "Key": "lst",
-      "ValueRaw": "1 2 3 4 10 10.1 10.2 10.333 a b c \"1 2 3 4\"",
+      "ValueRaw": "1 2 3 4 10 10.1 10.2 10.333 a b c \"\"quotes in content\"\"",
       "Value": [
         1.0,
         2.0,
@@ -43,7 +43,7 @@
     },
     {
       "Key": "lst2",
-      "ValueRaw": "a b c \"1 2 3 4\"",
+      "ValueRaw": "a b c \"\"quotes in content\"\"",
       "Value": null,
       "HasUnsuporttedType": false,
       "HasInvalidInput": true,
@@ -54,11 +54,11 @@
     },
     {
       "Key": "lst3",
-      "ValueRaw": "b c \"1 2 3 4\"",
+      "ValueRaw": "b c \"\"quotes in content\"\"",
       "Value": [
         "b",
         "c",
-        "1 2 3 4"
+        "\"quotes in content\""
       ],
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,

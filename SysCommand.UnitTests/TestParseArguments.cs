@@ -158,7 +158,7 @@ namespace SysCommand.UnitTests
             //method6
             methodName = "Method6";
             this.TestArgsMappedAuto(methodName, "--lst 1 2 3 4 --lst2 10 10.1 10.2 10.333 --lst3 a b c \"1 2 3 4\"", true, this.GetTestFileName(currentMethodName, methodName, "-", "3-list-ints-decimals-and-strings"));
-            this.TestArgsMappedAuto(methodName, "1 2 3 4 10 10.1 10.2 10.333 a b c \"1 2 3 4\"", true, this.GetTestFileName(currentMethodName, methodName, "-", "3-list-ints-decimals-and-strings-positioned"));
+            this.TestArgsMappedAuto(methodName, "1 2 3 4 10 10.1 10.2 10.333 a b c \"\\\"quotes in content\\\"\"", true, this.GetTestFileName(currentMethodName, methodName, "-", "3-list-ints-decimals-and-strings-positioned"));
 
             //method7
             methodName = "Method7";
