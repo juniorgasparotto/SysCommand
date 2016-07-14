@@ -23,7 +23,6 @@ namespace SysCommand
         {
             this.Arguments = args;
             this.GetRaw = string.Join(" ", args);
-            var parser = new ArgumentsParser();
             this.Get = AppHelpers.ArgsToDictionary(args);
             this.LoadRequestActions();
 
