@@ -14,7 +14,7 @@ using System.Collections;
 
 namespace SysCommand
 {
-    public class ArgumentsParser
+    public static class ArgumentsParser
     {
         /// <summary>
         /// Map: a, b, c, d, e, f = 1
@@ -37,54 +37,145 @@ namespace SysCommand
             NotMapped,
         }
 
+        /// <summary>
+        /// Input: 1 -a -b value1 -c+ --long --long2 value2 /long3:+
+        /// Result expected:
+        ///  1: Unnamed
+        /// -a: ShortNameAndNoValue
+        /// -b: ShortNameAndHasValue
+        /// -c: ShortNameAndHasValueInName
+        /// --long: LongNameAndNoValue
+        /// --long2: LongNameAndHasValue
+        /// --long3: LongNameAndHasValueInName
+        /// </summary>
+        public enum ArgumentFormat
+        {
+            Unnamed,
+            ShortNameAndNoValue,
+            ShortNameAndHasValue,
+            ShortNameAndHasValueInName,
+            LongNameAndNoValue,
+            LongNameAndHasValue,
+            LongNameAndHasValueInName,
+        }
+
         public class ArgumentMap
         {
-            public string Key { get; private set; }
+            public string MapName { get; private set; }
+            public string LongName { get; private set; }
+            public char? ShortName { get; private set; }
             public Type Type { get; private set; }
             public object DefaultValue { get; private set; }
             public bool IsOptional { get; private set; }
+            public string HelpText { get; private set; }
+            public bool ShowHelpComplement { get; private set; }
+            public int? Position { get; set; }
 
-            public ArgumentMap(string key, Type type, bool isOptional, object defaultValue)
+            public ArgumentMap(string mapName, string longName, char? shortName, Type type, bool isOptional, object defaultValue, string helpText, bool showHelpComplement, int? position)
             {
-                this.Key = key;
+                this.MapName = mapName;
+                this.LongName = longName;
+                this.ShortName = shortName;
                 this.Type = type;
                 this.IsOptional = isOptional;
                 this.DefaultValue = defaultValue;
+                this.HelpText = helpText;
+                this.ShowHelpComplement = showHelpComplement;
+                this.Position = position;
             }
 
             public override string ToString()
             {
-                return "[" + this.Key + ", " + this.Type + "]";
+                return "[" + this.MapName + ", " + this.Type + "]";
             }
-
         }
 
-        public class ArgumentSimple
+        public class ArgumentRaw
         {
-            public string Key { get; set; }
+            public string Name { get; set; }
             public string Value { get; set; }
-
-            public ArgumentSimple(string key, string value)
+            public ArgumentFormat Format { get; set; }
+            public string DelimiterArgument { get; set; }
+            public string DelimiterValueInName { get; set; }
+            public string ValueRaw { get; set; }
+            
+            public bool IsShortName
             {
-                this.Key = key;
+                get 
+                {
+                    switch (this.Format)
+                    {
+                        case ArgumentFormat.ShortNameAndHasValue:
+                        case ArgumentFormat.ShortNameAndHasValueInName:
+                        case ArgumentFormat.ShortNameAndNoValue:
+                            return true;
+                    }
+
+                    return false;
+                }
+            }
+
+            public bool IsLongName
+            {
+                get
+                {
+                    switch (this.Format)
+                    {
+                        case ArgumentFormat.LongNameAndHasValue:
+                        case ArgumentFormat.LongNameAndHasValueInName:
+                        case ArgumentFormat.LongNameAndNoValue:
+                            return true;
+                    }
+
+                    return false;
+                }
+            }
+
+            public ArgumentRaw(string name, string valueRaw, string value, ArgumentFormat format, string delimiterArgument, string delimiterValueInName)
+            {
+                this.Name = name;
                 this.Value = value;
+                this.ValueRaw = valueRaw;
+                this.Format = format;
+                this.DelimiterArgument = delimiterArgument;
+                this.DelimiterValueInName = delimiterValueInName;
             }
 
             public override string ToString()
             {
-                return "[" + this.Key + ", " + this.Value + "]";
+                return "[" + this.Name + ", " + this.Value + "]";
             }
+
         }
 
         public class ArgumentMapped
         {
-            public string Key { get; set; }
-            public object ValueRaw { get; set; }
+            private List<ArgumentRaw> allRaw;
+
+            public string Name { get; set; }
+            public object ValueParsed { get; set; }
             public object Value { get; set; }
             public bool HasUnsuporttedType { get; set; }
             public bool HasInvalidInput { get; set; }
             public Type Type { get; set; }
             public ArgumentMappingType MappingType { get; set; }
+            public ArgumentMap Map { get; set; }
+
+            public string Raw
+            {
+                get
+                {
+                    return ArgumentsParser.GetValueRaw(this.allRaw.Select(f => f.ValueRaw).ToArray());
+                }
+            }
+
+            public IEnumerable<ArgumentRaw> AllRaw
+            { 
+                get 
+                { 
+                    return allRaw; 
+                }
+            }
 
             public bool IsMapped
             {
@@ -106,43 +197,186 @@ namespace SysCommand
                 }
             }
 
-            public ArgumentMapped(string key, string valueRaw, string value, Type type)
+            public ArgumentMapped(string name, string valueParsed, string value, Type type, ArgumentMap map)
             {
-                this.Key = key;
+                this.Name = name;
                 this.Value = value;
-                this.ValueRaw = valueRaw;
+                this.ValueParsed = valueParsed;
                 this.Type = type;
+                this.Map = map;
+                this.allRaw = new List<ArgumentRaw>();
+            }
+
+            public void AddRaw(ArgumentRaw raw)
+            {
+                this.allRaw.Add(raw);
             }
 
             public override string ToString()
             {
-                return "[" + this.Key + ", " + this.Value + "]";
+                return "[" + this.Name + ", " + this.Value + "]";
             }
 
         }
 
-        public IEnumerable<ArgumentMapped> Parser(string[] args, bool enablePositionedArgs = true, params ArgumentMap[] maps)
+        public static IEnumerable<ArgumentRaw> Parser(string[] args)
+        {
+            var argsItems = new List<ArgumentRaw>();
+            var trueChar = '+';
+            var falseChar = '-';
+            var enumerator = args.GetEnumerator();
+
+            var i = 0;
+            while (enumerator.MoveNext())
+            {
+                string argFormat;
+
+                // if is non parameter: [value] [123] [true] [\--scape-parameter] [--=] [--]
+                var arg = (string)enumerator.Current;
+                if (!IsArgumentFormat(arg, out argFormat))
+                {
+                    argsItems.Add(new ArgumentRaw(null, arg, GetValueScaped(arg), ArgumentFormat.Unnamed, null, null));
+                    i++;
+                    continue;
+                }
+
+                string value;
+                string valueRaw;
+                string delimiterValueInName = null;
+                bool hasValueInName = false;
+                bool hasNoValue = false;
+
+                // get left pos and rigth pos in the following situations:
+                // -x=true     -> posLeft = "-x"; posRight = "true"
+                // -x          -> posLeft = "-x"; posRight = null
+                // --x:true    -> posLeft = "-x"; posRight = "true"
+                // --x:=true   -> posLeft = "-x"; posRight = "=true"
+                // --x=:true   -> posLeft = "-x"; posRight = ":true"                
+                string posLeft = null;
+                string posRight = null;
+                foreach (var c in arg)
+                {
+                    if (delimiterValueInName == null)
+                    {
+                        if (c == '=')
+                            delimiterValueInName = "=";
+                        else if (c == ':')
+                            delimiterValueInName = ":";
+                        else
+                            posLeft += c;
+                    }
+                    else
+                    {
+                        posRight += c;
+                    }
+                }
+
+                var lastLeftChar = posLeft.Last();
+
+                // check if exists "+" or "-": [-x+] or [-x-]
+                if (lastLeftChar.In(trueChar, falseChar))
+                {
+                    posLeft = posLeft.Remove(posLeft.Length - 1);
+                    value = lastLeftChar == trueChar ? trueChar.ToString() : falseChar.ToString();
+                    hasValueInName = true;
+                }
+                else if (posRight == null)
+                {
+                    // get next arg
+                    value = args.Length > (i + 1) ? args[i + 1] : null;
+
+                    // ignore if next arg is parameter: [-xyz --next-parameter ...]
+                    if (IsArgumentFormat(value))
+                    {
+                        value = null;
+                        hasNoValue = true;
+                    }
+                    // jump the next arg if is value: [-xyz value]
+                    else
+                    {
+                        enumerator.MoveNext();
+                        i++;
+                    }
+                }
+                else
+                {
+                    value = posRight;
+                    hasValueInName = true;
+                }
+
+                // --name \--value -> scape value
+                valueRaw = value;
+                value = GetValueScaped(value);
+
+                // remove "-":  -xyz  -> xyz
+                // remove "--": --xyz -> xyz
+                // remove "/":  /xyz  -> xyz
+                string name = posLeft.Substring(argFormat.Length);
+
+                // -x -> single parameter
+                if (argFormat == "-")
+                {
+                    ArgumentFormat format;
+                    if (hasNoValue)
+                        format = ArgumentFormat.ShortNameAndNoValue;
+                    else if (hasValueInName)
+                        format = ArgumentFormat.ShortNameAndHasValueInName;
+                    else
+                        format = ArgumentFormat.ShortNameAndHasValue;
+
+                    foreach (var n in name)
+                        argsItems.Add(new ArgumentRaw(n.ToString(), valueRaw, value, format, argFormat, delimiterValueInName));
+                }
+                else
+                {
+                    ArgumentFormat format;
+
+                    if (hasNoValue)
+                        format = ArgumentFormat.LongNameAndNoValue;
+                    else if (hasValueInName)
+                        format = ArgumentFormat.LongNameAndHasValueInName;
+                    else
+                        format = ArgumentFormat.LongNameAndHasValue;
+
+                    argsItems.Add(new ArgumentRaw(name, valueRaw, value, format, argFormat, delimiterValueInName));
+                }
+
+                i++;
+            }
+
+            return argsItems;
+        }
+
+        public static IEnumerable<ArgumentMapped> Parser(IEnumerable<ArgumentRaw> argumentsRaw, bool enablePositionedArgs = true, params ArgumentMap[] maps)
         {
             var argumentsMappeds = new List<ArgumentMapped>();
-            var argumentsSimples = this.Parser(args).ToList();
             var mapsUseds = maps.ToList();
 
             var i = 0;
-            using (IEnumerator<ArgumentSimple> enumerator = argumentsSimples.GetEnumerator())
+            using (IEnumerator<ArgumentRaw> enumerator = argumentsRaw.GetEnumerator())
             {
                 while (enumerator.MoveNext())
                 {
-                    var argSimple = enumerator.Current;
-                    var map = mapsUseds.FirstOrDefault(f => f.Key == argSimple.Key);
+                    var argRaw = enumerator.Current;
+                    var map = mapsUseds.FirstOrDefault(m => 
+                    {
+                        if (argRaw.IsLongName)
+                            return m.LongName == argRaw.Name;
+                        else if (argRaw.IsShortName)
+                            return m.ShortName == argRaw.Name[0];
+                        else
+                            return false;
+                    });
 
-                    if (enablePositionedArgs && map == null && argSimple.Key == null)
+                    if (enablePositionedArgs && map == null && argRaw.Format == ArgumentFormat.Unnamed)
                         map = mapsUseds.FirstOrDefault();
                     
                     if (map != null)
                     {
-                        var argMapped = new ArgumentMapped(map.Key, this.GetValueRaw(argSimple.Value), null, map.Type);
+                        var argMapped = new ArgumentMapped(map.MapName, GetValueRaw(argRaw.Value), null, map.Type, map);
+                        argMapped.AddRaw(argRaw);
 
-                        if (argSimple.Key == null)
+                        if (argRaw.Format == ArgumentFormat.Unnamed)
                         {
                             argMapped.MappingType = ArgumentMappingType.Position;
                         }
@@ -152,13 +386,14 @@ namespace SysCommand
                         }
 
                         argumentsMappeds.Add(argMapped);
-                        this.ParseArgument(enumerator, argumentsSimples, ref i, argSimple, map, argMapped);
+                        ParseArgument(enumerator, argumentsRaw, ref i, argRaw, map, argMapped);
 
                         mapsUseds.Remove(map);
                     }
                     else
                     {
-                        var argMapped = new ArgumentMapped(argSimple.Key, this.GetValueRaw(argSimple.Value), argSimple.Value, typeof(string));
+                        var argMapped = new ArgumentMapped(argRaw.Name, GetValueRaw(argRaw.Value), argRaw.Value, typeof(string), null);
+                        argMapped.AddRaw(argRaw);
                         argMapped.MappingType = ArgumentMappingType.NotMapped;
                         argumentsMappeds.Add(argMapped);
                     }
@@ -167,24 +402,20 @@ namespace SysCommand
                 }
             }
 
-            foreach (var map in maps)
+            foreach (var mapWithoutInput in mapsUseds)
             {
-                var exists = argumentsMappeds.Exists(f => f.Key == map.Key);
-                if (!exists)
-                {
-                    var argMapped = new ArgumentMapped(map.Key, null, null, map.Type);
-                    argumentsMappeds.Add(argMapped);
+                var argMapped = new ArgumentMapped(mapWithoutInput.MapName, null, null, mapWithoutInput.Type, mapWithoutInput);
+                argumentsMappeds.Add(argMapped);
 
-                    if (map.IsOptional)
-                    {
-                        argMapped.MappingType = ArgumentMappingType.DefaultValue;
-                        argMapped.Value = map.DefaultValue;
-                        argMapped.ValueRaw = map.DefaultValue;
-                    }
-                    else
-                    {
-                        argMapped.MappingType = ArgumentMappingType.HasNoInput;
-                    }
+                if (mapWithoutInput.IsOptional)
+                {
+                    argMapped.MappingType = ArgumentMappingType.DefaultValue;
+                    argMapped.Value = mapWithoutInput.DefaultValue;
+                    argMapped.ValueParsed = mapWithoutInput.DefaultValue;
+                }
+                else
+                {
+                    argMapped.MappingType = ArgumentMappingType.HasNoInput;
                 }
             }
 
@@ -194,15 +425,15 @@ namespace SysCommand
             return argumentsMappeds;
         }
 
-        private void ParseArgument(IEnumerator<ArgumentSimple> enumerator, List<ArgumentSimple> argumentsSimples, ref int i, ArgumentSimple argSimple, ArgumentMap map, ArgumentMapped argMapped)
+        private static void ParseArgument(IEnumerator<ArgumentRaw> enumerator, IEnumerable<ArgumentRaw> argumentsRaw, ref int i, ArgumentRaw argRaw, ArgumentMap map, ArgumentMapped argMapped)
         {
-            if (argSimple.Value == null && map.Type != typeof(bool))
+            if (argRaw.Value == null && map.Type != typeof(bool))
             {
                 argMapped.Value = GetDefaultForType(map.Type);
             }
             else
             {
-                var value = argSimple.Value;
+                var value = argRaw.Value;
                 var hasInvalidInput = false;
                 var hasUnsuporttedType = false;
                 object valueConverted = null;
@@ -213,31 +444,32 @@ namespace SysCommand
                     {
                         enumerator.MoveNext();
                         iDelegate++;
+                        argMapped.AddRaw(enumerator.Current);
                     }
                 };
 
                 if (IsEnum(map.Type))
                 {
-                    var values = new List<string>() { argSimple.Value };
-                    values.AddRange(this.GetArgumentSimplesOrphans(argumentsSimples, i + 1));
+                    var values = new List<string>() { argRaw.Value };
+                    values.AddRange(GetValuesRawPositioned(argumentsRaw, i + 1));
                     var valueArray = values.ToArray();
-                    argMapped.ValueRaw = this.GetValueRaw(valueArray);
-                    valueConverted = this.TryConvertEnum(map.Type, valueArray, out hasInvalidInput, actionConvertSuccess);
+                    argMapped.ValueParsed = GetValueRaw(valueArray);
+                    valueConverted = TryConvertEnum(map.Type, valueArray, out hasInvalidInput, actionConvertSuccess);
                     i = iDelegate;
                 }
                 else if (map.Type != typeof(string) && typeof(IEnumerable).IsAssignableFrom(map.Type))
                 {
-                    var values = new List<string>() { argSimple.Value };
-                    values.AddRange(this.GetArgumentSimplesOrphans(argumentsSimples, i + 1));
+                    var values = new List<string>() { argRaw.Value };
+                    values.AddRange(GetValuesRawPositioned(argumentsRaw, i + 1));
                     var valueArray = values.ToArray();
-                    argMapped.ValueRaw = this.GetValueRaw(valueArray);
+                    argMapped.ValueParsed = GetValueRaw(valueArray);
 
-                    valueConverted = this.TryConvertCollection(map.Type, valueArray, out hasInvalidInput, out hasUnsuporttedType, actionConvertSuccess);
+                    valueConverted = TryConvertCollection(map.Type, valueArray, out hasInvalidInput, out hasUnsuporttedType, actionConvertSuccess);
                     i = iDelegate;
                 }
                 else
                 {
-                    valueConverted = this.TryConvertPrimitives(map.Type, value, out hasInvalidInput, out hasUnsuporttedType);
+                    valueConverted = TryConvertPrimitives(map.Type, value, out hasInvalidInput, out hasUnsuporttedType);
                 }
 
                 argMapped.HasInvalidInput = hasInvalidInput;
@@ -248,19 +480,23 @@ namespace SysCommand
             }
         }
 
-        private IEnumerable<string> GetArgumentSimplesOrphans(List<ArgumentSimple> arguments, int iStart)
+        public static IEnumerable<string> GetValuesRawPositioned(IEnumerable<ArgumentRaw> argumentsRaw, int iStart)
         {
             // get nexts orphans values
-            for (var iArgSimple = iStart; arguments.Count > iArgSimple; iArgSimple++)
-                if (arguments[iArgSimple].Key == null)
-                    yield return arguments[iArgSimple].Value;
+            var count = argumentsRaw.Count();
+            for (var iArgRaw = iStart; count > iArgRaw; iArgRaw++)
+            {
+                var elm = argumentsRaw.ElementAt(iArgRaw);
+                if (elm.Format == ArgumentFormat.Unnamed)
+                    yield return elm.Value;
                 else
                     break;
+            }
         }
 
-        private object TryConvertEnum(Type type, string[] values, out bool hasInvalidInput, Action<int> successConvertCallback = null)
+        public static object TryConvertEnum(Type type, string[] values, out bool hasInvalidInput, Action<int> successConvertCallback = null)
         {
-            Type typeOriginal = this.GetTypeOrTypeOfNullable(type);
+            Type typeOriginal = GetTypeOrTypeOfNullable(type);
             int valueConverted = 0;
             var enumNames = Enum.GetNames(typeOriginal);
             var enumValues = Enum.GetValues(typeOriginal).Cast<int>().Select(f => f.ToString()).ToList();
@@ -270,9 +506,9 @@ namespace SysCommand
             // get next enum value
             // --enum1 value1 value2 --enum2 value1
             // [current.....] [next] [next+1......]
-            // [current]: Has key "enum1"
-            // [next]: Hasn't key, then is possible value
-            // [next+1]: Has key, is not possible value
+            // [current]: Has arg "enum1"
+            // [next]: Hasn't arg, then is possible value
+            // [next+1]: Has arg, is not possible value
             for (var i = 0; values.Length > i; i++)
             {
                 string enumValue = values[i];
@@ -320,7 +556,7 @@ namespace SysCommand
             return valueConverted;
         }
 
-        private object TryConvertCollection(Type type, string[] values, out bool hasInvalidInput, out bool hasUnsuporttedType, Action<int> successConvertCallback = null)
+        public static object TryConvertCollection(Type type, string[] values, out bool hasInvalidInput, out bool hasUnsuporttedType, Action<int> successConvertCallback = null)
         {
             object list = null;
             var hasInvalidInputAux = false;
@@ -345,7 +581,7 @@ namespace SysCommand
                 for (var i = 0; values.Length > i; i++)
                 {
                     var value = values[i];
-                    var convertedValue = this.TryConvertPrimitives(typeList, value, out hasInvalidInputAux, out hasUnsuporttedTypeAux);
+                    var convertedValue = TryConvertPrimitives(typeList, value, out hasInvalidInputAux, out hasUnsuporttedTypeAux);
                     if (!hasInvalidInputAux && !hasUnsuporttedTypeAux)
                     {
                         list.GetType().GetMethod("Add").Invoke(list, new[] { convertedValue });
@@ -377,12 +613,12 @@ namespace SysCommand
             return list;
         }
 
-        private object TryConvertPrimitives(Type type, string value, out bool hasInvalidInput, out bool hasUnsuporttedType)
+        public static object TryConvertPrimitives(Type type, string value, out bool hasInvalidInput, out bool hasUnsuporttedType)
         {
             object valueConverted = null;
             hasInvalidInput = false;
             hasUnsuporttedType = false;
-            Type typeOriginal = this.GetTypeOrTypeOfNullable(type);
+            Type typeOriginal = GetTypeOrTypeOfNullable(type);
 
             if (value == null && typeOriginal != typeof(bool))
             {
@@ -513,127 +749,104 @@ namespace SysCommand
             return valueConverted;
         }
 
-        public IEnumerable<ArgumentSimple> Parser(string[] args)
-        {
-            var argsItems = new List<ArgumentSimple>();
-            var trueChar = '+';
-            var falseChar = '-';
-            var enumerator = args.GetEnumerator();
-            string value;
-
-            var i = 0;
-            while (enumerator.MoveNext())
-            {
-                // if is non parameter: [value] [123] [true] [\--scape-parameter]
-                var arg = (string)enumerator.Current;
-                if (!IsArgumentFormat(arg))
-                {
-                    argsItems.Add(new ArgumentSimple(null, GetValueScaped(arg)));
-                    i++;
-                    continue;
-                }
-
-                // -x=true     -> posLeft = "-x"; posRight = "true"
-                // -x          -> posLeft = "-x"; posRight = null
-                // --x:true    -> posLeft = "-x"; posRight = "true"
-                // --x:=true   -> posLeft = "-x"; posRight = "=true"
-                // --x=:true   -> posLeft = "-x"; posRight = ":true"
-                
-                var split = arg.Split(new char[] { '=', ':' }, 2, StringSplitOptions.RemoveEmptyEntries);
-                var posLeft = split.Length > 0 ? split[0] : null;
-                var posRight = split.Length > 1 ? split[1] : null;
-
-                var char0 = (posLeft.Length > 0) ? posLeft[0] : default(char);
-                var char1 = (posLeft.Length > 1) ? posLeft[1] : default(char);            
-                var lastLeftChar = posLeft.Last();
-
-                // check if exists "+" or "-": [-x+] or [-x-]
-                if (lastLeftChar.In(trueChar, falseChar))
-                {
-                    posLeft = posLeft.Remove(posLeft.Length - 1);
-                    value = lastLeftChar == trueChar ? "true" : "false";
-                }
-                else if (posRight == null)
-                {
-                    // get next arg
-                    value = args.Length > (i + 1) ? args[i + 1] : null;
-
-                    // ignore if next arg is parameter: [-xyz --next-parameter ...]
-                    if (IsArgumentFormat(value))
-                    {
-                        value = null;
-                    }
-                    // jump the next arg if is value: [-xyz value]
-                    else
-                    {
-                        enumerator.MoveNext();
-                        i++;
-                    }
-                }
-                else
-                {
-                    value = posRight;
-                }
-
-                value = GetValueScaped(value);
-
-                //if (string.IsNullOrWhiteSpace(value))
-                //    value = "true";
-
-                // -x -> single parameter
-                if (char0 == '-' && char1 != '-')
-                {
-                    // remove "-": -xyz -> xyz
-                    var keys = posLeft.Substring(1);
-                    foreach (var key in keys)
-                        argsItems.Add(new ArgumentSimple(key.ToString(), value));
-                }
-                else
-                {
-                    string key = posLeft;
-
-                    // remove "--": --xyz -> xyz
-                    if (char0 == '-' && char1 == '-')
-                        key = key.Substring(1).Substring(1);
-                    // remove "/": /xyz -> xyz
-                    else
-                        key = arg.Substring(1);
-
-                    argsItems.Add(new ArgumentSimple(key, value));
-                }
-
-                i++;
-            }
-
-            return argsItems;
-        }
-
         public static IEnumerable<ArgumentMap> GetArgumentMaps(MethodInfo method)
         {
+            var maps = new List<ArgumentMap>();
             var parameters = method.GetParameters();
             foreach (var parameter in parameters)
-                yield return GetArgumentMap(parameter);
+            {
+                var map = GetArgumentMap(parameter);
+                maps.Add(map);
+            }
+            return GetArgumentsMapsOrderedByPosition(maps);
         }
 
         public static ArgumentMap GetArgumentMap(ParameterInfo parameter)
         {
-            var name = parameter.Name;
             var attribute = Attribute.GetCustomAttribute(parameter, typeof(ArgumentAttribute)) as ArgumentAttribute;
+            return GetArgumentMap(attribute, parameter.Name, parameter.ParameterType, parameter.IsOptional, parameter.DefaultValue);
+        }
+
+        public static ArgumentMap GetArgumentMap(ArgumentAttribute attribute, string name, Type type, bool isOptional, object defaultValue)
+        {
+            string longName = null;
+            char? shortName = null;
+            string helpText = null;
+            bool showHelpComplement = false;
+            int? position = null;
 
             if (attribute != null)
-                name = parameter.Name;
+            {
+                longName = attribute.LongName;
+                shortName = attribute.ShortName;
+                helpText = attribute.Help;
+                showHelpComplement = attribute.ShowHelpComplement;
+                position = attribute.Position;
 
-            return new ArgumentMap(name, parameter.ParameterType, parameter.IsOptional, parameter.DefaultValue);
+                if (string.IsNullOrWhiteSpace(longName) && string.IsNullOrWhiteSpace(shortName.ToString()))
+                    throw new Exception(string.Format("The parameter '{0}' has defined argument, but does not contain any information or longName shortName.", name));
+            }
+            else if (name.Length == 1)
+            {
+                shortName = name[0].ToString().ToLower()[0];
+            }
+            else
+            {
+                longName = AppHelpers.ToLowerSeparate(name, '-');
+            }
+
+            return new ArgumentMap(name, longName, shortName, type, isOptional, defaultValue, helpText, showHelpComplement, position);
+        }
+
+        private static IEnumerable<ArgumentMap> GetArgumentsMapsOrderedByPosition(IEnumerable<ArgumentMap> maps)
+        {
+            var mapsWithOrder = maps.Where(f => f.Position != null).OrderBy(f=>f.Position).ToList();
+            if (mapsWithOrder.Count > 0)
+            {
+                var mapsWithoutOrder = maps.Where(f => f.Position == null);
+                var mapsReturn = new List<ArgumentMap>();
+                mapsReturn.AddRange(mapsWithOrder);
+                mapsReturn.AddRange(mapsWithoutOrder);
+                return mapsReturn;
+            }
+            return maps;
         }
 
         public static bool IsArgumentFormat(string value)
         {
-            if (value == null || value.In("-", "--", "/"))
-                return false;
+            return GetArgumentFormat(value) != null;
+        }
 
-            var isChar1Digit = (value.Length > 1) ? char.IsDigit(value[1]) : false;
+        public static bool IsArgumentFormat(string value, out string argFormat)
+        {
+            argFormat = GetArgumentFormat(value);
+            return argFormat != null;
+        }
 
-            return value[0].In('-', '/') && !isChar1Digit;
+        public static string GetArgumentFormat(string value)
+        {
+            string argFormat = null;
+            if (value != null && !value.In("-", "--", "/"))
+            {   
+                var invalidArgStartName = new char[] { '=', ':' };
+                var char0 = value[0];
+                var char1 = (value.Length > 1) ? value[1] : default(char);
+                var char2 = (value.Length > 2) ? value[2] : default(char);
+
+                // the following values are considered invalid args formats
+                // --=a     --:a        --:
+                // -=a      -:a
+                // /=a      /:a
+                // -2000    --2000      /0
+                if (char0 == '-' && char1 == '-' && !char.IsDigit(char2) && !char2.In(invalidArgStartName))
+                    argFormat = "--";
+                else if (char0 == '-' && !char.IsDigit(char1) && !char1.In(invalidArgStartName))
+                    argFormat = "-";
+                else if (char0 == '/' && !char.IsDigit(char1) && !char1.In(invalidArgStartName))
+                    argFormat = "/";
+            }
+
+            return argFormat;
         }
 
         public static string GetValueScaped(string value)
@@ -661,22 +874,16 @@ namespace SysCommand
             return value;
         }
 
-        public static object GetDefaultForType(Type targetType)
+        public static string GetValueRaw(params string[] values)
         {
-            return targetType.IsValueType ? Activator.CreateInstance(targetType) : null;
-        }
-
-        private string GetValueRaw(params string[] values)
-        {
-            if (values.Length == 1)
-                return values[0];
-
             var hasString = false;
             var strBuilder = new StringBuilder();
-            foreach (var value in values)
+            foreach (var v in values)
             {
-                if (!string.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(v))
                 {
+                    var value = v.Replace("\"", "\\\"");
+
                     hasString = true;
                     if (strBuilder.Length > 0)
                         strBuilder.Append(" ");
@@ -697,16 +904,21 @@ namespace SysCommand
             return hasString ? strBuilder.ToString() : null;
         }
 
-        private bool IsEnum(Type type)
+        private static bool IsEnum(Type type)
         {   
-            return this.GetTypeOrTypeOfNullable(type).IsEnum;
+            return GetTypeOrTypeOfNullable(type).IsEnum;
         }
 
-        private Type GetTypeOrTypeOfNullable(Type type)
+        private static Type GetTypeOrTypeOfNullable(Type type)
         {
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
                 return type.GetGenericArguments()[0];
             return type;
+        }
+
+        private static object GetDefaultForType(Type targetType)
+        {
+            return targetType.IsValueType ? Activator.CreateInstance(targetType) : null;
         }
     }
 }

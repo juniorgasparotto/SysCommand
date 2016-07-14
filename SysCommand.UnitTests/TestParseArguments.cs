@@ -17,7 +17,6 @@ namespace SysCommand.UnitTests
     public class TestParseArguments
     {
         JsonSerializerSettings jsonSerializeConfig;
-        private bool GenerateFilesResultsToValidate = false;
 
         public TestParseArguments()
         {
@@ -32,23 +31,35 @@ namespace SysCommand.UnitTests
             this.jsonSerializeConfig.TypeNameHandling = TypeNameHandling.None;
         }
 
-        private string GetTestFileName(string methodName, params object[] fileNames)
+        private string Join(string separator, params string[] values)
         {
-            var fileNameFormat = @"Tests\{0}-{1}\{2}{3}.json";
-            var valid = this.GenerateFilesResultsToValidate ? "" : "valid-";
-            var fileName = string.Format(fileNameFormat, this.GetType().Name, methodName, valid, string.Join("", fileNames));
-            
+            return string.Join(separator, values);
+        }
+
+        private string GetValidTestFileName(string testContext, string fileName)
+        {
+            var fileNameFormat = @"Tests\{0}-{1}\valid-{2}.json";
+            fileName = string.Format(fileNameFormat, this.GetType().Name, testContext, fileName);
             return Path.Combine(@"..\..\", fileName);
         }
 
-        private void SaveFileIfNotExists<T>(T obj, string fileName)
+        private string GetUncheckedTestFileName(string testContext, string fileName)
         {
-            if (this.GenerateFilesResultsToValidate && FileHelper.GetObjectFromFileJson<T>(fileName, jsonSerializeConfig) == null)
-                FileHelper.SaveObjectToFileJson(obj, fileName, jsonSerializeConfig);
+            var fileNameFormat = @"Tests\{0}-{1}\unchecked-{2}.json";
+            fileName = string.Format(fileNameFormat, this.GetType().Name, testContext, fileName);
+            return Path.Combine(@"..\..\", fileName);
+        }
+
+        private void SaveUncheckedFileIfValidNotExists<T>(T obj, string testContext, string fileName)
+        {
+            var validFileName = this.GetValidTestFileName(testContext, fileName);
+            var uncheckedFileName = this.GetUncheckedTestFileName(testContext, fileName);
+            if (FileHelper.GetObjectFromFileJson<T>(validFileName, jsonSerializeConfig) == null)
+                FileHelper.SaveObjectToFileJson(obj, uncheckedFileName, jsonSerializeConfig);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public string GetCurrentMethod()
+        public string GetCurrentMethodName()
         {
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(1);
@@ -56,174 +67,371 @@ namespace SysCommand.UnitTests
             return sf.GetMethod().Name;
         }
 
-        [TestMethod]
-        public void TestSingle()
+        private void TestArgsMappedAuto(string mapMethodName, string input, bool enablePositionedArgs, string testMethodName)
         {
-            var parser = new ArgumentsParser();
-            var args = AppHelpers.CommandLineToArgs("action --teste -xyz+ --bla -u false -i+ teste --\"abc\":0");
-            var dic = parser.Parser(args);
-            var output = ToString(dic);
-            Assert.IsTrue(output == "[]=[action];[teste]=[];[x]=[true];[y]=[true];[z]=[true];[bla]=[];[u]=[false];[i]=[true];[]=[teste];[abc]=[0];");
+            var testContext = "Maps";
 
-            args = AppHelpers.CommandLineToArgs("action --teste+ -x- \"--bla\" /u false -iih=+ , -l:=+\\\"quote\\\" -1=0 2 3");
-            dic = parser.Parser(args);
-            output = ToString(dic);
-            Assert.IsTrue(output == "[]=[action];[teste]=[true];[x]=[false];[bla]=[];[u]=[false];[i]=[+];[i]=[+];[h]=[+];[]=[,];[l]=[+\"quote\"];[1]=[0];[]=[2];[]=[3];");
-
-            args = AppHelpers.CommandLineToArgs("--a value1 --b value2 -c value3");
-            dic = parser.Parser(args);
-            output = ToString(dic);
-            Assert.IsTrue(output == "[a]=[value1];[b]=[value2];[c]=[value3];");
-        }
-
-        private void TestArgsMappedAuto(string methodName, string input, bool enablePositionedArgs, string fileName, string testDetail = null)
-        {
-            var parser = new ArgumentsParser();
-            var method = GetMethod(methodName);
+            var method = this.GetType().GetMethod(mapMethodName);
             var args = AppHelpers.CommandLineToArgs(input);
             var maps = ArgumentsParser.GetArgumentMaps(method);
-            var argsMappeds = parser.Parser(args, enablePositionedArgs, maps.ToArray());
+            var argsRaw = ArgumentsParser.Parser(args);
+            var argsMappeds = ArgumentsParser.Parser(argsRaw, enablePositionedArgs, maps.ToArray());
             var objectTest = new { input, maps, argsMappeds };
 
             // add if not exists, and the first add must be correct
-            this.SaveFileIfNotExists<dynamic>(objectTest, fileName);
+            this.SaveUncheckedFileIfValidNotExists<dynamic>(objectTest, testContext, testMethodName);
 
             var outputTest = FileHelper.GetContentJsonFromObject(objectTest, jsonSerializeConfig);
-            var outputCorrect = FileHelper.GetContentFromFile(fileName);
-            Assert.IsTrue(outputTest == outputCorrect, string.Format("Error is test file '{0}'. {1}", fileName, testDetail));
+            var outputCorrect = FileHelper.GetContentFromFile(this.GetValidTestFileName(testContext, testMethodName));
+            Assert.IsTrue(outputTest == outputCorrect, string.Format("Error is test file '{0}'", testMethodName));
         }
 
         [TestMethod]
-        public void TestArgsMapped()
+        public void Method1And1Positioned3Named()
         {
-            var i = 0;
-            var n = 0;
-            var currentMethodName = GetCurrentMethod();
-            var methodName = "";
-            
-            // method 1
-            methodName = "Method1";
-            this.TestArgsMappedAuto(methodName, "value-positioned --a value1 --b value2 -c value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "1-positioned-3-named"));            
-            this.TestArgsMappedAuto(methodName, "-a value1 -b -c value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "3-named-1-without-value"));
-            this.TestArgsMappedAuto(methodName, "-abc value1", true, this.GetTestFileName(currentMethodName, methodName, "-", "3-args-in-1"));
-            this.TestArgsMappedAuto(methodName, "-b value1 -c value3 value2", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-named-1-positioned-in-last"), "With inverted order, ignored wrong order");
-            this.TestArgsMappedAuto(methodName, "-a value1 value2 value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "1-named-2-positioned"), "With -a");
-            this.TestArgsMappedAuto(methodName, "-a value1 value2 -c value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-named-1-positioned-in-middle"), "With -a and -c");
-            this.TestArgsMappedAuto(methodName, "-a value1 -b value2 value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-named-1-positioned-in-last2"), "With -a and -b");
-            this.TestArgsMappedAuto(methodName, "value1 -b value2 value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "1-named-in-middle-and-2-positioned"), "With -b");
-            this.TestArgsMappedAuto(methodName, "value1 -b value2 -c value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "1-named-in-first-and-2-named"), "With -b and -c");
-            this.TestArgsMappedAuto(methodName, "value1 value2 -c value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-positioned-1-named-in-last"), "With -c");
-            this.TestArgsMappedAuto(methodName, "value1 value2 value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "all-positioned"), "None args");
-            this.TestArgsMappedAuto(methodName, "value1 value2", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-positioned-without-1-arg"), "Two args only");
-            this.TestArgsMappedAuto(methodName, "value1 \"\\\"quote in content\\\"\"", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-positioned-with-quote-in-content"));
-            this.TestArgsMappedAuto(methodName, @"\--value1 \-value2 \/value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "all-positioned-and-args-format-scapeds"));
-            this.TestArgsMappedAuto(methodName, @"\\--value1 \\-value2 \\/value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "all-positioned-and-scape-args-as-value"));
-            this.TestArgsMappedAuto(methodName, @"- \- /", true, this.GetTestFileName(currentMethodName, methodName, "-", "all-positioned-and-args-format-as-value"), "Scape args as value");
-            this.TestArgsMappedAuto(methodName, @"-a - -b \- \/", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-named-1-positioned-and-all-args-has-format-as-value"));
-            this.TestArgsMappedAuto(methodName, @"--a \--value1 -b \/ -c --", true, this.GetTestFileName(currentMethodName, methodName, "-", "3-named-with-scapes"));
-            this.TestArgsMappedAuto(methodName, @"--a \ \ -c \", true, this.GetTestFileName(currentMethodName, methodName, "-", "backslash-as-values"));
-
-            //method2
-            methodName = "Method2";
-            this.TestArgsMappedAuto(methodName, "--value1 10.12 --value2 10 --value3 true", true, this.GetTestFileName(currentMethodName, methodName, "-", "boolean-as-true"));
-            this.TestArgsMappedAuto(methodName, "--value1 10.12 --value2 10 --value3 0", true, this.GetTestFileName(currentMethodName, methodName, "-", "boolean-as-0"));
-            this.TestArgsMappedAuto(methodName, "--value1 10.12 --value2 10 --value3 +", true, this.GetTestFileName(currentMethodName, methodName, "-", "boolean-as-PLUS"));
-            this.TestArgsMappedAuto(methodName, "--value1 10.12 --value2 10 --value3", true, this.GetTestFileName(currentMethodName, methodName, "-", "boolean-as-FLAG"));
-            this.TestArgsMappedAuto(methodName, "--value1 -10.12 --value2 -10 --value3 -1", true, this.GetTestFileName(currentMethodName, methodName, "-", "decimal-and-int-as-negative-and-boolean-invalid"));
-            this.TestArgsMappedAuto(methodName, "--value1 --value2 invalid", true, this.GetTestFileName(currentMethodName, methodName, "-", "last-arg-positioned-and-invalid-and-others-as-default"), "default type value and invalid value");
-            this.TestArgsMappedAuto(methodName, "-1 1 1", true, this.GetTestFileName(currentMethodName, methodName, "-", "positioned-and-first-negative"));
-            this.TestArgsMappedAuto(methodName, "-1.10 +100 true", true, this.GetTestFileName(currentMethodName, methodName, "-", "first-negative-and-the-middle-args-with-PLUS"));
-            
-            //method3
-            methodName = "Method3";
-            this.TestArgsMappedAuto(methodName, "--value1 10.1223 --value2 10.2344 --date \"12-22/1879 12:10:10.111\"", false, this.GetTestFileName(currentMethodName, methodName, "-", "simple-test-include-datetime"));
-            this.TestArgsMappedAuto(methodName, "-2000 -10.2222 \"01-01/2016 12:10:10.111\"", true, this.GetTestFileName(currentMethodName, methodName, "-", "positioned-test-include-negative-value-and-datetime"));
-
-            //method4
-            methodName = "Method4";
-            this.TestArgsMappedAuto(methodName, "-ab --value-", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-args-as-FLAG-and-1-args-boolean-with-NEGATIVE-format"));
-            this.TestArgsMappedAuto(methodName, "true - +", true, this.GetTestFileName(currentMethodName, methodName, "-", "positioned-all-as-true-value"));
-
-            //method5
-            methodName = "Method5";
-            this.TestArgsMappedAuto(methodName, "--enum1 --enum2 invalid", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-named-with-defaults-and-1-positioned-and-invalid"));
-            this.TestArgsMappedAuto(methodName, "--enum1 --enum3 --enum4", true, this.GetTestFileName(currentMethodName, methodName, "-", "3-named-with-default"));
-            this.TestArgsMappedAuto(methodName, "--enum1 Enum1Value1 2 enum1value3 8 --enum2 Enum2Value1 Enum2value2 Enum2value2Error --enum3 value1 Value2 Value3 --lst 1 2 3 4 5 a 8", true, this.GetTestFileName(currentMethodName, methodName, "-", "invalid-enum-value-in-middle-and-shifted-the-rest-by-position"), "Test with invalid enum value 'Enum2value2Error' that where the args are shifted, by position, and cause a strange result.");
-            this.TestArgsMappedAuto(methodName, "--enum1 Enum1Value1 2 enum1value3 8 --enum2 Enum2Value1 Enum2value2 Enum2value2Error --enum3 value1 Value2 Value3 --lst 1 2 3 4 5 a 8", false, this.GetTestFileName(currentMethodName, methodName, "-", "invalid-enum-value-in-middle-but-the-positioned-featured-is-OFF"), "The without position");
-
-            this.TestArgsMappedAuto(methodName, "Enum1Value1 2 enum1value3 8 Enum2Value1 Enum2value2 value1 1 2 3 4 5", true, this.GetTestFileName(currentMethodName, methodName, "-", "all-positioned"));
-            this.TestArgsMappedAuto(methodName, "Enum1Value1 2 enum1value3 8 Enum2Value1 Enum2value2 b 1 2 3 4 5 Value4", true, this.GetTestFileName(currentMethodName, methodName, "-", "all-positioned2"));
-            this.TestArgsMappedAuto(methodName, "Enum1Value1 2 enum1value3 8 Enum2Value1 Enum2value2 --enum3 value1 1 2 3 4 5", true, this.GetTestFileName(currentMethodName, methodName, "-", "all-positioned-except-the-last"));
-
-            //method6
-            methodName = "Method6";
-            this.TestArgsMappedAuto(methodName, "--lst 1 2 3 4 --lst2 10 10.1 10.2 10.333 --lst3 a b c \"1 2 3 4\"", true, this.GetTestFileName(currentMethodName, methodName, "-", "3-list-ints-decimals-and-strings"));
-            this.TestArgsMappedAuto(methodName, "1 2 3 4 10 10.1 10.2 10.333 a b c \"\\\"quotes in content\\\"\"", true, this.GetTestFileName(currentMethodName, methodName, "-", "3-list-ints-decimals-and-strings-positioned"));
-
-            //method7
-            methodName = "Method7";
-            this.TestArgsMappedAuto(methodName, "--lst 1 2 3 4 --lst2 a b c abc", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-list-ints-and-chars"));
-            this.TestArgsMappedAuto(methodName, "-0.1 2 0.1000 4 a b c", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-list-ints-and-chars-positioned"));
-
-            //method8
-            methodName = "Method8";
-            this.TestArgsMappedAuto(methodName, "--v1 1 --v2 2 --v3 10 --v4 1 0 1 0 --v5 a b c", true, this.GetTestFileName(currentMethodName, methodName, "-", "5-named-nullable-with-values"));
-            this.TestArgsMappedAuto(methodName, "--v1 --v2 --v3 --v4 --v5", true, this.GetTestFileName(currentMethodName, methodName, "-", "5-named-nullable-without-values-setting-as-null"));
-            this.TestArgsMappedAuto(methodName, "--v1 1 --v2 2.10", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-named-and-3-missing"));
-            this.TestArgsMappedAuto(methodName, "-10 -10.10 2000 0 1 0 1 0 1 a b c", true, this.GetTestFileName(currentMethodName, methodName, "-", "all-positioned-include-array-of-bytes-and-list-of-chars"));
-
-            //method9
-            //(Class1 unsuporttedType, int defaultValue = 10) { }
-            methodName = "Method9";
-            this.TestArgsMappedAuto(methodName, "--unsuporttedType abc --defaultValue 20", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-named-unsuportted-type-and-default-value-with-value"));
-            this.TestArgsMappedAuto(methodName, "--unsuporttedType abc --defaultValue", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-named-unsuportted-type-and-default-value-without-value"));
-            this.TestArgsMappedAuto(methodName, "--unsuporttedType abc", true, this.GetTestFileName(currentMethodName, methodName, "-", "1-named-unsuportted-type-and-1-missing"));
-            this.TestArgsMappedAuto(methodName, "abc 20", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-positioned-unsuportted-type-and-default-value-with-value"));
-
-            methodName = "Method10";
-            this.TestArgsMappedAuto(methodName, "--v1 \"abc\" a b c --v2 20", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-named-1-list-of-string-and-1-int"));
-            this.TestArgsMappedAuto(methodName, "--v1 \"abc\" a b c 20", true, this.GetTestFileName(currentMethodName, methodName, "-", "1-named-1-list-of-string-and-1-positioned-int"));
-            this.TestArgsMappedAuto(methodName, "\"abc\" a b c 20", true, this.GetTestFileName(currentMethodName, methodName, "-", "2-positioned-1-list-of-string-and-1-int"));
-            this.TestArgsMappedAuto(methodName, "\"abc\" a b c --v2 20", true, this.GetTestFileName(currentMethodName, methodName, "-", "1-positioned-1-list-of-string-and-1-named-int"));
+            this.TestArgsMappedAuto("Method1", "value-positioned -a value1 -b value2 -c value3", true, this.GetCurrentMethodName());
         }
 
-        private string ToString(IEnumerable<ArgumentsParser.ArgumentSimple> items)
+        [TestMethod]
+        public void Method1And3Named1WithoutValue()
+        {
+            this.TestArgsMappedAuto("Method1", "-a value1 -b -c value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And3ArgsIn1()
+        {
+            this.TestArgsMappedAuto("Method1", "-abc value1", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And2Named1PositionedInLast()
+        {
+            this.TestArgsMappedAuto("Method1", "-b value1 -c value3 value2", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And1Named2Positioned()
+        {
+            this.TestArgsMappedAuto("Method1", "-a value1 value2 value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And2Named1PositionedInMiddle()
+        {
+            this.TestArgsMappedAuto("Method1", "-a value1 value2 -c value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And2Named1PositionedInLast2()
+        {
+            this.TestArgsMappedAuto("Method1", "-a value1 -b value2 value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And1NamedInMiddleAnd2Positioned()
+        {
+            this.TestArgsMappedAuto("Method1", "value1 -b value2 value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And1NamedInFirstAnd2Named()
+        {
+            this.TestArgsMappedAuto("Method1", "value1 -b value2 -c value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And2Positioned1NamedInLast()
+        {
+            this.TestArgsMappedAuto("Method1", "value1 value2 -c value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1AndAllPositioned()
+        {
+            this.TestArgsMappedAuto("Method1", "value1 value2 value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And2PositionedWithout1Arg()
+        {
+            this.TestArgsMappedAuto("Method1", "value1 value2", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And2PositionedWithQuoteInContent()
+        {
+            this.TestArgsMappedAuto("Method1", "value1 \"\\\"quote in content\\\"\"", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1AndAllPositionedAndArgsFormatScapeds()
+        {
+            this.TestArgsMappedAuto(@"Method1", @"\--value1 \-value2 \/value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1AndAllPositionedAndScapeArgsAsValue()
+        {
+            this.TestArgsMappedAuto("Method1", @"\\--value1 \\-value2 \\/value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1AndAllPositionedAndArgsFormatAsValue()
+        {
+            this.TestArgsMappedAuto("Method1", @"- \- /", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And2Named1PositionedAndAllArgsHasFormatAsValue()
+        {
+            this.TestArgsMappedAuto("Method1", @"-a - -b \- \/", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1And3NamedWithScapes()
+        {
+            this.TestArgsMappedAuto("Method1", @"-a \--value1 -b \/ -c --", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method1AndBackslashAsValues()
+        {
+            this.TestArgsMappedAuto("Method1", @"-a \ \ -c \", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method2AndBooleanAsTrue()
+        {
+            this.TestArgsMappedAuto("Method2", "--value1 10.12 --value2 10 --value3 true", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method2AndBooleanAs0()
+        {
+            this.TestArgsMappedAuto("Method2", "--value1 10.12 --value2 10 --value3 0", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method2AndBooleanAsPLUS()
+        {
+            this.TestArgsMappedAuto("Method2", "--value1 10.12 --value2 10 --value3 +", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method2AndBooleanAsFLAG()
+        {
+            this.TestArgsMappedAuto("Method2", "--value1 10.12 --value2 10 --value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method2AndDecimalAndIntAsNegativeAndBooleanInvalid()
+        {
+            this.TestArgsMappedAuto("Method2", "--value1 -10.12 --value2 -10 --value3 -1", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method2AndLastArgPositionedAndInvalidAndOthersAsDefault()
+        {
+            this.TestArgsMappedAuto("Method2", "--value1 --value2 invalid", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method2AndPositionedAndFirstNegative()
+        {
+            this.TestArgsMappedAuto("Method2", "-1 1 1", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method2AndFirstNegativeAndTheMiddleArgsWithPLUS()
+        {
+            this.TestArgsMappedAuto("Method2", "-1.10 +100 true", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method3AndSimpleTestIncludeDatetime()
+        {
+            this.TestArgsMappedAuto("Method3", "--value1 10.1223 --value2 10.2344 --date \"12-22/1879 12:10:10.111\"", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method3AndPositionedTestIncludeNegativeValueAndDatetime()
+        {
+            this.TestArgsMappedAuto("Method3", "-2000 -10.2222 \"01-01/2016 12:10:10.111\"", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method4And2ArgsAsFLAGAnd1ArgsBooleanWithNEGATIVEFormat()
+        {
+            this.TestArgsMappedAuto("Method4", "-ab --value-", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method4AndPositionedAllAsTrueValue()
+        {
+            this.TestArgsMappedAuto("Method4", "true - +", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method5And2NamedWithDefaultsAnd1PositionedAndInvalid()
+        {
+            this.TestArgsMappedAuto("Method5", "--enum1 --enum2 invalid", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method5And3NamedWithDefault()
+        {
+            this.TestArgsMappedAuto("Method5", "--enum1 --enum3 --enum4", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method5AndInvalidEnumValueInMiddleAndShiftedTheRestByPosition()
+        {
+            this.TestArgsMappedAuto("Method5", "--enum1 Enum1Value1 2 enum1value3 8 --enum2 Enum2Value1 Enum2value2 Enum2value2Error --enum3 value1 Value2 Value3 --lst 1 2 3 4 5 a 8", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method5AndInvalidEnumValueInMiddleButThePositionedFeaturedIsOFF()
+        {
+            this.TestArgsMappedAuto("Method5", "--enum1 Enum1Value1 2 enum1value3 8 --enum2 Enum2Value1 Enum2value2 Enum2value2Error --enum3 value1 Value2 Value3 --lst 1 2 3 4 5 a 8", false, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method5AndAllPositioned()
+        {
+            this.TestArgsMappedAuto("Method5", "Enum1Value1 2 enum1value3 8 Enum2Value1 Enum2value2 value1 1 2 3 4 5", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method5AndAllPositioned2()
+        {
+            this.TestArgsMappedAuto("Method5", "Enum1Value1 2 enum1value3 8 Enum2Value1 Enum2value2 b 1 2 3 4 5 Value4", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method5AndAllPositionedExceptTheLast()
+        {
+            this.TestArgsMappedAuto("Method5", "Enum1Value1 2 enum1value3 8 Enum2Value1 Enum2value2 --enum3 value1 1 2 3 4 5", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method6And3ListIntsDecimalsAndStrings()
+        {
+            this.TestArgsMappedAuto("Method6", "--lst 1 2 3 4 --lst2 10 10.1 10.2 10.333 --lst3 a b c \"1 2 3 4\"", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method6And3ListIntsDecimalsAndStringsPositioned()
+        {
+            this.TestArgsMappedAuto("Method6", "1 2 3 4 10 10.1 10.2 10.333 a b c \"\\\"quotes in content\\\"\"", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method7And2ListIntsAndChars()
+        {
+            this.TestArgsMappedAuto("Method7", "--lst 1 2 3 4 --lst2 a b c abc", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method7And2ListIntsAndCharsPositioned()
+        {
+            this.TestArgsMappedAuto("Method7", "-0.1 2 0.1000 4 a b c", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method8And5NamedNullableWithValues()
+        {
+            this.TestArgsMappedAuto("Method8", "--v1 1 --v2 2 --v3 10 --v4 1 0 1 0 --v5 a b c", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method8And5NamedNullableWithoutValuesSettingAsNull()
+        {
+            this.TestArgsMappedAuto("Method8", "--v1 --v2 --v3 --v4 --v5", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method8And2NamedAnd3Missing()
+        {
+            this.TestArgsMappedAuto("Method8", "--v1 1 --v2 2.10", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method8AndAllPositionedIncludeArrayOfBytesAndListOfChars()
+        {
+            this.TestArgsMappedAuto("Method8", "-10 -10.10 2000 0 1 0 1 0 1 a b c", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method9And2NamedUnsuporttedTypeAndDefaultValueWithValue()
+        {
+            this.TestArgsMappedAuto("Method9", "--unsuportted-type abc --default-value 20", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method9And2NamedUnsuporttedTypeAndDefaultValueWithoutValue()
+        {
+            this.TestArgsMappedAuto("Method9", "--unsuportted-type abc --default-value", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method9And1NamedUnsuporttedTypeAnd1Missing()
+        {
+            this.TestArgsMappedAuto("Method9", "--unsuportted-type abc", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method9And2PositionedUnsuporttedTypeAndDefaultValueWithValue()
+        {
+            this.TestArgsMappedAuto("Method9", "abc 20", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method10And2Named1ListOfStringAnd1Int()
+        {
+            this.TestArgsMappedAuto("Method10", "--v1 \"abc\" a b c --v2 20", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method10And1Named1ListOfStringAnd1PositionedInt()
+        {
+            this.TestArgsMappedAuto("Method10", "--v1 \"abc\" a b c 20", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method10And2Positioned1ListOfStringAnd1Int()
+        {
+            this.TestArgsMappedAuto("Method10", "\"abc\" a b c 20", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method10And1Positioned1ListOfStringAnd1NamedInt()
+        {
+            this.TestArgsMappedAuto("Method10", "\"abc\" a b c --v2 20", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method10AndSeveralValuesVariants()
+        {
+            this.TestArgsMappedAuto("Method10", "\\--value1 --=a --- --: -: -= -/ /= /- --2000 /0 --value=value--value=junior --value=\"value\" --v2 100000", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method10AndSeveralValuesVariants()
+        {
+            this.TestArgsMappedAuto("Method10", "--v2 100000 lst1 lst2 --\"value1\":0 --value2=0 -abc=+ -def= + -1=0 \"--bla\" -l:=+\\\"quote\\\"", true, this.GetCurrentMethodName());
+        }
+
+        private string ToString(IEnumerable<ArgumentsParser.ArgumentRaw> items)
         {
             var output = "";
             foreach (var item in items)
             {
-                output += "[" + item.Key + "]=[" + item.Value + "];";
+                output += "[" + item.Name + "]=[" + item.Value + "];";
             }
             return output;
         }
-
-        private string ToString(IEnumerable<ArgumentsParser.ArgumentMapped> items)
-        {
-            var output = "";
-            foreach (var item in items)
-            {   
-                var value = item.Value;
-                if (value != null && ((item.Type.IsGenericType && item.Type.GetGenericTypeDefinition() == typeof(List<>)) || item.Type.IsArray))
-                {
-
-                    var enumerator = (value as System.Collections.IEnumerable).GetEnumerator();
-                    var valueJoin = "";
-                    while(enumerator.MoveNext())
-                    {
-                        valueJoin += valueJoin == "" ? enumerator.Current : "," + enumerator.Current;
-                    }
-                    value = valueJoin;
-                }
-                output += "[" + item.Key + "]=[" + value + "];";
-            }
-            return output;
-        }
-
-        private MethodInfo GetMethod(string name)
-        {
-            return this.GetType().GetMethod(name);
-        }
-
+        
         [Flags]
         public enum EnumTest1
         {

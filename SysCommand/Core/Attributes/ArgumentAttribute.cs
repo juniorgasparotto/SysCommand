@@ -14,6 +14,7 @@ namespace SysCommand
         public bool IsRequired { get; set; }
         public string Help { get; set; }
         public object Default { get; set; }
+        public int? Position { get; set; }
 
         /// <summary>
         /// Displays the default value or the label "required" at the end of the sentence help.

@@ -20,6 +20,10 @@ namespace SysCommand.Tests
 
         static int Main(string[] args)
         {
+            //foreach (var v in args)
+            //    Console.WriteLine(v);
+            //return 0;
+
             while (true)
             {
                 App.Initialize<Program>();
