@@ -224,7 +224,7 @@ namespace SysCommand
         public class ActionMap
         {
             public string Name { get; private set; }
-            public Type TypeReturn { get; private set; }
+            public Type ReturnType { get; private set; }
             public Type ParentClassType { get; private set; }
             public bool IsDefault { get; set; }
             public IEnumerable<ArgumentMap> ArgumentsMaps { get; private set; }
@@ -232,7 +232,7 @@ namespace SysCommand
             public ActionMap(string name, Type typeReturn, Type parentClassType, bool isDefault, IEnumerable<ArgumentMap> argumentsMaps)
             {
                 this.Name = name;
-                this.TypeReturn = typeReturn;
+                this.ReturnType = typeReturn;
                 this.ParentClassType = parentClassType;
                 this.ArgumentsMaps = argumentsMaps;
                 this.IsDefault = isDefault;
@@ -784,11 +784,13 @@ namespace SysCommand
         public static IEnumerable<ActionMap> GetActionsMapsFromType(Type type, MethodInfo[] methods, bool onlyWithAttribute = false, bool canAddPrefixInAllMethods = false, string prefix = null)
         {
             var maps = new List<ActionMap>();
+            
             foreach (var method in methods)
             {
                 var attribute = Attribute.GetCustomAttribute(method, typeof(ActionAttribute)) as ActionAttribute;
+                var isMainMethod = method.Name.ToLower() == "main";
 
-                if (onlyWithAttribute && attribute == null)
+                if (!isMainMethod && onlyWithAttribute && attribute == null)
                     continue;
 
                 var actionName = "";
@@ -802,7 +804,7 @@ namespace SysCommand
                     actionName = GetNameWithPrefix(actionName, type, prefix);
 
                 var isDefaultAction = false;
-                if (method.Name.ToLower() == "main" || (attribute != null && attribute.IsDefault == true))
+                if (isMainMethod || (attribute != null && attribute.IsDefault == true))
                     isDefaultAction = true;
 
                 var argsMaps = GetArgumentsMapsFromMethod(method);

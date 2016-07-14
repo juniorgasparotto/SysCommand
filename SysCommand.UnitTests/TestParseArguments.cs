@@ -666,7 +666,14 @@ namespace SysCommand.UnitTests
             [Argument]
             public string Prop5 { get; set; }
 
-            public void Method1(string a, string b) { }
+            public void Main(string[] args)
+            { 
+
+            }
+
+            public void Method1(string a, string b) 
+            { 
+            }
 
             [Action]
             public string Method2(string a, string b)
@@ -675,10 +682,14 @@ namespace SysCommand.UnitTests
             }
 
             [Action(CanAddPrefix=false, Name="action-custom-name")]
-            public void Method3(string a, string b) { }
+            public void Method3(string a, string b) 
+            { 
+            }
 
             [Action(IsDefault=true)]
-            public void Method4(string a, string b) { }
+            public void MethodDefault(string a, string b) 
+            { 
+            }
         }
 
         public void Method1(string a, string b, string c) { }
