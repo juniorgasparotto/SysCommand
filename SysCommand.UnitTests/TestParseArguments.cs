@@ -417,9 +417,15 @@ namespace SysCommand.UnitTests
         }
 
         [TestMethod]
-        public void Method10AndSeveralValuesVariants()
+        public void Method10AndSeveralValuesVariants2()
         {
             this.TestArgsMappedAuto("Method10", "--v2 100000 lst1 lst2 --\"value1\":0 --value2=0 -abc=+ -def= + -1=0 \"--bla\" -l:=+\\\"quote\\\"", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void Method10AndLikeGit()
+        {
+            this.TestArgsMappedAuto("Method10", "git -m\"commit\"", true, this.GetCurrentMethodName());
         }
 
         private string ToString(IEnumerable<ArgumentsParser.ArgumentRaw> items)
