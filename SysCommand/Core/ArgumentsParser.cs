@@ -797,7 +797,7 @@ namespace SysCommand
 
                 var actionName = "";
                 if (attribute != null && !string.IsNullOrWhiteSpace(attribute.Name))
-                    actionName = method.Name;
+                    actionName = attribute.Name;
                 else
                     actionName = AppHelpers.ToLowerSeparate(method.Name, '-');
 
