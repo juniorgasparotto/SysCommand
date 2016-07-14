@@ -425,7 +425,7 @@ namespace SysCommand.UnitTests
         [TestMethod]
         public void Method10AndLikeGit()
         {
-            this.TestArgsMappedAuto("Method10", "git -m\"commit\" git -m=\"commit\" git -m:s\"commit\"", true, this.GetCurrentMethodName());
+            this.TestArgsMappedAuto("Method10", "git -m\"commit\" git -m=\"commit\" git -m:\"commit\"", true, this.GetCurrentMethodName());
         }
 
         private string ToString(IEnumerable<ArgumentsParser.ArgumentRaw> items)
