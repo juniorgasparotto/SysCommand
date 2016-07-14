@@ -104,12 +104,12 @@ namespace SysCommand
                 if (attribute.IsRequired)
                     setup.Required();
 
-                if (attribute.Default != null && (propertyValue == null || propertyValue.Equals(default(TProperty))))
-                    setup.SetDefault((TProperty)attribute.Default);
+                if (attribute.DefaultValue != null && (propertyValue == null || propertyValue.Equals(default(TProperty))))
+                    setup.SetDefault((TProperty)attribute.DefaultValue);
 
                 setup.Callback(value =>
                     {
-                        if (!value.Equals(attribute.Default))
+                        if (!value.Equals(attribute.DefaultValue))
                         {
                             if (!string.IsNullOrWhiteSpace(attribute.LongName))
                                 this.parent.CommandsParseds["--" + attribute.LongName] = value.ToString();

@@ -76,9 +76,9 @@ namespace SysCommand.Tests
             App.Current.SaveObjectFile(tasks);
         }
 
-        [Action(Name = "ignored-prefix", AddPrefix = false)]
+        [Action(Name = "ignored-prefix", CanAddPrefix = false)]
         public void Delete(
-            [Argument(LongName="id", ShortName='i', Help="My ID", Default="not work here", ShowHelpComplement=false)]
+            [Argument(LongName="id", ShortName='i', Help="My ID", DefaultValue="not work here", ShowHelpComplement=false)]
             string id
         )
         {
@@ -88,7 +88,7 @@ namespace SysCommand.Tests
             App.Current.SaveObjectFile(tasks);
         }
 
-        [Action(Ignore = true)]
+        //[Action(Ignore = true)]
         public void NotAction(string id)
         {
             App.Current.Response.WriteLine("Executing: Task2Command/Ignored");

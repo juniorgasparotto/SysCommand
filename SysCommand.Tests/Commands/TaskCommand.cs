@@ -76,7 +76,7 @@ namespace SysCommand.Tests
 
         [Action(Name="delete2")]
         public void Delete(
-            [Argument(LongName="id", ShortName='i', Help="My ID", Default="not work here", ShowHelpComplement=true)]
+            [Argument(LongName="id", ShortName='i', Help="My ID", DefaultValue="not work here", ShowHelpComplement=true)]
             string id
         )
         {

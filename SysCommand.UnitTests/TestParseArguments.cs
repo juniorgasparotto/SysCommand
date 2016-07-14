@@ -43,6 +43,13 @@ namespace SysCommand.UnitTests
             return Path.Combine(@"..\..\", fileName);
         }
 
+        private string GetInvalidTestFileName(string testContext, string fileName)
+        {
+            var fileNameFormat = @"Tests\{0}-{1}\valid-{2}.json.invalid";
+            fileName = string.Format(fileNameFormat, this.GetType().Name, testContext, fileName);
+            return Path.Combine(@"..\..\", fileName);
+        }
+
         private string GetUncheckedTestFileName(string testContext, string fileName)
         {
             var fileNameFormat = @"Tests\{0}-{1}\unchecked-{2}.json";
@@ -54,8 +61,23 @@ namespace SysCommand.UnitTests
         {
             var validFileName = this.GetValidTestFileName(testContext, fileName);
             var uncheckedFileName = this.GetUncheckedTestFileName(testContext, fileName);
-            if (FileHelper.GetObjectFromFileJson<T>(validFileName, jsonSerializeConfig) == null)
+            if (!FileHelper.FileExists(validFileName))
                 FileHelper.SaveObjectToFileJson(obj, uncheckedFileName, jsonSerializeConfig);
+        }
+
+        private void SaveInvalidFileIfValidExists<T>(T obj, string testContext, string fileName)
+        {
+            var validFileName = this.GetValidTestFileName(testContext, fileName);
+            var invalidFileName = this.GetInvalidTestFileName(testContext, fileName);
+            if (FileHelper.FileExists(validFileName))
+                FileHelper.SaveObjectToFileJson(obj, invalidFileName, jsonSerializeConfig);
+        }
+
+        private void RemoveInvalidFile(string testContext, string fileName)
+        {
+            var invalidFileName = this.GetInvalidTestFileName(testContext, fileName);
+            if (FileHelper.FileExists(invalidFileName))
+                FileHelper.RemoveFile(invalidFileName);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -69,11 +91,21 @@ namespace SysCommand.UnitTests
 
         private void TestArgsMappedAuto(string mapMethodName, string input, bool enablePositionedArgs, string testMethodName)
         {
-            var testContext = "Maps";
-
             var method = this.GetType().GetMethod(mapMethodName);
+            var maps = ArgumentsParser.GetArgumentsMapsFromMethod(method);
+            this.TestArgsMappedAuto(maps, input, enablePositionedArgs, testMethodName);
+        }
+
+        private void TestArgsMappedAuto(Type typeInstance, string input, bool enablePositionedArgs, bool onlyWithAttribute, string testMethodName)
+        {
+            var maps = ArgumentsParser.GetArgumentsMapsFromProperties(typeInstance, onlyWithAttribute);
+            this.TestArgsMappedAuto(maps, input, enablePositionedArgs, testMethodName);
+        }
+
+        private void TestArgsMappedAuto(IEnumerable<ArgumentsParser.ArgumentMap> maps, string input, bool enablePositionedArgs, string testMethodName)
+        {
+            var testContext = "Maps";
             var args = AppHelpers.CommandLineToArgs(input);
-            var maps = ArgumentsParser.GetArgumentMaps(method);
             var argsRaw = ArgumentsParser.Parser(args);
             var argsMappeds = ArgumentsParser.Parser(argsRaw, enablePositionedArgs, maps.ToArray());
             var objectTest = new { input, maps, argsMappeds };
@@ -83,7 +115,38 @@ namespace SysCommand.UnitTests
 
             var outputTest = FileHelper.GetContentJsonFromObject(objectTest, jsonSerializeConfig);
             var outputCorrect = FileHelper.GetContentFromFile(this.GetValidTestFileName(testContext, testMethodName));
+            var test = outputTest == outputCorrect;
+
+            if (!test)
+                this.SaveInvalidFileIfValidExists<dynamic>(objectTest, testContext, testMethodName);
+            else
+                this.RemoveInvalidFile(testContext, testMethodName);
+
             Assert.IsTrue(outputTest == outputCorrect, string.Format("Error is test file '{0}'", testMethodName));
+        }
+
+        private void TestActionMap(Type type, string input, bool onlyWithAttribute, bool canAddPrefixInAllMethods, string prefix, string fileName)
+        {
+            var testContext = "Action-Maps";
+            var args = AppHelpers.CommandLineToArgs(input);
+            var argsRaw = ArgumentsParser.Parser(args);
+            var actionMaps = ArgumentsParser.GetActionsMapsFromType(type, onlyWithAttribute, canAddPrefixInAllMethods, prefix);
+            //var argsMappeds = ArgumentsParser.Parser(argsRaw, enablePositionedArgs, actionMaps.ToArray());
+            //var objectTest = new { input, maps = actionMaps, argsMappeds };
+
+            //// add if not exists, and the first add must be correct
+            //this.SaveUncheckedFileIfValidNotExists<dynamic>(objectTest, testContext, testMethodName);
+
+            //var outputTest = FileHelper.GetContentJsonFromObject(objectTest, jsonSerializeConfig);
+            //var outputCorrect = FileHelper.GetContentFromFile(this.GetValidTestFileName(testContext, testMethodName));
+            //var test = outputTest == outputCorrect;
+
+            //if (!test)
+            //    this.SaveInvalidFileIfValidExists<dynamic>(objectTest, testContext, testMethodName);
+            //else
+            //    this.RemoveInvalidFile(testContext, testMethodName);
+
+            //Assert.IsTrue(outputTest == outputCorrect, string.Format("Error is test file '{0}'", testMethodName));
         }
 
         [TestMethod]
@@ -413,31 +476,146 @@ namespace SysCommand.UnitTests
         [TestMethod]
         public void Method10AndSeveralValuesVariants()
         {
-            this.TestArgsMappedAuto("Method10", "\\--value1 --=a --- --: -: -= -/ /= /- --2000 /0 --value=value--value=junior --value=\"value\" --v2 100000", true, this.GetCurrentMethodName());
+            this.TestArgsMappedAuto("Method10", "\\--value1 --=a --- --: -: -= -/ /= /- ", true, this.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void Method10AndSeveralValuesVariants2()
         {
-            this.TestArgsMappedAuto("Method10", "--v2 100000 lst1 lst2 --\"value1\":0 --value2=0 -abc=+ -def= + -1=0 \"--bla\" -l:=+\\\"quote\\\"", true, this.GetCurrentMethodName());
+            this.TestArgsMappedAuto("Method10", "--v2 100000 lst1 lst2 --\"value1\":0 --value2=0 ", true, this.GetCurrentMethodName());
         }
 
         [TestMethod]
-        public void Method10AndLikeGit()
+        public void Method10AndSeveralValuesVariants3()
         {
-            this.TestArgsMappedAuto("Method10", "git -m\"commit\" git -m=\"commit\" git -m:\"commit\"", true, this.GetCurrentMethodName());
+            this.TestArgsMappedAuto("Method10", "--2000 /0 --value=value--value=junior --value=\"value\" --v2 100000", true, this.GetCurrentMethodName());
         }
 
-        private string ToString(IEnumerable<ArgumentsParser.ArgumentRaw> items)
+        [TestMethod]
+        public void Method10AndSeveralValuesVariants4()
         {
-            var output = "";
-            foreach (var item in items)
-            {
-                output += "[" + item.Name + "]=[" + item.Value + "];";
-            }
-            return output;
+            this.TestArgsMappedAuto("Method10", "-abc=+ -def= + -1=0 \"--bla\" -l:=+\\\"quote\\\" --value=\"--value\"", true, this.GetCurrentMethodName());
         }
-        
+
+        [TestMethod]
+        public void MethodInvalidShortName()
+        {
+            try
+            {
+                this.TestArgsMappedAuto("Method11", "1234", true, this.GetCurrentMethodName());
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message == "The map 'v1' has 'ShortName' invalid in method or class 'Method11'");
+            }
+        }
+
+        [TestMethod]
+        public void MethodInvalidLongNameEmpty()
+        {
+            try
+            {
+                this.TestArgsMappedAuto("Method12", "1234", true, this.GetCurrentMethodName());
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message == "The map 'v1' has 'LongName' invalid in method or class 'Method12'");
+            }
+        }
+
+        [TestMethod]
+        public void MethodInvalidShortNameEmpty()
+        {
+            try
+            {
+                this.TestArgsMappedAuto("Method13", "1234", true, this.GetCurrentMethodName());
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message == "The map 'v1' has 'ShortName' invalid in method or class 'Method13'");
+            }
+        }
+
+        [TestMethod]
+        public void MethodDuplicateShortName()
+        {
+            try
+            {
+                this.TestArgsMappedAuto("Method14", "1234", true, this.GetCurrentMethodName());
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message == "The map 'v1' has the same 'ShortName' on the map 'v2' in method or class 'Method14'");
+            }
+        }
+
+        [TestMethod]
+        public void MethodDuplicateLongName()
+        {
+            try
+            {
+                this.TestArgsMappedAuto("Method15", "1234", true, this.GetCurrentMethodName());
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message == "The map 'v1' has the same 'LogName' on the map 'v2' in method or class 'Method15'");
+            }
+        }
+
+        [TestMethod]
+        public void MethodLongNameWith1Char1()
+        {
+            this.TestArgsMappedAuto("Method16", "--v value1 -A value2", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void MethodLongNameWith1Char2()
+        {
+            this.TestArgsMappedAuto("Method16", "-v value1 --value-UPPER value2", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void MethodOrdered()
+        {
+            this.TestArgsMappedAuto("Method17", "--value-order-three value1 --value-order-two value2 --value-order-one value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void MethodOrdered2()
+        {
+            this.TestArgsMappedAuto("Method17", "value1 value2 value3", true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void InstanceOrdered()
+        {
+            this.TestArgsMappedAuto(typeof(Class1), "--prop1 value1 --prop2 value2", true, false, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void InstanceOrdered2()
+        {
+            this.TestArgsMappedAuto(typeof(Class1), "value2 value1", true, false, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void InstanceAllProperties()
+        {
+            this.TestArgsMappedAuto(typeof(Class1), "--prop1 value1 --prop2 value2 --p value3 --prop4 value4 --prop5 value5", true, false, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void InstanceAllPropertiesOnlyWithAttributes()
+        {
+            this.TestArgsMappedAuto(typeof(Class1), "--prop1 value1 --prop2 value2 --p value3 --prop4 value4 --prop5 value5", true, true, this.GetCurrentMethodName());
+        }
+
+        [TestMethod]
+        public void ActionMapWithCustomPrefix()
+        {
+            this.TestActionMap(typeof(Class1), "--prop1 value1 --prop2 value2 --p value3 --prop4 value4 --prop5 value5", false, true, "custom-prefix", this.GetCurrentMethodName());
+        }
+
         [Flags]
         public enum EnumTest1
         {
@@ -472,9 +650,35 @@ namespace SysCommand.UnitTests
             Value4,
         }
 
-        public class Class1 
+        public class Class1
         {
-            public string Prop1 { get; set;}
+            [Argument(Position = 1)]
+            public string Prop1 { get; set; }
+
+            [Argument(Position = 0)]
+            public string Prop2 { get; set; }
+
+            [Argument(DefaultValue="default", IsRequired=true, Help = "Help", ShowHelpComplement = true, ShortName='p', LongName="p")]
+            public string Prop3 { get; set; }
+
+            public string Prop4 { get; set; }
+
+            [Argument]
+            public string Prop5 { get; set; }
+
+            public void Method1(string a, string b) { }
+
+            [Action]
+            public string Method2(string a, string b)
+            {
+                return null;
+            }
+
+            [Action(CanAddPrefix=false, Name="action-custom-name")]
+            public void Method3(string a, string b) { }
+
+            [Action(IsDefault=true)]
+            public void Method4(string a, string b) { }
         }
 
         public void Method1(string a, string b, string c) { }
@@ -488,5 +692,49 @@ namespace SysCommand.UnitTests
         public void Method8(int? v1, decimal? v2, long? v3, byte?[] v4, List<char?> v5) { }
         public void Method9(Class1 unsuporttedType, int defaultValue = 10) { }
         public void Method10(string[] v1, int v2) { }
+
+        // MethodInvalidName
+        public void Method11(
+            [Argument(LongName = "value", ShortName = '2', ShowHelpComplement = true, Help = "My help")]
+            string v1, int v2) { }
+
+        // MethodInvalidName empty longName
+        public void Method12(
+            [Argument(LongName = "", ShortName = 'a', ShowHelpComplement = true, Help = "My help")]
+            string v1, int v2) { }
+
+        // MethodInvalidName empty shortName
+        public void Method13(
+            [Argument(LongName = "a", ShortName = ' ', ShowHelpComplement = true, Help = "My help")]
+            string v1, int v2) { }
+
+        //MethodDuplicateName
+        public void Method14(
+            [Argument(LongName = "value", ShortName = 'v', ShowHelpComplement = true, Help = "My help")]
+            string v1,
+            [Argument(LongName = "value2", ShortName = 'v', ShowHelpComplement = true, Help = "My help")]
+            int v2) { }
+
+        //MethodDuplicateName
+        public void Method15(
+            [Argument(LongName = "value", ShortName = 'v', ShowHelpComplement = true, Help = "My help")]
+            string v1,
+            [Argument(LongName = "value", ShortName = 'a', ShowHelpComplement = true, Help = "My help")]
+            int v2) { }
+
+        //MethodLongNameWith1Char
+        public void Method16(
+            [Argument(LongName = "v", ShortName = 'v', ShowHelpComplement = true, Help = "My help")]
+            string value,
+            [Argument(LongName = "value-UPPER", ShortName = 'A', ShowHelpComplement = true, Help = "My help")]
+            bool flag) { }
+
+        //MethodOrdered
+        public void Method17(
+            string valueOrderThree,
+            [Argument(Position = 0)]
+            string valueOrderOne,
+            [Argument(Position = 1)]
+            string valueOrderTWO) { }
     }
 }

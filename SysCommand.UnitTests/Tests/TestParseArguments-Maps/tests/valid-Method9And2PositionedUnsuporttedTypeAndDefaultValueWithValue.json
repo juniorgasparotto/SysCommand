@@ -1,0 +1,99 @@
+{
+  "input": "abc 20",
+  "maps": [
+    {
+      "MapName": "unsuporttedType",
+      "LongName": "unsuportted-type",
+      "ShortName": null,
+      "Type": "SysCommand.UnitTests.TestParseArguments+Class1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    },
+    {
+      "MapName": "defaultValue",
+      "LongName": "default-value",
+      "ShortName": null,
+      "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": 10,
+      "IsOptional": true,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "unsuporttedType",
+      "ValueParsed": "abc",
+      "Value": null,
+      "HasUnsuporttedType": true,
+      "HasInvalidInput": false,
+      "Type": "SysCommand.UnitTests.TestParseArguments+Class1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "MappingType": "Position",
+      "Map": {
+        "MapName": "unsuporttedType",
+        "LongName": "unsuportted-type",
+        "ShortName": null,
+        "Type": "SysCommand.UnitTests.TestParseArguments+Class1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": "abc",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "abc",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "abc",
+          "IsShortName": false,
+          "IsLongName": false
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "defaultValue",
+      "ValueParsed": "20",
+      "Value": 20,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "Map": {
+        "MapName": "defaultValue",
+        "LongName": "default-value",
+        "ShortName": null,
+        "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValue": 10,
+        "IsOptional": true,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": "20",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "20",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "20",
+          "IsShortName": false,
+          "IsLongName": false
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

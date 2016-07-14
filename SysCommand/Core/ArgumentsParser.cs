@@ -65,19 +65,21 @@ namespace SysCommand
             public string LongName { get; private set; }
             public char? ShortName { get; private set; }
             public Type Type { get; private set; }
+            public bool HasDefaultValue { get; private set; }
             public object DefaultValue { get; private set; }
             public bool IsOptional { get; private set; }
             public string HelpText { get; private set; }
             public bool ShowHelpComplement { get; private set; }
-            public int? Position { get; set; }
+            public int? Position { get; private set; }
 
-            public ArgumentMap(string mapName, string longName, char? shortName, Type type, bool isOptional, object defaultValue, string helpText, bool showHelpComplement, int? position)
+            public ArgumentMap(string mapName, string longName, char? shortName, Type type, bool isOptional, bool hasDefaultValue, object defaultValue, string helpText, bool showHelpComplement, int? position)
             {
                 this.MapName = mapName;
                 this.LongName = longName;
                 this.ShortName = shortName;
                 this.Type = type;
                 this.IsOptional = isOptional;
+                this.HasDefaultValue = hasDefaultValue;
                 this.DefaultValue = defaultValue;
                 this.HelpText = helpText;
                 this.ShowHelpComplement = showHelpComplement;
@@ -219,6 +221,29 @@ namespace SysCommand
 
         }
 
+        public class ActionMap
+        {
+            public string Name { get; private set; }
+            public Type TypeReturn { get; private set; }
+            public Type ParentClassType { get; private set; }
+            public bool IsDefault { get; set; }
+            public IEnumerable<ArgumentMap> ArgumentsMaps { get; private set; }
+
+            public ActionMap(string name, Type typeReturn, Type parentClassType, bool isDefault, IEnumerable<ArgumentMap> argumentsMaps)
+            {
+                this.Name = name;
+                this.TypeReturn = typeReturn;
+                this.ParentClassType = parentClassType;
+                this.ArgumentsMaps = argumentsMaps;
+                this.IsDefault = isDefault;
+            }
+
+            public override string ToString()
+            {
+                return "[" + this.Name + ", " + this.ParentClassType + "]";
+            }
+        }
+
         public static IEnumerable<ArgumentRaw> Parser(string[] args)
         {
             var argsItems = new List<ArgumentRaw>();
@@ -229,11 +254,11 @@ namespace SysCommand
             var i = 0;
             while (enumerator.MoveNext())
             {
-                string argFormat;
+                string argDelimiter;
 
                 // if is non parameter: [value] [123] [true] [\--scape-parameter] [--=] [--]
                 var arg = (string)enumerator.Current;
-                if (!IsArgumentFormat(arg, out argFormat))
+                if (!IsArgument(arg, out argDelimiter))
                 {
                     argsItems.Add(new ArgumentRaw(null, arg, GetValueScaped(arg), ArgumentFormat.Unnamed, null, null));
                     i++;
@@ -286,7 +311,7 @@ namespace SysCommand
                     value = args.Length > (i + 1) ? args[i + 1] : null;
 
                     // ignore if next arg is parameter: [-xyz --next-parameter ...]
-                    if (IsArgumentFormat(value))
+                    if (IsArgument(value))
                     {
                         value = null;
                         hasNoValue = true;
@@ -311,10 +336,10 @@ namespace SysCommand
                 // remove "-":  -xyz  -> xyz
                 // remove "--": --xyz -> xyz
                 // remove "/":  /xyz  -> xyz
-                string name = posLeft.Substring(argFormat.Length);
+                string name = posLeft.Substring(argDelimiter.Length);
 
                 // -x -> single parameter
-                if (argFormat == "-")
+                if (argDelimiter == "-")
                 {
                     ArgumentFormat format;
                     if (hasNoValue)
@@ -325,7 +350,7 @@ namespace SysCommand
                         format = ArgumentFormat.ShortNameAndHasValue;
 
                     foreach (var n in name)
-                        argsItems.Add(new ArgumentRaw(n.ToString(), valueRaw, value, format, argFormat, delimiterValueInName));
+                        argsItems.Add(new ArgumentRaw(n.ToString(), valueRaw, value, format, argDelimiter, delimiterValueInName));
                 }
                 else
                 {
@@ -338,7 +363,7 @@ namespace SysCommand
                     else
                         format = ArgumentFormat.LongNameAndHasValue;
 
-                    argsItems.Add(new ArgumentRaw(name, valueRaw, value, format, argFormat, delimiterValueInName));
+                    argsItems.Add(new ArgumentRaw(name, valueRaw, value, format, argDelimiter, delimiterValueInName));
                 }
 
                 i++;
@@ -407,7 +432,7 @@ namespace SysCommand
                 var argMapped = new ArgumentMapped(mapWithoutInput.MapName, null, null, mapWithoutInput.Type, mapWithoutInput);
                 argumentsMappeds.Add(argMapped);
 
-                if (mapWithoutInput.IsOptional)
+                if (mapWithoutInput.HasDefaultValue)
                 {
                     argMapped.MappingType = ArgumentMappingType.DefaultValue;
                     argMapped.Value = mapWithoutInput.DefaultValue;
@@ -749,7 +774,70 @@ namespace SysCommand
             return valueConverted;
         }
 
-        public static IEnumerable<ArgumentMap> GetArgumentMaps(MethodInfo method)
+        public static IEnumerable<ActionMap> GetActionsMapsFromType(Type type, bool onlyWithAttribute = false, bool canAddPrefixInAllMethods = false, string prefix = null)
+        {
+            var maps = new List<ActionMap>();
+            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(f => f.IsPublic && !f.IsSpecialName).ToArray();
+            return GetActionsMapsFromType(type, methods, onlyWithAttribute, canAddPrefixInAllMethods, prefix);
+        }
+
+        public static IEnumerable<ActionMap> GetActionsMapsFromType(Type type, MethodInfo[] methods, bool onlyWithAttribute = false, bool canAddPrefixInAllMethods = false, string prefix = null)
+        {
+            var maps = new List<ActionMap>();
+            foreach (var method in methods)
+            {
+                var attribute = Attribute.GetCustomAttribute(method, typeof(ActionAttribute)) as ActionAttribute;
+
+                if (onlyWithAttribute && attribute == null)
+                    continue;
+
+                var actionName = "";
+                if (attribute != null && !string.IsNullOrWhiteSpace(attribute.Name))
+                    actionName = method.Name;
+                else
+                    actionName = AppHelpers.ToLowerSeparate(method.Name, '-');
+
+                var canAddPrefix = attribute == null ? true : attribute.CanAddPrefix;
+                if (canAddPrefixInAllMethods && canAddPrefix)
+                    actionName = GetNameWithPrefix(actionName, type, prefix);
+
+                var isDefaultAction = false;
+                if (method.Name.ToLower() == "main" || (attribute != null && attribute.IsDefault == true))
+                    isDefaultAction = true;
+
+                var argsMaps = GetArgumentsMapsFromMethod(method);
+                maps.Add(new ActionMap(method.Name, method.ReturnType, type, isDefaultAction, argsMaps));
+            }
+
+            return maps;
+        }
+
+        public static IEnumerable<ArgumentMap> GetArgumentsMapsFromProperties(Type type, bool onlyWithAttribute = false)
+        {
+            var properties = type.GetProperties();
+            return GetArgumentsMapsFromProperties(type, properties, onlyWithAttribute);
+        }
+
+        public static IEnumerable<ArgumentMap> GetArgumentsMapsFromProperties(Type type, PropertyInfo[] properties, bool onlyWithAttribute = false)
+        {
+            var maps = new List<ArgumentMap>();
+            foreach (PropertyInfo property in properties)
+            {
+                var attribute = Attribute.GetCustomAttribute(property, typeof(ArgumentAttribute)) as ArgumentAttribute;
+
+                if (onlyWithAttribute && attribute == null)
+                    continue;
+
+                var map = GetArgumentMap(property);
+                maps.Add(map);
+            }
+
+            ValidateArgumentsMaps(maps, type.Name);
+
+            return GetArgumentsMapsOrderedByPosition(maps);
+        }
+
+        public static IEnumerable<ArgumentMap> GetArgumentsMapsFromMethod(MethodInfo method)
         {
             var maps = new List<ArgumentMap>();
             var parameters = method.GetParameters();
@@ -758,22 +846,25 @@ namespace SysCommand
                 var map = GetArgumentMap(parameter);
                 maps.Add(map);
             }
+
+            ValidateArgumentsMaps(maps, method.Name);
+
             return GetArgumentsMapsOrderedByPosition(maps);
         }
 
         public static ArgumentMap GetArgumentMap(ParameterInfo parameter)
         {
             var attribute = Attribute.GetCustomAttribute(parameter, typeof(ArgumentAttribute)) as ArgumentAttribute;
-            return GetArgumentMap(attribute, parameter.Name, parameter.ParameterType, parameter.IsOptional, parameter.DefaultValue);
-        }
 
-        public static ArgumentMap GetArgumentMap(ArgumentAttribute attribute, string name, Type type, bool isOptional, object defaultValue)
-        {
             string longName = null;
             char? shortName = null;
             string helpText = null;
             bool showHelpComplement = false;
             int? position = null;
+            bool hasPosition = false;
+            bool isOptional = parameter.IsOptional;
+            bool hasDefaultValue = parameter.HasDefaultValue;
+            object defaultValue = parameter.DefaultValue;
 
             if (attribute != null)
             {
@@ -781,24 +872,63 @@ namespace SysCommand
                 shortName = attribute.ShortName;
                 helpText = attribute.Help;
                 showHelpComplement = attribute.ShowHelpComplement;
-                position = attribute.Position;
-
-                if (string.IsNullOrWhiteSpace(longName) && string.IsNullOrWhiteSpace(shortName.ToString()))
-                    throw new Exception(string.Format("The parameter '{0}' has defined argument, but does not contain any information or longName shortName.", name));
-            }
-            else if (name.Length == 1)
-            {
-                shortName = name[0].ToString().ToLower()[0];
-            }
-            else
-            {
-                longName = AppHelpers.ToLowerSeparate(name, '-');
+                hasPosition = attribute.HasPosition;
+                position = (int?)attribute.Position;
             }
 
-            return new ArgumentMap(name, longName, shortName, type, isOptional, defaultValue, helpText, showHelpComplement, position);
+            return GetArgumentMap(parameter.Name, parameter.ParameterType, longName, shortName, hasPosition, position, helpText, showHelpComplement, isOptional, hasDefaultValue, defaultValue);
         }
 
-        private static IEnumerable<ArgumentMap> GetArgumentsMapsOrderedByPosition(IEnumerable<ArgumentMap> maps)
+        public static ArgumentMap GetArgumentMap(PropertyInfo property)
+        {
+            var attribute = Attribute.GetCustomAttribute(property, typeof(ArgumentAttribute)) as ArgumentAttribute;
+            string longName = null;
+            char? shortName = null;
+            string helpText = null;
+            bool showHelpComplement = false;
+            int? position = null;
+            bool hasPosition = false;
+            bool isOptional = true;
+            bool hasDefaultValue = false;
+            object defaultValue = null;
+
+            if (attribute != null)
+            {
+                longName = attribute.LongName;
+                shortName = attribute.ShortName;
+                helpText = attribute.Help;
+                showHelpComplement = attribute.ShowHelpComplement;
+                hasPosition = attribute.HasPosition;
+                position = (int?)attribute.Position;
+                hasDefaultValue = attribute.HasDefaultValue;
+                defaultValue = attribute.DefaultValue;
+                isOptional = !attribute.IsRequired;
+            }
+
+            return GetArgumentMap(property.Name, property.PropertyType, longName, shortName, hasPosition, position, helpText, showHelpComplement, isOptional, hasDefaultValue, defaultValue);
+        }
+
+        public static ArgumentMap GetArgumentMap(string mapName, Type mapType, string longName, char? shortName, bool hasPosition, int? position, string helpText, bool showHelpComplement, bool isOptional, bool hasDefaultValue, object defaultValue)
+        {
+            shortName = shortName == default(char) ? null : shortName;
+            position = hasPosition ? position : null;
+
+            if (longName == null || shortName == null)
+            {
+                if (mapName.Length == 1)
+                {
+                    shortName = mapName[0].ToString().ToLower()[0];
+                }
+                else
+                {
+                    longName = AppHelpers.ToLowerSeparate(mapName, '-');
+                }
+            }
+
+            return new ArgumentMap(mapName, longName, shortName, mapType, isOptional, hasDefaultValue, defaultValue, helpText, showHelpComplement, position);
+        }
+
+        public static IEnumerable<ArgumentMap> GetArgumentsMapsOrderedByPosition(IEnumerable<ArgumentMap> maps)
         {
             var mapsWithOrder = maps.Where(f => f.Position != null).OrderBy(f=>f.Position).ToList();
             if (mapsWithOrder.Count > 0)
@@ -812,23 +942,63 @@ namespace SysCommand
             return maps;
         }
 
-        public static bool IsArgumentFormat(string value)
+        public static void ValidateArgumentsMaps(IEnumerable<ArgumentMap> maps, string contextName)
         {
-            return GetArgumentFormat(value) != null;
+            foreach(var map in maps)
+            {
+                if (string.IsNullOrWhiteSpace(map.LongName) && string.IsNullOrWhiteSpace(map.ShortName.ToString()))
+                    throw new Exception(string.Format("The map '{0}' there's no values in 'LongName' or 'ShortName' in method or class '{1}'", map.MapName, contextName));
+
+                if (map.ShortName != null && (map.ShortName.Value.ToString().Trim().Length == 0 || !char.IsLetter(map.ShortName.Value)))
+                    throw new Exception(string.Format("The map '{0}' has 'ShortName' invalid in method or class '{1}'", map.MapName, contextName));
+
+                if (map.LongName != null && (map.LongName.Trim().Length == 0 || !char.IsLetter(map.LongName[0])))
+                    throw new Exception(string.Format("The map '{0}' has 'LongName' invalid in method or class '{1}'", map.MapName, contextName));
+
+                if (map.MapName != null)
+                {
+                    var duplicate = maps.FirstOrDefault(m => m.MapName == map.MapName && m != map);
+                    if (duplicate != null)
+                        throw new Exception(string.Format("The map '{0}' has the same 'MapName' on the map '{1}' in method or class '{2}'", map.MapName, duplicate.MapName, contextName));
+                }
+                else
+                {
+                    throw new Exception(string.Format("The method or object '{0}' has a map with no value in the property 'MapName'", contextName));
+                }
+
+                if (map.LongName != null)
+                {
+                    var duplicate = maps.FirstOrDefault(m => m.LongName == map.LongName && m != map);
+                    if (duplicate != null)
+                        throw new Exception(string.Format("The map '{0}' has the same 'LogName' on the map '{1}' in method or class '{2}'", map.MapName, duplicate.MapName, contextName));
+                }
+
+                if (map.ShortName != null)
+                {
+                    var duplicate = maps.FirstOrDefault(m => m.ShortName == map.ShortName && m != map);
+                    if (duplicate != null)
+                        throw new Exception(string.Format("The map '{0}' has the same 'ShortName' on the map '{1}' in method or class '{2}'", map.MapName, duplicate.MapName, contextName));
+                }
+            }
         }
 
-        public static bool IsArgumentFormat(string value, out string argFormat)
+        public static bool IsArgument(string value)
         {
-            argFormat = GetArgumentFormat(value);
-            return argFormat != null;
+            return GetArgumentDelimiterIfValidArgument(value) != null;
         }
 
-        public static string GetArgumentFormat(string value)
+        public static bool IsArgument(string value, out string argDelimiter)
         {
-            string argFormat = null;
+            argDelimiter = GetArgumentDelimiterIfValidArgument(value);
+            return argDelimiter != null;
+        }
+
+        public static string GetArgumentDelimiterIfValidArgument(string value)
+        {
+            string argDelimiter = null;
             if (value != null && !value.In("-", "--", "/"))
             {   
-                var invalidArgStartName = new char[] { '=', ':' };
+                //var invalidArgStartName = new char[] { '=', ':','+', '-', '/', '\\', '*', '&', '%' };
                 var char0 = value[0];
                 var char1 = (value.Length > 1) ? value[1] : default(char);
                 var char2 = (value.Length > 2) ? value[2] : default(char);
@@ -838,15 +1008,21 @@ namespace SysCommand
                 // -=a      -:a
                 // /=a      /:a
                 // -2000    --2000      /0
-                if (char0 == '-' && char1 == '-' && !char.IsDigit(char2) && !char2.In(invalidArgStartName))
-                    argFormat = "--";
-                else if (char0 == '-' && !char.IsDigit(char1) && !char1.In(invalidArgStartName))
-                    argFormat = "-";
-                else if (char0 == '/' && !char.IsDigit(char1) && !char1.In(invalidArgStartName))
-                    argFormat = "/";
+                if (char0 == '-' && char1 == '-')
+                {
+                    //if (!char.IsDigit(char2) && !char2.In(invalidArgStartName))
+                    if (char.IsLetter(char2))
+                        argDelimiter = "--";
+                }
+                else if (char0 == '-' || char0 == '/')
+                {
+                    //if (!char.IsDigit(char1) && !char1.In(invalidArgStartName))
+                    if (char.IsLetter(char1))
+                        argDelimiter = "-";
+                }
             }
 
-            return argFormat;
+            return argDelimiter;
         }
 
         public static string GetValueScaped(string value)
@@ -902,6 +1078,22 @@ namespace SysCommand
             }
 
             return hasString ? strBuilder.ToString() : null;
+        }
+
+        private static string GetNameWithPrefix(string name, Type type, string prefix)
+        {
+            if (string.IsNullOrWhiteSpace(prefix))
+            {
+                prefix = AppHelpers.ToLowerSeparate(type.Name, '-');
+                var split = prefix.Split('-').ToList();
+                if (split.Last() == "command")
+                {
+                    split.RemoveAt(split.Count - 1);
+                    prefix = string.Join("-", split.ToArray());
+                }
+            }
+
+            return prefix + "-" + name;
         }
 
         private static bool IsEnum(Type type)

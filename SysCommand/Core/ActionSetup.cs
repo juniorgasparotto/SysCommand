@@ -13,7 +13,8 @@ namespace SysCommand
             var action = new ActionInstance();
             var methodParameters = method.GetParameters();
             var methodAttr = Attribute.GetCustomAttribute(method, typeof(ActionAttribute)) as ActionAttribute;
-            if (methodAttr != null && methodAttr.Ignore)
+            //if (methodAttr != null && methodAttr.Ignore)
+            if (methodAttr != null)
                 return null;
 
             var actionName = "";
@@ -22,7 +23,7 @@ namespace SysCommand
             else
                 actionName = AppHelpers.ToLowerSeparate(method.Name, '-');
 
-            var addPrefixInCurrentAction = methodAttr == null ? true : methodAttr.AddPrefix;
+            var addPrefixInCurrentAction = methodAttr == null ? true : methodAttr.CanAddPrefix;
             if (command.AddPrefixInActions && addPrefixInCurrentAction)
                 actionName = this.AddPrefixAction(actionName, command.PrefixActions);
 

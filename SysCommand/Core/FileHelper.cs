@@ -10,6 +10,11 @@ namespace SysCommand
     {
         private static TypeNameSerializationBinder binder = new TypeNameSerializationBinder();
 
+        public static bool FileExists(string fileName)
+        {
+            return File.Exists(fileName);
+        }
+
         public static string GetContentFromFile(string fileName)
         {
             if (!File.Exists(fileName))

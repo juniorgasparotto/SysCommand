@@ -40,7 +40,7 @@ namespace SysCommand
         #region Internal Parameters
         public class Arguments
         {
-            [Argument(ShortName = 'v', LongName = "verbose", Help = "Specify the log level. The options are: all,info,success,warning,critical,error.", ShowHelpComplement = true, Default = "all")]
+            [Argument(ShortName = 'v', LongName = "verbose", Help = "Specify the log level. The options are: all,info,success,warning,critical,error.", ShowHelpComplement = true, DefaultValue = "all")]
             public string Verbose { get; set; }
 
             [Argument(ShortName = 'q', LongName = "quiet", Help = "Display nothing in the output.", ShowHelpComplement = true)]

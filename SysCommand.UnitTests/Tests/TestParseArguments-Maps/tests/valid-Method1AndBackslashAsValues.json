@@ -1,0 +1,145 @@
+{
+  "input": "-a \\ \\ -c \\",
+  "maps": [
+    {
+      "MapName": "a",
+      "LongName": null,
+      "ShortName": "a",
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    },
+    {
+      "MapName": "b",
+      "LongName": null,
+      "ShortName": "b",
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    },
+    {
+      "MapName": "c",
+      "LongName": null,
+      "ShortName": "c",
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "a",
+      "ValueParsed": "\\",
+      "Value": "\\",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "Map": {
+        "MapName": "a",
+        "LongName": null,
+        "ShortName": "a",
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": "\\",
+      "AllRaw": [
+        {
+          "Name": "a",
+          "Value": "\\",
+          "Format": "ShortNameAndHasValue",
+          "DelimiterArgument": "-",
+          "DelimiterValueInName": null,
+          "ValueRaw": "\\",
+          "IsShortName": true,
+          "IsLongName": false
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "b",
+      "ValueParsed": "\\",
+      "Value": "\\",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "Map": {
+        "MapName": "b",
+        "LongName": null,
+        "ShortName": "b",
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": "\\",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "\\",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "\\",
+          "IsShortName": false,
+          "IsLongName": false
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "c",
+      "ValueParsed": "\\",
+      "Value": "\\",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "Map": {
+        "MapName": "c",
+        "LongName": null,
+        "ShortName": "c",
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": "\\",
+      "AllRaw": [
+        {
+          "Name": "c",
+          "Value": "\\",
+          "Format": "ShortNameAndHasValue",
+          "DelimiterArgument": "-",
+          "DelimiterValueInName": null,
+          "ValueRaw": "\\",
+          "IsShortName": true,
+          "IsLongName": false
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

@@ -65,8 +65,8 @@ namespace SysCommand
             {
                 var prop = AppHelpers.GetPropertyInfo<TArgs>(expression);
                 var attribute = Attribute.GetCustomAttribute(prop, typeof(ArgumentAttribute)) as ArgumentAttribute;
-                if (attribute != null && attribute.Default != null)
-                    return (TProp)attribute.Default;
+                if (attribute != null && attribute.DefaultValue != null)
+                    return (TProp)attribute.DefaultValue;
             }
 
             return default(TProp);
@@ -86,8 +86,8 @@ namespace SysCommand
             else
             {
                 var attribute = Attribute.GetCustomAttribute(prop, typeof(ArgumentAttribute)) as ArgumentAttribute;
-                if (attribute != null && attribute.Default != null)
-                    return (TProp)attribute.Default;
+                if (attribute != null && attribute.DefaultValue != null)
+                    return (TProp)attribute.DefaultValue;
             }
 
             return default(TProp);
