@@ -223,15 +223,17 @@ namespace SysCommand
 
         public class ActionMap
         {
-            public string Name { get; private set; }
+            public string MapName { get; private set; }
+            public string ActionName { get; private set; }
             public Type ReturnType { get; private set; }
             public Type ParentClassType { get; private set; }
             public bool IsDefault { get; set; }
             public IEnumerable<ArgumentMap> ArgumentsMaps { get; private set; }
 
-            public ActionMap(string name, Type typeReturn, Type parentClassType, bool isDefault, IEnumerable<ArgumentMap> argumentsMaps)
+            public ActionMap(string mapName, string actionName, Type typeReturn, Type parentClassType, bool isDefault, IEnumerable<ArgumentMap> argumentsMaps)
             {
-                this.Name = name;
+                this.MapName = mapName;
+                this.ActionName = actionName;
                 this.ReturnType = typeReturn;
                 this.ParentClassType = parentClassType;
                 this.ArgumentsMaps = argumentsMaps;
@@ -240,7 +242,7 @@ namespace SysCommand
 
             public override string ToString()
             {
-                return "[" + this.Name + ", " + this.ParentClassType + "]";
+                return "[" + this.MapName + ", " + this.ParentClassType + "]";
             }
         }
 
@@ -808,7 +810,7 @@ namespace SysCommand
                     isDefaultAction = true;
 
                 var argsMaps = GetArgumentsMapsFromMethod(method);
-                maps.Add(new ActionMap(method.Name, method.ReturnType, type, isDefaultAction, argsMaps));
+                maps.Add(new ActionMap(method.Name, actionName, method.ReturnType, type, isDefaultAction, argsMaps));
             }
 
             return maps;

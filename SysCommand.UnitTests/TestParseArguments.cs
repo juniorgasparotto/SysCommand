@@ -666,13 +666,22 @@ namespace SysCommand.UnitTests
             [Argument]
             public string Prop5 { get; set; }
 
+            public void Main()
+            {
+
+            }
+
             public void Main(string[] args)
             { 
 
             }
 
-            public void Method1(string a, string b) 
+            public void Method1(string a, string b)
             { 
+            }
+
+            public void Method1()
+            {
             }
 
             [Action]
