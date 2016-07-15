@@ -125,28 +125,28 @@ namespace SysCommand.UnitTests
             Assert.IsTrue(outputTest == outputCorrect, string.Format("Error is test file '{0}'", testMethodName));
         }
 
-        private void TestActionMap(Type type, string input, bool onlyWithAttribute, bool canAddPrefixInAllMethods, string prefix, string fileName)
+        private void TestActionMap(Type type, string input, bool onlyWithAttribute, bool usePrefixInAllMethods, string prefix, string testMethodName)
         {
             var testContext = "Action-Maps";
             var args = AppHelpers.CommandLineToArgs(input);
             var argsRaw = ArgumentsParser.Parser(args);
-            var actionMaps = ArgumentsParser.GetActionsMapsFromType(type, onlyWithAttribute, canAddPrefixInAllMethods, prefix);
+            var actionMaps = ArgumentsParser.GetActionsMapsFromType(type, onlyWithAttribute, usePrefixInAllMethods, prefix);
             //var argsMappeds = ArgumentsParser.Parser(argsRaw, enablePositionedArgs, actionMaps.ToArray());
-            //var objectTest = new { input, maps = actionMaps, argsMappeds };
+            var objectTest = new { input, actionMaps, mapped="" };
 
             //// add if not exists, and the first add must be correct
-            //this.SaveUncheckedFileIfValidNotExists<dynamic>(objectTest, testContext, testMethodName);
+            this.SaveUncheckedFileIfValidNotExists<dynamic>(objectTest, testContext, testMethodName);
 
-            //var outputTest = FileHelper.GetContentJsonFromObject(objectTest, jsonSerializeConfig);
-            //var outputCorrect = FileHelper.GetContentFromFile(this.GetValidTestFileName(testContext, testMethodName));
-            //var test = outputTest == outputCorrect;
+            var outputTest = FileHelper.GetContentJsonFromObject(objectTest, jsonSerializeConfig);
+            var outputCorrect = FileHelper.GetContentFromFile(this.GetValidTestFileName(testContext, testMethodName));
+            var test = outputTest == outputCorrect;
 
-            //if (!test)
-            //    this.SaveInvalidFileIfValidExists<dynamic>(objectTest, testContext, testMethodName);
-            //else
-            //    this.RemoveInvalidFile(testContext, testMethodName);
+            if (!test)
+                this.SaveInvalidFileIfValidExists<dynamic>(objectTest, testContext, testMethodName);
+            else
+                this.RemoveInvalidFile(testContext, testMethodName);
 
-            //Assert.IsTrue(outputTest == outputCorrect, string.Format("Error is test file '{0}'", testMethodName));
+            Assert.IsTrue(outputTest == outputCorrect, string.Format("Error is test file '{0}'", testMethodName));
         }
 
         [TestMethod]
@@ -690,7 +690,7 @@ namespace SysCommand.UnitTests
                 return null;
             }
 
-            [Action(CanAddPrefix=false, Name="action-custom-name")]
+            [Action(UsePrefix=false, Name="action-custom-name")]
             public void Method3(string a, string b) 
             { 
             }

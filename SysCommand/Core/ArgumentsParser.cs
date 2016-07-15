@@ -225,24 +225,64 @@ namespace SysCommand
         {
             public string MapName { get; private set; }
             public string ActionName { get; private set; }
+            public string ActionNameRaw { get; private set; }
+            public string Prefix { get; private set; }
+            public bool UsePrefix { get; private set; }
             public Type ReturnType { get; private set; }
             public Type ParentClassType { get; private set; }
             public bool IsDefault { get; set; }
+            public bool EnablePositionalArgs { get; set; }
             public IEnumerable<ArgumentMap> ArgumentsMaps { get; private set; }
-
-            public ActionMap(string mapName, string actionName, Type typeReturn, Type parentClassType, bool isDefault, IEnumerable<ArgumentMap> argumentsMaps)
+            
+            public ActionMap(string mapName, string actionName, string prefix, string actionNameRaw, bool usePrefix, Type typeReturn, Type parentClassType, bool isDefault, bool enablePositionalArgs, IEnumerable<ArgumentMap> argumentsMaps)
             {
                 this.MapName = mapName;
                 this.ActionName = actionName;
+                this.ActionNameRaw = actionNameRaw;
+                this.Prefix = prefix;
+                this.UsePrefix = usePrefix;
                 this.ReturnType = typeReturn;
                 this.ParentClassType = parentClassType;
                 this.ArgumentsMaps = argumentsMaps;
                 this.IsDefault = isDefault;
+                this.EnablePositionalArgs = enablePositionalArgs;
             }
 
             public override string ToString()
             {
                 return "[" + this.MapName + ", " + this.ParentClassType + "]";
+            }
+        }
+
+        public class ActionMapped
+        {
+            private List<ArgumentRaw> argumentsRaw;
+            
+            public string Name { get; private set; }
+            public ActionMap ActionMap { get; private set; }
+            public ArgumentRaw ArgumentRawOfAction { get; private set; }
+            public IEnumerable<ArgumentMapped> ArgumentsMapped { get; set; }
+
+            public ActionMapped(string name, ActionMap actionMap, ArgumentRaw argumentRawOfAction)
+            {
+                this.Name = name;
+                this.ArgumentRawOfAction = argumentRawOfAction;
+                this.ActionMap = actionMap;
+            }
+
+            public void AddArgumentRaw(ArgumentRaw argumentRaw)
+            {
+                this.argumentsRaw.Add(argumentRaw);
+            }
+
+            public IEnumerable<ArgumentRaw> GetArgumentsRaw()
+            {
+                return this.argumentsRaw;
+            }
+
+            public override string ToString()
+            {
+                return "[" + this.Name + "]";
             }
         }
 
@@ -374,7 +414,75 @@ namespace SysCommand
             return argsItems;
         }
 
-        public static IEnumerable<ArgumentMapped> Parser(IEnumerable<ArgumentRaw> argumentsRaw, bool enablePositionedArgs = true, params ArgumentMap[] maps)
+        public static IEnumerable<ActionMapped> Parser(IEnumerable<ArgumentRaw> argumentsRaw, bool enableMultiAction, ActionMap[] maps)
+        {
+            var actionMappeds = new List<ActionMapped>();
+            var argumentsRawDefault = new List<ArgumentRaw>();
+            ActionMapped currentActionMapped = null;
+
+            foreach(var argRaw in argumentsRaw)
+            {
+                bool continueSearchToNextAction = true;
+                ArgumentRaw argRawAction = null;
+                var actionMap = maps.FirstOrDefault(map => map.ActionName == argRaw.Value);
+
+                if (argRaw.Format == ArgumentFormat.Unnamed)
+                {
+                    if (actionMap != null && continueSearchToNextAction)
+                    {
+                        argRawAction = argRaw;
+                    }
+                    else
+                    {
+                        //fix the method scape. E.g: 'save' exists but is scaped "\save" then remove the "\"
+                        if (AppHelpers.IsScaped(argRaw.Value))
+                        {
+                            var existsActionScaped = maps.FirstOrDefault(f => f.ActionName == AppHelpers.RemoveScape(argRaw.Value));
+                            if (existsActionScaped != null)
+                                argRaw.Value = AppHelpers.RemoveScape(argRaw.Value);
+                        }
+                    }
+                }
+
+                if (argRawAction != null)
+                {
+                    currentActionMapped = new ActionMapped(actionMap.MapName, actionMap, argRaw);
+                    actionMappeds.Add(currentActionMapped);
+                }
+                else if (currentActionMapped != null)
+                {
+                    currentActionMapped.AddArgumentRaw(argRaw);
+                }
+                else 
+                {   
+                    argumentsRawDefault.Add(argRaw);
+                }
+
+                // disable the search to the next action
+                if (!enableMultiAction)
+                    continueSearchToNextAction = false;
+            }
+
+            // map the actions that are default if has default arguments
+            if (argumentsRawDefault.Count > 0)
+            {
+                var mapsDefaults = maps.Where(map => map.IsDefault);
+                foreach (var map in mapsDefaults)
+                {
+                    var actionMappedDefault = new ActionMapped(map.MapName, map, null);
+                    foreach (var argRawDefault in argumentsRawDefault)
+                        actionMappedDefault.AddArgumentRaw(argRawDefault);
+                    actionMappeds.Add(currentActionMapped);
+                }
+            }
+
+            foreach (var actionMapped in actionMappeds)
+                actionMapped.ArgumentsMapped = Parser(actionMapped.GetArgumentsRaw(), actionMapped.ActionMap.EnablePositionalArgs, actionMapped.ActionMap.ArgumentsMaps.ToArray());
+            
+            return actionMappeds;
+        }
+
+        public static IEnumerable<ArgumentMapped> Parser(IEnumerable<ArgumentRaw> argumentsRaw, bool enablePositionalArgs, ArgumentMap[] maps)
         {
             var argumentsMappeds = new List<ArgumentMapped>();
             var mapsUseds = maps.ToList();
@@ -395,7 +503,7 @@ namespace SysCommand
                             return false;
                     });
 
-                    if (enablePositionedArgs && map == null && argRaw.Format == ArgumentFormat.Unnamed)
+                    if (enablePositionalArgs && map == null && argRaw.Format == ArgumentFormat.Unnamed)
                         map = mapsUseds.FirstOrDefault();
                     
                     if (map != null)
@@ -776,14 +884,14 @@ namespace SysCommand
             return valueConverted;
         }
 
-        public static IEnumerable<ActionMap> GetActionsMapsFromType(Type type, bool onlyWithAttribute = false, bool canAddPrefixInAllMethods = false, string prefix = null)
+        public static IEnumerable<ActionMap> GetActionsMapsFromType(Type type, bool onlyWithAttribute = false, bool usePrefixInAllMethods = false, string prefix = null)
         {
             var maps = new List<ActionMap>();
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(f => f.IsPublic && !f.IsSpecialName).ToArray();
-            return GetActionsMapsFromType(type, methods, onlyWithAttribute, canAddPrefixInAllMethods, prefix);
+            return GetActionsMapsFromType(type, methods, onlyWithAttribute, usePrefixInAllMethods, prefix);
         }
 
-        public static IEnumerable<ActionMap> GetActionsMapsFromType(Type type, MethodInfo[] methods, bool onlyWithAttribute = false, bool canAddPrefixInAllMethods = false, string prefix = null)
+        public static IEnumerable<ActionMap> GetActionsMapsFromType(Type type, MethodInfo[] methods, bool onlyWithAttribute = false, bool usePrefixInAllMethods = false, string prefix = null)
         {
             var maps = new List<ActionMap>();
             
@@ -795,22 +903,35 @@ namespace SysCommand
                 if (!isMainMethod && onlyWithAttribute && attribute == null)
                     continue;
 
-                var actionName = "";
-                if (attribute != null && !string.IsNullOrWhiteSpace(attribute.Name))
-                    actionName = attribute.Name;
-                else
-                    actionName = AppHelpers.ToLowerSeparate(method.Name, '-');
+                string actionNameRaw;
+                string actionName;
 
-                var canAddPrefix = attribute == null ? true : attribute.CanAddPrefix;
-                if (canAddPrefixInAllMethods && canAddPrefix)
-                    actionName = GetNameWithPrefix(actionName, type, prefix);
+                if (attribute != null && !string.IsNullOrWhiteSpace(attribute.Name))
+                    actionNameRaw = attribute.Name;
+                else
+                    actionNameRaw = GetArgumentLongName(method.Name);
+
+                var usePrefix = attribute == null ? true : attribute.UsePrefix;
+                var usePrefixFinal = usePrefixInAllMethods && usePrefix;
+                if (usePrefixFinal)
+                {
+                    if (string.IsNullOrWhiteSpace(prefix))
+                        prefix = GetArgumentLongNameByType(type);
+
+                    actionName = prefix + "-" + actionNameRaw;
+                }
+                else
+                {
+                    actionName = actionNameRaw;
+                }
 
                 var isDefaultAction = false;
-                if (isMainMethod || (attribute != null && attribute.IsDefault == true))
+                if (isMainMethod || (attribute != null && attribute.IsDefault))
                     isDefaultAction = true;
 
+                var enablePositionalArgs = attribute == null ? true : attribute.EnablePositionalArgs;
                 var argsMaps = GetArgumentsMapsFromMethod(method);
-                maps.Add(new ActionMap(method.Name, actionName, method.ReturnType, type, isDefaultAction, argsMaps));
+                maps.Add(new ActionMap(method.Name, actionName, prefix, actionNameRaw, usePrefixFinal, method.ReturnType, type, isDefaultAction, enablePositionalArgs, argsMaps));
             }
 
             return maps;
@@ -925,7 +1046,7 @@ namespace SysCommand
                 }
                 else
                 {
-                    longName = AppHelpers.ToLowerSeparate(mapName, '-');
+                    longName = GetArgumentLongName(mapName);
                 }
             }
 
@@ -1029,27 +1150,88 @@ namespace SysCommand
             return argDelimiter;
         }
 
-        public static string GetValueScaped(string value)
+        public static string GetValueScaped(string value, IEnumerable<ActionMap> actionMaps = null)
+        {
+            if (AppHelpers.IsScaped(value))
+            {
+                string[] escapableEquals = null;
+
+                //fix the method scape. E.g: 'save' exists but is scaped "\save" then remove the "\"
+                if (actionMaps != null)
+                    escapableEquals = actionMaps.Select(f => f.ActionName).ToArray();
+
+                return GetValueScaped(value, new string[] { "-", "/" }, escapableEquals);
+            }
+
+            return value;
+
+            //// "-"       = "-"
+            //// "/"       = "/"
+            //if (string.IsNullOrWhiteSpace(value) || value.Length <= 1)
+            //    return value;
+
+            //var char0 = value[0];
+            //var char1 = value[1];
+            //var char3 = value.Length > 2 ? value[2] : default(char);
+
+            //// "\-"      = "-"
+            //// "\-test"  = "-test"
+            //var existsScape = char0 == '\\' && char1.In('-', '/');
+
+            //// "\\-"     = "\-"
+            //// "\\-test" = "\-test"
+            //var existsScapeAndBackslashInValue = char0 == '\\' && char1 == '\\' && char3.In('-', '/');
+
+            //if (existsScape || existsScapeAndBackslashInValue)
+            //    value = value.Substring(1);
+
+            //return value;
+        }
+
+        public static string GetValueScaped(string value, string[] reservedWordsToStartValue, string[] reservedFullWords)
         {
             // "-"       = "-"
             // "/"       = "/"
             if (string.IsNullOrWhiteSpace(value) || value.Length <= 1)
                 return value;
 
-            var char0 = value[0];
-            var char1 = value[1];
-            var char3 = value.Length > 2 ? value[2] : default(char);
+            if (reservedWordsToStartValue != null)
+            {
+                foreach (var reservedStart in reservedWordsToStartValue)
+                {
+                    if (string.IsNullOrWhiteSpace(reservedStart))
+                        throw new ArgumentException("The argument is invalid", "reservedWordsToStartValue");
 
-            // "\-"      = "-"
-            // "\-test"  = "-test"
-            var existsScape = char0 == '\\' && char1.In('-', '/');
+                    // "\\-"     = "\-"
+                    // "\\-test" = "\-test"
+                    if (value.StartsWith("\\\\") && value.Substring(2).StartsWith(reservedStart))
+                        return value.Substring(1);
 
-            // "\\-"     = "\-"
-            // "\\-test" = "\-test"
-            var existsScapeAndBackslashInValue = char0 == '\\' && char1 == '\\' && char3.In('-', '/');
+                    // "\-"      = "-"
+                    // "\-test"  = "-test"
+                    if (value.StartsWith("\\") && value.Substring(1).StartsWith(reservedStart))
+                        return value.Substring(1);
+                }
+            }
 
-            if (existsScape || existsScapeAndBackslashInValue)
-                value = value.Substring(1);
+            if (reservedFullWords != null)
+            {
+                foreach (var reservedWord in reservedFullWords)
+                {
+                    if (string.IsNullOrWhiteSpace(reservedWord))
+                        throw new ArgumentException("The argument is invalid", "reservedFullWords");
+
+                    // "\\-"     = "\-"
+                    // "\\-test" = "\-test"
+                    if (value.StartsWith("\\\\") && value.Substring(2) == reservedWord)
+                        return value.Substring(1);
+
+                    // "\-"      = "-"
+                    // "\-test"  = "-test"
+                    if (value.StartsWith("\\") && value.Substring(1) == reservedWord)
+                        return value.Substring(1);
+                }
+            }
 
             return value;
         }
@@ -1084,20 +1266,22 @@ namespace SysCommand
             return hasString ? strBuilder.ToString() : null;
         }
 
-        private static string GetNameWithPrefix(string name, Type type, string prefix)
+        private static string GetArgumentLongName(string name)
         {
-            if (string.IsNullOrWhiteSpace(prefix))
+            return AppHelpers.ToLowerSeparate(name, '-');
+        }
+
+        private static string GetArgumentLongNameByType(Type type)
+        {
+            var prefix = AppHelpers.ToLowerSeparate(type.Name, '-');
+            var split = prefix.Split('-').ToList();
+            if (split.Last() == "command")
             {
-                prefix = AppHelpers.ToLowerSeparate(type.Name, '-');
-                var split = prefix.Split('-').ToList();
-                if (split.Last() == "command")
-                {
-                    split.RemoveAt(split.Count - 1);
-                    prefix = string.Join("-", split.ToArray());
-                }
+                split.RemoveAt(split.Count - 1);
+                prefix = string.Join("-", split.ToArray());
             }
 
-            return prefix + "-" + name;
+            return prefix;
         }
 
         private static bool IsEnum(Type type)

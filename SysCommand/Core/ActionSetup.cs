@@ -23,7 +23,7 @@ namespace SysCommand
             else
                 actionName = AppHelpers.ToLowerSeparate(method.Name, '-');
 
-            var addPrefixInCurrentAction = methodAttr == null ? true : methodAttr.CanAddPrefix;
+            var addPrefixInCurrentAction = methodAttr == null ? true : methodAttr.UsePrefix;
             if (command.AddPrefixInActions && addPrefixInCurrentAction)
                 actionName = this.AddPrefixAction(actionName, command.PrefixActions);
 

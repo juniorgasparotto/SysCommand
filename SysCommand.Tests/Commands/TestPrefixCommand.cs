@@ -76,7 +76,7 @@ namespace SysCommand.Tests
             App.Current.SaveObjectFile(tasks);
         }
 
-        [Action(Name = "ignored-prefix", CanAddPrefix = false)]
+        [Action(Name = "ignored-prefix", UsePrefix = false)]
         public void Delete(
             [Argument(LongName="id", ShortName='i', Help="My ID", DefaultValue="not work here", ShowHelpComplement=false)]
             string id
