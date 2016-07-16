@@ -1,0 +1,602 @@
+{
+  "input": "-a 1 -b 2",
+  "actionMaps": [
+    {
+      "MapName": "Main",
+      "ActionName": "main",
+      "ActionNameRaw": "main",
+      "Prefix": null,
+      "UsePrefix": false,
+      "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "IsDefault": true,
+      "EnablePositionalArgs": true,
+      "ArgumentsMaps": []
+    },
+    {
+      "MapName": "Main",
+      "ActionName": "main",
+      "ActionNameRaw": "main",
+      "Prefix": null,
+      "UsePrefix": false,
+      "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "IsDefault": true,
+      "EnablePositionalArgs": true,
+      "ArgumentsMaps": [
+        {
+          "MapName": "args",
+          "LongName": "args",
+          "ShortName": null,
+          "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "HasDefaultValue": false,
+          "DefaultValue": null,
+          "IsOptional": false,
+          "HelpText": null,
+          "ShowHelpComplement": false,
+          "Position": null
+        }
+      ]
+    },
+    {
+      "MapName": "MethodDefault",
+      "ActionName": "method-default",
+      "ActionNameRaw": "method-default",
+      "Prefix": null,
+      "UsePrefix": false,
+      "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "IsDefault": true,
+      "EnablePositionalArgs": true,
+      "ArgumentsMaps": [
+        {
+          "MapName": "a",
+          "LongName": null,
+          "ShortName": "a",
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "HasDefaultValue": true,
+          "DefaultValue": null,
+          "IsOptional": true,
+          "HelpText": null,
+          "ShowHelpComplement": false,
+          "Position": null
+        },
+        {
+          "MapName": "b",
+          "LongName": null,
+          "ShortName": "b",
+          "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "HasDefaultValue": true,
+          "DefaultValue": null,
+          "IsOptional": true,
+          "HelpText": null,
+          "ShowHelpComplement": false,
+          "Position": null
+        }
+      ]
+    },
+    {
+      "MapName": "MethodDefault",
+      "ActionName": "method-default",
+      "ActionNameRaw": "method-default",
+      "Prefix": null,
+      "UsePrefix": false,
+      "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "IsDefault": true,
+      "EnablePositionalArgs": true,
+      "ArgumentsMaps": [
+        {
+          "MapName": "a",
+          "LongName": null,
+          "ShortName": "a",
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "HasDefaultValue": true,
+          "DefaultValue": null,
+          "IsOptional": true,
+          "HelpText": null,
+          "ShowHelpComplement": false,
+          "Position": null
+        }
+      ]
+    },
+    {
+      "MapName": "Clean",
+      "ActionName": "clean",
+      "ActionNameRaw": "clean",
+      "Prefix": null,
+      "UsePrefix": false,
+      "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "IsDefault": false,
+      "EnablePositionalArgs": true,
+      "ArgumentsMaps": [
+        {
+          "MapName": "a",
+          "LongName": null,
+          "ShortName": "a",
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "HasDefaultValue": false,
+          "DefaultValue": null,
+          "IsOptional": false,
+          "HelpText": null,
+          "ShowHelpComplement": false,
+          "Position": null
+        },
+        {
+          "MapName": "b",
+          "LongName": null,
+          "ShortName": "b",
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "HasDefaultValue": false,
+          "DefaultValue": null,
+          "IsOptional": false,
+          "HelpText": null,
+          "ShowHelpComplement": false,
+          "Position": null
+        }
+      ]
+    },
+    {
+      "MapName": "Add",
+      "ActionName": "add",
+      "ActionNameRaw": "add",
+      "Prefix": null,
+      "UsePrefix": false,
+      "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "IsDefault": false,
+      "EnablePositionalArgs": false,
+      "ArgumentsMaps": [
+        {
+          "MapName": "a",
+          "LongName": null,
+          "ShortName": "a",
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "HasDefaultValue": false,
+          "DefaultValue": null,
+          "IsOptional": false,
+          "HelpText": null,
+          "ShowHelpComplement": false,
+          "Position": null
+        },
+        {
+          "MapName": "b",
+          "LongName": null,
+          "ShortName": "b",
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "HasDefaultValue": false,
+          "DefaultValue": null,
+          "IsOptional": false,
+          "HelpText": null,
+          "ShowHelpComplement": false,
+          "Position": null
+        }
+      ]
+    },
+    {
+      "MapName": "CommitAllFiles",
+      "ActionName": "commit",
+      "ActionNameRaw": "commit",
+      "Prefix": null,
+      "UsePrefix": false,
+      "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "IsDefault": false,
+      "EnablePositionalArgs": true,
+      "ArgumentsMaps": [
+        {
+          "MapName": "a",
+          "LongName": null,
+          "ShortName": "a",
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "HasDefaultValue": false,
+          "DefaultValue": null,
+          "IsOptional": false,
+          "HelpText": null,
+          "ShowHelpComplement": false,
+          "Position": null
+        },
+        {
+          "MapName": "b",
+          "LongName": null,
+          "ShortName": "b",
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "HasDefaultValue": false,
+          "DefaultValue": null,
+          "IsOptional": false,
+          "HelpText": null,
+          "ShowHelpComplement": false,
+          "Position": null
+        }
+      ]
+    }
+  ],
+  "actionsCallers": [
+    {
+      "Name": "Main",
+      "ActionMap": {
+        "MapName": "Main",
+        "ActionName": "main",
+        "ActionNameRaw": "main",
+        "Prefix": null,
+        "UsePrefix": false,
+        "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "IsDefault": true,
+        "EnablePositionalArgs": true,
+        "ArgumentsMaps": []
+      },
+      "ArgumentRawOfAction": null,
+      "ArgumentsMapped": [
+        {
+          "Name": "a",
+          "ValueParsed": "1",
+          "Value": "1",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "NotMapped",
+          "Map": null,
+          "Raw": "1",
+          "AllRaw": [
+            {
+              "Name": "a",
+              "Value": "1",
+              "Format": "ShortNameAndHasValue",
+              "DelimiterArgument": "-",
+              "DelimiterValueInName": null,
+              "ValueRaw": "1",
+              "IsShortName": true,
+              "IsLongName": false
+            }
+          ],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
+        },
+        {
+          "Name": "b",
+          "ValueParsed": "2",
+          "Value": "2",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "NotMapped",
+          "Map": null,
+          "Raw": "2",
+          "AllRaw": [
+            {
+              "Name": "b",
+              "Value": "2",
+              "Format": "ShortNameAndHasValue",
+              "DelimiterArgument": "-",
+              "DelimiterValueInName": null,
+              "ValueRaw": "2",
+              "IsShortName": true,
+              "IsLongName": false
+            }
+          ],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
+        }
+      ],
+      "Index": 0
+    },
+    {
+      "Name": "Main",
+      "ActionMap": {
+        "MapName": "Main",
+        "ActionName": "main",
+        "ActionNameRaw": "main",
+        "Prefix": null,
+        "UsePrefix": false,
+        "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "IsDefault": true,
+        "EnablePositionalArgs": true,
+        "ArgumentsMaps": [
+          {
+            "MapName": "args",
+            "LongName": "args",
+            "ShortName": null,
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "HasDefaultValue": false,
+            "DefaultValue": null,
+            "IsOptional": false,
+            "HelpText": null,
+            "ShowHelpComplement": false,
+            "Position": null
+          }
+        ]
+      },
+      "ArgumentRawOfAction": null,
+      "ArgumentsMapped": [
+        {
+          "Name": "a",
+          "ValueParsed": "1",
+          "Value": "1",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "NotMapped",
+          "Map": null,
+          "Raw": "1",
+          "AllRaw": [
+            {
+              "Name": "a",
+              "Value": "1",
+              "Format": "ShortNameAndHasValue",
+              "DelimiterArgument": "-",
+              "DelimiterValueInName": null,
+              "ValueRaw": "1",
+              "IsShortName": true,
+              "IsLongName": false
+            }
+          ],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
+        },
+        {
+          "Name": "b",
+          "ValueParsed": "2",
+          "Value": "2",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "NotMapped",
+          "Map": null,
+          "Raw": "2",
+          "AllRaw": [
+            {
+              "Name": "b",
+              "Value": "2",
+              "Format": "ShortNameAndHasValue",
+              "DelimiterArgument": "-",
+              "DelimiterValueInName": null,
+              "ValueRaw": "2",
+              "IsShortName": true,
+              "IsLongName": false
+            }
+          ],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
+        },
+        {
+          "Name": "args",
+          "ValueParsed": null,
+          "Value": null,
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "HasNoInput",
+          "Map": {
+            "MapName": "args",
+            "LongName": "args",
+            "ShortName": null,
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "HasDefaultValue": false,
+            "DefaultValue": null,
+            "IsOptional": false,
+            "HelpText": null,
+            "ShowHelpComplement": false,
+            "Position": null
+          },
+          "Raw": null,
+          "AllRaw": [],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
+        }
+      ],
+      "Index": 0
+    },
+    {
+      "Name": "MethodDefault",
+      "ActionMap": {
+        "MapName": "MethodDefault",
+        "ActionName": "method-default",
+        "ActionNameRaw": "method-default",
+        "Prefix": null,
+        "UsePrefix": false,
+        "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "IsDefault": true,
+        "EnablePositionalArgs": true,
+        "ArgumentsMaps": [
+          {
+            "MapName": "a",
+            "LongName": null,
+            "ShortName": "a",
+            "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "HasDefaultValue": true,
+            "DefaultValue": null,
+            "IsOptional": true,
+            "HelpText": null,
+            "ShowHelpComplement": false,
+            "Position": null
+          },
+          {
+            "MapName": "b",
+            "LongName": null,
+            "ShortName": "b",
+            "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "HasDefaultValue": true,
+            "DefaultValue": null,
+            "IsOptional": true,
+            "HelpText": null,
+            "ShowHelpComplement": false,
+            "Position": null
+          }
+        ]
+      },
+      "ArgumentRawOfAction": null,
+      "ArgumentsMapped": [
+        {
+          "Name": "a",
+          "ValueParsed": "1",
+          "Value": "1",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "Name",
+          "Map": {
+            "MapName": "a",
+            "LongName": null,
+            "ShortName": "a",
+            "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "HasDefaultValue": true,
+            "DefaultValue": null,
+            "IsOptional": true,
+            "HelpText": null,
+            "ShowHelpComplement": false,
+            "Position": null
+          },
+          "Raw": "1",
+          "AllRaw": [
+            {
+              "Name": "a",
+              "Value": "1",
+              "Format": "ShortNameAndHasValue",
+              "DelimiterArgument": "-",
+              "DelimiterValueInName": null,
+              "ValueRaw": "1",
+              "IsShortName": true,
+              "IsLongName": false
+            }
+          ],
+          "IsMapped": true,
+          "IsMappedOrHasDefaultValue": true
+        },
+        {
+          "Name": "b",
+          "ValueParsed": "2",
+          "Value": 2,
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "Name",
+          "Map": {
+            "MapName": "b",
+            "LongName": null,
+            "ShortName": "b",
+            "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "HasDefaultValue": true,
+            "DefaultValue": null,
+            "IsOptional": true,
+            "HelpText": null,
+            "ShowHelpComplement": false,
+            "Position": null
+          },
+          "Raw": "2",
+          "AllRaw": [
+            {
+              "Name": "b",
+              "Value": "2",
+              "Format": "ShortNameAndHasValue",
+              "DelimiterArgument": "-",
+              "DelimiterValueInName": null,
+              "ValueRaw": "2",
+              "IsShortName": true,
+              "IsLongName": false
+            }
+          ],
+          "IsMapped": true,
+          "IsMappedOrHasDefaultValue": true
+        }
+      ],
+      "Index": 0
+    },
+    {
+      "Name": "MethodDefault",
+      "ActionMap": {
+        "MapName": "MethodDefault",
+        "ActionName": "method-default",
+        "ActionNameRaw": "method-default",
+        "Prefix": null,
+        "UsePrefix": false,
+        "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "ParentClassType": "SysCommand.UnitTests.TestParseArguments+Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "IsDefault": true,
+        "EnablePositionalArgs": true,
+        "ArgumentsMaps": [
+          {
+            "MapName": "a",
+            "LongName": null,
+            "ShortName": "a",
+            "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "HasDefaultValue": true,
+            "DefaultValue": null,
+            "IsOptional": true,
+            "HelpText": null,
+            "ShowHelpComplement": false,
+            "Position": null
+          }
+        ]
+      },
+      "ArgumentRawOfAction": null,
+      "ArgumentsMapped": [
+        {
+          "Name": "a",
+          "ValueParsed": "1",
+          "Value": "1",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "Name",
+          "Map": {
+            "MapName": "a",
+            "LongName": null,
+            "ShortName": "a",
+            "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "HasDefaultValue": true,
+            "DefaultValue": null,
+            "IsOptional": true,
+            "HelpText": null,
+            "ShowHelpComplement": false,
+            "Position": null
+          },
+          "Raw": "1",
+          "AllRaw": [
+            {
+              "Name": "a",
+              "Value": "1",
+              "Format": "ShortNameAndHasValue",
+              "DelimiterArgument": "-",
+              "DelimiterValueInName": null,
+              "ValueRaw": "1",
+              "IsShortName": true,
+              "IsLongName": false
+            }
+          ],
+          "IsMapped": true,
+          "IsMappedOrHasDefaultValue": true
+        },
+        {
+          "Name": "b",
+          "ValueParsed": "2",
+          "Value": "2",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "NotMapped",
+          "Map": null,
+          "Raw": "2",
+          "AllRaw": [
+            {
+              "Name": "b",
+              "Value": "2",
+              "Format": "ShortNameAndHasValue",
+              "DelimiterArgument": "-",
+              "DelimiterValueInName": null,
+              "ValueRaw": "2",
+              "IsShortName": true,
+              "IsLongName": false
+            }
+          ],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
+        }
+      ],
+      "Index": 0
+    }
+  ]
+}

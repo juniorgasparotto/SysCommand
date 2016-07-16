@@ -243,7 +243,7 @@ namespace SysCommand
                 this.UsePrefix = usePrefix;
                 this.ReturnType = typeReturn;
                 this.ParentClassType = parentClassType;
-                this.ArgumentsMaps = argumentsMaps;
+                this.ArgumentsMaps = new List<ArgumentMap>(argumentsMaps);
                 this.IsDefault = isDefault;
                 this.EnablePositionalArgs = enablePositionalArgs;
             }
@@ -254,20 +254,23 @@ namespace SysCommand
             }
         }
 
-        public class ActionMapped
+        public class ActionCaller
         {
             private List<ArgumentRaw> argumentsRaw;
-            
+
             public string Name { get; private set; }
             public ActionMap ActionMap { get; private set; }
             public ArgumentRaw ArgumentRawOfAction { get; private set; }
             public IEnumerable<ArgumentMapped> ArgumentsMapped { get; set; }
+            public int Index { get; private set; }
 
-            public ActionMapped(string name, ActionMap actionMap, ArgumentRaw argumentRawOfAction)
+            public ActionCaller(string name, ActionMap actionMap, ArgumentRaw argumentRawOfAction, int index)
             {
                 this.Name = name;
                 this.ArgumentRawOfAction = argumentRawOfAction;
                 this.ActionMap = actionMap;
+                this.argumentsRaw = new List<ArgumentRaw>();
+                this.Index = index;
             }
 
             public void AddArgumentRaw(ArgumentRaw argumentRaw)
@@ -286,7 +289,7 @@ namespace SysCommand
             }
         }
 
-        public static IEnumerable<ArgumentRaw> Parser(string[] args)
+        public static IEnumerable<ArgumentRaw> Parser(string[] args, IEnumerable<ActionMap> actionsMaps = null)
         {
             var argsItems = new List<ArgumentRaw>();
             var trueChar = '+';
@@ -302,7 +305,7 @@ namespace SysCommand
                 var arg = (string)enumerator.Current;
                 if (!IsArgument(arg, out argDelimiter))
                 {
-                    argsItems.Add(new ArgumentRaw(null, arg, GetValueScaped(arg), ArgumentFormat.Unnamed, null, null));
+                    argsItems.Add(new ArgumentRaw(null, arg, GetValueScaped(arg, actionsMaps), ArgumentFormat.Unnamed, null, null));
                     i++;
                     continue;
                 }
@@ -373,7 +376,7 @@ namespace SysCommand
 
                 // --name \--value -> scape value
                 valueRaw = value;
-                value = GetValueScaped(value);
+                value = GetValueScaped(value, null);
 
                 // remove "-":  -xyz  -> xyz
                 // remove "--": --xyz -> xyz
@@ -414,76 +417,95 @@ namespace SysCommand
             return argsItems;
         }
 
-        public static IEnumerable<ActionMapped> Parser(IEnumerable<ArgumentRaw> argumentsRaw, bool enableMultiAction, ActionMap[] maps)
+        public static IEnumerable<ActionCaller> GetActionsCallers(IEnumerable<ArgumentRaw> argumentsRaw, bool enableMultiAction, IEnumerable<ActionMap> maps)
         {
-            var actionMappeds = new List<ActionMapped>();
-            var argumentsRawDefault = new List<ArgumentRaw>();
-            ActionMapped currentActionMapped = null;
-
-            foreach(var argRaw in argumentsRaw)
-            {
-                bool continueSearchToNextAction = true;
-                ArgumentRaw argRawAction = null;
-                var actionMap = maps.FirstOrDefault(map => map.ActionName == argRaw.Value);
-
-                if (argRaw.Format == ArgumentFormat.Unnamed)
-                {
-                    if (actionMap != null && continueSearchToNextAction)
-                    {
-                        argRawAction = argRaw;
-                    }
-                    else
-                    {
-                        //fix the method scape. E.g: 'save' exists but is scaped "\save" then remove the "\"
-                        if (AppHelpers.IsScaped(argRaw.Value))
-                        {
-                            var existsActionScaped = maps.FirstOrDefault(f => f.ActionName == AppHelpers.RemoveScape(argRaw.Value));
-                            if (existsActionScaped != null)
-                                argRaw.Value = AppHelpers.RemoveScape(argRaw.Value);
-                        }
-                    }
-                }
-
-                if (argRawAction != null)
-                {
-                    currentActionMapped = new ActionMapped(actionMap.MapName, actionMap, argRaw);
-                    actionMappeds.Add(currentActionMapped);
-                }
-                else if (currentActionMapped != null)
-                {
-                    currentActionMapped.AddArgumentRaw(argRaw);
-                }
-                else 
-                {   
-                    argumentsRawDefault.Add(argRaw);
-                }
-
-                // disable the search to the next action
-                if (!enableMultiAction)
-                    continueSearchToNextAction = false;
-            }
+            var actionCallers = new List<ActionCaller>();
+            var mapsDefaults = maps.Where(map => map.IsDefault);
 
             // map the actions that are default if has default arguments
-            if (argumentsRawDefault.Count > 0)
+            if (argumentsRaw.Count() == 0)
             {
-                var mapsDefaults = maps.Where(map => map.IsDefault);
                 foreach (var map in mapsDefaults)
                 {
-                    var actionMappedDefault = new ActionMapped(map.MapName, map, null);
-                    foreach (var argRawDefault in argumentsRawDefault)
-                        actionMappedDefault.AddArgumentRaw(argRawDefault);
-                    actionMappeds.Add(currentActionMapped);
+                    var actionCallerDefault = new ActionCaller(map.MapName, map, null, 0);
+                    actionCallers.Add(actionCallerDefault);
+                }
+            }
+            else
+            {
+                //var argumentsRawDefault = new List<ArgumentRaw>();
+                List<ActionCaller> lastFounds = null;
+                List<ActionCaller> defaultsCallers = null;
+                bool continueSearchToNextAction = true;
+                var index = 0;
+                foreach (var argRaw in argumentsRaw)
+                {
+                    ArgumentRaw argRawAction = null;
+
+                    // found all actions that has the same name (e.g: overrides methods).
+                    // ** use ValueRaw because de Value property has the value scaped when is action
+                    // ** and ValueRaw mantein the original value: 
+                    // ** Value: \exists-method-scaped -> exists-method-scaped
+                    // ** ValueRaw: \exists-method-scaped -> \exists-method-scaped
+                    var founds = maps.Where(map => map.ActionName == argRaw.ValueRaw).ToList();
+
+                    if (argRaw.Format == ArgumentFormat.Unnamed && founds.Count > 0 && continueSearchToNextAction)
+                        argRawAction = argRaw;
+
+                    if (argRawAction != null)
+                    {
+                        lastFounds = new List<ActionCaller>();
+                        foreach (var actionMap in founds)
+                        {
+                            var actionCaller = new ActionCaller(actionMap.MapName, actionMap, argRaw, index);
+                            lastFounds.Add(actionCaller);
+                            actionCallers.Add(actionCaller);
+                        }
+                        index++;
+                    }
+                    else if (lastFounds != null)
+                    {
+                        foreach (var actionMap in lastFounds)
+                            actionMap.AddArgumentRaw(argRaw);
+                    }
+                    else if (defaultsCallers == null)
+                    {
+                        defaultsCallers = new List<ActionCaller>();
+                        foreach (var map in mapsDefaults)
+                        {
+                            var actionCallerDefault = new ActionCaller(map.MapName, map, null, index);
+                            actionCallerDefault.AddArgumentRaw(argRaw);
+                            defaultsCallers.Add(actionCallerDefault);
+                            actionCallers.Add(actionCallerDefault);
+                        }
+                        index++;
+                    }
+                    else if (defaultsCallers != null)
+                    {
+                        foreach (var caller in defaultsCallers)
+                            caller.AddArgumentRaw(argRaw);
+                    }
+
+                    // disable the search to the next action
+                    if (!enableMultiAction)
+                        continueSearchToNextAction = false;
                 }
             }
 
-            foreach (var actionMapped in actionMappeds)
-                actionMapped.ArgumentsMapped = Parser(actionMapped.GetArgumentsRaw(), actionMapped.ActionMap.EnablePositionalArgs, actionMapped.ActionMap.ArgumentsMaps.ToArray());
-            
-            return actionMappeds;
+            foreach (var actionCaller in actionCallers)
+                actionCaller.ArgumentsMapped = Parser(actionCaller.GetArgumentsRaw(), actionCaller.ActionMap.EnablePositionalArgs, actionCaller.ActionMap.ArgumentsMaps);
+
+            return actionCallers;
         }
 
-        public static IEnumerable<ArgumentMapped> Parser(IEnumerable<ArgumentRaw> argumentsRaw, bool enablePositionalArgs, ArgumentMap[] maps)
+        public static IEnumerable<ArgumentMapped> Parser(IEnumerable<ArgumentRaw> argumentsRaw, bool enablePositionalArgs, IEnumerable<ArgumentMap> maps)
         {
+            if (argumentsRaw == null)
+                throw new ArgumentNullException("argumentsRaw");
+
+            if (maps == null)
+                throw new ArgumentNullException("maps");
+
             var argumentsMappeds = new List<ArgumentMapped>();
             var mapsUseds = maps.ToList();
 
@@ -493,7 +515,7 @@ namespace SysCommand
                 while (enumerator.MoveNext())
                 {
                     var argRaw = enumerator.Current;
-                    var map = mapsUseds.FirstOrDefault(m => 
+                    var map = mapsUseds.FirstOrDefault(m =>
                     {
                         if (argRaw.IsLongName)
                             return m.LongName == argRaw.Name;
@@ -899,8 +921,10 @@ namespace SysCommand
             {
                 var attribute = Attribute.GetCustomAttribute(method, typeof(ActionAttribute)) as ActionAttribute;
                 var isMainMethod = method.Name.ToLower() == "main";
+                var ignoredByWithoutAttr = onlyWithAttribute && attribute == null && !isMainMethod;
+                var ignoredByMethod = attribute != null && attribute.Ignore;
 
-                if (!isMainMethod && onlyWithAttribute && attribute == null)
+                if (ignoredByWithoutAttr || ignoredByMethod)
                     continue;
 
                 string actionNameRaw;
@@ -1150,7 +1174,7 @@ namespace SysCommand
             return argDelimiter;
         }
 
-        public static string GetValueScaped(string value, IEnumerable<ActionMap> actionMaps = null)
+        public static string GetValueScaped(string value, IEnumerable<ActionMap> actionMaps)
         {
             if (AppHelpers.IsScaped(value))
             {

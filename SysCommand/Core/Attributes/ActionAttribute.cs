@@ -11,7 +11,7 @@ namespace SysCommand
     {
         public string Name { get; set; }
         public bool UsePrefix { get; set; }
-        //public bool Ignore { get; set; }
+        public bool Ignore { get; set; }
         public bool IsDefault { get; set; }
         public bool EnablePositionalArgs { get; set; }
 
