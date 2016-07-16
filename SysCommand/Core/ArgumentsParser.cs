@@ -289,7 +289,7 @@ namespace SysCommand
             }
         }
 
-        public static IEnumerable<ArgumentRaw> Parser(string[] args, IEnumerable<ActionMap> actionsMaps = null)
+        public static IEnumerable<ArgumentRaw> ConvertToArgumentRaw(string[] args, IEnumerable<ActionMap> actionsMaps = null)
         {
             var argsItems = new List<ArgumentRaw>();
             var trueChar = '+';
@@ -417,7 +417,7 @@ namespace SysCommand
             return argsItems;
         }
 
-        public static IEnumerable<ActionCaller> GetActionsCallers(IEnumerable<ArgumentRaw> argumentsRaw, bool enableMultiAction, IEnumerable<ActionMap> maps)
+        public static IEnumerable<ActionCaller> ConvertToActionCaller(IEnumerable<ArgumentRaw> argumentsRaw, bool enableMultiAction, IEnumerable<ActionMap> maps)
         {
             var actionCallers = new List<ActionCaller>();
             var mapsDefaults = maps.Where(map => map.IsDefault);
@@ -493,12 +493,12 @@ namespace SysCommand
             }
 
             foreach (var actionCaller in actionCallers)
-                actionCaller.ArgumentsMapped = Parser(actionCaller.GetArgumentsRaw(), actionCaller.ActionMap.EnablePositionalArgs, actionCaller.ActionMap.ArgumentsMaps);
+                actionCaller.ArgumentsMapped = ConvertToArgumentMapped(actionCaller.GetArgumentsRaw(), actionCaller.ActionMap.EnablePositionalArgs, actionCaller.ActionMap.ArgumentsMaps);
 
             return actionCallers;
         }
 
-        public static IEnumerable<ArgumentMapped> Parser(IEnumerable<ArgumentRaw> argumentsRaw, bool enablePositionalArgs, IEnumerable<ArgumentMap> maps)
+        public static IEnumerable<ArgumentMapped> ConvertToArgumentMapped(IEnumerable<ArgumentRaw> argumentsRaw, bool enablePositionalArgs, IEnumerable<ArgumentMap> maps)
         {
             if (argumentsRaw == null)
                 throw new ArgumentNullException("argumentsRaw");

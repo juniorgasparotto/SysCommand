@@ -56,7 +56,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="TestParseArguments.cs" />
+    <Compile Include="Objects\LikeGit.cs" />
+    <Compile Include="Objects\EnumTest2.cs" />
+    <Compile Include="Objects\EnumTestNoFlag.cs" />
+    <Compile Include="Objects\EnumTestNoFlag2.cs" />
+    <Compile Include="Objects\EnumTest1.cs" />
+    <Compile Include="Objects\ArgumentMappedTestObject.cs" />
+    <Compile Include="TestHelper\TestHelper.cs" />
+    <Compile Include="TestActionCaller.cs" />
+    <Compile Include="TestHelper\TestFileHelper.cs" />
+    <Compile Include="TestParseArguments - Copy.cs" />
+    <Compile Include="TestArgumentMapped.cs" />
     <Compile Include="TestRun.cs" />
     <Compile Include="TestRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
