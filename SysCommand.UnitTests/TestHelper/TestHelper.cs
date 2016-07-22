@@ -65,7 +65,7 @@ namespace TestUtils
             var validFileName = GetValidTestFileName(typeName, testContext, fileName);
             var uncheckedFileName = GetUncheckedTestFileName(typeName, testContext, fileName);
             if (!TestFileHelper.FileExists(validFileName))
-                TestFileHelper.SaveObjectToFileJson(obj, validFileName, GetJsonConfig());
+                TestFileHelper.SaveObjectToFileJson(obj, uncheckedFileName, GetJsonConfig());
         }
 
         private static void SaveInvalidFileIfValidExists<T>(string typeName, T obj, string testContext, string fileName)

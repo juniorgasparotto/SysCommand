@@ -1,0 +1,151 @@
+{
+  "input": "-ab --value-",
+  "maps": [
+    {
+      "MapName": "a",
+      "LongName": null,
+      "ShortName": "a",
+      "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    },
+    {
+      "MapName": "b",
+      "LongName": null,
+      "ShortName": "b",
+      "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    },
+    {
+      "MapName": "value",
+      "LongName": "value",
+      "ShortName": null,
+      "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "a",
+      "ValueParsed": null,
+      "Value": true,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "Map": {
+        "MapName": "a",
+        "LongName": null,
+        "ShortName": "a",
+        "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": null,
+      "AllRaw": [
+        {
+          "Name": "a",
+          "Value": null,
+          "Format": "ShortNameAndNoValue",
+          "DelimiterArgument": "-",
+          "DelimiterValueInName": null,
+          "ValueRaw": null,
+          "IsShortName": true,
+          "IsLongName": false
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "b",
+      "ValueParsed": null,
+      "Value": true,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "Map": {
+        "MapName": "b",
+        "LongName": null,
+        "ShortName": "b",
+        "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": null,
+      "AllRaw": [
+        {
+          "Name": "b",
+          "Value": null,
+          "Format": "ShortNameAndNoValue",
+          "DelimiterArgument": "-",
+          "DelimiterValueInName": null,
+          "ValueRaw": null,
+          "IsShortName": true,
+          "IsLongName": false
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "value",
+      "ValueParsed": "-",
+      "Value": false,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "Map": {
+        "MapName": "value",
+        "LongName": "value",
+        "ShortName": null,
+        "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": "-",
+      "AllRaw": [
+        {
+          "Name": "value",
+          "Value": "-",
+          "Format": "LongNameAndHasValueInName",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "-",
+          "IsShortName": false,
+          "IsLongName": true
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

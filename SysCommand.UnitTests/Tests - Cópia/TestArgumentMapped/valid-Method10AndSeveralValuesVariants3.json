@@ -1,0 +1,166 @@
+{
+  "input": "--2000 /0 --value=value--value=junior --value=\"value\" --v2 100000",
+  "maps": [
+    {
+      "MapName": "v1",
+      "LongName": "v1",
+      "ShortName": null,
+      "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    },
+    {
+      "MapName": "v2",
+      "LongName": "v2",
+      "ShortName": null,
+      "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "v1",
+      "ValueParsed": "--2000 /0",
+      "Value": [
+        "--2000",
+        "/0"
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "Map": {
+        "MapName": "v1",
+        "LongName": "v1",
+        "ShortName": null,
+        "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": "--2000 /0",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "--2000",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "--2000",
+          "IsShortName": false,
+          "IsLongName": false
+        },
+        {
+          "Name": null,
+          "Value": "/0",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "/0",
+          "IsShortName": false,
+          "IsLongName": false
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "value",
+      "ValueParsed": "value--value=junior",
+      "Value": "value--value=junior",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "Map": null,
+      "Raw": "value--value=junior",
+      "AllRaw": [
+        {
+          "Name": "value",
+          "Value": "value--value=junior",
+          "Format": "LongNameAndHasValueInName",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": "=",
+          "ValueRaw": "value--value=junior",
+          "IsShortName": false,
+          "IsLongName": true
+        }
+      ],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Name": "value",
+      "ValueParsed": "value",
+      "Value": "value",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "NotMapped",
+      "Map": null,
+      "Raw": "value",
+      "AllRaw": [
+        {
+          "Name": "value",
+          "Value": "value",
+          "Format": "LongNameAndHasValueInName",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": "=",
+          "ValueRaw": "value",
+          "IsShortName": false,
+          "IsLongName": true
+        }
+      ],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Name": "v2",
+      "ValueParsed": "100000",
+      "Value": 100000,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "Map": {
+        "MapName": "v2",
+        "LongName": "v2",
+        "ShortName": null,
+        "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": "100000",
+      "AllRaw": [
+        {
+          "Name": "v2",
+          "Value": "100000",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "100000",
+          "IsShortName": false,
+          "IsLongName": true
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

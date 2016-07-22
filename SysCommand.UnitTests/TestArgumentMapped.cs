@@ -25,22 +25,22 @@ namespace SysCommand.UnitTests
         private void TestArgsMappedAuto(string mapMethodName, string input, bool enablePositionedArgs, string testMethodName)
         {
             var method = typeof(ArgumentMappedTestObject).GetMethod(mapMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            var maps = ArgumentsParser.GetArgumentsMapsFromMethod(method);
+            var maps = CommandParser.GetArgumentsMapsFromMethod(method);
             this.TestArgsMappedAuto(maps, input, enablePositionedArgs, testMethodName);
         }
 
         private void TestArgsMappedAuto(Type typeInstance, string input, bool enablePositionedArgs, bool onlyWithAttribute, string testMethodName)
         {
-            var maps = ArgumentsParser.GetArgumentsMapsFromProperties(typeInstance, onlyWithAttribute);
+            var maps = CommandParser.GetArgumentsMapsFromProperties(typeInstance, onlyWithAttribute);
             this.TestArgsMappedAuto(maps, input, enablePositionedArgs, testMethodName);
         }
 
-        private void TestArgsMappedAuto(IEnumerable<ArgumentsParser.ArgumentMap> maps, string input, bool enablePositionedArgs, string testMethodName)
+        private void TestArgsMappedAuto(IEnumerable<ArgumentMap> maps, string input, bool enablePositionedArgs, string testMethodName)
         {
             string testContext = null;
             var args = AppHelpers.CommandLineToArgs(input);
-            var argsRaw = ArgumentsParser.ConvertToArgumentRaw(args);
-            var argsMappeds = ArgumentsParser.ConvertToArgumentMapped(argsRaw, enablePositionedArgs, maps.ToArray());
+            var argsRaw = CommandParser.ParseArgumentRaw(args);
+            var argsMappeds = CommandParser.ParseArgumentMapped(argsRaw, enablePositionedArgs, maps.ToArray());
             var objectTest = new { input, maps, argsMappeds };
 
             TestHelper.CompareObjects<TestArgumentMapped>(objectTest, testContext, testMethodName);

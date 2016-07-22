@@ -63,12 +63,10 @@
     <Compile Include="Objects\EnumTest1.cs" />
     <Compile Include="Objects\ArgumentMappedTestObject.cs" />
     <Compile Include="TestHelper\TestHelper.cs" />
-    <Compile Include="TestActionCaller.cs" />
+    <Compile Include="TestAction.cs" />
     <Compile Include="TestHelper\TestFileHelper.cs" />
-    <Compile Include="TestParseArguments - Copy.cs" />
     <Compile Include="TestArgumentMapped.cs" />
     <Compile Include="TestRun.cs" />
-    <Compile Include="TestRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

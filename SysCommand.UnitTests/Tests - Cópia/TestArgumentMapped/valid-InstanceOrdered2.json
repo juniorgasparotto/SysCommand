@@ -1,0 +1,214 @@
+{
+  "input": "value2 value1",
+  "maps": [
+    {
+      "MapName": "Prop2",
+      "LongName": "prop2",
+      "ShortName": null,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": true,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": 0
+    },
+    {
+      "MapName": "Prop1",
+      "LongName": "prop1",
+      "ShortName": null,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": true,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": 1
+    },
+    {
+      "MapName": "Prop3",
+      "LongName": "p",
+      "ShortName": "p",
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": true,
+      "DefaultValue": "default",
+      "IsOptional": false,
+      "HelpText": "Help",
+      "ShowHelpComplement": true,
+      "Position": null
+    },
+    {
+      "MapName": "Prop4",
+      "LongName": "prop4",
+      "ShortName": null,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": true,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null
+    },
+    {
+      "MapName": "Prop5",
+      "LongName": "prop5",
+      "ShortName": null,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": true,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "Prop2",
+      "ValueParsed": "value2",
+      "Value": "value2",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "Map": {
+        "MapName": "Prop2",
+        "LongName": "prop2",
+        "ShortName": null,
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": true,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": 0
+      },
+      "Raw": "value2",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "value2",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "value2",
+          "IsShortName": false,
+          "IsLongName": false
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "Prop1",
+      "ValueParsed": "value1",
+      "Value": "value1",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "Map": {
+        "MapName": "Prop1",
+        "LongName": "prop1",
+        "ShortName": null,
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": true,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": 1
+      },
+      "Raw": "value1",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "value1",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "value1",
+          "IsShortName": false,
+          "IsLongName": false
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "Prop3",
+      "ValueParsed": "default",
+      "Value": "default",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "DefaultValue",
+      "Map": {
+        "MapName": "Prop3",
+        "LongName": "p",
+        "ShortName": "p",
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": true,
+        "DefaultValue": "default",
+        "IsOptional": false,
+        "HelpText": "Help",
+        "ShowHelpComplement": true,
+        "Position": null
+      },
+      "Raw": null,
+      "AllRaw": [],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "Prop4",
+      "ValueParsed": null,
+      "Value": null,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "HasNoInput",
+      "Map": {
+        "MapName": "Prop4",
+        "LongName": "prop4",
+        "ShortName": null,
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": true,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null
+      },
+      "Raw": null,
+      "AllRaw": [],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Name": "Prop5",
+      "ValueParsed": null,
+      "Value": null,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "HasNoInput",
+      "Map": {
+        "MapName": "Prop5",
+        "LongName": "prop5",
+        "ShortName": null,
+        "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": true,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null
+      },
+      "Raw": null,
+      "AllRaw": [],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    }
+  ]
+}
