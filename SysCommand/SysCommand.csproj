@@ -73,6 +73,7 @@
     <Compile Include="Core\Interfaces\IHelp.cs" />
     <Compile Include="Core\Interfaces\ICommand.cs" />
     <Compile Include="Core\Response.cs" />
+    <Compile Include="Parser\ArgumentMappingState.cs" />
     <Compile Include="Parser\ActionMappingState.cs" />
     <Compile Include="Parser\ArgumentFormat.cs" />
     <Compile Include="Parser\ArgumentMap.cs" />
