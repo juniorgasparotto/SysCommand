@@ -11,7 +11,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method8",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method8(System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Int64], System.Nullable`1[System.Byte][], System.Collections.Generic.List`1[System.Nullable`1[System.Char]])",
+          "Signature2": "System.Void Method8(System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "v1",
+        "PositionImpl": 0,
+        "_token": 134217771
+      }
     },
     {
       "MapName": "v2",
@@ -23,7 +40,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method8",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method8(System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Int64], System.Nullable`1[System.Byte][], System.Collections.Generic.List`1[System.Nullable`1[System.Char]])",
+          "Signature2": "System.Void Method8(System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "v2",
+        "PositionImpl": 1,
+        "_token": 134217772
+      }
     },
     {
       "MapName": "v3",
@@ -35,7 +69,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method8",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method8(System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Int64], System.Nullable`1[System.Byte][], System.Collections.Generic.List`1[System.Nullable`1[System.Char]])",
+          "Signature2": "System.Void Method8(System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "v3",
+        "PositionImpl": 2,
+        "_token": 134217773
+      }
     },
     {
       "MapName": "v4",
@@ -47,7 +98,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method8",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method8(System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Int64], System.Nullable`1[System.Byte][], System.Collections.Generic.List`1[System.Nullable`1[System.Char]])",
+          "Signature2": "System.Void Method8(System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "v4",
+        "PositionImpl": 3,
+        "_token": 134217774
+      }
     },
     {
       "MapName": "v5",
@@ -59,7 +127,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method8",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method8(System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Int64], System.Nullable`1[System.Byte][], System.Collections.Generic.List`1[System.Nullable`1[System.Char]])",
+          "Signature2": "System.Void Method8(System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "v5",
+        "PositionImpl": 4,
+        "_token": 134217775
+      }
     }
   ],
   "argsMappeds": [
@@ -71,6 +156,7 @@
       "HasInvalidInput": false,
       "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "v1",
         "LongName": "v1",
@@ -81,7 +167,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method8",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method8(System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Int64], System.Nullable`1[System.Byte][], System.Collections.Generic.List`1[System.Nullable`1[System.Char]])",
+            "Signature2": "System.Void Method8(System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "v1",
+          "PositionImpl": 0,
+          "_token": 134217771
+        }
       },
       "Raw": "1",
       "AllRaw": [
@@ -93,7 +196,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "1",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 1
         }
       ],
       "IsMapped": true,
@@ -107,6 +211,7 @@
       "HasInvalidInput": false,
       "Type": "System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "v2",
         "LongName": "v2",
@@ -117,7 +222,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method8",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method8(System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Int64], System.Nullable`1[System.Byte][], System.Collections.Generic.List`1[System.Nullable`1[System.Char]])",
+            "Signature2": "System.Void Method8(System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "v2",
+          "PositionImpl": 1,
+          "_token": 134217772
+        }
       },
       "Raw": "2.10",
       "AllRaw": [
@@ -129,7 +251,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "2.10",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 3
         }
       ],
       "IsMapped": true,
@@ -143,6 +266,7 @@
       "HasInvalidInput": false,
       "Type": "System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "HasNoInput",
+      "MappingStates": "None",
       "Map": {
         "MapName": "v3",
         "LongName": "v3",
@@ -153,7 +277,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method8",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method8(System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Int64], System.Nullable`1[System.Byte][], System.Collections.Generic.List`1[System.Nullable`1[System.Char]])",
+            "Signature2": "System.Void Method8(System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "v3",
+          "PositionImpl": 2,
+          "_token": 134217773
+        }
       },
       "Raw": null,
       "AllRaw": [],
@@ -168,6 +309,7 @@
       "HasInvalidInput": false,
       "Type": "System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "HasNoInput",
+      "MappingStates": "None",
       "Map": {
         "MapName": "v4",
         "LongName": "v4",
@@ -178,7 +320,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method8",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method8(System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Int64], System.Nullable`1[System.Byte][], System.Collections.Generic.List`1[System.Nullable`1[System.Char]])",
+            "Signature2": "System.Void Method8(System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "v4",
+          "PositionImpl": 3,
+          "_token": 134217774
+        }
       },
       "Raw": null,
       "AllRaw": [],
@@ -193,6 +352,7 @@
       "HasInvalidInput": false,
       "Type": "System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "HasNoInput",
+      "MappingStates": "None",
       "Map": {
         "MapName": "v5",
         "LongName": "v5",
@@ -203,7 +363,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method8",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method8(System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Int64], System.Nullable`1[System.Byte][], System.Collections.Generic.List`1[System.Nullable`1[System.Char]])",
+            "Signature2": "System.Void Method8(System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "v5",
+          "PositionImpl": 4,
+          "_token": 134217775
+        }
       },
       "Raw": null,
       "AllRaw": [],

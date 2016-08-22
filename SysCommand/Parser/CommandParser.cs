@@ -263,7 +263,7 @@ namespace SysCommand
                 var arg = (string)enumerator.Current;
                 if (!IsArgument(arg, out argDelimiter))
                 {
-                    argsItems.Add(new ArgumentRaw(null, arg, GetValueScaped(arg, actionsMaps), ArgumentFormat.Unnamed, null, null));
+                    argsItems.Add(new ArgumentRaw(i, null, arg, GetValueScaped(arg, actionsMaps), ArgumentFormat.Unnamed, null, null));
                     i++;
                     continue;
                 }
@@ -353,7 +353,7 @@ namespace SysCommand
                         format = ArgumentFormat.ShortNameAndHasValue;
 
                     foreach (var n in name)
-                        argsItems.Add(new ArgumentRaw(n.ToString(), valueRaw, value, format, argDelimiter, delimiterValueInName));
+                        argsItems.Add(new ArgumentRaw(i, n.ToString(), valueRaw, value, format, argDelimiter, delimiterValueInName));
                 }
                 else
                 {
@@ -366,7 +366,7 @@ namespace SysCommand
                     else
                         format = ArgumentFormat.LongNameAndHasValue;
 
-                    argsItems.Add(new ArgumentRaw(name, valueRaw, value, format, argDelimiter, delimiterValueInName));
+                    argsItems.Add(new ArgumentRaw(i, name, valueRaw, value, format, argDelimiter, delimiterValueInName));
                 }
 
                 i++;
@@ -685,8 +685,11 @@ namespace SysCommand
         {
             foreach(var arg in argumentsMapped)
             {
-                var property = (PropertyInfo)arg.Map.InternalMap;
-                property.SetValue(instance, arg.Value);
+                if (arg.Map != null)
+                {
+                    var property = (PropertyInfo)arg.Map.InternalMap;
+                    property.SetValue(instance, arg.Value);
+                }
             }
         }
 
@@ -735,12 +738,12 @@ namespace SysCommand
                         return ArgumentMappingState.ArgumentAlreadyBeenSet | ArgumentMappingState.IsInvalid;
                     else
                         //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ArgumentNotExists, string.Format("The argument '{0}' does not exist", userParameterName)));
-                        return ArgumentMappingState.ArgumentNotExists | ArgumentMappingState.IsInvalid;
+                        return ArgumentMappingState.ArgumentNotExistsByName | ArgumentMappingState.IsInvalid;
                 }
                 else
                 {
                     //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ValueWithoutArgument, string.Format("Could not find an argument to the specified value: {0}", arg.Raw)));
-                    return ArgumentMappingState.ValueWithoutArgument | ArgumentMappingState.IsInvalid;
+                    return ArgumentMappingState.ArgumentNotExistsByValue | ArgumentMappingState.IsInvalid;
                 }
             }
             else if (!arg.Map.IsOptional && arg.MappingType == ArgumentMappingType.HasNoInput)

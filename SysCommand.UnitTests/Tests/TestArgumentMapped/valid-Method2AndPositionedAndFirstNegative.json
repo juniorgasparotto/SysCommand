@@ -11,7 +11,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method2",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method2(System.Decimal, Int32, Boolean)",
+          "Signature2": "System.Void Method2(System.Decimal, System.Int32, System.Boolean)",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "value1",
+        "PositionImpl": 0,
+        "_token": 134217752
+      }
     },
     {
       "MapName": "value2",
@@ -23,7 +40,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method2",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method2(System.Decimal, Int32, Boolean)",
+          "Signature2": "System.Void Method2(System.Decimal, System.Int32, System.Boolean)",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "value2",
+        "PositionImpl": 1,
+        "_token": 134217753
+      }
     },
     {
       "MapName": "value3",
@@ -35,7 +69,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method2",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method2(System.Decimal, Int32, Boolean)",
+          "Signature2": "System.Void Method2(System.Decimal, System.Int32, System.Boolean)",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "value3",
+        "PositionImpl": 2,
+        "_token": 134217754
+      }
     }
   ],
   "argsMappeds": [
@@ -47,6 +98,7 @@
       "HasInvalidInput": false,
       "Type": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
+      "MappingStates": "None",
       "Map": {
         "MapName": "value1",
         "LongName": "value1",
@@ -57,7 +109,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method2",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method2(System.Decimal, Int32, Boolean)",
+            "Signature2": "System.Void Method2(System.Decimal, System.Int32, System.Boolean)",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "value1",
+          "PositionImpl": 0,
+          "_token": 134217752
+        }
       },
       "Raw": "-1",
       "AllRaw": [
@@ -69,7 +138,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "-1",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 0
         }
       ],
       "IsMapped": true,
@@ -83,6 +153,7 @@
       "HasInvalidInput": false,
       "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
+      "MappingStates": "None",
       "Map": {
         "MapName": "value2",
         "LongName": "value2",
@@ -93,7 +164,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method2",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method2(System.Decimal, Int32, Boolean)",
+            "Signature2": "System.Void Method2(System.Decimal, System.Int32, System.Boolean)",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "value2",
+          "PositionImpl": 1,
+          "_token": 134217753
+        }
       },
       "Raw": "1",
       "AllRaw": [
@@ -105,7 +193,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "1",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 1
         }
       ],
       "IsMapped": true,
@@ -119,6 +208,7 @@
       "HasInvalidInput": false,
       "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
+      "MappingStates": "None",
       "Map": {
         "MapName": "value3",
         "LongName": "value3",
@@ -129,7 +219,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method2",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method2(System.Decimal, Int32, Boolean)",
+            "Signature2": "System.Void Method2(System.Decimal, System.Int32, System.Boolean)",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "value3",
+          "PositionImpl": 2,
+          "_token": 134217754
+        }
       },
       "Raw": "1",
       "AllRaw": [
@@ -141,7 +248,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "1",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 2
         }
       ],
       "IsMapped": true,

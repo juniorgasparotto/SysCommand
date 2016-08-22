@@ -62,6 +62,7 @@
     <Compile Include="Objects\EnumTestNoFlag2.cs" />
     <Compile Include="Objects\EnumTest1.cs" />
     <Compile Include="Objects\ArgumentMappedTestObject.cs" />
+    <Compile Include="TestInvoke.cs" />
     <Compile Include="TestHelper\TestHelper.cs" />
     <Compile Include="TestAction.cs" />
     <Compile Include="TestHelper\TestFileHelper.cs" />

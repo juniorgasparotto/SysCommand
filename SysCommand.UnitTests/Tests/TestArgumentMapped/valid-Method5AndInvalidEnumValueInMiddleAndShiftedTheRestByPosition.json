@@ -11,7 +11,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method5",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+          "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "enum1",
+        "PositionImpl": 0,
+        "_token": 134217761
+      }
     },
     {
       "MapName": "enum2",
@@ -23,7 +40,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method5",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+          "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "enum2",
+        "PositionImpl": 1,
+        "_token": 134217762
+      }
     },
     {
       "MapName": "enum3",
@@ -35,7 +69,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "SysCommand.UnitTests.EnumTestNoFlag, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method5",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+          "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "enum3",
+        "PositionImpl": 2,
+        "_token": 134217763
+      }
     },
     {
       "MapName": "lst",
@@ -47,7 +98,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method5",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+          "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "lst",
+        "PositionImpl": 3,
+        "_token": 134217764
+      }
     },
     {
       "MapName": "enum4",
@@ -59,7 +127,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "SysCommand.UnitTests.EnumTestNoFlag2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method5",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+          "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "enum4",
+        "PositionImpl": 4,
+        "_token": 134217765
+      }
     }
   ],
   "argsMappeds": [
@@ -71,6 +156,7 @@
       "HasInvalidInput": false,
       "Type": "System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "enum1",
         "LongName": "enum1",
@@ -81,7 +167,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method5",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+            "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "enum1",
+          "PositionImpl": 0,
+          "_token": 134217761
+        }
       },
       "Raw": "Enum1Value1 2 enum1value3 8",
       "AllRaw": [
@@ -93,7 +196,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "Enum1Value1",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 1
         },
         {
           "Name": null,
@@ -103,7 +207,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "2",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 2
         },
         {
           "Name": null,
@@ -113,7 +218,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "enum1value3",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 3
         },
         {
           "Name": null,
@@ -123,7 +229,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "8",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 4
         }
       ],
       "IsMapped": true,
@@ -137,6 +244,7 @@
       "HasInvalidInput": false,
       "Type": "SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "enum2",
         "LongName": "enum2",
@@ -147,7 +255,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method5",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+            "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "enum2",
+          "PositionImpl": 1,
+          "_token": 134217762
+        }
       },
       "Raw": "Enum2Value1 Enum2value2",
       "AllRaw": [
@@ -159,7 +284,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "Enum2Value1",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 6
         },
         {
           "Name": null,
@@ -169,7 +295,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "Enum2value2",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 7
         }
       ],
       "IsMapped": true,
@@ -183,6 +310,7 @@
       "HasInvalidInput": true,
       "Type": "SysCommand.UnitTests.EnumTestNoFlag, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "MappingType": "Position",
+      "MappingStates": "None",
       "Map": {
         "MapName": "enum3",
         "LongName": "enum3",
@@ -193,7 +321,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "SysCommand.UnitTests.EnumTestNoFlag, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method5",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+            "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "enum3",
+          "PositionImpl": 2,
+          "_token": 134217763
+        }
       },
       "Raw": "Enum2value2Error",
       "AllRaw": [
@@ -205,7 +350,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "Enum2value2Error",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 8
         }
       ],
       "IsMapped": true,
@@ -219,6 +365,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
+      "MappingStates": "None",
       "Map": null,
       "Raw": "value1",
       "AllRaw": [
@@ -230,7 +377,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value1",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 10
         }
       ],
       "IsMapped": false,
@@ -244,6 +392,7 @@
       "HasInvalidInput": true,
       "Type": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
+      "MappingStates": "None",
       "Map": {
         "MapName": "lst",
         "LongName": "lst",
@@ -254,7 +403,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method5",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+            "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "lst",
+          "PositionImpl": 3,
+          "_token": 134217764
+        }
       },
       "Raw": "Value2",
       "AllRaw": [
@@ -266,7 +432,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "Value2",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 11
         }
       ],
       "IsMapped": true,
@@ -280,6 +447,7 @@
       "HasInvalidInput": false,
       "Type": "SysCommand.UnitTests.EnumTestNoFlag2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "MappingType": "Position",
+      "MappingStates": "None",
       "Map": {
         "MapName": "enum4",
         "LongName": "enum4",
@@ -290,7 +458,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "SysCommand.UnitTests.EnumTestNoFlag2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method5",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+            "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "enum4",
+          "PositionImpl": 4,
+          "_token": 134217765
+        }
       },
       "Raw": "Value3",
       "AllRaw": [
@@ -302,7 +487,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "Value3",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 12
         }
       ],
       "IsMapped": true,
@@ -316,6 +502,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
+      "MappingStates": "None",
       "Map": null,
       "Raw": "1",
       "AllRaw": [
@@ -327,7 +514,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "1",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 14
         }
       ],
       "IsMapped": false,
@@ -341,6 +529,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
+      "MappingStates": "None",
       "Map": null,
       "Raw": "2",
       "AllRaw": [
@@ -352,7 +541,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "2",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 15
         }
       ],
       "IsMapped": false,
@@ -366,6 +556,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
+      "MappingStates": "None",
       "Map": null,
       "Raw": "3",
       "AllRaw": [
@@ -377,7 +568,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "3",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 16
         }
       ],
       "IsMapped": false,
@@ -391,6 +583,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
+      "MappingStates": "None",
       "Map": null,
       "Raw": "4",
       "AllRaw": [
@@ -402,7 +595,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "4",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 17
         }
       ],
       "IsMapped": false,
@@ -416,6 +610,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
+      "MappingStates": "None",
       "Map": null,
       "Raw": "5",
       "AllRaw": [
@@ -427,7 +622,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "5",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 18
         }
       ],
       "IsMapped": false,
@@ -441,6 +637,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
+      "MappingStates": "None",
       "Map": null,
       "Raw": "a",
       "AllRaw": [
@@ -452,7 +649,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "a",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 19
         }
       ],
       "IsMapped": false,
@@ -466,6 +664,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
+      "MappingStates": "None",
       "Map": null,
       "Raw": "8",
       "AllRaw": [
@@ -477,7 +676,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "8",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 20
         }
       ],
       "IsMapped": false,

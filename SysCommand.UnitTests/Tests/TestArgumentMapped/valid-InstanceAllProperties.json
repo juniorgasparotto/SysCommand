@@ -11,7 +11,16 @@
       "IsOptional": true,
       "HelpText": null,
       "ShowHelpComplement": true,
-      "Position": 0
+      "Position": 0,
+      "InternalMap": {
+        "Name": "Prop2",
+        "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+        "Signature": "System.String Prop2",
+        "Signature2": "System.String Prop2",
+        "MemberType": 16,
+        "GenericArguments": null
+      }
     },
     {
       "MapName": "Prop1",
@@ -23,7 +32,16 @@
       "IsOptional": true,
       "HelpText": null,
       "ShowHelpComplement": true,
-      "Position": 1
+      "Position": 1,
+      "InternalMap": {
+        "Name": "Prop1",
+        "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+        "Signature": "System.String Prop1",
+        "Signature2": "System.String Prop1",
+        "MemberType": 16,
+        "GenericArguments": null
+      }
     },
     {
       "MapName": "Prop3",
@@ -35,7 +53,16 @@
       "IsOptional": false,
       "HelpText": "Help",
       "ShowHelpComplement": true,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "Name": "Prop3",
+        "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+        "Signature": "System.String Prop3",
+        "Signature2": "System.String Prop3",
+        "MemberType": 16,
+        "GenericArguments": null
+      }
     },
     {
       "MapName": "Prop4",
@@ -47,7 +74,16 @@
       "IsOptional": true,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "Name": "Prop4",
+        "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+        "Signature": "System.String Prop4",
+        "Signature2": "System.String Prop4",
+        "MemberType": 16,
+        "GenericArguments": null
+      }
     },
     {
       "MapName": "Prop5",
@@ -59,7 +95,16 @@
       "IsOptional": true,
       "HelpText": null,
       "ShowHelpComplement": true,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "Name": "Prop5",
+        "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+        "Signature": "System.String Prop5",
+        "Signature2": "System.String Prop5",
+        "MemberType": 16,
+        "GenericArguments": null
+      }
     }
   ],
   "argsMappeds": [
@@ -71,6 +116,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "Prop1",
         "LongName": "prop1",
@@ -81,7 +127,16 @@
         "IsOptional": true,
         "HelpText": null,
         "ShowHelpComplement": true,
-        "Position": 1
+        "Position": 1,
+        "InternalMap": {
+          "Name": "Prop1",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "System.String Prop1",
+          "Signature2": "System.String Prop1",
+          "MemberType": 16,
+          "GenericArguments": null
+        }
       },
       "Raw": "value1",
       "AllRaw": [
@@ -93,7 +148,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value1",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 1
         }
       ],
       "IsMapped": true,
@@ -107,6 +163,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "Prop2",
         "LongName": "prop2",
@@ -117,7 +174,16 @@
         "IsOptional": true,
         "HelpText": null,
         "ShowHelpComplement": true,
-        "Position": 0
+        "Position": 0,
+        "InternalMap": {
+          "Name": "Prop2",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "System.String Prop2",
+          "Signature2": "System.String Prop2",
+          "MemberType": 16,
+          "GenericArguments": null
+        }
       },
       "Raw": "value2",
       "AllRaw": [
@@ -129,7 +195,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value2",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 3
         }
       ],
       "IsMapped": true,
@@ -143,6 +210,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "Prop3",
         "LongName": "p",
@@ -153,7 +221,16 @@
         "IsOptional": false,
         "HelpText": "Help",
         "ShowHelpComplement": true,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "Name": "Prop3",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "System.String Prop3",
+          "Signature2": "System.String Prop3",
+          "MemberType": 16,
+          "GenericArguments": null
+        }
       },
       "Raw": "value3",
       "AllRaw": [
@@ -165,7 +242,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value3",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 5
         }
       ],
       "IsMapped": true,
@@ -179,6 +257,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "Prop4",
         "LongName": "prop4",
@@ -189,7 +268,16 @@
         "IsOptional": true,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "Name": "Prop4",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "System.String Prop4",
+          "Signature2": "System.String Prop4",
+          "MemberType": 16,
+          "GenericArguments": null
+        }
       },
       "Raw": "value4",
       "AllRaw": [
@@ -201,7 +289,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value4",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 7
         }
       ],
       "IsMapped": true,
@@ -215,6 +304,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "Prop5",
         "LongName": "prop5",
@@ -225,7 +315,16 @@
         "IsOptional": true,
         "HelpText": null,
         "ShowHelpComplement": true,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "Name": "Prop5",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "System.String Prop5",
+          "Signature2": "System.String Prop5",
+          "MemberType": 16,
+          "GenericArguments": null
+        }
       },
       "Raw": "value5",
       "AllRaw": [
@@ -237,7 +336,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value5",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 9
         }
       ],
       "IsMapped": true,

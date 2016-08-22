@@ -11,7 +11,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method6",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method6(System.Collections.Generic.List`1[System.Double], System.Collections.Generic.List`1[System.Decimal], System.Collections.Generic.List`1[System.String])",
+          "Signature2": "System.Void Method6(System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "lst",
+        "PositionImpl": 0,
+        "_token": 134217766
+      }
     },
     {
       "MapName": "lst2",
@@ -23,7 +40,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method6",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method6(System.Collections.Generic.List`1[System.Double], System.Collections.Generic.List`1[System.Decimal], System.Collections.Generic.List`1[System.String])",
+          "Signature2": "System.Void Method6(System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "lst2",
+        "PositionImpl": 1,
+        "_token": 134217767
+      }
     },
     {
       "MapName": "lst3",
@@ -35,7 +69,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method6",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method6(System.Collections.Generic.List`1[System.Double], System.Collections.Generic.List`1[System.Decimal], System.Collections.Generic.List`1[System.String])",
+          "Signature2": "System.Void Method6(System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "lst3",
+        "PositionImpl": 2,
+        "_token": 134217768
+      }
     }
   ],
   "argsMappeds": [
@@ -52,6 +103,7 @@
       "HasInvalidInput": false,
       "Type": "System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "lst",
         "LongName": "lst",
@@ -62,7 +114,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method6",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method6(System.Collections.Generic.List`1[System.Double], System.Collections.Generic.List`1[System.Decimal], System.Collections.Generic.List`1[System.String])",
+            "Signature2": "System.Void Method6(System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "lst",
+          "PositionImpl": 0,
+          "_token": 134217766
+        }
       },
       "Raw": "1 2 3 4",
       "AllRaw": [
@@ -74,7 +143,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "1",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 1
         },
         {
           "Name": null,
@@ -84,7 +154,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "2",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 2
         },
         {
           "Name": null,
@@ -94,7 +165,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "3",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 3
         },
         {
           "Name": null,
@@ -104,7 +176,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "4",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 4
         }
       ],
       "IsMapped": true,
@@ -123,6 +196,7 @@
       "HasInvalidInput": false,
       "Type": "System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "lst2",
         "LongName": "lst2",
@@ -133,7 +207,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method6",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method6(System.Collections.Generic.List`1[System.Double], System.Collections.Generic.List`1[System.Decimal], System.Collections.Generic.List`1[System.String])",
+            "Signature2": "System.Void Method6(System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "lst2",
+          "PositionImpl": 1,
+          "_token": 134217767
+        }
       },
       "Raw": "10 10.1 10.2 10.333",
       "AllRaw": [
@@ -145,7 +236,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "10",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 6
         },
         {
           "Name": null,
@@ -155,7 +247,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "10.1",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 7
         },
         {
           "Name": null,
@@ -165,7 +258,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "10.2",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 8
         },
         {
           "Name": null,
@@ -175,7 +269,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "10.333",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 9
         }
       ],
       "IsMapped": true,
@@ -194,6 +289,7 @@
       "HasInvalidInput": false,
       "Type": "System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "lst3",
         "LongName": "lst3",
@@ -204,7 +300,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method6",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method6(System.Collections.Generic.List`1[System.Double], System.Collections.Generic.List`1[System.Decimal], System.Collections.Generic.List`1[System.String])",
+            "Signature2": "System.Void Method6(System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]])",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "lst3",
+          "PositionImpl": 2,
+          "_token": 134217768
+        }
       },
       "Raw": "a b c \"1 2 3 4\"",
       "AllRaw": [
@@ -216,7 +329,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "a",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 11
         },
         {
           "Name": null,
@@ -226,7 +340,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "b",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 12
         },
         {
           "Name": null,
@@ -236,7 +351,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "c",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 13
         },
         {
           "Name": null,
@@ -246,7 +362,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "1 2 3 4",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 14
         }
       ],
       "IsMapped": true,

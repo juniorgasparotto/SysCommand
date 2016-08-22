@@ -19,8 +19,8 @@ namespace SysCommand
     {
         None = 0,
         ArgumentAlreadyBeenSet = 1,
-        ArgumentNotExists = 2,
-        ValueWithoutArgument = 4,
+        ArgumentNotExistsByName = 2,
+        ArgumentNotExistsByValue = 4,
         ArgumentIsRequired = 8,
         ArgumentIsInvalid = 16,
         ArgumentIsUnsupported = 32,

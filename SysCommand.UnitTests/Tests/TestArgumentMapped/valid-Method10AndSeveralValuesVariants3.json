@@ -11,7 +11,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method10",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method10(System.String[], Int32)",
+          "Signature2": "System.Void Method10(System.String[], System.Int32)",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "v1",
+        "PositionImpl": 0,
+        "_token": 134217778
+      }
     },
     {
       "MapName": "v2",
@@ -23,7 +40,24 @@
       "IsOptional": false,
       "HelpText": null,
       "ShowHelpComplement": false,
-      "Position": null
+      "Position": null,
+      "InternalMap": {
+        "AttrsImpl": "None",
+        "ClassImpl": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "DefaultValueImpl": null,
+        "MemberImpl": {
+          "Name": "Method10",
+          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+          "Signature": "Void Method10(System.String[], Int32)",
+          "Signature2": "System.Void Method10(System.String[], System.Int32)",
+          "MemberType": 8,
+          "GenericArguments": null
+        },
+        "NameImpl": "v2",
+        "PositionImpl": 1,
+        "_token": 134217779
+      }
     }
   ],
   "argsMappeds": [
@@ -38,6 +72,7 @@
       "HasInvalidInput": false,
       "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
+      "MappingStates": "None",
       "Map": {
         "MapName": "v1",
         "LongName": "v1",
@@ -48,7 +83,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method10",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method10(System.String[], Int32)",
+            "Signature2": "System.Void Method10(System.String[], System.Int32)",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "v1",
+          "PositionImpl": 0,
+          "_token": 134217778
+        }
       },
       "Raw": "--2000 /0",
       "AllRaw": [
@@ -60,7 +112,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "--2000",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 0
         },
         {
           "Name": null,
@@ -70,7 +123,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "/0",
           "IsShortName": false,
-          "IsLongName": false
+          "IsLongName": false,
+          "Index": 1
         }
       ],
       "IsMapped": true,
@@ -84,6 +138,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
+      "MappingStates": "None",
       "Map": null,
       "Raw": "value--value=junior",
       "AllRaw": [
@@ -95,7 +150,8 @@
           "DelimiterValueInName": "=",
           "ValueRaw": "value--value=junior",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 2
         }
       ],
       "IsMapped": false,
@@ -109,6 +165,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
+      "MappingStates": "None",
       "Map": null,
       "Raw": "value",
       "AllRaw": [
@@ -120,7 +177,8 @@
           "DelimiterValueInName": "=",
           "ValueRaw": "value",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 3
         }
       ],
       "IsMapped": false,
@@ -134,6 +192,7 @@
       "HasInvalidInput": false,
       "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
+      "MappingStates": "None",
       "Map": {
         "MapName": "v2",
         "LongName": "v2",
@@ -144,7 +203,24 @@
         "IsOptional": false,
         "HelpText": null,
         "ShowHelpComplement": false,
-        "Position": null
+        "Position": null,
+        "InternalMap": {
+          "AttrsImpl": "None",
+          "ClassImpl": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "DefaultValueImpl": null,
+          "MemberImpl": {
+            "Name": "Method10",
+            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
+            "Signature": "Void Method10(System.String[], Int32)",
+            "Signature2": "System.Void Method10(System.String[], System.Int32)",
+            "MemberType": 8,
+            "GenericArguments": null
+          },
+          "NameImpl": "v2",
+          "PositionImpl": 1,
+          "_token": 134217779
+        }
       },
       "Raw": "100000",
       "AllRaw": [
@@ -156,7 +232,8 @@
           "DelimiterValueInName": null,
           "ValueRaw": "100000",
           "IsShortName": false,
-          "IsLongName": true
+          "IsLongName": true,
+          "Index": 5
         }
       ],
       "IsMapped": true,

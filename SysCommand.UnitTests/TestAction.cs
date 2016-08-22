@@ -28,125 +28,12 @@ namespace SysCommand.UnitTests
                 args = new string[0];
 
             var argsRaw = CommandParser.ParseArgumentRaw(args, actionMaps);
+            var actionsMapped = CommandParser.ParseActionMapped(argsRaw, enableMultiAction, actionMaps);
+            var objectTest = new { input, actionMaps, actionsMapped };
 
-            var notFound = true;
-            var instance = new Git();
-            object actionsInvoke;
-            object argumentsInvoke;
-
-            //  mapping actions
-            {
-                var results = new List<string>();
-                var errors = new List<string>();
-                var actionsMapped = CommandParser.ParseActionMapped(argsRaw, enableMultiAction, actionMaps);
-                var actionsMappedBestToInvoke = CommandParser.GetBestActionsMappedToInvoke(actionsMapped);
-
-                if (actionsMappedBestToInvoke.Count() > 0)
-                {
-                    notFound = false;
-                    var hasError = false;
-                    foreach (var action in actionsMappedBestToInvoke)
-                    {
-                        foreach (var arg in action.ArgumentsMapped)
-                        {
-                            if (arg.MappingStates.HasFlag(ArgumentMappingState.IsInvalid))
-                            {
-                                hasError = true;
-                                errors.Add(string.Format("{0}: {1}", action.ToString(), this.GetArgumentMappedErrorDescription(arg)));
-                            }
-                        }
-                    }
-
-                    if (!hasError)
-                    {
-                        foreach (var action in actionsMappedBestToInvoke)
-                        {
-                            var result = CommandParser.InvokeAction(instance, action);
-                            results.Add(string.Format("{0}: {1}", action.ToString(), result));
-                        }
-                    }
-                }
-
-                var allErrors = new List<string>();
-
-                foreach (var action in actionsMapped)
-                {
-                    foreach (var arg in action.ArgumentsMapped)
-                    {
-                        if (arg.MappingStates.HasFlag(ArgumentMappingState.IsInvalid))
-                        {
-                            allErrors.Add(string.Format("{0}: {1}", action.ToString(), this.GetArgumentMappedErrorDescription(arg)));
-                        }
-                    }
-                }
-
-                actionsInvoke = new
-                {
-                    ActionsInvoke = new
-                    {
-                        All = new
-                        {
-                            Names = actionsMapped.Select(f => f.ActionMap.Method.ToString()),
-                            Errors = allErrors
-                        },
-                        Best = new
-                        {
-                            Names = actionsMappedBestToInvoke.Select(f => f.ActionMap.Method.ToString()),
-                            Errors = errors,
-                            Results = results
-                        }
-                    }
-                };
-            }
-
-            // mapping arguments
-            {
-                var errors = new List<string>();
-                var argumentsMap = CommandParser.GetArgumentsMapsFromProperties(typeof(Git), false);
-                var argumentsMapped = CommandParser.ParseArgumentMapped(argsRaw, true, argumentsMap);
-
-                var hasError = false;
-                foreach (var arg in argumentsMapped)
-                {
-                    if (arg.MappingStates.HasFlag(ArgumentMappingState.IsInvalid))
-                    {
-                        hasError = true;
-                        errors.Add(string.Format("globals: {0}", this.GetArgumentMappedErrorDescription(arg)));
-                    }
-                }
-
-                if (!hasError)
-                    CommandParser.InvokeArgumentsMappedAsProperties(instance, argumentsMapped);
-
-                argumentsInvoke = new
-                {
-                    ArgumentsInvoke = new
-                    {
-                        Errors = errors,
-                        Result = instance
-                    }
-                };
-            }
-
-            var objectTest = new { input, actionMaps, actionsMapped, invokeActionStep = actionStep2 };
-            TestHelper.CompareObjects<TestAction>(objectTest, testContext, testMethodName);
-        }
-
-        public string GetArgumentMappedErrorDescription(ArgumentMapped argumentMapped)
-        {
-            if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentAlreadyBeenSet))
-                return string.Format("The argument '{0}' has already been set", argumentMapped.GetArgumentNameInputted());
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentNotExists))
-                return string.Format("The argument '{0}' does not exist", argumentMapped.GetArgumentNameInputted());
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ValueWithoutArgument))
-                return string.Format("Could not find an argument to the specified value: {0}", argumentMapped.Raw);
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsRequired))
-                return string.Format("The argument '{0}' is required", argumentMapped.GetArgumentNameInputted());
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsInvalid))
-                return string.Format("The argument '{0}' is invalid", argumentMapped.GetArgumentNameInputted());
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsUnsupported))
-                return string.Format("The argument '{0}' is unsupported", argumentMapped.GetArgumentNameInputted());
-            return null;
+            var jsonSerializeConfig = TestHelper.GetJsonConfig();
+            jsonSerializeConfig.Converters.Add(new TestActionConverter());
+            TestHelper.CompareObjects<TestAction>(objectTest, testContext, testMethodName, jsonSerializeConfig);
         }
 
         //public static List<string> GetActionMappedErrors(IEnumerable<ActionMapped> actionsMapped)
@@ -337,6 +224,27 @@ namespace SysCommand.UnitTests
         {
             var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, @"commit a b", true, TestHelper.GetCurrentMethodName());
+        }
+
+        private class TestActionConverter : JsonConverter
+        {
+            public override bool CanConvert(Type objectType)
+            {
+                return
+                       objectType.IsSubclassOf(typeof(System.Reflection.PropertyInfo))
+                    || objectType.IsSubclassOf(typeof(System.Reflection.ParameterInfo))
+                    || objectType.IsSubclassOf(typeof(MethodInfo));
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                serializer.Serialize(writer, value.ToString());
+            }
         }
     }
 }

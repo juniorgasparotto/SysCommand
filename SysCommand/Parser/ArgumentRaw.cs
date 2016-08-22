@@ -55,8 +55,9 @@ namespace SysCommand
             }
         }
 
-        public ArgumentRaw(string name, string valueRaw, string value, ArgumentFormat format, string delimiterArgument, string delimiterValueInName)
+        public ArgumentRaw(int index, string name, string valueRaw, string value, ArgumentFormat format, string delimiterArgument, string delimiterValueInName)
         {
+            this.Index = index;
             this.Name = name;
             this.Value = value;
             this.ValueRaw = valueRaw;
@@ -69,5 +70,7 @@ namespace SysCommand
         {
             return "[" + this.Name + ", " + this.Value + "]";
         }
+
+        public int Index { get; set; }
     }
 }

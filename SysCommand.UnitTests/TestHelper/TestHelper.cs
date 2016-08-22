@@ -60,20 +60,20 @@ namespace TestUtils
             return GetFileName(typeName, testContext, "unchecked", fileName, "");
         }
 
-        private static void SaveUncheckedFileIfValidNotExists<T>(string typeName, T obj, string testContext, string fileName)
+        private static void SaveUncheckedFileIfValidNotExists<T>(string typeName, T obj, string testContext, string fileName, JsonSerializerSettings config)
         {
             var validFileName = GetValidTestFileName(typeName, testContext, fileName);
             var uncheckedFileName = GetUncheckedTestFileName(typeName, testContext, fileName);
             if (!TestFileHelper.FileExists(validFileName))
-                TestFileHelper.SaveObjectToFileJson(obj, uncheckedFileName, GetJsonConfig());
+                TestFileHelper.SaveObjectToFileJson(obj, uncheckedFileName, config);
         }
 
-        private static void SaveInvalidFileIfValidExists<T>(string typeName, T obj, string testContext, string fileName)
+        private static void SaveInvalidFileIfValidExists<T>(string typeName, T obj, string testContext, string fileName, JsonSerializerSettings config)
         {
             var validFileName = GetValidTestFileName(typeName, testContext, fileName);
             var invalidFileName = GetInvalidTestFileName(typeName, testContext, fileName);
             if (TestFileHelper.FileExists(validFileName))
-                TestFileHelper.SaveObjectToFileJson(obj, invalidFileName, GetJsonConfig());
+                TestFileHelper.SaveObjectToFileJson(obj, invalidFileName, config);
         }
 
         private static void RemoveInvalidFile(string typeName, string testContext, string fileName)
@@ -92,18 +92,20 @@ namespace TestUtils
             return sf.GetMethod().Name;
         }
 
-        public static void CompareObjects<TType>(object objectTest, string testContext, string testMethodName)
+        public static void CompareObjects<TType>(object objectTest, string testContext, string testMethodName, JsonSerializerSettings config = null)
         {
+            config = config ?? GetJsonConfig();
+
             var typeName = typeof(TType).Name;
             //// add if not exists, and the first add must be correct
-            SaveUncheckedFileIfValidNotExists<dynamic>(typeName, objectTest, testContext, testMethodName);
+            SaveUncheckedFileIfValidNotExists<dynamic>(typeName, objectTest, testContext, testMethodName, config);
 
-            var outputTest = TestFileHelper.GetContentJsonFromObject(objectTest, GetJsonConfig());
+            var outputTest = TestFileHelper.GetContentJsonFromObject(objectTest, config);
             var outputCorrect = TestFileHelper.GetContentFromFile(GetValidTestFileName(typeName, testContext, testMethodName));
             var test = outputTest == outputCorrect;
 
             if (!test)
-                SaveInvalidFileIfValidExists<dynamic>(typeName, objectTest, testContext, testMethodName);
+                SaveInvalidFileIfValidExists<dynamic>(typeName, objectTest, testContext, testMethodName, config);
             else
                 RemoveInvalidFile(typeName, testContext, testMethodName);
 
