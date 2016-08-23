@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Command.cs" />
+    <Compile Include="MapLoader.cs" />
     <Compile Include="Core\ArgumentsParser.cs" />
     <Compile Include="Mono.Options.cs" />
     <Compile Include="Core\Attributes\ActionAttribute.cs" />
