@@ -27,7 +27,7 @@
         },
         "NameImpl": "value1",
         "PositionImpl": 0,
-        "_token": 134217752
+        "_token": 134217839
       }
     },
     {
@@ -56,7 +56,7 @@
         },
         "NameImpl": "value2",
         "PositionImpl": 1,
-        "_token": 134217753
+        "_token": 134217840
       }
     },
     {
@@ -85,7 +85,7 @@
         },
         "NameImpl": "value3",
         "PositionImpl": 2,
-        "_token": 134217754
+        "_token": 134217841
       }
     }
   ],
@@ -125,7 +125,7 @@
           },
           "NameImpl": "value1",
           "PositionImpl": 0,
-          "_token": 134217752
+          "_token": 134217839
         }
       },
       "Raw": "-10.12",
@@ -180,7 +180,7 @@
           },
           "NameImpl": "value2",
           "PositionImpl": 1,
-          "_token": 134217753
+          "_token": 134217840
         }
       },
       "Raw": "-10",
@@ -235,7 +235,7 @@
           },
           "NameImpl": "value3",
           "PositionImpl": 2,
-          "_token": 134217754
+          "_token": 134217841
         }
       },
       "Raw": "-1",

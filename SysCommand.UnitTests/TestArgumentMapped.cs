@@ -43,6 +43,8 @@ namespace SysCommand.UnitTests
             var argsMappeds = CommandParser.ParseArgumentMapped(argsRaw, enablePositionedArgs, maps.ToArray());
             var objectTest = new { input, maps, argsMappeds };
 
+            var jsonSerializeConfig = TestHelper.GetJsonConfig();
+            jsonSerializeConfig.Converters.Add(new TestObjectJsonConverter());
             TestHelper.CompareObjects<TestArgumentMapped>(objectTest, testContext, testMethodName);
         }
 

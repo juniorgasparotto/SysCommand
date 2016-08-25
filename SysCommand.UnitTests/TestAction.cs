@@ -32,7 +32,7 @@ namespace SysCommand.UnitTests
             var objectTest = new { input, actionMaps, actionsMapped };
 
             var jsonSerializeConfig = TestHelper.GetJsonConfig();
-            jsonSerializeConfig.Converters.Add(new TestActionConverter());
+            jsonSerializeConfig.Converters.Add(new TestObjectJsonConverter());
             TestHelper.CompareObjects<TestAction>(objectTest, testContext, testMethodName, jsonSerializeConfig);
         }
 
@@ -226,25 +226,6 @@ namespace SysCommand.UnitTests
             this.TestActionMapped(actionMaps, @"commit a b", true, TestHelper.GetCurrentMethodName());
         }
 
-        private class TestActionConverter : JsonConverter
-        {
-            public override bool CanConvert(Type objectType)
-            {
-                return
-                       objectType.IsSubclassOf(typeof(System.Reflection.PropertyInfo))
-                    || objectType.IsSubclassOf(typeof(System.Reflection.ParameterInfo))
-                    || objectType.IsSubclassOf(typeof(MethodInfo));
-            }
-
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                serializer.Serialize(writer, value.ToString());
-            }
-        }
+        
     }
 }

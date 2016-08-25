@@ -27,7 +27,7 @@
         },
         "NameImpl": "enum1",
         "PositionImpl": 0,
-        "_token": 134217761
+        "_token": 134217848
       }
     },
     {
@@ -56,7 +56,7 @@
         },
         "NameImpl": "enum2",
         "PositionImpl": 1,
-        "_token": 134217762
+        "_token": 134217849
       }
     },
     {
@@ -85,7 +85,7 @@
         },
         "NameImpl": "enum3",
         "PositionImpl": 2,
-        "_token": 134217763
+        "_token": 134217850
       }
     },
     {
@@ -114,7 +114,7 @@
         },
         "NameImpl": "lst",
         "PositionImpl": 3,
-        "_token": 134217764
+        "_token": 134217851
       }
     },
     {
@@ -143,7 +143,7 @@
         },
         "NameImpl": "enum4",
         "PositionImpl": 4,
-        "_token": 134217765
+        "_token": 134217852
       }
     }
   ],
@@ -183,7 +183,7 @@
           },
           "NameImpl": "enum1",
           "PositionImpl": 0,
-          "_token": 134217761
+          "_token": 134217848
         }
       },
       "Raw": null,
@@ -238,7 +238,7 @@
           },
           "NameImpl": "enum2",
           "PositionImpl": 1,
-          "_token": 134217762
+          "_token": 134217849
         }
       },
       "Raw": "invalid",
@@ -293,7 +293,7 @@
           },
           "NameImpl": "enum3",
           "PositionImpl": 2,
-          "_token": 134217763
+          "_token": 134217850
         }
       },
       "Raw": null,
@@ -336,7 +336,7 @@
           },
           "NameImpl": "lst",
           "PositionImpl": 3,
-          "_token": 134217764
+          "_token": 134217851
         }
       },
       "Raw": null,
@@ -379,7 +379,7 @@
           },
           "NameImpl": "enum4",
           "PositionImpl": 4,
-          "_token": 134217765
+          "_token": 134217852
         }
       },
       "Raw": null,
