@@ -45,8 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Command.cs" />
-    <Compile Include="MapLoader.cs" />
+    <Compile Include="Core\Command4.cs" />
+    <Compile Include="Commands.cs" />
     <Compile Include="Core\ArgumentsParser.cs" />
     <Compile Include="Mono.Options.cs" />
     <Compile Include="Core\Attributes\ActionAttribute.cs" />
@@ -85,6 +85,7 @@
     <Compile Include="Parser\ActionMapped.cs" />
     <Compile Include="Parser\ArgumentMappingType.cs" />
     <Compile Include="Parser\CommandParser.cs" />
+    <Compile Include="Parser\Command.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

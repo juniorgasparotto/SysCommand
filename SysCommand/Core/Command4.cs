@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace SysCommand
 {
-    public abstract class Command
+    public abstract class Command4
     {
         public int OrderExecution { get; set; }
         public bool OnlyInDebug { get; set; }
