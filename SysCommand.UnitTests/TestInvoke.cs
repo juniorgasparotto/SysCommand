@@ -94,7 +94,7 @@ namespace SysCommand.UnitTests
             // mapping arguments
             {
                 var errors = new List<string>();
-                var argumentsMap = CommandParser.GetArgumentsMapsFromProperties(typeof(Git), false);
+                var argumentsMap = CommandParser.GetArgumentsMapsFromProperties(new Git(), false);
                 var argumentsMapped = CommandParser.ParseArgumentMapped(argsRaw, true, argumentsMap);
 
                 var hasError = false;

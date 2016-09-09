@@ -12,15 +12,14 @@
       "HelpText": null,
       "ShowHelpComplement": true,
       "Position": 0,
-      "InternalMap": {
-        "Name": "Prop2",
-        "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-        "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-        "Signature": "System.String Prop2",
-        "Signature2": "System.String Prop2",
-        "MemberType": 16,
-        "GenericArguments": null
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.String Prop2"
     },
     {
       "MapName": "Prop1",
@@ -33,15 +32,14 @@
       "HelpText": null,
       "ShowHelpComplement": true,
       "Position": 1,
-      "InternalMap": {
-        "Name": "Prop1",
-        "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-        "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-        "Signature": "System.String Prop1",
-        "Signature2": "System.String Prop1",
-        "MemberType": 16,
-        "GenericArguments": null
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.String Prop1"
     },
     {
       "MapName": "Prop3",
@@ -54,15 +52,14 @@
       "HelpText": "Help",
       "ShowHelpComplement": true,
       "Position": null,
-      "InternalMap": {
-        "Name": "Prop3",
-        "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-        "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-        "Signature": "System.String Prop3",
-        "Signature2": "System.String Prop3",
-        "MemberType": 16,
-        "GenericArguments": null
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.String Prop3"
     },
     {
       "MapName": "Prop4",
@@ -75,15 +72,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "InternalMap": {
-        "Name": "Prop4",
-        "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-        "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-        "Signature": "System.String Prop4",
-        "Signature2": "System.String Prop4",
-        "MemberType": 16,
-        "GenericArguments": null
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.String Prop4"
     },
     {
       "MapName": "Prop5",
@@ -96,15 +92,14 @@
       "HelpText": null,
       "ShowHelpComplement": true,
       "Position": null,
-      "InternalMap": {
-        "Name": "Prop5",
-        "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-        "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-        "Signature": "System.String Prop5",
-        "Signature2": "System.String Prop5",
-        "MemberType": 16,
-        "GenericArguments": null
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.String Prop5"
     }
   ],
   "argsMappeds": [
@@ -128,15 +123,14 @@
         "HelpText": null,
         "ShowHelpComplement": true,
         "Position": 1,
-        "InternalMap": {
-          "Name": "Prop1",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "System.String Prop1",
-          "Signature2": "System.String Prop1",
-          "MemberType": 16,
-          "GenericArguments": null
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.String Prop1"
       },
       "Raw": "value1",
       "AllRaw": [
@@ -175,15 +169,14 @@
         "HelpText": null,
         "ShowHelpComplement": true,
         "Position": 0,
-        "InternalMap": {
-          "Name": "Prop2",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "System.String Prop2",
-          "Signature2": "System.String Prop2",
-          "MemberType": 16,
-          "GenericArguments": null
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.String Prop2"
       },
       "Raw": "value2",
       "AllRaw": [
@@ -222,15 +215,14 @@
         "HelpText": "Help",
         "ShowHelpComplement": true,
         "Position": null,
-        "InternalMap": {
-          "Name": "Prop3",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "System.String Prop3",
-          "Signature2": "System.String Prop3",
-          "MemberType": 16,
-          "GenericArguments": null
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.String Prop3"
       },
       "Raw": null,
       "AllRaw": [],
@@ -257,15 +249,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "InternalMap": {
-          "Name": "Prop4",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "System.String Prop4",
-          "Signature2": "System.String Prop4",
-          "MemberType": 16,
-          "GenericArguments": null
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.String Prop4"
       },
       "Raw": null,
       "AllRaw": [],
@@ -292,15 +283,14 @@
         "HelpText": null,
         "ShowHelpComplement": true,
         "Position": null,
-        "InternalMap": {
-          "Name": "Prop5",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "System.String Prop5",
-          "Signature2": "System.String Prop5",
-          "MemberType": 16,
-          "GenericArguments": null
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.String Prop5"
       },
       "Raw": null,
       "AllRaw": [],

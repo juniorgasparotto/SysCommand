@@ -59,160 +59,160 @@ namespace SysCommand.UnitTests
         [TestMethod]
         public void CallWithoutIgnoredsAndOnlyMethodsWithAttributes()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: true, usePrefixInAllMethods: false, prefix: "custom-prefix");
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: true, usePrefixInAllMethods: false, prefix: "custom-prefix");
             this.TestActionMapped(actionMaps, "clean -a 1 -b 2", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallWithoutIgnoredsAndPrefixedWithClassName()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: true, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: true, prefix: null);
             this.TestActionMapped(actionMaps, "git-clean", true, TestHelper.GetCurrentMethodName());
         }
         
         [TestMethod]
         public void CallWithoutIgnoredsAndCustomPrefix()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: true, prefix: "custom-prefix");
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: true, prefix: "custom-prefix");
             this.TestActionMapped(actionMaps, "custom-prefix-main", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallActionMainAndEmptyArguments()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "main", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallEmptyArguments()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallWithoutActionAnd1NamedArgument()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "--args a b c d clean 1 2 clean 1 2", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallWithoutActionAnd1NamedArgumentAndMultiActionDisabled()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "--args a b c d clean 1 2 clean 1 2", false, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallWithoutActionAndAllArgsPositioned()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, @"\--args a b c d", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallWithoutActionAndAllArgsPositionedAnd1ActionScaped()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, @"\main a b c d", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallTwoActionsMainInSameCommand()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "main --args a b c d main 123", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallMainActionAnd1ActionScaped()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, @"main --args a b c d \\main 123", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallWithoutActionAnd2ArgNamed()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "-a 1 -b 2", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallWithoutActionAnd2ArgsPositioned()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "1 2", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallActionMainThatIsIgnoredAction()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, @"main -a 1 -b 2", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallTwoCallAndFirstIsArgsOfDefaulActionAndRestAreArgsOfMainAction()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, @"\main main 1 2", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallMethodDefaultWithPositionedArgs()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, @"method-default -a value1", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallWithoutActionsAnd1NamedArg()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "-a value1", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallWithoutActionsAnd1PositionedArg()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "value1", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallActionCleanMethodWith2ArgsPositioned()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "clean 1 2", true, TestHelper.GetCurrentMethodName());
         }
 
         public void CallActionCleanScapedThenAllArgsPositioned()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, @"\clean 1 2", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallActionAddWithAllArgsPositionedButThisActionHasPosicionalDisable()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, "add abc def", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallActionAddWithNamedArgsAndCallActionClearInMiddle()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, @"add -a \add -b clean clean 1 2", true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void CallActionCommit()
         {
-            var actionMaps = CommandParser.GetActionsMapsFromType(typeof(Git), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
+            var actionMaps = CommandParser.GetActionsMapsFromSourceObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
             this.TestActionMapped(actionMaps, @"commit a b", true, TestHelper.GetCurrentMethodName());
         }
 

@@ -24,14 +24,15 @@ namespace SysCommand.UnitTests
 
         private void TestArgsMappedAuto(string mapMethodName, string input, bool enablePositionedArgs, string testMethodName)
         {
-            var method = typeof(ArgumentMappedTestObject).GetMethod(mapMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            var maps = CommandParser.GetArgumentsMapsFromMethod(method);
+            var obj = new ArgumentMappedTestObject();
+            var method = obj.GetType().GetMethod(mapMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            var maps = CommandParser.GetArgumentsMapsFromMethod(obj, method);
             this.TestArgsMappedAuto(maps, input, enablePositionedArgs, testMethodName);
         }
 
-        private void TestArgsMappedAuto(Type typeInstance, string input, bool enablePositionedArgs, bool onlyWithAttribute, string testMethodName)
+        private void TestArgsMappedAuto(object source, string input, bool enablePositionedArgs, bool onlyWithAttribute, string testMethodName)
         {
-            var maps = CommandParser.GetArgumentsMapsFromProperties(typeInstance, onlyWithAttribute);
+            var maps = CommandParser.GetArgumentsMapsFromProperties(source, onlyWithAttribute);
             this.TestArgsMappedAuto(maps, input, enablePositionedArgs, testMethodName);
         }
 
@@ -45,7 +46,7 @@ namespace SysCommand.UnitTests
 
             var jsonSerializeConfig = TestHelper.GetJsonConfig();
             jsonSerializeConfig.Converters.Add(new TestObjectJsonConverter());
-            TestHelper.CompareObjects<TestArgumentMapped>(objectTest, testContext, testMethodName);
+            TestHelper.CompareObjects<TestArgumentMapped>(objectTest, testContext, testMethodName, jsonSerializeConfig);
         }
 
         [TestMethod]
@@ -488,25 +489,25 @@ namespace SysCommand.UnitTests
         [TestMethod]
         public void InstanceOrdered()
         {
-            this.TestArgsMappedAuto(typeof(ArgumentMappedTestObject), "--prop1 value1 --prop2 value2", true, false, TestHelper.GetCurrentMethodName());
+            this.TestArgsMappedAuto(new ArgumentMappedTestObject(), "--prop1 value1 --prop2 value2", true, false, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void InstanceOrdered2()
         {
-            this.TestArgsMappedAuto(typeof(ArgumentMappedTestObject), "value2 value1", true, false, TestHelper.GetCurrentMethodName());
+            this.TestArgsMappedAuto(new ArgumentMappedTestObject(), "value2 value1", true, false, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void InstanceAllProperties()
         {
-            this.TestArgsMappedAuto(typeof(ArgumentMappedTestObject), "--prop1 value1 --prop2 value2 --p value3 --prop4 value4 --prop5 value5", true, false, TestHelper.GetCurrentMethodName());
+            this.TestArgsMappedAuto(new ArgumentMappedTestObject(), "--prop1 value1 --prop2 value2 --p value3 --prop4 value4 --prop5 value5", true, false, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]
         public void InstanceAllPropertiesOnlyWithAttributes()
         {
-            this.TestArgsMappedAuto(typeof(ArgumentMappedTestObject), "--prop1 value1 --prop2 value2 --p value3 --prop4 value4 --prop5 value5", true, true, TestHelper.GetCurrentMethodName());
+            this.TestArgsMappedAuto(new ArgumentMappedTestObject(), "--prop1 value1 --prop2 value2 --p value3 --prop4 value4 --prop5 value5", true, true, TestHelper.GetCurrentMethodName());
         }
     }
 }

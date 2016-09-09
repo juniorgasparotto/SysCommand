@@ -5,11 +5,15 @@
       "MapName": "Main",
       "ActionName": "main",
       "ActionNameRaw": "main",
+      "Source": {
+        "Arg0": null,
+        "a": null,
+        "b": null
+      },
       "Method": "System.String Main()",
       "Prefix": "custom-prefix",
       "UsePrefix": false,
       "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "ParentClassType": "SysCommand.UnitTests.Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "IsDefault": true,
       "EnablePositionalArgs": true,
       "ArgumentsMaps": []
@@ -18,11 +22,15 @@
       "MapName": "Main",
       "ActionName": "main",
       "ActionNameRaw": "main",
+      "Source": {
+        "Arg0": null,
+        "a": null,
+        "b": null
+      },
       "Method": "System.String Main(System.String[])",
       "Prefix": "custom-prefix",
       "UsePrefix": false,
       "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "ParentClassType": "SysCommand.UnitTests.Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "IsDefault": true,
       "EnablePositionalArgs": true,
       "ArgumentsMaps": [
@@ -37,7 +45,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "InternalMap": "System.String[] args"
+          "Source": {
+            "Arg0": null,
+            "a": null,
+            "b": null
+          },
+          "PropertyOrParameter": "System.String[] args"
         }
       ]
     },
@@ -45,11 +58,15 @@
       "MapName": "MethodDefault",
       "ActionName": "method-default",
       "ActionNameRaw": "method-default",
+      "Source": {
+        "Arg0": null,
+        "a": null,
+        "b": null
+      },
       "Method": "System.String MethodDefault(System.String, System.Nullable`1[System.Int32])",
       "Prefix": "custom-prefix",
       "UsePrefix": false,
       "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "ParentClassType": "SysCommand.UnitTests.Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "IsDefault": true,
       "EnablePositionalArgs": true,
       "ArgumentsMaps": [
@@ -64,7 +81,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "InternalMap": "System.String a"
+          "Source": {
+            "Arg0": null,
+            "a": null,
+            "b": null
+          },
+          "PropertyOrParameter": "System.String a"
         },
         {
           "MapName": "b",
@@ -77,7 +99,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "InternalMap": "System.Nullable`1[System.Int32] b"
+          "Source": {
+            "Arg0": null,
+            "a": null,
+            "b": null
+          },
+          "PropertyOrParameter": "System.Nullable`1[System.Int32] b"
         }
       ]
     },
@@ -85,11 +112,15 @@
       "MapName": "MethodDefault",
       "ActionName": "method-default",
       "ActionNameRaw": "method-default",
+      "Source": {
+        "Arg0": null,
+        "a": null,
+        "b": null
+      },
       "Method": "System.String MethodDefault(System.String)",
       "Prefix": "custom-prefix",
       "UsePrefix": false,
       "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "ParentClassType": "SysCommand.UnitTests.Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "IsDefault": true,
       "EnablePositionalArgs": true,
       "ArgumentsMaps": [
@@ -104,7 +135,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "InternalMap": "System.String a"
+          "Source": {
+            "Arg0": null,
+            "a": null,
+            "b": null
+          },
+          "PropertyOrParameter": "System.String a"
         }
       ]
     },
@@ -112,11 +148,15 @@
       "MapName": "Add",
       "ActionName": "add",
       "ActionNameRaw": "add",
+      "Source": {
+        "Arg0": null,
+        "a": null,
+        "b": null
+      },
       "Method": "System.String Add(System.String, System.String)",
       "Prefix": "custom-prefix",
       "UsePrefix": false,
       "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "ParentClassType": "SysCommand.UnitTests.Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "IsDefault": false,
       "EnablePositionalArgs": false,
       "ArgumentsMaps": [
@@ -131,7 +171,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "InternalMap": "System.String a"
+          "Source": {
+            "Arg0": null,
+            "a": null,
+            "b": null
+          },
+          "PropertyOrParameter": "System.String a"
         },
         {
           "MapName": "b",
@@ -144,7 +189,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "InternalMap": "System.String b"
+          "Source": {
+            "Arg0": null,
+            "a": null,
+            "b": null
+          },
+          "PropertyOrParameter": "System.String b"
         }
       ]
     },
@@ -152,11 +202,15 @@
       "MapName": "CommitAllFiles",
       "ActionName": "commit",
       "ActionNameRaw": "commit",
+      "Source": {
+        "Arg0": null,
+        "a": null,
+        "b": null
+      },
       "Method": "System.String CommitAllFiles(System.String, System.String)",
       "Prefix": "custom-prefix",
       "UsePrefix": false,
       "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "ParentClassType": "SysCommand.UnitTests.Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "IsDefault": false,
       "EnablePositionalArgs": true,
       "ArgumentsMaps": [
@@ -171,7 +225,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "InternalMap": "System.String a"
+          "Source": {
+            "Arg0": null,
+            "a": null,
+            "b": null
+          },
+          "PropertyOrParameter": "System.String a"
         },
         {
           "MapName": "b",
@@ -184,7 +243,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "InternalMap": "System.String b"
+          "Source": {
+            "Arg0": null,
+            "a": null,
+            "b": null
+          },
+          "PropertyOrParameter": "System.String b"
         }
       ]
     }
@@ -196,11 +260,15 @@
         "MapName": "Main",
         "ActionName": "main",
         "ActionNameRaw": "main",
+        "Source": {
+          "Arg0": null,
+          "a": null,
+          "b": null
+        },
         "Method": "System.String Main()",
         "Prefix": "custom-prefix",
         "UsePrefix": false,
         "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-        "ParentClassType": "SysCommand.UnitTests.Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
         "IsDefault": true,
         "EnablePositionalArgs": true,
         "ArgumentsMaps": []
@@ -298,11 +366,15 @@
         "MapName": "Main",
         "ActionName": "main",
         "ActionNameRaw": "main",
+        "Source": {
+          "Arg0": null,
+          "a": null,
+          "b": null
+        },
         "Method": "System.String Main(System.String[])",
         "Prefix": "custom-prefix",
         "UsePrefix": false,
         "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-        "ParentClassType": "SysCommand.UnitTests.Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
         "IsDefault": true,
         "EnablePositionalArgs": true,
         "ArgumentsMaps": [
@@ -317,7 +389,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "InternalMap": "System.String[] args"
+            "Source": {
+              "Arg0": null,
+              "a": null,
+              "b": null
+            },
+            "PropertyOrParameter": "System.String[] args"
           }
         ]
       },
@@ -345,7 +422,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "InternalMap": "System.String[] args"
+            "Source": {
+              "Arg0": null,
+              "a": null,
+              "b": null
+            },
+            "PropertyOrParameter": "System.String[] args"
           },
           "Raw": "clean",
           "AllRaw": [
@@ -428,11 +510,15 @@
         "MapName": "MethodDefault",
         "ActionName": "method-default",
         "ActionNameRaw": "method-default",
+        "Source": {
+          "Arg0": null,
+          "a": null,
+          "b": null
+        },
         "Method": "System.String MethodDefault(System.String, System.Nullable`1[System.Int32])",
         "Prefix": "custom-prefix",
         "UsePrefix": false,
         "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-        "ParentClassType": "SysCommand.UnitTests.Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
         "IsDefault": true,
         "EnablePositionalArgs": true,
         "ArgumentsMaps": [
@@ -447,7 +533,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "InternalMap": "System.String a"
+            "Source": {
+              "Arg0": null,
+              "a": null,
+              "b": null
+            },
+            "PropertyOrParameter": "System.String a"
           },
           {
             "MapName": "b",
@@ -460,7 +551,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "InternalMap": "System.Nullable`1[System.Int32] b"
+            "Source": {
+              "Arg0": null,
+              "a": null,
+              "b": null
+            },
+            "PropertyOrParameter": "System.Nullable`1[System.Int32] b"
           }
         ]
       },
@@ -486,7 +582,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "InternalMap": "System.String a"
+            "Source": {
+              "Arg0": null,
+              "a": null,
+              "b": null
+            },
+            "PropertyOrParameter": "System.String a"
           },
           "Raw": "clean",
           "AllRaw": [
@@ -552,7 +653,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "InternalMap": "System.Nullable`1[System.Int32] b"
+            "Source": {
+              "Arg0": null,
+              "a": null,
+              "b": null
+            },
+            "PropertyOrParameter": "System.Nullable`1[System.Int32] b"
           },
           "Raw": "2",
           "AllRaw": [
@@ -581,11 +687,15 @@
         "MapName": "MethodDefault",
         "ActionName": "method-default",
         "ActionNameRaw": "method-default",
+        "Source": {
+          "Arg0": null,
+          "a": null,
+          "b": null
+        },
         "Method": "System.String MethodDefault(System.String)",
         "Prefix": "custom-prefix",
         "UsePrefix": false,
         "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-        "ParentClassType": "SysCommand.UnitTests.Git, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
         "IsDefault": true,
         "EnablePositionalArgs": true,
         "ArgumentsMaps": [
@@ -600,7 +710,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "InternalMap": "System.String a"
+            "Source": {
+              "Arg0": null,
+              "a": null,
+              "b": null
+            },
+            "PropertyOrParameter": "System.String a"
           }
         ]
       },
@@ -626,7 +741,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "InternalMap": "System.String a"
+            "Source": {
+              "Arg0": null,
+              "a": null,
+              "b": null
+            },
+            "PropertyOrParameter": "System.String a"
           },
           "Raw": "clean",
           "AllRaw": [

@@ -46,7 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Command4.cs" />
-    <Compile Include="Commands.cs" />
+    <Compile Include="SysCommand\CommandMappedCollection.cs" />
+    <Compile Include="SysCommand\Debug.cs" />
+    <Compile Include="SysCommand\App.cs" />
+    <Compile Include="SysCommand\CommandAppDomainLoader.cs" />
+    <Compile Include="SysCommand\CommandMapCollection.cs" />
     <Compile Include="Core\ArgumentsParser.cs" />
     <Compile Include="Mono.Options.cs" />
     <Compile Include="Core\Attributes\ActionAttribute.cs" />
@@ -85,7 +89,7 @@
     <Compile Include="Parser\ActionMapped.cs" />
     <Compile Include="Parser\ArgumentMappingType.cs" />
     <Compile Include="Parser\CommandParser.cs" />
-    <Compile Include="Parser\Command.cs" />
+    <Compile Include="SysCommand\Command.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

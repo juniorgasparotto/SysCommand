@@ -26,10 +26,13 @@ namespace SysCommand
         public string HelpText { get; private set; }
         public bool ShowHelpComplement { get; private set; }
         public int? Position { get; private set; }
-        public object InternalMap { get; private set; }
+        public object Source { get; private set; }
+        public object PropertyOrParameter { get; private set; }
 
-        public ArgumentMap(string mapName, string longName, char? shortName, Type type, bool isOptional, bool hasDefaultValue, object defaultValue, string helpText, bool showHelpComplement, int? position, object internalMap)
+        public ArgumentMap(object source, object propertyOrParameter, string mapName, string longName, char? shortName, Type type, bool isOptional, bool hasDefaultValue, object defaultValue, string helpText, bool showHelpComplement, int? position)
         {
+            this.Source = source;
+            this.PropertyOrParameter = propertyOrParameter;
             this.MapName = mapName;
             this.LongName = longName;
             this.ShortName = shortName;
@@ -40,7 +43,6 @@ namespace SysCommand
             this.HelpText = helpText;
             this.ShowHelpComplement = showHelpComplement;
             this.Position = position;
-            this.InternalMap = internalMap;
         }
 
         public override string ToString()

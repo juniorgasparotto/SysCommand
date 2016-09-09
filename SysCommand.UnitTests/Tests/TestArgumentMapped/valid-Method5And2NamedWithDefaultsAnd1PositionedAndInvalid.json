@@ -12,23 +12,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "InternalMap": {
-        "AttrsImpl": "None",
-        "ClassImpl": "System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-        "DefaultValueImpl": null,
-        "MemberImpl": {
-          "Name": "Method5",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-          "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-          "MemberType": 8,
-          "GenericArguments": null
-        },
-        "NameImpl": "enum1",
-        "PositionImpl": 0,
-        "_token": 134217848
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.Nullable`1[SysCommand.UnitTests.EnumTest1] enum1"
     },
     {
       "MapName": "enum2",
@@ -41,23 +32,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "InternalMap": {
-        "AttrsImpl": "None",
-        "ClassImpl": "SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-        "DefaultValueImpl": null,
-        "MemberImpl": {
-          "Name": "Method5",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-          "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-          "MemberType": 8,
-          "GenericArguments": null
-        },
-        "NameImpl": "enum2",
-        "PositionImpl": 1,
-        "_token": 134217849
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "SysCommand.UnitTests.EnumTest2 enum2"
     },
     {
       "MapName": "enum3",
@@ -70,23 +52,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "InternalMap": {
-        "AttrsImpl": "None",
-        "ClassImpl": "SysCommand.UnitTests.EnumTestNoFlag, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-        "DefaultValueImpl": null,
-        "MemberImpl": {
-          "Name": "Method5",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-          "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-          "MemberType": 8,
-          "GenericArguments": null
-        },
-        "NameImpl": "enum3",
-        "PositionImpl": 2,
-        "_token": 134217850
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "SysCommand.UnitTests.EnumTestNoFlag enum3"
     },
     {
       "MapName": "lst",
@@ -99,23 +72,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "InternalMap": {
-        "AttrsImpl": "None",
-        "ClassImpl": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-        "DefaultValueImpl": null,
-        "MemberImpl": {
-          "Name": "Method5",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-          "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-          "MemberType": 8,
-          "GenericArguments": null
-        },
-        "NameImpl": "lst",
-        "PositionImpl": 3,
-        "_token": 134217851
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "Int32[] lst"
     },
     {
       "MapName": "enum4",
@@ -128,23 +92,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "InternalMap": {
-        "AttrsImpl": "None",
-        "ClassImpl": "SysCommand.UnitTests.EnumTestNoFlag2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-        "DefaultValueImpl": null,
-        "MemberImpl": {
-          "Name": "Method5",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-          "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-          "MemberType": 8,
-          "GenericArguments": null
-        },
-        "NameImpl": "enum4",
-        "PositionImpl": 4,
-        "_token": 134217852
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "SysCommand.UnitTests.EnumTestNoFlag2 enum4"
     }
   ],
   "argsMappeds": [
@@ -168,23 +123,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "InternalMap": {
-          "AttrsImpl": "None",
-          "ClassImpl": "System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "DefaultValueImpl": null,
-          "MemberImpl": {
-            "Name": "Method5",
-            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-            "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-            "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-            "MemberType": 8,
-            "GenericArguments": null
-          },
-          "NameImpl": "enum1",
-          "PositionImpl": 0,
-          "_token": 134217848
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.Nullable`1[SysCommand.UnitTests.EnumTest1] enum1"
       },
       "Raw": null,
       "AllRaw": [
@@ -223,23 +169,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "InternalMap": {
-          "AttrsImpl": "None",
-          "ClassImpl": "SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "DefaultValueImpl": null,
-          "MemberImpl": {
-            "Name": "Method5",
-            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-            "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-            "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-            "MemberType": 8,
-            "GenericArguments": null
-          },
-          "NameImpl": "enum2",
-          "PositionImpl": 1,
-          "_token": 134217849
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "SysCommand.UnitTests.EnumTest2 enum2"
       },
       "Raw": "invalid",
       "AllRaw": [
@@ -278,23 +215,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "InternalMap": {
-          "AttrsImpl": "None",
-          "ClassImpl": "SysCommand.UnitTests.EnumTestNoFlag, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "DefaultValueImpl": null,
-          "MemberImpl": {
-            "Name": "Method5",
-            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-            "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-            "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-            "MemberType": 8,
-            "GenericArguments": null
-          },
-          "NameImpl": "enum3",
-          "PositionImpl": 2,
-          "_token": 134217850
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "SysCommand.UnitTests.EnumTestNoFlag enum3"
       },
       "Raw": null,
       "AllRaw": [],
@@ -321,23 +249,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "InternalMap": {
-          "AttrsImpl": "None",
-          "ClassImpl": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "DefaultValueImpl": null,
-          "MemberImpl": {
-            "Name": "Method5",
-            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-            "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-            "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-            "MemberType": 8,
-            "GenericArguments": null
-          },
-          "NameImpl": "lst",
-          "PositionImpl": 3,
-          "_token": 134217851
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "Int32[] lst"
       },
       "Raw": null,
       "AllRaw": [],
@@ -364,23 +283,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "InternalMap": {
-          "AttrsImpl": "None",
-          "ClassImpl": "SysCommand.UnitTests.EnumTestNoFlag2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "DefaultValueImpl": null,
-          "MemberImpl": {
-            "Name": "Method5",
-            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-            "Signature": "Void Method5(System.Nullable`1[SysCommand.UnitTests.EnumTest1], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-            "Signature2": "System.Void Method5(System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests.EnumTestNoFlag, System.Int32[], SysCommand.UnitTests.EnumTestNoFlag2)",
-            "MemberType": 8,
-            "GenericArguments": null
-          },
-          "NameImpl": "enum4",
-          "PositionImpl": 4,
-          "_token": 134217852
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "SysCommand.UnitTests.EnumTestNoFlag2 enum4"
       },
       "Raw": null,
       "AllRaw": [],

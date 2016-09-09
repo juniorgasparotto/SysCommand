@@ -12,23 +12,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "InternalMap": {
-        "AttrsImpl": "None",
-        "ClassImpl": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-        "DefaultValueImpl": null,
-        "MemberImpl": {
-          "Name": "Method1",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "Void Method1(System.String, System.String, System.String)",
-          "Signature2": "System.Void Method1(System.String, System.String, System.String)",
-          "MemberType": 8,
-          "GenericArguments": null
-        },
-        "NameImpl": "a",
-        "PositionImpl": 0,
-        "_token": 134217836
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.String a"
     },
     {
       "MapName": "b",
@@ -41,23 +32,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "InternalMap": {
-        "AttrsImpl": "None",
-        "ClassImpl": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-        "DefaultValueImpl": null,
-        "MemberImpl": {
-          "Name": "Method1",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "Void Method1(System.String, System.String, System.String)",
-          "Signature2": "System.Void Method1(System.String, System.String, System.String)",
-          "MemberType": 8,
-          "GenericArguments": null
-        },
-        "NameImpl": "b",
-        "PositionImpl": 1,
-        "_token": 134217837
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.String b"
     },
     {
       "MapName": "c",
@@ -70,23 +52,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "InternalMap": {
-        "AttrsImpl": "None",
-        "ClassImpl": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-        "DefaultValueImpl": null,
-        "MemberImpl": {
-          "Name": "Method1",
-          "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-          "Signature": "Void Method1(System.String, System.String, System.String)",
-          "Signature2": "System.Void Method1(System.String, System.String, System.String)",
-          "MemberType": 8,
-          "GenericArguments": null
-        },
-        "NameImpl": "c",
-        "PositionImpl": 2,
-        "_token": 134217838
-      }
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.String c"
     }
   ],
   "argsMappeds": [
@@ -110,23 +83,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "InternalMap": {
-          "AttrsImpl": "None",
-          "ClassImpl": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "DefaultValueImpl": null,
-          "MemberImpl": {
-            "Name": "Method1",
-            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-            "Signature": "Void Method1(System.String, System.String, System.String)",
-            "Signature2": "System.Void Method1(System.String, System.String, System.String)",
-            "MemberType": 8,
-            "GenericArguments": null
-          },
-          "NameImpl": "a",
-          "PositionImpl": 0,
-          "_token": 134217836
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.String a"
       },
       "Raw": "value-positioned",
       "AllRaw": [
@@ -192,23 +156,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "InternalMap": {
-          "AttrsImpl": "None",
-          "ClassImpl": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "DefaultValueImpl": null,
-          "MemberImpl": {
-            "Name": "Method1",
-            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-            "Signature": "Void Method1(System.String, System.String, System.String)",
-            "Signature2": "System.Void Method1(System.String, System.String, System.String)",
-            "MemberType": 8,
-            "GenericArguments": null
-          },
-          "NameImpl": "b",
-          "PositionImpl": 1,
-          "_token": 134217837
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.String b"
       },
       "Raw": "value2",
       "AllRaw": [
@@ -247,23 +202,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "InternalMap": {
-          "AttrsImpl": "None",
-          "ClassImpl": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "DefaultValueImpl": null,
-          "MemberImpl": {
-            "Name": "Method1",
-            "AssemblyName": "SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "ClassName": "SysCommand.UnitTests.ArgumentMappedTestObject",
-            "Signature": "Void Method1(System.String, System.String, System.String)",
-            "Signature2": "System.Void Method1(System.String, System.String, System.String)",
-            "MemberType": 8,
-            "GenericArguments": null
-          },
-          "NameImpl": "c",
-          "PositionImpl": 2,
-          "_token": 134217838
-        }
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.String c"
       },
       "Raw": "value3",
       "AllRaw": [

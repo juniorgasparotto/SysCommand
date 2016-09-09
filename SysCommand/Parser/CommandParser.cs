@@ -18,14 +18,14 @@ namespace SysCommand
     {
         #region Mappings - Step1
 
-        public static IEnumerable<ActionMap> GetActionsMapsFromType(Type type, bool onlyWithAttribute = false, bool usePrefixInAllMethods = false, string prefix = null)
+        public static IEnumerable<ActionMap> GetActionsMapsFromSourceObject(object source, bool onlyWithAttribute = false, bool usePrefixInAllMethods = false, string prefix = null)
         {
             var maps = new List<ActionMap>();
-            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(f => f.IsPublic && !f.IsSpecialName).ToArray();
-            return GetActionsMapsFromType(type, methods, onlyWithAttribute, usePrefixInAllMethods, prefix);
+            var methods = source.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(f => f.IsPublic && !f.IsSpecialName).ToArray();
+            return GetActionsMapsFromSourceObject(source, methods, onlyWithAttribute, usePrefixInAllMethods, prefix);
         }
 
-        public static IEnumerable<ActionMap> GetActionsMapsFromType(Type type, MethodInfo[] methods, bool onlyWithAttribute = false, bool usePrefixInAllMethods = false, string prefix = null)
+        public static IEnumerable<ActionMap> GetActionsMapsFromSourceObject(object source, MethodInfo[] methods, bool onlyWithAttribute = false, bool usePrefixInAllMethods = false, string prefix = null)
         {
             var maps = new List<ActionMap>();
 
@@ -52,7 +52,7 @@ namespace SysCommand
                 if (usePrefixFinal)
                 {
                     if (string.IsNullOrWhiteSpace(prefix))
-                        prefix = GetArgumentLongNameByType(type);
+                        prefix = GetArgumentLongNameByType(source.GetType());
 
                     actionName = prefix + "-" + actionNameRaw;
                 }
@@ -66,20 +66,20 @@ namespace SysCommand
                     isDefaultAction = true;
 
                 var enablePositionalArgs = attribute == null ? true : attribute.EnablePositionalArgs;
-                var argsMaps = GetArgumentsMapsFromMethod(method);
-                maps.Add(new ActionMap(method, actionName, prefix, actionNameRaw, usePrefixFinal, type, isDefaultAction, enablePositionalArgs, argsMaps));
+                var argsMaps = GetArgumentsMapsFromMethod(source, method);
+                maps.Add(new ActionMap(source, method, actionName, prefix, actionNameRaw, usePrefixFinal, isDefaultAction, enablePositionalArgs, argsMaps));
             }
 
             return maps;
         }
 
-        public static IEnumerable<ArgumentMap> GetArgumentsMapsFromProperties(Type type, bool onlyWithAttribute = false)
+        public static IEnumerable<ArgumentMap> GetArgumentsMapsFromProperties(object source, bool onlyWithAttribute = false)
         {
-            var properties = type.GetProperties();
-            return GetArgumentsMapsFromProperties(type, properties, onlyWithAttribute);
+            var properties = source.GetType().GetProperties();
+            return GetArgumentsMapsFromProperties(source, properties, onlyWithAttribute);
         }
 
-        public static IEnumerable<ArgumentMap> GetArgumentsMapsFromProperties(Type type, PropertyInfo[] properties, bool onlyWithAttribute = false)
+        public static IEnumerable<ArgumentMap> GetArgumentsMapsFromProperties(object source, PropertyInfo[] properties, bool onlyWithAttribute = false)
         {
             var maps = new List<ArgumentMap>();
             foreach (PropertyInfo property in properties)
@@ -89,22 +89,22 @@ namespace SysCommand
                 if (onlyWithAttribute && attribute == null)
                     continue;
 
-                var map = GetArgumentMap(property);
+                var map = GetArgumentMap(source, property);
                 maps.Add(map);
             }
 
-            ValidateArgumentsMaps(maps, type.Name);
+            ValidateArgumentsMaps(maps, source.GetType().Name);
 
             return GetArgumentsMapsOrderedByPosition(maps);
         }
 
-        public static IEnumerable<ArgumentMap> GetArgumentsMapsFromMethod(MethodInfo method)
+        public static IEnumerable<ArgumentMap> GetArgumentsMapsFromMethod(object source, MethodInfo method)
         {
             var maps = new List<ArgumentMap>();
             var parameters = method.GetParameters();
             foreach (var parameter in parameters)
             {
-                var map = GetArgumentMap(parameter);
+                var map = GetArgumentMap(source, parameter);
                 maps.Add(map);
             }
 
@@ -113,7 +113,7 @@ namespace SysCommand
             return GetArgumentsMapsOrderedByPosition(maps);
         }
 
-        public static ArgumentMap GetArgumentMap(ParameterInfo parameter)
+        public static ArgumentMap GetArgumentMap(object source, ParameterInfo parameter)
         {
             var attribute = Attribute.GetCustomAttribute(parameter, typeof(ArgumentAttribute)) as ArgumentAttribute;
 
@@ -137,10 +137,10 @@ namespace SysCommand
                 position = (int?)attribute.Position;
             }
 
-            return GetArgumentMap(parameter.Name, parameter.ParameterType, longName, shortName, hasPosition, position, helpText, showHelpComplement, isOptional, hasDefaultValue, defaultValue, parameter);
+            return GetArgumentMap(source, parameter, parameter.Name, parameter.ParameterType, longName, shortName, hasPosition, position, helpText, showHelpComplement, isOptional, hasDefaultValue, defaultValue);
         }
 
-        public static ArgumentMap GetArgumentMap(PropertyInfo property)
+        public static ArgumentMap GetArgumentMap(object source, PropertyInfo property)
         {
             var attribute = Attribute.GetCustomAttribute(property, typeof(ArgumentAttribute)) as ArgumentAttribute;
             string longName = null;
@@ -166,10 +166,10 @@ namespace SysCommand
                 isOptional = !attribute.IsRequired;
             }
 
-            return GetArgumentMap(property.Name, property.PropertyType, longName, shortName, hasPosition, position, helpText, showHelpComplement, isOptional, hasDefaultValue, defaultValue, property);
+            return GetArgumentMap(source, property, property.Name, property.PropertyType, longName, shortName, hasPosition, position, helpText, showHelpComplement, isOptional, hasDefaultValue, defaultValue);
         }
 
-        public static ArgumentMap GetArgumentMap(string mapName, Type mapType, string longName, char? shortName, bool hasPosition, int? position, string helpText, bool showHelpComplement, bool isOptional, bool hasDefaultValue, object defaultValue, object internalMap)
+        public static ArgumentMap GetArgumentMap(object source, object propertyOrParameter, string mapName, Type mapType, string longName, char? shortName, bool hasPosition, int? position, string helpText, bool showHelpComplement, bool isOptional, bool hasDefaultValue, object defaultValue)
         {
             shortName = shortName == default(char) ? null : shortName;
             position = hasPosition ? position : null;
@@ -186,7 +186,7 @@ namespace SysCommand
                 }
             }
 
-            return new ArgumentMap(mapName, longName, shortName, mapType, isOptional, hasDefaultValue, defaultValue, helpText, showHelpComplement, position, internalMap);
+            return new ArgumentMap(source, propertyOrParameter, mapName, longName, shortName, mapType, isOptional, hasDefaultValue, defaultValue, helpText, showHelpComplement, position);
         }
 
         public static IEnumerable<ArgumentMap> GetArgumentsMapsOrderedByPosition(IEnumerable<ArgumentMap> maps)
@@ -649,7 +649,7 @@ namespace SysCommand
             // get all actions that has all arguments inputed or with default value
             var candidates = actionsMapped.Where(f => f.MappingStates.HasFlag(ActionMappingState.AmountOfMappedIsEqualsToMaps)).ToList();
 
-            /* In this canaries all actions are valid if the input is valid foreach action
+            /* In this cenaries all actions are valid if the input is valid foreach action
              * input: method 1 2 3
              * 1) Method(string a, string b, string c)
              * 2) Method(string a, string b, int c)
@@ -687,7 +687,7 @@ namespace SysCommand
             {
                 if (arg.Map != null)
                 {
-                    var property = (PropertyInfo)arg.Map.InternalMap;
+                    var property = (PropertyInfo)arg.Map.PropertyOrParameter;
                     property.SetValue(instance, arg.Value);
                 }
             }
