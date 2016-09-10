@@ -19,6 +19,8 @@
             this.App = app;
         }
 
+        public abstract void Main();
+
         //public List<ActionMap> ActionsMaps
         //{
         //    get

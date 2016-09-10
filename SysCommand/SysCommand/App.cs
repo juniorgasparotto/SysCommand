@@ -26,33 +26,66 @@ namespace SysCommand
             this.Args = args;
             this.CommandsMappeds = new CommandMappedCollection(this.Args, this.CommandsMaps, this.EnableMultiAction);
 
-            var notFound = true;
             var errors = new List<string>();
-            var actionsMappedBestToInvoke = CommandParser.GetBestActionsMappedToInvoke(this.CommandsMappeds.ActionsMappeds);
+            var hasErrorInArguments = false;
+            var notFoundArguments = true;
 
-            if (actionsMappedBestToInvoke.Count() > 0)
+            //if (!this.CommandsMappeds.GetAllArgumentsMappeds().All(f => f.IsMapped))
+            //    notFoundArguments = false;
+
+            foreach (var commandMapped in this.CommandsMappeds)
             {
-                notFound = false;
-                var hasError = false;
-                foreach (var action in actionsMappedBestToInvoke)
-                {
-                    foreach (var arg in action.ArgumentsMapped)
-                    {
-                        if (arg.MappingStates.HasFlag(ArgumentMappingState.IsInvalid))
-                        {
-                            hasError = true;
-                            errors.Add(string.Format("{0}: {1}", action.ToString(), this.GetArgumentMappedErrorDescription(arg)));
-                        }
-                    }
-                }
+                //foreach (var argumentMapped in commandMapped.ArgumentsMappeds)
+                //{
 
+                //    //if (argumentMapped.IsMapped)
+                //    //{
+                        
+                //    //}
+
+                //    //if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.IsInvalid))
+                //    //{
+                        
+                //    //    hasErrorInArguments = true;
+                //    //    errors.Add(string.Format("{0}: {1}", argumentMapped.ToString(), this.GetArgumentMappedErrorDescription(argumentMapped)));
+                //    //}
+                //}
+
+                var lstValids = commandMapped.ArgumentsMappeds.Where(f => !f.MappingStates.HasFlag(ArgumentMappingState.IsInvalid)).ToList();
+                if (lstValids.Count > 0)
+                {
+                    notFoundArguments = false;
+                    CommandParser.InvokeSourcePropertiesFromArgumentsMappeds(lstValids);
+                    //commandMapped.ActionsMappeds.Where(f => f.ActionMap.Method.Name.ToLower() == "main");
+                    commandMapped.Command.Main();
+                }
+            }
+
+            var notFoundActions = true;
+            var actionsMappedBestOrAllToInvoke = CommandParser.GetBestActionsMappedOrAll(this.CommandsMappeds.GetAllActionsMappeds());
+
+            if (actionsMappedBestOrAllToInvoke.Count() > 0)
+            {
+                notFoundActions = false;
+                var hasError = actionsMappedBestOrAllToInvoke.Any(f => f.MappingStates.HasFlag(ActionMappingState.IsInvalid));
+                
+                //foreach (var action in actionsMappedBestOrAllToInvoke)
+                //{
+                //    foreach (var arg in action.ArgumentsMapped)
+                //    {
+                //        if (arg.MappingStates.HasFlag(ArgumentMappingState.IsInvalid))
+                //        {
+                //            hasError = true;
+                //            errors.Add(string.Format("{0}: {1}", action.ToString(), this.GetArgumentMappedErrorDescription(arg)));
+                //        }
+                //    }
+                //}
+
+                // execute only if all actions is valids
                 if (!hasError)
                 {
-                    foreach (var action in actionsMappedBestToInvoke)
-                    {
-                        //var result = CommandParser.InvokeAction(this.CommandsMappeds[action.ActionMap.ParentClassType], action);
-                        //results.Add(string.Format("{0}: {1}", action.ToString(), result));
-                    }
+                    foreach (var action in actionsMappedBestOrAllToInvoke)
+                        CommandParser.InvokeSourceMethodsFromActionsMappeds(action);
                 }
             }
         }

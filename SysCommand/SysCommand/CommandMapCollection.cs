@@ -30,15 +30,15 @@ namespace SysCommand
             }
         }
 
-        public CommandMap this[Type type]
+        public IEnumerable<CommandMap> this[Type type]
         {
             get
             {
-                return commandsMaps.Where(f => f.Command.GetType() == type).FirstOrDefault();
+                return commandsMaps.Where(f => f.Command.GetType() == type);
             }
         }
 
-        public CommandMap this[Command command]
+        public CommandMap this[object command]
         {
             get
             {
@@ -46,9 +46,9 @@ namespace SysCommand
             }
         }
 
-        public CommandMap Get<T>()
+        public IEnumerable<CommandMap> Get<T>()
         {
-            return commandsMaps.FirstOrDefault(c => c.Command.GetType() == typeof(T));
+            return commandsMaps.Where(c => c.Command.GetType() == typeof(T));
         }
         
         #endregion
@@ -56,23 +56,9 @@ namespace SysCommand
         private void Add(Command command)
         {
             var commandMaps = new CommandMap(command);
-            commandMaps.ActionsMaps.AddRange(CommandParser.GetActionsMapsFromSourceObject(command.GetType(), command.OnlyMethodsWithAttribute, command.UsePrefixInAllMethods, command.PrefixMethods));
-            commandMaps.ArgumentsMaps.AddRange(CommandParser.GetArgumentsMapsFromProperties(command.GetType(), command.OnlyPropertiesWithAttribute));
+            commandMaps.ActionsMaps.AddRange(CommandParser.GetActionsMapsFromSourceObject(command, command.OnlyMethodsWithAttribute, command.UsePrefixInAllMethods, command.PrefixMethods));
+            commandMaps.ArgumentsMaps.AddRange(CommandParser.GetArgumentsMapsFromProperties(command, command.OnlyPropertiesWithAttribute));
             commandsMaps.Add(commandMaps);
-        }
-
-        //public void Remove(Command command)
-        //{
-        //    commandsMaps.RemoveAll(c => c.Command == command);
-        //}
-
-        public T GetCommand<T>() where T : class
-        {
-            var commandMap = this.Get<T>();
-            if (commandMap != null)
-                return commandMap.Command as T;
-
-            return null;
         }
 
         public IEnumerable<Command> GetAllCommands()

@@ -8,24 +8,24 @@ namespace SysCommand
     public class CommandMappedCollection : IEnumerable<CommandMappedCollection.CommandMapped>
     {
         private CommandMapCollection commandMapCollection;
-        private List<CommandMapped> commandsMappeds;
         private IEnumerable<ActionMap> actionsMaps;
+        private IEnumerable<ActionMapped> actionsMappeds;
+        private List<CommandMapped> commandsMappeds;
         private string[] args;
         private bool enableMultiAction;
 
         public IEnumerable<ArgumentRaw> ArgumentsRaws { get; private set; }
-        public IEnumerable<ActionMapped> ActionsMappeds { get; private set; }
 
         public CommandMappedCollection(string[] args, CommandMapCollection commandMapCollection, bool enableMultiAction)
         {
             this.commandsMappeds = new List<CommandMapped>();
             this.args = args;
             this.enableMultiAction = enableMultiAction;
-            this.actionsMaps = commandMapCollection.GetAllActionsMaps();
             this.commandMapCollection = commandMapCollection;
 
+            this.actionsMaps = this.commandMapCollection.GetAllActionsMaps();
             this.ArgumentsRaws = CommandParser.ParseArgumentRaw(args, this.actionsMaps);
-            this.ActionsMappeds = CommandParser.ParseActionMapped(this.ArgumentsRaws, enableMultiAction, this.actionsMaps);
+            this.actionsMappeds = CommandParser.ParseActionMapped(this.ArgumentsRaws, enableMultiAction, this.actionsMaps);
 
             foreach (var commandMap in commandMapCollection)
                 this.Add(commandMap.Command);
@@ -41,15 +41,15 @@ namespace SysCommand
             }
         }
 
-        public CommandMapped this[Type type]
+        public IEnumerable<CommandMapped> this[Type type]
         {
             get
             {
-                return commandsMappeds.Where(f => f.Command.GetType() == type).FirstOrDefault();
+                return commandsMappeds.Where(f => f.Command.GetType() == type);
             }
         }
 
-        public CommandMapped this[Command command]
+        public CommandMapped this[object command]
         {
             get
             {
@@ -57,9 +57,9 @@ namespace SysCommand
             }
         }
 
-        public CommandMapped Get<T>()
+        public IEnumerable<CommandMapped> Get<T>()
         {
-            return commandsMappeds.FirstOrDefault(c => c.Command.GetType() == typeof(T));
+            return commandsMappeds.Where(c => c.Command.GetType() == typeof(T));
         }
 
         #endregion
@@ -67,22 +67,19 @@ namespace SysCommand
         private void Add(Command command)
         {
             var commandMapped = new CommandMapped(command);
-            commandMapped.ArgumentsMappeds.AddRange(CommandParser.ParseArgumentMapped(this.ArgumentsRaws, command.EnablePositionalArgs, this.commandMapCollection[command].ArgumentsMaps));
+            commandMapped.ArgumentsMappeds = CommandParser.ParseArgumentMapped(this.ArgumentsRaws, command.EnablePositionalArgs, this.commandMapCollection[command].ArgumentsMaps);
+            commandMapped.ActionsMappeds = this.actionsMappeds.Where(f => f.ActionMap.Source == command);
             commandsMappeds.Add(commandMapped);
-        }
-
-        public T GetCommand<T>() where T : class
-        {
-            var commandMap = this.Get<T>();
-            if (commandMap != null)
-                return commandMap.Command as T;
-
-            return null;
         }
 
         public IEnumerable<Command> GetAllCommands()
         {
             return commandsMappeds.Select(c => c.Command);
+        }
+
+        public IEnumerable<ActionMapped> GetAllActionsMappeds()
+        {
+            return this.actionsMappeds;
         }
 
         public IEnumerable<ArgumentMapped> GetAllArgumentsMappeds()
@@ -105,12 +102,12 @@ namespace SysCommand
         public class CommandMapped
         {
             public Command Command { get; private set; }
-            public List<ArgumentMapped> ArgumentsMappeds { get; private set; }
+            public IEnumerable<ActionMapped> ActionsMappeds { get; internal set; }
+            public IEnumerable<ArgumentMapped> ArgumentsMappeds { get; internal set; }
 
             internal CommandMapped(Command command)
             {
                 this.Command = command;
-                this.ArgumentsMappeds = new List<ArgumentMapped>();
             }
         }
 

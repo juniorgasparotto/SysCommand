@@ -31,7 +31,7 @@ namespace SysCommand.UnitTests
                 var results = new List<string>();
                 var errors = new List<string>();
                 actionsMapped = CommandParser.ParseActionMapped(argsRaw, enableMultiAction, actionMaps);
-                var actionsMappedBestToInvoke = CommandParser.GetBestActionsMappedToInvoke(actionsMapped);
+                var actionsMappedBestToInvoke = CommandParser.GetBestActionsMappedOrAll(actionsMapped);
 
                 if (actionsMappedBestToInvoke.Count() > 0)
                 {
@@ -113,7 +113,7 @@ namespace SysCommand.UnitTests
                 }
 
                 //if (!hasError)
-                CommandParser.InvokeArgumentsMappedAsProperties(instance, lstValids);
+                CommandParser.InvokeSourcePropertiesFromArgumentsMappeds(instance, lstValids);
 
                 argumentsInvoke = new
                 {

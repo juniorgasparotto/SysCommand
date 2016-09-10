@@ -644,7 +644,7 @@ namespace SysCommand
             return state;
         }
 
-        public static IEnumerable<ActionMapped> GetBestActionsMappedToInvoke(IEnumerable<ActionMapped> actionsMapped)
+        public static IEnumerable<ActionMapped> GetBestActionsMappedOrAll(IEnumerable<ActionMapped> actionsMapped)
         {
             // get all actions that has all arguments inputed or with default value
             var candidates = actionsMapped.Where(f => f.MappingStates.HasFlag(ActionMappingState.AmountOfMappedIsEqualsToMaps)).ToList();
@@ -675,20 +675,20 @@ namespace SysCommand
             return candidates;
         }
 
-        public static object InvokeAction(object instance, ActionMapped actionMapped)
+        public static object InvokeSourceMethodsFromActionsMappeds(ActionMapped actionMapped)
         {
             var parameters = actionMapped.ArgumentsMapped.Where(f => f.IsMapped).ToDictionary(f => f.Name, f => f.Value);
-            return actionMapped.ActionMap.Method.InvokeWithNamedParameters(instance, parameters);
+            return actionMapped.ActionMap.Method.InvokeWithNamedParameters(actionMapped.ActionMap.Source, parameters);
         }
 
-        public static void InvokeArgumentsMappedAsProperties(object instance, IEnumerable<ArgumentMapped> argumentsMapped)
+        public static void InvokeSourcePropertiesFromArgumentsMappeds(IEnumerable<ArgumentMapped> argumentsMapped)
         {
             foreach(var arg in argumentsMapped)
             {
                 if (arg.Map != null)
                 {
                     var property = (PropertyInfo)arg.Map.PropertyOrParameter;
-                    property.SetValue(instance, arg.Value);
+                    property.SetValue(arg.Map.Source, arg.Value);
                 }
             }
         }
