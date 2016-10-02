@@ -22,16 +22,9 @@ namespace SysCommand
         ArgumentNotExistsByName = 2,
         ArgumentNotExistsByValue = 4,
         ArgumentIsRequired = 8,
-        ArgumentIsInvalid = 16,
-        ArgumentIsUnsupported = 32,
-        IsInvalid = 64
-        //AnyArgumentHasNoInput = 1,
-        //AnyArgumentNotMapped = 2,
-        //AnyArgumentHasDefaultValue = 4,
-        //AnyArgumentIsPositional = 8,
-        //AnyArgumentIsNamed = 16,
-        //AnyArgumentHasUnsuporttedType = 32,
-        //AnyArgumentHasInvalidInput = 64,        
-        //IsValid = 512,
+        ArgumentHasInvalidInput = 16,
+        ArgumentHasUnsupportedType = 32,
+        IsInvalid = 64,
+        Valid = 128
     }
 }

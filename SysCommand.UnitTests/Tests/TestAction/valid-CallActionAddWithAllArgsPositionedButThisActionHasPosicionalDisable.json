@@ -10,23 +10,6 @@
         "a": null,
         "b": null
       },
-      "Method": "System.String Main()",
-      "Prefix": null,
-      "UsePrefix": false,
-      "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "IsDefault": true,
-      "EnablePositionalArgs": true,
-      "ArgumentsMaps": []
-    },
-    {
-      "MapName": "Main",
-      "ActionName": "main",
-      "ActionNameRaw": "main",
-      "Source": {
-        "Arg0": null,
-        "a": null,
-        "b": null
-      },
       "Method": "System.String Main(System.String[])",
       "Prefix": null,
       "UsePrefix": false,
@@ -496,7 +479,7 @@
         }
       ],
       "Index": 0,
-      "MappingStates": "AmountOfMappedIsBiggerThenMaps, IsInvalid"
+      "MappingStates": "IsInvalid"
     }
   ]
 }

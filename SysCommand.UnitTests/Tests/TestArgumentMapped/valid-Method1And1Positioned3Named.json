@@ -71,7 +71,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "a",
         "LongName": null,
@@ -117,7 +117,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentAlreadyBeenSet, IsInvalid",
       "Map": null,
       "Raw": "value1",
       "AllRaw": [
@@ -144,7 +144,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "b",
         "LongName": null,
@@ -190,7 +190,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "c",
         "LongName": null,

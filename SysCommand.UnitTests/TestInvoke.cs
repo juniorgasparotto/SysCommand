@@ -31,8 +31,8 @@ namespace SysCommand.UnitTests
                 var results = new List<string>();
                 var errors = new List<string>();
                 actionsMapped = CommandParser.ParseActionMapped(argsRaw, enableMultiAction, actionMaps);
-                var actionsMappedBestToInvoke = CommandParser.GetBestActionsMappedOrAll(actionsMapped);
-
+                //var actionsMappedBestToInvoke = CommandParser.GetBestActionsMappedOrAll(actionsMapped);
+                var actionsMappedBestToInvoke = new List<ActionMapped>();
                 if (actionsMappedBestToInvoke.Count() > 0)
                 {
                     notFound = false;
@@ -53,8 +53,8 @@ namespace SysCommand.UnitTests
                     {
                         foreach (var action in actionsMappedBestToInvoke)
                         {
-                            var result = CommandParser.InvokeAction(instance, action);
-                            results.Add(string.Format("{0}: {1}", action.ToString(), result));
+                            //var result = CommandParser.InvokeSourceMethodsFromActionsMappeds(action);
+                            //results.Add(string.Format("{0}: {1}", action.ToString(), result));
                         }
                     }
                 }
@@ -113,7 +113,7 @@ namespace SysCommand.UnitTests
                 }
 
                 //if (!hasError)
-                CommandParser.InvokeSourcePropertiesFromArgumentsMappeds(instance, lstValids);
+                //CommandParser.InvokeSourcePropertiesFromArgumentsMappeds(lstValids);
 
                 argumentsInvoke = new
                 {
@@ -139,9 +139,9 @@ namespace SysCommand.UnitTests
                 return string.Format("Could not find an argument to the specified value: {0}", argumentMapped.Raw);
             else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsRequired))
                 return string.Format("The argument '{0}' is required", argumentMapped.GetArgumentNameInputted());
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsInvalid))
+            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentHasInvalidInput))
                 return string.Format("The argument '{0}' is invalid", argumentMapped.GetArgumentNameInputted());
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsUnsupported))
+            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentHasUnsupportedType))
                 return string.Format("The argument '{0}' is unsupported", argumentMapped.GetArgumentNameInputted());
             return null;
         }

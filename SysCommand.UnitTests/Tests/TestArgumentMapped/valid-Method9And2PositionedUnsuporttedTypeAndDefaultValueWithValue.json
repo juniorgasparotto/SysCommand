@@ -51,7 +51,7 @@
       "HasInvalidInput": false,
       "Type": "SysCommand.UnitTests.ArgumentMappedTestObject, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "MappingType": "Position",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentHasUnsupportedType, IsInvalid",
       "Map": {
         "MapName": "unsuporttedType",
         "LongName": "unsuportted-type",
@@ -97,7 +97,7 @@
       "HasInvalidInput": false,
       "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "defaultValue",
         "LongName": "default-value",

@@ -17,6 +17,9 @@ namespace SysCommand
 
         public static object InvokeWithNamedParameters(this MethodBase self, object obj, IDictionary<string, object> namedParameters)
         {
+            if (namedParameters == null)
+                return self.Invoke(obj, null);
+
             return self.Invoke(obj, MapParameters(self, namedParameters));
         }
 
@@ -521,6 +524,20 @@ namespace SysCommand
         public static string RemoveScape(string value, char scapeChar = '\\')
         {
             return AppHelpers.RemoveFirstCharIfFound(value, scapeChar);
+        }
+
+        #endregion
+
+        #region collections
+
+        public static bool Empty<TSource>(this IEnumerable<TSource> source)
+        {
+            return !source.Any();
+        }
+
+        public static bool Empty<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        {
+            return !source.Any(predicate);
         }
 
         #endregion

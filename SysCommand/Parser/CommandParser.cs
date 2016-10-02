@@ -2,13 +2,8 @@
 using System.Linq;
 using System;
 using Fclp;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.ComponentModel;
 using System.Globalization;
 using System.Collections;
 
@@ -16,6 +11,8 @@ namespace SysCommand
 {
     public static class CommandParser
     {
+        public const string MAIN_METHOD_NAME = "main";
+
         #region Mappings - Step1
 
         public static IEnumerable<ActionMap> GetActionsMapsFromSourceObject(object source, bool onlyWithAttribute = false, bool usePrefixInAllMethods = false, string prefix = null)
@@ -32,7 +29,16 @@ namespace SysCommand
             foreach (var method in methods)
             {
                 var attribute = Attribute.GetCustomAttribute(method, typeof(ActionAttribute)) as ActionAttribute;
-                var isMainMethod = method.Name.ToLower() == "main";
+
+                var isMainMethod = method.Name.ToLower() == MAIN_METHOD_NAME;
+                var countParameters = method.GetParameters().Length;
+
+                // the main method, with zero arguments, can't be a action
+                if (isMainMethod && countParameters == 0 && attribute == null)
+                    continue;
+                else if (isMainMethod && countParameters == 0 && attribute != null)
+                    throw new Exception("The main method, with zero arguments, can be se a action. This method is reserved to be aways invoked in action.   it is defined.");
+
                 var ignoredByWithoutAttr = onlyWithAttribute && attribute == null && !isMainMethod;
                 var ignoredByMethod = attribute != null && attribute.Ignore;
 
@@ -75,7 +81,7 @@ namespace SysCommand
 
         public static IEnumerable<ArgumentMap> GetArgumentsMapsFromProperties(object source, bool onlyWithAttribute = false)
         {
-            var properties = source.GetType().GetProperties();
+            var properties = source.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             return GetArgumentsMapsFromProperties(source, properties, onlyWithAttribute);
         }
 
@@ -457,8 +463,8 @@ namespace SysCommand
                 }
             }
 
-            //string.Format("The type '{0}' not supported", map.Type.ToString());
-            //var msgInputInvalid = "The input value is invalid.";
+            foreach (var arg in argumentsMappeds)
+                arg.MappingStates = GetArgumentMappingState(arg, argumentsMappeds);
 
             return argumentsMappeds;
         }
@@ -596,8 +602,7 @@ namespace SysCommand
             foreach (var action in actionsMapped)
             {
                 action.ArgumentsMapped = ParseArgumentMapped(action.GetArgumentsRaw(), action.ActionMap.EnablePositionalArgs, action.ActionMap.ArgumentsMaps);
-                foreach (var arg in action.ArgumentsMapped)
-                    arg.MappingStates = GetArgumentMappingState(arg, action.ArgumentsMapped);
+                
 
                 action.MappingStates = GetActionMappingState(action);
             }
@@ -611,87 +616,90 @@ namespace SysCommand
 
             var countMap = actionMapped.ActionMap.ArgumentsMaps.Count();
             var countMapped = actionMapped.ArgumentsMapped.Count();
+            var allIsMapped = actionMapped.ArgumentsMapped.All(f => f.IsMappedOrHasDefaultValue);
 
             if (countMap == 0 && countMapped == 0)
             {
-                state |= ActionMappingState.NoArgumentsInMapAndInInput | ActionMappingState.AmountOfMappedIsEqualsToMaps;
+                state |= ActionMappingState.NoArgumentsInMapAndInInput;
             }
             else
             {
-                if (countMapped > countMap)
-                    state |= ActionMappingState.AmountOfMappedIsBiggerThenMaps;
-                else if (countMapped < countMap)
-                    state |= ActionMappingState.AmountOfMappedIsLessThanMaps;
-                else
-                    state |= ActionMappingState.AmountOfMappedIsEqualsToMaps;
+                //if (countMapped > countMap)
+                //    state |= ActionMappingState.AmountOfMappedIsBiggerThenMaps;
+                //else if (countMapped < countMap)
+                //    state |= ActionMappingState.AmountOfMappedIsLessThanMaps;
 
-                if (actionMapped.ArgumentsMapped.Any(arg => arg.MappingType.In(ArgumentMappingType.NotMapped)))
+                if (allIsMapped)
+                    state |= ActionMappingState.AllArgumentsAreMapped;
+
+                if (actionMapped.ArgumentsMapped.Any(arg => arg.MappingStates.HasFlag(ArgumentMappingState.IsInvalid)))
                     state |= ActionMappingState.IsInvalid;
 
-                if (countMap > 0)
-                {
-                    if (actionMapped.ArgumentsMapped.Any(arg => arg.MappingType.In(ArgumentMappingType.HasNoInput)))
-                        state |= ActionMappingState.IsInvalid;
+                //if (actionMapped.ArgumentsMapped.Any(arg => arg.MappingType.In(ArgumentMappingType.NotMapped)))
+                //    state |= ActionMappingState.IsInvalid;
 
-                    if (actionMapped.ArgumentsMapped.Any(arg => arg.HasUnsuporttedType))
-                        state |= ActionMappingState.IsInvalid;
+                //if (actionMapped.ArgumentsMapped.Any(arg => arg.MappingType.In(ArgumentMappingType.HasNoInput)))
+                //    state |= ActionMappingState.IsInvalid;
 
-                    if (actionMapped.ArgumentsMapped.Any(arg => arg.HasInvalidInput))
-                        state |= ActionMappingState.IsInvalid;
-                }
+                //if (actionMapped.ArgumentsMapped.Any(arg => arg.HasUnsuporttedType))
+                //    state |= ActionMappingState.IsInvalid;
+
+                //if (actionMapped.ArgumentsMapped.Any(arg => arg.HasInvalidInput))
+                //    state |= ActionMappingState.IsInvalid;
             }
+
+            if (!state.HasFlag(ActionMappingState.IsInvalid))
+                state |= ActionMappingState.Valid;
 
             return state;
         }
 
-        public static IEnumerable<ActionMapped> GetBestActionsMappedOrAll(IEnumerable<ActionMapped> actionsMapped)
-        {
-            // get all actions that has all arguments inputed or with default value
-            var candidates = actionsMapped.Where(f => f.MappingStates.HasFlag(ActionMappingState.AmountOfMappedIsEqualsToMaps)).ToList();
+        //public static IEnumerable<ActionMapped> GetBestActionsMappedOrAll(IEnumerable<ActionMapped> actionsMapped)
+        //{
+        //    // get all actions that has all arguments inputed or with default value
+        //    var candidates = actionsMapped.Where(f => f.MappingStates.HasFlag(ActionMappingState.AllArgumentsAreMapped | ActionMappingState.NoArgumentsInMapAndInInput)).ToList();
 
-            /* In this cenaries all actions are valid if the input is valid foreach action
-             * input: method 1 2 3
-             * 1) Method(string a, string b, string c)
-             * 2) Method(string a, string b, int c)
-             * 3) Method(string a, string b)
-             * 4) Method(string a = null, float? b = null)
-             * 5) Method(List<string> args)
-             * 6) Method(List<int> args)
-             * 7) Method(Enum1And2And3 enum)
-             * << -- or -- >>
-             * input: 1 2 3
-             * 1) Main(string a, string b, string c)
-             * 2) Main(string a, string b, int c)
-             * 3) Default1(string a, string b)
-             * 4) Default2(string a = null, float? b = null)
-             * 5) Default3(List<string> args)
-             * 6) Default4(List<int> args)
-             * 7) Default5(Enum1And2And3 enum)
-             */
-            var valids = candidates.Where(f => !f.MappingStates.HasFlag(ActionMappingState.IsInvalid)).ToList();
-            if (valids.Count > 0)
-                return valids;
+        //    /* In this cenaries all actions are valid if the input is valid foreach action
+        //     * input: method 1 2 3
+        //     * 1) Method(string a, string b, string c)
+        //     * 2) Method(string a, string b, int c)
+        //     * 4) Method(string a = null, float? b = null, decimal? c = null)
+        //     * 5) Method(List<string> args)
+        //     * 6) Method(List<int> args)
+        //     * 7) Method(Enum1And2And3 enum)
+        //     * << -- or -- >>
+        //     * input: 1 2 3
+        //     * 1) Main(string a, string b, string c)
+        //     * 2) Main(string a, string b, int c)
+        //     * 4) Default2(string a = null, float? b = null, decimal? c = null)
+        //     * 5) Default3(List<string> args)
+        //     * 6) Default4(List<int> args)
+        //     * 7) Default5(Enum1And2And3 enum)
+        //     */
+        //    var valids = candidates.Where(f => f.MappingStates.HasFlag(ActionMappingState.Valid)).ToList();
+        //    if (valids.Count > 0)
+        //        return valids;
 
-            return candidates;
-        }
+        //    return candidates;
+        //}
 
-        public static object InvokeSourceMethodsFromActionsMappeds(ActionMapped actionMapped)
-        {
-            var parameters = actionMapped.ArgumentsMapped.Where(f => f.IsMapped).ToDictionary(f => f.Name, f => f.Value);
-            return actionMapped.ActionMap.Method.InvokeWithNamedParameters(actionMapped.ActionMap.Source, parameters);
-        }
+        //public static object InvokeSourceMethodsFromActionsMappeds(ActionMapped actionMapped)
+        //{
+        //    var parameters = actionMapped.ArgumentsMapped.Where(f => f.IsMapped).ToDictionary(f => f.Name, f => f.Value);
+        //    return actionMapped.ActionMap.Method.InvokeWithNamedParameters(actionMapped.ActionMap.Source, parameters);
+        //}
 
-        public static void InvokeSourcePropertiesFromArgumentsMappeds(IEnumerable<ArgumentMapped> argumentsMapped)
-        {
-            foreach(var arg in argumentsMapped)
-            {
-                if (arg.Map != null)
-                {
-                    var property = (PropertyInfo)arg.Map.PropertyOrParameter;
-                    property.SetValue(arg.Map.Source, arg.Value);
-                }
-            }
-        }
+        //public static void InvokeSourcePropertiesFromArgumentsMappeds(IEnumerable<ArgumentMapped> argumentsMapped)
+        //{
+        //    foreach(var arg in argumentsMapped)
+        //    {
+        //        if (arg.Map != null)
+        //        {
+        //            var property = (PropertyInfo)arg.Map.PropertyOrParameter;
+        //            property.SetValue(arg.Map.Source, arg.Value);
+        //        }
+        //    }
+        //}
 
         //public class ErrorArgumentMapped
         //{
@@ -754,15 +762,15 @@ namespace SysCommand
             else if (arg.IsMapped && arg.HasInvalidInput)
             {
                 //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ArgumentIsInvalid, string.Format("The argument '{0}' is invalid", userParameterName)));
-                return ArgumentMappingState.ArgumentIsInvalid | ArgumentMappingState.IsInvalid;
+                return ArgumentMappingState.ArgumentHasInvalidInput | ArgumentMappingState.IsInvalid;
             }
             else if (arg.IsMapped && arg.HasUnsuporttedType)
             {
                 //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ArgumentIsUnsupported, string.Format("The argument '{0}' is unsupported", userParameterName)));
-                return ArgumentMappingState.ArgumentIsUnsupported | ArgumentMappingState.IsInvalid;
+                return ArgumentMappingState.ArgumentHasUnsupportedType | ArgumentMappingState.IsInvalid;
             }
 
-            return ArgumentMappingState.None;
+            return ArgumentMappingState.Valid;
         }
 
         #endregion

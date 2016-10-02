@@ -91,7 +91,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "Prop1",
         "LongName": "prop1",
@@ -137,7 +137,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "Prop2",
         "LongName": "prop2",
@@ -183,7 +183,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "Prop3",
         "LongName": "p",
@@ -229,7 +229,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentNotExistsByName, IsInvalid",
       "Map": null,
       "Raw": "value4",
       "AllRaw": [
@@ -256,7 +256,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "Prop5",
         "LongName": "prop5",

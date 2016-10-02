@@ -10,8 +10,8 @@ namespace SysCommand.UnitTests
         [TestMethod]
         public void RunApp()
         {
-            var commandLoader = new CommandAppDomainLoader();
-            var app = new App2(commandLoader.GetFromAppDomain());
+            var commandLoader = new DefaultCommandLoader();
+            //var app = new App2(commandLoader.GetFromAppDomain());
         }
     }
 

@@ -19,10 +19,11 @@ namespace SysCommand
     {
         None = 0,
         NoArgumentsInMapAndInInput = 1,
-        AmountOfMappedIsLessThanMaps = 2,
-        AmountOfMappedIsEqualsToMaps = 4,
-        AmountOfMappedIsBiggerThenMaps = 8,
-        IsInvalid = 16
+        AllArgumentsAreMapped = 2,
+        IsInvalid = 4,
+        Valid = 8
+        //AmountOfMappedIsBiggerThenMaps = 8,
+        //AmountOfMappedIsLessThanMaps = 2,
         //AnyArgumentHasNoInput = 1,
         //AnyArgumentNotMapped = 2,
         //AnyArgumentHasDefaultValue = 4,

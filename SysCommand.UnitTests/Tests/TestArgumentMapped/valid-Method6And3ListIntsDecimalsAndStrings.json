@@ -76,7 +76,7 @@
       "HasInvalidInput": false,
       "Type": "System.Collections.Generic.List`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "lst",
         "LongName": "lst",
@@ -160,7 +160,7 @@
       "HasInvalidInput": false,
       "Type": "System.Collections.Generic.List`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "lst2",
         "LongName": "lst2",
@@ -244,7 +244,7 @@
       "HasInvalidInput": false,
       "Type": "System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "lst3",
         "LongName": "lst3",

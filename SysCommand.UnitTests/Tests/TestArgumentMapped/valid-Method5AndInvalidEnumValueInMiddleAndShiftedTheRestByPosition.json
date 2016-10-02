@@ -111,7 +111,7 @@
       "HasInvalidInput": false,
       "Type": "System.Nullable`1[[SysCommand.UnitTests.EnumTest1, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "enum1",
         "LongName": "enum1",
@@ -190,7 +190,7 @@
       "HasInvalidInput": false,
       "Type": "SysCommand.UnitTests.EnumTest2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "enum2",
         "LongName": "enum2",
@@ -247,7 +247,7 @@
       "HasInvalidInput": true,
       "Type": "SysCommand.UnitTests.EnumTestNoFlag, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "MappingType": "Position",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentHasInvalidInput, IsInvalid",
       "Map": {
         "MapName": "enum3",
         "LongName": "enum3",
@@ -293,7 +293,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentAlreadyBeenSet, IsInvalid",
       "Map": null,
       "Raw": "value1",
       "AllRaw": [
@@ -320,7 +320,7 @@
       "HasInvalidInput": true,
       "Type": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentHasInvalidInput, IsInvalid",
       "Map": {
         "MapName": "lst",
         "LongName": "lst",
@@ -366,7 +366,7 @@
       "HasInvalidInput": false,
       "Type": "SysCommand.UnitTests.EnumTestNoFlag2, SysCommand.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "MappingType": "Position",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "enum4",
         "LongName": "enum4",
@@ -412,7 +412,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentAlreadyBeenSet, IsInvalid",
       "Map": null,
       "Raw": "1",
       "AllRaw": [
@@ -439,7 +439,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentNotExistsByValue, IsInvalid",
       "Map": null,
       "Raw": "2",
       "AllRaw": [
@@ -466,7 +466,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentNotExistsByValue, IsInvalid",
       "Map": null,
       "Raw": "3",
       "AllRaw": [
@@ -493,7 +493,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentNotExistsByValue, IsInvalid",
       "Map": null,
       "Raw": "4",
       "AllRaw": [
@@ -520,7 +520,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentNotExistsByValue, IsInvalid",
       "Map": null,
       "Raw": "5",
       "AllRaw": [
@@ -547,7 +547,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentNotExistsByValue, IsInvalid",
       "Map": null,
       "Raw": "a",
       "AllRaw": [
@@ -574,7 +574,7 @@
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "NotMapped",
-      "MappingStates": "None",
+      "MappingStates": "ArgumentNotExistsByValue, IsInvalid",
       "Map": null,
       "Raw": "8",
       "AllRaw": [

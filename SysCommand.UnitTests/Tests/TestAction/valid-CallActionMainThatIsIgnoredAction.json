@@ -10,23 +10,6 @@
         "a": null,
         "b": null
       },
-      "Method": "System.String Main()",
-      "Prefix": null,
-      "UsePrefix": false,
-      "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "IsDefault": true,
-      "EnablePositionalArgs": true,
-      "ArgumentsMaps": []
-    },
-    {
-      "MapName": "Main",
-      "ActionName": "main",
-      "ActionNameRaw": "main",
-      "Source": {
-        "Arg0": null,
-        "a": null,
-        "b": null
-      },
       "Method": "System.String Main(System.String[])",
       "Prefix": null,
       "UsePrefix": false,
@@ -319,95 +302,6 @@
           "a": null,
           "b": null
         },
-        "Method": "System.String Main()",
-        "Prefix": null,
-        "UsePrefix": false,
-        "ReturnType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-        "IsDefault": true,
-        "EnablePositionalArgs": true,
-        "ArgumentsMaps": []
-      },
-      "ArgumentRawOfAction": {
-        "Name": null,
-        "Value": "main",
-        "Format": "Unnamed",
-        "DelimiterArgument": null,
-        "DelimiterValueInName": null,
-        "ValueRaw": "main",
-        "IsShortName": false,
-        "IsLongName": false,
-        "Index": 0
-      },
-      "ArgumentsMapped": [
-        {
-          "Name": "a",
-          "ValueParsed": "1",
-          "Value": "1",
-          "HasUnsuporttedType": false,
-          "HasInvalidInput": false,
-          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "NotMapped",
-          "MappingStates": "ArgumentNotExistsByName, IsInvalid",
-          "Map": null,
-          "Raw": "1",
-          "AllRaw": [
-            {
-              "Name": "a",
-              "Value": "1",
-              "Format": "ShortNameAndHasValue",
-              "DelimiterArgument": "-",
-              "DelimiterValueInName": null,
-              "ValueRaw": "1",
-              "IsShortName": true,
-              "IsLongName": false,
-              "Index": 2
-            }
-          ],
-          "IsMapped": false,
-          "IsMappedOrHasDefaultValue": false
-        },
-        {
-          "Name": "b",
-          "ValueParsed": "2",
-          "Value": "2",
-          "HasUnsuporttedType": false,
-          "HasInvalidInput": false,
-          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "NotMapped",
-          "MappingStates": "ArgumentNotExistsByName, IsInvalid",
-          "Map": null,
-          "Raw": "2",
-          "AllRaw": [
-            {
-              "Name": "b",
-              "Value": "2",
-              "Format": "ShortNameAndHasValue",
-              "DelimiterArgument": "-",
-              "DelimiterValueInName": null,
-              "ValueRaw": "2",
-              "IsShortName": true,
-              "IsLongName": false,
-              "Index": 4
-            }
-          ],
-          "IsMapped": false,
-          "IsMappedOrHasDefaultValue": false
-        }
-      ],
-      "Index": 0,
-      "MappingStates": "AmountOfMappedIsBiggerThenMaps, IsInvalid"
-    },
-    {
-      "Name": "Main",
-      "ActionMap": {
-        "MapName": "Main",
-        "ActionName": "main",
-        "ActionNameRaw": "main",
-        "Source": {
-          "Arg0": null,
-          "a": null,
-          "b": null
-        },
         "Method": "System.String Main(System.String[])",
         "Prefix": null,
         "UsePrefix": false,
@@ -535,7 +429,7 @@
         }
       ],
       "Index": 0,
-      "MappingStates": "AmountOfMappedIsBiggerThenMaps, IsInvalid"
+      "MappingStates": "IsInvalid"
     }
   ]
 }

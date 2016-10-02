@@ -45,12 +45,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleHelper.cs" />
     <Compile Include="Core\Command4.cs" />
-    <Compile Include="SysCommand\CommandMappedCollection.cs" />
-    <Compile Include="SysCommand\Debug.cs" />
-    <Compile Include="SysCommand\App.cs" />
-    <Compile Include="SysCommand\CommandAppDomainLoader.cs" />
-    <Compile Include="SysCommand\CommandMapCollection.cs" />
+    <Compile Include="SysCommand\Execution\IExecutionStrategy.cs" />
+    <Compile Include="SysCommand\Execution\IExecutionListener.cs" />
+    <Compile Include="SysCommand\Members\MethodMain.cs" />
+    <Compile Include="SysCommand\EnumsAndConstants\PriorityConstants.cs" />
+    <Compile Include="SysCommand\Execution\DefaultExecutionStrategy.cs" />
+    <Compile Include="Deleteds\Executor.cs" />
+    <Compile Include="SysCommand\Map\Map.cs" />
+    <Compile Include="SysCommand\Map\MapCommand.cs" />
+    <Compile Include="SysCommand\Members\Property.cs" />
+    <Compile Include="SysCommand\Members\Method.cs" />
+    <Compile Include="SysCommand\Members\IMember.cs" />
+    <Compile Include="SysCommand\Execution\Result.cs" />
+    <Compile Include="SysCommand\EnumsAndConstants\ExecutionState.cs" />
+    <Compile Include="Deleteds\__MapperDefault.cs" />
+    <Compile Include="Deleteds\Debug.cs" />
+    <Compile Include="SysCommand\Executor.cs" />
+    <Compile Include="SysCommand\CommandLoader\DefaultCommandLoader.cs" />
     <Compile Include="Core\ArgumentsParser.cs" />
     <Compile Include="Mono.Options.cs" />
     <Compile Include="Core\Attributes\ActionAttribute.cs" />
@@ -89,7 +102,7 @@
     <Compile Include="Parser\ActionMapped.cs" />
     <Compile Include="Parser\ArgumentMappingType.cs" />
     <Compile Include="Parser\CommandParser.cs" />
-    <Compile Include="SysCommand\Command.cs" />
+    <Compile Include="SysCommand\Members\Command.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +113,9 @@
       <Project>{74cdfa61-81d8-40f2-b536-949baba15d3e}</Project>
       <Name>FluentCommandLineParser</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Invoker\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -58,6 +58,7 @@ namespace TestUtils
         private static string GetUncheckedTestFileName(string typeName, string testContext, string fileName)
         {
             return GetFileName(typeName, testContext, "valid", fileName, "");
+            return GetFileName(typeName, testContext, "unchecked", fileName, "");
         }
 
         private static void SaveUncheckedFileIfValidNotExists<T>(string typeName, T obj, string testContext, string fileName, JsonSerializerSettings config)

@@ -4,13 +4,15 @@ using System;
 
 namespace SysCommand
 {
-    public class CommandAppDomainLoader
+    public sealed class DefaultCommandLoader
     {
         public List<Type> IgnoredCommands { get; private set; }
 
-        public CommandAppDomainLoader(List<Type> ignoredCommands = null)
+        public DefaultCommandLoader(IEnumerable<Type> ignoredCommands = null)
         {
-            this.IgnoredCommands = ignoredCommands;
+            this.IgnoredCommands = new List<Type>();
+            if (ignoredCommands != null)
+                this.IgnoredCommands.AddRange(ignoredCommands);
         }
 
         public void IgnoreCommand<T>()
@@ -18,7 +20,7 @@ namespace SysCommand
             this.IgnoredCommands.Add(typeof(T));
         }
         
-        public IEnumerable<Command> GetFromAppDomain()
+        public IEnumerable<Command> GetFromAppDomain(bool isDebug)
         {
             var listOfCommands = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()
@@ -29,7 +31,7 @@ namespace SysCommand
                                   select assemblyType).ToList();
 
             var commandsList = listOfCommands.Select(f => (Command)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
-            commandsList.RemoveAll(f => this.IgnoredCommands.Contains(f.GetType()) || (!Debug.IsInDebug && f.OnlyInDebug));
+            commandsList.RemoveAll(f => this.IgnoredCommands.Contains(f.GetType()) || (!isDebug && f.OnlyInDebug));
             return commandsList;
         }
     }

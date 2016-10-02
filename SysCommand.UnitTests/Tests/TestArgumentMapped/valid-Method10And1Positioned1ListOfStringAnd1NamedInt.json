@@ -56,7 +56,7 @@
       "HasInvalidInput": false,
       "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "v1",
         "LongName": "v1",
@@ -135,7 +135,7 @@
       "HasInvalidInput": false,
       "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Name",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "v2",
         "LongName": "v2",

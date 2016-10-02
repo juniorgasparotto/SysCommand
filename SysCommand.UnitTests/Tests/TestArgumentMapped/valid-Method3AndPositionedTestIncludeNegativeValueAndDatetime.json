@@ -71,7 +71,7 @@
       "HasInvalidInput": false,
       "Type": "System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "value1",
         "LongName": "value1",
@@ -117,7 +117,7 @@
       "HasInvalidInput": false,
       "Type": "System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "value2",
         "LongName": "value2",
@@ -163,7 +163,7 @@
       "HasInvalidInput": false,
       "Type": "System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "MappingType": "Position",
-      "MappingStates": "None",
+      "MappingStates": "Valid",
       "Map": {
         "MapName": "date",
         "LongName": "date",

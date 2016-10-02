@@ -335,7 +335,6 @@ namespace SysCommand
                 Console.WriteLine(AppHelpers.GetConsoleHelper(dic, 4));
         }
 
-
         public void IgnoreCommmand<T>()
         {
             ignoredCommands.Add(typeof(T));
