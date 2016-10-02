@@ -5,16 +5,16 @@ using Fclp;
 using System.Linq.Expressions;
 using System.IO;
 
-namespace SysCommand
+namespace SysCommand.ConsoleApp
 {
-    public static class ConsoleHelper
+    public class Application
     {
         public static bool IsDebug { get { return System.Diagnostics.Debugger.IsAttached; } }
         public static bool WhenIsDebugReadArgs { get; set; }
 
         public static string[] GetArguments()
         {
-            if (ConsoleHelper.IsDebug && ConsoleHelper.WhenIsDebugReadArgs)
+            if (Application.IsDebug && Application.WhenIsDebugReadArgs)
             {
                 Console.WriteLine("Enter with args:");
                 return StringToArgs(Console.ReadLine());

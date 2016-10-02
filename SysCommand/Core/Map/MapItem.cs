@@ -2,16 +2,17 @@
 using System.Linq;
 using System;
 using System.Collections;
+using SysCommand.Parser;
 
 namespace SysCommand
 {
-    public class MapCommand
+    public class MapItem
     {
         public Command Command { get; private set; }
         public List<ActionMap> Methods { get; private set; }
         public List<ArgumentMap> Properties { get; private set; }
 
-        internal MapCommand(Command command)
+        internal MapItem(Command command)
         {
             this.Command = command;
             this.Methods = new List<ActionMap>();

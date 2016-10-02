@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using TestUtils;
+using SysCommand.Parser;
 
 namespace SysCommand.UnitTests
 {

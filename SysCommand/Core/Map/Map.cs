@@ -2,21 +2,22 @@
 using System.Linq;
 using System;
 using System.Collections;
+using SysCommand.Parser;
 
 namespace SysCommand
 {
-    public class Map : IEnumerable<MapCommand>
+    public class Map : IEnumerable<MapItem>
     {
-        private List<MapCommand> commandsMaps;
+        private List<MapItem> commandsMaps;
 
-        public Map(IEnumerable<MapCommand> commands)
+        public Map(IEnumerable<MapItem> commands)
         {
             this.commandsMaps = commands.ToList();
         }
 
         #region get command maps
 
-        public MapCommand this[int index]
+        public MapItem this[int index]
         {
             get
             {
@@ -24,7 +25,7 @@ namespace SysCommand
             }
         }
 
-        public IEnumerable<MapCommand> this[Type type]
+        public IEnumerable<MapItem> this[Type type]
         {
             get
             {
@@ -32,7 +33,7 @@ namespace SysCommand
             }
         }
 
-        public MapCommand this[object command]
+        public MapItem this[object command]
         {
             get
             {
@@ -40,32 +41,24 @@ namespace SysCommand
             }
         }
 
-        public IEnumerable<MapCommand> Get<T>()
+        public IEnumerable<MapItem> Get<T>()
         {
             return commandsMaps.Where(c => c.Command.GetType() == typeof(T));
         }
         
         #endregion
-
-        private void Add(Command command)
-        {
-            var commandMaps = new MapCommand(command);
-            commandMaps.Methods.AddRange(CommandParser.GetActionsMapsFromSourceObject(command, command.OnlyMethodsWithAttribute, command.UsePrefixInAllMethods, command.PrefixMethods));
-            commandMaps.Properties.AddRange(CommandParser.GetArgumentsMapsFromProperties(command, command.OnlyPropertiesWithAttribute));
-            commandsMaps.Add(commandMaps);
-        }
-
-        public IEnumerable<Command> GetAllCommands()
+                
+        public IEnumerable<Command> GetCommands()
         {
             return commandsMaps.Select(c => c.Command);
         }
 
-        public IEnumerable<ActionMap> GetAllActionsMaps()
+        public IEnumerable<ActionMap> GetMethods()
         {
             return commandsMaps.SelectMany(c => c.Methods);
         }
 
-        public IEnumerable<ArgumentMap> GetAllArgumentsMaps()
+        public IEnumerable<ArgumentMap> GetProperties()
         {
             return commandsMaps.SelectMany(c => c.Properties);
         }
@@ -75,9 +68,9 @@ namespace SysCommand
             return this.commandsMaps.GetEnumerator();
         }
 
-        public IEnumerator<MapCommand> GetEnumerator()
+        public IEnumerator<MapItem> GetEnumerator()
         {
-            return ((IEnumerable<MapCommand>)commandsMaps).GetEnumerator();
+            return ((IEnumerable<MapItem>)commandsMaps).GetEnumerator();
         }
     }
 }

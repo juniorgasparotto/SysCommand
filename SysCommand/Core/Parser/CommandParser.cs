@@ -7,7 +7,7 @@ using System.Text;
 using System.Globalization;
 using System.Collections;
 
-namespace SysCommand
+namespace SysCommand.Parser
 {
     public static class CommandParser
     {

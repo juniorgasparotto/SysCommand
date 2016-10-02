@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using TestUtils;
+using SysCommand.Parser;
 
 namespace SysCommand.UnitTests
 {

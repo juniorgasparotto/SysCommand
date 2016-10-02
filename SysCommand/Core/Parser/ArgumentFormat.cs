@@ -12,7 +12,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Collections;
 
-namespace SysCommand
+namespace SysCommand.Parser
 {
     /// <summary>
     /// Input: 1 -a -b value1 -c+ --long --long2 value2 /long3:+

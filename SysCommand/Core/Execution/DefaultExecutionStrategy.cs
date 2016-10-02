@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SysCommand.Parser;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SysCommand
@@ -7,11 +8,11 @@ namespace SysCommand
     {
         public virtual Map CreateMap(IEnumerable<Command> commands)
         {
-            var maps = new List<MapCommand>();
+            var maps = new List<MapItem>();
 
             foreach (var command in commands)
             {
-                var mapCommand = new MapCommand(command);
+                var mapCommand = new MapItem(command);
                 mapCommand.Methods.AddRange(CommandParser.GetActionsMapsFromSourceObject(command, command.OnlyMethodsWithAttribute, command.UsePrefixInAllMethods, command.PrefixMethods));
                 mapCommand.Properties.AddRange(CommandParser.GetArgumentsMapsFromProperties(command, command.OnlyPropertiesWithAttribute));
                 maps.Add(mapCommand);
@@ -23,7 +24,7 @@ namespace SysCommand
         public virtual Result<IMember> Parse(string[] args, Map map, bool enableMultiAction)
         {
             var result = new Result<IMember>();
-            var actionsMaps = map.GetAllActionsMaps();
+            var actionsMaps = map.GetMethods();
             var argumentsRaw = CommandParser.ParseArgumentRaw(args, actionsMaps);
 
             foreach (var item in map)
@@ -42,7 +43,7 @@ namespace SysCommand
             // step1: create main methods
             this.CreateMainMethods(map, result);
 
-            // step1: invoke all properties
+            // step1: invoke the properties that are valid
             result
                 .With<Property>(f => f.ArgumentMapped.MappingStates.HasFlag(ArgumentMappingState.Valid))
                 .Invoke();
@@ -52,29 +53,30 @@ namespace SysCommand
                 .With<MethodMain>()
                 .Invoke();
 
-            // step2: validate if exists errors
-            return this.Validate(args, result);
+            // step3: get state and execute other methods if success
+            var state = this.GetExecutionState(args, result);
+            if (state == ExecutionState.Success)
+                this.GetValidMethods(result.With<Method>()).Invoke();
+
+            return state;
         }
 
-        private ExecutionState Validate(string[] args, Result<IMember> result)
+        private ExecutionState GetExecutionState(string[] args, Result<IMember> result)
         {
-            if (args.Empty())
-                return ExecutionState.ArgsIsEmpty;
-
-            // methods - exclude 'main' methods
-            var actions = result.With<Method>(/*f => f.InvokePriority == PriorityConstants.PriorityUser*/);
-            var actionsValids = actions.With(f => f.ActionMapped.MappingStates.HasFlag(ActionMappingState.Valid));
-            var actionsInvalids = actions.With(f => f.ActionMapped.MappingStates.HasFlag(ActionMappingState.IsInvalid));
+            // methods
+            var methods = result.With<Method>();
+            var methodsValids = this.GetValidMethods(methods);
+            var methodsInvalids = this.GetInvalidMethods(methods);
 
             // properties
-            var arguments = result.With<Property>();
-            var argumentsValids = arguments.With(f => f.ArgumentMapped.MappingStates.HasFlag(ArgumentMappingState.Valid));
-            var argumentsInvalids = arguments.With(f => f.ArgumentMapped.MappingStates.HasFlag(ArgumentMappingState.IsInvalid));
+            var properties = result.With<Property>();
+            var propertiesValids = this.GetValidProperties(properties);
+            var propertiesInvalids = this.GetInvalidProperties(properties);
 
             // check errors
-            var notFoundActions = actions.Empty();
-            var notFoundArguments = arguments.Empty() || argumentsInvalids.All(f => f.ArgumentMapped.IsMapped == false);
-            var existsActionsError = actionsValids.Empty() && actionsInvalids.Any();
+            var notFoundActions = methods.Empty();
+            var notFoundArguments = properties.Empty() || propertiesInvalids.All(f => f.ArgumentMapped.IsMapped == false);
+            var existsActionsError = methodsValids.Empty() && propertiesInvalids.Any();
             //var existsArgumentsError = !notFoundArguments && lstPropertiesInvokers.Count == 0 && lstInvalidsArguments.Count > 0;
 
             if (notFoundActions && notFoundArguments)
@@ -85,9 +87,29 @@ namespace SysCommand
             return ExecutionState.Success;
         }
 
+        private Result<Method> GetValidMethods(Result<Method> result)
+        {
+            return result.With(f => f.ActionMapped.MappingStates.HasFlag(ActionMappingState.Valid));
+        }
+
+        private Result<Method> GetInvalidMethods(Result<Method> result)
+        {
+            return result.With(f => f.ActionMapped.MappingStates.HasFlag(ActionMappingState.IsInvalid));
+        }
+
+        private Result<Property> GetValidProperties(Result<Property> result)
+        {
+            return result.With(f => f.ArgumentMapped.MappingStates.HasFlag(ActionMappingState.Valid));
+        }
+
+        private Result<Property> GetInvalidProperties(Result<Property> result)
+        {
+            return result.With(f => f.ArgumentMapped.MappingStates.HasFlag(ActionMappingState.IsInvalid));
+        }
+
         private void CreateMainMethods(Map map, Result<IMember> result)
         {
-            foreach (var command in map.GetAllCommands())
+            foreach (var command in map.GetCommands())
             {
                 var mainMethod = command.GetType().GetMethods().Where(f => f.Name.ToLower() == CommandParser.MAIN_METHOD_NAME && f.GetParameters().Length == 0).FirstOrDefault();
                 if (mainMethod != null)

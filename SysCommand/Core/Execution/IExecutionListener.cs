@@ -6,7 +6,7 @@ namespace SysCommand
     {
         void OnError(string[] args, Map map, Result<IMember> parseResult, Exception ex);
         void OnSuccess(string[] args, Map map, Result<IMember> result);
-        void OnArgsIsEmpty(string[] args, Map map, Result<IMember> result);
+        //void OnArgsIsEmpty(string[] args, Map map, Result<IMember> result);
         void OnNotFound(string[] args, Map map, Result<IMember> result);
         void OnInvalidArgumentParse(string[] args, Map map, Result<IMember> result);
 

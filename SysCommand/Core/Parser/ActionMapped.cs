@@ -12,7 +12,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Collections;
 
-namespace SysCommand
+namespace SysCommand.Parser
 {
     public class ActionMapped
     {

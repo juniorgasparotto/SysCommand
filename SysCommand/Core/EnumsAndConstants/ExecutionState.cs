@@ -12,6 +12,7 @@ namespace SysCommand
         HasInvalidAction,
         HasInvalidArgument,
         NotFound,
-        ArgsIsEmpty,
+        //ArgsIsEmpty,
+        UnexpectedError,
     }
 }
