@@ -1,8 +1,4 @@
-﻿using Fclp;
-using System;
-using System.Linq.Expressions;
-
-namespace SysCommand
+﻿namespace SysCommand.ConsoleApp
 {
     //[Command(OrderExecution = -1)]
     public class VerboseCommand : CommandArguments<VerboseCommand.Arguments>
@@ -16,25 +12,25 @@ namespace SysCommand
         public override void Execute()
         {
             var v = this.ArgsObject.Verbose.ToLower();
-            App.Current.Verbose = 0;
-            App.Current.Quiet = this.ArgsObject.Quiet;
+            App333.Current.Verbose = 0;
+            App333.Current.Quiet = this.ArgsObject.Quiet;
 
             if (v.Contains("all"))
-                App.Current.Verbose |= VerboseEnum.All;
+                App333.Current.Verbose |= VerboseEnum.All;
             if (v.Contains("none"))
-                App.Current.Verbose |= VerboseEnum.None;
+                App333.Current.Verbose |= VerboseEnum.None;
             if (v.Contains("info"))
-                App.Current.Verbose |= VerboseEnum.Info;
+                App333.Current.Verbose |= VerboseEnum.Info;
             if (v.Contains("success"))
-                App.Current.Verbose |= VerboseEnum.Success;
+                App333.Current.Verbose |= VerboseEnum.Success;
             if (v.Contains("warning"))
-                App.Current.Verbose |= VerboseEnum.Warning;
+                App333.Current.Verbose |= VerboseEnum.Warning;
             if (v.Contains("critical"))
-                App.Current.Verbose |= VerboseEnum.Critical;
+                App333.Current.Verbose |= VerboseEnum.Critical;
             if (v.Contains("error"))
-                App.Current.Verbose |= VerboseEnum.Error;
+                App333.Current.Verbose |= VerboseEnum.Error;
             if (v.Contains("question"))
-                App.Current.Verbose |= VerboseEnum.Question;
+                App333.Current.Verbose |= VerboseEnum.Question;
         }
 
         #region Internal Parameters

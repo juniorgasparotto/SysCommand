@@ -1,7 +1,6 @@
-﻿using Fclp;
-using System;
+﻿using System;
 
-namespace SysCommand
+namespace SysCommand.ConsoleApp
 {
     //[Command(OrderExecution = -1000)]
     public class ManagerCommand2 : CommandArguments<ManagerCommand2.Arguments>
@@ -18,13 +17,13 @@ namespace SysCommand
             
             if (string.IsNullOrWhiteSpace(this.ArgsObject.Name))    
             {
-                App.Current.CurrentCommandName = App.CommandNameDefault;
+                App333.Current.CurrentCommandName = App333.CommandNameDefault;
                 if (args != null && args.Length > 0 && args[0].Length > 0 && args[0][0] != '-')
-                    App.Current.CurrentCommandName = args[0];
+                    App333.Current.CurrentCommandName = args[0];
             }
             else
             {
-                App.Current.CurrentCommandName = this.ArgsObject.Name;
+                App333.Current.CurrentCommandName = this.ArgsObject.Name;
             }
         }
 
@@ -45,44 +44,44 @@ namespace SysCommand
 
         private void Save()
         {
-            var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
+            var histories = App333.Current.GetOrCreateObjectFile<CommandStorage>();
 
-            if (!histories.All.ContainsKey(App.Current.CurrentCommandName))
+            if (!histories.All.ContainsKey(App333.Current.CurrentCommandName))
             {
                 Console.WriteLine("The command has no argument to save.");
-                App.Current.StopPropagation();
+                App333.Current.StopPropagation();
                 return;
             }
 
-            App.Current.SaveObjectFile<CommandStorage>(histories);
-            App.Current.StopPropagation();
-            Console.WriteLine("The command '{0}' was successfully saved", App.Current.CurrentCommandName);
+            App333.Current.SaveObjectFile<CommandStorage>(histories);
+            App333.Current.StopPropagation();
+            Console.WriteLine("The command '{0}' was successfully saved", App333.Current.CurrentCommandName);
         }
 
         private void Remove()
         {
-            var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
+            var histories = App333.Current.GetOrCreateObjectFile<CommandStorage>();
 
-            if (!histories.All.ContainsKey(App.Current.CurrentCommandName))
+            if (!histories.All.ContainsKey(App333.Current.CurrentCommandName))
             {
-                Console.WriteLine("Command name '{0}' dosen't exists", App.Current.CurrentCommandName);
-                App.Current.StopPropagation();
+                Console.WriteLine("Command name '{0}' dosen't exists", App333.Current.CurrentCommandName);
+                App333.Current.StopPropagation();
                 return;
             }
 
-            histories.Remove(App.Current.CurrentCommandName);
-            App.Current.SaveObjectFile<CommandStorage>(histories);
-            App.Current.StopPropagation();
-            Console.WriteLine("The command '{0}' was successfully removed.", App.Current.CurrentCommandName);
+            histories.Remove(App333.Current.CurrentCommandName);
+            App333.Current.SaveObjectFile<CommandStorage>(histories);
+            App333.Current.StopPropagation();
+            Console.WriteLine("The command '{0}' was successfully removed.", App333.Current.CurrentCommandName);
         }
 
         private void Show()
         {
-            var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
+            var histories = App333.Current.GetOrCreateObjectFile<CommandStorage>();
             if (histories.All.Count == 0)
             {
                 Console.WriteLine("No command was found to display.");
-                App.Current.StopPropagation();
+                App333.Current.StopPropagation();
                 return;
             }
 
@@ -97,19 +96,19 @@ namespace SysCommand
                 Console.WriteLine("\"{0}\" {1}", commandKeyValue.Key, argsOutput);
             }
 
-            App.Current.StopPropagation();
+            App333.Current.StopPropagation();
         }
 
         private void Show(string commandName)
         {
-            var histories = App.Current.GetOrCreateObjectFile<CommandStorage>();
+            var histories = App333.Current.GetOrCreateObjectFile<CommandStorage>();
             if (histories == null)
-                App.Current.SaveObjectFile<CommandStorage>(new CommandStorage());
+                App333.Current.SaveObjectFile<CommandStorage>(new CommandStorage());
 
             if (!histories.All.ContainsKey(commandName))
             {
                 Console.WriteLine("Command name '{0}' dosen't exists", commandName);
-                App.Current.StopPropagation();
+                App333.Current.StopPropagation();
                 return;
             }
 
@@ -121,7 +120,7 @@ namespace SysCommand
             }
 
             Console.WriteLine("\"{0}\" {1}", commandName, argsOutput);
-            App.Current.StopPropagation();
+            App333.Current.StopPropagation();
         }
 
         #region Internal Parameters

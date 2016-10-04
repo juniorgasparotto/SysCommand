@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SysCommand.Tests
 {
-    public class Program : App
+    public class Program : App333
     {
         public static void LoadAssembly()
         {
@@ -26,13 +26,13 @@ namespace SysCommand.Tests
 
             while (true)
             {
-                App.Initialize<Program>();
-                App.Current.DebugShowExitConfirm = false;
-                App.Current.ActionCharPrefix = null;
-                App.Current.SetArgs("position --teste -xyz+ --bla -u false -i+ teste");
-                App.Current.Run();
-                if (!App.Current.InDebug)
-                    return App.Current.Response.Code;
+                App333.Initialize<Program>();
+                App333.Current.DebugShowExitConfirm = false;
+                App333.Current.ActionCharPrefix = null;
+                App333.Current.SetArgs("position --teste -xyz+ --bla -u false -i+ teste");
+                App333.Current.Run();
+                if (!App333.Current.InDebug)
+                    return App333.Current.Response.Code;
             }
         }
     }

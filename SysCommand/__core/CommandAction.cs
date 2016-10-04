@@ -45,9 +45,9 @@ namespace SysCommand
         {
             foreach (var action in this.Actions)
             {
-                action.RequestAction = App.Current.Request.RequestActions.FirstOrDefault(f => f.Name == action.Name);
+                action.RequestAction = App333.Current.Request.RequestActions.FirstOrDefault(f => f.Name == action.Name);
                 if (action.RequestAction == null && action.IsDefault)
-                    action.RequestAction = App.Current.Request.RequestActions.FirstOrDefault(f => f.Name == null);
+                    action.RequestAction = App333.Current.Request.RequestActions.FirstOrDefault(f => f.Name == null);
 
                 var methodParameters = action.MethodInfo.GetParameters();
                 var countTotal = methodParameters.Length;

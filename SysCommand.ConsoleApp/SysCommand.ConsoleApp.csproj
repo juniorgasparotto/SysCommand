@@ -40,19 +40,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application.cs" />
-    <Compile Include="CommandLoader\AppDomainCommandLoader.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="IEventListener.cs" />
+    <Compile Include="Loader\AppDomainCommandLoader.cs" />
     <Compile Include="Commands\System\HelpCommand.cs" />
     <Compile Include="Commands\System\IHelpCommand.cs" />
     <Compile Include="Commands\System\IManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\System\ManageArgsHistoryCommand.cs" />
-    <Compile Include="Commands\User\ClearCommand.cs" />
-    <Compile Include="Commands\User\HelperCommand.cs" />
-    <Compile Include="Commands\User\ManagerCommand2.cs" />
+    <Compile Include="Commands\Debug\ClearCommand.cs" />
+    <Compile Include="Commands\System\HelperCommand.cs" />
+    <Compile Include="Commands\System\ManagerCommand2.cs" />
     <Compile Include="Commands\User\VerboseCommand.cs" />
-    <Compile Include="Listener\DefaultAppExecutionListener.cs" />
+    <Compile Include="DefaultEventListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SysCommand\SysCommand.csproj">
+      <Project>{4b7472b5-d979-455f-9613-4f64b98c67f4}</Project>
+      <Name>SysCommand</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

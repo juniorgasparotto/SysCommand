@@ -503,10 +503,10 @@ namespace SysCommand
                 return false;
 
             var isArgumentFormat = AppHelpers.IsArgumentFormat(value);
-            if (App.Current.ActionCharPrefix == null)
+            if (App333.Current.ActionCharPrefix == null)
                 return !isArgumentFormat;
             else
-                return !isArgumentFormat && value[0].In(App.Current.ActionCharPrefix.Value);
+                return !isArgumentFormat && value[0].In(App333.Current.ActionCharPrefix.Value);
         }
 
         public static bool HasCharAtFirst(string value, char firstChar)

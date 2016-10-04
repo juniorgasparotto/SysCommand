@@ -1,6 +1,4 @@
 ﻿using SysCommand;
-using SysCommand.ConsoleApp;
-using SysCommand;
 using SysCommand.Tests.ConsoleApp.Commands;
 using System.Collections.Generic;
 

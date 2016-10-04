@@ -1,13 +1,8 @@
-﻿using SysCommand;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SysCommand.ConsoleApp;
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {
-    public class EmptyCommand : CommandBase
+    public class EmptyCommand : Command
     {
         
     }

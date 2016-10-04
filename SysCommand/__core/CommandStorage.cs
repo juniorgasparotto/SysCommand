@@ -52,9 +52,9 @@ namespace SysCommand
         public static TProp GetValueForArgsType<TArgs, TProp>(Expression<Func<TArgs, object>> expression, string commandName = null)
         {
             if (commandName == null)
-                commandName = App.CommandNameDefault;
+                commandName = App333.CommandNameDefault;
 
-            var argsItem = App.Current.GetOrCreateObjectFile<CommandStorage>().GetArguments(commandName, typeof(TArgs));
+            var argsItem = App333.Current.GetOrCreateObjectFile<CommandStorage>().GetArguments(commandName, typeof(TArgs));
 
             if (argsItem != null && argsItem.Object != null)
             {
@@ -75,9 +75,9 @@ namespace SysCommand
         public static TProp GetValueForArgsType<TProp>(PropertyInfo prop, string commandName = null)
         {
             if (commandName == null)
-                commandName = App.CommandNameDefault;
+                commandName = App333.CommandNameDefault;
 
-            var argsItem = App.Current.GetOrCreateObjectFile<CommandStorage>().GetArguments(commandName, prop.DeclaringType);
+            var argsItem = App333.Current.GetOrCreateObjectFile<CommandStorage>().GetArguments(commandName, prop.DeclaringType);
 
             if (argsItem != null && argsItem.Object != null)
             {

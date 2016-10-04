@@ -9,7 +9,7 @@ namespace SysCommand
 
         private bool CheckIfWrite(VerboseEnum verb, bool forceWrite)
         {
-            if (App.Current.Verbose == VerboseEnum.All || App.Current.Verbose.HasFlag(verb) || forceWrite)
+            if (App333.Current.Verbose == VerboseEnum.All || App333.Current.Verbose.HasFlag(verb) || forceWrite)
                 return true;
             return false;
         }
@@ -51,7 +51,7 @@ namespace SysCommand
 
         public void Write(string msg, ConsoleColor fontColor, bool breakLine = true)
         {
-            if (App.Current.Quiet)
+            if (App333.Current.Quiet)
                 return;
 
             var color = Console.ForegroundColor;

@@ -15,7 +15,7 @@ namespace SysCommand.Tests
 
         public void Position(string key, string p2)
         {
-            App.Current.Response.WriteLine("Executing: PositionCommand/Position/p1/p2");
+            App333.Current.Response.WriteLine("Executing: PositionCommand/Position/p1/p2");
         }
     }
 }

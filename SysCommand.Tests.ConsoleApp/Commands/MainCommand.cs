@@ -1,8 +1,8 @@
-﻿using SysCommand;
+﻿using SysCommand.ConsoleApp;
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {
-    public class MainCommand : CommandBase
+    public class MainCommand : Command
     {
         public string Main()
         {

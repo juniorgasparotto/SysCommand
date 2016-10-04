@@ -8,7 +8,7 @@ namespace SysCommand
         public IEnumerable<CommandMap> Maps { get; internal set; }
         public Result<IMember> Result { get; internal set; }
 
-        public CommandTag Tag { get; set; }
+        public object Tag { get; set; }
         public int OrderExecution { get; set; }
         public bool OnlyInDebug { get; set; }
         public bool UsePrefixInAllMethods { get; set; }

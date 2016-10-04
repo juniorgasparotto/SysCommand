@@ -53,7 +53,7 @@ namespace SysCommand
             if (this.Arguments.Length == 0)
                 return;
 
-            if (App.Current.ActionCharPrefix == null)
+            if (App333.Current.ActionCharPrefix == null)
                 this.LoadRequestActionsWithoutPrefix();
             else
                 this.LoadRequestActionsWithPrefix();
@@ -68,7 +68,7 @@ namespace SysCommand
 
             var argZero = this.Arguments[0];
             var argZeroScaped = AppHelpers.RemoveScape(argZero);
-            var existsAction = App.Current.Actions.Any(f => f.Name == argZeroScaped);
+            var existsAction = App333.Current.Actions.Any(f => f.Name == argZeroScaped);
             var isScaped = AppHelpers.IsScaped(argZero);
 
             var requestAction = new RequestAction();
@@ -101,7 +101,7 @@ namespace SysCommand
         {
             // model1: $action-name --p1 a $delete --p2 b \$other --p3 c
 
-            var prefix = App.Current.ActionCharPrefix.Value;
+            var prefix = App333.Current.ActionCharPrefix.Value;
             var argZero = this.Arguments[0];
 
             // check if "$" exists
@@ -114,7 +114,7 @@ namespace SysCommand
             var argZeroScapedWithoutPrefix = AppHelpers.RemoveFirstCharIfFound(argZeroScaped, prefix);
 
             // check if "save" action exists
-            var existsAction = App.Current.Actions.Any(f => f.Name == argZeroScapedWithoutPrefix);
+            var existsAction = App333.Current.Actions.Any(f => f.Name == argZeroScapedWithoutPrefix);
 
             // if has prefix "$" and action exists
             if (argZeroHasPrefix && existsAction)
@@ -132,7 +132,7 @@ namespace SysCommand
                     var argHasPrefix = AppHelpers.HasCharAtFirst(arg, prefix);
                     var argScaped = AppHelpers.RemoveScape(arg);
                     var argScapedWithoutPrefix = AppHelpers.RemoveFirstCharIfFound(argScaped, prefix);
-                    var argExistsAction = App.Current.Actions.Any(f => f.Name == argScapedWithoutPrefix);
+                    var argExistsAction = App333.Current.Actions.Any(f => f.Name == argScapedWithoutPrefix);
 
                     if (argHasPrefix && argExistsAction)
                     {

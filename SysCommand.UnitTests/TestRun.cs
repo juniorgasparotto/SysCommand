@@ -21,11 +21,11 @@ namespace SysCommand.UnitTests
             if (output != null)
                 Console.SetOut(output);
 
-            App.Initialize();
-            App.Current.DebugShowExitConfirm = false;
-            App.Current.ActionCharPrefix = prefix;
-            App.Current.SetArgs(args);
-            App.Current.Run();
+            App333.Initialize();
+            App333.Current.DebugShowExitConfirm = false;
+            App333.Current.ActionCharPrefix = prefix;
+            App333.Current.SetArgs(args);
+            App333.Current.Run();
         }
         #endregion
 

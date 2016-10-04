@@ -7,7 +7,7 @@ using System.IO;
 
 namespace SysCommand
 {
-    public class App
+    public class App333
     {
         public static readonly string CommandNameDefault = "default";
         
@@ -50,24 +50,24 @@ namespace SysCommand
         public Request Request { get; private set; }
         public Response Response { get; private set; }
 
-        public static App Current { get; private set; }
+        public static App333 Current { get; private set; }
 
-        protected App() { }
+        protected App333() { }
 
         public static void Initialize()
         {
-            Initialize<App>();
+            Initialize<App333>();
         }
 
-        public static void Initialize<TApp>() where TApp : App
+        public static void Initialize<TApp>() where TApp : App333
         {
-            App.Current = (TApp)Activator.CreateInstance(typeof(TApp), true);
-            App.Current.DebugGetInputArgs = true;
-            App.Current.DebugShowExitConfirm = true;
-            App.Current.DebugObjectsFilesSaveInRootFolder  = true;
-            App.Current.ObjectsFilesFolder = ".app";
-            App.Current.ObjectsFilesPrefix = "";
-            App.Current.ObjectsFilesExtension = ".object";
+            App333.Current = (TApp)Activator.CreateInstance(typeof(TApp), true);
+            App333.Current.DebugGetInputArgs = true;
+            App333.Current.DebugShowExitConfirm = true;
+            App333.Current.DebugObjectsFilesSaveInRootFolder  = true;
+            App333.Current.ObjectsFilesFolder = ".app";
+            App333.Current.ObjectsFilesPrefix = "";
+            App333.Current.ObjectsFilesExtension = ".object";
         }
 
         public void SetArgs(string[] args)
@@ -425,7 +425,7 @@ namespace SysCommand
                 {
                     useTypeFullName = !useTypeFullName ? this.ObjectsFilesUseTypeFullName : useTypeFullName;
                     fileName = AppHelpers.CSharpName(type, useTypeFullName).Replace("<", "[").Replace(">", "]").Replace(@"\", "");
-                    fileName = App.Current.ObjectsFilesPrefix + AppHelpers.ToLowerSeparate(fileName, '.') + this.ObjectsFilesExtension;
+                    fileName = App333.Current.ObjectsFilesPrefix + AppHelpers.ToLowerSeparate(fileName, '.') + this.ObjectsFilesExtension;
                 }
 
                 folder = this.ObjectsFilesFolder;
@@ -453,8 +453,8 @@ namespace SysCommand
 
         private void Validate()
         {
-            if (App.Current.ActionCharPrefix != null && AppHelpers.IsArgumentFormat(App.Current.ActionCharPrefix.ToString()))
-                throw new Exception("Is not possible use the action prefix '" + App.Current.ActionCharPrefix + "' because this char is used like of argument delimiter.");
+            if (App333.Current.ActionCharPrefix != null && AppHelpers.IsArgumentFormat(App333.Current.ActionCharPrefix.ToString()))
+                throw new Exception("Is not possible use the action prefix '" + App333.Current.ActionCharPrefix + "' because this char is used like of argument delimiter.");
         }
     }
 }

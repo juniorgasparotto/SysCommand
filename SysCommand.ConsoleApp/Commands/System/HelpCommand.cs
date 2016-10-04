@@ -2,10 +2,8 @@
 
 namespace SysCommand.ConsoleApp
 {
-    public class ManageArgsHistoryCommand : CommandBase, IHelpCommand
+    public class HelpCommand : Command, IHelpCommand
     {
-        public Application App { get; internal set; }
-
         public void Help()
         {
             throw new NotImplementedException();

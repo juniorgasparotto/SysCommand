@@ -3,26 +3,16 @@ using System.Collections.Generic;
 
 namespace SysCommand.ConsoleApp
 {
-    public class DefaultAppExecutionListener : IExecutionListener
+    public class DefaultEventListener : IEventListener
     {
-        public virtual void OnError(string[] args, IEnumerable<CommandMap> maps, Result<IMember> parseResult, Exception ex)
+        public void OnComplete(App app, EvalState state)
+        {
+
+        }
+
+        public void OnException(App app, Exception ex)
         {
             throw ex;
-        }
-
-        public virtual void OnInvalidArgumentParse(string[] args, IEnumerable<CommandMap> maps, Result<IMember> result)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public virtual void OnNotFound(string[] args, IEnumerable<CommandMap> maps, Result<IMember> result)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public virtual void OnSuccess(string[] args, IEnumerable<CommandMap> maps, Result<IMember> result)
-        {
-            //throw new NotImplementedException();
         }
 
         //public virtual void ShowActionsErrors()

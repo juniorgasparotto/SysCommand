@@ -15,13 +15,13 @@ namespace SysCommand.Tests
 
         public void Default(int p1, int p2)
         {
-            App.Current.Response.WriteLine("Executing: DefaultCommand/Default/p1/p2");
+            App333.Current.Response.WriteLine("Executing: DefaultCommand/Default/p1/p2");
         }
 
         [Action(IsDefault=true)]
         public void Default2(string a)
         {
-            App.Current.Response.WriteLine("Executing: DefaultCommand/Default/a/b/c");
+            App333.Current.Response.WriteLine("Executing: DefaultCommand/Default/a/b/c");
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SysCommand.Tests
 
         public override void Execute()
         {
-            App.Current.Response.WriteLine("Executing: SampleArgsCommand");
+            App333.Current.Response.WriteLine("Executing: SampleArgsCommand");
         }
     }
 }

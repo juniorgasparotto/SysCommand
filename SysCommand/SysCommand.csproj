@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -45,34 +45,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreConsole\Application.cs" />
-    <Compile Include="CoreConsole\Commands\System\IManageArgsHistoryCommand.cs" />
-    <Compile Include="CoreConsole\Commands\System\ManageArgsHistoryCommand.cs" />
-    <Compile Include="CoreConsole\Commands\System\HelpCommand.cs" />
-    <Compile Include="CoreConsole\Commands\System\IHelpCommand.cs" />
-    <Compile Include="CoreConsole\Listener\DefaultAppExecutionListener.cs" />
-    <Compile Include="Core\Extensions\IEnumerableCommandMapExtensions.cs" />
-    <Compile Include="Core\Map\DefaultMapper.cs" />
-    <Compile Include="Core\Map\IMapper.cs" />
-    <Compile Include="Core\Members\CommandTag.cs" />
+    <Compile Include="Extensions\IEnumerableCommandMapExtensions.cs" />
+    <Compile Include="Map\DefaultMapper.cs" />
+    <Compile Include="Map\IMapper.cs" />
+    <Compile Include="__deleteds\CommandTag.cs" />
     <Compile Include="__core\Command4.cs" />
-    <Compile Include="Core\Execution\IExecutionStrategy.cs" />
-    <Compile Include="Core\Execution\IExecutionListener.cs" />
-    <Compile Include="Core\Members\MethodMain.cs" />
-    <Compile Include="Core\PriorityConstants.cs" />
-    <Compile Include="Core\Execution\DefaultExecutionStrategy.cs" />
+    <Compile Include="Execution\IEvaluationStrategy.cs" />
+    <Compile Include="Members\MethodMain.cs" />
+    <Compile Include="__deleteds\PriorityConstants.cs" />
+    <Compile Include="Execution\DefaultEvaluationStrategy.cs" />
     <Compile Include="__deleteds\__Executor.cs" />
     <Compile Include="__deleteds\Map.cs" />
-    <Compile Include="Core\Map\CommandMap.cs" />
-    <Compile Include="Core\Members\Property.cs" />
-    <Compile Include="Core\Members\Method.cs" />
-    <Compile Include="Core\Members\IMember.cs" />
-    <Compile Include="Core\Execution\Result.cs" />
-    <Compile Include="Core\Execution\ExecutionState.cs" />
+    <Compile Include="Map\CommandMap.cs" />
+    <Compile Include="Members\Property.cs" />
+    <Compile Include="Members\Method.cs" />
+    <Compile Include="Members\IMember.cs" />
+    <Compile Include="Execution\Result.cs" />
+    <Compile Include="Execution\EvalState.cs" />
     <Compile Include="__deleteds\__MapperDefault.cs" />
     <Compile Include="__deleteds\__Debug.cs" />
-    <Compile Include="Core\Evaluator.cs" />
-    <Compile Include="CoreConsole\CommandLoader\AppDomainCommandLoader.cs" />
+    <Compile Include="Evaluator.cs" />
     <Compile Include="__core\ArgumentsParser.cs" />
     <Compile Include="__core\Attributes\ActionAttribute.cs" />
     <Compile Include="__core\ActionInstance.cs" />
@@ -83,13 +75,9 @@
     <Compile Include="__core\Interfaces\IParser.cs" />
     <Compile Include="__core\RequestAction.cs" />
     <Compile Include="__core\Request.cs" />
-    <Compile Include="App.cs" />
+    <Compile Include="__core\App333.cs" />
     <Compile Include="__core\VerboseEnum.cs" />
     <Compile Include="__core\Attributes\ObjectFileAttribute.cs" />
-    <Compile Include="CoreConsole\Commands\User\ClearCommand.cs" />
-    <Compile Include="CoreConsole\Commands\User\HelperCommand.cs" />
-    <Compile Include="CoreConsole\Commands\User\VerboseCommand.cs" />
-    <Compile Include="CoreConsole\Commands\User\ManagerCommand2.cs" />
     <Compile Include="__core\AppHelpers.cs" />
     <Compile Include="__core\FileHelper.cs" />
     <Compile Include="__core\TypeNameSerializationBinder.cs" />
@@ -100,21 +88,18 @@
     <Compile Include="__core\Interfaces\IHelp.cs" />
     <Compile Include="__core\Interfaces\ICommand.cs" />
     <Compile Include="__core\Response.cs" />
-    <Compile Include="Core\Parser\ArgumentMappingState.cs" />
-    <Compile Include="Core\Parser\ActionMappingState.cs" />
-    <Compile Include="Core\Parser\ArgumentFormat.cs" />
-    <Compile Include="Core\Parser\ArgumentMap.cs" />
-    <Compile Include="Core\Parser\ArgumentRaw.cs" />
-    <Compile Include="Core\Parser\ArgumentMapped.cs" />
-    <Compile Include="Core\Parser\ActionMap.cs" />
-    <Compile Include="Core\Parser\ActionMapped.cs" />
-    <Compile Include="Core\Parser\ArgumentMappingType.cs" />
-    <Compile Include="Core\Parser\CommandParser.cs" />
-    <Compile Include="Core\Members\CommandBase.cs" />
+    <Compile Include="Parser\ArgumentMappingState.cs" />
+    <Compile Include="Parser\ActionMappingState.cs" />
+    <Compile Include="Parser\ArgumentFormat.cs" />
+    <Compile Include="Parser\ArgumentMap.cs" />
+    <Compile Include="Parser\ArgumentRaw.cs" />
+    <Compile Include="Parser\ArgumentMapped.cs" />
+    <Compile Include="Parser\ActionMap.cs" />
+    <Compile Include="Parser\ActionMapped.cs" />
+    <Compile Include="Parser\ArgumentMappingType.cs" />
+    <Compile Include="Parser\CommandParser.cs" />
+    <Compile Include="Members\CommandBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\fluent-command-line-parser\FluentCommandLineParser\FluentCommandLineParser.csproj">
@@ -122,7 +107,9 @@
       <Name>FluentCommandLineParser</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,7 +1,4 @@
-﻿using Fclp;
-using System;
-
-namespace SysCommand
+﻿namespace SysCommand.ConsoleApp
 {
     //[Command(OrderExecution = -1)]
     public class HelperCommand : CommandArguments<HelperCommand.Arguments>
@@ -16,9 +13,9 @@ namespace SysCommand
         {
             if (this.ArgsObject.Show)
             {
-                App.Current.ShowHelp();
-                App.Current.ShowHelp2();
-                App.Current.StopPropagation();
+                App333.Current.ShowHelp();
+                App333.Current.ShowHelp2();
+                App333.Current.StopPropagation();
             }
         }
         

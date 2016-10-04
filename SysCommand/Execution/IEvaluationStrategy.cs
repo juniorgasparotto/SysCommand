@@ -2,9 +2,9 @@
 
 namespace SysCommand
 {
-    public interface IExecutionStrategy
+    public interface IEvaluationStrategy
     {
-        ExecutionState Execute(string[] args, IEnumerable<CommandMap> maps, Result<IMember> result);
+        EvalState Eval(string[] args, IEnumerable<CommandMap> maps, Result<IMember> result);
         Result<IMember> Parse(string[] args, IEnumerable<CommandMap> maps, bool enableMultiAction);
     }
 }

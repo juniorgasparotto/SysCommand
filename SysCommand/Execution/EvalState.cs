@@ -6,13 +6,13 @@ using System.Reflection;
 
 namespace SysCommand
 {
-    public enum ExecutionState
+    public enum EvalState
     {
         Success,
         HasInvalidAction,
         HasInvalidArgument,
         NotFound,
         //ArgsIsEmpty,
-        UnexpectedError,
+        //UnexpectedError,
     }
 }

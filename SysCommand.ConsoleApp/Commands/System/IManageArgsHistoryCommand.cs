@@ -1,4 +1,4 @@
-﻿namespace SysCommand
+﻿namespace SysCommand.ConsoleApp
 {
     public interface IManageArgsHistoryCommand
     {

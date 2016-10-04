@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SysCommand
 {
-    public class DefaultExecutionStrategy : IExecutionStrategy
+    public class DefaultEvaluationStrategy : IEvaluationStrategy
     {
         public virtual Result<IMember> Parse(string[] args, IEnumerable<CommandMap> maps, bool enableMultiAction)
         {
@@ -23,7 +23,7 @@ namespace SysCommand
             return result;
         }
 
-        public ExecutionState Execute(string[] args, IEnumerable<CommandMap> maps, Result<IMember> result)
+        public EvalState Eval(string[] args, IEnumerable<CommandMap> maps, Result<IMember> result)
         {
             // step1: create main methods
             this.CreateMainMethods(maps, result);
@@ -39,14 +39,14 @@ namespace SysCommand
                 .Invoke();
 
             // step3: get state and execute other methods if success
-            var state = this.GetExecutionState(args, result);
-            if (state == ExecutionState.Success)
+            var state = this.GetEvalState(args, result);
+            if (state == EvalState.Success)
                 this.GetValidMethods(result.With<Method>()).Invoke();
 
             return state;
         }
 
-        private ExecutionState GetExecutionState(string[] args, Result<IMember> result)
+        private EvalState GetEvalState(string[] args, Result<IMember> result)
         {
             // methods
             var methods = result.With<Method>();
@@ -65,11 +65,11 @@ namespace SysCommand
             //var existsArgumentsError = !notFoundArguments && lstPropertiesInvokers.Count == 0 && lstInvalidsArguments.Count > 0;
 
             if (notFoundActions && notFoundArguments)
-                return ExecutionState.NotFound;
+                return EvalState.NotFound;
             else if (existsActionsError)
-                return ExecutionState.HasInvalidAction;
+                return EvalState.HasInvalidAction;
 
-            return ExecutionState.Success;
+            return EvalState.Success;
         }
 
         private Result<Method> GetValidMethods(Result<Method> result)

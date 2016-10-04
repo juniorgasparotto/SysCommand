@@ -36,7 +36,7 @@ namespace SysCommand
             if (this.HasParsed)
                 return;
 
-            var itemHistory = App.Current.GetOrCreateObjectFile<CommandStorage>().GetArguments(App.Current.CurrentCommandName, typeof(TArgs));
+            var itemHistory = App333.Current.GetOrCreateObjectFile<CommandStorage>().GetArguments(App333.Current.CurrentCommandName, typeof(TArgs));
             if (itemHistory == null || itemHistory.Object == null)
             {
                 this.ArgsObject = Activator.CreateInstance<TArgs>();
@@ -63,7 +63,7 @@ namespace SysCommand
                 if (this.AllowSaveArgsInStorage)
                 {
                     itemHistory.Command = autoFill.GetCommandsParsed();
-                    App.Current.GetOrCreateObjectFile<CommandStorage>().SetArguments(App.Current.CurrentCommandName, itemHistory);
+                    App333.Current.GetOrCreateObjectFile<CommandStorage>().SetArguments(App333.Current.CurrentCommandName, itemHistory);
                 }
             }
         }

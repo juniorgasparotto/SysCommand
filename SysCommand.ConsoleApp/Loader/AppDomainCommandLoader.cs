@@ -20,22 +20,20 @@ namespace SysCommand.ConsoleApp
             this.IgnoredCommands.Add(typeof(T));
         }
         
-        public IEnumerable<CommandBase> GetFromAppDomain(bool isDebug)
+        public IEnumerable<Command> GetFromAppDomain(bool isDebug)
         {
             var listOfCommands = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()
                                   where
-                                         typeof(CommandBase).IsAssignableFrom(assemblyType)
+                                         typeof(Command).IsAssignableFrom(assemblyType)
                                       && assemblyType.IsInterface == false
                                       && assemblyType.IsAbstract == false
                                   select assemblyType).ToList();
 
-            var commandsList = listOfCommands.Select(f => (CommandBase)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
+            var commandsList = listOfCommands.Select(f => (Command)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
             commandsList.RemoveAll(f => this.IgnoredCommands.Contains(f.GetType()) || (!isDebug && f.OnlyInDebug));
             
-            // This "order" it's only has the best vision in debug
-            // it's better see the System commands on the top the list.
-            return commandsList.OrderByDescending(f => f.Tag);
+            return commandsList;
         }
     }
 }
