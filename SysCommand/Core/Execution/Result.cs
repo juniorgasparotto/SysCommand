@@ -52,6 +52,11 @@ namespace SysCommand
             return new Result<T>(this.all.Where(f => f.Alias == alias));
         }
 
+        //public Result<T> WithSourceIs<TSource>()
+        //{
+        //    return new Result<T>(this.all.Where(f => f is TSource));
+        //}
+
         public Result<T> WithSource<TSource>()
         {
             return this.WithSource(typeof(TSource));

@@ -2,13 +2,13 @@
 using System.Linq;
 using System;
 
-namespace SysCommand
+namespace SysCommand.ConsoleApp
 {
-    public sealed class DefaultCommandLoader
+    public sealed class AppDomainCommandLoader
     {
         public List<Type> IgnoredCommands { get; private set; }
 
-        public DefaultCommandLoader(IEnumerable<Type> ignoredCommands = null)
+        public AppDomainCommandLoader(IEnumerable<Type> ignoredCommands = null)
         {
             this.IgnoredCommands = new List<Type>();
             if (ignoredCommands != null)
@@ -20,19 +20,22 @@ namespace SysCommand
             this.IgnoredCommands.Add(typeof(T));
         }
         
-        public IEnumerable<Command> GetFromAppDomain(bool isDebug)
+        public IEnumerable<CommandBase> GetFromAppDomain(bool isDebug)
         {
             var listOfCommands = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()
                                   where
-                                         typeof(Command).IsAssignableFrom(assemblyType)
+                                         typeof(CommandBase).IsAssignableFrom(assemblyType)
                                       && assemblyType.IsInterface == false
                                       && assemblyType.IsAbstract == false
                                   select assemblyType).ToList();
 
-            var commandsList = listOfCommands.Select(f => (Command)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
+            var commandsList = listOfCommands.Select(f => (CommandBase)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
             commandsList.RemoveAll(f => this.IgnoredCommands.Contains(f.GetType()) || (!isDebug && f.OnlyInDebug));
-            return commandsList;
+            
+            // This "order" it's only has the best vision in debug
+            // it's better see the System commands on the top the list.
+            return commandsList.OrderByDescending(f => f.Tag);
         }
     }
 }

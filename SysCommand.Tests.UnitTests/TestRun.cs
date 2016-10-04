@@ -4,6 +4,8 @@ using System;
 using System.Linq;
 using SysCommand;
 using SysCommand.Tests.ConsoleApp.Commands;
+using SysCommand.ConsoleApp;
+using System.IO;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -14,20 +16,37 @@ namespace SysCommand.Tests.UnitTests
         [ExpectedException(typeof(Exception), "No command found")]
         public void TestNoCommands()
         {
-            var result = new Executor(null, new List<Command>()).Execute();
+            var strWrite = new StringWriter();
+            var result = new Application(
+                    args: new string[0],
+                    commands: new List<CommandBase>(),
+                    output: strWrite
+                ).Execute();
         }
 
         [TestMethod]
         public void TestEmptyCommand()
         {
-            var result = new Executor(null, new List<Command>() { new EmptyCommand() }).Execute();
+            var strWrite = new StringWriter();
+            var result = new Application(
+                    args: new string[0],
+                    command: new EmptyCommand(),
+                    output: strWrite
+                ).Execute();
+
             Assert.IsTrue(!result.Any());
         }
 
         [TestMethod]
         public void TestMainCommand()
         {
-            var result = new Executor(null, new List<Command>() { new MainCommand() }).Execute();
+            var strWrite = new StringWriter();
+            var result = new Application(
+                    args: new string[0],
+                    command: new MainCommand(),
+                    output: strWrite
+                ).Execute();
+
             var value = result.WithAlias("Main").GetValue<string>();
             var methods = result.With<MethodMain>().First();
 

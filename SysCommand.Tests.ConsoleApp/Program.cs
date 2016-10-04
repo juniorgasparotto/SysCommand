@@ -12,10 +12,10 @@ namespace SysCommand.Tests.ConsoleApp
         {
             //var result = new App2(null, new List<Command>() { new MainCommand() }).Run();
 
-            var commandLoader = new DefaultCommandLoader();
-            var commands = commandLoader.GetFromAppDomain(Application.IsDebug);
-            var app2 = new Executor(Application.GetArguments(), commands);
-            app2.Execute();
+            //var commandLoader = new AppDomainCommandLoader();
+            //var commands = commandLoader.GetFromAppDomain(Application.IsDebug);
+            //var app2 = new Evaluator(Application.GetArguments(), commands);
+            //app2.Execute();
         }
     }
 }

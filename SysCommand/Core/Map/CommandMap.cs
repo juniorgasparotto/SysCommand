@@ -6,13 +6,13 @@ using SysCommand.Parser;
 
 namespace SysCommand
 {
-    public class MapItem
+    public class CommandMap
     {
-        public Command Command { get; private set; }
+        public CommandBase Command { get; private set; }
         public List<ActionMap> Methods { get; private set; }
         public List<ArgumentMap> Properties { get; private set; }
 
-        internal MapItem(Command command)
+        internal CommandMap(CommandBase command)
         {
             this.Command = command;
             this.Methods = new List<ActionMap>();

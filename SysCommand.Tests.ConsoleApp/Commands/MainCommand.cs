@@ -2,7 +2,7 @@
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {
-    public class MainCommand : Command
+    public class MainCommand : CommandBase
     {
         public string Main()
         {

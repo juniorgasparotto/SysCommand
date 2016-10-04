@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysCommand.Tests.ConsoleApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysCommand.Tests.UnitTests", "SysCommand.Tests.UnitTests\SysCommand.Tests.UnitTests.csproj", "{2FC5A895-3E3C-4A99-863C-F7713E288D0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysCommand.ConsoleApp", "SysCommand.ConsoleApp\SysCommand.ConsoleApp.csproj", "{D58E8352-ABC2-4D96-BF7E-603828F56D16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,14 @@ Global
 		{2FC5A895-3E3C-4A99-863C-F7713E288D0D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FC5A895-3E3C-4A99-863C-F7713E288D0D}.Release|x86.ActiveCfg = Release|Any CPU
 		{2FC5A895-3E3C-4A99-863C-F7713E288D0D}.Release|x86.Build.0 = Release|Any CPU
+		{D58E8352-ABC2-4D96-BF7E-603828F56D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D58E8352-ABC2-4D96-BF7E-603828F56D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D58E8352-ABC2-4D96-BF7E-603828F56D16}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D58E8352-ABC2-4D96-BF7E-603828F56D16}.Debug|x86.Build.0 = Debug|Any CPU
+		{D58E8352-ABC2-4D96-BF7E-603828F56D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D58E8352-ABC2-4D96-BF7E-603828F56D16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D58E8352-ABC2-4D96-BF7E-603828F56D16}.Release|x86.ActiveCfg = Release|Any CPU
+		{D58E8352-ABC2-4D96-BF7E-603828F56D16}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

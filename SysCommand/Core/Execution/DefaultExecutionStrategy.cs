@@ -6,42 +6,27 @@ namespace SysCommand
 {
     public class DefaultExecutionStrategy : IExecutionStrategy
     {
-        public virtual Map CreateMap(IEnumerable<Command> commands)
-        {
-            var maps = new List<MapItem>();
-
-            foreach (var command in commands)
-            {
-                var mapCommand = new MapItem(command);
-                mapCommand.Methods.AddRange(CommandParser.GetActionsMapsFromSourceObject(command, command.OnlyMethodsWithAttribute, command.UsePrefixInAllMethods, command.PrefixMethods));
-                mapCommand.Properties.AddRange(CommandParser.GetArgumentsMapsFromProperties(command, command.OnlyPropertiesWithAttribute));
-                maps.Add(mapCommand);
-            }
-
-            return new Map(maps);
-        }
-
-        public virtual Result<IMember> Parse(string[] args, Map map, bool enableMultiAction)
+        public virtual Result<IMember> Parse(string[] args, IEnumerable<CommandMap> maps, bool enableMultiAction)
         {
             var result = new Result<IMember>();
-            var actionsMaps = map.GetMethods();
-            var argumentsRaw = CommandParser.ParseArgumentRaw(args, actionsMaps);
+            var methods = maps.GetMethods();
+            var properties = CommandParser.ParseArgumentRaw(args, methods);
 
-            foreach (var item in map)
+            foreach (var item in maps)
             {
-                var argsMapped = CommandParser.ParseArgumentMapped(argumentsRaw, item.Command.EnablePositionalArgs, map[item.Command].Properties);
-                var actions = CommandParser.ParseActionMapped(argumentsRaw, enableMultiAction, actionsMaps);
-                result.AddRange(argsMapped.Select(f => new Property(f/*, PriorityConstants.PriorityUser*/)));
-                result.AddRange(actions.Select(f => new Method(f/*, PriorityConstants.PriorityUser*/)));
+                var propertiesParsed = CommandParser.ParseArgumentMapped(properties, item.Command.EnablePositionalArgs, item.Properties);
+                var methodsParsed = CommandParser.ParseActionMapped(properties, enableMultiAction, methods);
+                result.AddRange(propertiesParsed.Select(f => new Property(f)));
+                result.AddRange(methodsParsed.Select(f => new Method(f)));
             }
 
             return result;
         }
 
-        public ExecutionState Execute(string[] args, Map map, Result<IMember> result)
+        public ExecutionState Execute(string[] args, IEnumerable<CommandMap> maps, Result<IMember> result)
         {
             // step1: create main methods
-            this.CreateMainMethods(map, result);
+            this.CreateMainMethods(maps, result);
 
             // step1: invoke the properties that are valid
             result
@@ -99,21 +84,21 @@ namespace SysCommand
 
         private Result<Property> GetValidProperties(Result<Property> result)
         {
-            return result.With(f => f.ArgumentMapped.MappingStates.HasFlag(ActionMappingState.Valid));
+            return result.With(f => f.ArgumentMapped.MappingStates.HasFlag(ArgumentMappingState.Valid));
         }
 
         private Result<Property> GetInvalidProperties(Result<Property> result)
         {
-            return result.With(f => f.ArgumentMapped.MappingStates.HasFlag(ActionMappingState.IsInvalid));
+            return result.With(f => f.ArgumentMapped.MappingStates.HasFlag(ArgumentMappingState.IsInvalid));
         }
 
-        private void CreateMainMethods(Map map, Result<IMember> result)
+        private void CreateMainMethods(IEnumerable<CommandMap> maps, Result<IMember> result)
         {
-            foreach (var command in map.GetCommands())
+            foreach (var map in maps)
             {
-                var mainMethod = command.GetType().GetMethods().Where(f => f.Name.ToLower() == CommandParser.MAIN_METHOD_NAME && f.GetParameters().Length == 0).FirstOrDefault();
+                var mainMethod = map.Command.GetType().GetMethods().Where(f => f.Name.ToLower() == CommandParser.MAIN_METHOD_NAME && f.GetParameters().Length == 0).FirstOrDefault();
                 if (mainMethod != null)
-                    result.Add(new MethodMain(mainMethod.Name, command, mainMethod));
+                    result.Add(new MethodMain(mainMethod.Name, map.Command, mainMethod));
             }
         }
     }

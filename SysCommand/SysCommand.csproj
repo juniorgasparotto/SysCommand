@@ -46,24 +46,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreConsole\Application.cs" />
+    <Compile Include="CoreConsole\Commands\System\IManageArgsHistoryCommand.cs" />
+    <Compile Include="CoreConsole\Commands\System\ManageArgsHistoryCommand.cs" />
+    <Compile Include="CoreConsole\Commands\System\HelpCommand.cs" />
+    <Compile Include="CoreConsole\Commands\System\IHelpCommand.cs" />
+    <Compile Include="CoreConsole\Listener\DefaultAppExecutionListener.cs" />
+    <Compile Include="Core\Extensions\IEnumerableCommandMapExtensions.cs" />
+    <Compile Include="Core\Map\DefaultMapper.cs" />
+    <Compile Include="Core\Map\IMapper.cs" />
+    <Compile Include="Core\Members\CommandTag.cs" />
     <Compile Include="__core\Command4.cs" />
     <Compile Include="Core\Execution\IExecutionStrategy.cs" />
     <Compile Include="Core\Execution\IExecutionListener.cs" />
     <Compile Include="Core\Members\MethodMain.cs" />
-    <Compile Include="Core\EnumsAndConstants\PriorityConstants.cs" />
+    <Compile Include="Core\PriorityConstants.cs" />
     <Compile Include="Core\Execution\DefaultExecutionStrategy.cs" />
     <Compile Include="__deleteds\__Executor.cs" />
-    <Compile Include="Core\Map\Map.cs" />
-    <Compile Include="Core\Map\MapItem.cs" />
+    <Compile Include="__deleteds\Map.cs" />
+    <Compile Include="Core\Map\CommandMap.cs" />
     <Compile Include="Core\Members\Property.cs" />
     <Compile Include="Core\Members\Method.cs" />
     <Compile Include="Core\Members\IMember.cs" />
     <Compile Include="Core\Execution\Result.cs" />
-    <Compile Include="Core\EnumsAndConstants\ExecutionState.cs" />
+    <Compile Include="Core\Execution\ExecutionState.cs" />
     <Compile Include="__deleteds\__MapperDefault.cs" />
     <Compile Include="__deleteds\__Debug.cs" />
-    <Compile Include="Core\Executor.cs" />
-    <Compile Include="Core\CommandLoader\DefaultCommandLoader.cs" />
+    <Compile Include="Core\Evaluator.cs" />
+    <Compile Include="CoreConsole\CommandLoader\AppDomainCommandLoader.cs" />
     <Compile Include="__core\ArgumentsParser.cs" />
     <Compile Include="__core\Attributes\ActionAttribute.cs" />
     <Compile Include="__core\ActionInstance.cs" />
@@ -77,10 +86,10 @@
     <Compile Include="App.cs" />
     <Compile Include="__core\VerboseEnum.cs" />
     <Compile Include="__core\Attributes\ObjectFileAttribute.cs" />
-    <Compile Include="CoreConsole\Default\ClearCommand.cs" />
-    <Compile Include="CoreConsole\Default\HelperCommand.cs" />
-    <Compile Include="CoreConsole\Default\VerboseCommand.cs" />
-    <Compile Include="CoreConsole\Default\ManagerCommand.cs" />
+    <Compile Include="CoreConsole\Commands\User\ClearCommand.cs" />
+    <Compile Include="CoreConsole\Commands\User\HelperCommand.cs" />
+    <Compile Include="CoreConsole\Commands\User\VerboseCommand.cs" />
+    <Compile Include="CoreConsole\Commands\User\ManagerCommand2.cs" />
     <Compile Include="__core\AppHelpers.cs" />
     <Compile Include="__core\FileHelper.cs" />
     <Compile Include="__core\TypeNameSerializationBinder.cs" />
@@ -101,7 +110,7 @@
     <Compile Include="Core\Parser\ActionMapped.cs" />
     <Compile Include="Core\Parser\ArgumentMappingType.cs" />
     <Compile Include="Core\Parser\CommandParser.cs" />
-    <Compile Include="Core\Members\Command.cs" />
+    <Compile Include="Core\Members\CommandBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

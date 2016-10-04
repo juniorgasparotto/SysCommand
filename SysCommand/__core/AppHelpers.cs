@@ -53,7 +53,7 @@ namespace SysCommand
             sb.Append(">");
             return sb.ToString();
         }
-
+        
         public static PropertyInfo GetPropertyInfo<TSource>(Expression<Func<TSource, object>> propertyLambda)
         {
             MemberExpression Exp = null;
@@ -93,6 +93,14 @@ namespace SysCommand
         #endregion
 
         #region string
+
+        public static string[] StringToArgs(string args)
+        {
+            if (!string.IsNullOrWhiteSpace(args))
+                return AppHelpers.CommandLineToArgs(args);
+            else
+                return new string[0];
+        }
 
         public static string ToLowerSeparate(string str, char separate)
         {
@@ -538,6 +546,17 @@ namespace SysCommand
         public static bool Empty<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return !source.Any(predicate);
+        }
+
+        public static IEnumerable<T> Replace<T>(this IEnumerable<T> source, T oldValue, T newValue)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            var lst = source.ToList();
+            var index = lst.IndexOf(oldValue);
+            if (index != -1)
+                lst[index] = newValue;
+            return lst;
         }
 
         #endregion

@@ -4,8 +4,7 @@ namespace SysCommand
 {
     public interface IExecutionStrategy
     {
-        Map CreateMap(IEnumerable<Command> commands);
-        ExecutionState Execute(string[] args, Map map, Result<IMember> result);
-        Result<IMember> Parse(string[] args, Map map, bool enableMultiAction);
+        ExecutionState Execute(string[] args, IEnumerable<CommandMap> maps, Result<IMember> result);
+        Result<IMember> Parse(string[] args, IEnumerable<CommandMap> maps, bool enableMultiAction);
     }
 }

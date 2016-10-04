@@ -4,9 +4,9 @@ using System;
 namespace SysCommand
 {
     //[Command(OrderExecution = -1000)]
-    public class ManagerCommand : CommandArguments<ManagerCommand.Arguments>
+    public class ManagerCommand2 : CommandArguments<ManagerCommand2.Arguments>
     {
-        public ManagerCommand()
+        public ManagerCommand2()
         {
             this.OrderExecution = int.MinValue;
         }

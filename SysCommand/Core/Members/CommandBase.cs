@@ -1,8 +1,14 @@
-﻿namespace SysCommand
+﻿using System.Collections.Generic;
+
+namespace SysCommand
 {
-    public abstract class Command
+    public abstract class CommandBase
     {
-        public App App { get; set; }
+        public string[] Args { get; internal set; }
+        public IEnumerable<CommandMap> Maps { get; internal set; }
+        public Result<IMember> Result { get; internal set; }
+
+        public CommandTag Tag { get; set; }
         public int OrderExecution { get; set; }
         public bool OnlyInDebug { get; set; }
         public bool UsePrefixInAllMethods { get; set; }

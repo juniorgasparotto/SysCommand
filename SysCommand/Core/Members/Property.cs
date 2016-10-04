@@ -17,17 +17,18 @@ namespace SysCommand
         public object Value { get; private set; }
         public bool IsInvoked { get; private set; }
 
-        //public int InvokePriority { get; private set; }
-
         public Property(ArgumentMapped argumentMapped/*, int invokePriority*/)
         {
             this.ArgumentMapped = argumentMapped;
-            this.PropertyInfo = (PropertyInfo)argumentMapped.Map.PropertyOrParameter;
-            this.Value = argumentMapped.Value;
-            this.Source = argumentMapped.Map.Source;
-            this.Name = this.ArgumentMapped.Map.MapName;
             this.Alias = this.ArgumentMapped.Name;
-            //this.InvokePriority = invokePriority;
+
+            if (argumentMapped.Map != null)
+            { 
+                this.PropertyInfo = (PropertyInfo)argumentMapped.Map.PropertyOrParameter;
+                this.Value = argumentMapped.Value;
+                this.Source = argumentMapped.Map.Source;
+                this.Name = this.ArgumentMapped.Map.MapName;
+            }
         }
 
         public Property(string name, string alias, object source, PropertyInfo property, object value, int invokePriority)
@@ -37,7 +38,6 @@ namespace SysCommand
             this.Source = source;
             this.Name = name;
             this.Alias = alias;
-            //this.InvokePriority = invokePriority;
         }
 
         public void Invoke()

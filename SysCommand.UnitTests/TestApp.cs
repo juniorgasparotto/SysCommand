@@ -2,6 +2,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SysCommand;
+using SysCommand.ConsoleApp;
 
 namespace SysCommand.UnitTests
 {
@@ -11,7 +12,7 @@ namespace SysCommand.UnitTests
         [TestMethod]
         public void RunApp()
         {
-            var commandLoader = new DefaultCommandLoader();
+            var commandLoader = new AppDomainCommandLoader();
             //var app = new App2(commandLoader.GetFromAppDomain());
         }
     }

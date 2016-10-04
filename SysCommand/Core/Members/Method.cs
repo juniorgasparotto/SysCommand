@@ -19,9 +19,7 @@ namespace SysCommand
         public object Value { get; private set; }
         public bool IsInvoked { get; private set; }
 
-        //public int InvokePriority { get; private set; }
-
-        public Method(ActionMapped actionMapped/*, int invokePriority*/)
+        public Method(ActionMapped actionMapped)
         {
             this.ActionMapped = actionMapped;
             this.MethodInfo = this.ActionMapped.ActionMap.Method;
@@ -29,17 +27,15 @@ namespace SysCommand
             this.Source = this.ActionMapped.ActionMap.Source;
             this.Name = this.ActionMapped.Name;
             this.Alias = this.ActionMapped.ActionMap.MapName;
-            //this.InvokePriority = invokePriority;
         }
 
-        public Method(string name, string alias, object source, MethodInfo method, Dictionary<string, object> parameters/*, int invokePriority*/)
+        public Method(string name, string alias, object source, MethodInfo method, Dictionary<string, object> parameters)
         {
             this.MethodInfo = method;
             this.Parameters = parameters;
             this.Source = source;
             this.Name = name;
             this.Alias = alias;
-            //this.InvokePriority = invokePriority;
         }
 
         public void Invoke()
@@ -47,6 +43,5 @@ namespace SysCommand
             this.Value = this.MethodInfo.InvokeWithNamedParameters(Source, this.Parameters);
             this.IsInvoked = true;
         }
-
     }
 }
