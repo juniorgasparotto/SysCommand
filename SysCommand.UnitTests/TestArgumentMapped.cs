@@ -41,7 +41,7 @@ namespace SysCommand.UnitTests
         {
             string testContext = null;
             var args = AppHelpers.CommandLineToArgs(input);
-            var argsRaw = CommandParser.ParseArgumentRaw(args);
+            var argsRaw = CommandParser.ParseArgumentsRaw(args);
             var argsMappeds = CommandParser.ParseArgumentMapped(argsRaw, enablePositionedArgs, maps.ToArray());
             var objectTest = new { input, maps, argsMappeds };
 

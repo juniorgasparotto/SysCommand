@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,19 +44,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppEventsArgs.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="IEventListener.cs" />
+    <Compile Include="Listener\IEventListener.cs" />
     <Compile Include="Loader\AppDomainCommandLoader.cs" />
     <Compile Include="Commands\System\HelpCommand.cs" />
     <Compile Include="Commands\System\IHelpCommand.cs" />
     <Compile Include="Commands\System\IManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\System\ManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\Debug\ClearCommand.cs" />
-    <Compile Include="Commands\System\HelperCommand.cs" />
+    <Compile Include="Strings.cs" />
+    <Compile Include="__deleteds\HelperCommand.cs" />
     <Compile Include="Commands\System\ManagerCommand2.cs" />
     <Compile Include="Commands\User\VerboseCommand.cs" />
-    <Compile Include="DefaultEventListener.cs" />
+    <Compile Include="Listener\DefaultEventListener.cs" />
+    <Compile Include="Console\ExitCodeConstants.cs" />
+    <Compile Include="Console\ConsoleWrapper.cs" />
+    <Compile Include="TypeNameSerializationBinder.cs" />
+    <Compile Include="Console\Verbose.cs" />
+    <Compile Include="__deleteds\MethodEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,7 +72,9 @@
       <Name>SysCommand</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

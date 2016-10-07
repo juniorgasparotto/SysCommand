@@ -1,19 +1,28 @@
 ﻿using SysCommand;
+using SysCommand.ConsoleApp;
 using SysCommand.Tests.ConsoleApp.Commands;
+using System;
 using System.Collections.Generic;
 
 namespace SysCommand.Tests.ConsoleApp
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            //var result = new App2(null, new List<Command>() { new MainCommand() }).Run();
+            bool lastBreakLineInNextWrite = false;
+            while (true)
+            {
+                var app = new App();
 
-            //var commandLoader = new AppDomainCommandLoader();
-            //var commands = commandLoader.GetFromAppDomain(Application.IsDebug);
-            //var app2 = new Evaluator(Application.GetArguments(), commands);
-            //app2.Execute();
+                app.ReadArgsWhenIsDebug = true;
+                app.Console.BreakLineInNextWrite = lastBreakLineInNextWrite;
+                app.Run();
+                lastBreakLineInNextWrite = app.Console.BreakLineInNextWrite;
+
+                if (!App.IsDebug)
+                    return app.Console.ExitCode;
+            }
         }
     }
 }

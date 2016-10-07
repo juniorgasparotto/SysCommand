@@ -18,7 +18,7 @@ namespace SysCommand.UnitTests
             else
                 args = new string[0];
 
-            var argsRaw = CommandParser.ParseArgumentRaw(args, actionMaps);
+            var argsRaw = CommandParser.ParseArgumentsRaw(args, actionMaps);
             var actionsMapped = CommandParser.ParseActionMapped(argsRaw, enableMultiAction, actionMaps);
             var objectTest = new { input, actionMaps, actionsMapped };
 

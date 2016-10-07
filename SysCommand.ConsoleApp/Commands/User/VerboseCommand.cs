@@ -16,21 +16,21 @@
             App333.Current.Quiet = this.ArgsObject.Quiet;
 
             if (v.Contains("all"))
-                App333.Current.Verbose |= VerboseEnum.All;
+                App333.Current.Verbose |= SysCommand.VerboseEnum.All;
             if (v.Contains("none"))
-                App333.Current.Verbose |= VerboseEnum.None;
+                App333.Current.Verbose |= SysCommand.VerboseEnum.None;
             if (v.Contains("info"))
-                App333.Current.Verbose |= VerboseEnum.Info;
+                App333.Current.Verbose |= SysCommand.VerboseEnum.Info;
             if (v.Contains("success"))
-                App333.Current.Verbose |= VerboseEnum.Success;
+                App333.Current.Verbose |= SysCommand.VerboseEnum.Success;
             if (v.Contains("warning"))
-                App333.Current.Verbose |= VerboseEnum.Warning;
+                App333.Current.Verbose |= SysCommand.VerboseEnum.Warning;
             if (v.Contains("critical"))
-                App333.Current.Verbose |= VerboseEnum.Critical;
+                App333.Current.Verbose |= SysCommand.VerboseEnum.Critical;
             if (v.Contains("error"))
-                App333.Current.Verbose |= VerboseEnum.Error;
+                App333.Current.Verbose |= SysCommand.VerboseEnum.Error;
             if (v.Contains("question"))
-                App333.Current.Verbose |= VerboseEnum.Question;
+                App333.Current.Verbose |= SysCommand.VerboseEnum.Question;
         }
 
         #region Internal Parameters

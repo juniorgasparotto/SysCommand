@@ -73,7 +73,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helper\TestFileHelper.cs" />
-    <Compile Include="TestRun.cs" />
+    <Compile Include="TestAppEvents.cs" />
+    <Compile Include="TestApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

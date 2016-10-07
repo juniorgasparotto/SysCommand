@@ -6,12 +6,12 @@ namespace SysCommand.ConsoleApp
     {
         public void Help()
         {
-            throw new NotImplementedException();
+            this.App.Console.Write("Help()");
         }
 
         public void Help(char m)
         {
-            throw new NotImplementedException();
+            this.App.Console.Write("Help(char m) = " + m);
         }
     }
 }

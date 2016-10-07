@@ -253,7 +253,7 @@ namespace SysCommand.Parser
 
         #region Converters - Step2
 
-        public static IEnumerable<ArgumentRaw> ParseArgumentRaw(string[] args, IEnumerable<ActionMap> actionsMaps = null)
+        public static IEnumerable<ArgumentRaw> ParseArgumentsRaw(string[] args, IEnumerable<ActionMap> actionsMaps = null)
         {
             var argsItems = new List<ArgumentRaw>();
             var trueChar = '+';
@@ -602,8 +602,6 @@ namespace SysCommand.Parser
             foreach (var action in actionsMapped)
             {
                 action.ArgumentsMapped = ParseArgumentMapped(action.GetArgumentsRaw(), action.ActionMap.EnablePositionalArgs, action.ActionMap.ArgumentsMaps);
-                
-
                 action.MappingStates = GetActionMappingState(action);
             }
 
@@ -754,7 +752,7 @@ namespace SysCommand.Parser
                     return ArgumentMappingState.ArgumentNotExistsByValue | ArgumentMappingState.IsInvalid;
                 }
             }
-            else if (!arg.Map.IsOptional && arg.MappingType == ArgumentMappingType.HasNoInput)
+            else if (!arg.Map.HasDefaultValue && arg.MappingType == ArgumentMappingType.HasNoInput)
             {
                 //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ArgumentIsRequired, string.Format("The argument '{0}' is required", userParameterName)));
                 return ArgumentMappingState.ArgumentIsRequired | ArgumentMappingState.IsInvalid;

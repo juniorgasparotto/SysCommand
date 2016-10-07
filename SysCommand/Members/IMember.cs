@@ -11,8 +11,8 @@ namespace SysCommand
         string Name { get; }
         string Alias { get; }
         object Source { get; }
-        object Value { get; }
-        bool IsInvoked { get; }
+        object Value { get; set; }
+        bool IsInvoked { get; set; }
         //int InvokePriority { get; }
         void Invoke();
     }

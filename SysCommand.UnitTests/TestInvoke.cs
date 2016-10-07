@@ -19,7 +19,7 @@ namespace SysCommand.UnitTests
             else
                 args = new string[0];
 
-            var argsRaw = CommandParser.ParseArgumentRaw(args, actionMaps);
+            var argsRaw = CommandParser.ParseArgumentsRaw(args, actionMaps);
 
             var notFound = true;
             var instance = new Git();

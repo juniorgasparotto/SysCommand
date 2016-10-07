@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SysCommand.Parser;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace SysCommand
             }
         }
 
-        internal Result()
+        public Result()
         {
 
         }
@@ -64,7 +65,7 @@ namespace SysCommand
 
         public Result<T> WithSource(Type type)
         {
-            return new Result<T>(this.all.Where(f => f.Source.GetType() == type));
+            return new Result<T>(this.all.Where(f => f.Source != null && f.Source.GetType() == type));
         }
 
         public Result<T> WithValue(object value)
@@ -93,16 +94,15 @@ namespace SysCommand
             return new Result<TFilter>(this.all.Where(f => f is TFilter && expression((TFilter)f)));
         }
 
-        public Result<T> Invoke(/*int? priority = null*/)
+        public Result<T> Invoke(Action<IMember> onInvoke)
         {
-            //if (priority == null)
-            //    this.all.ForEach(f => f.Invoke());
-            //else
-            //    this.all
-            //        .Where(f => f.InvokePriority == priority.Value)
-            //        .ToList()
-            //        .ForEach(f => f.Invoke());
-            this.all.ForEach(f => f.Invoke());
+            foreach (var m in this.all)
+            {
+                if (onInvoke == null)
+                    m.Invoke();
+                else
+                    onInvoke(m);
+            }
             return this;
         }
 
@@ -132,15 +132,55 @@ namespace SysCommand
             return null;
         }
 
-        internal void Add(IMember result)
+        public void Add(IMember result)
         {
             this.all.Add(result);
         }
 
 
-        internal void AddRange(IEnumerable<IMember> result)
+        public void AddRange(IEnumerable<IMember> result)
         {
             this.all.AddRange(result);
+        }
+
+        public Result<Method> TrimDuplicate()
+        {
+            var methods = this.With<Method>();
+            var newMethods = methods.ToList();
+            var commands = newMethods.Select(f => f.Source).ToList();
+
+            foreach (var cmd in commands)
+            {
+                var methodsFromCmd = methods.WithSource(cmd.GetType()).ToList();
+                var duplicates = methodsFromCmd.GroupBy(f => f.Alias).Where(g => g.Count() > 1).ToList();
+
+                foreach (var duplicate in duplicates)
+                {
+                    // mantain method with more mapped arguments ignoring args with default values
+                    var removeList = duplicate
+                        .Select(m => new { method = m, countParameters = m.ActionMapped.ActionMap.ArgumentsMaps.Count(), countParametersMapped = m.ActionMapped.ArgumentsMapped.Count(a => a.IsMapped) })
+                        .OrderByDescending(o => o.countParametersMapped)
+                        .ThenBy(o => o.countParameters)
+                        .ToList();
+
+                    var mantain = removeList.First();
+                    foreach (var remove in removeList)
+                        if (mantain != remove)
+                            newMethods.Remove(remove.method);
+                }
+            }
+
+            return new Result<Method>(newMethods);
+        }
+
+        public Result<Method> WithValidMethods()
+        {
+            return this.With<Method>(f => f.ActionMapped.MappingStates.HasFlag(ActionMappingState.Valid));
+        }
+
+        public Result<Property> WithValidProperties()
+        {
+            return this.With<Property>(f => f.ArgumentMapped.MappingStates.HasFlag(ArgumentMappingState.Valid));
         }
 
         public IEnumerator GetEnumerator()

@@ -13,6 +13,11 @@ namespace SysCommand
             return maps.Where(c => c.Command is T).FirstOrDefault();
         }
 
+        public static CommandMap GetMap(this IEnumerable<CommandMap> maps, Type type)
+        {
+            return maps.Where(c => c.Command.GetType() == type).FirstOrDefault();
+        }
+
         public static IEnumerable<CommandBase> GetCommands(this IEnumerable<CommandMap> maps)
         {
             return maps.Select(c => c.Command);

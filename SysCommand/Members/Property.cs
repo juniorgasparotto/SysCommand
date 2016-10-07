@@ -14,8 +14,8 @@ namespace SysCommand
         public string Name { get; private set; }
         public string Alias { get; private set; }
         public object Source { get; private set; }
-        public object Value { get; private set; }
-        public bool IsInvoked { get; private set; }
+        public object Value { get; set; }
+        public bool IsInvoked { get; set; }
 
         public Property(ArgumentMapped argumentMapped/*, int invokePriority*/)
         {
