@@ -358,61 +358,7 @@
         "IsLongName": false,
         "Index": 0
       },
-      "ArgumentsMapped": [
-        {
-          "Name": null,
-          "ValueParsed": "abc",
-          "Value": "abc",
-          "HasUnsuporttedType": false,
-          "HasInvalidInput": false,
-          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "NotMapped",
-          "MappingStates": "ArgumentNotExistsByValue, IsInvalid",
-          "Map": null,
-          "Raw": "abc",
-          "AllRaw": [
-            {
-              "Name": null,
-              "Value": "abc",
-              "Format": "Unnamed",
-              "DelimiterArgument": null,
-              "DelimiterValueInName": null,
-              "ValueRaw": "abc",
-              "IsShortName": false,
-              "IsLongName": false,
-              "Index": 1
-            }
-          ],
-          "IsMapped": false,
-          "IsMappedOrHasDefaultValue": false
-        },
-        {
-          "Name": null,
-          "ValueParsed": "def",
-          "Value": "def",
-          "HasUnsuporttedType": false,
-          "HasInvalidInput": false,
-          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "NotMapped",
-          "MappingStates": "ArgumentNotExistsByValue, IsInvalid",
-          "Map": null,
-          "Raw": "def",
-          "AllRaw": [
-            {
-              "Name": null,
-              "Value": "def",
-              "Format": "Unnamed",
-              "DelimiterArgument": null,
-              "DelimiterValueInName": null,
-              "ValueRaw": "def",
-              "IsShortName": false,
-              "IsLongName": false,
-              "Index": 2
-            }
-          ],
-          "IsMapped": false,
-          "IsMappedOrHasDefaultValue": false
-        },
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": null,
@@ -478,8 +424,64 @@
           "IsMappedOrHasDefaultValue": false
         }
       ],
-      "Index": 0,
-      "MappingStates": "IsInvalid"
+      "ArgumentsExtras": [
+        {
+          "Name": null,
+          "ValueParsed": "abc",
+          "Value": "abc",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "NotMapped",
+          "MappingStates": "ArgumentNotExistsByValue, IsInvalid",
+          "Map": null,
+          "Raw": "abc",
+          "AllRaw": [
+            {
+              "Name": null,
+              "Value": "abc",
+              "Format": "Unnamed",
+              "DelimiterArgument": null,
+              "DelimiterValueInName": null,
+              "ValueRaw": "abc",
+              "IsShortName": false,
+              "IsLongName": false,
+              "Index": 1
+            }
+          ],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
+        },
+        {
+          "Name": null,
+          "ValueParsed": "def",
+          "Value": "def",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "NotMapped",
+          "MappingStates": "ArgumentNotExistsByValue, IsInvalid",
+          "Map": null,
+          "Raw": "def",
+          "AllRaw": [
+            {
+              "Name": null,
+              "Value": "def",
+              "Format": "Unnamed",
+              "DelimiterArgument": null,
+              "DelimiterValueInName": null,
+              "ValueRaw": "def",
+              "IsShortName": false,
+              "IsLongName": false,
+              "Index": 2
+            }
+          ],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
+        }
+      ],
+      "Level": 0,
+      "MappingStates": "HasExtras, IsInvalid"
     }
   ]
 }

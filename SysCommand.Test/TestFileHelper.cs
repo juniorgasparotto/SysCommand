@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace TestUtils
+namespace SysCommand.Test
 {
     public static class TestFileHelper
     {

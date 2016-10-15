@@ -330,7 +330,7 @@
         ]
       },
       "ArgumentRawOfAction": null,
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "args",
           "ValueParsed": "a b c d",
@@ -414,8 +414,9 @@
           "IsMappedOrHasDefaultValue": true
         }
       ],
-      "Index": 0,
-      "MappingStates": "AllArgumentsAreMapped, Valid"
+      "ArgumentsExtras": [],
+      "Level": 0,
+      "MappingStates": "Valid"
     },
     {
       "Name": "MethodDefault",
@@ -474,34 +475,7 @@
         ]
       },
       "ArgumentRawOfAction": null,
-      "ArgumentsMapped": [
-        {
-          "Name": "args",
-          "ValueParsed": "a",
-          "Value": "a",
-          "HasUnsuporttedType": false,
-          "HasInvalidInput": false,
-          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "NotMapped",
-          "MappingStates": "ArgumentNotExistsByName, IsInvalid",
-          "Map": null,
-          "Raw": "a",
-          "AllRaw": [
-            {
-              "Name": "args",
-              "Value": "a",
-              "Format": "LongNameAndHasValue",
-              "DelimiterArgument": "--",
-              "DelimiterValueInName": null,
-              "ValueRaw": "a",
-              "IsShortName": false,
-              "IsLongName": true,
-              "Index": 1
-            }
-          ],
-          "IsMapped": false,
-          "IsMappedOrHasDefaultValue": false
-        },
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": "b",
@@ -589,6 +563,35 @@
           ],
           "IsMapped": true,
           "IsMappedOrHasDefaultValue": true
+        }
+      ],
+      "ArgumentsExtras": [
+        {
+          "Name": "args",
+          "ValueParsed": "a",
+          "Value": "a",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "NotMapped",
+          "MappingStates": "ArgumentNotExistsByName, IsInvalid",
+          "Map": null,
+          "Raw": "a",
+          "AllRaw": [
+            {
+              "Name": "args",
+              "Value": "a",
+              "Format": "LongNameAndHasValue",
+              "DelimiterArgument": "--",
+              "DelimiterValueInName": null,
+              "ValueRaw": "a",
+              "IsShortName": false,
+              "IsLongName": true,
+              "Index": 1
+            }
+          ],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
         },
         {
           "Name": null,
@@ -618,8 +621,8 @@
           "IsMappedOrHasDefaultValue": false
         }
       ],
-      "Index": 0,
-      "MappingStates": "IsInvalid"
+      "Level": 0,
+      "MappingStates": "HasExtras, IsInvalid"
     },
     {
       "Name": "MethodDefault",
@@ -660,34 +663,7 @@
         ]
       },
       "ArgumentRawOfAction": null,
-      "ArgumentsMapped": [
-        {
-          "Name": "args",
-          "ValueParsed": "a",
-          "Value": "a",
-          "HasUnsuporttedType": false,
-          "HasInvalidInput": false,
-          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "NotMapped",
-          "MappingStates": "ArgumentNotExistsByName, IsInvalid",
-          "Map": null,
-          "Raw": "a",
-          "AllRaw": [
-            {
-              "Name": "args",
-              "Value": "a",
-              "Format": "LongNameAndHasValue",
-              "DelimiterArgument": "--",
-              "DelimiterValueInName": null,
-              "ValueRaw": "a",
-              "IsShortName": false,
-              "IsLongName": true,
-              "Index": 1
-            }
-          ],
-          "IsMapped": false,
-          "IsMappedOrHasDefaultValue": false
-        },
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": "b",
@@ -731,6 +707,35 @@
           ],
           "IsMapped": true,
           "IsMappedOrHasDefaultValue": true
+        }
+      ],
+      "ArgumentsExtras": [
+        {
+          "Name": "args",
+          "ValueParsed": "a",
+          "Value": "a",
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "NotMapped",
+          "MappingStates": "ArgumentNotExistsByName, IsInvalid",
+          "Map": null,
+          "Raw": "a",
+          "AllRaw": [
+            {
+              "Name": "args",
+              "Value": "a",
+              "Format": "LongNameAndHasValue",
+              "DelimiterArgument": "--",
+              "DelimiterValueInName": null,
+              "ValueRaw": "a",
+              "IsShortName": false,
+              "IsLongName": true,
+              "Index": 1
+            }
+          ],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
         },
         {
           "Name": null,
@@ -787,8 +792,8 @@
           "IsMappedOrHasDefaultValue": false
         }
       ],
-      "Index": 0,
-      "MappingStates": "IsInvalid"
+      "Level": 0,
+      "MappingStates": "Valid, HasExtras"
     },
     {
       "Name": "Clean",
@@ -857,7 +862,7 @@
         "IsLongName": false,
         "Index": 5
       },
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": "1",
@@ -947,8 +952,9 @@
           "IsMappedOrHasDefaultValue": true
         }
       ],
-      "Index": 1,
-      "MappingStates": "AllArgumentsAreMapped, Valid"
+      "ArgumentsExtras": [],
+      "Level": 1,
+      "MappingStates": "Valid"
     },
     {
       "Name": "Clean",
@@ -1017,7 +1023,7 @@
         "IsLongName": false,
         "Index": 8
       },
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": "1",
@@ -1107,8 +1113,9 @@
           "IsMappedOrHasDefaultValue": true
         }
       ],
-      "Index": 2,
-      "MappingStates": "AllArgumentsAreMapped, Valid"
+      "ArgumentsExtras": [],
+      "Level": 2,
+      "MappingStates": "Valid"
     }
   ]
 }

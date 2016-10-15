@@ -340,7 +340,41 @@
         "IsLongName": false,
         "Index": 0
       },
-      "ArgumentsMapped": [
+      "Arguments": [
+        {
+          "Name": "args",
+          "ValueParsed": null,
+          "Value": null,
+          "HasUnsuporttedType": false,
+          "HasInvalidInput": false,
+          "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "MappingType": "HasNoInput",
+          "MappingStates": "ArgumentIsRequired, IsInvalid",
+          "Map": {
+            "MapName": "args",
+            "LongName": "args",
+            "ShortName": null,
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "HasDefaultValue": false,
+            "DefaultValue": null,
+            "IsOptional": false,
+            "HelpText": null,
+            "ShowHelpComplement": false,
+            "Position": null,
+            "Source": {
+              "Arg0": null,
+              "a": null,
+              "b": null
+            },
+            "PropertyOrParameter": "System.String[] args"
+          },
+          "Raw": null,
+          "AllRaw": [],
+          "IsMapped": false,
+          "IsMappedOrHasDefaultValue": false
+        }
+      ],
+      "ArgumentsExtras": [
         {
           "Name": "a",
           "ValueParsed": "1",
@@ -394,42 +428,10 @@
           ],
           "IsMapped": false,
           "IsMappedOrHasDefaultValue": false
-        },
-        {
-          "Name": "args",
-          "ValueParsed": null,
-          "Value": null,
-          "HasUnsuporttedType": false,
-          "HasInvalidInput": false,
-          "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "HasNoInput",
-          "MappingStates": "ArgumentIsRequired, IsInvalid",
-          "Map": {
-            "MapName": "args",
-            "LongName": "args",
-            "ShortName": null,
-            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-            "HasDefaultValue": false,
-            "DefaultValue": null,
-            "IsOptional": false,
-            "HelpText": null,
-            "ShowHelpComplement": false,
-            "Position": null,
-            "Source": {
-              "Arg0": null,
-              "a": null,
-              "b": null
-            },
-            "PropertyOrParameter": "System.String[] args"
-          },
-          "Raw": null,
-          "AllRaw": [],
-          "IsMapped": false,
-          "IsMappedOrHasDefaultValue": false
         }
       ],
-      "Index": 0,
-      "MappingStates": "IsInvalid"
+      "Level": 0,
+      "MappingStates": "HasExtras, IsInvalid"
     }
   ]
 }

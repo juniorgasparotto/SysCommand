@@ -5,7 +5,7 @@ namespace SysCommand
     public class MethodMain : IMember
     {
         public string Name { get; private set; }
-        public string Alias { get; private set; }
+        //public string Alias { get; private set; }
         public object Source { get; private set; }
         public MethodInfo MethodInfo { get; private set; }
         public object Value { get; set; }
@@ -15,7 +15,7 @@ namespace SysCommand
         {
             this.Source = source;
             this.Name = name;
-            this.Alias = name;
+            //this.Alias = name;
             this.MethodInfo = method;
         }
 

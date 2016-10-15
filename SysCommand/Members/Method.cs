@@ -14,7 +14,7 @@ namespace SysCommand
         public Dictionary<string, object> Parameters { get; private set; }
 
         public string Name { get; private set; }
-        public string Alias { get; private set; }
+        //public string Alias { get; private set; }
         public object Source { get; private set; }
         public object Value { get; set; }
         public bool IsInvoked { get; set; }
@@ -23,10 +23,10 @@ namespace SysCommand
         {
             this.ActionMapped = actionMapped;
             this.MethodInfo = this.ActionMapped.ActionMap.Method;
-            this.Parameters = this.ActionMapped.ArgumentsMapped.Where(f => f.IsMapped).ToDictionary(f => f.Name, f => f.Value);
+            this.Parameters = this.ActionMapped.Arguments.Where(f => f.IsMapped).ToDictionary(f => f.Name, f => f.Value);
             this.Source = this.ActionMapped.ActionMap.Source;
             this.Name = this.ActionMapped.Name;
-            this.Alias = this.ActionMapped.ActionMap.ActionName;
+            //this.Alias = this.ActionMapped.ActionMap.ActionName;
         }
 
         public Method(string name, string alias, object source, MethodInfo method, Dictionary<string, object> parameters)
@@ -35,7 +35,7 @@ namespace SysCommand
             this.Parameters = parameters;
             this.Source = source;
             this.Name = name;
-            this.Alias = alias;
+            //this.Alias = alias;
         }
 
         public void Invoke()

@@ -358,7 +358,7 @@
         "IsLongName": false,
         "Index": 0
       },
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": "value1",
@@ -436,8 +436,9 @@
           "IsMappedOrHasDefaultValue": true
         }
       ],
-      "Index": 0,
-      "MappingStates": "AllArgumentsAreMapped, Valid"
+      "ArgumentsExtras": [],
+      "Level": 0,
+      "MappingStates": "Valid"
     },
     {
       "Name": "MethodDefault",
@@ -488,7 +489,7 @@
         "IsLongName": false,
         "Index": 0
       },
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": "value1",
@@ -534,8 +535,9 @@
           "IsMappedOrHasDefaultValue": true
         }
       ],
-      "Index": 0,
-      "MappingStates": "AllArgumentsAreMapped, Valid"
+      "ArgumentsExtras": [],
+      "Level": 0,
+      "MappingStates": "Valid"
     }
   ]
 }

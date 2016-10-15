@@ -1,0 +1,32 @@
+{
+  "Args": "save 1 2 value 1",
+  "Members": [
+    "Command1.System.String Description (obrigatory)",
+    "Command1.System.String Id (obrigatory)",
+    "Command1.save(Int32, Int32, Int32)",
+    "Command1.save(Int32, Int32)"
+  ],
+  "Values": [
+    "Command1.Main=Command1.Main",
+    "Command1.Description=value",
+    "Command1.Id=1",
+    "Command1.Save=Command1.save(Int32, Int32)"
+  ],
+  "ExpectedResult": [
+    "Command1.Main",
+    "Command1.save(Int32, Int32)"
+  ],
+  "CommandsValid": [
+    "Command1"
+  ],
+  "CommandsWithError": [],
+  "PropertiesValid": [
+    "Command1.System.String Description",
+    "Command1.System.String Id"
+  ],
+  "PropertiesInvalid": [],
+  "MethodsValid": [
+    "Command1.save(Int32, Int32)"
+  ],
+  "MethodsInvalid": []
+}

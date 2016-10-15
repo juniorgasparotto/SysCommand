@@ -48,10 +48,10 @@ namespace SysCommand
             return new Result<T>(this.all.Where(f => f.Name == name));
         }
 
-        public Result<T> WithAlias(string alias)
-        {
-            return new Result<T>(this.all.Where(f => f.Alias == alias));
-        }
+        //public Result<T> WithAlias(string alias)
+        //{
+        //    return new Result<T>(this.all.Where(f => f.Alias == alias));
+        //}
 
         //public Result<T> WithSourceIs<TSource>()
         //{
@@ -143,35 +143,35 @@ namespace SysCommand
             this.all.AddRange(result);
         }
 
-        public Result<Method> TrimDuplicate()
-        {
-            var methods = this.With<Method>();
-            var newMethods = methods.ToList();
-            var commands = newMethods.Select(f => f.Source).ToList();
+        //public Result<Method> TrimDuplicate()
+        //{
+        //    var methods = this.With<Method>();
+        //    var newMethods = methods.ToList();
+        //    var commands = newMethods.Select(f => f.Source).ToList();
 
-            foreach (var cmd in commands)
-            {
-                var methodsFromCmd = methods.WithSource(cmd.GetType()).ToList();
-                var duplicates = methodsFromCmd.GroupBy(f => f.Alias).Where(g => g.Count() > 1).ToList();
+        //    foreach (var cmd in commands)
+        //    {
+        //        var methodsFromCmd = methods.WithSource(cmd.GetType()).ToList();
+        //        var duplicates = methodsFromCmd.GroupBy(f => f.Alias).Where(g => g.Count() > 1).ToList();
 
-                foreach (var duplicate in duplicates)
-                {
-                    // mantain method with more mapped arguments ignoring args with default values
-                    var removeList = duplicate
-                        .Select(m => new { method = m, countParameters = m.ActionMapped.ActionMap.ArgumentsMaps.Count(), countParametersMapped = m.ActionMapped.ArgumentsMapped.Count(a => a.IsMapped) })
-                        .OrderByDescending(o => o.countParametersMapped)
-                        .ThenBy(o => o.countParameters)
-                        .ToList();
+        //        foreach (var duplicate in duplicates)
+        //        {
+        //            mantain method with more mapped arguments ignoring args with default values
+        //            var removeList = duplicate
+        //                .Select(m => new { method = m, countParameters = m.ActionMapped.ActionMap.ArgumentsMaps.Count(), countParametersMapped = m.ActionMapped.Arguments.Count(a => a.IsMapped) })
+        //                .OrderByDescending(o => o.countParametersMapped)
+        //                .ThenBy(o => o.countParameters)
+        //                .ToList();
 
-                    var mantain = removeList.First();
-                    foreach (var remove in removeList)
-                        if (mantain != remove)
-                            newMethods.Remove(remove.method);
-                }
-            }
+        //            var mantain = removeList.First();
+        //            foreach (var remove in removeList)
+        //                if (mantain != remove)
+        //                    newMethods.Remove(remove.method);
+        //        }
+        //    }
 
-            return new Result<Method>(newMethods);
-        }
+        //    return new Result<Method>(newMethods);
+        //}
 
         public Result<Method> WithValidMethods()
         {

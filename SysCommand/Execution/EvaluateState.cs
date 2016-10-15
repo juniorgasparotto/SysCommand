@@ -9,7 +9,7 @@ namespace SysCommand
     public enum EvaluateState
     {
         Success,
-        HasInvalidMethod,
+        HasError,
         //HasInvalidArgument,
         NotFound,
         //ArgsIsEmpty,

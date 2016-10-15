@@ -45,7 +45,7 @@ namespace SysCommand.Tests.UnitTests
         {
             var listener = new CustomListener();
             var app = new App(
-                    commands: new List<Command> { new OnlyMainCommand() },
+                    commands: new List<SysCommand.ConsoleApp.Command> { new OnlyMainCommand() },
                     listener: listener
                 );
 
@@ -69,7 +69,7 @@ OnException: Exception!!";
         public void TestEventsWithActions()
         {
             var app = new App(
-                    commands: new List<Command> { new OnlyMainCommand() }
+                    commands: new List<SysCommand.ConsoleApp.Command> { new OnlyMainCommand() }
                 )
             .OnComplete((args) => { args.App.Console.Write("ActionsOnComplete"); throw new Exception("Exception!!"); })
             .OnException((args, ex) => args.App.Console.Write(string.Format("ActionsOnException: {0}", ex.Message)))

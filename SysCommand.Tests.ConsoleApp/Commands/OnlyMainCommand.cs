@@ -2,7 +2,7 @@
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {
-    public class OnlyMainCommand : Command
+    public class OnlyMainCommand : SysCommand.ConsoleApp.Command
     {
         public char a { get; set; }
 

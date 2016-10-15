@@ -1,12 +1,6 @@
-﻿using Fclp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-namespace SysCommand
+﻿namespace SysCommand
 {
-    public abstract class Command4
+    public abstract class Command66
     {
         public int OrderExecution { get; set; }
         public bool OnlyInDebug { get; set; }

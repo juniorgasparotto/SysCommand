@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SysCommand.ConsoleApp
 {
@@ -20,9 +21,9 @@ namespace SysCommand.ConsoleApp
                     eventArgs.App.Console.ExitCode = ExitCodeConstants.Error;
                     this.ShowNotFound(eventArgs);
                     break;
-                case EvaluateState.HasInvalidMethod:
+                case EvaluateState.HasError:
                     eventArgs.App.Console.ExitCode = ExitCodeConstants.Error;
-                    this.ShowInvalidMethods(eventArgs);
+                    this.ShowErrors(eventArgs);
                     break;
                 //case EvaluateState.HasInvalidArgument:
                 //    eventArgs.App.Console.ExitCode = ExitCodeConstants.Error;
@@ -63,30 +64,60 @@ namespace SysCommand.ConsoleApp
 
         public virtual void ShowNotFound(AppEventsArgs eventArgs)
         {
-            eventArgs.App.Console.Write(Strings.NotFoundMessage, false);
+            eventArgs.App.Console.Error(Strings.NotFoundMessage, false);
         }
 
-        public virtual void ShowInvalidMethods(AppEventsArgs eventArgs)
+        public virtual void ShowErrors(AppEventsArgs eventArgs)
         {
-            var methods = eventArgs.Result.With<Method>().TrimDuplicate();
-            var iErr = 0;
+            var commandsInvalid = eventArgs.Result.Where(f => f.HasError);
+            var app = eventArgs.App;
 
-            foreach (Method method in methods)
+            var iErr = 0;
+            var count = commandsInvalid.Count();
+            foreach (var command in commandsInvalid)
             {
                 iErr++;
 
-                var header = string.Format("Error in method: {0}", GetMethodSpecification(method.ActionMapped.ActionMap));
-                eventArgs.App.Console.Error(header);
+                var header = string.Format("There are errors in command: {0}", command.Command.GetType().Name);
+                app.Console.Error(header);
 
-                foreach (var arg in method.ActionMapped.ArgumentsMapped)
-                {
-                    var argErro = GetArgumentErrorDescription(arg);
-                    if (argErro != null)
-                        eventArgs.App.Console.Error(string.Format("{0}", argErro));
-                }
+                var propertiesInvalid = command.Levels.SelectMany(f => f.PropertiesInvalid);
+                if (propertiesInvalid.Any())
+                    this.ShowInvalidProperties(app, propertiesInvalid);
 
-                if (iErr < methods.Count)
-                    eventArgs.App.Console.Write(string.Empty, true);
+                var methodsInvalid = command.Levels.SelectMany(f => f.MethodsInvalid);
+                if (methodsInvalid.Any())
+                    this.ShowInvalidMethods(app, methodsInvalid);
+
+                if (iErr < count)
+                    app.Console.Write(string.Empty, true);
+            }
+        }
+
+        private void ShowInvalidMethods(App app, IEnumerable<ActionMapped> methodsInvalid)
+        {
+            var iErr = 0;
+            var count = methodsInvalid.Count();
+
+            foreach (var invalid in methodsInvalid)
+            {
+                iErr++;
+
+                var header = string.Format("Error in method: {0}", GetMethodSpecification(invalid.ActionMap));
+                app.Console.Error(header);
+                this.ShowInvalidProperties(app, invalid.Arguments);
+                if (iErr < count)
+                    app.Console.Write(string.Empty, true);
+            }
+        }
+
+        private void ShowInvalidProperties(App app, IEnumerable<ArgumentMapped> properties)
+        {
+            foreach (var arg in properties)
+            {
+                var argErro = GetArgumentErrorDescription(arg);
+                if (argErro != null)
+                    app.Console.Error(string.Format("{0}", argErro));
             }
         }
 

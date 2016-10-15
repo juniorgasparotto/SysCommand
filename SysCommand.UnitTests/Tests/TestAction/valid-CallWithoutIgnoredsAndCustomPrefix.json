@@ -340,7 +340,7 @@
         "IsLongName": false,
         "Index": 0
       },
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "args",
           "ValueParsed": null,
@@ -374,7 +374,8 @@
           "IsMappedOrHasDefaultValue": false
         }
       ],
-      "Index": 0,
+      "ArgumentsExtras": [],
+      "Level": 0,
       "MappingStates": "IsInvalid"
     }
   ]

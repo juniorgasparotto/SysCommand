@@ -101,31 +101,31 @@ namespace SysCommand.ConsoleApp
             return this.input;
         }
         
-        public void Info(object msg, bool breakLine = true, bool forceWrite = false)
+        public void Info(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Info, forceWrite))
                 Write(msg, breakLine, this.ColorInfo);
         }
 
-        public void Critical(object msg, bool breakLine = true, bool forceWrite = false)
+        public void Critical(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Critical, forceWrite))
                 Write(msg, breakLine, this.ColorCritical);
         }
 
-        public void Error(object msg, bool breakLine = true, bool forceWrite = false)
+        public void Error(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Error, forceWrite))
                 Write(msg, breakLine, this.ColorError);
         }
 
-        public void Success(object msg, bool breakLine = true, bool forceWrite = false)
+        public void Success(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Success, forceWrite))
                 Write(msg, breakLine, this.ColorSuccess);
         }
 
-        public void Warning(object msg, bool breakLine = true, bool forceWrite = false)
+        public void Warning(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Warning, forceWrite))
                 Write(msg, breakLine, this.ColorWarning);

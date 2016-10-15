@@ -72,10 +72,30 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Helper\TestFileHelper.cs" />
+    <Compile Include="Commands\T01\Command1.cs" />
+    <Compile Include="Commands\T02\Command1.cs" />
+    <Compile Include="Commands\T03\Command1.cs" />
+    <Compile Include="Commands\T13\Command1.cs" />
+    <Compile Include="Commands\T13\Command2.cs" />
+    <Compile Include="Commands\T13\Command3.cs" />
+    <Compile Include="Commands\T12\Command2.cs" />
+    <Compile Include="Commands\T12\Command1.cs" />
+    <Compile Include="Commands\T11\Command3.cs" />
+    <Compile Include="Commands\T11\Command2.cs" />
+    <Compile Include="Commands\T11\Command1.cs" />
+    <Compile Include="Commands\T10\Command1.cs" />
+    <Compile Include="Commands\T09\Command1.cs" />
+    <Compile Include="Commands\T08\Command1.cs" />
+    <Compile Include="Commands\T07\Command1.cs" />
+    <Compile Include="Commands\T06\Command1.cs" />
+    <Compile Include="Commands\T05\Command1.cs" />
+    <Compile Include="Commands\T04\Command1.cs" />
+    <Compile Include="TestApp2.cs" />
     <Compile Include="TestAppEvents.cs" />
     <Compile Include="TestApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Commands\TestChoosedByAllValidsAndHaveMajorityAsMappedButInputIsInvalid\Command7.cs" />
+    <Compile Include="Commands\TestNoDefaultMethodOnlyHasPropertiesInFirstLevel\Command8.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SysCommand.ConsoleApp\SysCommand.ConsoleApp.csproj">
@@ -85,6 +105,10 @@
     <ProjectReference Include="..\SysCommand.Tests.ConsoleApp\SysCommand.Tests.ConsoleApp.csproj">
       <Project>{C40D5C8A-E9BF-4E21-AC51-AAD23DFD952E}</Project>
       <Name>SysCommand.Tests.ConsoleApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SysCommand.Test\SysCommand.Test.csproj">
+      <Project>{7977222F-64E3-4C58-B3A8-00700454804C}</Project>
+      <Name>SysCommand.Test</Name>
     </ProjectReference>
     <ProjectReference Include="..\SysCommand\SysCommand.csproj">
       <Project>{4B7472B5-D979-455F-9613-4F64B98C67F4}</Project>

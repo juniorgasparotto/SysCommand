@@ -25,6 +25,7 @@ namespace SysCommand.Parser
         ArgumentHasInvalidInput = 16,
         ArgumentHasUnsupportedType = 32,
         IsInvalid = 64,
-        Valid = 128
+        Valid = 128,
+        ArgumentIsNotRequired = 256
     }
 }

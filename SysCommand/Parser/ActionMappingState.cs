@@ -18,19 +18,9 @@ namespace SysCommand.Parser
     public enum ActionMappingState
     {
         None = 0,
-        NoArgumentsInMapAndInInput = 1,
-        AllArgumentsAreMapped = 2,
-        IsInvalid = 4,
-        Valid = 8
-        //AmountOfMappedIsBiggerThenMaps = 8,
-        //AmountOfMappedIsLessThanMaps = 2,
-        //AnyArgumentHasNoInput = 1,
-        //AnyArgumentNotMapped = 2,
-        //AnyArgumentHasDefaultValue = 4,
-        //AnyArgumentIsPositional = 8,
-        //AnyArgumentIsNamed = 16,
-        //AnyArgumentHasUnsuporttedType = 32,
-        //AnyArgumentHasInvalidInput = 64,        
-        //IsValid = 512,
+        Valid = 1,
+        HasExtras = 2,
+        NoArgumentsInMapAndInInput = 4,
+        IsInvalid = 8
     }
 }

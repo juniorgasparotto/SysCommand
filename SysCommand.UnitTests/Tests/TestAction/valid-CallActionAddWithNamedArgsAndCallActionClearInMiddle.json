@@ -358,7 +358,7 @@
         "IsLongName": false,
         "Index": 0
       },
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": "\\add",
@@ -448,8 +448,9 @@
           "IsMappedOrHasDefaultValue": true
         }
       ],
-      "Index": 0,
-      "MappingStates": "AllArgumentsAreMapped, Valid"
+      "ArgumentsExtras": [],
+      "Level": 0,
+      "MappingStates": "Valid"
     },
     {
       "Name": "Clean",
@@ -518,7 +519,7 @@
         "IsLongName": false,
         "Index": 5
       },
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": "1",
@@ -608,8 +609,9 @@
           "IsMappedOrHasDefaultValue": true
         }
       ],
-      "Index": 1,
-      "MappingStates": "AllArgumentsAreMapped, Valid"
+      "ArgumentsExtras": [],
+      "Level": 1,
+      "MappingStates": "Valid"
     }
   ]
 }

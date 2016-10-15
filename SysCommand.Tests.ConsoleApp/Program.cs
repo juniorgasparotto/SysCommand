@@ -25,4 +25,31 @@ namespace SysCommand.Tests.ConsoleApp
             }
         }
     }
+
+//""
+//  main() *
+//	default()
+
+//"save --show-time delete --show-time"
+//    main()
+//    save()
+//    main()
+//    delete()
+	
+//"save delete"
+//    main()
+//    save()
+//    main()
+//    delete()
+
+//"--show-time"
+//    main()
+	
+//"--show-time save"
+//    main()
+//    save()
+
+//"value"
+//    main()
+//    main(string v)
 }

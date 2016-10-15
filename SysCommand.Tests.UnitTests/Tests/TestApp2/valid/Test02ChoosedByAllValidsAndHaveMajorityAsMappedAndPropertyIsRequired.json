@@ -1,0 +1,27 @@
+{
+  "Args": "save 1 2 value-missing-map",
+  "Members": [
+    "Command1.System.String Description (obrigatory) (NOT accept positional)",
+    "Command1.save(Int32, Int32, Int32)",
+    "Command1.save(Int32, Int32)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "Could not find an argument to the specified value: value-missing-map",
+    "The argument '--description' is required"
+  ],
+  "CommandsValid": [],
+  "CommandsWithError": [
+    "Command1"
+  ],
+  "PropertiesValid": [],
+  "PropertiesInvalid": [
+    "Command1.value-missing-map",
+    "Command1.Description"
+  ],
+  "MethodsValid": [
+    "Command1.save(Int32, Int32)"
+  ],
+  "MethodsInvalid": []
+}

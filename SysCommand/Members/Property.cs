@@ -12,7 +12,7 @@ namespace SysCommand
         public ArgumentMapped ArgumentMapped { get; private set; }
         public PropertyInfo PropertyInfo { get; private set; }
         public string Name { get; private set; }
-        public string Alias { get; private set; }
+        //public string Alias { get; private set; }
         public object Source { get; private set; }
         public object Value { get; set; }
         public bool IsInvoked { get; set; }
@@ -20,14 +20,14 @@ namespace SysCommand
         public Property(ArgumentMapped argumentMapped/*, int invokePriority*/)
         {
             this.ArgumentMapped = argumentMapped;
-            this.Alias = this.ArgumentMapped.Name;
+            this.Name = this.ArgumentMapped.Name;
 
             if (argumentMapped.Map != null)
             { 
                 this.PropertyInfo = (PropertyInfo)argumentMapped.Map.PropertyOrParameter;
                 this.Value = argumentMapped.Value;
                 this.Source = argumentMapped.Map.Source;
-                this.Name = this.ArgumentMapped.Map.MapName;
+                //this.Name = this.ArgumentMapped.Map.MapName;
             }
         }
 
@@ -37,7 +37,7 @@ namespace SysCommand
             this.Value = value;
             this.Source = source;
             this.Name = name;
-            this.Alias = alias;
+            //this.Alias = alias;
         }
 
         public void Invoke()

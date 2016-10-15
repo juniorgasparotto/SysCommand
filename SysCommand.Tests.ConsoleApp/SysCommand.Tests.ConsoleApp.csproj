@@ -43,10 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Command5.cs" />
+    <Compile Include="Commands\Command4.cs" />
+    <Compile Include="Commands\Command3.cs" />
     <Compile Include="Commands\OnlyMainCommand.cs" />
     <Compile Include="Commands\EmptyCommand.cs" />
-    <Compile Include="Commands\TaskCommandCopy.cs" />
-    <Compile Include="Commands\TaskCommand.cs" />
+    <Compile Include="Commands\Command1.cs" />
+    <Compile Include="Commands\Command2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

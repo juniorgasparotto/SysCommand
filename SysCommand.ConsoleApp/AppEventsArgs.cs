@@ -9,7 +9,7 @@ namespace SysCommand.ConsoleApp
     public sealed class AppEventsArgs
     {
         public App App { get; internal set; }
-        public Result<IMember> Result { get; internal set; }
+        public IEnumerable<CommandParseResult> Result { get; internal set; }
         public EvaluateState State { get; internal set; }
         public string[] Args { get; internal set; }
 

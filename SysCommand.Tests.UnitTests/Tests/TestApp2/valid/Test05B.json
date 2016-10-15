@@ -1,0 +1,23 @@
+{
+  "Args": "save 1 2 3",
+  "Members": [
+    "Command1.save(Int32, Int32, Int32)",
+    "Command1.save(Int32, Int32)"
+  ],
+  "Values": [
+    "Command1.Save=Command1.save(Int32, Int32, Int32)"
+  ],
+  "ExpectedResult": [
+    "Command1.save(Int32, Int32, Int32)"
+  ],
+  "CommandsValid": [
+    "Command1"
+  ],
+  "CommandsWithError": [],
+  "PropertiesValid": [],
+  "PropertiesInvalid": [],
+  "MethodsValid": [
+    "Command1.save(Int32, Int32, Int32)"
+  ],
+  "MethodsInvalid": []
+}

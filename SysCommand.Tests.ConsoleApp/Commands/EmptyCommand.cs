@@ -2,7 +2,7 @@
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {
-    public class EmptyCommand : Command
+    public class EmptyCommand : SysCommand.ConsoleApp.Command
     {
         
     }

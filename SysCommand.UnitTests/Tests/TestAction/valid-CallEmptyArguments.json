@@ -330,7 +330,7 @@
         ]
       },
       "ArgumentRawOfAction": null,
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "args",
           "ValueParsed": null,
@@ -364,7 +364,8 @@
           "IsMappedOrHasDefaultValue": false
         }
       ],
-      "Index": 0,
+      "ArgumentsExtras": [],
+      "Level": 0,
       "MappingStates": "IsInvalid"
     },
     {
@@ -424,7 +425,7 @@
         ]
       },
       "ArgumentRawOfAction": null,
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": null,
@@ -490,8 +491,9 @@
           "IsMappedOrHasDefaultValue": true
         }
       ],
-      "Index": 0,
-      "MappingStates": "AllArgumentsAreMapped, Valid"
+      "ArgumentsExtras": [],
+      "Level": 0,
+      "MappingStates": "Valid"
     },
     {
       "Name": "MethodDefault",
@@ -532,7 +534,7 @@
         ]
       },
       "ArgumentRawOfAction": null,
-      "ArgumentsMapped": [
+      "Arguments": [
         {
           "Name": "a",
           "ValueParsed": null,
@@ -566,8 +568,9 @@
           "IsMappedOrHasDefaultValue": true
         }
       ],
-      "Index": 0,
-      "MappingStates": "AllArgumentsAreMapped, Valid"
+      "ArgumentsExtras": [],
+      "Level": 0,
+      "MappingStates": "Valid"
     }
   ]
 }

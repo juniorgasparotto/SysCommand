@@ -9,7 +9,7 @@ namespace SysCommand
     public interface IMember
     {
         string Name { get; }
-        string Alias { get; }
+        //string Alias { get; }
         object Source { get; }
         object Value { get; set; }
         bool IsInvoked { get; set; }

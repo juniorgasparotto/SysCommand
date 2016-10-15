@@ -1,0 +1,34 @@
+{
+  "Args": "save 1 a save 4 a save 7 a",
+  "Members": [
+    "Command1.System.Decimal Price",
+    "Command1.Int32 Id",
+    "Command1.save(Int32, Int32, Int32)",
+    "Command1.save(Int32, Int32)",
+    "Command1.delete(Int32)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "Error in method: save(Int32, Int32)",
+    "The argument '-b' is invalid",
+    "",
+    "Error in method: save(Int32, Int32)",
+    "The argument '-b' is invalid",
+    "",
+    "Error in method: save(Int32, Int32)",
+    "The argument '-b' is invalid"
+  ],
+  "CommandsValid": [],
+  "CommandsWithError": [
+    "Command1"
+  ],
+  "PropertiesValid": [],
+  "PropertiesInvalid": [],
+  "MethodsValid": [],
+  "MethodsInvalid": [
+    "Command1.save(Int32, Int32)",
+    "Command1.save(Int32, Int32)",
+    "Command1.save(Int32, Int32)"
+  ]
+}

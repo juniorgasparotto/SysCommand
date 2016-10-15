@@ -11,11 +11,11 @@ namespace SysCommand
         private bool enableMultiAction;
         private IEvaluationStrategy evaluationStrategy;
         private IEnumerable<CommandMap> maps;
-        private Result<IMember> result;
+        private IEnumerable<CommandParseResult> result;
 
         public EvaluateState EvaluateState { get; private set; }
 
-        public Result<IMember> Result
+        public IEnumerable<CommandParseResult> Result
         {
             get
             {

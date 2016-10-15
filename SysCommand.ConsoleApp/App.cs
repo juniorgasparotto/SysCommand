@@ -106,24 +106,23 @@ namespace SysCommand.ConsoleApp
             return this;
         }
 
-        public Result<IMember> Run()
+        public AppEventsArgs Run()
         {
             return this.Run(GetArguments());
         }
 
-        public Result<IMember> Run(string arg)
+        public AppEventsArgs Run(string arg)
         {
             return this.Run(AppHelpers.StringToArgs(arg));
         }
 
-        public Result<IMember> Run(string[] args)
+        public AppEventsArgs Run(string[] args)
         {
-            var result = new Result<IMember>();
+            IEnumerable<CommandParseResult> result;
 
             var eventArgs = new AppEventsArgs();
             eventArgs.App = this;
             eventArgs.Args = args;
-            eventArgs.Result = result;
 
             try
             {
@@ -138,7 +137,7 @@ namespace SysCommand.ConsoleApp
                 {
                     var evaluator = new Evaluator(this.Args, manageCommand, false, this.evaluationStrategy);
                     //this.Result.AddRange(evaluator.Eval().Result);
-                    var newArgs = evaluator.Evaluate().Result.GetValue<string[]>();
+                    var newArgs = evaluator.Evaluate().Result.First().Levels.First().Result.GetValue<string[]>();
                     if (newArgs != null)
                         this.Args = newArgs;
 
@@ -168,8 +167,8 @@ namespace SysCommand.ConsoleApp
                     .Evaluate();
 
                 eventArgs.State = evaluatorUser.EvaluateState;
-                result.AddRange(evaluatorUser.Result);
-
+                eventArgs.Result = evaluatorUser.Result;
+                
                 if (this.onComplete != null)
                     this.onComplete(eventArgs);
             }
@@ -181,7 +180,7 @@ namespace SysCommand.ConsoleApp
                     throw ex;
             }
 
-            return result;
+            return eventArgs;
         }
 
         private void MemberInvoke(AppEventsArgs args, IMember member)

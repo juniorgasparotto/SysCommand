@@ -1,0 +1,21 @@
+{
+  "Args": "--str value",
+  "Members": [
+    "Command1.System.Text.StringBuilder Str"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "The argument '--str' is unsupported"
+  ],
+  "CommandsValid": [],
+  "CommandsWithError": [
+    "Command1"
+  ],
+  "PropertiesValid": [],
+  "PropertiesInvalid": [
+    "Command1.Str"
+  ],
+  "MethodsValid": [],
+  "MethodsInvalid": []
+}
