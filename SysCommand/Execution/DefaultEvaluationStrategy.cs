@@ -170,25 +170,6 @@ namespace SysCommand
             return candidates.First().method;
         }
         
-        //private void ParseProperties(CommandMap commandMap, CommandParseLevelResult level, IEnumerable<ArgumentRaw> argumentsRaw)
-        //{
-        //    var argumentsRawProperties = new List<ArgumentRaw>();
-        //    foreach (var extraRaw in argumentsRaw)
-        //    {
-        //        // clone ArgumentRaw
-        //        var raw = new ArgumentRaw(extraRaw.Index, extraRaw.Name, extraRaw.ValueRaw, extraRaw.Value, extraRaw.Format, extraRaw.DelimiterArgument, extraRaw.DelimiterValueInName);
-        //        argumentsRawProperties.Add(raw);
-        //    }
-
-        //    var propertiesParsed = CommandParser.ParseArgumentMapped(argumentsRawProperties, commandMap.Command.EnablePositionalArgs, commandMap.Properties);
-        //    level.Properties.AddRange(propertiesParsed.Where(f => f.MappingStates.HasFlag(ArgumentMappingState.Valid)));
-
-        //    // add all invalids but ignore arguments with the state 'not required"
-        //    // because the arg kind can't be consider valid or invalid, 
-        //    // is a neutro type.
-        //    level.PropertiesInvalid.AddRange(propertiesParsed.Where(f => f.MappingStates.HasFlag(ArgumentMappingState.IsInvalid) && !f.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsNotRequired)));
-        //}
-
         private void ParseProperties(CommandMap commandMap, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
         {
             var parseds = CommandParser.ParseArgumentMapped(argumentsRaw, commandMap.Command.EnablePositionalArgs, commandMap.Properties);
