@@ -47,6 +47,7 @@
     <Compile Include="AppResult.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Listener\CommandError.cs" />
     <Compile Include="Listener\IEventListener.cs" />
     <Compile Include="Loader\AppDomainCommandLoader.cs" />
     <Compile Include="Commands\System\HelpCommand.cs" />

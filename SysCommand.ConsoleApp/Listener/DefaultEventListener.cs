@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace SysCommand.ConsoleApp
 {
@@ -67,87 +68,173 @@ namespace SysCommand.ConsoleApp
             appResult.App.Console.Error(Strings.NotFoundMessage, false);
         }
 
+        //public virtual void ShowErrors(AppResult appResult)
+        //{
+        //    // don't show errors when exists 1 or more valids, 
+        //    // but if have 1 error of type "ArgumentRequired" then show the error
+        //    //var levelsInvalid = appResult
+        //    //   .ParseResult
+        //    //   .Levels
+        //    //   .Where(f => f.Commands.Empty(c => c.IsValid));
+
+        //    //var levelsInvalidWithArgumentRequired = appResult
+        //    //  .ParseResult
+        //    //  .Levels
+        //    //  .Where(f => f.Commands.Any(c => c.HasAnyArgumentRequired));
+
+        //    var levelsInvalid = appResult
+        //       .ParseResult
+        //       .Levels
+        //       .Where(f => f.Commands.Empty(c => c.IsValid) || f.Commands.Any(c => c.HasAnyArgumentRequired));
+
+        //    if (levelsInvalid.Any())
+        //    {
+        //        var groupByCommand = levelsInvalid
+        //            .SelectMany(f => f.Commands)
+        //            .Where(f=>f.HasError)
+        //            .GroupBy(f => f.Command);
+
+        //        var count = groupByCommand.Count();
+
+        //        var iErr = 0;
+        //        foreach (var group in groupByCommand)
+        //        {
+        //            var propertiesInvalid = group.SelectMany(f => f.PropertiesInvalid);
+        //            var methodsInvalid = group.SelectMany(f => f.MethodsInvalid);
+
+        //            iErr++;
+
+        //            var header = string.Format("There are errors in command: {0}", group.Key.GetType().Name);
+        //            appResult.App.Console.Error(header);
+
+        //            //var propertiesInvalid = command.PropertiesInvalid;
+        //            if (propertiesInvalid.Any())
+        //                this.ShowInvalidProperties(appResult.App, propertiesInvalid);
+
+        //            if (methodsInvalid.Any())
+        //                this.ShowInvalidMethods(appResult.App, methodsInvalid);
+
+        //            if (iErr < count)
+        //                appResult.App.Console.Write(string.Empty, true);
+        //        }
+        //    }
+        //    //else if (levelsInvalidWithArgumentRequired.Any())
+        //    //{
+        //    //    var groupByCommand = levelsInvalidWithArgumentRequired
+        //    //         .SelectMany(f => f.Commands)
+        //    //         .Where(f => f.HasError)
+        //    //         .GroupBy(f => f.Command);
+
+        //    //    var count = groupByCommand.Count(f => f.Any(p => p.HasAnyArgumentRequired));
+
+        //    //    var iErr = 0;
+        //    //    foreach (var group in groupByCommand)
+        //    //    {
+        //    //        var propertiesInvalid = group
+        //    //            .SelectMany(f => f.PropertiesInvalid)
+        //    //            .Where(f => f.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsRequired));
+
+        //    //        iErr++;
+
+        //    //        if (propertiesInvalid.Any())
+        //    //        {
+        //    //            var header = string.Format("There are errors in command: {0}", group.Key.GetType().Name);
+        //    //            appResult.App.Console.Error(header);
+
+        //    //            if (propertiesInvalid.Any())
+        //    //                this.ShowInvalidProperties(appResult.App, propertiesInvalid);
+
+        //    //            if (iErr < count)
+        //    //                appResult.App.Console.Write(string.Empty, true);
+        //    //        }
+        //    //    }
+        //    //}
+        //}
+
         public virtual void ShowErrors(AppResult appResult)
         {
-            // don't show errors when exists 1 or more valids, 
-            // but if have 1 error of type "ArgumentRequired" then show the error
-            //var levelsInvalid = appResult
-            //   .ParseResult
-            //   .Levels
-            //   .Where(f => f.Commands.Empty(c => c.IsValid));
-
-            //var levelsInvalidWithArgumentRequired = appResult
-            //  .ParseResult
-            //  .Levels
-            //  .Where(f => f.Commands.Any(c => c.HasAnyArgumentRequired));
-
             var levelsInvalid = appResult
                .ParseResult
                .Levels
                .Where(f => f.Commands.Empty(c => c.IsValid) || f.Commands.Any(c => c.HasAnyArgumentRequired));
 
-            if (levelsInvalid.Any())
+            var groupsCommands = levelsInvalid
+                .SelectMany(f => f.Commands)
+                .Where(f => f.HasError)
+                .GroupBy(f => f.Command);
+
+            var commandsErrors = new List<CommandError>();
+            foreach(var groupCommand in groupsCommands)
             {
-                var groupByCommand = levelsInvalid
-                    .SelectMany(f => f.Commands)
-                    .Where(f=>f.HasError)
-                    .GroupBy(f => f.Command);
+                var commandError = new CommandError();
+                commandError.Command = groupCommand.Key;
+                commandError.Methods.AddRange(groupCommand.SelectMany(f => f.MethodsInvalid));
+                commandError.Properties.AddRange(groupCommand.SelectMany(f => f.PropertiesInvalid));
 
-                var count = groupByCommand.Count();
-
-                var iErr = 0;
-                foreach (var group in groupByCommand)
-                {
-                    var propertiesInvalid = group.SelectMany(f => f.PropertiesInvalid);
-                    var methodsInvalid = group.SelectMany(f => f.MethodsInvalid);
-
-                    iErr++;
-
-                    var header = string.Format("There are errors in command: {0}", group.Key.GetType().Name);
-                    appResult.App.Console.Error(header);
-
-                    //var propertiesInvalid = command.PropertiesInvalid;
-                    if (propertiesInvalid.Any())
-                        this.ShowInvalidProperties(appResult.App, propertiesInvalid);
-
-                    if (methodsInvalid.Any())
-                        this.ShowInvalidMethods(appResult.App, methodsInvalid);
-
-                    if (iErr < count)
-                        appResult.App.Console.Write(string.Empty, true);
-                }
+                commandsErrors.Add(commandError);
             }
-            //else if (levelsInvalidWithArgumentRequired.Any())
-            //{
-            //    var groupByCommand = levelsInvalidWithArgumentRequired
-            //         .SelectMany(f => f.Commands)
-            //         .Where(f => f.HasError)
-            //         .GroupBy(f => f.Command);
-                
-            //    var count = groupByCommand.Count(f => f.Any(p => p.HasAnyArgumentRequired));
 
-            //    var iErr = 0;
-            //    foreach (var group in groupByCommand)
-            //    {
-            //        var propertiesInvalid = group
-            //            .SelectMany(f => f.PropertiesInvalid)
-            //            .Where(f => f.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsRequired));
+            var strBuilder = this.GetErrors(commandsErrors);
+            appResult.App.Console.Write(strBuilder);
+        }
 
-            //        iErr++;
+        private StringBuilder GetErrors(IEnumerable<CommandError> commandsErrors)
+        {
+            var strBuilder = new StringBuilder();
+            var count = commandsErrors.Count();
+            var iErr = 0;
+            foreach (var commandError in commandsErrors)
+            {
+                strBuilder.AppendLine(string.Format("There are errors in command: {0}", commandError.Command.GetType().Name));
+                var hasPropertyError = commandError.Properties.Any();
+                var hasMethodError = commandError.Methods.Any();
 
-            //        if (propertiesInvalid.Any())
-            //        {
-            //            var header = string.Format("There are errors in command: {0}", group.Key.GetType().Name);
-            //            appResult.App.Console.Error(header);
+                if (hasPropertyError)
+                {
+                    this.ShowInvalidProperties(strBuilder, commandError.Properties);
+                }
 
-            //            if (propertiesInvalid.Any())
-            //                this.ShowInvalidProperties(appResult.App, propertiesInvalid);
+                if (hasMethodError)
+                { 
+                    if (hasPropertyError)
+                        strBuilder.AppendLine();
 
-            //            if (iErr < count)
-            //                appResult.App.Console.Write(string.Empty, true);
-            //        }
-            //    }
-            //}
+                    this.ShowInvalidMethods(strBuilder, commandError.Methods);
+                }
+
+                if (++iErr < count)
+                    strBuilder.AppendLine("\r\n");
+            }
+
+            return strBuilder;
+        }
+
+        private void ShowInvalidMethods(StringBuilder strBuilder, IEnumerable<ActionMapped> methodsInvalid)
+        {
+            var iErr = 0;
+            var count = methodsInvalid.Count();
+
+            foreach (var invalid in methodsInvalid)
+            {
+                strBuilder.AppendLine(string.Format("Error in method: {0}", GetMethodSpecification(invalid.ActionMap)));
+                this.ShowInvalidProperties(strBuilder, invalid.Arguments.Where(f=>f.MappingStates.HasFlag(ArgumentMappingState.IsInvalid)));
+                if (++iErr < count)
+                    strBuilder.AppendLine("\r\n");
+            }
+        }
+
+        private void ShowInvalidProperties(StringBuilder strBuilder, IEnumerable<ArgumentMapped> properties)
+        {
+            var iErr = 0;
+            var count = properties.Count();
+
+            foreach (var arg in properties)
+            {
+                var argErro = GetArgumentErrorDescription(arg);
+                strBuilder.Append(string.Format("{0}", argErro));
+                if (++iErr < count)
+                    strBuilder.AppendLine();
+            }
         }
 
         private void ShowInvalidMethods(App app, IEnumerable<ActionMapped> methodsInvalid)
@@ -157,12 +244,10 @@ namespace SysCommand.ConsoleApp
 
             foreach (var invalid in methodsInvalid)
             {
-                iErr++;
-
                 var header = string.Format("Error in method: {0}", GetMethodSpecification(invalid.ActionMap));
                 app.Console.Error(header);
                 this.ShowInvalidProperties(app, invalid.Arguments);
-                if (iErr < count)
+                if (++iErr < count)
                     app.Console.Write(string.Empty, true);
             }
         }
