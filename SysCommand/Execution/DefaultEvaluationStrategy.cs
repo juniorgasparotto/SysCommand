@@ -30,7 +30,7 @@ namespace SysCommand
                     commandParse.Command = commandMap.Command;
                     level.Add(commandParse);
 
-                    this.ParseProperties2(commandMap, commandParse, initialExtraArguments);
+                    this.ParseProperties(commandMap, commandParse, initialExtraArguments);
                 }
             }
 
@@ -66,7 +66,7 @@ namespace SysCommand
                         // with properties inputs.
                         var argumentsExtras = bestMethod.ArgumentsExtras.SelectMany(f => f.AllRaw).ToList();
                         var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
-                        this.ParseProperties2(commandMap, commandParse, argumentsExtras);
+                        this.ParseProperties(commandMap, commandParse, argumentsExtras);
                     }
                 }
             }
@@ -189,7 +189,7 @@ namespace SysCommand
         //    level.PropertiesInvalid.AddRange(propertiesParsed.Where(f => f.MappingStates.HasFlag(ArgumentMappingState.IsInvalid) && !f.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsNotRequired)));
         //}
 
-        private void ParseProperties2(CommandMap commandMap, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
+        private void ParseProperties(CommandMap commandMap, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
         {
             var parseds = CommandParser.ParseArgumentMapped(argumentsRaw, commandMap.Command.EnablePositionalArgs, commandMap.Properties);
             commandParse.AddProperties(parseds.Where(f => f.MappingStates.HasFlag(ArgumentMappingState.Valid)));
