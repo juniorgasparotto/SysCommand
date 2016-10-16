@@ -72,7 +72,15 @@ namespace SysCommand
                     return !HasError && (this.methods.Any() || this.properties.Any());
                 }
             }
-            
+
+            public bool HasAnyArgumentRequired
+            {
+                get
+                {
+                    return this.propertiesInvalid.Any(f => f.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsRequired));
+                }
+            }
+
             public CommandParse()
             {
                 this.methods = new List<ActionMapped>();

@@ -80,9 +80,11 @@ namespace SysCommand
             evaluateResult.Result = new Result<IMember>();
 
             var countLevelsValid = parseResult.Levels.Count(l => l.Commands.Any(c => c.IsValid));
+            var countArgumentRequired = parseResult.Levels.Count(l => l.Commands.Any(c => c.HasAnyArgumentRequired));
+
             var addMainMethod = new Dictionary<CommandBase, bool>();
 
-            if (parseResult.Levels.Count() == countLevelsValid)
+            if (parseResult.Levels.Count() == countLevelsValid && countArgumentRequired == 0)
             {
                 foreach(var level in parseResult.Levels)
                 {

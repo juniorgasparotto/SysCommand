@@ -538,6 +538,25 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
+        public void Test11_3Command2ValidLevelsInDiffCommands2()
+        {
+            /*
+            * 3 command com 2 niveis validos em diferentes commands
+            */
+
+            this.Compare(
+                args: "--price a save 1 1 delete 1 --price b",
+                commands: GetCmds(
+                    new Commands.T11.Command1(),
+                    new Commands.T11.Command2(),
+                    new Commands.T11.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
         public void Test12_2Commands1LevelInvalidAnd2LevelIsValid()
         {
             /*
@@ -682,6 +701,103 @@ namespace SysCommand.Tests.UnitTests
                     new Commands.T14.Command1(),
                     new Commands.T14.Command2(),
                     new Commands.T14.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test15_3Commands2EmptyAmd1With1Property()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            */
+
+            this.Compare(
+                args: "--id 1 --price 1 delete save",
+                commands: GetCmds(
+                    new Commands.T15.Command1(),
+                    new Commands.T15.Command2(),
+                    new Commands.T15.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test15_3Commands2EmptyAmd1With1Property2()
+        {   
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            */
+
+            this.Compare(
+                args: "--price 1",
+                commands: GetCmds(
+                    new Commands.T15.Command1(),
+                    new Commands.T15.Command2(),
+                    new Commands.T15.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test16_3Commands2EmptyAmd1With1PropertyRequired()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            */
+
+            this.Compare(
+                args: "--price 1",
+                commands: GetCmds(
+                    new Commands.T16.Command1(),
+                    new Commands.T16.Command2(),
+                    new Commands.T16.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test16_3Commands2EmptyAmd1With1PropertyRequired2()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            * THIS METHOD IS PENDING SUCCESS
+            */
+
+            this.Compare(
+                args: "--price a",
+                commands: GetCmds(
+                    new Commands.T16.Command1(),
+                    new Commands.T16.Command2(),
+                    new Commands.T16.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test17_3Commands3LevelsWith1PropertyRequired()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            * THIS METHOD IS PENDING SUCCESS
+            */
+
+            this.Compare(
+                args: "save save",
+                commands: GetCmds(
+                    new Commands.T17.Command1(),
+                    new Commands.T17.Command2(),
+                    new Commands.T17.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName(),
                 data: null

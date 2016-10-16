@@ -1,0 +1,40 @@
+{
+  "Args": "--price a",
+  "Members": [
+    "Command1.Int32 Id (obrigatory) (NOT accept positional)",
+    "Command1.System.Decimal Price (NOT accept positional)",
+    "Command3.System.Decimal Price (NOT accept positional)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "The argument '--price' is invalid",
+    "The argument '--id' is required",
+    "",
+    "There are errors in command: Command2",
+    "The argument '--price' does not exist",
+    "",
+    "There are errors in command: Command3",
+    "The argument '--price' is invalid"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1",
+        "Command2",
+        "Command3"
+      ],
+      "PropertiesInvalid": [
+        "Command1.Price",
+        "Command1.Id",
+        "Command2.price",
+        "Command3.Price"
+      ],
+      "MethodsInvalid": []
+    }
+  ]
+}

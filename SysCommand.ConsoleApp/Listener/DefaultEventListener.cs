@@ -69,40 +69,85 @@ namespace SysCommand.ConsoleApp
 
         public virtual void ShowErrors(AppResult appResult)
         {
-            var commandsInvalid = appResult
-                .ParseResult
-                .Levels
-                .Where(f => f.Commands.Empty(c => c.IsValid))
-                .SelectMany(f => f.Commands)
-                .Where(f => f.HasError);
+            // don't show errors when exists 1 or more valids, 
+            // but if have 1 error of type "ArgumentRequired" then show the error
+            //var levelsInvalid = appResult
+            //   .ParseResult
+            //   .Levels
+            //   .Where(f => f.Commands.Empty(c => c.IsValid));
 
-            var groupByCommand = commandsInvalid.GroupBy(f => f.Command);
+            //var levelsInvalidWithArgumentRequired = appResult
+            //  .ParseResult
+            //  .Levels
+            //  .Where(f => f.Commands.Any(c => c.HasAnyArgumentRequired));
 
-            var app = appResult.App;
-            var count = groupByCommand.Count();
+            var levelsInvalid = appResult
+               .ParseResult
+               .Levels
+               .Where(f => f.Commands.Empty(c => c.IsValid) || f.Commands.Any(c => c.HasAnyArgumentRequired));
 
-            var iErr = 0;
-            foreach (var group in groupByCommand)
+            if (levelsInvalid.Any())
             {
-                var propertiesInvalid = group.SelectMany(f => f.PropertiesInvalid);
-                var methodsInvalid = group.SelectMany(f => f.MethodsInvalid);
+                var groupByCommand = levelsInvalid
+                    .SelectMany(f => f.Commands)
+                    .Where(f=>f.HasError)
+                    .GroupBy(f => f.Command);
 
-                iErr++;
+                var count = groupByCommand.Count();
 
-                var header = string.Format("There are errors in command: {0}", group.Key.GetType().Name);
-                app.Console.Error(header);
+                var iErr = 0;
+                foreach (var group in groupByCommand)
+                {
+                    var propertiesInvalid = group.SelectMany(f => f.PropertiesInvalid);
+                    var methodsInvalid = group.SelectMany(f => f.MethodsInvalid);
 
-                //var propertiesInvalid = command.PropertiesInvalid;
-                if (propertiesInvalid.Any())
-                    this.ShowInvalidProperties(app, propertiesInvalid);
+                    iErr++;
 
-                //var methodsInvalid = command.MethodsInvalid;
-                if (methodsInvalid.Any())
-                    this.ShowInvalidMethods(app, methodsInvalid);
+                    var header = string.Format("There are errors in command: {0}", group.Key.GetType().Name);
+                    appResult.App.Console.Error(header);
 
-                if (iErr < count)
-                    app.Console.Write(string.Empty, true);
+                    //var propertiesInvalid = command.PropertiesInvalid;
+                    if (propertiesInvalid.Any())
+                        this.ShowInvalidProperties(appResult.App, propertiesInvalid);
+
+                    if (methodsInvalid.Any())
+                        this.ShowInvalidMethods(appResult.App, methodsInvalid);
+
+                    if (iErr < count)
+                        appResult.App.Console.Write(string.Empty, true);
+                }
             }
+            //else if (levelsInvalidWithArgumentRequired.Any())
+            //{
+            //    var groupByCommand = levelsInvalidWithArgumentRequired
+            //         .SelectMany(f => f.Commands)
+            //         .Where(f => f.HasError)
+            //         .GroupBy(f => f.Command);
+                
+            //    var count = groupByCommand.Count(f => f.Any(p => p.HasAnyArgumentRequired));
+
+            //    var iErr = 0;
+            //    foreach (var group in groupByCommand)
+            //    {
+            //        var propertiesInvalid = group
+            //            .SelectMany(f => f.PropertiesInvalid)
+            //            .Where(f => f.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsRequired));
+
+            //        iErr++;
+
+            //        if (propertiesInvalid.Any())
+            //        {
+            //            var header = string.Format("There are errors in command: {0}", group.Key.GetType().Name);
+            //            appResult.App.Console.Error(header);
+
+            //            if (propertiesInvalid.Any())
+            //                this.ShowInvalidProperties(appResult.App, propertiesInvalid);
+
+            //            if (iErr < count)
+            //                appResult.App.Console.Write(string.Empty, true);
+            //        }
+            //    }
+            //}
         }
 
         private void ShowInvalidMethods(App app, IEnumerable<ActionMapped> methodsInvalid)
