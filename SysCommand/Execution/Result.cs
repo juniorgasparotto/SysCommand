@@ -147,6 +147,11 @@ namespace SysCommand
             this.all.Insert(index, result);
         }
 
+        public void InsertRange(int index, IEnumerable<IMember> result)
+        {
+            this.all.InsertRange(index, result);
+        }
+
         public Result<Method> WithValidMethods()
         {
             return this.With<Method>(f => f.ActionMapped.MappingStates.HasFlag(ActionMappingState.Valid));

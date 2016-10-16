@@ -18,7 +18,7 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test01ChoosedByAllValidsAndHaveMajorityAsMappedButInputIsInvalid()
+        public void Test01_ChoosedByAllValidsAndHaveMajorityAsMappedButInputIsInvalid()
         {
             /*
              * 1 command com 1 metodo valido com 1 nivel e com 1 propriedade invalida no fim e com metodo main (posicional)
@@ -42,7 +42,7 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test02ChoosedByAllValidsAndHaveMajorityAsMappedAndPropertyIsRequired()
+        public void Test02_ChoosedByAllValidsAndHaveMajorityAsMappedAndPropertyIsRequired()
         {
             /*
              m1: save(int a, int b, int c)
@@ -65,7 +65,7 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test03ChoosedByAllValidsAndHaveMajorityAsMappedAndInputIsValid()
+        public void Test03_ChoosedByAllValidsAndHaveMajorityAsMappedAndInputIsValid()
         {
             /*
              * 1 command com 1 metodo valido com 1 nivel e com 2 propriedade valida e com metodo main
@@ -88,7 +88,7 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test04OneMethodValidAndNoPropertiesFoundInInput()
+        public void Test04_OneMethodValidAndNoPropertiesFoundInInput()
         {
             /*
              m1: save(int a, int b, int c)
@@ -109,7 +109,7 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test05()
+        public void Test05_1Command1LevelValid()
         {
             /*
              * 1 command com 1 metodo valido com 1 nivel e sem propriedade e com metodo main
@@ -124,7 +124,7 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test05B()
+        public void Test05_1Command1LevelValid2()
         {
             /*
              * 1 command com 1 metodo valido com 1 nivel e sem propriedade e com metodo main
@@ -503,7 +503,7 @@ namespace SysCommand.Tests.UnitTests
         public void Test11_3Command1ValidLevelAnd2InvalidLevels()
         {
             /*
-            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            * 3 command com 3 niveis cada 3 invalidos
             */
 
             this.Compare(
@@ -519,11 +519,10 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test11_3Command2InvalidLevelsBecauseTheMethodsAreInDiffCommands()
+        public void Test11_3Command2ValidLevelsInDiffCommands()
         {
             /*
-            * 3 command com 2 niveis cada onde os metodos estão escritos corretamente,
-            * Criar fix para isso.
+            * 3 command com 2 niveis validos em diferentes commands
             */
 
             this.Compare(
@@ -539,11 +538,10 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test12_()
+        public void Test12_2Commands1LevelInvalidAnd2LevelIsValid()
         {
             /*
-            * 3 command com 2 niveis cada onde os metodos estão escritos corretamente,
-            * Criar fix para isso.
+            * 2 command com 2 niveis onde o primeiro esta invalido e o segundo valido
             */
 
             this.Compare(
@@ -558,11 +556,28 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test13_A()
+        public void Test12_2Commands1LevelValidWithScapeForExistsMethod()
         {
             /*
-            * 3 command com 2 niveis cada onde os metodos estão escritos corretamente,
-            * Criar fix para isso.
+            * 2 command com 1 nivel valido e com scape no valor que seria um outro metodo 
+            */
+
+            this.Compare(
+                args: @"delete \save",
+                commands: GetCmds(
+                    new Commands.T12.Command1(),
+                    new Commands.T12.Command2()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test13_3Commands3LevelsAnd2LevelIsInvalid()
+        {
+            /*
+            * 3 command com 3 niveis onde o segundo esta invalido
             */
 
             this.Compare(
@@ -576,13 +591,12 @@ namespace SysCommand.Tests.UnitTests
                 data: null
             );
         }
-
+        
         [TestMethod]
-        public void Test13_B()
+        public void Test13_3Commands3LevelsAnd2LevelIsInvalid2()
         {
             /*
-            * 3 command com 2 niveis cada onde os metodos estão escritos corretamente,
-            * Criar fix para isso.
+            * 3 command com 3 niveis onde o segundo esta invalido
             */
 
             this.Compare(
@@ -591,6 +605,83 @@ namespace SysCommand.Tests.UnitTests
                     new Commands.T13.Command1(),
                     new Commands.T13.Command2(),
                     new Commands.T13.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+
+        [TestMethod]
+        public void Test14_3Commands1LevelValidAnd2LevelInvalid()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            */
+
+            this.Compare(
+                args: "--id 1 delete 1 --price 99 save a delete a --price 1",
+                commands: GetCmds(
+                    new Commands.T14.Command1(),
+                    new Commands.T14.Command2(),
+                    new Commands.T14.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test14_3Commands3LevelValid()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            */
+
+            this.Compare(
+                args: "--id 1 delete 2 --price 99 save 3 delete 4 5",
+                commands: GetCmds(
+                    new Commands.T14.Command1(),
+                    new Commands.T14.Command2(),
+                    new Commands.T14.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test14_3Commands3LevelValid2()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            */
+
+            this.Compare(
+                args: "--id 1 delete 2 --price 99 save delete 4 5",
+                commands: GetCmds(
+                    new Commands.T14.Command1(),
+                    new Commands.T14.Command2(),
+                    new Commands.T14.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test14_3Commands3LevelInvalid()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            */
+
+            this.Compare(
+                args: "--id 1 delete a --price 99 save b delete c 5",
+                commands: GetCmds(
+                    new Commands.T14.Command1(),
+                    new Commands.T14.Command2(),
+                    new Commands.T14.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName(),
                 data: null

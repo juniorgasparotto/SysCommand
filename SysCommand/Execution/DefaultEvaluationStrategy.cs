@@ -104,12 +104,15 @@ namespace SysCommand
 
                 if (addMainMethod.Any())
                 {
+                    List<MethodMain> mains = new List<MethodMain>();
                     foreach (var command in addMainMethod)
                     {
                         var main = this.CreateMainMethod(command.Key);
                         if (main != null)
-                            evaluateResult.Result.Insert(0, main);
+                            mains.Add(main);
                     }
+
+                    evaluateResult.Result.InsertRange(0, mains);
                 }
 
                 var evaluateScope = new EvaluateScope()
