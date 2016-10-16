@@ -9,26 +9,19 @@ namespace SysCommand
 
         private string[] args;
         private bool enableMultiAction;
-        private IEvaluationStrategy evaluationStrategy;
         private IEnumerable<CommandMap> maps;
-        private IEnumerable<CommandParseResult> result;
+        private ParseResult parseResult;
+        private IEvaluationStrategy evaluationStrategy;
 
-        public EvaluateState EvaluateState { get; private set; }
-
-        public IEnumerable<CommandParseResult> Result
+        public ParseResult ParseResult
         {
             get
             {
-                if (this.result == null)
-                    this.result = this.evaluationStrategy.Parse(this.args, this.maps, this.enableMultiAction);
-                return this.result;
-            }
-            private set
-            {
-                this.result = value;
-            }
+                if (this.parseResult == null)
+                    this.parseResult = this.evaluationStrategy.Parse(this.args, this.maps, this.enableMultiAction);
+                return this.parseResult;
+            }            
         }
-
 
         public Evaluator(
             string args,
@@ -82,22 +75,11 @@ namespace SysCommand
             return this;
         }
 
-        public Evaluator Evaluate()
+        public EvaluateResult Evaluate()
         {
-            this.SetSystemPropertiesInCommands();
             this.evaluationStrategy.OnInvoke = this.onInvoke;
-            this.EvaluateState = this.evaluationStrategy.Evaluate(this.args, this.maps, this.Result);
-            return this;
-        }
-
-        private void SetSystemPropertiesInCommands()
-        {
-            foreach (var command in this.maps)
-            {
-                command.Command.Args = this.args;
-                command.Command.Maps = this.maps;
-                command.Command.Result = this.Result;
-            }
+            var evaluateResult = this.evaluationStrategy.Evaluate(this.args, this.maps, this.parseResult);
+            return evaluateResult;
         }
     }
 }

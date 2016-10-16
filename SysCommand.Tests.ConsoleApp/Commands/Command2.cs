@@ -23,42 +23,42 @@ namespace SysCommand.Tests.ConsoleApp.Commands
         [Action(IsDefault = true)]
         public string Default()
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         [Action(IsDefault = true)]
         public string Default2()
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         public string Get(string title = null, string description = null, DateTime? date = null)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         public string Get(int? id = null)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
             //var tasks = App333.Current.GetOrCreateObjectFile<List<Task>>();
             //App333.Current.Response.Write(tasks.FirstOrDefault(f=>f.Id == id));
         }
 
         public string Get(string title = null)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
             //var tasks = App333.Current.GetOrCreateObjectFile<List<Task>>();
             //App333.Current.Response.Write(tasks.FirstOrDefault(f => f.Title == title));
         }
 
         public string Save()
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         public string Save(string title)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
             //var tasks = App333.Current.GetOrCreateObjectFile<List<Task>>();
             //var task = new Task
             //{
@@ -72,7 +72,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public string Save(string title, string description = null, DateTime? date = null)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
 
             //var tasks = App333.Current.GetOrCreateObjectFile<List<Task>>();
             //var task = new Task
@@ -88,7 +88,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public string Delete(int id)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         [Action(Name="delete2")]
@@ -97,7 +97,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
             string id
         )
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         private string GetDebugName(ActionMap map, Method result)

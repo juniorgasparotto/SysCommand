@@ -22,45 +22,45 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public string Main(int id, string p2)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         public string Main(string[] args)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         [Action(IsDefault = true)]
         public string Default()
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         public string Delete()
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         [Action(Name = "delete")]
         public string OtherName(int param = 0)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         public string Save()
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         public string Save(int id)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         [Action(IsDefault=true)]
         public string Save(int id, string description = null, decimal? value = null)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         private string GetDebugName(ActionMap map, Method result)

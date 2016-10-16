@@ -20,7 +20,7 @@ namespace SysCommand.Tests.UnitTests.Commands.T12
 
         public string Save()
         {
-            var cur = this.CurrentMethodResult();
+            var cur = this.CurrentMethodParse();
             return GetDebugName(this.CurrentMethodMap(), cur);
         }
 

@@ -20,7 +20,7 @@ namespace SysCommand.Tests.UnitTests.Commands.T12
 
         public string Delete(string value)
         {
-            var cur = this.CurrentMethodResult();
+            var cur = this.CurrentMethodParse();
             return GetDebugName(this.CurrentMethodMap(), cur) + "=" + value;
         }
 

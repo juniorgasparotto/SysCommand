@@ -10,17 +10,17 @@ namespace SysCommand.ConsoleApp
     {
         public static bool IsDebug { get { return System.Diagnostics.Debugger.IsAttached; } }
 
-        public delegate void AppRunExceptionHandler(AppEventsArgs args, Exception ex);
-        public delegate void AppRunCompleteHandler(AppEventsArgs args);
-        public delegate void AppRunOnBeforeMemberInvokeHandler(AppEventsArgs args, IMember member);
-        public delegate void AppRunOnAfterMemberInvokeHandler(AppEventsArgs args, IMember member);
-        public delegate void AppRunOnPrintHandler(AppEventsArgs args, IMember member);
+        public delegate void AppRunExceptionHandler(AppResult args, Exception ex);
+        public delegate void AppRunCompleteHandler(AppResult args);
+        public delegate void AppRunOnBeforeMemberInvokeHandler(AppResult args, IMember member);
+        public delegate void AppRunOnAfterMemberInvokeHandler(AppResult args, IMember member);
+        public delegate void AppRunOnPrintHandler(AppResult args, IMember member);
 
         private AppRunCompleteHandler onComplete;
         private AppRunExceptionHandler onException;
         private AppRunOnBeforeMemberInvokeHandler onBeforeMemberInvoke;
         private AppRunOnAfterMemberInvokeHandler onAfterMemberInvoke;
-        private AppRunOnPrintHandler onPrint;
+        private AppRunOnPrintHandler onMemberPrint;
 
         private bool enableMultiAction;
         private IMapper mapper;
@@ -70,7 +70,7 @@ namespace SysCommand.ConsoleApp
             this.onException = listener.OnException;
             this.onAfterMemberInvoke = listener.OnAfterMemberInvoke;
             this.onBeforeMemberInvoke = listener.OnBeforeMemberInvoke;
-            this.onPrint = listener.OnPrint;
+            this.onMemberPrint = listener.OnMemberPrint;
 
             // mapping
             this.Maps = this.mapper.CreateMap(commands).ToList();
@@ -100,29 +100,27 @@ namespace SysCommand.ConsoleApp
             return this;
         }
 
-        public App OnPrint(AppRunOnPrintHandler onPrint)
+        public App OnMemberPrint(AppRunOnPrintHandler onMemberPrint)
         {
-            this.onPrint = onPrint;
+            this.onMemberPrint = onMemberPrint;
             return this;
         }
 
-        public AppEventsArgs Run()
+        public AppResult Run()
         {
             return this.Run(GetArguments());
         }
 
-        public AppEventsArgs Run(string arg)
+        public AppResult Run(string arg)
         {
             return this.Run(AppHelpers.StringToArgs(arg));
         }
 
-        public AppEventsArgs Run(string[] args)
+        public AppResult Run(string[] args)
         {
-            IEnumerable<CommandParseResult> result;
-
-            var eventArgs = new AppEventsArgs();
-            eventArgs.App = this;
-            eventArgs.Args = args;
+            var appResult = new AppResult();
+            appResult.App = this;
+            appResult.Args = args;
 
             try
             {
@@ -137,7 +135,7 @@ namespace SysCommand.ConsoleApp
                 {
                     var evaluator = new Evaluator(this.Args, manageCommand, false, this.evaluationStrategy);
                     //this.Result.AddRange(evaluator.Eval().Result);
-                    var newArgs = evaluator.Evaluate().Result.First().Levels.First().Result.GetValue<string[]>();
+                    var newArgs = evaluator.Evaluate().Result.GetValue<string[]>();
                     if (newArgs != null)
                         this.Args = newArgs;
 
@@ -162,28 +160,27 @@ namespace SysCommand.ConsoleApp
                 //}
 
                 // execute user properties and methods
-                var evaluatorUser = new Evaluator(this.Args, userMaps, this.enableMultiAction, this.evaluationStrategy)
-                    .OnInvoke(member => this.MemberInvoke(eventArgs, member))
-                    .Evaluate();
+                var evaluator2 = new Evaluator(this.Args, userMaps, this.enableMultiAction, this.evaluationStrategy)
+                    .OnInvoke(member => this.MemberInvoke(appResult, member));
 
-                eventArgs.State = evaluatorUser.EvaluateState;
-                eventArgs.Result = evaluatorUser.Result;
-                
+                appResult.ParseResult = evaluator2.ParseResult;
+                appResult.EvaluateResult = evaluator2.Evaluate();
+
                 if (this.onComplete != null)
-                    this.onComplete(eventArgs);
+                    this.onComplete(appResult);
             }
             catch(Exception ex)
             {
                 if (this.onException != null)
-                    this.onException(eventArgs, ex);
+                    this.onException(appResult, ex);
                 else
                     throw ex;
             }
 
-            return eventArgs;
+            return appResult;
         }
 
-        private void MemberInvoke(AppEventsArgs args, IMember member)
+        private void MemberInvoke(AppResult args, IMember member)
         {
             if (!member.IsInvoked)
             {
@@ -206,7 +203,7 @@ namespace SysCommand.ConsoleApp
                 method = ((MethodMain)member).MethodInfo;
 
             if (method != null && method.ReturnType != typeof(void) && member.Value != null)
-                this.onPrint(args, member);
+                this.onMemberPrint(args, member);
         }
 
         private string[] GetArguments()

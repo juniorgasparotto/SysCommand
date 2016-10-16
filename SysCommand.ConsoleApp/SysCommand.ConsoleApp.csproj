@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppEventsArgs.cs" />
+    <Compile Include="AppResult.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Listener\IEventListener.cs" />

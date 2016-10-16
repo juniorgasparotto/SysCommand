@@ -13,28 +13,28 @@ namespace SysCommand.Tests.UnitTests
     {
         public class CustomListener : IEventListener
         {
-            public void OnComplete(AppEventsArgs eventArgs)
+            public void OnComplete(AppResult eventArgs)
             {
                 eventArgs.App.Console.Write("OnComplete");
                 throw new Exception("Exception!!");
             }
 
-            public void OnException(AppEventsArgs eventArgs, Exception ex)
+            public void OnException(AppResult eventArgs, Exception ex)
             {
                 eventArgs.App.Console.Write(string.Format("OnException: {0}", ex.Message));
             }
 
-            public void OnBeforeMemberInvoke(AppEventsArgs eventArgs, IMember member)
+            public void OnBeforeMemberInvoke(AppResult eventArgs, IMember member)
             {
                 eventArgs.App.Console.Write(string.Format("OnBeforeMemberInvoke: {0} {1}", member.Name, member.Value));
             }
 
-            public void OnAfterMemberInvoke(AppEventsArgs eventArgs, IMember member)
+            public void OnAfterMemberInvoke(AppResult eventArgs, IMember member)
             {
                 eventArgs.App.Console.Write(string.Format("OnAfterMemberInvoke: {0}: {1}", member.Name, member.Value));
             }
 
-            public void OnPrint(AppEventsArgs eventArgs, IMember method)
+            public void OnMemberPrint(AppResult eventArgs, IMember method)
             {
                 eventArgs.App.Console.Write(string.Format("OnPrint: {0}: {1}", method.Name, method.Value));
             }
@@ -75,7 +75,7 @@ OnException: Exception!!";
             .OnException((args, ex) => args.App.Console.Write(string.Format("ActionsOnException: {0}", ex.Message)))
             .OnBeforeMemberInvoke((args, member) => args.App.Console.Write(string.Format("ActionsOnBeforeMemberInvoke: {0}: {1}", member.Name, member.Value)))
             .OnAfterMemberInvoke((args, member) => args.App.Console.Write(string.Format("ActionsOnAfterMemberInvoke: {0}: {1}", member.Name, member.Value)))
-            .OnPrint((args, member) => args.App.Console.Write(string.Format("ActionsOnPrint: {0}: {1}", member.Name, member.Value)));
+            .OnMemberPrint((args, member) => args.App.Console.Write(string.Format("ActionsOnPrint: {0}: {1}", member.Name, member.Value)));
 
             app.Console.Out = new StringWriter();
             app.Run("-a Y");

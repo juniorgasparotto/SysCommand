@@ -43,19 +43,19 @@ namespace SysCommand.Tests.UnitTests
         public void TestNoArgsAndEmptyCommand()
         {
             var app = this.GetApp(new EmptyCommand());
-            var result = app.Run("");
+            var appResult = app.Run("");
             var output = app.Console.Out.ToString();
-            Assert.IsTrue(result.Result.GetResult().Empty());
+            Assert.IsTrue(appResult.EvaluateResult.Result.Empty());
             Assert.IsTrue(output == Strings.NotFoundMessage);
         }
 
         [TestMethod]
         public void TestMainCommand()
         {
-            var result = this.GetApp(new OnlyMainCommand()).Run("-a Y");
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().GetNullableValue<char>() == 'Y');
-            Assert.IsTrue("Main" == result.Result.GetResult().WithName("Main").GetValue<string>());
+            var appResult = this.GetApp(new OnlyMainCommand()).Run("-a Y");
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().GetNullableValue<char>() == 'Y');
+            Assert.IsTrue("Main" == appResult.EvaluateResult.Result.WithName("Main").GetValue<string>());
         }
        
         [TestMethod]
@@ -63,17 +63,17 @@ namespace SysCommand.Tests.UnitTests
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("main 1 b");
+            var appResult = app.Run("main 1 b");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -81,17 +81,17 @@ namespace SysCommand.Tests.UnitTests
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("1 a");
+            var appResult = app.Run("1 a");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -99,17 +99,17 @@ namespace SysCommand.Tests.UnitTests
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("a a");
+            var appResult = app.Run("a a");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -117,17 +117,17 @@ namespace SysCommand.Tests.UnitTests
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("--id a b");
+            var appResult = app.Run("--id a b");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -135,7 +135,7 @@ namespace SysCommand.Tests.UnitTests
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("");
+            var appResult = app.Run("");
 
             var output = app.Console.Out.ToString();
             var expected =
@@ -145,10 +145,10 @@ Command2.default()";
 //Command2.default2()";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 1);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 0);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 0);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 1);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 0);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 0);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
         }
 
         [TestMethod]
@@ -156,17 +156,17 @@ Command2.default()";
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("1 a save");
+            var appResult= app.Run("1 a save");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -174,17 +174,17 @@ Command2.default()";
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("save delete");
+            var appResult= app.Run("save delete");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -192,17 +192,17 @@ Command2.default()";
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("delete a save");
+            var appResult= app.Run("delete a save");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -210,17 +210,17 @@ Command2.default()";
         {
             var app = this.GetApp(new Command1(), new Command2(), new Command3(), new Command4());
             app.Console.Out = new StringWriter();
-            var result = app.Run("--prop1 value1 --prop2 value2");
+            var appResult= app.Run("--prop1 value1 --prop2 value2");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -229,17 +229,17 @@ Command2.default()";
             var app = this.GetApp( new Command5() );
             //var app = this.GetApp(new Command1(), new Command2(), new Command3(), new Command4());
             app.Console.Out = new StringWriter();
-            var result = app.Run("get 1 a --description a get 1 a --description a");
+            var appResult= app.Run("get 1 a --description a get 1 a --description a");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -248,17 +248,17 @@ Command2.default()";
             // one command and single action
             var app = this.GetApp(new Commands.Command7());
             app.Console.Out = new StringWriter();
-            var result = app.Run("save 1 2 value");
+            var appResult= app.Run("save 1 2 value");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
 
             // one command and multi action
 //            app = this.GetApp(new Command6());
@@ -283,33 +283,33 @@ Command2.default()";
             // one command and single action
             var app = this.GetApp(new Commands.Command8());
             app.Console.Out = new StringWriter();
-            var result = app.Run("--prop1 --prop2 save 1 2");
+            var appResult= app.Run("--prop1 --prop2 save 1 2");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
 
             // one command and multi action
             app = this.GetApp(new Commands.Command8());
             //var app = this.GetApp(new Command1(), new Command2(), new Command3(), new Command4());
             app.Console.Out = new StringWriter();
-            result = app.Run("--prop1 --prop2 save 1 2 delete 1");
+            var appResult2 = app.Run("--prop1 --prop2 save 1 2 delete 1");
 
             output = app.Console.Out.ToString();
             expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -317,17 +317,17 @@ Command2.default()";
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("help");
+            var appResult= app.Run("help");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -335,17 +335,17 @@ Command2.default()";
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("help save");
+            var appResult= app.Run("help save");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -353,17 +353,17 @@ Command2.default()";
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("save help");
+            var appResult= app.Run("save help");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         [TestMethod]
@@ -371,17 +371,17 @@ Command2.default()";
         {
             var app = this.GetApp(new Command1(), new Command2());
             app.Console.Out = new StringWriter();
-            var result = app.Run("save 1 --id=10");
+            var appResult= app.Run("save 1 --id=10");
 
             var output = app.Console.Out.ToString();
             var expected =
 @"";
 
             Assert.IsTrue(expected == output);
-            Assert.IsTrue(result.Result.GetResult().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Method>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<MethodMain>().Count == 2);
-            Assert.IsTrue(result.Result.GetResult().With<Property>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Method>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<MethodMain>().Count == 2);
+            Assert.IsTrue(appResult.EvaluateResult.Result.With<Property>().Count == 2);
         }
 
         private App GetApp(params SysCommand.ConsoleApp.Command[] cmds)

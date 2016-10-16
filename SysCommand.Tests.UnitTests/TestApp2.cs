@@ -440,6 +440,21 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
+        public void Test10_1CommandAllValidLevelsAnd2ValidPropertiesInBeginAndEnd2()
+        {
+            /*
+            * 1 command com 3 niveis cada os 3 validos
+            */
+
+            this.Compare(
+                args: "--price -1.99 save 1 2 3 --price -1.99 delete 4 --price -1.99 save 5 6 --id 10 --price -1.99",
+                commands: GetCmds(new Commands.T10.Command1()),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
         public void Test10_1CommandAllValidLevelsAndRepeatSameMethodIn3Levels()
         {
             /*
@@ -573,7 +588,7 @@ namespace SysCommand.Tests.UnitTests
                     commands: commands
                 );
             app.Console.Out = new StringWriter();
-            var result = app.Run(args);
+            var appResult = app.Run(args);
             var output = app.Console.Out.ToString();
 
             var test = new TestData();
@@ -586,18 +601,27 @@ namespace SysCommand.Tests.UnitTests
             }
 
             test.ExpectedResult = output.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            test.Values = result.Result.GetResult().Select(f => f.Source.GetType().Name + "." + f.Name + "=" + f.Value);
+            test.Values = appResult.EvaluateResult.Result.Select(f => f.Source.GetType().Name + "." + f.Name + "=" + f.Value);
 
-            foreach (var cmd in result.Result)
+            var commandsParse = appResult.ParseResult.Levels.SelectMany(f => f.Commands);
+            var groupCommandsParse = commandsParse.GroupBy(f => f.Command);
+
+            foreach (var group in groupCommandsParse)
             {
-                test.MethodsValid.AddRange(cmd.Levels.SelectMany(f=>f.Methods.Select(s => cmd.Command.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s.ActionMap))));
-                test.MethodsInvalid.AddRange(cmd.Levels.SelectMany(f=>f.MethodsInvalid.Select(s => cmd.Command.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s.ActionMap))));
-                test.PropertiesValid.AddRange(cmd.Levels.SelectMany(f => f.Properties.Select(s => cmd.Command.GetType().Name + "." + s.Map.PropertyOrParameter.ToString())));
-                test.PropertiesInvalid.AddRange(cmd.Levels.SelectMany(f => f.PropertiesInvalid.Select(s => cmd.Command.GetType().Name + "." + (s.Name ?? s.Value))));
+                foreach(var cmd in group)
+                {
+                    test.MethodsValid.AddRange(cmd.Methods.Select(s => cmd.Command.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s.ActionMap)));
+                    test.MethodsInvalid.AddRange(cmd.MethodsInvalid.Select(s => cmd.Command.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s.ActionMap)));
+                    test.PropertiesValid.AddRange(cmd.Properties.Select(s => cmd.Command.GetType().Name + "." + s.Map.PropertyOrParameter.ToString()));
+                    test.PropertiesInvalid.AddRange(cmd.PropertiesInvalid.Select(s => cmd.Command.GetType().Name + "." + (s.Name ?? s.Value)));
+                }
             }
 
-            test.CommandsValid.AddRange(result.Result.GetAllValid().Select(f => f.Command.GetType().Name));
-            test.CommandsWithError.AddRange(result.Result.GetAllWithError().Select(f => f.Command.GetType().Name));
+            var commandsParsedValid = commandsParse.Where(f => f.IsValid).GroupBy(f=>f.Command);
+            var commandsParsedWithError = commandsParse.Where(f => f.HasError).GroupBy(f => f.Command);
+
+            test.CommandsValid.AddRange(commandsParsedValid.Select(f => f.Key.GetType().Name));
+            test.CommandsWithError.AddRange(commandsParsedWithError.Select(f => f.Key.GetType().Name));
 
             Assert.IsTrue(TestHelper.CompareObjects<TestApp2>(test, null, funcName));
             //Assert.IsTrue(output == data.ExpectedResult);

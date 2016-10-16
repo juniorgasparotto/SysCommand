@@ -23,7 +23,7 @@ namespace SysCommand.Tests.UnitTests.Commands.T11
 
         public string Save(int a, int b)
         {
-            var cur = this.CurrentMethodResult();
+            var cur = this.CurrentMethodParse();
             return GetDebugName(this.CurrentMethodMap(), cur) + " Level" + cur.ActionMapped.Level;
         }
 

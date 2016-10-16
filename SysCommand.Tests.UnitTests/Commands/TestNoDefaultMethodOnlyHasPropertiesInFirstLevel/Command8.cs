@@ -22,12 +22,12 @@ namespace SysCommand.Tests.UnitTests.Commands
 
         public string Save(int a, int b)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         public string Delete(int a)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult());
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
         private string GetDebugName(ActionMap map, Method result)

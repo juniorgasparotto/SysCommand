@@ -45,10 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Execution\CommandParseLevelResult.cs" />
-    <Compile Include="Execution\CommandParse.cs" />
-    <Compile Include="Execution\ExecutionLevel.cs" />
-    <Compile Include="Execution\CommandParseResult.cs" />
+    <Compile Include="EvaluateScope.cs" />
+    <Compile Include="__deleteds\CommandParseLevelResult.cs" />
+    <Compile Include="__deleteds\CommandParse.cs" />
+    <Compile Include="Execution\ParseResult.cs" />
+    <Compile Include="Execution\EvaluateResult.cs" />
+    <Compile Include="__deleteds\CommandParseLevel.cs" />
+    <Compile Include="__deleteds\CommandParseResult.cs" />
     <Compile Include="Extensions\IEnumerableCommandParseResultExtensions.cs" />
     <Compile Include="Extensions\IEnumerableCommandMapExtensions.cs" />
     <Compile Include="Map\DefaultMapper.cs" />

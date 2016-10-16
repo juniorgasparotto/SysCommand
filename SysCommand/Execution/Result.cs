@@ -136,42 +136,16 @@ namespace SysCommand
         {
             this.all.Add(result);
         }
-
-
+        
         public void AddRange(IEnumerable<IMember> result)
         {
             this.all.AddRange(result);
         }
 
-        //public Result<Method> TrimDuplicate()
-        //{
-        //    var methods = this.With<Method>();
-        //    var newMethods = methods.ToList();
-        //    var commands = newMethods.Select(f => f.Source).ToList();
-
-        //    foreach (var cmd in commands)
-        //    {
-        //        var methodsFromCmd = methods.WithSource(cmd.GetType()).ToList();
-        //        var duplicates = methodsFromCmd.GroupBy(f => f.Alias).Where(g => g.Count() > 1).ToList();
-
-        //        foreach (var duplicate in duplicates)
-        //        {
-        //            mantain method with more mapped arguments ignoring args with default values
-        //            var removeList = duplicate
-        //                .Select(m => new { method = m, countParameters = m.ActionMapped.ActionMap.ArgumentsMaps.Count(), countParametersMapped = m.ActionMapped.Arguments.Count(a => a.IsMapped) })
-        //                .OrderByDescending(o => o.countParametersMapped)
-        //                .ThenBy(o => o.countParameters)
-        //                .ToList();
-
-        //            var mantain = removeList.First();
-        //            foreach (var remove in removeList)
-        //                if (mantain != remove)
-        //                    newMethods.Remove(remove.method);
-        //        }
-        //    }
-
-        //    return new Result<Method>(newMethods);
-        //}
+        public void Insert(int index, IMember result)
+        {
+            this.all.Insert(index, result);
+        }
 
         public Result<Method> WithValidMethods()
         {

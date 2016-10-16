@@ -6,7 +6,7 @@ namespace SysCommand
     public interface IEvaluationStrategy
     {
         Action<IMember> OnInvoke { get; set; }
-        IEnumerable<CommandParseResult> Parse(string[] args, IEnumerable<CommandMap> maps, bool enableMultiAction);
-        EvaluateState Evaluate(string[] args, IEnumerable<CommandMap> maps, IEnumerable<CommandParseResult> result);
+        ParseResult Parse(string[] args, IEnumerable<CommandMap> maps, bool enableMultiAction);
+        EvaluateResult Evaluate(string[] args, IEnumerable<CommandMap> maps, ParseResult parseResult);
     }
 }

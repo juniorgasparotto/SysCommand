@@ -20,8 +20,8 @@ namespace SysCommand.Tests.UnitTests.Commands.T11
 
         public string Delete(int a)
         {
-            var cur = this.CurrentMethodResult();
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodResult()) + " Level" + cur.ActionMapped.Level;
+            var cur = this.CurrentMethodParse();
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse()) + " Level" + cur.ActionMapped.Level;
         }
 
         private string GetDebugName(ActionMap map, Method result)

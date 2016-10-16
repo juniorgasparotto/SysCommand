@@ -8,22 +8,22 @@ namespace SysCommand.ConsoleApp
 {
     public class DefaultEventListener : IEventListener
     {
-        public virtual void OnComplete(AppEventsArgs eventArgs)
+        public virtual void OnComplete(AppResult appResult)
         {
-            switch (eventArgs.State)
+            switch (appResult.EvaluateResult.State)
             {
                 case EvaluateState.Success:
-                    if (!eventArgs.App.Console.ExitCodeHasValue)
-                        eventArgs.App.Console.ExitCode = ExitCodeConstants.Success;
+                    if (!appResult.App.Console.ExitCodeHasValue)
+                        appResult.App.Console.ExitCode = ExitCodeConstants.Success;
 
                     break;
                 case EvaluateState.NotFound:
-                    eventArgs.App.Console.ExitCode = ExitCodeConstants.Error;
-                    this.ShowNotFound(eventArgs);
+                    appResult.App.Console.ExitCode = ExitCodeConstants.Error;
+                    this.ShowNotFound(appResult);
                     break;
                 case EvaluateState.HasError:
-                    eventArgs.App.Console.ExitCode = ExitCodeConstants.Error;
-                    this.ShowErrors(eventArgs);
+                    appResult.App.Console.ExitCode = ExitCodeConstants.Error;
+                    this.ShowErrors(appResult);
                     break;
                 //case EvaluateState.HasInvalidArgument:
                 //    eventArgs.App.Console.ExitCode = ExitCodeConstants.Error;
@@ -31,61 +31,66 @@ namespace SysCommand.ConsoleApp
             }
         }
 
-        public virtual void OnException(AppEventsArgs eventArgs, Exception ex)
+        public virtual void OnException(AppResult appResult, Exception ex)
         {
             throw ex;
         }
 
-        public virtual void OnBeforeMemberInvoke(AppEventsArgs eventArgs, IMember member)
+        public virtual void OnBeforeMemberInvoke(AppResult appResult, IMember member)
         {
             
         }
 
-        public virtual void OnAfterMemberInvoke(AppEventsArgs eventArgs, IMember member)
+        public virtual void OnAfterMemberInvoke(AppResult appResult, IMember member)
         {
 
         }
 
-        public virtual void OnPrint(AppEventsArgs eventArgs, IMember method)
+        public virtual void OnMemberPrint(AppResult appResult, IMember method)
         {
             if (method.Value != null)
             {
                 if (method.Value.GetType() != typeof(string) && typeof(IEnumerable).IsAssignableFrom(method.Value.GetType()))
                 {
                     foreach (var value in (IEnumerable)method.Value)
-                        eventArgs.App.Console.Write(value);
+                        appResult.App.Console.Write(value);
                 }
                 else
                 {
-                    eventArgs.App.Console.Write(method.Value);
+                    appResult.App.Console.Write(method.Value);
                 }
             }
         }
 
-        public virtual void ShowNotFound(AppEventsArgs eventArgs)
+        public virtual void ShowNotFound(AppResult appResult)
         {
-            eventArgs.App.Console.Error(Strings.NotFoundMessage, false);
+            appResult.App.Console.Error(Strings.NotFoundMessage, false);
         }
 
-        public virtual void ShowErrors(AppEventsArgs eventArgs)
+        public virtual void ShowErrors(AppResult appResult)
         {
-            var commandsInvalid = eventArgs.Result.Where(f => f.HasError);
-            var app = eventArgs.App;
+            var commandsInvalid = appResult.ParseResult.Levels.SelectMany(f=>f.Commands).Where(f => f.HasError);
+            var groupByCommand = commandsInvalid.GroupBy(f => f.Command);
+
+            var app = appResult.App;
+            var count = groupByCommand.Count();
 
             var iErr = 0;
-            var count = commandsInvalid.Count();
-            foreach (var command in commandsInvalid)
+            foreach (var group in groupByCommand)
             {
+                var propertiesInvalid = group.SelectMany(f => f.PropertiesInvalid);
+                var methodsInvalid = group.SelectMany(f => f.MethodsInvalid);
+
                 iErr++;
 
-                var header = string.Format("There are errors in command: {0}", command.Command.GetType().Name);
+                var header = string.Format("There are errors in command: {0}", group.Key.GetType().Name);
                 app.Console.Error(header);
 
-                var propertiesInvalid = command.Levels.SelectMany(f => f.PropertiesInvalid);
+                //var propertiesInvalid = command.PropertiesInvalid;
                 if (propertiesInvalid.Any())
                     this.ShowInvalidProperties(app, propertiesInvalid);
 
-                var methodsInvalid = command.Levels.SelectMany(f => f.MethodsInvalid);
+                //var methodsInvalid = command.MethodsInvalid;
                 if (methodsInvalid.Any())
                     this.ShowInvalidMethods(app, methodsInvalid);
 

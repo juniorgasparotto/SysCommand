@@ -23,7 +23,7 @@ namespace SysCommand.Tests.UnitTests.Commands.T13
 
         public string Save()
         {
-            var cur = this.CurrentMethodResult();
+            var cur = this.CurrentMethodParse();
             return GetDebugName(this.CurrentMethodMap(), cur);
         }
 
