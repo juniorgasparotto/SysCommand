@@ -69,7 +69,13 @@ namespace SysCommand.ConsoleApp
 
         public virtual void ShowErrors(AppResult appResult)
         {
-            var commandsInvalid = appResult.ParseResult.Levels.SelectMany(f=>f.Commands).Where(f => f.HasError);
+            var commandsInvalid = appResult
+                .ParseResult
+                .Levels
+                .Where(f => f.Commands.Empty(c => c.IsValid))
+                .SelectMany(f => f.Commands)
+                .Where(f => f.HasError);
+
             var groupByCommand = commandsInvalid.GroupBy(f => f.Command);
 
             var app = appResult.App;

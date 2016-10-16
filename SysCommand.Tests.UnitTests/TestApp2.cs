@@ -602,7 +602,9 @@ namespace SysCommand.Tests.UnitTests
             var app = new App(
                     commands: commands
                 );
+
             app.Console.Out = new StringWriter();
+
             var appResult = app.Run(args);
             var output = app.Console.Out.ToString();
 
@@ -618,62 +620,60 @@ namespace SysCommand.Tests.UnitTests
             test.ExpectedResult = output.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             test.Values = appResult.EvaluateResult.Result.Select(f => f.Source.GetType().Name + "." + f.Name + "=" + f.Value);
 
-            var commandsParse = appResult.ParseResult.Levels.SelectMany(f => f.Commands);
-            var groupCommandsParse = commandsParse.GroupBy(f => f.Command);
-
-            foreach (var group in groupCommandsParse)
+            foreach(var level in appResult.ParseResult.Levels)
             {
-                foreach(var cmd in group)
-                {
-                    test.MethodsValid.AddRange(cmd.Methods.Select(s => cmd.Command.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s.ActionMap)));
-                    test.MethodsInvalid.AddRange(cmd.MethodsInvalid.Select(s => cmd.Command.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s.ActionMap)));
-                    test.PropertiesValid.AddRange(cmd.Properties.Select(s => cmd.Command.GetType().Name + "." + s.Map.PropertyOrParameter.ToString()));
-                    test.PropertiesInvalid.AddRange(cmd.PropertiesInvalid.Select(s => cmd.Command.GetType().Name + "." + (s.Name ?? s.Value)));
+                var testLevel = new TestData.Level();
+                testLevel.LevelNumber = level.LevelNumber;
+                test.Levels.Add(testLevel);
+
+                testLevel.CommandsValid.AddRange(level.Commands.Where(f => f.IsValid).Select(f => f.Command.GetType().Name));
+                testLevel.CommandsWithError.AddRange(level.Commands.Where(f => f.HasError).Select(f => f.Command.GetType().Name));
+
+                foreach (var cmd in level.Commands)
+                { 
+                    testLevel.MethodsValid.AddRange(cmd.Methods.Select(s => cmd.Command.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s.ActionMap)));
+                    testLevel.MethodsInvalid.AddRange(cmd.MethodsInvalid.Select(s => cmd.Command.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s.ActionMap)));
+                    testLevel.PropertiesValid.AddRange(cmd.Properties.Select(s => cmd.Command.GetType().Name + "." + s.Map.PropertyOrParameter.ToString()));
+                    testLevel.PropertiesInvalid.AddRange(cmd.PropertiesInvalid.Select(s => cmd.Command.GetType().Name + "." + (s.Name ?? s.Value)));
                 }
             }
 
-            var commandsParsedValid = commandsParse.Where(f => f.IsValid).GroupBy(f=>f.Command);
-            var commandsParsedWithError = commandsParse.Where(f => f.HasError).GroupBy(f => f.Command);
-
-            test.CommandsValid.AddRange(commandsParsedValid.Select(f => f.Key.GetType().Name));
-            test.CommandsWithError.AddRange(commandsParsedWithError.Select(f => f.Key.GetType().Name));
-
             Assert.IsTrue(TestHelper.CompareObjects<TestApp2>(test, null, funcName));
-            //Assert.IsTrue(output == data.ExpectedResult);
-            //Assert.IsTrue(result.Result.GetAllValid().Count() == data.CountAllValid);
-            //Assert.IsTrue(result.Result.GetAllInvalid().Count() == data.CountAllInvalid);
-            //Assert.IsTrue(result.Result.GetAllWithError().Count() == data.CountAllWithError);
-            //Assert.IsTrue(result.Result.GetResult().Count == data.CountResult);
-            //Assert.IsTrue(result.Result.GetProperties().Count() == data.CountProperties);
-            //Assert.IsTrue(result.Result.GetPropertiesInvalid().Count() == data.CountPropertiesInvalid);
-            //Assert.IsTrue(result.Result.GetMethods().Count() == data.CountMethods);
-            //Assert.IsTrue(result.Result.GetMethodsInvalid().Count() == data.CountMethodsInvalid);
         }
 
         private class TestData
         {
+            public class Level
+            {
+                public int LevelNumber { get; internal set; }
+                public List<string> CommandsValid { get; set; }
+                public List<string> PropertiesValid { get; internal set; }
+                public List<string> MethodsValid { get; internal set; }
+                public List<string> CommandsWithError { get; set; }
+                public List<string> PropertiesInvalid { get; internal set; }
+                public List<string> MethodsInvalid { get; internal set; }
+
+                public Level()
+                {
+                    this.MethodsValid = new List<string>();
+                    this.MethodsInvalid = new List<string>();
+                    this.PropertiesValid = new List<string>();
+                    this.PropertiesInvalid = new List<string>();
+                    this.CommandsValid = new List<string>();
+                    this.CommandsWithError = new List<string>();
+                }
+            }
+
             public string Args { get; internal set; }
             public List<string> Members { get; internal set; }
             public IEnumerable<object> Values { get; internal set; }
             public string[] ExpectedResult { get; set; }
-            public List<string> CommandsValid { get; set; }
-            public List<string> CommandsWithError { get; set; }
-            public List<string> PropertiesValid { get; internal set; }
-            public List<string> PropertiesInvalid { get; internal set; }
-            public List<string> MethodsValid { get; internal set; }
-            public List<string> MethodsInvalid { get; internal set; }
-           
+            public List<Level> Levels { get; internal set; }
 
             public TestData()
             {
                 this.Members = new List<string>();
-                this.MethodsValid = new List<string>();
-                this.MethodsInvalid = new List<string>();
-                this.PropertiesValid = new List<string>();
-                this.PropertiesInvalid = new List<string>();
-                this.CommandsValid = new List<string>();
-                this.CommandsWithError = new List<string>();
-
+                this.Levels = new List<Level>();
             }
         }
 

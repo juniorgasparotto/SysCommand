@@ -10,16 +10,21 @@
     "There are errors in command: Command1",
     "Could not find an argument to the specified value: value-missing-map"
   ],
-  "CommandsValid": [],
-  "CommandsWithError": [
-    "Command1"
-  ],
-  "PropertiesValid": [],
-  "PropertiesInvalid": [
-    "Command1.value-missing-map"
-  ],
-  "MethodsValid": [
-    "Command1.save(Int32, Int32)"
-  ],
-  "MethodsInvalid": []
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32)"
+      ],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [
+        "Command1.value-missing-map"
+      ],
+      "MethodsInvalid": []
+    }
+  ]
 }

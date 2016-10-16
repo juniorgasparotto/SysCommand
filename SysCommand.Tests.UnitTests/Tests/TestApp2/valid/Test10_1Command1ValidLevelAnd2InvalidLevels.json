@@ -17,17 +17,45 @@
     "The argument '-a' is invalid",
     "The argument '-b' is invalid"
   ],
-  "CommandsValid": [],
-  "CommandsWithError": [
-    "Command1"
-  ],
-  "PropertiesValid": [],
-  "PropertiesInvalid": [],
-  "MethodsValid": [
-    "Command1.save(Int32, Int32, Int32)"
-  ],
-  "MethodsInvalid": [
-    "Command1.delete(Int32)",
-    "Command1.save(Int32, Int32)"
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": [
+        "Command1.delete(Int32)"
+      ]
+    },
+    {
+      "LevelNumber": 2,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": [
+        "Command1.save(Int32, Int32)"
+      ]
+    }
   ]
 }

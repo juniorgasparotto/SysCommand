@@ -17,16 +17,45 @@
     "Command1.save(Int32, Int32, Int32) Level1",
     "Command1.save(Int32, Int32, Int32) Level2"
   ],
-  "CommandsValid": [
-    "Command1"
-  ],
-  "CommandsWithError": [],
-  "PropertiesValid": [],
-  "PropertiesInvalid": [],
-  "MethodsValid": [
-    "Command1.save(Int32, Int32, Int32)",
-    "Command1.save(Int32, Int32, Int32)",
-    "Command1.save(Int32, Int32, Int32)"
-  ],
-  "MethodsInvalid": []
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 2,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
 }

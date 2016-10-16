@@ -13,16 +13,21 @@
   "ExpectedResult": [
     ""
   ],
-  "CommandsValid": [
-    "Command1"
-  ],
-  "CommandsWithError": [],
-  "PropertiesValid": [
-    "Command1.Int32 A",
-    "Command1.Int32 B",
-    "Command1.Int32 C"
-  ],
-  "PropertiesInvalid": [],
-  "MethodsValid": [],
-  "MethodsInvalid": []
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [
+        "Command1.Int32 A",
+        "Command1.Int32 B",
+        "Command1.Int32 C"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
 }

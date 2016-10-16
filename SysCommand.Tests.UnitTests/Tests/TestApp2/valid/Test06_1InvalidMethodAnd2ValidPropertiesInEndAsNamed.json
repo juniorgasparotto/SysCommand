@@ -13,17 +13,22 @@
     "The argument '-a' is invalid",
     "The argument '-b' is invalid"
   ],
-  "CommandsValid": [],
-  "CommandsWithError": [
-    "Command1"
-  ],
-  "PropertiesValid": [
-    "Command1.System.Decimal Price",
-    "Command1.Int32 Id"
-  ],
-  "PropertiesInvalid": [],
-  "MethodsValid": [],
-  "MethodsInvalid": [
-    "Command1.save(Int32, Int32)"
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [
+        "Command1.System.Decimal Price",
+        "Command1.Int32 Id"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": [
+        "Command1.save(Int32, Int32)"
+      ]
+    }
   ]
 }

@@ -19,7 +19,8 @@ namespace SysCommand.UnitTests
                 args = new string[0];
 
             var argsRaw = CommandParser.ParseArgumentsRaw(args, actionMaps);
-            var actionsMapped = CommandParser.ParseActionMapped(argsRaw, enableMultiAction, actionMaps);
+            IEnumerable<ArgumentRaw> initialExtraArguments;
+            var actionsMapped = CommandParser.ParseActionMapped(argsRaw, enableMultiAction, actionMaps, out initialExtraArguments);
             var objectTest = new { input, actionMaps, actionsMapped };
 
             var jsonSerializeConfig = TestHelper.GetJsonConfig();

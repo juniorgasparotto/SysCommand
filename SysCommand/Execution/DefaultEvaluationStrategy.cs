@@ -15,8 +15,8 @@ namespace SysCommand
             
             var allMethodsMaps = commandsMap.GetMethods();
             var argumentsRaw = CommandParser.ParseArgumentsRaw(args, allMethodsMaps);
-            var initialExtraArguments = new List<ArgumentRaw>();
-            var methodsParsed = CommandParser.ParseActionMapped(argumentsRaw, enableMultiAction, allMethodsMaps, initialExtraArguments).ToList();
+            IEnumerable<ArgumentRaw> initialExtraArguments;
+            var methodsParsed = CommandParser.ParseActionMapped(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
             
             if (initialExtraArguments.Any())
             {

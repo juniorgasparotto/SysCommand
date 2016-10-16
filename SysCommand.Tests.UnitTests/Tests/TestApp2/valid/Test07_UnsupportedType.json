@@ -8,14 +8,19 @@
     "There are errors in command: Command1",
     "The argument '--str' is unsupported"
   ],
-  "CommandsValid": [],
-  "CommandsWithError": [
-    "Command1"
-  ],
-  "PropertiesValid": [],
-  "PropertiesInvalid": [
-    "Command1.Str"
-  ],
-  "MethodsValid": [],
-  "MethodsInvalid": []
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [
+        "Command1.Str"
+      ],
+      "MethodsInvalid": []
+    }
+  ]
 }

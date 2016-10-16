@@ -11,14 +11,19 @@
   "ExpectedResult": [
     "Command1.save(Int32, Int32, Int32)"
   ],
-  "CommandsValid": [
-    "Command1"
-  ],
-  "CommandsWithError": [],
-  "PropertiesValid": [],
-  "PropertiesInvalid": [],
-  "MethodsValid": [
-    "Command1.save(Int32, Int32, Int32)"
-  ],
-  "MethodsInvalid": []
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
 }

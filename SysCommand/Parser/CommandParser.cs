@@ -524,10 +524,13 @@ namespace SysCommand.Parser
             }
         }
 
-        public static IEnumerable<ActionMapped> ParseActionMapped(IEnumerable<ArgumentRaw> argumentsRaw, bool enableMultiAction, IEnumerable<ActionMap> maps, List<ArgumentRaw> initialExtraArguments = null)
+        public static IEnumerable<ActionMapped> ParseActionMapped(IEnumerable<ArgumentRaw> argumentsRaw, bool enableMultiAction, IEnumerable<ActionMap> maps, out IEnumerable<ArgumentRaw> initialExtraArguments)
         {
             var actionsMapped = new List<ActionMapped>();
             var mapsDefaults = maps.Where(map => map.IsDefault);
+
+            var initialExtraArgumentsAux = new List<ArgumentRaw>();
+            initialExtraArguments = initialExtraArgumentsAux;
 
             // map the actions that are default if has default arguments
             if (argumentsRaw.Count() == 0)
@@ -558,6 +561,13 @@ namespace SysCommand.Parser
 
                     if (argRaw.Format == ArgumentFormat.Unnamed && founds.Count > 0 && continueSearchToNextAction)
                         argRawAction = argRaw;
+
+                    // consider initial args as LEVEL 0
+                    // $ --id 10 action 1
+                    // 1) "--id 10"  : LEVEL 0
+                    // 2) "action 1" : LEVEL 1
+                    if (index == 0 && initialExtraArgumentsAux.Any())
+                        index = 1;
 
                     if (argRawAction != null)
                     {
@@ -591,7 +601,7 @@ namespace SysCommand.Parser
                         }
                         else if(actionsMapped.Count == 0 && initialExtraArguments != null)
                         {
-                            initialExtraArguments.Add(argRaw);
+                            initialExtraArgumentsAux.Add(argRaw);
                         }
                     }
                     else if (defaultsCallers != null)

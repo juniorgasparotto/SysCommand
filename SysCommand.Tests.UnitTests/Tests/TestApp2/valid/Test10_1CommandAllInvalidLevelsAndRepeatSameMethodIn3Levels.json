@@ -19,16 +19,45 @@
     "Error in method: save(Int32, Int32)",
     "The argument '-b' is invalid"
   ],
-  "CommandsValid": [],
-  "CommandsWithError": [
-    "Command1"
-  ],
-  "PropertiesValid": [],
-  "PropertiesInvalid": [],
-  "MethodsValid": [],
-  "MethodsInvalid": [
-    "Command1.save(Int32, Int32)",
-    "Command1.save(Int32, Int32)",
-    "Command1.save(Int32, Int32)"
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": [
+        "Command1.save(Int32, Int32)"
+      ]
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": [
+        "Command1.save(Int32, Int32)"
+      ]
+    },
+    {
+      "LevelNumber": 2,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": [
+        "Command1.save(Int32, Int32)"
+      ]
+    }
   ]
 }

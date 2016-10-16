@@ -13,17 +13,22 @@
     "The argument '-c' is invalid",
     "The argument '--arg-not-found' does not exist"
   ],
-  "CommandsValid": [],
-  "CommandsWithError": [
-    "Command1"
-  ],
-  "PropertiesValid": [],
-  "PropertiesInvalid": [
-    "Command1.A",
-    "Command1.B",
-    "Command1.C",
-    "Command1.arg-not-found"
-  ],
-  "MethodsValid": [],
-  "MethodsInvalid": []
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [
+        "Command1.A",
+        "Command1.B",
+        "Command1.C",
+        "Command1.arg-not-found"
+      ],
+      "MethodsInvalid": []
+    }
+  ]
 }
