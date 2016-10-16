@@ -455,6 +455,21 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
+        public void Test10_1CommandAllValidLevelsAnd2ValidPropertiesInBeginAndEnd3()
+        {
+            /*
+            * 1 command com 3 niveis cada os 3 validos
+            */
+
+            this.Compare(
+                args: "--price -1.99 --price -1.99 save 1 2 3 --price -1.99 delete 4 --price -1.99 --price -1.99 save 5 6 --id 10 --price -1.99",
+                commands: GetCmds(new Commands.T10.Command1()),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
         public void Test10_1CommandAllValidLevelsAndRepeatSameMethodIn3Levels()
         {
             /*
