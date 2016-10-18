@@ -7,8 +7,9 @@ namespace SysCommand
 {
     public class EvaluateResult
     {
-        public Result<IMember> Result { get; internal set; }
-        public EvaluateState State { get; internal set; }
+        public Result<IMember> Result { get; set; }
+        public IEnumerable<CommandError> Errors { get; set; }
+        public EvaluateState State { get; set; }
 
         public EvaluateResult()
         {

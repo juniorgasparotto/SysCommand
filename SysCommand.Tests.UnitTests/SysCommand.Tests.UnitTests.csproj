@@ -75,6 +75,9 @@
     <Compile Include="Commands\T01\Command1.cs" />
     <Compile Include="Commands\T02\Command1.cs" />
     <Compile Include="Commands\T03\Command1.cs" />
+    <Compile Include="Commands\T18\Command1.cs" />
+    <Compile Include="Commands\T18\Command2.cs" />
+    <Compile Include="Commands\T18\Command3.cs" />
     <Compile Include="Commands\T17\Command1.cs" />
     <Compile Include="Commands\T17\Command2.cs" />
     <Compile Include="Commands\T17\Command3.cs" />

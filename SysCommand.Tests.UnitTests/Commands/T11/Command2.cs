@@ -29,7 +29,7 @@ namespace SysCommand.Tests.UnitTests.Commands.T11
             if (map != result.ActionMapped.ActionMap)
                 throw new Exception("There are errors in one of the methods: GetCurrentMethodMap() or GetCurrentMethodResult()");
 
-            var specification = DefaultEventListener.GetMethodSpecification(map);
+            var specification = App.MessageOutput.GetMethodSpecification(map);
             return this.GetType().Name + "." + specification;
         }
     }

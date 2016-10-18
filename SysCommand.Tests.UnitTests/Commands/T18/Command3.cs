@@ -4,21 +4,17 @@ using System.Collections.Generic;
 using SysCommand.ConsoleApp;
 using SysCommand.Parser;
 
-namespace SysCommand.Tests.UnitTests.Commands.T12
+namespace SysCommand.Tests.UnitTests.Commands.T18
 {
-    public class Command1 : Command
+    public class Command3 : Command
     {
-        public Command1()
+        public decimal Price { get; set; }
+        public void Main()
         {
-            this.EnablePositionalArgs = true;
+            App.Console.Write("Price=" + Price);
         }
 
-        public string Main()
-        {
-            return this.GetType().Name + string.Format(".Main()");
-        }
-
-        public string Save()
+        public string Save(int? a = null)
         {
             var cur = this.CurrentMethodParse();
             return GetDebugName(this.CurrentMethodMap(), cur);

@@ -10,27 +10,35 @@ namespace SysCommand.ConsoleApp
     {
         public static bool IsDebug { get { return System.Diagnostics.Debugger.IsAttached; } }
 
-        public delegate void AppRunExceptionHandler(AppResult args, Exception ex);
-        public delegate void AppRunCompleteHandler(AppResult args);
-        public delegate void AppRunOnBeforeMemberInvokeHandler(AppResult args, IMember member);
-        public delegate void AppRunOnAfterMemberInvokeHandler(AppResult args, IMember member);
-        public delegate void AppRunOnPrintHandler(AppResult args, IMember member);
-
         private AppRunCompleteHandler onComplete;
         private AppRunExceptionHandler onException;
         private AppRunOnBeforeMemberInvokeHandler onBeforeMemberInvoke;
         private AppRunOnAfterMemberInvokeHandler onAfterMemberInvoke;
-        private AppRunOnPrintHandler onMemberPrint;
+        private AppRunOnMethodReturnHandler onMethodReturn;
 
         private bool enableMultiAction;
         private IMapper mapper;
         private IEvaluationStrategy evaluationStrategy;
+        private IMessageOutput messageOutput;
 
-        public string[] Args { get; private set; }
-        public string[] ArgsOriginal { get; private set; }
-        public IEnumerable<CommandMap> Maps { get; private set; }
-        public ConsoleWrapper Console { get; set; }
         public bool ReadArgsWhenIsDebug { get; set; }
+        public IEnumerable<CommandMap> Maps { get; private set; }
+
+        public ConsoleWrapper Console { get; set; }
+        public IMessageOutput MessageOutput
+        {
+            get
+            {
+                return messageOutput ?? new MessageOutput();
+            }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("This property can't be null.");
+
+                messageOutput = value;
+            }
+        }
 
         public App(
             IEnumerable<Command> commands = null,
@@ -70,7 +78,7 @@ namespace SysCommand.ConsoleApp
             this.onException = listener.OnException;
             this.onAfterMemberInvoke = listener.OnAfterMemberInvoke;
             this.onBeforeMemberInvoke = listener.OnBeforeMemberInvoke;
-            this.onMemberPrint = listener.OnMemberPrint;
+            this.onMethodReturn = listener.OnMethodReturn;
 
             // mapping
             this.Maps = this.mapper.CreateMap(commands).ToList();
@@ -100,9 +108,9 @@ namespace SysCommand.ConsoleApp
             return this;
         }
 
-        public App OnMemberPrint(AppRunOnPrintHandler onMemberPrint)
+        public App OnMethotReturn(AppRunOnMethodReturnHandler onMethodReturn)
         {
-            this.onMemberPrint = onMemberPrint;
+            this.onMethodReturn = onMethodReturn;
             return this;
         }
 
@@ -121,23 +129,21 @@ namespace SysCommand.ConsoleApp
             var appResult = new AppResult();
             appResult.App = this;
             appResult.Args = args;
+            appResult.ArgsOriginal = args;
 
             try
             {
-                this.Args = args;
-                this.ArgsOriginal = args;
-                
                 var userMaps = this.Maps.ToList();
 
                 // system feature: "manage args history"
                 var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
                 if (manageCommand != null)
                 {
-                    var evaluator = new Evaluator(this.Args, manageCommand, false, this.evaluationStrategy);
+                    var evaluator = new Evaluator(appResult.Args, manageCommand, false, this.evaluationStrategy);
                     //this.Result.AddRange(evaluator.Eval().Result);
                     var newArgs = evaluator.Evaluate().Result.GetValue<string[]>();
                     if (newArgs != null)
-                        this.Args = newArgs;
+                        appResult.Args = newArgs;
 
                     userMaps.Remove(manageCommand);
                 }
@@ -160,7 +166,7 @@ namespace SysCommand.ConsoleApp
                 //}
 
                 // execute user properties and methods
-                var evaluator2 = new Evaluator(this.Args, userMaps, this.enableMultiAction, this.evaluationStrategy)
+                var evaluator2 = new Evaluator(appResult.Args, userMaps, this.enableMultiAction, this.evaluationStrategy)
                     .OnInvoke(member => this.MemberInvoke(appResult, member));
 
                 appResult.ParseResult = evaluator2.ParseResult;
@@ -190,7 +196,6 @@ namespace SysCommand.ConsoleApp
                 if (!member.IsInvoked)
                 {
                     member.Invoke();
-
                     if (this.onAfterMemberInvoke != null)
                         this.onAfterMemberInvoke(args, member);
                 }
@@ -203,7 +208,9 @@ namespace SysCommand.ConsoleApp
                 method = ((MethodMain)member).MethodInfo;
 
             if (method != null && method.ReturnType != typeof(void) && member.Value != null)
-                this.onMemberPrint(args, member);
+            {
+                this.onMethodReturn(args, member);
+            }
         }
 
         private string[] GetArguments()

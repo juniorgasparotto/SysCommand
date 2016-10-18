@@ -10,6 +10,7 @@ namespace SysCommand.ConsoleApp
     {
         public App App { get; internal set; }
         public string[] Args { get; internal set; }
+        public string[] ArgsOriginal { get; internal set; }
         public ParseResult ParseResult { get; internal set; }
         public EvaluateResult EvaluateResult { get; internal set; }
         internal AppResult() { }

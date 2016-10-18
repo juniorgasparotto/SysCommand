@@ -1,10 +1,7 @@
 ﻿using SysCommand.Parser;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand
 {
     public class CommandError
     {

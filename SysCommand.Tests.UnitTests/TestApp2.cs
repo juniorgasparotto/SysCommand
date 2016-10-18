@@ -804,6 +804,46 @@ namespace SysCommand.Tests.UnitTests
             );
         }
 
+        [TestMethod]
+        public void Test17_NotFound()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            * THIS METHOD IS PENDING SUCCESS
+            */
+
+            this.Compare(
+                args: "save2 save2",
+                commands: GetCmds(
+                    new Commands.T17.Command1(),
+                    new Commands.T17.Command2(),
+                    new Commands.T17.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test18_NotFound()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            * THIS METHOD IS PENDING SUCCESS
+            */
+
+            this.Compare(
+                args: "save2 save2",
+                commands: GetCmds(
+                    new Commands.T18.Command1(),
+                    new Commands.T18.Command2(),
+                    new Commands.T18.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
         private void Compare(string args, Command[] commands, TestData data, string funcName)
         {
             var app = new App(
@@ -821,7 +861,7 @@ namespace SysCommand.Tests.UnitTests
             foreach(var cmd in commands)
             { 
                 test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Properties.Select(s => s.Source.GetType().Name + "." + s.PropertyOrParameter.ToString() + (s.IsOptional ? "" : " (obrigatory)") + (cmd.EnablePositionalArgs ? "" : " (NOT accept positional)"))));
-                test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Methods.Select(s => s.Source.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s))));
+                test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Methods.Select(s => s.Source.GetType().Name + "." + app.MessageOutput.GetMethodSpecification(s))));
             }
 
             test.ExpectedResult = output.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
@@ -838,8 +878,8 @@ namespace SysCommand.Tests.UnitTests
 
                 foreach (var cmd in level.Commands)
                 { 
-                    testLevel.MethodsValid.AddRange(cmd.Methods.Select(s => cmd.Command.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s.ActionMap)));
-                    testLevel.MethodsInvalid.AddRange(cmd.MethodsInvalid.Select(s => cmd.Command.GetType().Name + "." + DefaultEventListener.GetMethodSpecification(s.ActionMap)));
+                    testLevel.MethodsValid.AddRange(cmd.Methods.Select(s => cmd.Command.GetType().Name + "." + app.MessageOutput.GetMethodSpecification(s.ActionMap)));
+                    testLevel.MethodsInvalid.AddRange(cmd.MethodsInvalid.Select(s => cmd.Command.GetType().Name + "." + app.MessageOutput.GetMethodSpecification(s.ActionMap)));
                     testLevel.PropertiesValid.AddRange(cmd.Properties.Select(s => cmd.Command.GetType().Name + "." + s.Map.PropertyOrParameter.ToString()));
                     testLevel.PropertiesInvalid.AddRange(cmd.PropertiesInvalid.Select(s => cmd.Command.GetType().Name + "." + (s.Name ?? s.Value)));
                 }

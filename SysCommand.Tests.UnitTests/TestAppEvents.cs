@@ -34,7 +34,7 @@ namespace SysCommand.Tests.UnitTests
                 eventArgs.App.Console.Write(string.Format("OnAfterMemberInvoke: {0}: {1}", member.Name, member.Value));
             }
 
-            public void OnMemberPrint(AppResult eventArgs, IMember method)
+            public void OnMethodReturn(AppResult eventArgs, IMember method)
             {
                 eventArgs.App.Console.Write(string.Format("OnPrint: {0}: {1}", method.Name, method.Value));
             }
@@ -75,7 +75,7 @@ OnException: Exception!!";
             .OnException((args, ex) => args.App.Console.Write(string.Format("ActionsOnException: {0}", ex.Message)))
             .OnBeforeMemberInvoke((args, member) => args.App.Console.Write(string.Format("ActionsOnBeforeMemberInvoke: {0}: {1}", member.Name, member.Value)))
             .OnAfterMemberInvoke((args, member) => args.App.Console.Write(string.Format("ActionsOnAfterMemberInvoke: {0}: {1}", member.Name, member.Value)))
-            .OnMemberPrint((args, member) => args.App.Console.Write(string.Format("ActionsOnPrint: {0}: {1}", member.Name, member.Value)));
+            .OnMethotReturn((args, member) => args.App.Console.Write(string.Format("ActionsOnPrint: {0}: {1}", member.Name, member.Value)));
 
             app.Console.Out = new StringWriter();
             app.Run("-a Y");

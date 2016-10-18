@@ -136,10 +136,79 @@ namespace SysCommand
             }
             else
             {
-                evaluateResult.State = EvaluateState.HasError;
+                var errors = this.CreateErrors(parseResult);
+                evaluateResult.Errors = errors;
+
+                var hasMethodsInvalid = false;
+                var hasMethodsValid = false;
+                var hasPropertyValid = false;
+                bool? allPropertiesNotExists = null;
+
+                foreach (var level in parseResult.Levels)
+                {
+                    foreach (var cmd in level.Commands)
+                    {
+                        if (cmd.Methods.Any())
+                            hasMethodsValid = true;
+                        if (cmd.MethodsInvalid.Any())
+                            hasMethodsInvalid = true;
+                        if (cmd.Properties.Any())
+                            hasPropertyValid = true;
+
+                        var continueTrue = allPropertiesNotExists == null || allPropertiesNotExists == true;
+                        if (continueTrue && cmd.PropertiesInvalid.All(f => f.MappingType == ArgumentMappingType.NotMapped))
+                            allPropertiesNotExists = true;
+                        else
+                            allPropertiesNotExists = false;
+                    }
+                }
+
+                var hasMember = hasMethodsValid || hasMethodsInvalid || hasPropertyValid;
+
+                if (!hasMember && allPropertiesNotExists == true)
+                    evaluateResult.State = EvaluateState.NotFound;
+                else
+                    evaluateResult.State = EvaluateState.HasError;
             }
 
             return evaluateResult;
+        }
+
+        private bool HasAnyMember(ParseResult parseResult)
+        {
+            foreach (var level in parseResult.Levels)
+            {
+                foreach (var cmd in level.Commands)
+                    if (cmd.Methods.Any() || cmd.MethodsInvalid.Any()
+                        || cmd.Properties.Any() || cmd.PropertiesInvalid.Any())
+                        return true;
+            }
+
+            return false;
+        }
+
+        private List<CommandError> CreateErrors(ParseResult parseResult)
+        {
+            var levelsInvalid = 
+                parseResult
+               .Levels
+               .Where(f => f.Commands.Empty(c => c.IsValid) || f.Commands.Any(c => c.HasAnyArgumentRequired));
+
+            var commandsInvalids = levelsInvalid.SelectMany(f => f.Commands.Where(c => c.HasError));
+            var groupsCommands = commandsInvalids.GroupBy(f => f.Command);
+
+            var commandsErrors = new List<CommandError>();
+            foreach (var groupCommand in groupsCommands)
+            {
+                var commandError = new CommandError();
+                commandError.Command = groupCommand.Key;
+                commandError.Methods.AddRange(groupCommand.SelectMany(f => f.MethodsInvalid));
+                commandError.Properties.AddRange(groupCommand.SelectMany(f => f.PropertiesInvalid));
+
+                commandsErrors.Add(commandError);
+            }
+
+            return commandsErrors;
         }
 
         private ActionMapped GetBestMethod(IEnumerable<ActionMapped> methods, out bool isBestMethodButHasError)

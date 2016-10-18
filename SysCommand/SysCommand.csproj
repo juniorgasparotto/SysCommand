@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandError.cs" />
     <Compile Include="EvaluateScope.cs" />
     <Compile Include="__deleteds\CommandParseLevelResult.cs" />
     <Compile Include="__deleteds\CommandParse.cs" />
