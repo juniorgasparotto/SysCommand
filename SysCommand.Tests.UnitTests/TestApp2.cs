@@ -844,6 +844,25 @@ namespace SysCommand.Tests.UnitTests
             );
         }
 
+        [TestMethod]
+        public void Test19_NotFoundAndEmptyMethodsAndProperties()
+        {
+            /*
+            * 3 command com 3 niveis cada 1 valido e 2 invalidos
+            * THIS METHOD IS PENDING SUCCESS
+            */
+
+            this.Compare(
+                args: "--id 1",
+                commands: GetCmds(
+                    new Commands.T19.Command1(),
+                    new Commands.T19.Command2()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
+
         private void Compare(string args, Command[] commands, TestData data, string funcName)
         {
             var app = new App(
