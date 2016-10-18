@@ -767,11 +767,6 @@ namespace SysCommand.Tests.UnitTests
         [TestMethod]
         public void Test16_3Commands2EmptyAmd1With1PropertyRequired2()
         {
-            /*
-            * 3 command com 3 niveis cada 1 valido e 2 invalidos
-            * THIS METHOD IS PENDING SUCCESS
-            */
-
             this.Compare(
                 args: "--price a",
                 commands: GetCmds(
@@ -787,11 +782,6 @@ namespace SysCommand.Tests.UnitTests
         [TestMethod]
         public void Test17_3Commands3LevelsWith1PropertyRequired()
         {
-            /*
-            * 3 command com 3 niveis cada 1 valido e 2 invalidos
-            * THIS METHOD IS PENDING SUCCESS
-            */
-
             this.Compare(
                 args: "save save",
                 commands: GetCmds(
@@ -807,11 +797,6 @@ namespace SysCommand.Tests.UnitTests
         [TestMethod]
         public void Test17_NotFound()
         {
-            /*
-            * 3 command com 3 niveis cada 1 valido e 2 invalidos
-            * THIS METHOD IS PENDING SUCCESS
-            */
-
             this.Compare(
                 args: "save2 save2",
                 commands: GetCmds(
@@ -827,11 +812,6 @@ namespace SysCommand.Tests.UnitTests
         [TestMethod]
         public void Test18_NotFound()
         {
-            /*
-            * 3 command com 3 niveis cada 1 valido e 2 invalidos
-            * THIS METHOD IS PENDING SUCCESS
-            */
-
             this.Compare(
                 args: "save2 save2",
                 commands: GetCmds(
@@ -847,11 +827,6 @@ namespace SysCommand.Tests.UnitTests
         [TestMethod]
         public void Test19_NotFoundAndEmptyMethodsAndProperties()
         {
-            /*
-            * 3 command com 3 niveis cada 1 valido e 2 invalidos
-            * THIS METHOD IS PENDING SUCCESS
-            */
-
             this.Compare(
                 args: "--id 1",
                 commands: GetCmds(
