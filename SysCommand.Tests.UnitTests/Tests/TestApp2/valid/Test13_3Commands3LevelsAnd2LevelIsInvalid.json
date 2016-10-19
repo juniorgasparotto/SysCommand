@@ -1,5 +1,5 @@
 {
-  "Args": "--id 1 delete --price 99 save --id 99",
+  "Args": "--id 1 delete --price 99 save",
   "Members": [
     "Command1.System.Decimal Price",
     "Command1.Int32 Id",
@@ -25,23 +25,24 @@
       ],
       "PropertiesValid": [
         "Command1.Int32 Id",
-        "Command2.Int32 Id"
+        "Command1.System.Decimal Price",
+        "Command2.Int32 Id",
+        "Command2.System.Decimal Price"
       ],
       "MethodsValid": [],
       "CommandsWithError": [
         "Command3"
       ],
       "PropertiesInvalid": [
-        "Command3.id"
+        "Command3.id",
+        "Command3.price"
       ],
       "MethodsInvalid": []
     },
     {
       "LevelNumber": 1,
       "CommandsValid": [],
-      "PropertiesValid": [
-        "Command2.System.Decimal Price"
-      ],
+      "PropertiesValid": [],
       "MethodsValid": [],
       "CommandsWithError": [
         "Command2"
@@ -56,9 +57,7 @@
       "CommandsValid": [
         "Command1"
       ],
-      "PropertiesValid": [
-        "Command1.Int32 Id"
-      ],
+      "PropertiesValid": [],
       "MethodsValid": [
         "Command1.save()"
       ],

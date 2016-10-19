@@ -1,43 +1,48 @@
 {
-  "Args": "--price -10.9999 save 1 --id 10 3 --id 20 --price -0.99",
+  "Args": "--id 1 save --id=2 3",
   "Members": [
-    "Command1.System.Decimal Price",
-    "Command1.Int32 Id",
-    "Command1.save(Int32, Int32, Int32)",
-    "Command1.save(Int32, Int32)"
+    "Command1.save(String, String)",
+    "Command2.Int32 Id (NOT accept positional)",
+    "Command2.save(String)"
   ],
   "Values": [],
   "ExpectedResult": [
     "There are errors in command: Command1",
-    "The argument '--id' has already been set",
-    "The argument '--price' has already been set"
+    "The argument '--id' does not exist",
+    "Could not find an argument to the specified value: 3",
+    "",
+    "There are errors in command: Command2",
+    "Could not find an argument to the specified value: 3"
   ],
   "Levels": [
     {
       "LevelNumber": 0,
       "CommandsValid": [],
       "PropertiesValid": [
-        "Command1.System.Decimal Price",
-        "Command1.Int32 Id"
+        "Command2.Int32 Id"
       ],
       "MethodsValid": [],
       "CommandsWithError": [
-        "Command1"
+        "Command1",
+        "Command2"
       ],
       "PropertiesInvalid": [
         "Command1.id",
-        "Command1.price"
+        "Command1.3",
+        "Command2.3"
       ],
       "MethodsInvalid": []
     },
     {
       "LevelNumber": 1,
       "CommandsValid": [
-        "Command1"
+        "Command1",
+        "Command2"
       ],
       "PropertiesValid": [],
       "MethodsValid": [
-        "Command1.save(Int32, Int32)"
+        "Command1.save(String, String)",
+        "Command2.save(String)"
       ],
       "CommandsWithError": [],
       "PropertiesInvalid": [],

@@ -73,6 +73,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Commands\T00\Command1.cs" />
+    <Compile Include="Commands\T23\Command1.cs" />
+    <Compile Include="Commands\T23\Command2.cs" />
     <Compile Include="Commands\T22\Command1.cs" />
     <Compile Include="Commands\T22\Command2.cs" />
     <Compile Include="Commands\T22\Command3.cs" />

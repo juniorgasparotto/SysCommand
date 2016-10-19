@@ -1,15 +1,17 @@
 {
-  "Args": "save 1 2 value-missing-map",
+  "Args": "save 1 2",
   "Members": [
-    "Command1.System.String Description (obrigatory) (NOT accept positional)",
-    "Command1.save(Int32, Int32, Int32)",
-    "Command1.save(Int32, Int32)"
+    "Command1.save(String, String)",
+    "Command2.Int32 Id (NOT accept positional)",
+    "Command2.save(String)"
   ],
   "Values": [],
   "ExpectedResult": [
     "There are errors in command: Command1",
-    "Could not find an argument to the specified value: value-missing-map",
-    "The argument '--description' is required"
+    "Could not find an argument to the specified value: 2",
+    "",
+    "There are errors in command: Command2",
+    "Could not find an argument to the specified value: 2"
   ],
   "Levels": [
     {
@@ -18,22 +20,25 @@
       "PropertiesValid": [],
       "MethodsValid": [],
       "CommandsWithError": [
-        "Command1"
+        "Command1",
+        "Command2"
       ],
       "PropertiesInvalid": [
-        "Command1.value-missing-map",
-        "Command1.Description"
+        "Command1.2",
+        "Command2.2"
       ],
       "MethodsInvalid": []
     },
     {
       "LevelNumber": 1,
       "CommandsValid": [
-        "Command1"
+        "Command1",
+        "Command2"
       ],
       "PropertiesValid": [],
       "MethodsValid": [
-        "Command1.save(Int32, Int32)"
+        "Command1.save(String, String)",
+        "Command2.save(String)"
       ],
       "CommandsWithError": [],
       "PropertiesInvalid": [],

@@ -23,7 +23,8 @@
         "Command1"
       ],
       "PropertiesValid": [
-        "Command1.System.Decimal Price"
+        "Command1.System.Decimal Price",
+        "Command1.Int32 Id"
       ],
       "MethodsValid": [],
       "CommandsWithError": [],
@@ -35,9 +36,7 @@
       "CommandsValid": [
         "Command1"
       ],
-      "PropertiesValid": [
-        "Command1.Int32 Id"
-      ],
+      "PropertiesValid": [],
       "MethodsValid": [
         "Command1.save(Int32, Int32)"
       ],

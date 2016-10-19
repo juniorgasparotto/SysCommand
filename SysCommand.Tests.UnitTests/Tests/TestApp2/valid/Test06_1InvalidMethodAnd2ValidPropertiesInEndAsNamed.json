@@ -16,11 +16,22 @@
   "Levels": [
     {
       "LevelNumber": 0,
-      "CommandsValid": [],
+      "CommandsValid": [
+        "Command1"
+      ],
       "PropertiesValid": [
         "Command1.System.Decimal Price",
         "Command1.Int32 Id"
       ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [],
+      "PropertiesValid": [],
       "MethodsValid": [],
       "CommandsWithError": [
         "Command1"

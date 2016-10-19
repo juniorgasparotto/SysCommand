@@ -1002,6 +1002,34 @@ namespace SysCommand.Tests.UnitTests
             );
         }
 
+        [TestMethod]
+        public void Test23_3CommandsAndHave2PropertiesTheOtherCommandInLevel2()
+        {
+            this.Compare(
+                    args: "save 1 2",
+                    commands: GetCmds(
+                        new Commands.T23.Command1(),
+                        new Commands.T23.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test23_3CommandsAndHave2PropertiesTheOtherCommandInLevel3()
+        {
+            this.Compare(
+                    args: "--id 1 save --id=2 3",
+                    commands: GetCmds(
+                        new Commands.T23.Command1(),
+                        new Commands.T23.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
         //[TestMethod]
         //public void TestHelpAllMembers()
         //{

@@ -9,38 +9,38 @@
   "Values": [],
   "ExpectedResult": [
     "There are errors in command: Command1",
-    "The argument '--id' has already been set"
+    "The argument '--id' has already been set",
+    "The argument '--price' has already been set"
   ],
   "Levels": [
     {
       "LevelNumber": 0,
-      "CommandsValid": [
-        "Command1"
-      ],
-      "PropertiesValid": [
-        "Command1.System.Decimal Price"
-      ],
-      "MethodsValid": [],
-      "CommandsWithError": [],
-      "PropertiesInvalid": [],
-      "MethodsInvalid": []
-    },
-    {
-      "LevelNumber": 1,
       "CommandsValid": [],
       "PropertiesValid": [
-        "Command1.Int32 Id",
-        "Command1.System.Decimal Price"
+        "Command1.System.Decimal Price",
+        "Command1.Int32 Id"
       ],
-      "MethodsValid": [
-        "Command1.save(Int32, Int32)"
-      ],
+      "MethodsValid": [],
       "CommandsWithError": [
         "Command1"
       ],
       "PropertiesInvalid": [
-        "Command1.id"
+        "Command1.id",
+        "Command1.price"
       ],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
       "MethodsInvalid": []
     }
   ]
