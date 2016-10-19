@@ -1,0 +1,96 @@
+{
+  "Args": "--id 1 delete 2 --price 99 save delete 4 5",
+  "Members": [
+    "Command1.System.Decimal Price",
+    "Command1.Int32 Id",
+    "Command1.save(Nullable<Int32>)",
+    "Command1.delete(Int32)",
+    "Command1.delete(Int32, Int32)",
+    "Command2.System.Decimal Price",
+    "Command2.Int32 Id",
+    "Command2.delete(Int32)",
+    "Command2.delete(Int32, Int32)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "The argument '--price' has already been set",
+    "",
+    "There are errors in command: Command2",
+    "The argument '--price' has already been set",
+    "",
+    "There are errors in command: Command3",
+    "The argument '--id' does not exist",
+    "The argument '--price' does not exist",
+    "The argument '--price' does not exist"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [
+        "Command1.Int32 Id",
+        "Command1.System.Decimal Price",
+        "Command2.Int32 Id",
+        "Command2.System.Decimal Price"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1",
+        "Command2",
+        "Command3"
+      ],
+      "PropertiesInvalid": [
+        "Command1.price",
+        "Command2.price",
+        "Command3.id",
+        "Command3.price",
+        "Command3.price"
+      ],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1",
+        "Command2"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.delete(Int32)",
+        "Command2.delete(Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 2,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Nullable<Int32>)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 3,
+      "CommandsValid": [
+        "Command1",
+        "Command2"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.delete(Int32, Int32)",
+        "Command2.delete(Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

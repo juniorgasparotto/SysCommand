@@ -4,7 +4,7 @@
 	OBS: O método Main() não pode ser definido como Action, gera exception
 	
 	Main();
-	
+		
 1) Eu quero que o método Main() não seja executado caso exista outro método Main que tenha parametros e esteja válido para ser executado
 
 	Main(string parameter1)

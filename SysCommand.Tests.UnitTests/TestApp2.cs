@@ -17,6 +17,45 @@ namespace SysCommand.Tests.UnitTests
             TestHelper.SetCultureInfoToInvariant();
         }
 
+
+        [TestMethod]
+        public void Test00_ExceptionZeroCommandsAndGet()
+        {
+            try
+            {
+                this.Compare(
+                    args: "",
+                    commands: GetCmds(
+                        new Command[0]
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+                );
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message == "No command found");
+            }
+        }
+
+        [TestMethod]
+        public void Test00_ExceptionCommandsAttachedInOtherApp()
+        {
+            try
+            {
+                var commands = new Command[1] { new Commands.T00.Command1() };
+                var app = new App(commands: commands);
+                var app2 = new App(commands: commands);
+
+                app.Run("");
+                app2.Run("");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message == "The command '"+ typeof(Commands.T00.Command1).FullName + "' already attached to another application.");
+            }
+        }
+
         [TestMethod]
         public void Test01_ChoosedByAllValidsAndHaveMajorityAsMappedButInputIsInvalid()
         {
@@ -440,14 +479,14 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test10_1CommandAllValidLevelsAnd2ValidPropertiesInBeginAndEnd2()
+        public void Test10_1CommandAllValidLevelsAnd2ValidPropertiesInMiddleAndEnd()
         {
             /*
             * 1 command com 3 niveis cada os 3 validos
             */
 
             this.Compare(
-                args: "--price -1.99 save 1 2 3 --price -1.99 delete 4 --price -1.99 save 5 6 --id 10 --price -1.99",
+                args: "save 1 2 3 delete 4 --price -1.99 save 5 6 --id 10",
                 commands: GetCmds(new Commands.T10.Command1()),
                 funcName: TestHelper.GetCurrentMethodName(),
                 data: null
@@ -462,7 +501,7 @@ namespace SysCommand.Tests.UnitTests
             */
 
             this.Compare(
-                args: "--price -1.99 --price -1.99 save 1 2 3 --price -1.99 delete 4 --price -1.99 --price -1.99 save 5 6 --id 10 --price -1.99",
+                args: "--price 1 save 1 2 3 delete 4 save 5 6 --id 10",
                 commands: GetCmds(new Commands.T10.Command1()),
                 funcName: TestHelper.GetCurrentMethodName(),
                 data: null
@@ -600,7 +639,7 @@ namespace SysCommand.Tests.UnitTests
             */
 
             this.Compare(
-                args: "--id 1 delete --price 99 save --id 99",
+                args: "--id 1 delete --price 99 save",
                 commands: GetCmds(
                     new Commands.T13.Command1(),
                     new Commands.T13.Command2(),
@@ -795,6 +834,19 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
+        public void Test17_RequiredNoArgsAnd1CommandWith1PropertyObrigatory()
+        {
+            this.Compare(
+                    args: "",
+                    commands: GetCmds(
+                        new Commands.T17.Command1()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
         public void Test17_NotFound()
         {
             this.Compare(
@@ -823,6 +875,21 @@ namespace SysCommand.Tests.UnitTests
                 data: null
             );
         }
+        
+        [TestMethod]
+        public void Test18_NotFound3CommandsButWithoutInput()
+        {
+            this.Compare(
+                args: "",
+                commands: GetCmds(
+                    new Commands.T18.Command1(),
+                    new Commands.T18.Command2(),
+                    new Commands.T18.Command3()
+                ),
+                funcName: TestHelper.GetCurrentMethodName(),
+                data: null
+            );
+        }
 
         [TestMethod]
         public void Test19_NotFoundAndEmptyMethodsAndProperties()
@@ -837,6 +904,148 @@ namespace SysCommand.Tests.UnitTests
                 data: null
             );
         }
+
+        [TestMethod]
+        public void Test20_NotFoundNoArgsAndEmptyCommand()
+        {
+            this.Compare(
+                    args: "",
+                    commands: GetCmds(
+                        new Commands.T20.Command1()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test20_NotFound1ArgsAndEmptyCommand()
+        {
+            this.Compare(
+                    args: "value",
+                    commands: GetCmds(
+                        new Commands.T20.Command1()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test20_NotFound1ArgsAndCommandWith1PropertyOnly()
+        {
+            this.Compare(
+                    args: "value",
+                    commands: GetCmds(
+                        new Commands.T20.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test20_NotFoundNoArgsAndCommandWith1PropertyOnly()
+        {
+            this.Compare(
+                    args: "",
+                    commands: GetCmds(
+                        new Commands.T20.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test21_3CommandsAndNoArgsAndAllHaveMethodDefault()
+        {
+            this.Compare(
+                    args: "",
+                    commands: GetCmds(
+                        new Commands.T21.Command1(),
+                        new Commands.T21.Command2(),
+                        new Commands.T21.Command3()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test21_3CommandsAnd2ArgsAndAllHaveMethodDefault()
+        {
+            this.Compare(
+                    args: "value 10",
+                    commands: GetCmds(
+                        new Commands.T21.Command1(),
+                        new Commands.T21.Command2(),
+                        new Commands.T21.Command3()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test22_3CommandsAndHave2PropertiesTheOtherCommandInLevel2()
+        {
+            this.Compare(
+                    args: "--price 10 save 1 2 --id 10",
+                    commands: GetCmds(
+                        new Commands.T22.Command1(),
+                        new Commands.T22.Command2(),
+                        new Commands.T22.Command3()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        //[TestMethod]
+        //public void TestHelpAllMembers()
+        //{
+        //    this.Compare(
+        //        args: "help",
+        //        commands: GetCmds(
+        //            new Commands.T18.Command1(),
+        //            new Commands.T18.Command2(),
+        //            new Commands.T18.Command3()
+        //        ),
+        //        funcName: TestHelper.GetCurrentMethodName(),
+        //        data: null
+        //    );
+        //}
+
+        //[TestMethod]
+        //public void TestHelpSpecifyMember()
+        //{
+        //    this.Compare(
+        //        args: "help save",
+        //        commands: GetCmds(
+        //            new Commands.T18.Command1(),
+        //            new Commands.T18.Command2(),
+        //            new Commands.T18.Command3()
+        //        ),
+        //        funcName: TestHelper.GetCurrentMethodName(),
+        //        data: null
+        //    );
+        //}
+
+        //[TestMethod]
+        //public void TestHelpInEnd()
+        //{
+        //    this.Compare(
+        //        args: "save help",
+        //        commands: GetCmds(
+        //            new Commands.T18.Command1(),
+        //            new Commands.T18.Command2(),
+        //            new Commands.T18.Command3()
+        //        ),
+        //        funcName: TestHelper.GetCurrentMethodName(),
+        //        data: null
+        //    );
+        //}
 
         private void Compare(string args, Command[] commands, TestData data, string funcName)
         {

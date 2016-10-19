@@ -1,0 +1,79 @@
+{
+  "Args": "--price -1.99 save 1 2 3 delete 4 save 5 6 --id 10",
+  "Members": [
+    "Command1.System.Decimal Price",
+    "Command1.Int32 Id",
+    "Command1.save(Int32, Int32, Int32)",
+    "Command1.save(Int32, Int32)",
+    "Command1.delete(Int32)"
+  ],
+  "Values": [
+    "Command1.Main=Command1.Main() = Price=-1.99, Id=10",
+    "Command1.Price=-1.99",
+    "Command1.Id=10",
+    "Command1.Save=Command1.save(Int32, Int32, Int32) Level1",
+    "Command1.Delete=Command1.delete(Int32) Level2",
+    "Command1.Save=Command1.save(Int32, Int32) Level3"
+  ],
+  "ExpectedResult": [
+    "Command1.Main() = Price=-1.99, Id=10",
+    "Command1.save(Int32, Int32, Int32) Level1",
+    "Command1.delete(Int32) Level2",
+    "Command1.save(Int32, Int32) Level3"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [
+        "Command1.System.Decimal Price",
+        "Command1.Int32 Id"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 2,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.delete(Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 3,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

@@ -20,6 +20,11 @@ namespace SysCommand
             this.levels.Add(level);
         }
 
+        public void Insert(int index , Level level)
+        {
+            this.levels.Insert(index, level);
+        }
+
         #region sub-classes
 
         public class Level

@@ -72,6 +72,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Commands\T00\Command1.cs" />
+    <Compile Include="Commands\T22\Command1.cs" />
+    <Compile Include="Commands\T22\Command2.cs" />
+    <Compile Include="Commands\T22\Command3.cs" />
+    <Compile Include="Commands\T21\Command1.cs" />
+    <Compile Include="Commands\T21\Command3.cs" />
+    <Compile Include="Commands\T21\Command2.cs" />
+    <Compile Include="Commands\T20\Command1.cs" />
+    <Compile Include="Commands\T20\Command2.cs" />
     <Compile Include="Commands\T01\Command1.cs" />
     <Compile Include="Commands\T02\Command1.cs" />
     <Compile Include="Commands\T03\Command1.cs" />
@@ -109,10 +118,7 @@
     <Compile Include="Commands\T04\Command1.cs" />
     <Compile Include="TestApp2.cs" />
     <Compile Include="TestAppEvents.cs" />
-    <Compile Include="TestApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\TestChoosedByAllValidsAndHaveMajorityAsMappedButInputIsInvalid\Command7.cs" />
-    <Compile Include="Commands\TestNoDefaultMethodOnlyHasPropertiesInFirstLevel\Command8.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SysCommand.ConsoleApp\SysCommand.ConsoleApp.csproj">

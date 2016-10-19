@@ -15,34 +15,21 @@ namespace SysCommand
             
             var allMethodsMaps = commandsMap.GetMethods();
             var argumentsRaw = CommandParser.ParseArgumentsRaw(args, allMethodsMaps);
+
             IEnumerable<ArgumentRaw> initialExtraArguments;
             var methodsParsed = CommandParser.ParseActionMapped(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
+            var extrasArguments = new List<ArgumentRaw>(initialExtraArguments);
+
+            var hasMethodsParsed = methodsParsed.Count > 0;
             
-            if (initialExtraArguments.Any())
-            {
-                var level = new ParseResult.Level();
-                level.LevelNumber = 0;
-                parseResult.Add(level);
-
-                foreach (var commandMap in commandsMap)
-                {
-                    var commandParse = new ParseResult.CommandParse();
-                    commandParse.Command = commandMap.Command;
-                    level.Add(commandParse);
-
-                    this.ParseProperties(commandMap, commandParse, initialExtraArguments);
-                }
-            }
-
             // step1: there are methods that are candidates to be execute
-            if (methodsParsed.Count > 0)
+            if (hasMethodsParsed)
             {
                 // step2: separate per level
                 var levelsGroups = methodsParsed.GroupBy(f => f.Level).OrderBy(f => f.Key);
                 foreach (var levelGroup in levelsGroups)
                 {
                     var level = new ParseResult.Level();
-                    level.LevelNumber = levelGroup.Key;
                     parseResult.Add(level);
 
                     var commandsGroups = levelGroup.GroupBy(f => f.ActionMap.Source);
@@ -64,12 +51,37 @@ namespace SysCommand
                         // in this part of the code the method is 100% valid
                         // but can be exists extra arguments that are used 
                         // with properties inputs.
-                        var argumentsExtras = bestMethod.ArgumentsExtras.SelectMany(f => f.AllRaw).ToList();
-                        var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
-                        this.ParseProperties(commandMap, commandParse, argumentsExtras);
+                        var extrasArgumentsMethod = bestMethod.ArgumentsExtras.SelectMany(f => f.AllRaw).ToList();
+                        extrasArguments.AddRange(extrasArgumentsMethod);
+                        //var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
+                        //this.ParseProperties(commandMap, commandParse, argumentsExtras);
                     }
                 }
             }
+
+            // (args.Length == 0 && !hasMethodsParsed): This code is to prevent properties
+            // that are required but dosen't exists args
+            // Test: Test17_RequiredNoArgsAnd1CommandWith1PropertyObrigatory
+            var hasExtras = extrasArguments.Any();
+            if (hasExtras || (args.Length == 0 && !hasMethodsParsed))
+            {
+                var level = new ParseResult.Level();
+                parseResult.Insert(0, level);
+
+                foreach (var commandMap in commandsMap)
+                {
+                    var commandParse = new ParseResult.CommandParse();
+                    commandParse.Command = commandMap.Command;
+                    level.Add(commandParse);
+
+                    this.ParseProperties(commandMap, commandParse, extrasArguments);
+                }
+            }
+
+            // organize level number
+            var i = 0;
+            foreach(var level in parseResult.Levels)
+                level.LevelNumber = i++;
 
             return parseResult;
         }
@@ -84,7 +96,7 @@ namespace SysCommand
 
             var addMainMethod = new Dictionary<CommandBase, bool>();
 
-            if (parseResult.Levels.Count() == countLevelsValid && countArgumentRequired == 0)
+            if (countLevelsValid > 0 && parseResult.Levels.Count() == countLevelsValid && countArgumentRequired == 0)
             {
                 foreach(var level in parseResult.Levels)
                 {
@@ -165,7 +177,7 @@ namespace SysCommand
 
                 var hasMember = hasMethodsValid || hasMethodsInvalid || hasPropertyValid;
 
-                if (!hasMember && allPropertiesNotExists == true)
+                if (!hasMember && (allPropertiesNotExists == null || allPropertiesNotExists == true))
                     evaluateResult.State = EvaluateState.NotFound;
                 else
                     evaluateResult.State = EvaluateState.HasError;

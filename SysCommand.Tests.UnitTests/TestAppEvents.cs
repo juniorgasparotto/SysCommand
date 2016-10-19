@@ -9,7 +9,7 @@ using System.IO;
 namespace SysCommand.Tests.UnitTests
 {
     [TestClass]
-    public class TestAppEvents
+    public class TestAppCallBacks
     {
         public class CustomListener : IEventListener
         {
@@ -41,11 +41,11 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void TestEventsWithClass()
+        public void Test22_EventsWithClass()
         {
             var listener = new CustomListener();
             var app = new App(
-                    commands: new List<SysCommand.ConsoleApp.Command> { new OnlyMainCommand() },
+                    commands: new List<SysCommand.ConsoleApp.Command> { new Commands.T21.Command2() },
                     listener: listener
                 );
 
@@ -66,10 +66,10 @@ OnException: Exception!!";
         }
 
         [TestMethod]
-        public void TestEventsWithActions()
+        public void Test22_EventsWithActions()
         {
             var app = new App(
-                    commands: new List<SysCommand.ConsoleApp.Command> { new OnlyMainCommand() }
+                    commands: new List<SysCommand.ConsoleApp.Command> { new Commands.T21.Command2() }
                 )
             .OnComplete((args) => { args.App.Console.Write("ActionsOnComplete"); throw new Exception("Exception!!"); })
             .OnException((args, ex) => args.App.Console.Write(string.Format("ActionsOnException: {0}", ex.Message)))
