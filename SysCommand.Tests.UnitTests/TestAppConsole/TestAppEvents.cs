@@ -48,7 +48,7 @@ namespace SysCommand.Tests.UnitTests
                     commands: new List<SysCommand.ConsoleApp.Command> { new Commands.T22.Command1() },
                     listener: listener
                 );
-
+                       
             app.Console.Out = new StringWriter();
             app.Run("-a Y");
 

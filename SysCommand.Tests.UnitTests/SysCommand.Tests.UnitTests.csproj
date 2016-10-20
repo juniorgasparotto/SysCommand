@@ -73,8 +73,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="TestAppConsole\Commands\T00\Command1.cs" />
-    <Compile Include="TestAppConsole\Commands\T26\Command1.cs" />
-    <Compile Include="TestAppConsole\Commands\T26\Command2.cs" />
     <Compile Include="TestAppConsole\Commands\T25\Command1.cs" />
     <Compile Include="TestAppConsole\Commands\T25\Command2.cs" />
     <Compile Include="TestAppConsole\Commands\T24\Command1.cs" />
@@ -82,8 +80,6 @@
     <Compile Include="TestAppConsole\Commands\T23\Command2.cs" />
     <Compile Include="TestAppConsole\Commands\T23\Command1.cs" />
     <Compile Include="TestAppConsole\Commands\T22\Command1.cs" />
-    <Compile Include="TestAppConsole\Commands\T22\Command2.cs" />
-    <Compile Include="TestAppConsole\Commands\T22\Command3.cs" />
     <Compile Include="TestAppConsole\Commands\T21\Command1.cs" />
     <Compile Include="TestAppConsole\Commands\T21\Command3.cs" />
     <Compile Include="TestAppConsole\Commands\T21\Command2.cs" />
