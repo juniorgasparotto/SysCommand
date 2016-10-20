@@ -15,26 +15,15 @@
       "LevelNumber": 0,
       "CommandsValid": [],
       "PropertiesValid": [],
-      "MethodsValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32)"
+      ],
       "CommandsWithError": [
         "Command1"
       ],
       "PropertiesInvalid": [
         "Command1.value-missing-map"
       ],
-      "MethodsInvalid": []
-    },
-    {
-      "LevelNumber": 1,
-      "CommandsValid": [
-        "Command1"
-      ],
-      "PropertiesValid": [],
-      "MethodsValid": [
-        "Command1.save(Int32, Int32)"
-      ],
-      "CommandsWithError": [],
-      "PropertiesInvalid": [],
       "MethodsInvalid": []
     }
   ]

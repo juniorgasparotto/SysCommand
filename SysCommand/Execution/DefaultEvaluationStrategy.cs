@@ -18,10 +18,26 @@ namespace SysCommand
 
             IEnumerable<ArgumentRaw> initialExtraArguments;
             var methodsParsed = CommandParser.ParseActionMapped(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
-            var extrasArguments = new List<ArgumentRaw>(initialExtraArguments);
+            //var extrasArguments = new List<ArgumentRaw>(initialExtraArguments);
 
             var hasMethodsParsed = methodsParsed.Count > 0;
-            
+            var hasExtras = initialExtraArguments.Any();
+            if (hasExtras || (args.Length == 0 && !hasMethodsParsed))
+            {
+                var level = new ParseResult.Level();
+                level.LevelNumber = 0;
+                parseResult.Add(level);
+
+                foreach (var commandMap in commandsMap)
+                {
+                    var commandParse = new ParseResult.CommandParse();
+                    commandParse.Command = commandMap.Command;
+                    level.Add(commandParse);
+
+                    this.ParseProperties(commandMap, commandParse, initialExtraArguments);
+                }
+            }
+
             // step1: there are methods that are candidates to be execute
             if (hasMethodsParsed)
             {
@@ -51,9 +67,17 @@ namespace SysCommand
                         // in this part of the code the method is 100% valid
                         // but can be exists extra arguments that are used 
                         // with properties inputs.
-                        var extrasArgumentsMethod = bestMethod.ArgumentsExtras.SelectMany(f => f.AllRaw).ToList();
-                        extrasArguments.AddRange(extrasArgumentsMethod);
-                        //var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
+                        var argumentsExtras = bestMethod.ArgumentsExtras.SelectMany(f => f.AllRaw).ToList();
+                        var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
+                        this.ParseProperties(commandMap, commandParse, argumentsExtras);
+
+                        // CREATE PROPERTIES
+                        // in this part of the code the method is 100% valid
+                        // but can be exists extra arguments that are used 
+                        // with properties inputs.
+                        //var extrasArgumentsMethod = bestMethod.ArgumentsExtras.SelectMany(f => f.AllRaw).ToList();
+                        //extrasArguments.AddRange(extrasArgumentsMethod);
+                        ////var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
                         //this.ParseProperties(commandMap, commandParse, argumentsExtras);
                     }
                 }
@@ -62,21 +86,21 @@ namespace SysCommand
             // (args.Length == 0 && !hasMethodsParsed): This code is to prevent properties
             // that are required but dosen't exists args
             // Test: Test17_RequiredNoArgsAnd1CommandWith1PropertyObrigatory
-            var hasExtras = extrasArguments.Any();
-            if (hasExtras || (args.Length == 0 && !hasMethodsParsed))
-            {
-                var level = new ParseResult.Level();
-                parseResult.Insert(0, level);
+            //var hasExtras = extrasArguments.Any();
+            //if (hasExtras || (args.Length == 0 && !hasMethodsParsed))
+            //{
+            //    var level = new ParseResult.Level();
+            //    parseResult.Insert(0, level);
 
-                foreach (var commandMap in commandsMap)
-                {
-                    var commandParse = new ParseResult.CommandParse();
-                    commandParse.Command = commandMap.Command;
-                    level.Add(commandParse);
+            //    foreach (var commandMap in commandsMap)
+            //    {
+            //        var commandParse = new ParseResult.CommandParse();
+            //        commandParse.Command = commandMap.Command;
+            //        level.Add(commandParse);
 
-                    this.ParseProperties(commandMap, commandParse, extrasArguments);
-                }
-            }
+            //        this.ParseProperties(commandMap, commandParse, extrasArguments);
+            //    }
+            //}
 
             // organize level number
             var i = 0;

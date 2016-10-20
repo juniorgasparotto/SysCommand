@@ -501,7 +501,7 @@ namespace SysCommand.Tests.UnitTests
             */
 
             this.Compare(
-                args: "--price 1 save 1 2 3 delete 4 save 5 6 --id 10",
+                args: "--price -1.99 --price -1.99 save 1 2 3 --price -1.99 delete 4 --price -1.99 --price -1.99 save 5 6 --id 10 --price -1.99",
                 commands: GetCmds(new Commands.T10.Command1()),
                 funcName: TestHelper.GetCurrentMethodName(),
                 data: null
@@ -639,7 +639,7 @@ namespace SysCommand.Tests.UnitTests
             */
 
             this.Compare(
-                args: "--id 1 delete --price 99 save",
+                args: "--id 1 delete --price 99 save --id 99",
                 commands: GetCmds(
                     new Commands.T13.Command1(),
                     new Commands.T13.Command2(),
@@ -987,48 +987,48 @@ namespace SysCommand.Tests.UnitTests
             );
         }
 
-        [TestMethod]
-        public void Test22_3CommandsAndHave2PropertiesTheOtherCommandInLevel2()
-        {
-            this.Compare(
-                    args: "--price 10 save 1 2 --id 10",
-                    commands: GetCmds(
-                        new Commands.T22.Command1(),
-                        new Commands.T22.Command2(),
-                        new Commands.T22.Command3()
-                    ),
-                    funcName: TestHelper.GetCurrentMethodName(),
-                    data: null
-            );
-        }
+        //[TestMethod]
+        //public void Test22_3CommandsAndHave2PropertiesTheOtherCommandInLevel2()
+        //{
+        //    this.Compare(
+        //            args: "--price 10 save 1 2 --id 10",
+        //            commands: GetCmds(
+        //                new Commands.T22.Command1(),
+        //                new Commands.T22.Command2(),
+        //                new Commands.T22.Command3()
+        //            ),
+        //            funcName: TestHelper.GetCurrentMethodName(),
+        //            data: null
+        //    );
+        //}
 
-        [TestMethod]
-        public void Test23_3CommandsAndHave2PropertiesTheOtherCommandInLevel2()
-        {
-            this.Compare(
-                    args: "save 1 2",
-                    commands: GetCmds(
-                        new Commands.T23.Command1(),
-                        new Commands.T23.Command2()
-                    ),
-                    funcName: TestHelper.GetCurrentMethodName(),
-                    data: null
-            );
-        }
+        //[TestMethod]
+        //public void Test23_3CommandsAndHave2PropertiesTheOtherCommandInLevel2()
+        //{
+        //    this.Compare(
+        //            args: "save 1 2",
+        //            commands: GetCmds(
+        //                new Commands.T23.Command1(),
+        //                new Commands.T23.Command2()
+        //            ),
+        //            funcName: TestHelper.GetCurrentMethodName(),
+        //            data: null
+        //    );
+        //}
 
-        [TestMethod]
-        public void Test23_3CommandsAndHave2PropertiesTheOtherCommandInLevel3()
-        {
-            this.Compare(
-                    args: "--id 1 save --id=2 3",
-                    commands: GetCmds(
-                        new Commands.T23.Command1(),
-                        new Commands.T23.Command2()
-                    ),
-                    funcName: TestHelper.GetCurrentMethodName(),
-                    data: null
-            );
-        }
+        //[TestMethod]
+        //public void Test23_3CommandsAndHave2PropertiesTheOtherCommandInLevel3()
+        //{
+        //    this.Compare(
+        //            args: "--id 1 save --id=2 3",
+        //            commands: GetCmds(
+        //                new Commands.T23.Command1(),
+        //                new Commands.T23.Command2()
+        //            ),
+        //            funcName: TestHelper.GetCurrentMethodName(),
+        //            data: null
+        //    );
+        //}
 
         //[TestMethod]
         //public void TestHelpAllMembers()

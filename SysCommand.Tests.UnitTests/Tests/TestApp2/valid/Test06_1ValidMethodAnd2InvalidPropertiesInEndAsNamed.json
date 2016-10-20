@@ -17,7 +17,9 @@
       "LevelNumber": 0,
       "CommandsValid": [],
       "PropertiesValid": [],
-      "MethodsValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32, Int32)"
+      ],
       "CommandsWithError": [
         "Command1"
       ],
@@ -25,19 +27,6 @@
         "Command1.Price",
         "Command1.Id"
       ],
-      "MethodsInvalid": []
-    },
-    {
-      "LevelNumber": 1,
-      "CommandsValid": [
-        "Command1"
-      ],
-      "PropertiesValid": [],
-      "MethodsValid": [
-        "Command1.save(Int32, Int32, Int32)"
-      ],
-      "CommandsWithError": [],
-      "PropertiesInvalid": [],
       "MethodsInvalid": []
     }
   ]

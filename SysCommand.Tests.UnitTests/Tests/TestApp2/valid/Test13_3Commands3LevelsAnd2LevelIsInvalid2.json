@@ -12,47 +12,36 @@
   ],
   "Values": [],
   "ExpectedResult": [
-    "There are errors in command: Command1",
-    "The argument '--description' does not exist",
-    "",
     "There are errors in command: Command2",
-    "The argument '--description' does not exist",
     "Error in method: delete(String)",
-    "The argument '--value' is required",
-    "",
-    "There are errors in command: Command3",
-    "The argument '--price' does not exist",
-    "The argument '--id' does not exist"
+    "The argument '--value' is required"
   ],
   "Levels": [
     {
       "LevelNumber": 0,
-      "CommandsValid": [],
+      "CommandsValid": [
+        "Command3"
+      ],
       "PropertiesValid": [
-        "Command1.System.Decimal Price",
-        "Command1.Int32 Id",
-        "Command2.System.Decimal Price",
-        "Command2.Int32 Id",
         "Command3.System.String Description"
       ],
       "MethodsValid": [],
       "CommandsWithError": [
         "Command1",
-        "Command2",
-        "Command3"
+        "Command2"
       ],
       "PropertiesInvalid": [
         "Command1.description",
-        "Command2.description",
-        "Command3.price",
-        "Command3.id"
+        "Command2.description"
       ],
       "MethodsInvalid": []
     },
     {
       "LevelNumber": 1,
       "CommandsValid": [],
-      "PropertiesValid": [],
+      "PropertiesValid": [
+        "Command2.System.Decimal Price"
+      ],
       "MethodsValid": [],
       "CommandsWithError": [
         "Command2"
@@ -67,7 +56,9 @@
       "CommandsValid": [
         "Command1"
       ],
-      "PropertiesValid": [],
+      "PropertiesValid": [
+        "Command1.Int32 Id"
+      ],
       "MethodsValid": [
         "Command1.save()"
       ],

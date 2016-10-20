@@ -13,15 +13,13 @@
   "ExpectedResult": [
     "There are errors in command: Command1",
     "The argument '--price' is invalid",
-    "The argument '--price' has already been set",
     "",
     "There are errors in command: Command2",
     "The argument '--price' does not exist",
     "The argument '--price' does not exist",
     "",
     "There are errors in command: Command3",
-    "The argument '--price' is invalid",
-    "The argument '--price' has already been set"
+    "The argument '--price' is invalid"
   ],
   "Levels": [
     {
@@ -36,11 +34,8 @@
       ],
       "PropertiesInvalid": [
         "Command1.Price",
-        "Command1.price",
         "Command2.price",
-        "Command2.price",
-        "Command3.Price",
-        "Command3.price"
+        "Command3.Price"
       ],
       "MethodsInvalid": []
     },
@@ -63,15 +58,17 @@
     },
     {
       "LevelNumber": 2,
-      "CommandsValid": [
-        "Command2"
-      ],
+      "CommandsValid": [],
       "PropertiesValid": [],
       "MethodsValid": [
         "Command2.delete(Int32)"
       ],
-      "CommandsWithError": [],
-      "PropertiesInvalid": [],
+      "CommandsWithError": [
+        "Command2"
+      ],
+      "PropertiesInvalid": [
+        "Command2.price"
+      ],
       "MethodsInvalid": []
     }
   ]
