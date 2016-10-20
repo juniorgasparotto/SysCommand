@@ -1,0 +1,26 @@
+{
+  "Args": "",
+  "Members": [
+    "Command1.Int32 Id (NOT accept positional)",
+    "Command1.System.Decimal Price (NOT accept positional)",
+    "Command1.save(Nullable<Int32>)",
+    "Command2.save(Nullable<Int32>)",
+    "Command3.System.Decimal Price (NOT accept positional)",
+    "Command3.save(Nullable<Int32>)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "Could not find any action."
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

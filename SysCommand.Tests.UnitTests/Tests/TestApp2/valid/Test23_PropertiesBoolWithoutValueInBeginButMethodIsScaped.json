@@ -1,0 +1,29 @@
+{
+  "Args": "--help \\save",
+  "Members": [
+    "Command2.System.String Help (NOT accept positional)",
+    "Command2.save(String)"
+  ],
+  "Values": [
+    "Command2.Main=Main",
+    "Command2.Help=save"
+  ],
+  "ExpectedResult": [
+    "Main"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command2"
+      ],
+      "PropertiesValid": [
+        "Command2.System.String Help"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

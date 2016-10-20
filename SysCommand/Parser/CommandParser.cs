@@ -320,7 +320,7 @@ namespace SysCommand.Parser
                     value = args.Length > (i + 1) ? args[i + 1] : null;
 
                     // ignore if next arg is parameter: [-xyz --next-parameter ...]
-                    if (IsArgument(value))
+                    if (IsArgument(value) || (actionsMaps != null && actionsMaps.Any(f => f.ActionName == value)))
                     {
                         value = null;
                         hasNoValue = true;
@@ -340,7 +340,7 @@ namespace SysCommand.Parser
 
                 // --name \--value -> scape value
                 valueRaw = value;
-                value = GetValueScaped(value, null);
+                value = GetValueScaped(value, actionsMaps);
 
                 // remove "-":  -xyz  -> xyz
                 // remove "--": --xyz -> xyz

@@ -1,0 +1,425 @@
+{
+  "input": "-10 -10.10 2000 0 1 0 1 0 1 a b c",
+  "maps": [
+    {
+      "MapName": "v1",
+      "LongName": "v1",
+      "ShortName": null,
+      "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.Nullable`1[System.Int32] v1"
+    },
+    {
+      "MapName": "v2",
+      "LongName": "v2",
+      "ShortName": null,
+      "Type": "System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.Nullable`1[System.Decimal] v2"
+    },
+    {
+      "MapName": "v3",
+      "LongName": "v3",
+      "ShortName": null,
+      "Type": "System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.Nullable`1[System.Int64] v3"
+    },
+    {
+      "MapName": "v4",
+      "LongName": "v4",
+      "ShortName": null,
+      "Type": "System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.Nullable`1[System.Byte][] v4"
+    },
+    {
+      "MapName": "v5",
+      "LongName": "v5",
+      "ShortName": null,
+      "Type": "System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.Collections.Generic.List`1[System.Nullable`1[System.Char]] v5"
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "v1",
+      "ValueParsed": "-10",
+      "Value": -10,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "v1",
+        "LongName": "v1",
+        "ShortName": null,
+        "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.Nullable`1[System.Int32] v1"
+      },
+      "Raw": "-10",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "-10",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "-10",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 0
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "v2",
+      "ValueParsed": "-10.10",
+      "Value": -10.10,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "v2",
+        "LongName": "v2",
+        "ShortName": null,
+        "Type": "System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.Nullable`1[System.Decimal] v2"
+      },
+      "Raw": "-10.10",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "-10.10",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "-10.10",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 1
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "v3",
+      "ValueParsed": "2000",
+      "Value": 2000,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "v3",
+        "LongName": "v3",
+        "ShortName": null,
+        "Type": "System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.Nullable`1[System.Int64] v3"
+      },
+      "Raw": "2000",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "2000",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "2000",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 2
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "v4",
+      "ValueParsed": "0 1 0 1 0 1 a b c",
+      "Value": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "v4",
+        "LongName": "v4",
+        "ShortName": null,
+        "Type": "System.Nullable`1[[System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]][], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.Nullable`1[System.Byte][] v4"
+      },
+      "Raw": "0 1 0 1 0 1",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "0",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "0",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 3
+        },
+        {
+          "Name": null,
+          "Value": "1",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "1",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 4
+        },
+        {
+          "Name": null,
+          "Value": "0",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "0",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 5
+        },
+        {
+          "Name": null,
+          "Value": "1",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "1",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 6
+        },
+        {
+          "Name": null,
+          "Value": "0",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "0",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 7
+        },
+        {
+          "Name": null,
+          "Value": "1",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "1",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 8
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "v5",
+      "ValueParsed": "a b c",
+      "Value": [
+        "a",
+        "b",
+        "c"
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Position",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "v5",
+        "LongName": "v5",
+        "ShortName": null,
+        "Type": "System.Collections.Generic.List`1[[System.Nullable`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.Collections.Generic.List`1[System.Nullable`1[System.Char]] v5"
+      },
+      "Raw": "a b c",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "a",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "a",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 9
+        },
+        {
+          "Name": null,
+          "Value": "b",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "b",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 10
+        },
+        {
+          "Name": null,
+          "Value": "c",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "c",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 11
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

@@ -1,0 +1,313 @@
+{
+  "input": "--enum1 --enum3 --enum4",
+  "maps": [
+    {
+      "MapName": "enum1",
+      "LongName": "enum1",
+      "ShortName": null,
+      "Type": "System.Nullable`1[[SysCommand.Tests.UnitTests.EnumTest1, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1] enum1"
+    },
+    {
+      "MapName": "enum2",
+      "LongName": "enum2",
+      "ShortName": null,
+      "Type": "SysCommand.Tests.UnitTests.EnumTest2, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTest2 enum2"
+    },
+    {
+      "MapName": "enum3",
+      "LongName": "enum3",
+      "ShortName": null,
+      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTestNoFlag enum3"
+    },
+    {
+      "MapName": "lst",
+      "LongName": "lst",
+      "ShortName": null,
+      "Type": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "Int32[] lst"
+    },
+    {
+      "MapName": "enum4",
+      "LongName": "enum4",
+      "ShortName": null,
+      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag2, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTestNoFlag2 enum4"
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "enum1",
+      "ValueParsed": null,
+      "Value": null,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Nullable`1[[SysCommand.Tests.UnitTests.EnumTest1, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "enum1",
+        "LongName": "enum1",
+        "ShortName": null,
+        "Type": "System.Nullable`1[[SysCommand.Tests.UnitTests.EnumTest1, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1] enum1"
+      },
+      "Raw": null,
+      "AllRaw": [
+        {
+          "Name": "enum1",
+          "Value": null,
+          "Format": "LongNameAndNoValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": null,
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 0
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "enum3",
+      "ValueParsed": null,
+      "Value": 0,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "MappingType": "Name",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "enum3",
+        "LongName": "enum3",
+        "ShortName": null,
+        "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTestNoFlag enum3"
+      },
+      "Raw": null,
+      "AllRaw": [
+        {
+          "Name": "enum3",
+          "Value": null,
+          "Format": "LongNameAndNoValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": null,
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 1
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "enum4",
+      "ValueParsed": null,
+      "Value": "Value1",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag2, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "MappingType": "Name",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "enum4",
+        "LongName": "enum4",
+        "ShortName": null,
+        "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag2, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTestNoFlag2 enum4"
+      },
+      "Raw": null,
+      "AllRaw": [
+        {
+          "Name": "enum4",
+          "Value": null,
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": null,
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 3
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "enum2",
+      "ValueParsed": null,
+      "Value": null,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "SysCommand.Tests.UnitTests.EnumTest2, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "MappingType": "HasNoInput",
+      "MappingStates": "ArgumentIsRequired, IsInvalid",
+      "Map": {
+        "MapName": "enum2",
+        "LongName": "enum2",
+        "ShortName": null,
+        "Type": "SysCommand.Tests.UnitTests.EnumTest2, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTest2 enum2"
+      },
+      "Raw": null,
+      "AllRaw": [],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Name": "lst",
+      "ValueParsed": null,
+      "Value": null,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "HasNoInput",
+      "MappingStates": "ArgumentIsRequired, IsInvalid",
+      "Map": {
+        "MapName": "lst",
+        "LongName": "lst",
+        "ShortName": null,
+        "Type": "System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "Int32[] lst"
+      },
+      "Raw": null,
+      "AllRaw": [],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    }
+  ]
+}

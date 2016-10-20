@@ -1,0 +1,34 @@
+{
+  "Args": "-a invalid-value a b --arg-not-found c",
+  "Members": [
+    "Command1.Int32 A",
+    "Command1.Int32 B",
+    "Command1.Int32 C"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "The argument '-a' is invalid",
+    "The argument '-b' is invalid",
+    "The argument '-c' is invalid",
+    "The argument '--arg-not-found' does not exist"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [
+        "Command1.A",
+        "Command1.B",
+        "Command1.C",
+        "Command1.arg-not-found"
+      ],
+      "MethodsInvalid": []
+    }
+  ]
+}

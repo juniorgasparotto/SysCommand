@@ -1,0 +1,205 @@
+{
+  "input": "--value1 10.1223 --value2 10.2344 --date \"12-22/1879 12:10:10.111\"",
+  "maps": [
+    {
+      "MapName": "value1",
+      "LongName": "value1",
+      "ShortName": null,
+      "Type": "System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "Double value1"
+    },
+    {
+      "MapName": "value2",
+      "LongName": "value2",
+      "ShortName": null,
+      "Type": "System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "Single value2"
+    },
+    {
+      "MapName": "date",
+      "LongName": "date",
+      "ShortName": null,
+      "Type": "System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": false,
+      "Position": null,
+      "Source": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "PropertyOrParameter": "System.DateTime date"
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "value1",
+      "ValueParsed": "10.1223",
+      "Value": 10.1223,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "value1",
+        "LongName": "value1",
+        "ShortName": null,
+        "Type": "System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "Double value1"
+      },
+      "Raw": "10.1223",
+      "AllRaw": [
+        {
+          "Name": "value1",
+          "Value": "10.1223",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "10.1223",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 1
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "value2",
+      "ValueParsed": "10.2344",
+      "Value": 10.2344,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "value2",
+        "LongName": "value2",
+        "ShortName": null,
+        "Type": "System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "Single value2"
+      },
+      "Raw": "10.2344",
+      "AllRaw": [
+        {
+          "Name": "value2",
+          "Value": "10.2344",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "10.2344",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 3
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "date",
+      "ValueParsed": "\"12-22/1879 12:10:10.111\"",
+      "Value": "1879-12-22T12:10:10.111",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "MappingType": "Name",
+      "MappingStates": "Valid",
+      "Map": {
+        "MapName": "date",
+        "LongName": "date",
+        "ShortName": null,
+        "Type": "System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": false,
+        "Position": null,
+        "Source": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "PropertyOrParameter": "System.DateTime date"
+      },
+      "Raw": "\"12-22/1879 12:10:10.111\"",
+      "AllRaw": [
+        {
+          "Name": "date",
+          "Value": "12-22/1879 12:10:10.111",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "12-22/1879 12:10:10.111",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 5
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

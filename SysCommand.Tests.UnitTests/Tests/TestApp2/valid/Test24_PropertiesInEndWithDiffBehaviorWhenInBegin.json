@@ -1,0 +1,29 @@
+{
+  "Args": "save 1 --help",
+  "Members": [
+    "Command1.save(String)",
+    "Command2.Boolean Help (NOT accept positional)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "The argument '--help' does not exist"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(String)"
+      ],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [
+        "Command1.help"
+      ],
+      "MethodsInvalid": []
+    }
+  ]
+}

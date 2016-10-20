@@ -33,7 +33,7 @@ namespace SysCommand.Test
         private static string GetFileName(string typeName, string testContext, string fileNameSuffix, string fileName, string fileNameFinal)
         {
             testContext = testContext != null ? "-" + testContext : "";
-            var fileNameFormat = @"Tests\{0}{1}\{2}\{3}.json{4}";
+            var fileNameFormat = @".tests\{0}{1}\{2}\{3}.json{4}";
             var path = string.Format(fileNameFormat, typeName, testContext, fileNameSuffix, fileName, fileNameFinal);
             return Path.Combine(@"..\..\", path);
         }

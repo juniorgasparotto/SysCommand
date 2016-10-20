@@ -1,0 +1,28 @@
+{
+  "Args": "delete \\save",
+  "Members": [
+    "Command1.save()",
+    "Command2.delete(String)"
+  ],
+  "Values": [
+    "Command2.Delete=Command2.delete(String)=save"
+  ],
+  "ExpectedResult": [
+    "Command2.delete(String)=save"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command2"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command2.delete(String)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

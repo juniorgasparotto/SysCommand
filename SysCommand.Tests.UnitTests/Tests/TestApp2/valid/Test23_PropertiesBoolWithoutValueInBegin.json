@@ -1,0 +1,44 @@
+{
+  "Args": "--help save 1 ",
+  "Members": [
+    "Command1.Boolean Help (NOT accept positional)",
+    "Command1.save(String)"
+  ],
+  "Values": [
+    "Command1.Main=Main",
+    "Command1.Help=True",
+    "Command1.Save=Save: id=1"
+  ],
+  "ExpectedResult": [
+    "Main",
+    "Save: id=1"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [
+        "Command1.Boolean Help"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(String)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

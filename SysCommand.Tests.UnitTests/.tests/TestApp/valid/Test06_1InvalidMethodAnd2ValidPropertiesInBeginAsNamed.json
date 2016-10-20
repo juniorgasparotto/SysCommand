@@ -1,0 +1,45 @@
+{
+  "Args": "--price -10.9999 --id 10 save a a",
+  "Members": [
+    "Command1.System.Decimal Price",
+    "Command1.Int32 Id",
+    "Command1.save(Int32, Int32, Int32)",
+    "Command1.save(Int32, Int32)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "Error in method: save(Int32, Int32)",
+    "The argument '-a' is invalid",
+    "The argument '-b' is invalid"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [
+        "Command1.System.Decimal Price",
+        "Command1.Int32 Id"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": [
+        "Command1.save(Int32, Int32)"
+      ]
+    }
+  ]
+}

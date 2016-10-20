@@ -1,0 +1,34 @@
+{
+  "Args": "",
+  "Members": [
+    "Command1.Int32 Id (obrigatory) (NOT accept positional)",
+    "Command2.Int32 Id (NOT accept positional)"
+  ],
+  "Values": [
+    "Command1.Main=Main= Id:100",
+    "Command2.Main=Main= Id:100",
+    "Command1.Id=100",
+    "Command2.Id=100"
+  ],
+  "ExpectedResult": [
+    "Main= Id:100",
+    "Main= Id:100"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1",
+        "Command2"
+      ],
+      "PropertiesValid": [
+        "Command1.Int32 Id",
+        "Command2.Int32 Id"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}
