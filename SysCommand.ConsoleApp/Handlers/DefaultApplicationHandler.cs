@@ -50,11 +50,11 @@ namespace SysCommand.ConsoleApp
                 if (method.Value.GetType() != typeof(string) && typeof(IEnumerable).IsAssignableFrom(method.Value.GetType()))
                 {
                     foreach (var value in (IEnumerable)method.Value)
-                        appResult.App.Console.Write(value);
+                        appResult.App.MessageFormatter.ShowMethodReturn(appResult, method, value);
                 }
                 else
                 {
-                    appResult.App.Console.Write(method.Value);
+                    appResult.App.MessageFormatter.ShowMethodReturn(appResult, method, method.Value);
                 }
             }
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System;
 
 namespace SysCommand.ConsoleApp
 {
@@ -16,6 +17,11 @@ namespace SysCommand.ConsoleApp
         public virtual void ShowNotFound(ApplicationResult appResult)
         {
             appResult.App.Console.Error(Strings.NotFoundMessage, false);
+        }
+
+        public virtual void ShowMethodReturn(ApplicationResult appResult, IMember method, object value)
+        {
+            appResult.App.Console.Write(method.Value);
         }
 
         public virtual string GetMethodSpecification(ActionMap map)
@@ -104,6 +110,6 @@ namespace SysCommand.ConsoleApp
                 if (++iErr < count)
                     strBuilder.AppendLine();
             }
-        }        
+        }
     }
 }

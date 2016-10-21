@@ -4,9 +4,10 @@ namespace SysCommand.ConsoleApp
 {
     public interface IMessageFormatter
     {
-        string GetMethodSpecification(ActionMap map);
-        string GetPropertyErrorDescription(ArgumentMapped argumentMapped);
         void ShowErrors(ApplicationResult appResult);
         void ShowNotFound(ApplicationResult appResult);
+        void ShowMethodReturn(ApplicationResult appResult, IMember method, object value);
+        string GetMethodSpecification(ActionMap map);
+        string GetPropertyErrorDescription(ArgumentMapped argumentMapped);
     }
 }
