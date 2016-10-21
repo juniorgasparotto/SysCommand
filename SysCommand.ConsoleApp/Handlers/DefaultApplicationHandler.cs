@@ -7,9 +7,9 @@ using System.Text;
 
 namespace SysCommand.ConsoleApp
 {
-    public class DefaultEventListener : IEventListener
+    public class DefaultApplicationHandler : IApplicationHandler
     {
-        public virtual void OnComplete(AppResult appResult)
+        public virtual void OnComplete(ApplicationResult appResult)
         {
             switch (appResult.EvaluateResult.State)
             {
@@ -19,31 +19,31 @@ namespace SysCommand.ConsoleApp
                     break;
                 case EvaluateState.NotFound:
                     appResult.App.Console.ExitCode = ExitCodeConstants.Error;
-                    appResult.App.MessageOutput.ShowNotFound(appResult);
+                    appResult.App.MessageFormatter.ShowNotFound(appResult);
                     break;
                 case EvaluateState.HasError:
                     appResult.App.Console.ExitCode = ExitCodeConstants.Error;
-                    appResult.App.MessageOutput.ShowErrors(appResult);
+                    appResult.App.MessageFormatter.ShowErrors(appResult);
                     break;
             }
         }
 
-        public virtual void OnException(AppResult appResult, Exception ex)
+        public virtual void OnException(ApplicationResult appResult, Exception ex)
         {
             throw ex;
         }
 
-        public virtual void OnBeforeMemberInvoke(AppResult appResult, IMember member)
+        public virtual void OnBeforeMemberInvoke(ApplicationResult appResult, IMember member)
         {
             
         }
 
-        public virtual void OnAfterMemberInvoke(AppResult appResult, IMember member)
+        public virtual void OnAfterMemberInvoke(ApplicationResult appResult, IMember member)
         {
 
         }
 
-        public virtual void OnMethodReturn(AppResult appResult, IMember method)
+        public virtual void OnMethodReturn(ApplicationResult appResult, IMember method)
         {
             if (method.Value != null)
             {

@@ -11,30 +11,30 @@ namespace SysCommand.Tests.UnitTests
     [TestClass]
     public class TestAppCallBacks
     {
-        public class CustomListener : IEventListener
+        public class CustomListener : IApplicationHandler
         {
-            public void OnComplete(AppResult eventArgs)
+            public void OnComplete(ApplicationResult eventArgs)
             {
                 eventArgs.App.Console.Write("OnComplete");
                 throw new Exception("Exception!!");
             }
 
-            public void OnException(AppResult eventArgs, Exception ex)
+            public void OnException(ApplicationResult eventArgs, Exception ex)
             {
                 eventArgs.App.Console.Write(string.Format("OnException: {0}", ex.Message));
             }
 
-            public void OnBeforeMemberInvoke(AppResult eventArgs, IMember member)
+            public void OnBeforeMemberInvoke(ApplicationResult eventArgs, IMember member)
             {
                 eventArgs.App.Console.Write(string.Format("OnBeforeMemberInvoke: {0} {1}", member.Name, member.Value));
             }
 
-            public void OnAfterMemberInvoke(AppResult eventArgs, IMember member)
+            public void OnAfterMemberInvoke(ApplicationResult eventArgs, IMember member)
             {
                 eventArgs.App.Console.Write(string.Format("OnAfterMemberInvoke: {0}: {1}", member.Name, member.Value));
             }
 
-            public void OnMethodReturn(AppResult eventArgs, IMember method)
+            public void OnMethodReturn(ApplicationResult eventArgs, IMember method)
             {
                 eventArgs.App.Console.Write(string.Format("OnPrint: {0}: {1}", method.Name, method.Value));
             }
@@ -45,10 +45,11 @@ namespace SysCommand.Tests.UnitTests
         {
             var listener = new CustomListener();
             var app = new App(
-                    commands: new List<SysCommand.ConsoleApp.Command> { new Commands.T22.Command1() },
-                    listener: listener
+                    commands: new List<Command> { new Commands.T22.Command1() },
+                    addDefaultAppHandler: false
                 );
-                       
+
+            app.AddApplicationHandler(listener);
             app.Console.Out = new StringWriter();
             app.Run("-a Y");
 
@@ -69,13 +70,15 @@ OnException: Exception!!";
         public void Test22_EventsWithActions()
         {
             var app = new App(
-                    commands: new List<SysCommand.ConsoleApp.Command> { new Commands.T22.Command1() }
-                )
-            .OnComplete((args) => { args.App.Console.Write("ActionsOnComplete"); throw new Exception("Exception!!"); })
-            .OnException((args, ex) => args.App.Console.Write(string.Format("ActionsOnException: {0}", ex.Message)))
-            .OnBeforeMemberInvoke((args, member) => args.App.Console.Write(string.Format("ActionsOnBeforeMemberInvoke: {0}: {1}", member.Name, member.Value)))
-            .OnAfterMemberInvoke((args, member) => args.App.Console.Write(string.Format("ActionsOnAfterMemberInvoke: {0}: {1}", member.Name, member.Value)))
-            .OnMethotReturn((args, member) => args.App.Console.Write(string.Format("ActionsOnPrint: {0}: {1}", member.Name, member.Value)));
+                    commands: new List<SysCommand.ConsoleApp.Command> { new Commands.T22.Command1() },
+                    addDefaultAppHandler: false
+                );
+
+            app.OnComplete += (args) => { args.App.Console.Write("ActionsOnComplete"); throw new Exception("Exception!!"); };
+            app.OnException += (args, ex) => args.App.Console.Write(string.Format("ActionsOnException: {0}", ex.Message));
+            app.OnBeforeMemberInvoke += (args, member) => args.App.Console.Write(string.Format("ActionsOnBeforeMemberInvoke: {0}: {1}", member.Name, member.Value));
+            app.OnAfterMemberInvoke += (args, member) => args.App.Console.Write(string.Format("ActionsOnAfterMemberInvoke: {0}: {1}", member.Name, member.Value));
+            app.OnMethodReturn += (args, member) => args.App.Console.Write(string.Format("ActionsOnPrint: {0}: {1}", member.Name, member.Value));
 
             app.Console.Out = new StringWriter();
             app.Run("-a Y");

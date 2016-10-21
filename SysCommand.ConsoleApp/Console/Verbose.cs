@@ -10,7 +10,6 @@ namespace SysCommand.ConsoleApp
         Success = 4,
         Critical = 8,
         Warning = 16,
-        Error = 32,
-        //Question = 128,
+        Error = 32
     }
 }

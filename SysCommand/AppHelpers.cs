@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
-using Fclp;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace SysCommand
@@ -499,21 +497,6 @@ namespace SysCommand
                 return false;
 
             return value[0].In(argsDelimiter);
-        }
-
-        public static bool IsActionFormat(string value)
-        {
-            if (value == null || value.Length == 0)
-                return false;
-            
-            if (AppHelpers.IsScaped(value))
-                return false;
-
-            var isArgumentFormat = AppHelpers.IsArgumentFormat(value);
-            if (App333.Current.ActionCharPrefix == null)
-                return !isArgumentFormat;
-            else
-                return !isArgumentFormat && value[0].In(App333.Current.ActionCharPrefix.Value);
         }
 
         public static bool HasCharAtFirst(string value, char firstChar)

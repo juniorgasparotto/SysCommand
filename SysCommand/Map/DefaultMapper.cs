@@ -6,7 +6,7 @@ using SysCommand.Parser;
 
 namespace SysCommand
 {
-    public class DefaultMapper : IMapper
+    public class DefaultMapper : IMappingStrategy
     {
         public CommandMap CreateMap(CommandBase command)
         {
@@ -16,7 +16,7 @@ namespace SysCommand
             return mapCommand;
         }
 
-        public IEnumerable<CommandMap> CreateMap(IEnumerable<CommandBase> commands)
+        public IEnumerable<CommandMap> DoMappping(IEnumerable<CommandBase> commands)
         {
             foreach (var command in commands)
                 yield return this.CreateMap(command);

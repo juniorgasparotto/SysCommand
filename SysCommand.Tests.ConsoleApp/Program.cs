@@ -14,9 +14,6 @@ namespace SysCommand.Tests.ConsoleApp
             while (true)
             {
                 var app = new App();
-
-                app.ReadArgsWhenIsDebug = true;
-                app.Console.BreakLineInNextWrite = lastBreakLineInNextWrite;
                 app.Run();
                 lastBreakLineInNextWrite = app.Console.BreakLineInNextWrite;
 

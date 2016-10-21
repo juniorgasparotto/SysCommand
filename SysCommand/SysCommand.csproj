@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppHelpers.cs" />
     <Compile Include="CommandError.cs" />
     <Compile Include="EvaluateScope.cs" />
     <Compile Include="__deleteds\CommandParseLevelResult.cs" />
@@ -56,9 +57,8 @@
     <Compile Include="Extensions\IEnumerableCommandParseResultExtensions.cs" />
     <Compile Include="Extensions\IEnumerableCommandMapExtensions.cs" />
     <Compile Include="Map\DefaultMapper.cs" />
-    <Compile Include="Map\IMapper.cs" />
+    <Compile Include="Map\IMappingStrategy.cs" />
     <Compile Include="__deleteds\CommandTag.cs" />
-    <Compile Include="__core\Command66.cs" />
     <Compile Include="Execution\IEvaluationStrategy.cs" />
     <Compile Include="Members\MethodMain.cs" />
     <Compile Include="__deleteds\PriorityConstants.cs" />
@@ -74,29 +74,9 @@
     <Compile Include="__deleteds\__MapperDefault.cs" />
     <Compile Include="__deleteds\__Debug.cs" />
     <Compile Include="Evaluator.cs" />
-    <Compile Include="__core\ArgumentsParser.cs" />
     <Compile Include="Map\Attributes\ActionAttribute.cs" />
-    <Compile Include="__core\ActionInstance.cs" />
-    <Compile Include="__core\CommandAction.cs" />
-    <Compile Include="__core\ActionArgumentInstance.cs" />
-    <Compile Include="__core\Fclp\FclpActionArgumentSetup.cs" />
-    <Compile Include="__core\ActionSetup.cs" />
-    <Compile Include="__core\Interfaces\IParser.cs" />
-    <Compile Include="__core\RequestAction.cs" />
-    <Compile Include="__core\Request.cs" />
-    <Compile Include="__core\App333.cs" />
-    <Compile Include="__core\VerboseEnum.cs" />
     <Compile Include="Map\Attributes\ObjectFileAttribute.cs" />
-    <Compile Include="__core\AppHelpers.cs" />
-    <Compile Include="__core\FileHelper.cs" />
-    <Compile Include="__core\TypeNameSerializationBinder.cs" />
-    <Compile Include="__core\CommandStorage.cs" />
-    <Compile Include="__core\CommandArguments.cs" />
-    <Compile Include="__core\CommandPropertyAutoFill.cs" />
     <Compile Include="Map\Attributes\ArgumentAttribute.cs" />
-    <Compile Include="__core\Interfaces\IHelp.cs" />
-    <Compile Include="__core\Interfaces\ICommand.cs" />
-    <Compile Include="__core\Response.cs" />
     <Compile Include="Parser\ArgumentMappingState.cs" />
     <Compile Include="Parser\ActionMappingState.cs" />
     <Compile Include="Parser\ArgumentFormat.cs" />
@@ -109,12 +89,6 @@
     <Compile Include="Parser\CommandParser.cs" />
     <Compile Include="Members\CommandBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\fluent-command-line-parser\FluentCommandLineParser\FluentCommandLineParser.csproj">
-      <Project>{74cdfa61-81d8-40f2-b536-949baba15d3e}</Project>
-      <Name>FluentCommandLineParser</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

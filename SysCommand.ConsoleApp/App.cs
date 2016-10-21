@@ -10,42 +10,57 @@ namespace SysCommand.ConsoleApp
     {
         public static bool IsDebug { get { return System.Diagnostics.Debugger.IsAttached; } }
 
-        private AppRunCompleteHandler onComplete;
-        private AppRunExceptionHandler onException;
-        private AppRunOnBeforeMemberInvokeHandler onBeforeMemberInvoke;
-        private AppRunOnAfterMemberInvokeHandler onAfterMemberInvoke;
-        private AppRunOnMethodReturnHandler onMethodReturn;
+        public event AppRunCompleteHandler OnComplete;
+        public event AppRunExceptionHandler OnException;
+        public event AppRunOnBeforeMemberInvokeHandler OnBeforeMemberInvoke;
+        public event AppRunOnAfterMemberInvokeHandler OnAfterMemberInvoke;
+        public event AppRunOnMethodReturnHandler OnMethodReturn;
 
         private bool enableMultiAction;
-        private IMapper mapper;
+        private IMappingStrategy mapper;
         private IEvaluationStrategy evaluationStrategy;
-        private IMessageOutput messageOutput;
+        private IMessageFormatter messageFormatter;
+        private ConsoleWrapper console;
 
         public bool ReadArgsWhenIsDebug { get; set; }
         public IEnumerable<CommandMap> Maps { get; private set; }
 
-        public ConsoleWrapper Console { get; set; }
-        public IMessageOutput MessageOutput
+        public ConsoleWrapper Console
         {
             get
             {
-                return messageOutput ?? new MessageOutput();
+                return console ?? new ConsoleWrapper();
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("This property can't be null.");
 
-                messageOutput = value;
+                console = value;
+            }
+        }
+
+        public IMessageFormatter MessageFormatter
+        {
+            get
+            {
+                return messageFormatter ?? new DefaultMessageFormatter();
+            }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("This property can't be null.");
+
+                messageFormatter = value;
             }
         }
 
         public App(
             IEnumerable<Command> commands = null,
             bool enableMultiAction = true,
-            IMapper mapper = null,
+            IMappingStrategy mapper = null,
             IEvaluationStrategy evaluationStrategy = null,
-            IEventListener listener = null
+            bool addDefaultAppHandler = true
         )
         {
             // validate if some commands is attached in another app.
@@ -72,61 +87,37 @@ namespace SysCommand.ConsoleApp
             this.mapper = mapper ?? new DefaultMapper();
             this.evaluationStrategy = evaluationStrategy ?? new DefaultEvaluationStrategy();
 
-            // events
-            listener = listener ?? new DefaultEventListener();
-            this.onComplete = listener.OnComplete;
-            this.onException = listener.OnException;
-            this.onAfterMemberInvoke = listener.OnAfterMemberInvoke;
-            this.onBeforeMemberInvoke = listener.OnBeforeMemberInvoke;
-            this.onMethodReturn = listener.OnMethodReturn;
+            // add handler default
+            if (addDefaultAppHandler)
+                this.AddApplicationHandler(new DefaultApplicationHandler());
 
             // mapping
-            this.Maps = this.mapper.CreateMap(commands).ToList();
+            this.Maps = this.mapper.DoMappping(commands).ToList();
         }
 
-        public App OnComplete(AppRunCompleteHandler onComplete)
+        public App AddApplicationHandler(IApplicationHandler handler)
         {
-            this.onComplete = onComplete;
+            this.OnComplete += handler.OnComplete;
+            this.OnException += handler.OnException;
+            this.OnAfterMemberInvoke += handler.OnAfterMemberInvoke;
+            this.OnBeforeMemberInvoke += handler.OnBeforeMemberInvoke;
+            this.OnMethodReturn += handler.OnMethodReturn;
             return this;
         }
 
-        public App OnException(AppRunExceptionHandler onException)
-        {
-            this.onException = onException;
-            return this;
-        }
-
-        public App OnBeforeMemberInvoke(AppRunOnBeforeMemberInvokeHandler onBefore)
-        {
-            this.onBeforeMemberInvoke = onBefore;
-            return this;
-        }
-
-        public App OnAfterMemberInvoke(AppRunOnAfterMemberInvokeHandler onAfter)
-        {
-            this.onAfterMemberInvoke = onAfter;
-            return this;
-        }
-
-        public App OnMethotReturn(AppRunOnMethodReturnHandler onMethodReturn)
-        {
-            this.onMethodReturn = onMethodReturn;
-            return this;
-        }
-
-        public AppResult Run()
+        public ApplicationResult Run()
         {
             return this.Run(GetArguments());
         }
 
-        public AppResult Run(string arg)
+        public ApplicationResult Run(string arg)
         {
             return this.Run(AppHelpers.StringToArgs(arg));
         }
 
-        public AppResult Run(string[] args)
+        public ApplicationResult Run(string[] args)
         {
-            var appResult = new AppResult();
+            var appResult = new ApplicationResult();
             appResult.App = this;
             appResult.Args = args;
             appResult.ArgsOriginal = args;
@@ -172,13 +163,13 @@ namespace SysCommand.ConsoleApp
                 appResult.ParseResult = evaluator2.ParseResult;
                 appResult.EvaluateResult = evaluator2.Evaluate();
 
-                if (this.onComplete != null)
-                    this.onComplete(appResult);
+                if (this.OnComplete != null)
+                    this.OnComplete(appResult);
             }
             catch(Exception ex)
             {
-                if (this.onException != null)
-                    this.onException(appResult, ex);
+                if (this.OnException != null)
+                    this.OnException(appResult, ex);
                 else
                     throw ex;
             }
@@ -186,18 +177,18 @@ namespace SysCommand.ConsoleApp
             return appResult;
         }
 
-        private void MemberInvoke(AppResult args, IMember member)
+        private void MemberInvoke(ApplicationResult args, IMember member)
         {
             if (!member.IsInvoked)
             {
-                if (this.onBeforeMemberInvoke != null)
-                    this.onBeforeMemberInvoke(args, member);
+                if (this.OnBeforeMemberInvoke != null)
+                    this.OnBeforeMemberInvoke(args, member);
 
                 if (!member.IsInvoked)
                 {
                     member.Invoke();
-                    if (this.onAfterMemberInvoke != null)
-                        this.onAfterMemberInvoke(args, member);
+                    if (this.OnAfterMemberInvoke != null)
+                        this.OnAfterMemberInvoke(args, member);
                 }
             }
 
@@ -209,7 +200,8 @@ namespace SysCommand.ConsoleApp
 
             if (method != null && method.ReturnType != typeof(void) && member.Value != null)
             {
-                this.onMethodReturn(args, member);
+                if (this.OnMethodReturn != null)
+                    this.OnMethodReturn(args, member);
             }
         }
 
@@ -217,7 +209,7 @@ namespace SysCommand.ConsoleApp
         {
             if (App.IsDebug && this.ReadArgsWhenIsDebug)
             {
-                var args = this.Console.Read("Enter with args: ");
+                var args = this.Console.Read(Strings.GetArgumentsInDebug);
                 return AppHelpers.StringToArgs(args);
             }
             else

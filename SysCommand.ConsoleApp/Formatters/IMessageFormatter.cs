@@ -2,11 +2,11 @@
 
 namespace SysCommand.ConsoleApp
 {
-    public interface IMessageOutput
+    public interface IMessageFormatter
     {
         string GetMethodSpecification(ActionMap map);
         string GetPropertyErrorDescription(ArgumentMapped argumentMapped);
-        void ShowErrors(AppResult appResult);
-        void ShowNotFound(AppResult appResult);
+        void ShowErrors(ApplicationResult appResult);
+        void ShowNotFound(ApplicationResult appResult);
     }
 }

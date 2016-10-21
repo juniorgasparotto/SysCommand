@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -160,6 +159,11 @@ namespace SysCommand.ConsoleApp
                 Out.Write(str);
             }
             Console.ForegroundColor = color;
+        }
+
+        internal object Read(object debugGetArguments)
+        {
+            throw new NotImplementedException();
         }
 
         //public string ToJson(object obj)

@@ -44,13 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppDelegates.cs" />
-    <Compile Include="AppResult.cs" />
+    <Compile Include="Handlers\ApplicationDelegates.cs" />
+    <Compile Include="ApplicationResult.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="Listener\IMessageOutput.cs" />
-    <Compile Include="Listener\MessageOutput.cs" />
-    <Compile Include="Listener\IEventListener.cs" />
+    <Compile Include="Formatters\IMessageFormatter.cs" />
+    <Compile Include="Formatters\DefaultMessageFormatter.cs" />
+    <Compile Include="Handlers\IApplicationHandler.cs" />
     <Compile Include="Loader\AppDomainCommandLoader.cs" />
     <Compile Include="Commands\System\HelpCommand.cs" />
     <Compile Include="Commands\System\IHelpCommand.cs" />
@@ -58,15 +58,13 @@
     <Compile Include="Commands\System\ManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\Debug\ClearCommand.cs" />
     <Compile Include="Strings.cs" />
-    <Compile Include="__deleteds\HelperCommand.cs" />
     <Compile Include="Commands\System\ManagerCommand2.cs" />
     <Compile Include="Commands\User\VerboseCommand.cs" />
-    <Compile Include="Listener\DefaultEventListener.cs" />
+    <Compile Include="Handlers\DefaultApplicationHandler.cs" />
     <Compile Include="Console\ExitCodeConstants.cs" />
     <Compile Include="Console\ConsoleWrapper.cs" />
-    <Compile Include="TypeNameSerializationBinder.cs" />
+    <Compile Include="JsonUtils\TypeNameSerializationBinder.cs" />
     <Compile Include="Console\Verbose.cs" />
-    <Compile Include="__deleteds\MethodEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

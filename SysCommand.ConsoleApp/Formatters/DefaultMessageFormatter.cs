@@ -5,15 +5,15 @@ using System.Text;
 
 namespace SysCommand.ConsoleApp
 {
-    public class MessageOutput : IMessageOutput
+    public class DefaultMessageFormatter : IMessageFormatter
     {
-        public virtual void ShowErrors(AppResult appResult)
+        public virtual void ShowErrors(ApplicationResult appResult)
         {
             var strBuilder = this.GetErrors(appResult.EvaluateResult.Errors);
             appResult.App.Console.Write(strBuilder);
         }
 
-        public virtual void ShowNotFound(AppResult appResult)
+        public virtual void ShowNotFound(ApplicationResult appResult)
         {
             appResult.App.Console.Error(Strings.NotFoundMessage, false);
         }
