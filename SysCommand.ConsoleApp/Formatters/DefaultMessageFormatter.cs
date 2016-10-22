@@ -39,17 +39,17 @@ namespace SysCommand.ConsoleApp
         public virtual string GetPropertyErrorDescription(ArgumentMapped argumentMapped)
         {
             if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentAlreadyBeenSet))
-                return string.Format("The argument '{0}' has already been set", argumentMapped.GetArgumentNameInputted());
+                return string.Format(Strings.ArgumentAlreadyBeenSet, argumentMapped.GetArgumentNameInputted());
             else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentNotExistsByName))
-                return string.Format("The argument '{0}' does not exist", argumentMapped.GetArgumentNameInputted());
+                return string.Format(Strings.ArgumentNotExistsByName, argumentMapped.GetArgumentNameInputted());
             else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentNotExistsByValue))
-                return string.Format("Could not find an argument to the specified value: {0}", argumentMapped.Raw);
+                return string.Format(Strings.ArgumentNotExistsByValue, argumentMapped.Raw);
             else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsRequired))
-                return string.Format("The argument '{0}' is required", argumentMapped.GetArgumentNameInputted());
+                return string.Format(Strings.ArgumentIsRequired, argumentMapped.GetArgumentNameInputted());
             else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentHasInvalidInput))
-                return string.Format("The argument '{0}' is invalid", argumentMapped.GetArgumentNameInputted());
+                return string.Format(Strings.ArgumentHasInvalidInput, argumentMapped.GetArgumentNameInputted());
             else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentHasUnsupportedType))
-                return string.Format("The argument '{0}' is unsupported", argumentMapped.GetArgumentNameInputted());
+                return string.Format(Strings.ArgumentHasUnsupportedType, argumentMapped.GetArgumentNameInputted());
             return null;
         }
 
