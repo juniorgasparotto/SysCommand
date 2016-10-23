@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using SysCommand.Test;
-using SysCommand.Evaluation;
+using SysCommand.Execution;
 using SysCommand.Utils;
 using SysCommand.Utils.Extras;
 
@@ -60,17 +60,17 @@ namespace SysCommand.Tests.UnitTests
             };
 
             var parseResult = options.Parse(args);
-            var evaluationResult = options.Evaluate(parseResult);
+            var executionResult = options.Execute(parseResult);
 
-            switch (evaluationResult.State)
+            switch (executionResult.State)
             {
-                case EvaluateState.HasError:
+                case ExecutionState.HasError:
                     Assert.Fail();
                     break;
-                case EvaluateState.NotFound:
+                case ExecutionState.NotFound:
                     Assert.Fail();
                     break;
-                case EvaluateState.Success:
+                case ExecutionState.Success:
                     Assert.IsTrue(verbosity == true);
                     Assert.IsTrue(shouldShowHelp == true);
                     Assert.IsTrue(names.Count == 4);

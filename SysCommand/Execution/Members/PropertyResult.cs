@@ -1,7 +1,7 @@
 ﻿using SysCommand.Parsing;
 using System.Reflection;
 
-namespace SysCommand.Evaluation
+namespace SysCommand.Execution
 {
     public class PropertyResult : IMemberResult
     {

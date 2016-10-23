@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SysCommand.Evaluation
+namespace SysCommand.Execution
 {
     public static class IEnumerableIMemberResultExtensions
     {

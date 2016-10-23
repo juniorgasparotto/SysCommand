@@ -5,15 +5,15 @@ using SysCommand.Mapping;
 using SysCommand.Parsing;
 using SysCommand.Utils;
 
-namespace SysCommand.Evaluation
+namespace SysCommand.Execution
 {
-    public class DefaultEvaluationStrategy : IEvaluationStrategy
+    public class DefaultExecutionStrategy : IExecutionStrategy
     {
-        public EvaluateResult Evaluate(ParseResult parseResult, Action<IMemberResult> onInvoke)
+        public ExecutionResult Execute(ParseResult parseResult, Action<IMemberResult> onInvoke)
         {
             var results = new List<IMemberResult>();
-            var evaluateResult = new EvaluateResult();
-            evaluateResult.Results = results;
+            var executionResult = new ExecutionResult();
+            executionResult.Results = results;
 
             var countLevelsValid = parseResult.Levels.Count(l => l.Commands.Any(c => c.IsValid));
             var countArgumentRequired = parseResult.Levels.Count(l => l.Commands.Any(c => c.HasAnyArgumentRequired));
@@ -53,25 +53,25 @@ namespace SysCommand.Evaluation
                     results.InsertRange(0, mains);
                 }
 
-                var evaluateScope = new EvaluateScope()
+                var executionScope = new ExecutionScope()
                 {
                     ParseResult = parseResult,
-                    EvaluateResult = evaluateResult
+                    ExecutionResult = executionResult
                 };
 
-                foreach(var cmd in evaluateResult.Results.Select(f=> (CommandBase)f.Target))
-                    cmd.EvaluateScope = evaluateScope;
+                foreach(var cmd in executionResult.Results.Select(f=> (CommandBase)f.Target))
+                    cmd.ExecutionScope = executionScope;
 
-                evaluateResult.Results.With<PropertyResult>().Invoke(onInvoke);
-                evaluateResult.Results.With<MethodMainResult>().Invoke(onInvoke);
-                evaluateResult.Results.With<MethodResult>().Invoke(onInvoke);
+                executionResult.Results.With<PropertyResult>().Invoke(onInvoke);
+                executionResult.Results.With<MethodMainResult>().Invoke(onInvoke);
+                executionResult.Results.With<MethodResult>().Invoke(onInvoke);
 
-                evaluateResult.State = EvaluateState.Success;
+                executionResult.State = ExecutionState.Success;
             }
             else
             {
                 var errors = this.CreateErrors(parseResult);
-                evaluateResult.Errors = errors;
+                executionResult.Errors = errors;
 
                 var hasMethodsInvalid = false;
                 var hasMethodsValid = false;
@@ -100,15 +100,15 @@ namespace SysCommand.Evaluation
                 var hasMember = hasMethodsValid || hasMethodsInvalid || hasPropertyValid;
 
                 if (!hasMember && (allPropertiesNotExists == null || allPropertiesNotExists == true))
-                    evaluateResult.State = EvaluateState.NotFound;
+                    executionResult.State = ExecutionState.NotFound;
                 else
-                    evaluateResult.State = EvaluateState.HasError;
+                    executionResult.State = ExecutionState.HasError;
             }
 
-            return evaluateResult;
+            return executionResult;
         }
 
-        private IEnumerable<EvaluateError> CreateErrors(ParseResult parseResult)
+        private IEnumerable<ExecutionError> CreateErrors(ParseResult parseResult)
         {
             var levelsInvalid = 
                 parseResult
@@ -118,7 +118,7 @@ namespace SysCommand.Evaluation
             var commandsInvalids = levelsInvalid.SelectMany(f => f.Commands.Where(c => c.HasError));
             var groupsCommands = commandsInvalids.GroupBy(f => f.Command);
 
-            var commandsErrors = new List<EvaluateError>();
+            var commandsErrors = new List<ExecutionError>();
             foreach (var groupCommand in groupsCommands)
             {
                 var propertiesInvalid = new List<ArgumentParsed>();
@@ -126,7 +126,7 @@ namespace SysCommand.Evaluation
                 methodsInvalid.AddRange(groupCommand.SelectMany(f => f.MethodsInvalid));
                 propertiesInvalid.AddRange(groupCommand.SelectMany(f => f.PropertiesInvalid));
 
-                var commandError = new EvaluateError();
+                var commandError = new ExecutionError();
                 commandError.Command = groupCommand.Key;
                 commandError.MethodsInvalid = methodsInvalid;
                 commandError.PropertiesInvalid = propertiesInvalid;

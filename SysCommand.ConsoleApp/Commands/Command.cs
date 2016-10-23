@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using SysCommand.Mapping;
-using SysCommand.Evaluation;
+using SysCommand.Execution;
 using SysCommand.Utils;
 
 namespace SysCommand.ConsoleApp
@@ -18,7 +18,7 @@ namespace SysCommand.ConsoleApp
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(1);
             var currentMethod = (MethodInfo)sf.GetMethod();
-            return this.EvaluateScope.ParseResult.Maps.GetMap(this.GetType()).Methods.FirstOrDefault(m => AppHelpers.MethodsAreEquals(m.Method, currentMethod));
+            return this.ExecutionScope.ParseResult.Maps.GetMap(this.GetType()).Methods.FirstOrDefault(m => AppHelpers.MethodsAreEquals(m.Method, currentMethod));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -30,7 +30,7 @@ namespace SysCommand.ConsoleApp
             
             // return this method (eg: save) in all levels
             // -> save 1 2 3 save 4 5 6 save 7 8 9
-            var allMethodResult = this.EvaluateScope.EvaluateResult.Results.With<MethodResult>();
+            var allMethodResult = this.ExecutionScope.ExecutionResult.Results.With<MethodResult>();
             var thisMethodForEachLevel = allMethodResult.Where(m => AppHelpers.MethodsAreEquals(m.ActionParsed.ActionMap.Method, currentMethod)).ToList();
 
             //  1.0) f.IsInvoked = false: save 1 2 3 -> FIRST: IsInvoked = FALSE

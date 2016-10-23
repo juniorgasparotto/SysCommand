@@ -1,4 +1,4 @@
-﻿namespace SysCommand.Evaluation
+﻿namespace SysCommand.Execution
 {
     public interface IMemberResult
     {

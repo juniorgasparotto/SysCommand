@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace SysCommand.Evaluation
+namespace SysCommand.Execution
 {
     public class MethodMainResult : IMemberResult
     {

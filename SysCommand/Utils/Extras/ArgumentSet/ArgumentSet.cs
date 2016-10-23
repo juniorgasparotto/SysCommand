@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using SysCommand.Parsing;
 using System.Collections;
-using SysCommand.Evaluation;
+using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.Utils;
 
@@ -74,37 +74,37 @@ namespace SysCommand.Utils.Extras
             return parseResult;
         }
 
-        public EvaluateResult Evaluate(ParseResult parseResult)
+        public ExecutionResult Execute(ParseResult parseResult)
         {
             var results = new List<IMemberResult>();
-            var evaluateResult = new EvaluateResult();
-            evaluateResult.Results = results;
+            var executionResult = new ExecutionResult();
+            executionResult.Results = results;
 
             var commandParse = parseResult.Levels.First().Commands.First();
             if (commandParse.IsValid)
             {
                 var properties = commandParse.Properties;
                 results.AddRange(properties.Select(f => new ArgumentResult(f)));
-                evaluateResult.Results.Invoke(this.OnInvoke);
-                evaluateResult.State = EvaluateState.Success;
+                executionResult.Results.Invoke(this.OnInvoke);
+                executionResult.State = ExecutionState.Success;
             }
             else
             {
                 var errors = this.CreateErrors(parseResult);
-                evaluateResult.Errors = errors;
+                executionResult.Errors = errors;
 
                 bool allPropertiesNotExists = commandParse.PropertiesInvalid.All(f => f.ParsingType == ArgumentParsedType.NotMapped);
 
                 if (allPropertiesNotExists)
-                    evaluateResult.State = EvaluateState.NotFound;
+                    executionResult.State = ExecutionState.NotFound;
                 else
-                    evaluateResult.State = EvaluateState.HasError;
+                    executionResult.State = ExecutionState.HasError;
             }
 
-            return evaluateResult;
+            return executionResult;
         }
 
-        private IEnumerable<EvaluateError> CreateErrors(ParseResult parseResult)
+        private IEnumerable<ExecutionError> CreateErrors(ParseResult parseResult)
         {
             var levelsInvalid =
                 parseResult
@@ -114,12 +114,12 @@ namespace SysCommand.Utils.Extras
             var commandsInvalids = levelsInvalid.SelectMany(f => f.Commands.Where(c => c.HasError));
             var groupsCommands = commandsInvalids.GroupBy(f => f.Command);
 
-            var commandsErrors = new List<EvaluateError>();
+            var commandsErrors = new List<ExecutionError>();
             foreach (var groupCommand in groupsCommands)
             {
                 var propertiesInvalid = new List<ArgumentParsed>();
                 propertiesInvalid.AddRange(groupCommand.SelectMany(f => f.PropertiesInvalid));
-                var commandError = new EvaluateError();
+                var commandError = new ExecutionError();
                 commandError.Command = groupCommand.Key;
                 commandError.PropertiesInvalid = propertiesInvalid;
                 commandsErrors.Add(commandError);

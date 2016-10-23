@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace SysCommand.Evaluation
+namespace SysCommand.Execution
 {
     public class MethodResult : IMemberResult
     {

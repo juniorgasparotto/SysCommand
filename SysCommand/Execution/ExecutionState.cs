@@ -1,6 +1,6 @@
-﻿namespace SysCommand.Evaluation
+﻿namespace SysCommand.Execution
 {
-    public enum EvaluateState
+    public enum ExecutionState
     {
         Success,
         HasError,

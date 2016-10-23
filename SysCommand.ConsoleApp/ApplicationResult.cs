@@ -3,7 +3,7 @@ using System.Linq;
 using System;
 using System.IO;
 using System.Reflection;
-using SysCommand.Evaluation;
+using SysCommand.Execution;
 using SysCommand.Parsing;
 
 namespace SysCommand.ConsoleApp
@@ -14,7 +14,7 @@ namespace SysCommand.ConsoleApp
         public string[] Args { get; internal set; }
         public string[] ArgsOriginal { get; internal set; }
         public ParseResult ParseResult { get; internal set; }
-        public EvaluateResult EvaluateResult { get; internal set; }
+        public ExecutionResult ExecutionResult { get; internal set; }
         internal ApplicationResult() { }
     }
 }

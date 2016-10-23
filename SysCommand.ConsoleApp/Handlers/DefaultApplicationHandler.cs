@@ -1,4 +1,4 @@
-﻿using SysCommand.Evaluation;
+﻿using SysCommand.Execution;
 using System;
 using System.Collections;
 
@@ -8,17 +8,17 @@ namespace SysCommand.ConsoleApp
     {
         public virtual void OnComplete(ApplicationResult appResult)
         {
-            switch (appResult.EvaluateResult.State)
+            switch (appResult.ExecutionResult.State)
             {
-                case EvaluateState.Success:
+                case ExecutionState.Success:
                     if (!appResult.App.Console.ExitCodeHasValue)
                         appResult.App.Console.ExitCode = ExitCodeConstants.Success;
                     break;
-                case EvaluateState.NotFound:
+                case ExecutionState.NotFound:
                     appResult.App.Console.ExitCode = ExitCodeConstants.Error;
                     appResult.App.MessageFormatter.ShowNotFound(appResult);
                     break;
-                case EvaluateState.HasError:
+                case ExecutionState.HasError:
                     appResult.App.Console.ExitCode = ExitCodeConstants.Error;
                     appResult.App.MessageFormatter.ShowErrors(appResult);
                     break;

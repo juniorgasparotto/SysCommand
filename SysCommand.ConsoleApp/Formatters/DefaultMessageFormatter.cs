@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SysCommand.Evaluation;
+using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.Utils;
 
@@ -12,7 +12,7 @@ namespace SysCommand.ConsoleApp
     {
         public virtual void ShowErrors(ApplicationResult appResult)
         {
-            var strBuilder = this.GetErrors(appResult.EvaluateResult.Errors);
+            var strBuilder = this.GetErrors(appResult.ExecutionResult.Errors);
             appResult.App.Console.Write(strBuilder);
         }
 
@@ -55,7 +55,7 @@ namespace SysCommand.ConsoleApp
             return null;
         }
 
-        private StringBuilder GetErrors(IEnumerable<EvaluateError> commandsErrors)
+        private StringBuilder GetErrors(IEnumerable<ExecutionError> commandsErrors)
         {
             var strBuilder = new StringBuilder();
             var count = commandsErrors.Count();

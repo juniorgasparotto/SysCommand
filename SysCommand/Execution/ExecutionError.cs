@@ -2,15 +2,15 @@
 using SysCommand.Parsing;
 using System.Collections.Generic;
 
-namespace SysCommand.Evaluation
+namespace SysCommand.Execution
 {
-    public class EvaluateError
+    public class ExecutionError
     {
         public CommandBase Command { get; set; }
         public IEnumerable<ArgumentParsed> PropertiesInvalid { get; set; }
         public IEnumerable<ActionParsed> MethodsInvalid { get; set; }
 
-        public EvaluateError()
+        public ExecutionError()
         {
             
         }

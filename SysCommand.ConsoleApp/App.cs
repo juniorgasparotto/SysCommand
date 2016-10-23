@@ -2,7 +2,7 @@
 using System.Linq;
 using System;
 using System.Reflection;
-using SysCommand.Evaluation;
+using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.Utils;
 using SysCommand.Parsing;
@@ -21,8 +21,8 @@ namespace SysCommand.ConsoleApp
 
         private bool enableMultiAction;
         private IMappingStrategy mapper;
-        private IParseStrategy parserStrategy;
-        private IEvaluationStrategy evaluationStrategy;
+        private IParseStrategy parser;
+        private IExecutionStrategy executor;
         private IMessageFormatter messageFormatter;
         private ConsoleWrapper console;
 
@@ -63,8 +63,8 @@ namespace SysCommand.ConsoleApp
             IEnumerable<Command> commands = null,
             bool enableMultiAction = true,
             IMappingStrategy mapper = null,
-            IParseStrategy parserStrategy = null,
-            IEvaluationStrategy evaluationStrategy = null,
+            IParseStrategy parser = null,
+            IExecutionStrategy executor = null,
             bool addDefaultAppHandler = true
         )
         {
@@ -90,8 +90,8 @@ namespace SysCommand.ConsoleApp
             // defaults
             this.Console = new ConsoleWrapper();
             this.mapper = mapper ?? new DefaultMappingStrategy();
-            this.evaluationStrategy = evaluationStrategy ?? new DefaultEvaluationStrategy();
-            this.parserStrategy = parserStrategy ?? new DefaultParseStrategy();
+            this.executor = executor ?? new DefaultExecutionStrategy();
+            this.parser = parser ?? new DefaultParseStrategy();
 
             // add handler default
             if (addDefaultAppHandler)
@@ -137,9 +137,9 @@ namespace SysCommand.ConsoleApp
                 if (manageCommand != null)
                 {
                     var parserHistory = new DefaultParseStrategy();
-                    var evaluatorHistory = new DefaultEvaluationStrategy();
+                    var evaluatorHistory = new DefaultExecutionStrategy();
                     var parseResultHistory = parserHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
-                    var newArgs = evaluatorHistory.Evaluate(parseResultHistory, null).Results.GetValue<string[]>();
+                    var newArgs = evaluatorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
                     if (newArgs != null)
                         appResult.Args = newArgs;
 
@@ -163,8 +163,8 @@ namespace SysCommand.ConsoleApp
                 //    userMaps.Remove(helpCommand);
                 //}
 
-                appResult.ParseResult = this.parserStrategy.Parse(appResult.Args, userMaps, this.enableMultiAction);
-                appResult.EvaluateResult = this.evaluationStrategy.Evaluate(appResult.ParseResult, (member) => this.MemberInvoke(appResult, member));
+                appResult.ParseResult = this.parser.Parse(appResult.Args, userMaps, this.enableMultiAction);
+                appResult.ExecutionResult = this.executor.Execute(appResult.ParseResult, (member) => this.MemberInvoke(appResult, member));
 
                 if (this.OnComplete != null)
                     this.OnComplete(appResult);
