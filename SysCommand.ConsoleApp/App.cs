@@ -84,7 +84,7 @@ namespace SysCommand.ConsoleApp
 
             // defaults
             this.Console = new ConsoleWrapper();
-            this.mapper = mapper ?? new DefaultMapper();
+            this.mapper = mapper ?? new DefaultMappingStrategy();
             this.evaluationStrategy = evaluationStrategy ?? new DefaultEvaluationStrategy();
 
             // add handler default

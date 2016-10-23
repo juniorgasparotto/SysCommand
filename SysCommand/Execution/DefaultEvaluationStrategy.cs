@@ -9,6 +9,11 @@ namespace SysCommand
     {
         public Action<IMember> OnInvoke { get; set; }
 
+        //public IEnumerable<CommandMap> DoMappping(IEnumerable<CommandBase> commands)
+        //{
+
+        //}
+
         public virtual ParseResult Parse(string[] args, IEnumerable<CommandMap> commandsMap, bool enableMultiAction)
         {
             var parseResult = new ParseResult();
@@ -18,7 +23,6 @@ namespace SysCommand
 
             IEnumerable<ArgumentRaw> initialExtraArguments;
             var methodsParsed = CommandParser.ParseActionMapped(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
-            //var extrasArguments = new List<ArgumentRaw>(initialExtraArguments);
 
             var hasMethodsParsed = methodsParsed.Count > 0;
             var hasExtras = initialExtraArguments.Any();
@@ -63,44 +67,15 @@ namespace SysCommand
                         else
                             commandParse.AddMethod(bestMethod);
 
-                        // CREATE PROPERTIES
                         // in this part of the code the method is 100% valid
                         // but can be exists extra arguments that are used 
                         // with properties inputs.
                         var argumentsExtras = bestMethod.ArgumentsExtras.SelectMany(f => f.AllRaw).ToList();
                         var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
                         this.ParseProperties(commandMap, commandParse, argumentsExtras);
-
-                        // CREATE PROPERTIES
-                        // in this part of the code the method is 100% valid
-                        // but can be exists extra arguments that are used 
-                        // with properties inputs.
-                        //var extrasArgumentsMethod = bestMethod.ArgumentsExtras.SelectMany(f => f.AllRaw).ToList();
-                        //extrasArguments.AddRange(extrasArgumentsMethod);
-                        ////var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
-                        //this.ParseProperties(commandMap, commandParse, argumentsExtras);
                     }
                 }
             }
-
-            // (args.Length == 0 && !hasMethodsParsed): This code is to prevent properties
-            // that are required but dosen't exists args
-            // Test: Test17_RequiredNoArgsAnd1CommandWith1PropertyObrigatory
-            //var hasExtras = extrasArguments.Any();
-            //if (hasExtras || (args.Length == 0 && !hasMethodsParsed))
-            //{
-            //    var level = new ParseResult.Level();
-            //    parseResult.Insert(0, level);
-
-            //    foreach (var commandMap in commandsMap)
-            //    {
-            //        var commandParse = new ParseResult.CommandParse();
-            //        commandParse.Command = commandMap.Command;
-            //        level.Add(commandParse);
-
-            //        this.ParseProperties(commandMap, commandParse, extrasArguments);
-            //    }
-            //}
 
             // organize level number
             var i = 0;
@@ -208,19 +183,6 @@ namespace SysCommand
             }
 
             return evaluateResult;
-        }
-
-        private bool HasAnyMember(ParseResult parseResult)
-        {
-            foreach (var level in parseResult.Levels)
-            {
-                foreach (var cmd in level.Commands)
-                    if (cmd.Methods.Any() || cmd.MethodsInvalid.Any()
-                        || cmd.Properties.Any() || cmd.PropertiesInvalid.Any())
-                        return true;
-            }
-
-            return false;
         }
 
         private List<CommandError> CreateErrors(ParseResult parseResult)

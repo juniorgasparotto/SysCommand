@@ -56,7 +56,7 @@
     <Compile Include="__deleteds\CommandParseResult.cs" />
     <Compile Include="Extensions\IEnumerableCommandParseResultExtensions.cs" />
     <Compile Include="Extensions\IEnumerableCommandMapExtensions.cs" />
-    <Compile Include="Map\DefaultMapper.cs" />
+    <Compile Include="Map\DefaultMappingStrategy.cs" />
     <Compile Include="Map\IMappingStrategy.cs" />
     <Compile Include="__deleteds\CommandTag.cs" />
     <Compile Include="Execution\IEvaluationStrategy.cs" />
@@ -75,7 +75,7 @@
     <Compile Include="__deleteds\__Debug.cs" />
     <Compile Include="Evaluator.cs" />
     <Compile Include="Map\Attributes\ActionAttribute.cs" />
-    <Compile Include="Map\Attributes\ObjectFileAttribute.cs" />
+    <Compile Include="FileObject\Attributes\ObjectFileAttribute.cs" />
     <Compile Include="Map\Attributes\ArgumentAttribute.cs" />
     <Compile Include="Parser\ArgumentMappingState.cs" />
     <Compile Include="Parser\ActionMappingState.cs" />

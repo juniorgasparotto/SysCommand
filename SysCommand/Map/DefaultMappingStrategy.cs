@@ -6,7 +6,7 @@ using SysCommand.Parser;
 
 namespace SysCommand
 {
-    public class DefaultMapper : IMappingStrategy
+    public class DefaultMappingStrategy : IMappingStrategy
     {
         public CommandMap CreateMap(CommandBase command)
         {

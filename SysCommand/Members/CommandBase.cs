@@ -4,7 +4,7 @@ namespace SysCommand
 {
     public abstract class CommandBase
     {
-        public EvaluateScope EvaluateScope { get; internal set; }
+        public EvaluateScope EvaluateScope { get; set; }
         public object Tag { get; set; }
         public int OrderExecution { get; set; }
         public bool OnlyInDebug { get; set; }
