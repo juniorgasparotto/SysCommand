@@ -50,8 +50,8 @@
       "HasUnsuporttedType": true,
       "HasInvalidInput": false,
       "Type": "SysCommand.Tests.UnitTests.ArgumentMappedTestObject, SysCommand.Tests.UnitTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "MappingType": "Name",
-      "MappingStates": "ArgumentHasUnsupportedType, IsInvalid",
+      "ParsingType": "Name",
+      "ParsingStates": "ArgumentHasUnsupportedType, IsInvalid",
       "Map": {
         "MapName": "unsuporttedType",
         "LongName": "unsuportted-type",
@@ -96,8 +96,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "DefaultValue",
-      "MappingStates": "Valid",
+      "ParsingType": "DefaultValue",
+      "ParsingStates": "Valid",
       "Map": {
         "MapName": "defaultValue",
         "LongName": "default-value",

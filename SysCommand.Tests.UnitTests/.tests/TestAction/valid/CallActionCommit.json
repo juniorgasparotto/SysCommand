@@ -366,8 +366,8 @@
           "HasUnsuporttedType": false,
           "HasInvalidInput": false,
           "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "Position",
-          "MappingStates": "Valid",
+          "ParsingType": "Position",
+          "ParsingStates": "Valid",
           "Map": {
             "MapName": "a",
             "LongName": null,
@@ -410,8 +410,8 @@
           "HasUnsuporttedType": false,
           "HasInvalidInput": false,
           "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "Position",
-          "MappingStates": "Valid",
+          "ParsingType": "Position",
+          "ParsingStates": "Valid",
           "Map": {
             "MapName": "b",
             "LongName": null,
@@ -450,7 +450,7 @@
       ],
       "ArgumentsExtras": [],
       "Level": 0,
-      "MappingStates": "Valid"
+      "ParsingStates": "Valid"
     }
   ]
 }

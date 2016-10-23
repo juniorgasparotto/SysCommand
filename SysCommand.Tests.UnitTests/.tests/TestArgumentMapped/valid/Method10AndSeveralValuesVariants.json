@@ -60,8 +60,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "Position",
-      "MappingStates": "Valid",
+      "ParsingType": "Position",
+      "ParsingStates": "Valid",
       "Map": {
         "MapName": "v1",
         "LongName": "v1",
@@ -194,8 +194,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "HasNoInput",
-      "MappingStates": "ArgumentIsRequired, IsInvalid",
+      "ParsingType": "HasNoInput",
+      "ParsingStates": "ArgumentIsRequired, IsInvalid",
       "Map": {
         "MapName": "v2",
         "LongName": "v2",

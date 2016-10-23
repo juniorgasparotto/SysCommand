@@ -55,8 +55,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.Collections.Generic.List`1[[System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "Position",
-      "MappingStates": "Valid",
+      "ParsingType": "Position",
+      "ParsingStates": "Valid",
       "Map": {
         "MapName": "lst",
         "LongName": "lst",
@@ -138,8 +138,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.Collections.Generic.List`1[[System.Char, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "Position",
-      "MappingStates": "Valid",
+      "ParsingType": "Position",
+      "ParsingStates": "Valid",
       "Map": {
         "MapName": "lst2",
         "LongName": "lst2",

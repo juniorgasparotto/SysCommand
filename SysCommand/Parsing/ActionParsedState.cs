@@ -3,7 +3,7 @@
 namespace SysCommand.Parsing
 {
     [Flags]
-    public enum ActionMappingState
+    public enum ActionParsedState
     {
         None = 0,
         Valid = 1,

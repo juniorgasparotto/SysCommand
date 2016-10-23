@@ -54,16 +54,16 @@ namespace SysCommand.Parsing
 
         public class CommandParse
         {
-            private List<ActionMapped> methods;
-            private List<ArgumentMapped> properties;
-            private List<ActionMapped> methodsInvalid;
-            private List<ArgumentMapped> propertiesInvalid;
+            private List<ActionParsed> methods;
+            private List<ArgumentParsed> properties;
+            private List<ActionParsed> methodsInvalid;
+            private List<ArgumentParsed> propertiesInvalid;
 
             public CommandBase Command { get; set; }
-            public IEnumerable<ActionMapped> Methods { get { return methods; } }
-            public IEnumerable<ArgumentMapped> Properties { get { return properties; } }
-            public IEnumerable<ActionMapped> MethodsInvalid { get { return methodsInvalid; } }
-            public IEnumerable<ArgumentMapped> PropertiesInvalid { get { return propertiesInvalid; } }
+            public IEnumerable<ActionParsed> Methods { get { return methods; } }
+            public IEnumerable<ArgumentParsed> Properties { get { return properties; } }
+            public IEnumerable<ActionParsed> MethodsInvalid { get { return methodsInvalid; } }
+            public IEnumerable<ArgumentParsed> PropertiesInvalid { get { return propertiesInvalid; } }
 
             public bool HasError
             {
@@ -85,54 +85,54 @@ namespace SysCommand.Parsing
             {
                 get
                 {
-                    return this.propertiesInvalid.Any(f => f.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsRequired));
+                    return this.propertiesInvalid.Any(f => f.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsRequired));
                 }
             }
 
             public CommandParse()
             {
-                this.methods = new List<ActionMapped>();
-                this.methodsInvalid = new List<ActionMapped>();
-                this.propertiesInvalid = new List<ArgumentMapped>();
-                this.properties = new List<ArgumentMapped>();
+                this.methods = new List<ActionParsed>();
+                this.methodsInvalid = new List<ActionParsed>();
+                this.propertiesInvalid = new List<ArgumentParsed>();
+                this.properties = new List<ArgumentParsed>();
             }
 
-            public void AddMethod(ActionMapped method)
+            public void AddMethod(ActionParsed method)
             {
                 this.methods.Add(method);
             }
 
-            public void AddMethods(IEnumerable<ActionMapped> methods)
+            public void AddMethods(IEnumerable<ActionParsed> methods)
             {
                 this.methods.AddRange(methods);
             }
 
-            public void AddMethodInvalid(ActionMapped method)
+            public void AddMethodInvalid(ActionParsed method)
             {
                 this.methodsInvalid.Add(method);
             }
 
-            public void AddMethodsInvalid(IEnumerable<ActionMapped> method)
+            public void AddMethodsInvalid(IEnumerable<ActionParsed> method)
             {
                 this.methodsInvalid.AddRange(method);
             }
 
-            public void AddProperty(ArgumentMapped property)
+            public void AddProperty(ArgumentParsed property)
             {
                 this.properties.Add(property);
             }
 
-            public void AddProperties(IEnumerable<ArgumentMapped> properties)
+            public void AddProperties(IEnumerable<ArgumentParsed> properties)
             {
                 this.properties.AddRange(properties);
             }
 
-            public void AddPropertyInvalid(ArgumentMapped property)
+            public void AddPropertyInvalid(ArgumentParsed property)
             {
                 this.propertiesInvalid.Add(property);
             }
 
-            public void AddPropertiesInvalid(IEnumerable<ArgumentMapped> properties)
+            public void AddPropertiesInvalid(IEnumerable<ArgumentParsed> properties)
             {
                 this.propertiesInvalid.AddRange(properties);
             }

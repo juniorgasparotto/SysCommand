@@ -10,6 +10,6 @@ namespace SysCommand.ConsoleApp
         void ShowNotFound(ApplicationResult appResult);
         void ShowMethodReturn(ApplicationResult appResult, IMemberResult method, object value);
         string GetMethodSpecification(ActionMap map);
-        string GetPropertyErrorDescription(ArgumentMapped argumentMapped);
+        string GetPropertyErrorDescription(ArgumentParsed argumentParsed);
     }
 }

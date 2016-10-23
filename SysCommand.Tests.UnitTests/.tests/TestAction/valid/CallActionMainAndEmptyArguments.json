@@ -348,8 +348,8 @@
           "HasUnsuporttedType": false,
           "HasInvalidInput": false,
           "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "HasNoInput",
-          "MappingStates": "ArgumentIsRequired, IsInvalid",
+          "ParsingType": "HasNoInput",
+          "ParsingStates": "ArgumentIsRequired, IsInvalid",
           "Map": {
             "MapName": "args",
             "LongName": "args",
@@ -376,7 +376,7 @@
       ],
       "ArgumentsExtras": [],
       "Level": 0,
-      "MappingStates": "IsInvalid"
+      "ParsingStates": "IsInvalid"
     }
   ]
 }

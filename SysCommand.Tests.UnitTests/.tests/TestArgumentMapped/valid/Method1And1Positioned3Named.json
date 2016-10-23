@@ -70,8 +70,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "Position",
-      "MappingStates": "Valid",
+      "ParsingType": "Position",
+      "ParsingStates": "Valid",
       "Map": {
         "MapName": "a",
         "LongName": null,
@@ -116,8 +116,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "NotMapped",
-      "MappingStates": "ArgumentAlreadyBeenSet, IsInvalid",
+      "ParsingType": "NotMapped",
+      "ParsingStates": "ArgumentAlreadyBeenSet, IsInvalid",
       "Map": null,
       "Raw": "value1",
       "AllRaw": [
@@ -143,8 +143,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "Name",
-      "MappingStates": "Valid",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
       "Map": {
         "MapName": "b",
         "LongName": null,
@@ -189,8 +189,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "Name",
-      "MappingStates": "Valid",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
       "Map": {
         "MapName": "c",
         "LongName": null,

@@ -6,23 +6,23 @@ namespace SysCommand.Utils.Extras
 {
     public class ArgumentResult : IMemberResult
     {
-        public ArgumentMapped ArgumentMapped { get; private set; }
+        public ArgumentParsed ArgumentParsed { get; private set; }
         public MethodInfo MethodInfo { get; private set; }
         public string Name { get; private set; }
         public object Source { get; private set; }
         public object Value { get; set; }
         public bool IsInvoked { get; set; }
 
-        public ArgumentResult(ArgumentMapped argumentMapped)
+        public ArgumentResult(ArgumentParsed argumentParsed)
         {
-            this.ArgumentMapped = argumentMapped;
-            this.Name = this.ArgumentMapped.Name;
+            this.ArgumentParsed = argumentParsed;
+            this.Name = this.ArgumentParsed.Name;
 
-            if (argumentMapped.Map != null)
+            if (argumentParsed.Map != null)
             { 
-                this.MethodInfo = (MethodInfo)argumentMapped.Map.PropertyOrParameter;
-                this.Value = argumentMapped.Value;
-                this.Source = argumentMapped.Map.Source;
+                this.MethodInfo = (MethodInfo)argumentParsed.Map.PropertyOrParameter;
+                this.Value = argumentParsed.Value;
+                this.Source = argumentParsed.Map.Source;
             }
         }
 

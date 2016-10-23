@@ -338,8 +338,8 @@
           "HasUnsuporttedType": false,
           "HasInvalidInput": false,
           "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "HasNoInput",
-          "MappingStates": "ArgumentIsRequired, IsInvalid",
+          "ParsingType": "HasNoInput",
+          "ParsingStates": "ArgumentIsRequired, IsInvalid",
           "Map": {
             "MapName": "args",
             "LongName": "args",
@@ -366,7 +366,7 @@
       ],
       "ArgumentsExtras": [],
       "Level": 0,
-      "MappingStates": "IsInvalid"
+      "ParsingStates": "IsInvalid"
     },
     {
       "Name": "MethodDefault",
@@ -433,8 +433,8 @@
           "HasUnsuporttedType": false,
           "HasInvalidInput": false,
           "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "DefaultValue",
-          "MappingStates": "Valid",
+          "ParsingType": "DefaultValue",
+          "ParsingStates": "Valid",
           "Map": {
             "MapName": "a",
             "LongName": null,
@@ -465,8 +465,8 @@
           "HasUnsuporttedType": false,
           "HasInvalidInput": false,
           "Type": "System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "DefaultValue",
-          "MappingStates": "Valid",
+          "ParsingType": "DefaultValue",
+          "ParsingStates": "Valid",
           "Map": {
             "MapName": "b",
             "LongName": null,
@@ -493,7 +493,7 @@
       ],
       "ArgumentsExtras": [],
       "Level": 0,
-      "MappingStates": "Valid"
+      "ParsingStates": "Valid"
     },
     {
       "Name": "MethodDefault",
@@ -542,8 +542,8 @@
           "HasUnsuporttedType": false,
           "HasInvalidInput": false,
           "Type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "DefaultValue",
-          "MappingStates": "Valid",
+          "ParsingType": "DefaultValue",
+          "ParsingStates": "Valid",
           "Map": {
             "MapName": "a",
             "LongName": null,
@@ -570,7 +570,7 @@
       ],
       "ArgumentsExtras": [],
       "Level": 0,
-      "MappingStates": "Valid"
+      "ParsingStates": "Valid"
     }
   ]
 }

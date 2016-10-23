@@ -12,7 +12,7 @@
     // -e: HasNoInput
     // -j: NotMapped
     // -f: DefaultValue
-    public enum ArgumentMappingType
+    public enum ArgumentParsedType
     {
         Name,
         Position,

@@ -5,23 +5,23 @@ namespace SysCommand.Evaluation
 {
     public class PropertyResult : IMemberResult
     {
-        public ArgumentMapped ArgumentMapped { get; private set; }
+        public ArgumentParsed ArgumentParsed { get; private set; }
         public PropertyInfo PropertyInfo { get; private set; }
         public string Name { get; private set; }
         public object Source { get; private set; }
         public object Value { get; set; }
         public bool IsInvoked { get; set; }
 
-        public PropertyResult(ArgumentMapped argumentMapped)
+        public PropertyResult(ArgumentParsed argumentParsed)
         {
-            this.ArgumentMapped = argumentMapped;
-            this.Name = this.ArgumentMapped.Name;
+            this.ArgumentParsed = argumentParsed;
+            this.Name = this.ArgumentParsed.Name;
 
-            if (argumentMapped.Map != null)
+            if (argumentParsed.Map != null)
             { 
-                this.PropertyInfo = (PropertyInfo)argumentMapped.Map.PropertyOrParameter;
-                this.Value = argumentMapped.Value;
-                this.Source = argumentMapped.Map.Source;
+                this.PropertyInfo = (PropertyInfo)argumentParsed.Map.PropertyOrParameter;
+                this.Value = argumentParsed.Value;
+                this.Source = argumentParsed.Map.Source;
             }
         }
 

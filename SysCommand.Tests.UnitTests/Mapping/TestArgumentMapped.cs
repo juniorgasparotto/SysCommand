@@ -36,7 +36,7 @@ namespace SysCommand.Tests.UnitTests
             string testContext = null;
             var args = AppHelpers.CommandLineToArgs(input);
             var argsRaw = CommandParserUtils.ParseArgumentsRaw(args);
-            var argsMappeds = CommandParserUtils.ParseArgumentMapped(argsRaw, enablePositionedArgs, maps.ToArray());
+            var argsMappeds = CommandParserUtils.GetArgumentsParsed(argsRaw, enablePositionedArgs, maps.ToArray());
             var objectTest = new { input, maps, argsMappeds };
 
             var jsonSerializeConfig = TestHelper.GetJsonConfig();

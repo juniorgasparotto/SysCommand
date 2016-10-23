@@ -387,7 +387,7 @@ namespace SysCommand.Utils
 
         #region Converters - Step3
 
-        public static IEnumerable<ArgumentMapped> ParseArgumentMapped(IEnumerable<ArgumentRaw> argumentsRaw, bool enablePositionalArgs, IEnumerable<ArgumentMap> maps)
+        public static IEnumerable<ArgumentParsed> GetArgumentsParsed(IEnumerable<ArgumentRaw> argumentsRaw, bool enablePositionalArgs, IEnumerable<ArgumentMap> maps)
         {
             if (argumentsRaw == null)
                 throw new ArgumentNullException("argumentsRaw");
@@ -395,7 +395,7 @@ namespace SysCommand.Utils
             if (maps == null)
                 throw new ArgumentNullException("maps");
 
-            var argumentsMappeds = new List<ArgumentMapped>();
+            var argumentsMappeds = new List<ArgumentParsed>();
             var mapsUseds = maps.ToList();
 
             var i = 0;
@@ -419,28 +419,28 @@ namespace SysCommand.Utils
                     
                     if (map != null)
                     {
-                        var argMapped = new ArgumentMapped(map.MapName, GetValueRaw(argRaw.Value), null, map.Type, map);
+                        var argMapped = new ArgumentParsed(map.MapName, GetValueRaw(argRaw.Value), null, map.Type, map);
                         argMapped.AddRaw(argRaw);
 
                         if (argRaw.Format == ArgumentFormat.Unnamed)
                         {
-                            argMapped.MappingType = ArgumentMappingType.Position;
+                            argMapped.ParsingType = ArgumentParsedType.Position;
                         }
                         else
                         {
-                            argMapped.MappingType = ArgumentMappingType.Name;
+                            argMapped.ParsingType = ArgumentParsedType.Name;
                         }
 
                         argumentsMappeds.Add(argMapped);
-                        ProcessArgumentMappedValue(enumerator, argumentsRaw, ref i, argRaw, map, argMapped);
+                        ProcessArgumentParsedValue(enumerator, argumentsRaw, ref i, argRaw, map, argMapped);
 
                         mapsUseds.Remove(map);
                     }
                     else
                     {
-                        var argMapped = new ArgumentMapped(argRaw.Name, GetValueRaw(argRaw.Value), argRaw.Value, typeof(string), null);
+                        var argMapped = new ArgumentParsed(argRaw.Name, GetValueRaw(argRaw.Value), argRaw.Value, typeof(string), null);
                         argMapped.AddRaw(argRaw);
-                        argMapped.MappingType = ArgumentMappingType.NotMapped;
+                        argMapped.ParsingType = ArgumentParsedType.NotMapped;
                         argumentsMappeds.Add(argMapped);
                     }
 
@@ -450,28 +450,28 @@ namespace SysCommand.Utils
 
             foreach (var mapWithoutInput in mapsUseds)
             {
-                var argMapped = new ArgumentMapped(mapWithoutInput.MapName, null, null, mapWithoutInput.Type, mapWithoutInput);
+                var argMapped = new ArgumentParsed(mapWithoutInput.MapName, null, null, mapWithoutInput.Type, mapWithoutInput);
                 argumentsMappeds.Add(argMapped);
 
                 if (mapWithoutInput.HasDefaultValue)
                 {
-                    argMapped.MappingType = ArgumentMappingType.DefaultValue;
+                    argMapped.ParsingType = ArgumentParsedType.DefaultValue;
                     argMapped.Value = mapWithoutInput.DefaultValue;
                     argMapped.ValueParsed = mapWithoutInput.DefaultValue;
                 }
                 else
                 {
-                    argMapped.MappingType = ArgumentMappingType.HasNoInput;
+                    argMapped.ParsingType = ArgumentParsedType.HasNoInput;
                 }
             }
 
             foreach (var arg in argumentsMappeds)
-                arg.MappingStates = GetArgumentMappingState(arg, argumentsMappeds);
+                arg.ParsingStates = GetArgumentParsingState(arg, argumentsMappeds);
 
             return argumentsMappeds;
         }
 
-        private static void ProcessArgumentMappedValue(IEnumerator<ArgumentRaw> enumerator, IEnumerable<ArgumentRaw> argumentsRaw, ref int i, ArgumentRaw argRaw, ArgumentMap map, ArgumentMapped argMapped)
+        private static void ProcessArgumentParsedValue(IEnumerator<ArgumentRaw> enumerator, IEnumerable<ArgumentRaw> argumentsRaw, ref int i, ArgumentRaw argRaw, ArgumentMap map, ArgumentParsed argMapped)
         {
             if (argRaw.Value == null && map.Type != typeof(bool))
             {
@@ -526,9 +526,9 @@ namespace SysCommand.Utils
             }
         }
 
-        public static IEnumerable<ActionMapped> ParseActionMapped(IEnumerable<ArgumentRaw> argumentsRaw, bool enableMultiAction, IEnumerable<ActionMap> maps, out IEnumerable<ArgumentRaw> initialExtraArguments)
+        public static IEnumerable<ActionParsed> GetActionsParsed(IEnumerable<ArgumentRaw> argumentsRaw, bool enableMultiAction, IEnumerable<ActionMap> maps, out IEnumerable<ArgumentRaw> initialExtraArguments)
         {
-            var actionsMapped = new List<ActionMapped>();
+            var actionsMapped = new List<ActionParsed>();
             var mapsDefaults = maps.Where(map => map.IsDefault);
 
             var initialExtraArgumentsAux = new List<ArgumentRaw>();
@@ -539,15 +539,15 @@ namespace SysCommand.Utils
             {
                 foreach (var map in mapsDefaults)
                 {
-                    var actionCallerDefault = new ActionMapped(map.MapName, map, null, 0);
+                    var actionCallerDefault = new ActionParsed(map.MapName, map, null, 0);
                     actionsMapped.Add(actionCallerDefault);
                 }
             }
             else
             {
                 //var argumentsRawDefault = new List<ArgumentRaw>();
-                List<ActionMapped> lastFounds = null;
-                List<ActionMapped> defaultsCallers = null;
+                List<ActionParsed> lastFounds = null;
+                List<ActionParsed> defaultsCallers = null;
                 bool continueSearchToNextAction = true;
                 var index = 0;
                 foreach (var argRaw in argumentsRaw)
@@ -573,10 +573,10 @@ namespace SysCommand.Utils
 
                     if (argRawAction != null)
                     {
-                        lastFounds = new List<ActionMapped>();
+                        lastFounds = new List<ActionParsed>();
                         foreach (var actionMap in founds)
                         {
-                            var actionCaller = new ActionMapped(actionMap.MapName, actionMap, argRaw, index);
+                            var actionCaller = new ActionParsed(actionMap.MapName, actionMap, argRaw, index);
                             lastFounds.Add(actionCaller);
                             actionsMapped.Add(actionCaller);
                         }
@@ -591,10 +591,10 @@ namespace SysCommand.Utils
                     {
                         if (mapsDefaults.Any())
                         {
-                            defaultsCallers = new List<ActionMapped>();
+                            defaultsCallers = new List<ActionParsed>();
                             foreach (var map in mapsDefaults)
                             {
-                                var actionCallerDefault = new ActionMapped(map.MapName, map, null, index);
+                                var actionCallerDefault = new ActionParsed(map.MapName, map, null, index);
                                 actionCallerDefault.AddArgumentRaw(argRaw);
                                 defaultsCallers.Add(actionCallerDefault);
                                 actionsMapped.Add(actionCallerDefault);
@@ -620,72 +620,69 @@ namespace SysCommand.Utils
 
             foreach (var action in actionsMapped)
             {
-                var argumentsMapped = ParseArgumentMapped(action.GetArgumentsRaw(), action.ActionMap.EnablePositionalArgs, action.ActionMap.ArgumentsMaps);
+                var argumentsMapped = GetArgumentsParsed(action.GetArgumentsRaw(), action.ActionMap.EnablePositionalArgs, action.ActionMap.ArgumentsMaps);
 
-                var argumentsExtras = argumentsMapped.Where(f => f.MappingType == ArgumentMappingType.NotMapped);
-                var arguments = argumentsMapped.Where(f => f.MappingType != ArgumentMappingType.NotMapped);
+                var argumentsExtras = argumentsMapped.Where(f => f.ParsingType == ArgumentParsedType.NotMapped);
+                var arguments = argumentsMapped.Where(f => f.ParsingType != ArgumentParsedType.NotMapped);
 
                 action.Arguments = arguments;
                 action.ArgumentsExtras = argumentsExtras;
-                action.MappingStates = GetActionMappingState(action);
+                action.ParsingStates = GetActionParsingState(action);
             }
 
             return actionsMapped;
         }
 
-        public static ActionMappingState GetActionMappingState(ActionMapped actionMapped)
+        public static ActionParsedState GetActionParsingState(ActionParsed actionParsed)
         {
-            ActionMappingState state = ActionMappingState.None;
+            ActionParsedState state = ActionParsedState.None;
 
-            var countMap = actionMapped.ActionMap.ArgumentsMaps.Count();
-            var countArgs = actionMapped.Arguments.Count();
-            var countExtras = actionMapped.ArgumentsExtras.Count();
-            var allValids = actionMapped.Arguments.All(f => f.MappingStates.HasFlag(ArgumentMappingState.Valid));
+            var countMap = actionParsed.ActionMap.ArgumentsMaps.Count();
+            var countArgs = actionParsed.Arguments.Count();
+            var countExtras = actionParsed.ArgumentsExtras.Count();
+            var allValids = actionParsed.Arguments.All(f => f.ParsingStates.HasFlag(ArgumentParsedState.Valid));
 
             if (countMap == 0 && countArgs == 0 && countExtras == 0)
             {
-                state |= ActionMappingState.Valid | ActionMappingState.NoArgumentsInMapAndInInput;
+                state |= ActionParsedState.Valid | ActionParsedState.NoArgumentsInMapAndInInput;
             }
             else
             {
                 if (countExtras > 0)
-                    state |= ActionMappingState.HasExtras;
+                    state |= ActionParsedState.HasExtras;
 
                 if (allValids)
-                    state |= ActionMappingState.Valid;
+                    state |= ActionParsedState.Valid;
                 else
-                    state |= ActionMappingState.IsInvalid;
+                    state |= ActionParsedState.IsInvalid;
             }
 
             return state;
         }
 
-        public static ArgumentMappingState GetArgumentMappingState(ArgumentMapped arg, IEnumerable<ArgumentMapped> argumentsMapped)
+        public static ArgumentParsedState GetArgumentParsingState(ArgumentParsed arg, IEnumerable<ArgumentParsed> argumentsMapped)
         {
-            if (arg.MappingType == ArgumentMappingType.NotMapped)
+            if (arg.ParsingType == ArgumentParsedType.NotMapped)
             {
                 if (arg.AllRaw.First().Format != ArgumentFormat.Unnamed)
                 {
                     var hasMappedBefore = argumentsMapped.Any(f => f.IsMapped && arg.Name.In(f.Map.LongName, f.Map.ShortName.ToString()) && f != arg);
                     if (hasMappedBefore)
-                        return ArgumentMappingState.ArgumentAlreadyBeenSet | ArgumentMappingState.IsInvalid;
+                        return ArgumentParsedState.ArgumentAlreadyBeenSet | ArgumentParsedState.IsInvalid;
                     else
-                        //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ArgumentNotExists, string.Format("The argument '{0}' does not exist", userParameterName)));
-                        return ArgumentMappingState.ArgumentNotExistsByName | ArgumentMappingState.IsInvalid;
+                        return ArgumentParsedState.ArgumentNotExistsByName | ArgumentParsedState.IsInvalid;
                 }
                 else
                 {
-                    //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ValueWithoutArgument, string.Format("Could not find an argument to the specified value: {0}", arg.Raw)));
-                    return ArgumentMappingState.ArgumentNotExistsByValue | ArgumentMappingState.IsInvalid;
+                    return ArgumentParsedState.ArgumentNotExistsByValue | ArgumentParsedState.IsInvalid;
                 }
             }
-            else if (!arg.Map.HasDefaultValue && arg.MappingType == ArgumentMappingType.HasNoInput)
+            else if (!arg.Map.HasDefaultValue && arg.ParsingType == ArgumentParsedType.HasNoInput)
             {
-                //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ArgumentIsRequired, string.Format("The argument '{0}' is required", userParameterName)));
                 if (arg.Map.IsOptional)
-                    return ArgumentMappingState.ArgumentIsNotRequired | ArgumentMappingState.IsInvalid;
+                    return ArgumentParsedState.ArgumentIsNotRequired | ArgumentParsedState.IsInvalid;
                 else
-                    return ArgumentMappingState.ArgumentIsRequired | ArgumentMappingState.IsInvalid;
+                    return ArgumentParsedState.ArgumentIsRequired | ArgumentParsedState.IsInvalid;
             }
             //else if (!arg.Map.IsOptional && arg.MappingType == ArgumentMappingType.HasNoInput)
             //{
@@ -695,15 +692,15 @@ namespace SysCommand.Utils
             else if (arg.IsMapped && arg.HasInvalidInput)
             {
                 //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ArgumentIsInvalid, string.Format("The argument '{0}' is invalid", userParameterName)));
-                return ArgumentMappingState.ArgumentHasInvalidInput | ArgumentMappingState.IsInvalid;
+                return ArgumentParsedState.ArgumentHasInvalidInput | ArgumentParsedState.IsInvalid;
             }
             else if (arg.IsMapped && arg.HasUnsuporttedType)
             {
                 //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ArgumentIsUnsupported, string.Format("The argument '{0}' is unsupported", userParameterName)));
-                return ArgumentMappingState.ArgumentHasUnsupportedType | ArgumentMappingState.IsInvalid;
+                return ArgumentParsedState.ArgumentHasUnsupportedType | ArgumentParsedState.IsInvalid;
             }
 
-            return ArgumentMappingState.Valid;
+            return ArgumentParsedState.Valid;
         }
 
         #endregion

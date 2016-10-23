@@ -7,8 +7,8 @@ namespace SysCommand.Evaluation
     public class EvaluateError
     {
         public CommandBase Command { get; set; }
-        public IEnumerable<ArgumentMapped> PropertiesInvalid { get; set; }
-        public IEnumerable<ActionMapped> MethodsInvalid { get; set; }
+        public IEnumerable<ArgumentParsed> PropertiesInvalid { get; set; }
+        public IEnumerable<ActionParsed> MethodsInvalid { get; set; }
 
         public EvaluateError()
         {

@@ -35,7 +35,7 @@ namespace SysCommand.Tests.UnitTests.Commands.T04
 
         private string GetDebugName(ActionMap map, MethodResult result)
         {
-            if (map != result.ActionMapped.ActionMap)
+            if (map != result.ActionParsed.ActionMap)
                 throw new Exception("There are errors in one of the methods: GetCurrentMethodMap() or GetCurrentMethodResult()");
 
             var specification = App.MessageFormatter.GetMethodSpecification(map);

@@ -3,7 +3,7 @@
 namespace SysCommand.Parsing
 {
     [Flags]
-    public enum ArgumentMappingState
+    public enum ArgumentParsedState
     {
         None = 0,
         ArgumentAlreadyBeenSet = 1,

@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-
-namespace SysCommand.ConsoleApp
+﻿namespace SysCommand.ConsoleApp
 {
     public static class ExitCodeConstants
     {

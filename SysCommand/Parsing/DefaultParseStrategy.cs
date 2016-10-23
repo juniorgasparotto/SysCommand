@@ -18,7 +18,7 @@ namespace SysCommand.Parsing
             var argumentsRaw = CommandParserUtils.ParseArgumentsRaw(args, allMethodsMaps);
 
             IEnumerable<ArgumentRaw> initialExtraArguments;
-            var methodsParsed = CommandParserUtils.ParseActionMapped(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
+            var methodsParsed = CommandParserUtils.GetActionsParsed(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
 
             var hasMethodsParsed = methodsParsed.Count > 0;
             var hasExtras = initialExtraArguments.Any();
@@ -81,7 +81,7 @@ namespace SysCommand.Parsing
             return parseResult;
         }
 
-        private ActionMapped GetBestMethod(IEnumerable<ActionMapped> methods, out bool isBestMethodButHasError)
+        private ActionParsed GetBestMethod(IEnumerable<ActionParsed> methods, out bool isBestMethodButHasError)
         {
             var candidates = methods
                     .Select(m => new
@@ -89,7 +89,7 @@ namespace SysCommand.Parsing
                         method = m,
                         countParameters = m.ActionMap.ArgumentsMaps.Count(),
                         countMappedParameters = m.Arguments.Count(a => a.IsMapped),
-                        countValidParameters = m.Arguments.Count(a => a.MappingStates.HasFlag(ArgumentMappingState.Valid))
+                        countValidParameters = m.Arguments.Count(a => a.ParsingStates.HasFlag(ArgumentParsedState.Valid))
                     })
                     .OrderByDescending(o => o.countMappedParameters)
                     .ThenBy(o => o.countParameters)
@@ -111,15 +111,15 @@ namespace SysCommand.Parsing
         
         private void ParseProperties(CommandMap commandMap, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
         {
-            var parseds = CommandParserUtils.ParseArgumentMapped(argumentsRaw, commandMap.Command.EnablePositionalArgs, commandMap.Properties);
-            commandParse.AddProperties(parseds.Where(f => f.MappingStates.HasFlag(ArgumentMappingState.Valid)));
+            var parseds = CommandParserUtils.GetArgumentsParsed(argumentsRaw, commandMap.Command.EnablePositionalArgs, commandMap.Properties);
+            commandParse.AddProperties(parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.Valid)));
 
             // Don't considere invalid args in this situation:
             // -> ArgumentMappingType.HasNoInput && ArgumentMappingState.ArgumentIsNotRequired
             // "ArgumentMappingType.HasNoInput": Means that args don't have input.
             // "ArgumentMappingState.ArgumentIsNotRequired": Means that args is optional.
             // in this situation the args is not consider invalid.
-            commandParse.AddPropertiesInvalid(parseds.Where(f => f.MappingStates.HasFlag(ArgumentMappingState.IsInvalid) && !f.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsNotRequired)));
+            commandParse.AddPropertiesInvalid(parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.IsInvalid) && !f.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsNotRequired)));
         }
     }
 }

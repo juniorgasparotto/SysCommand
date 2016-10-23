@@ -26,12 +26,12 @@ namespace SysCommand.Tests.UnitTests.Commands.T11
         public string Save(int a, int b)
         {
             var cur = this.CurrentMethodParse();
-            return GetDebugName(this.CurrentMethodMap(), cur) + " Level" + cur.ActionMapped.Level;
+            return GetDebugName(this.CurrentMethodMap(), cur) + " Level" + cur.ActionParsed.Level;
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)
         {
-            if (map != result.ActionMapped.ActionMap)
+            if (map != result.ActionParsed.ActionMap)
                 throw new Exception("There are errors in one of the methods: GetCurrentMethodMap() or GetCurrentMethodResult()");
 
             var specification = App.MessageFormatter.GetMethodSpecification(map);

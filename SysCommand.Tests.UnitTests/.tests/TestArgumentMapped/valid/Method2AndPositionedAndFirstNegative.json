@@ -70,8 +70,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "Position",
-      "MappingStates": "Valid",
+      "ParsingType": "Position",
+      "ParsingStates": "Valid",
       "Map": {
         "MapName": "value1",
         "LongName": "value1",
@@ -116,8 +116,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "Position",
-      "MappingStates": "Valid",
+      "ParsingType": "Position",
+      "ParsingStates": "Valid",
       "Map": {
         "MapName": "value2",
         "LongName": "value2",
@@ -162,8 +162,8 @@
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
       "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "MappingType": "Position",
-      "MappingStates": "Valid",
+      "ParsingType": "Position",
+      "ParsingStates": "Valid",
       "Map": {
         "MapName": "value3",
         "LongName": "value3",

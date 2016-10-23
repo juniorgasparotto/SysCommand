@@ -6,7 +6,7 @@ using SysCommand.Utils;
 
 namespace SysCommand.Parsing
 {
-    public class ArgumentMapped
+    public class ArgumentParsed
     {
         private List<ArgumentRaw> allRaw;
 
@@ -16,8 +16,8 @@ namespace SysCommand.Parsing
         public bool HasUnsuporttedType { get; set; }
         public bool HasInvalidInput { get; set; }
         public Type Type { get; set; }
-        public ArgumentMappingType MappingType { get; set; }
-        public ArgumentMappingState MappingStates { get; set; }
+        public ArgumentParsedType ParsingType { get; set; }
+        public ArgumentParsedState ParsingStates { get; set; }
         public ArgumentMap Map { get; set; }
 
         public string Raw
@@ -40,7 +40,7 @@ namespace SysCommand.Parsing
         {
             get
             {
-                if (this.MappingType.In(ArgumentMappingType.Name, ArgumentMappingType.Position))
+                if (this.ParsingType.In(ArgumentParsedType.Name, ArgumentParsedType.Position))
                     return true;
                 return false;
             }
@@ -50,13 +50,13 @@ namespace SysCommand.Parsing
         {
             get
             {
-                if (this.IsMapped || this.MappingType == ArgumentMappingType.DefaultValue)
+                if (this.IsMapped || this.ParsingType == ArgumentParsedType.DefaultValue)
                     return true;
                 return false;
             }
         }
 
-        public ArgumentMapped(string name, string valueParsed, string value, Type type, ArgumentMap map)
+        public ArgumentParsed(string name, string valueParsed, string value, Type type, ArgumentMap map)
         {
             this.Name = name;
             this.Value = value;

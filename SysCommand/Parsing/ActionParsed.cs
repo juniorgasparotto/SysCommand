@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 namespace SysCommand.Parsing
 {
-    public class ActionMapped
+    public class ActionParsed
     {
         private List<ArgumentRaw> argumentsRaw;
 
         public string Name { get; private set; }
         public ActionMap ActionMap { get; private set; }
         public ArgumentRaw ArgumentRawOfAction { get; private set; }
-        public IEnumerable<ArgumentMapped> Arguments { get; set; }
-        public IEnumerable<ArgumentMapped> ArgumentsExtras { get; internal set; }
+        public IEnumerable<ArgumentParsed> Arguments { get; set; }
+        public IEnumerable<ArgumentParsed> ArgumentsExtras { get; internal set; }
         public int Level { get; private set; }
-        public ActionMappingState MappingStates { get; set; }
+        public ActionParsedState ParsingStates { get; set; }
 
-        public ActionMapped(string name, ActionMap actionMap, ArgumentRaw argumentRawOfAction, int level)
+        public ActionParsed(string name, ActionMap actionMap, ArgumentRaw argumentRawOfAction, int level)
         {
             this.Name = name;
             this.ArgumentRawOfAction = argumentRawOfAction;

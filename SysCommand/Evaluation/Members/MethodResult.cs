@@ -8,7 +8,7 @@ namespace SysCommand.Evaluation
 {
     public class MethodResult : IMemberResult
     {
-        public ActionMapped ActionMapped { get; private set; }
+        public ActionParsed ActionParsed { get; private set; }
         public MethodInfo MethodInfo { get; private set; }
         public Dictionary<string, object> Parameters { get; private set; }
 
@@ -17,13 +17,13 @@ namespace SysCommand.Evaluation
         public object Value { get; set; }
         public bool IsInvoked { get; set; }
 
-        public MethodResult(ActionMapped actionMapped)
+        public MethodResult(ActionParsed actionParsed)
         {
-            this.ActionMapped = actionMapped;
-            this.MethodInfo = this.ActionMapped.ActionMap.Method;
-            this.Parameters = this.ActionMapped.Arguments.Where(f => f.IsMapped).ToDictionary(f => f.Name, f => f.Value);
-            this.Source = this.ActionMapped.ActionMap.Source;
-            this.Name = this.ActionMapped.Name;
+            this.ActionParsed = actionParsed;
+            this.MethodInfo = this.ActionParsed.ActionMap.Method;
+            this.Parameters = this.ActionParsed.Arguments.Where(f => f.IsMapped).ToDictionary(f => f.Name, f => f.Value);
+            this.Source = this.ActionParsed.ActionMap.Source;
+            this.Name = this.ActionParsed.Name;
         }
 
         public MethodResult(string name, string alias, object source, MethodInfo method, Dictionary<string, object> parameters)

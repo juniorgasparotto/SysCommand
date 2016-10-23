@@ -353,8 +353,8 @@
           "HasUnsuporttedType": false,
           "HasInvalidInput": false,
           "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "Name",
-          "MappingStates": "Valid",
+          "ParsingType": "Name",
+          "ParsingStates": "Valid",
           "Map": {
             "MapName": "args",
             "LongName": "args",
@@ -426,7 +426,7 @@
       ],
       "ArgumentsExtras": [],
       "Level": 0,
-      "MappingStates": "Valid"
+      "ParsingStates": "Valid"
     },
     {
       "Name": "Main",
@@ -487,8 +487,8 @@
           "HasUnsuporttedType": false,
           "HasInvalidInput": false,
           "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-          "MappingType": "Position",
-          "MappingStates": "Valid",
+          "ParsingType": "Position",
+          "ParsingStates": "Valid",
           "Map": {
             "MapName": "args",
             "LongName": "args",
@@ -527,7 +527,7 @@
       ],
       "ArgumentsExtras": [],
       "Level": 1,
-      "MappingStates": "Valid"
+      "ParsingStates": "Valid"
     }
   ]
 }

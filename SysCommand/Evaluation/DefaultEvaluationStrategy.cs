@@ -90,7 +90,7 @@ namespace SysCommand.Evaluation
                             hasPropertyValid = true;
 
                         var continueTrue = allPropertiesNotExists == null || allPropertiesNotExists == true;
-                        if (continueTrue && cmd.PropertiesInvalid.All(f => f.MappingType == ArgumentMappingType.NotMapped))
+                        if (continueTrue && cmd.PropertiesInvalid.All(f => f.ParsingType == ArgumentParsedType.NotMapped))
                             allPropertiesNotExists = true;
                         else
                             allPropertiesNotExists = false;
@@ -121,8 +121,8 @@ namespace SysCommand.Evaluation
             var commandsErrors = new List<EvaluateError>();
             foreach (var groupCommand in groupsCommands)
             {
-                var propertiesInvalid = new List<ArgumentMapped>();
-                var methodsInvalid = new List<ActionMapped>();
+                var propertiesInvalid = new List<ArgumentParsed>();
+                var methodsInvalid = new List<ActionParsed>();
                 methodsInvalid.AddRange(groupCommand.SelectMany(f => f.MethodsInvalid));
                 propertiesInvalid.AddRange(groupCommand.SelectMany(f => f.PropertiesInvalid));
 

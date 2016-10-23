@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System;
 using SysCommand.Evaluation;
 using SysCommand.Mapping;
 using SysCommand.Utils;
@@ -39,20 +38,20 @@ namespace SysCommand.ConsoleApp
             return string.Format(format, map.ActionName, args);
         }
 
-        public virtual string GetPropertyErrorDescription(ArgumentMapped argumentMapped)
+        public virtual string GetPropertyErrorDescription(ArgumentParsed argumentParsed)
         {
-            if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentAlreadyBeenSet))
-                return string.Format(Strings.ArgumentAlreadyBeenSet, argumentMapped.GetArgumentNameInputted());
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentNotExistsByName))
-                return string.Format(Strings.ArgumentNotExistsByName, argumentMapped.GetArgumentNameInputted());
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentNotExistsByValue))
-                return string.Format(Strings.ArgumentNotExistsByValue, argumentMapped.Raw);
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsRequired))
-                return string.Format(Strings.ArgumentIsRequired, argumentMapped.GetArgumentNameInputted());
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentHasInvalidInput))
-                return string.Format(Strings.ArgumentHasInvalidInput, argumentMapped.GetArgumentNameInputted());
-            else if (argumentMapped.MappingStates.HasFlag(ArgumentMappingState.ArgumentHasUnsupportedType))
-                return string.Format(Strings.ArgumentHasUnsupportedType, argumentMapped.GetArgumentNameInputted());
+            if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentAlreadyBeenSet))
+                return string.Format(Strings.ArgumentAlreadyBeenSet, argumentParsed.GetArgumentNameInputted());
+            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByName))
+                return string.Format(Strings.ArgumentNotExistsByName, argumentParsed.GetArgumentNameInputted());
+            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByValue))
+                return string.Format(Strings.ArgumentNotExistsByValue, argumentParsed.Raw);
+            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsRequired))
+                return string.Format(Strings.ArgumentIsRequired, argumentParsed.GetArgumentNameInputted());
+            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasInvalidInput))
+                return string.Format(Strings.ArgumentHasInvalidInput, argumentParsed.GetArgumentNameInputted());
+            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasUnsupportedType))
+                return string.Format(Strings.ArgumentHasUnsupportedType, argumentParsed.GetArgumentNameInputted());
             return null;
         }
 
@@ -87,7 +86,7 @@ namespace SysCommand.ConsoleApp
             return strBuilder;
         }
 
-        private void ShowInvalidMethods(StringBuilder strBuilder, IEnumerable<ActionMapped> methodsInvalid)
+        private void ShowInvalidMethods(StringBuilder strBuilder, IEnumerable<ActionParsed> methodsInvalid)
         {
             var iErr = 0;
             var count = methodsInvalid.Count();
@@ -95,13 +94,13 @@ namespace SysCommand.ConsoleApp
             foreach (var invalid in methodsInvalid)
             {
                 strBuilder.AppendLine(string.Format("Error in method: {0}", GetMethodSpecification(invalid.ActionMap)));
-                this.ShowInvalidProperties(strBuilder, invalid.Arguments.Where(f=>f.MappingStates.HasFlag(ArgumentMappingState.IsInvalid)));
+                this.ShowInvalidProperties(strBuilder, invalid.Arguments.Where(f=>f.ParsingStates.HasFlag(ArgumentParsedState.IsInvalid)));
                 if (++iErr < count)
                     strBuilder.AppendLine("\r\n");
             }
         }
 
-        private void ShowInvalidProperties(StringBuilder strBuilder, IEnumerable<ArgumentMapped> properties)
+        private void ShowInvalidProperties(StringBuilder strBuilder, IEnumerable<ArgumentParsed> properties)
         {
             var iErr = 0;
             var count = properties.Count();

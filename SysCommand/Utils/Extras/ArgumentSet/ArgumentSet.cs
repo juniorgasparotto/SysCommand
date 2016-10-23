@@ -48,7 +48,7 @@ namespace SysCommand.Utils.Extras
         {
             var parseResult = new ParseResult();
             var argumentsRaw = CommandParserUtils.ParseArgumentsRaw(args, null);
-            var parseds = CommandParserUtils.ParseArgumentMapped(argumentsRaw, false, this.argumentsMap);
+            var parseds = CommandParserUtils.GetArgumentsParsed(argumentsRaw, false, this.argumentsMap);
 
             var level = new ParseResult.Level()
             {
@@ -63,14 +63,14 @@ namespace SysCommand.Utils.Extras
             parseResult.Add(level);
             level.Add(commandParse);
 
-            commandParse.AddProperties(parseds.Where(f => f.MappingStates.HasFlag(ArgumentMappingState.Valid)));
+            commandParse.AddProperties(parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.Valid)));
 
             // Don't considere invalid args in this situation:
             // -> ArgumentMappingType.HasNoInput && ArgumentMappingState.ArgumentIsNotRequired
             // "ArgumentMappingType.HasNoInput": Means that args don't have input.
             // "ArgumentMappingState.ArgumentIsNotRequired": Means that args is optional.
             // in this situation the args is not consider invalid.
-            commandParse.AddPropertiesInvalid(parseds.Where(f => f.MappingStates.HasFlag(ArgumentMappingState.IsInvalid) && !f.MappingStates.HasFlag(ArgumentMappingState.ArgumentIsNotRequired)));
+            commandParse.AddPropertiesInvalid(parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.IsInvalid) && !f.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsNotRequired)));
             return parseResult;
         }
 
@@ -93,7 +93,7 @@ namespace SysCommand.Utils.Extras
                 var errors = this.CreateErrors(parseResult);
                 evaluateResult.Errors = errors;
 
-                bool allPropertiesNotExists = commandParse.PropertiesInvalid.All(f => f.MappingType == ArgumentMappingType.NotMapped);
+                bool allPropertiesNotExists = commandParse.PropertiesInvalid.All(f => f.ParsingType == ArgumentParsedType.NotMapped);
 
                 if (allPropertiesNotExists)
                     evaluateResult.State = EvaluateState.NotFound;
@@ -117,7 +117,7 @@ namespace SysCommand.Utils.Extras
             var commandsErrors = new List<EvaluateError>();
             foreach (var groupCommand in groupsCommands)
             {
-                var propertiesInvalid = new List<ArgumentMapped>();
+                var propertiesInvalid = new List<ArgumentParsed>();
                 propertiesInvalid.AddRange(groupCommand.SelectMany(f => f.PropertiesInvalid));
                 var commandError = new EvaluateError();
                 commandError.Command = groupCommand.Key;

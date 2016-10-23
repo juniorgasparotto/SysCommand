@@ -31,7 +31,7 @@ namespace SysCommand.ConsoleApp
             // return this method (eg: save) in all levels
             // -> save 1 2 3 save 4 5 6 save 7 8 9
             var allMethodResult = this.EvaluateScope.EvaluateResult.Results.With<MethodResult>();
-            var thisMethodForEachLevel = allMethodResult.Where(m => AppHelpers.MethodsAreEquals(m.ActionMapped.ActionMap.Method, currentMethod)).ToList();
+            var thisMethodForEachLevel = allMethodResult.Where(m => AppHelpers.MethodsAreEquals(m.ActionParsed.ActionMap.Method, currentMethod)).ToList();
 
             //  1.0) f.IsInvoked = false: save 1 2 3 -> FIRST: IsInvoked = FALSE
             //  1.1) f.IsInvoked = false: save 4 5 6 -> NO
