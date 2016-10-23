@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using SysCommand.ConsoleApp;
-using SysCommand.Evaluation;
 using System.IO;
 using SysCommand.Test;
 
