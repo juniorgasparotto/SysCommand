@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace SysCommand.Parsing
+namespace SysCommand.Mapping
 {
     public class ActionMap
     {

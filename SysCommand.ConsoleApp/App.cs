@@ -3,6 +3,9 @@ using System.Linq;
 using System;
 using System.Reflection;
 using SysCommand.Evaluation;
+using SysCommand.Mapping;
+using SysCommand.Utils;
+using SysCommand.Parsing;
 
 namespace SysCommand.ConsoleApp
 {
@@ -18,6 +21,7 @@ namespace SysCommand.ConsoleApp
 
         private bool enableMultiAction;
         private IMappingStrategy mapper;
+        private IParseStrategy parserStrategy;
         private IEvaluationStrategy evaluationStrategy;
         private IMessageFormatter messageFormatter;
         private ConsoleWrapper console;
@@ -59,6 +63,7 @@ namespace SysCommand.ConsoleApp
             IEnumerable<Command> commands = null,
             bool enableMultiAction = true,
             IMappingStrategy mapper = null,
+            IParseStrategy parserStrategy = null,
             IEvaluationStrategy evaluationStrategy = null,
             bool addDefaultAppHandler = true
         )
@@ -86,6 +91,7 @@ namespace SysCommand.ConsoleApp
             this.Console = new ConsoleWrapper();
             this.mapper = mapper ?? new DefaultMappingStrategy();
             this.evaluationStrategy = evaluationStrategy ?? new DefaultEvaluationStrategy();
+            this.parserStrategy = parserStrategy ?? new DefaultParseStrategy();
 
             // add handler default
             if (addDefaultAppHandler)
@@ -130,9 +136,10 @@ namespace SysCommand.ConsoleApp
                 var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
                 if (manageCommand != null)
                 {
+                    var parserHistory = new DefaultParseStrategy();
                     var evaluatorHistory = new DefaultEvaluationStrategy();
-                    var parseResultHistory = evaluatorHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
-                    var newArgs = evaluatorHistory.Evaluate(parseResultHistory).Result.GetValue<string[]>();
+                    var parseResultHistory = parserHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
+                    var newArgs = evaluatorHistory.Evaluate(parseResultHistory, null).Results.GetValue<string[]>();
                     if (newArgs != null)
                         appResult.Args = newArgs;
 
@@ -156,9 +163,8 @@ namespace SysCommand.ConsoleApp
                 //    userMaps.Remove(helpCommand);
                 //}
 
-                this.evaluationStrategy.OnInvoke = (member) => this.MemberInvoke(appResult, member);
-                appResult.ParseResult = this.evaluationStrategy.Parse(appResult.Args, userMaps, this.enableMultiAction);
-                appResult.EvaluateResult = this.evaluationStrategy.Evaluate(appResult.ParseResult);
+                appResult.ParseResult = this.parserStrategy.Parse(appResult.Args, userMaps, this.enableMultiAction);
+                appResult.EvaluateResult = this.evaluationStrategy.Evaluate(appResult.ParseResult, (member) => this.MemberInvoke(appResult, member));
 
                 if (this.OnComplete != null)
                     this.OnComplete(appResult);
@@ -174,7 +180,7 @@ namespace SysCommand.ConsoleApp
             return appResult;
         }
 
-        private void MemberInvoke(ApplicationResult args, IMember member)
+        private void MemberInvoke(ApplicationResult args, IMemberResult member)
         {
             if (!member.IsInvoked)
             {
@@ -190,10 +196,10 @@ namespace SysCommand.ConsoleApp
             }
 
             MethodInfo method = null;
-            if (member is Method)
-                method = ((Method)member).MethodInfo;
-            else if (member is MethodMain)
-                method = ((MethodMain)member).MethodInfo;
+            if (member is MethodResult)
+                method = ((MethodResult)member).MethodInfo;
+            else if (member is MethodMainResult)
+                method = ((MethodMainResult)member).MethodInfo;
 
             if (method != null && method.ReturnType != typeof(void) && member.Value != null)
             {

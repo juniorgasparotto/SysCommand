@@ -1,5 +1,4 @@
 ﻿using SysCommand.Parsing;
-using System.Collections.Generic;
 
 namespace SysCommand.Evaluation
 {

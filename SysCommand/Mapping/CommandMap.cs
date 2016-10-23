@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System;
-using System.Collections;
-using SysCommand.Parsing;
 
-namespace SysCommand
+namespace SysCommand.Mapping
 {
     public class CommandMap
     {

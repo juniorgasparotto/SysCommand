@@ -5,6 +5,7 @@ using System.Linq;
 using SysCommand.Tests.ConsoleApp.Commands;
 using SysCommand.ConsoleApp;
 using System.IO;
+using SysCommand.Evaluation;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -24,17 +25,17 @@ namespace SysCommand.Tests.UnitTests
                 eventArgs.App.Console.Write(string.Format("OnException: {0}", ex.Message));
             }
 
-            public void OnBeforeMemberInvoke(ApplicationResult eventArgs, IMember member)
+            public void OnBeforeMemberInvoke(ApplicationResult eventArgs, IMemberResult member)
             {
                 eventArgs.App.Console.Write(string.Format("OnBeforeMemberInvoke: {0} {1}", member.Name, member.Value));
             }
 
-            public void OnAfterMemberInvoke(ApplicationResult eventArgs, IMember member)
+            public void OnAfterMemberInvoke(ApplicationResult eventArgs, IMemberResult member)
             {
                 eventArgs.App.Console.Write(string.Format("OnAfterMemberInvoke: {0}: {1}", member.Name, member.Value));
             }
 
-            public void OnMethodReturn(ApplicationResult eventArgs, IMember method)
+            public void OnMethodReturn(ApplicationResult eventArgs, IMemberResult method)
             {
                 eventArgs.App.Console.Write(string.Format("OnPrint: {0}: {1}", method.Name, method.Value));
             }

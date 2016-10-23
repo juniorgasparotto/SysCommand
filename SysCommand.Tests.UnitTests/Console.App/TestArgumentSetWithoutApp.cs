@@ -1,14 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System;
-using System.Linq;
-using SysCommand.Tests.ConsoleApp.Commands;
-using SysCommand.ConsoleApp;
-using System.IO;
 using SysCommand.Test;
-using SysCommand.Parsing;
-using Mono.Options;
 using SysCommand.Evaluation;
+using SysCommand.Utils;
+using SysCommand.Utils.Extras;
 
 namespace SysCommand.Tests.UnitTests
 {

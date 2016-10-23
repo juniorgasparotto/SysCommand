@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SysCommand
+namespace SysCommand.Mapping
 {
     public interface IMappingStrategy
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SysCommand
+namespace SysCommand.Mapping
 {
     public class ArgumentAttribute : Attribute
     {

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
+using SysCommand.Mapping;
+using SysCommand.Utils;
 
 namespace SysCommand.Parsing
 {
@@ -22,7 +24,7 @@ namespace SysCommand.Parsing
         {
             get
             {
-                return ParserUtils.GetValueRaw(this.allRaw.Select(f => f.ValueRaw).ToArray());
+                return CommandParserUtils.GetValueRaw(this.allRaw.Select(f => f.ValueRaw).ToArray());
             }
         }
 

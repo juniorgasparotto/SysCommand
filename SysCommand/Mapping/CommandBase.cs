@@ -1,6 +1,6 @@
 ﻿using SysCommand.Evaluation;
 
-namespace SysCommand
+namespace SysCommand.Mapping
 {
     public abstract class CommandBase
     {

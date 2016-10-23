@@ -1,4 +1,6 @@
-﻿namespace SysCommand.Tests.UnitTests
+﻿using SysCommand.Mapping;
+
+namespace SysCommand.Tests.UnitTests
 {
     public class Git
     {

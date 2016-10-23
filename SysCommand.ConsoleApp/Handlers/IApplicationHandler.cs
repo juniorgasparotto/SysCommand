@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SysCommand.Evaluation;
+using System;
 
 namespace SysCommand.ConsoleApp
 {
@@ -6,8 +7,8 @@ namespace SysCommand.ConsoleApp
     {
         void OnComplete(ApplicationResult eventArgs);
         void OnException(ApplicationResult eventArgs, Exception ex);
-        void OnBeforeMemberInvoke(ApplicationResult eventArgs, IMember member);
-        void OnAfterMemberInvoke(ApplicationResult eventArgs, IMember member);
-        void OnMethodReturn(ApplicationResult eventArgs, IMember method);
+        void OnBeforeMemberInvoke(ApplicationResult eventArgs, IMemberResult member);
+        void OnAfterMemberInvoke(ApplicationResult eventArgs, IMemberResult member);
+        void OnMethodReturn(ApplicationResult eventArgs, IMemberResult method);
     }
 }

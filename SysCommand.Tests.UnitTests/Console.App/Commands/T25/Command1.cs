@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using SysCommand.ConsoleApp;
 using SysCommand.Parsing;
+using SysCommand.Mapping;
 
 namespace SysCommand.Tests.UnitTests.Commands.T25
 {

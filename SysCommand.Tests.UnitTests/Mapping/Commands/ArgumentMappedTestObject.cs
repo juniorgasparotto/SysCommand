@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SysCommand.Mapping;
+using System;
 using System.Collections.Generic;
 
 namespace SysCommand.Tests.UnitTests

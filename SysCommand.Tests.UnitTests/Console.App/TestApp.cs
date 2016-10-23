@@ -1184,7 +1184,7 @@ namespace SysCommand.Tests.UnitTests
             }
 
             test.ExpectedResult = output.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            test.Values = appResult.EvaluateResult.Result.Select(f => f.Source.GetType().Name + "." + f.Name + "=" + f.Value);
+            test.Values = appResult.EvaluateResult.Results.Select(f => f.Source.GetType().Name + "." + f.Name + "=" + f.Value);
 
             foreach(var level in appResult.ParseResult.Levels)
             {

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
 using SysCommand.ConsoleApp;
-using SysCommand.Parsing;
+using SysCommand.Mapping;
+using SysCommand.Evaluation;
 
 namespace SysCommand.Tests.UnitTests.Commands.T10
 {
@@ -39,7 +38,7 @@ namespace SysCommand.Tests.UnitTests.Commands.T10
             return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse()) + " Level" + cur.ActionMapped.Level;
         }
 
-        private string GetDebugName(ActionMap map, Method result)
+        private string GetDebugName(ActionMap map, MethodResult result)
         {
             if (map != result.ActionMapped.ActionMap)
                 throw new Exception("There are errors in one of the methods: GetCurrentMethodMap() or GetCurrentMethodResult()");

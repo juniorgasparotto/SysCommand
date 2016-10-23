@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System;
 using SysCommand.Evaluation;
+using SysCommand.Mapping;
+using SysCommand.Utils;
 
 namespace SysCommand.ConsoleApp
 {
@@ -20,7 +22,7 @@ namespace SysCommand.ConsoleApp
             appResult.App.Console.Error(Strings.NotFoundMessage, false);
         }
 
-        public virtual void ShowMethodReturn(ApplicationResult appResult, IMember method, object value)
+        public virtual void ShowMethodReturn(ApplicationResult appResult, IMemberResult method, object value)
         {
             appResult.App.Console.Write(method.Value);
         }
@@ -54,7 +56,7 @@ namespace SysCommand.ConsoleApp
             return null;
         }
 
-        private StringBuilder GetErrors(IEnumerable<CommandError> commandsErrors)
+        private StringBuilder GetErrors(IEnumerable<EvaluateError> commandsErrors)
         {
             var strBuilder = new StringBuilder();
             var count = commandsErrors.Count();
@@ -62,12 +64,12 @@ namespace SysCommand.ConsoleApp
             foreach (var commandError in commandsErrors)
             {
                 strBuilder.AppendLine(string.Format("There are errors in command: {0}", commandError.Command.GetType().Name));
-                var hasPropertyError = commandError.Properties.Any();
-                var hasMethodError = commandError.Methods.Any();
+                var hasPropertyError = commandError.PropertiesInvalid.Any();
+                var hasMethodError = commandError.MethodsInvalid.Any();
 
                 if (hasPropertyError)
                 {
-                    this.ShowInvalidProperties(strBuilder, commandError.Properties);
+                    this.ShowInvalidProperties(strBuilder, commandError.PropertiesInvalid);
                 }
 
                 if (hasMethodError)
@@ -75,7 +77,7 @@ namespace SysCommand.ConsoleApp
                     if (hasPropertyError)
                         strBuilder.AppendLine();
 
-                    this.ShowInvalidMethods(strBuilder, commandError.Methods);
+                    this.ShowInvalidMethods(strBuilder, commandError.MethodsInvalid);
                 }
 
                 if (++iErr < count)

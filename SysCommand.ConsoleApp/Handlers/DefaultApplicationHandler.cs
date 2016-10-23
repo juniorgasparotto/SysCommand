@@ -30,17 +30,17 @@ namespace SysCommand.ConsoleApp
             throw ex;
         }
 
-        public virtual void OnBeforeMemberInvoke(ApplicationResult appResult, IMember member)
+        public virtual void OnBeforeMemberInvoke(ApplicationResult appResult, IMemberResult member)
         {
             
         }
 
-        public virtual void OnAfterMemberInvoke(ApplicationResult appResult, IMember member)
+        public virtual void OnAfterMemberInvoke(ApplicationResult appResult, IMemberResult member)
         {
 
         }
 
-        public virtual void OnMethodReturn(ApplicationResult appResult, IMember method)
+        public virtual void OnMethodReturn(ApplicationResult appResult, IMemberResult method)
         {
             if (method.Value != null)
             {

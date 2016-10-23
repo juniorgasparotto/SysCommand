@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SysCommand.Mapping;
+using System.Collections.Generic;
 
 namespace SysCommand.Parsing
 {

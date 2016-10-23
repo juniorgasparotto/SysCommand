@@ -7,7 +7,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
-namespace SysCommand
+namespace SysCommand.Utils
 {
     public static class AppHelpers
     {

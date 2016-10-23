@@ -1,4 +1,6 @@
 ﻿using SysCommand.ConsoleApp;
+using SysCommand.Evaluation;
+using SysCommand.Mapping;
 using SysCommand.Parsing;
 using System;
 
@@ -13,7 +15,7 @@ namespace SysCommand.Tests.UnitTests.Commands.T21
             return GetDebugName(this.CurrentMethodMap(), cur);
         }
 
-        private string GetDebugName(ActionMap map, Method result)
+        private string GetDebugName(ActionMap map, MethodResult result)
         {
             if (map != result.ActionMapped.ActionMap)
                 throw new Exception("There are errors in one of the methods: GetCurrentMethodMap() or GetCurrentMethodResult()");
