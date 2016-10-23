@@ -1,8 +1,9 @@
-﻿using SysCommand.Parser;
+﻿using SysCommand.Parsing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System;
+using SysCommand.Evaluation;
 
 namespace SysCommand.ConsoleApp
 {

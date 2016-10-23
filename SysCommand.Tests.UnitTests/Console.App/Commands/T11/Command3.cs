@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using SysCommand.ConsoleApp;
-using SysCommand.Parser;
+using SysCommand.Parsing;
 
 namespace SysCommand.Tests.UnitTests.Commands.T11
 {

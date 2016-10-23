@@ -45,54 +45,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppHelpers.cs" />
-    <Compile Include="CommandError.cs" />
-    <Compile Include="EvaluateScope.cs" />
+    <Compile Include="Evaluation\IEnumerableIMemberExtensions.cs" />
+    <Compile Include="Utils\AppHelpers.cs" />
+    <Compile Include="Utils\ArgumentSet\ArgumentResult.cs" />
+    <Compile Include="Utils\ArgumentSet\ArgumentSet.cs" />
+    <Compile Include="Evaluation\CommandError.cs" />
+    <Compile Include="Evaluation\EvaluateScope.cs" />
     <Compile Include="__deleteds\CommandParseLevelResult.cs" />
     <Compile Include="__deleteds\CommandParse.cs" />
-    <Compile Include="Execution\ParseResult.cs" />
-    <Compile Include="Execution\EvaluateResult.cs" />
+    <Compile Include="Parsing\ParseResult.cs" />
+    <Compile Include="Evaluation\EvaluateResult.cs" />
     <Compile Include="__deleteds\CommandParseLevel.cs" />
     <Compile Include="__deleteds\CommandParseResult.cs" />
     <Compile Include="Extensions\IEnumerableCommandParseResultExtensions.cs" />
     <Compile Include="Extensions\IEnumerableCommandMapExtensions.cs" />
-    <Compile Include="Map\DefaultMappingStrategy.cs" />
-    <Compile Include="Map\IMappingStrategy.cs" />
+    <Compile Include="Mapping\DefaultMappingStrategy.cs" />
+    <Compile Include="Mapping\IMappingStrategy.cs" />
     <Compile Include="__deleteds\CommandTag.cs" />
-    <Compile Include="Execution\IEvaluationStrategy.cs" />
+    <Compile Include="Evaluation\IEvaluationStrategy.cs" />
     <Compile Include="Members\MethodMain.cs" />
     <Compile Include="__deleteds\PriorityConstants.cs" />
-    <Compile Include="Execution\DefaultEvaluationStrategy.cs" />
+    <Compile Include="Evaluation\DefaultEvaluationStrategy.cs" />
     <Compile Include="__deleteds\__Executor.cs" />
     <Compile Include="__deleteds\Map.cs" />
-    <Compile Include="Map\CommandMap.cs" />
+    <Compile Include="Mapping\CommandMap.cs" />
     <Compile Include="Members\Property.cs" />
     <Compile Include="Members\Method.cs" />
     <Compile Include="Members\IMember.cs" />
-    <Compile Include="Execution\Result.cs" />
-    <Compile Include="Execution\EvaluateState.cs" />
+    <Compile Include="Evaluation\Result.cs" />
+    <Compile Include="Evaluation\EvaluateState.cs" />
     <Compile Include="__deleteds\__MapperDefault.cs" />
     <Compile Include="__deleteds\__Debug.cs" />
-    <Compile Include="Evaluator.cs" />
-    <Compile Include="Map\Attributes\ActionAttribute.cs" />
+    <Compile Include="Mapping\Attributes\ActionAttribute.cs" />
     <Compile Include="FileObject\Attributes\ObjectFileAttribute.cs" />
-    <Compile Include="Map\Attributes\ArgumentAttribute.cs" />
-    <Compile Include="Parser\ArgumentMappingState.cs" />
-    <Compile Include="Parser\ActionMappingState.cs" />
-    <Compile Include="Parser\ArgumentFormat.cs" />
-    <Compile Include="Parser\ArgumentMap.cs" />
-    <Compile Include="Parser\ArgumentRaw.cs" />
-    <Compile Include="Parser\ArgumentMapped.cs" />
-    <Compile Include="Parser\ActionMap.cs" />
-    <Compile Include="Parser\ActionMapped.cs" />
-    <Compile Include="Parser\ArgumentMappingType.cs" />
-    <Compile Include="Parser\CommandParser.cs" />
-    <Compile Include="Members\CommandBase.cs" />
+    <Compile Include="Mapping\Attributes\ArgumentAttribute.cs" />
+    <Compile Include="Mapping\ArgumentMappingState.cs" />
+    <Compile Include="Parsing\ActionMappingState.cs" />
+    <Compile Include="Mapping\ArgumentFormat.cs" />
+    <Compile Include="Mapping\ArgumentMap.cs" />
+    <Compile Include="Mapping\ArgumentRaw.cs" />
+    <Compile Include="Parsing\ArgumentMapped.cs" />
+    <Compile Include="Mapping\ActionMap.cs" />
+    <Compile Include="Parsing\ActionMapped.cs" />
+    <Compile Include="Mapping\ArgumentMappingType.cs" />
+    <Compile Include="Utils\ParserUtils.cs" />
+    <Compile Include="Mapping\CommandBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

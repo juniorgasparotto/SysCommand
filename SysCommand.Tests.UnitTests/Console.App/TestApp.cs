@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using SysCommand.Tests.ConsoleApp.Commands;
 using SysCommand.ConsoleApp;
+using SysCommand.Evaluation;
 using System.IO;
 using SysCommand.Test;
 
@@ -1172,6 +1172,7 @@ namespace SysCommand.Tests.UnitTests
             app.Console.Out = new StringWriter();
 
             var appResult = app.Run(args);
+            
             var output = app.Console.Out.ToString();
 
             var test = new TestData();

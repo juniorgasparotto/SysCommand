@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
-using System.IO;
 using System.Reflection;
+using SysCommand.Evaluation;
 
 namespace SysCommand.ConsoleApp
 {
@@ -130,9 +130,9 @@ namespace SysCommand.ConsoleApp
                 var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
                 if (manageCommand != null)
                 {
-                    var evaluator = new Evaluator(appResult.Args, manageCommand, false, this.evaluationStrategy);
-                    //this.Result.AddRange(evaluator.Eval().Result);
-                    var newArgs = evaluator.Evaluate().Result.GetValue<string[]>();
+                    var evaluatorHistory = new DefaultEvaluationStrategy();
+                    var parseResultHistory = evaluatorHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
+                    var newArgs = evaluatorHistory.Evaluate(parseResultHistory).Result.GetValue<string[]>();
                     if (newArgs != null)
                         appResult.Args = newArgs;
 
@@ -156,12 +156,9 @@ namespace SysCommand.ConsoleApp
                 //    userMaps.Remove(helpCommand);
                 //}
 
-                // execute user properties and methods
-                var evaluator2 = new Evaluator(appResult.Args, userMaps, this.enableMultiAction, this.evaluationStrategy)
-                    .OnInvoke(member => this.MemberInvoke(appResult, member));
-
-                appResult.ParseResult = evaluator2.ParseResult;
-                appResult.EvaluateResult = evaluator2.Evaluate();
+                this.evaluationStrategy.OnInvoke = (member) => this.MemberInvoke(appResult, member);
+                appResult.ParseResult = this.evaluationStrategy.Parse(appResult.Args, userMaps, this.enableMultiAction);
+                appResult.EvaluateResult = this.evaluationStrategy.Evaluate(appResult.ParseResult);
 
                 if (this.OnComplete != null)
                     this.OnComplete(appResult);

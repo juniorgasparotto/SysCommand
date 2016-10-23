@@ -120,9 +120,7 @@
     <Compile Include="Console.App\Commands\T06\Command1.cs" />
     <Compile Include="Console.App\Commands\T05\Command1.cs" />
     <Compile Include="Console.App\Commands\T04\Command1.cs" />
-    <Compile Include="Console.App\ArgumentAction.cs" />
-    <Compile Include="Console.App\CustomEvaluator.cs" />
-    <Compile Include="Console.App\TestAppCustom.cs" />
+    <Compile Include="Console.App\TestArgumentSetWithoutApp.cs" />
     <Compile Include="Mapping\Commands\ArgumentMappedTestObject.cs" />
     <Compile Include="Mapping\Commands\EnumTest1.cs" />
     <Compile Include="Mapping\Commands\EnumTest2.cs" />

@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Reflection;
-using SysCommand.Parser;
+using SysCommand.Parsing;
 using SysCommand.Test;
 
 namespace SysCommand.Tests.UnitTests
@@ -20,13 +20,13 @@ namespace SysCommand.Tests.UnitTests
         {
             var obj = new ArgumentMappedTestObject();
             var method = obj.GetType().GetMethod(mapMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            var maps = CommandParser.GetArgumentsMapsFromMethod(obj, method);
+            var maps = ParserUtils.GetArgumentsMapsFromMethod(obj, method);
             this.TestArgsMappedAuto(maps, input, enablePositionedArgs, testMethodName);
         }
 
         private void TestArgsMappedAuto(object source, string input, bool enablePositionedArgs, bool onlyWithAttribute, string testMethodName)
         {
-            var maps = CommandParser.GetArgumentsMapsFromProperties(source, onlyWithAttribute);
+            var maps = ParserUtils.GetArgumentsMapsFromProperties(source, onlyWithAttribute);
             this.TestArgsMappedAuto(maps, input, enablePositionedArgs, testMethodName);
         }
 
@@ -34,8 +34,8 @@ namespace SysCommand.Tests.UnitTests
         {
             string testContext = null;
             var args = AppHelpers.CommandLineToArgs(input);
-            var argsRaw = CommandParser.ParseArgumentsRaw(args);
-            var argsMappeds = CommandParser.ParseArgumentMapped(argsRaw, enablePositionedArgs, maps.ToArray());
+            var argsRaw = ParserUtils.ParseArgumentsRaw(args);
+            var argsMappeds = ParserUtils.ParseArgumentMapped(argsRaw, enablePositionedArgs, maps.ToArray());
             var objectTest = new { input, maps, argsMappeds };
 
             var jsonSerializeConfig = TestHelper.GetJsonConfig();

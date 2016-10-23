@@ -1,5 +1,5 @@
 ﻿using SysCommand.ConsoleApp;
-using SysCommand.Parser;
+using SysCommand.Parsing;
 using System;
 
 namespace SysCommand.Tests.UnitTests.Commands.T21

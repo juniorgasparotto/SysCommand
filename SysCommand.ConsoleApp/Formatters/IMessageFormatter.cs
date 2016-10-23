@@ -1,4 +1,4 @@
-﻿using SysCommand.Parser;
+﻿using SysCommand.Parsing;
 
 namespace SysCommand.ConsoleApp
 {

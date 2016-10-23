@@ -1,4 +1,4 @@
-﻿using SysCommand.Parser;
+﻿using SysCommand.Parsing;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +16,7 @@ namespace SysCommand.ConsoleApp
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(1);
             var currentMethod = (MethodInfo)sf.GetMethod();
-            return this.EvaluateScope.Maps.GetMap(this.GetType()).Methods.FirstOrDefault(m => AppHelpers.MethodsAreEquals(m.Method, currentMethod));
+            return this.EvaluateScope.ParseResult.Maps.GetMap(this.GetType()).Methods.FirstOrDefault(m => AppHelpers.MethodsAreEquals(m.Method, currentMethod));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
