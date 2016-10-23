@@ -12,14 +12,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.String[] v1"
+      "TargetMember": "System.String[] v1"
     },
     {
       "MapName": "v2",
@@ -32,14 +32,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "Int32 v2"
+      "TargetMember": "Int32 v2"
     }
   ],
   "argsMappeds": [
@@ -73,14 +73,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.String[] v1"
+        "TargetMember": "System.String[] v1"
       },
       "Raw": "\\--value1 --=a --- --: -: -= -/ /= /-",
       "AllRaw": [
@@ -207,14 +207,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "Int32 v2"
+        "TargetMember": "Int32 v2"
       },
       "Raw": null,
       "AllRaw": [],

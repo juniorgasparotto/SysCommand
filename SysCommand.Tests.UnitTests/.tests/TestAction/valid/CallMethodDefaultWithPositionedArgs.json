@@ -5,7 +5,7 @@
       "MapName": "Main",
       "ActionName": "main",
       "ActionNameRaw": "main",
-      "Source": {
+      "Target": {
         "Arg0": null,
         "a": null,
         "b": null
@@ -28,12 +28,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "Source": {
+          "Target": {
             "Arg0": null,
             "a": null,
             "b": null
           },
-          "PropertyOrParameter": "System.String[] args"
+          "TargetMember": "System.String[] args"
         }
       ]
     },
@@ -41,7 +41,7 @@
       "MapName": "MethodDefault",
       "ActionName": "method-default",
       "ActionNameRaw": "method-default",
-      "Source": {
+      "Target": {
         "Arg0": null,
         "a": null,
         "b": null
@@ -64,12 +64,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "Source": {
+          "Target": {
             "Arg0": null,
             "a": null,
             "b": null
           },
-          "PropertyOrParameter": "System.String a"
+          "TargetMember": "System.String a"
         },
         {
           "MapName": "b",
@@ -82,12 +82,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "Source": {
+          "Target": {
             "Arg0": null,
             "a": null,
             "b": null
           },
-          "PropertyOrParameter": "System.Nullable`1[System.Int32] b"
+          "TargetMember": "System.Nullable`1[System.Int32] b"
         }
       ]
     },
@@ -95,7 +95,7 @@
       "MapName": "MethodDefault",
       "ActionName": "method-default",
       "ActionNameRaw": "method-default",
-      "Source": {
+      "Target": {
         "Arg0": null,
         "a": null,
         "b": null
@@ -118,12 +118,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "Source": {
+          "Target": {
             "Arg0": null,
             "a": null,
             "b": null
           },
-          "PropertyOrParameter": "System.String a"
+          "TargetMember": "System.String a"
         }
       ]
     },
@@ -131,7 +131,7 @@
       "MapName": "Clean",
       "ActionName": "clean",
       "ActionNameRaw": "clean",
-      "Source": {
+      "Target": {
         "Arg0": null,
         "a": null,
         "b": null
@@ -154,12 +154,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "Source": {
+          "Target": {
             "Arg0": null,
             "a": null,
             "b": null
           },
-          "PropertyOrParameter": "System.String a"
+          "TargetMember": "System.String a"
         },
         {
           "MapName": "b",
@@ -172,12 +172,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "Source": {
+          "Target": {
             "Arg0": null,
             "a": null,
             "b": null
           },
-          "PropertyOrParameter": "System.String b"
+          "TargetMember": "System.String b"
         }
       ]
     },
@@ -185,7 +185,7 @@
       "MapName": "Add",
       "ActionName": "add",
       "ActionNameRaw": "add",
-      "Source": {
+      "Target": {
         "Arg0": null,
         "a": null,
         "b": null
@@ -208,12 +208,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "Source": {
+          "Target": {
             "Arg0": null,
             "a": null,
             "b": null
           },
-          "PropertyOrParameter": "System.String a"
+          "TargetMember": "System.String a"
         },
         {
           "MapName": "b",
@@ -226,12 +226,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "Source": {
+          "Target": {
             "Arg0": null,
             "a": null,
             "b": null
           },
-          "PropertyOrParameter": "System.String b"
+          "TargetMember": "System.String b"
         }
       ]
     },
@@ -239,7 +239,7 @@
       "MapName": "CommitAllFiles",
       "ActionName": "commit",
       "ActionNameRaw": "commit",
-      "Source": {
+      "Target": {
         "Arg0": null,
         "a": null,
         "b": null
@@ -262,12 +262,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "Source": {
+          "Target": {
             "Arg0": null,
             "a": null,
             "b": null
           },
-          "PropertyOrParameter": "System.String a"
+          "TargetMember": "System.String a"
         },
         {
           "MapName": "b",
@@ -280,12 +280,12 @@
           "HelpText": null,
           "ShowHelpComplement": false,
           "Position": null,
-          "Source": {
+          "Target": {
             "Arg0": null,
             "a": null,
             "b": null
           },
-          "PropertyOrParameter": "System.String b"
+          "TargetMember": "System.String b"
         }
       ]
     }
@@ -297,7 +297,7 @@
         "MapName": "MethodDefault",
         "ActionName": "method-default",
         "ActionNameRaw": "method-default",
-        "Source": {
+        "Target": {
           "Arg0": null,
           "a": null,
           "b": null
@@ -320,12 +320,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "Source": {
+            "Target": {
               "Arg0": null,
               "a": null,
               "b": null
             },
-            "PropertyOrParameter": "System.String a"
+            "TargetMember": "System.String a"
           },
           {
             "MapName": "b",
@@ -338,12 +338,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "Source": {
+            "Target": {
               "Arg0": null,
               "a": null,
               "b": null
             },
-            "PropertyOrParameter": "System.Nullable`1[System.Int32] b"
+            "TargetMember": "System.Nullable`1[System.Int32] b"
           }
         ]
       },
@@ -379,12 +379,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "Source": {
+            "Target": {
               "Arg0": null,
               "a": null,
               "b": null
             },
-            "PropertyOrParameter": "System.String a"
+            "TargetMember": "System.String a"
           },
           "Raw": "value1",
           "AllRaw": [
@@ -423,12 +423,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "Source": {
+            "Target": {
               "Arg0": null,
               "a": null,
               "b": null
             },
-            "PropertyOrParameter": "System.Nullable`1[System.Int32] b"
+            "TargetMember": "System.Nullable`1[System.Int32] b"
           },
           "Raw": null,
           "AllRaw": [],
@@ -446,7 +446,7 @@
         "MapName": "MethodDefault",
         "ActionName": "method-default",
         "ActionNameRaw": "method-default",
-        "Source": {
+        "Target": {
           "Arg0": null,
           "a": null,
           "b": null
@@ -469,12 +469,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "Source": {
+            "Target": {
               "Arg0": null,
               "a": null,
               "b": null
             },
-            "PropertyOrParameter": "System.String a"
+            "TargetMember": "System.String a"
           }
         ]
       },
@@ -510,12 +510,12 @@
             "HelpText": null,
             "ShowHelpComplement": false,
             "Position": null,
-            "Source": {
+            "Target": {
               "Arg0": null,
               "a": null,
               "b": null
             },
-            "PropertyOrParameter": "System.String a"
+            "TargetMember": "System.String a"
           },
           "Raw": "value1",
           "AllRaw": [

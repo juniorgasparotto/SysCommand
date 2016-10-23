@@ -25,9 +25,9 @@ namespace SysCommand.Tests.UnitTests
             this.TestArgsMappedAuto(maps, input, enablePositionedArgs, testMethodName);
         }
 
-        private void TestArgsMappedAuto(object source, string input, bool enablePositionedArgs, bool onlyWithAttribute, string testMethodName)
+        private void TestArgsMappedAuto(object target, string input, bool enablePositionedArgs, bool onlyWithAttribute, string testMethodName)
         {
-            var maps = CommandParserUtils.GetArgumentsMapsFromProperties(source, onlyWithAttribute);
+            var maps = CommandParserUtils.GetArgumentsMapsFromProperties(target, onlyWithAttribute);
             this.TestArgsMappedAuto(maps, input, enablePositionedArgs, testMethodName);
         }
 

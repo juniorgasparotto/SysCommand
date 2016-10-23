@@ -9,7 +9,7 @@ namespace SysCommand.Utils.Extras
         public ArgumentParsed ArgumentParsed { get; private set; }
         public MethodInfo MethodInfo { get; private set; }
         public string Name { get; private set; }
-        public object Source { get; private set; }
+        public object Target { get; private set; }
         public object Value { get; set; }
         public bool IsInvoked { get; set; }
 
@@ -20,15 +20,15 @@ namespace SysCommand.Utils.Extras
 
             if (argumentParsed.Map != null)
             { 
-                this.MethodInfo = (MethodInfo)argumentParsed.Map.PropertyOrParameter;
+                this.MethodInfo = (MethodInfo)argumentParsed.Map.TargetMember;
                 this.Value = argumentParsed.Value;
-                this.Source = argumentParsed.Map.Source;
+                this.Target = argumentParsed.Map.Target;
             }
         }
 
         public void Invoke()
         {
-            this.MethodInfo.Invoke(Source, new[] { this.Value });
+            this.MethodInfo.Invoke(Target, new[] { this.Value });
             this.IsInvoked = true;
         }
     }

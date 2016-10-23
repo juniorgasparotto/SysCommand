@@ -12,14 +12,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.Decimal value1"
+      "TargetMember": "System.Decimal value1"
     },
     {
       "MapName": "value2",
@@ -32,14 +32,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "Int32 value2"
+      "TargetMember": "Int32 value2"
     },
     {
       "MapName": "value3",
@@ -52,14 +52,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "Boolean value3"
+      "TargetMember": "Boolean value3"
     }
   ],
   "argsMappeds": [
@@ -83,14 +83,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.Decimal value1"
+        "TargetMember": "System.Decimal value1"
       },
       "Raw": "-1.10",
       "AllRaw": [
@@ -129,14 +129,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "Int32 value2"
+        "TargetMember": "Int32 value2"
       },
       "Raw": "+100",
       "AllRaw": [
@@ -175,14 +175,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "Boolean value3"
+        "TargetMember": "Boolean value3"
       },
       "Raw": "true",
       "AllRaw": [

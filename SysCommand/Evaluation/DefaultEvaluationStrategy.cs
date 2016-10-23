@@ -59,7 +59,7 @@ namespace SysCommand.Evaluation
                     EvaluateResult = evaluateResult
                 };
 
-                foreach(var cmd in evaluateResult.Results.Select(f=> (CommandBase)f.Source))
+                foreach(var cmd in evaluateResult.Results.Select(f=> (CommandBase)f.Target))
                     cmd.EvaluateScope = evaluateScope;
 
                 evaluateResult.Results.With<PropertyResult>().Invoke(onInvoke);

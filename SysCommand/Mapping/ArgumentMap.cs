@@ -14,13 +14,13 @@ namespace SysCommand.Mapping
         public string HelpText { get; private set; }
         public bool ShowHelpComplement { get; private set; }
         public int? Position { get; private set; }
-        public object Source { get; private set; }
-        public object PropertyOrParameter { get; private set; }
+        public object Target { get; private set; }
+        public object TargetMember { get; private set; }
 
-        public ArgumentMap(object source, object propertyOrParameter, string mapName, string longName, char? shortName, Type type, bool isOptional, bool hasDefaultValue, object defaultValue, string helpText, bool showHelpComplement, int? position)
+        public ArgumentMap(object target, object targetMember, string mapName, string longName, char? shortName, Type type, bool isOptional, bool hasDefaultValue, object defaultValue, string helpText, bool showHelpComplement, int? position)
         {
-            this.Source = source;
-            this.PropertyOrParameter = propertyOrParameter;
+            this.Target = target;
+            this.TargetMember = targetMember;
             this.MapName = mapName;
             this.LongName = longName;
             this.ShortName = shortName;

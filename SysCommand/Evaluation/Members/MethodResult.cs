@@ -13,7 +13,7 @@ namespace SysCommand.Evaluation
         public Dictionary<string, object> Parameters { get; private set; }
 
         public string Name { get; private set; }
-        public object Source { get; private set; }
+        public object Target { get; private set; }
         public object Value { get; set; }
         public bool IsInvoked { get; set; }
 
@@ -22,21 +22,21 @@ namespace SysCommand.Evaluation
             this.ActionParsed = actionParsed;
             this.MethodInfo = this.ActionParsed.ActionMap.Method;
             this.Parameters = this.ActionParsed.Arguments.Where(f => f.IsMapped).ToDictionary(f => f.Name, f => f.Value);
-            this.Source = this.ActionParsed.ActionMap.Source;
+            this.Target = this.ActionParsed.ActionMap.Target;
             this.Name = this.ActionParsed.Name;
         }
 
-        public MethodResult(string name, string alias, object source, MethodInfo method, Dictionary<string, object> parameters)
+        public MethodResult(string name, string alias, object target, MethodInfo method, Dictionary<string, object> parameters)
         {
             this.MethodInfo = method;
             this.Parameters = parameters;
-            this.Source = source;
+            this.Target = target;
             this.Name = name;
         }
 
         public void Invoke()
         {
-            this.Value = this.MethodInfo.InvokeWithNamedParameters(Source, this.Parameters);
+            this.Value = this.MethodInfo.InvokeWithNamedParameters(Target, this.Parameters);
             this.IsInvoked = true;
         }
     }

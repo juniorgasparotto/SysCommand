@@ -12,14 +12,14 @@
       "HelpText": "My help",
       "ShowHelpComplement": true,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.String value"
+      "TargetMember": "System.String value"
     },
     {
       "MapName": "flag",
@@ -32,14 +32,14 @@
       "HelpText": "My help",
       "ShowHelpComplement": true,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "Boolean flag"
+      "TargetMember": "Boolean flag"
     }
   ],
   "argsMappeds": [
@@ -63,14 +63,14 @@
         "HelpText": "My help",
         "ShowHelpComplement": true,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.String value"
+        "TargetMember": "System.String value"
       },
       "Raw": "value1",
       "AllRaw": [
@@ -109,14 +109,14 @@
         "HelpText": "My help",
         "ShowHelpComplement": true,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "Boolean flag"
+        "TargetMember": "Boolean flag"
       },
       "Raw": "value2",
       "AllRaw": [

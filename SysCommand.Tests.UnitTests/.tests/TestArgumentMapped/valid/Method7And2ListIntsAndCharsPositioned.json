@@ -12,14 +12,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.Collections.Generic.List`1[System.Single] lst"
+      "TargetMember": "System.Collections.Generic.List`1[System.Single] lst"
     },
     {
       "MapName": "lst2",
@@ -32,14 +32,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.Collections.Generic.List`1[System.Char] lst2"
+      "TargetMember": "System.Collections.Generic.List`1[System.Char] lst2"
     }
   ],
   "argsMappeds": [
@@ -68,14 +68,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.Collections.Generic.List`1[System.Single] lst"
+        "TargetMember": "System.Collections.Generic.List`1[System.Single] lst"
       },
       "Raw": "-0.1 2 0.1000 4",
       "AllRaw": [
@@ -151,14 +151,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.Collections.Generic.List`1[System.Char] lst2"
+        "TargetMember": "System.Collections.Generic.List`1[System.Char] lst2"
       },
       "Raw": "a b c",
       "AllRaw": [

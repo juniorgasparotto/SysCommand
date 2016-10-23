@@ -8,7 +8,7 @@ namespace SysCommand.Evaluation
         public ArgumentParsed ArgumentParsed { get; private set; }
         public PropertyInfo PropertyInfo { get; private set; }
         public string Name { get; private set; }
-        public object Source { get; private set; }
+        public object Target { get; private set; }
         public object Value { get; set; }
         public bool IsInvoked { get; set; }
 
@@ -19,23 +19,23 @@ namespace SysCommand.Evaluation
 
             if (argumentParsed.Map != null)
             { 
-                this.PropertyInfo = (PropertyInfo)argumentParsed.Map.PropertyOrParameter;
+                this.PropertyInfo = (PropertyInfo)argumentParsed.Map.TargetMember;
                 this.Value = argumentParsed.Value;
-                this.Source = argumentParsed.Map.Source;
+                this.Target = argumentParsed.Map.Target;
             }
         }
 
-        public PropertyResult(string name, string alias, object source, PropertyInfo property, object value, int invokePriority)
+        public PropertyResult(string name, string alias, object target, PropertyInfo property, object value, int invokePriority)
         {
             this.PropertyInfo = property;
             this.Value = value;
-            this.Source = source;
+            this.Target = target;
             this.Name = name;
         }
 
         public void Invoke()
         {
-            this.PropertyInfo.SetValue(Source, this.Value);
+            this.PropertyInfo.SetValue(Target, this.Value);
             this.IsInvoked = true;
         }
     }

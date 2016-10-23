@@ -1179,12 +1179,12 @@ namespace SysCommand.Tests.UnitTests
 
             foreach(var cmd in commands)
             { 
-                test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Properties.Select(s => s.Source.GetType().Name + "." + s.PropertyOrParameter.ToString() + (s.IsOptional ? "" : " (obrigatory)") + (cmd.EnablePositionalArgs ? "" : " (NOT accept positional)"))));
-                test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Methods.Select(s => s.Source.GetType().Name + "." + app.MessageFormatter.GetMethodSpecification(s))));
+                test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Properties.Select(s => s.Target.GetType().Name + "." + s.TargetMember.ToString() + (s.IsOptional ? "" : " (obrigatory)") + (cmd.EnablePositionalArgs ? "" : " (NOT accept positional)"))));
+                test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Methods.Select(s => s.Target.GetType().Name + "." + app.MessageFormatter.GetMethodSpecification(s))));
             }
 
             test.ExpectedResult = output.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            test.Values = appResult.EvaluateResult.Results.Select(f => f.Source.GetType().Name + "." + f.Name + "=" + f.Value);
+            test.Values = appResult.EvaluateResult.Results.Select(f => f.Target.GetType().Name + "." + f.Name + "=" + f.Value);
 
             foreach(var level in appResult.ParseResult.Levels)
             {
@@ -1199,7 +1199,7 @@ namespace SysCommand.Tests.UnitTests
                 { 
                     testLevel.MethodsValid.AddRange(cmd.Methods.Select(s => cmd.Command.GetType().Name + "." + app.MessageFormatter.GetMethodSpecification(s.ActionMap)));
                     testLevel.MethodsInvalid.AddRange(cmd.MethodsInvalid.Select(s => cmd.Command.GetType().Name + "." + app.MessageFormatter.GetMethodSpecification(s.ActionMap)));
-                    testLevel.PropertiesValid.AddRange(cmd.Properties.Select(s => cmd.Command.GetType().Name + "." + s.Map.PropertyOrParameter.ToString()));
+                    testLevel.PropertiesValid.AddRange(cmd.Properties.Select(s => cmd.Command.GetType().Name + "." + s.Map.TargetMember.ToString()));
                     testLevel.PropertiesInvalid.AddRange(cmd.PropertiesInvalid.Select(s => cmd.Command.GetType().Name + "." + (s.Name ?? s.Value)));
                 }
             }

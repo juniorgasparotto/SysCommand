@@ -27,8 +27,8 @@ namespace SysCommand.Utils.Extras
         public void Add<T>(string longName, char? shortName, string helpText, Action<T> action)
         {
             var argumentMap = new ArgumentMap(
-                source: action.Target,
-                propertyOrParameter: action.Method,
+                target: action.Target,
+                targetMember: action.Method,
                 mapName: longName ?? shortName.ToString(),
                 longName: longName,
                 shortName: shortName,

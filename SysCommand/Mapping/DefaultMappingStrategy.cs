@@ -14,7 +14,7 @@ namespace SysCommand.Mapping
         private CommandMap CreateMap(CommandBase command)
         {
             var mapCommand = new CommandMap(command);
-            mapCommand.Methods.AddRange(CommandParserUtils.GetActionsMapsFromSourceObject(command, command.OnlyMethodsWithAttribute, command.UsePrefixInAllMethods, command.PrefixMethods));
+            mapCommand.Methods.AddRange(CommandParserUtils.GetActionsMapsFromTargetObject(command, command.OnlyMethodsWithAttribute, command.UsePrefixInAllMethods, command.PrefixMethods));
             mapCommand.Properties.AddRange(CommandParserUtils.GetArgumentsMapsFromProperties(command, command.OnlyPropertiesWithAttribute));
             return mapCommand;
         }

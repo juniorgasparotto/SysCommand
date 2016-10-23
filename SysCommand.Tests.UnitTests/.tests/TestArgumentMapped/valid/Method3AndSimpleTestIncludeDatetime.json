@@ -12,14 +12,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "Double value1"
+      "TargetMember": "Double value1"
     },
     {
       "MapName": "value2",
@@ -32,14 +32,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "Single value2"
+      "TargetMember": "Single value2"
     },
     {
       "MapName": "date",
@@ -52,14 +52,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.DateTime date"
+      "TargetMember": "System.DateTime date"
     }
   ],
   "argsMappeds": [
@@ -83,14 +83,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "Double value1"
+        "TargetMember": "Double value1"
       },
       "Raw": "10.1223",
       "AllRaw": [
@@ -129,14 +129,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "Single value2"
+        "TargetMember": "Single value2"
       },
       "Raw": "10.2344",
       "AllRaw": [
@@ -175,14 +175,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.DateTime date"
+        "TargetMember": "System.DateTime date"
       },
       "Raw": "\"12-22/1879 12:10:10.111\"",
       "AllRaw": [

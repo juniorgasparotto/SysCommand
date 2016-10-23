@@ -12,14 +12,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "SysCommand.Tests.UnitTests.ArgumentMappedTestObject unsuporttedType"
+      "TargetMember": "SysCommand.Tests.UnitTests.ArgumentMappedTestObject unsuporttedType"
     },
     {
       "MapName": "defaultValue",
@@ -32,14 +32,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "Int32 defaultValue"
+      "TargetMember": "Int32 defaultValue"
     }
   ],
   "argsMappeds": [
@@ -63,14 +63,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "SysCommand.Tests.UnitTests.ArgumentMappedTestObject unsuporttedType"
+        "TargetMember": "SysCommand.Tests.UnitTests.ArgumentMappedTestObject unsuporttedType"
       },
       "Raw": "abc",
       "AllRaw": [
@@ -109,14 +109,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "Int32 defaultValue"
+        "TargetMember": "Int32 defaultValue"
       },
       "Raw": "20",
       "AllRaw": [

@@ -48,7 +48,7 @@ namespace SysCommand.Parsing
                     var level = new ParseResult.Level();
                     parseResult.Add(level);
 
-                    var commandsGroups = levelGroup.GroupBy(f => f.ActionMap.Source);
+                    var commandsGroups = levelGroup.GroupBy(f => f.ActionMap.Target);
                     foreach (var commandGroup in commandsGroups)
                     {
                         var commandParse = new ParseResult.CommandParse();

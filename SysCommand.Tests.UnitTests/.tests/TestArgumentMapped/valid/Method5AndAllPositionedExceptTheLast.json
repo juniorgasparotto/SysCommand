@@ -12,14 +12,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1] enum1"
+      "TargetMember": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1] enum1"
     },
     {
       "MapName": "enum2",
@@ -32,14 +32,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTest2 enum2"
+      "TargetMember": "SysCommand.Tests.UnitTests.EnumTest2 enum2"
     },
     {
       "MapName": "enum3",
@@ -52,14 +52,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTestNoFlag enum3"
+      "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag enum3"
     },
     {
       "MapName": "lst",
@@ -72,14 +72,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "Int32[] lst"
+      "TargetMember": "Int32[] lst"
     },
     {
       "MapName": "enum4",
@@ -92,14 +92,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTestNoFlag2 enum4"
+      "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag2 enum4"
     }
   ],
   "argsMappeds": [
@@ -123,14 +123,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1] enum1"
+        "TargetMember": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1] enum1"
       },
       "Raw": "Enum1Value1 2 enum1value3 8",
       "AllRaw": [
@@ -202,14 +202,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTest2 enum2"
+        "TargetMember": "SysCommand.Tests.UnitTests.EnumTest2 enum2"
       },
       "Raw": "Enum2Value1 Enum2value2",
       "AllRaw": [
@@ -259,14 +259,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTestNoFlag enum3"
+        "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag enum3"
       },
       "Raw": "value1",
       "AllRaw": [
@@ -311,14 +311,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "Int32[] lst"
+        "TargetMember": "Int32[] lst"
       },
       "Raw": "1 2 3 4 5",
       "AllRaw": [
@@ -401,14 +401,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "SysCommand.Tests.UnitTests.EnumTestNoFlag2 enum4"
+        "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag2 enum4"
       },
       "Raw": null,
       "AllRaw": [],

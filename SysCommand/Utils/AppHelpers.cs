@@ -59,7 +59,7 @@ namespace SysCommand.Utils
             return sb.ToString();
         }
         
-        public static PropertyInfo GetPropertyInfo<TSource>(Expression<Func<TSource, object>> propertyLambda)
+        public static PropertyInfo GetPropertyInfo<T>(Expression<Func<T, object>> propertyLambda)
         {
             MemberExpression Exp = null;
 

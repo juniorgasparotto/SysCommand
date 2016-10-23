@@ -12,14 +12,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.Nullable`1[System.Int32] v1"
+      "TargetMember": "System.Nullable`1[System.Int32] v1"
     },
     {
       "MapName": "v2",
@@ -32,14 +32,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.Nullable`1[System.Decimal] v2"
+      "TargetMember": "System.Nullable`1[System.Decimal] v2"
     },
     {
       "MapName": "v3",
@@ -52,14 +52,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.Nullable`1[System.Int64] v3"
+      "TargetMember": "System.Nullable`1[System.Int64] v3"
     },
     {
       "MapName": "v4",
@@ -72,14 +72,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.Nullable`1[System.Byte][] v4"
+      "TargetMember": "System.Nullable`1[System.Byte][] v4"
     },
     {
       "MapName": "v5",
@@ -92,14 +92,14 @@
       "HelpText": null,
       "ShowHelpComplement": false,
       "Position": null,
-      "Source": {
+      "Target": {
         "Prop1": null,
         "Prop2": null,
         "Prop3": null,
         "Prop4": null,
         "Prop5": null
       },
-      "PropertyOrParameter": "System.Collections.Generic.List`1[System.Nullable`1[System.Char]] v5"
+      "TargetMember": "System.Collections.Generic.List`1[System.Nullable`1[System.Char]] v5"
     }
   ],
   "argsMappeds": [
@@ -123,14 +123,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.Nullable`1[System.Int32] v1"
+        "TargetMember": "System.Nullable`1[System.Int32] v1"
       },
       "Raw": "1",
       "AllRaw": [
@@ -169,14 +169,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.Nullable`1[System.Decimal] v2"
+        "TargetMember": "System.Nullable`1[System.Decimal] v2"
       },
       "Raw": "2",
       "AllRaw": [
@@ -215,14 +215,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.Nullable`1[System.Int64] v3"
+        "TargetMember": "System.Nullable`1[System.Int64] v3"
       },
       "Raw": "10",
       "AllRaw": [
@@ -266,14 +266,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.Nullable`1[System.Byte][] v4"
+        "TargetMember": "System.Nullable`1[System.Byte][] v4"
       },
       "Raw": "1 0 1 0",
       "AllRaw": [
@@ -349,14 +349,14 @@
         "HelpText": null,
         "ShowHelpComplement": false,
         "Position": null,
-        "Source": {
+        "Target": {
           "Prop1": null,
           "Prop2": null,
           "Prop3": null,
           "Prop4": null,
           "Prop5": null
         },
-        "PropertyOrParameter": "System.Collections.Generic.List`1[System.Nullable`1[System.Char]] v5"
+        "TargetMember": "System.Collections.Generic.List`1[System.Nullable`1[System.Char]] v5"
       },
       "Raw": "a b c",
       "AllRaw": [

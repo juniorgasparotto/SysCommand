@@ -9,7 +9,7 @@ namespace SysCommand.Mapping
         public string MapName { get; private set; }
         public string ActionName { get; private set; }
         public string ActionNameRaw { get; private set; }
-        public object Source { get; private set; }
+        public object Target { get; private set; }
         public MethodInfo Method { get; private set; }
         public string Prefix { get; private set; }
         public bool UsePrefix { get; private set; }
@@ -18,9 +18,9 @@ namespace SysCommand.Mapping
         public bool EnablePositionalArgs { get; set; }
         public IEnumerable<ArgumentMap> ArgumentsMaps { get; private set; }
 
-        public ActionMap(object source, MethodInfo method, string actionName, string prefix, string actionNameRaw, bool usePrefix, bool isDefault, bool enablePositionalArgs, IEnumerable<ArgumentMap> argumentsMaps)
+        public ActionMap(object target, MethodInfo method, string actionName, string prefix, string actionNameRaw, bool usePrefix, bool isDefault, bool enablePositionalArgs, IEnumerable<ArgumentMap> argumentsMaps)
         {
-            this.Source = source;
+            this.Target = target;
             this.Method = method;
             this.MapName = method.Name;
             this.ActionName = actionName;
@@ -35,7 +35,7 @@ namespace SysCommand.Mapping
 
         public override string ToString()
         {
-            return "[" + this.MapName + ", " + this.Source + "]";
+            return "[" + this.MapName + ", " + this.Target + "]";
         }
     }
 }

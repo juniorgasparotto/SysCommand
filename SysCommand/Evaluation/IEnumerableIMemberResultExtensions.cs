@@ -11,14 +11,14 @@ namespace SysCommand.Evaluation
             return list.Where(f => f.Name == name);
         }
 
-        public static IEnumerable<T> WithSource<T>(this IEnumerable<T> list) where T : IMemberResult
+        public static IEnumerable<T> WithTarget<T>(this IEnumerable<T> list) where T : IMemberResult
         {
-            return list.WithSource(typeof(T));
+            return list.WithTarget(typeof(T));
         }
 
-        public static IEnumerable<T> WithSource<T>(this IEnumerable<T> list, Type type) where T : IMemberResult
+        public static IEnumerable<T> WithTarget<T>(this IEnumerable<T> list, Type type) where T : IMemberResult
         {
-            return list.Where(f => f.Source != null && f.Source.GetType() == type);
+            return list.Where(f => f.Target != null && f.Target.GetType() == type);
         }
 
         public static IEnumerable<T> WithValue<T>(this IEnumerable<T> list, object value) where T : IMemberResult
