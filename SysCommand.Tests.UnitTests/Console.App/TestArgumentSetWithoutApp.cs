@@ -26,59 +26,60 @@ namespace SysCommand.Tests.UnitTests
             var names = new List<string>();
             var repeat = 1;
 
-            // thses are the available options, not that they set the variables
-            var options = new ArgumentSet
+            var options = new ArgumentSet();
+
+            options.Add(new ArgumentSet.Argument<List<string>>("name", "the name of someone to greet.")
             {
+                Action = (n) =>
                 {
-                    "name", "the name of someone to greet.",
-                    (List<string> n) =>
-                    {
-                        names.AddRange(n);
-                    }
-                },
-                {
-                    'r', "the number of times to repeat the greeting.",
-                    (int r) => 
-                    {
-                        repeat = r;
-                    }
-                },
-                {
-                    'v', "increase debug message verbosity",
-                    (bool v) => 
-                    {
-                        verbosity = v;
-                    }
-                },
-                {
-                    "help", "show this message and exit",
-                    (bool h) => 
-                    {
-                        shouldShowHelp = h;
-                    }
+                    names.AddRange(n);
                 }
-            };
+            });
 
-            var parseResult = options.Parse(args);
-            var executionResult = options.Execute(parseResult);
-
-            switch (executionResult.State)
+            options.Add(new ArgumentSet.Argument<int>('r', "param C")
             {
-                case ExecutionState.HasError:
-                    Assert.Fail();
-                    break;
-                case ExecutionState.NotFound:
-                    Assert.Fail();
-                    break;
-                case ExecutionState.Success:
-                    Assert.IsTrue(verbosity == true);
-                    Assert.IsTrue(shouldShowHelp == true);
-                    Assert.IsTrue(names.Count == 4);
-                    Assert.IsTrue(repeat == 10);
-                    break;
-                default:
-                    Assert.Fail();
-                    break;
+                Action = (r) =>
+                {
+                    repeat = r;
+                }
+            });
+
+            options.Add(new ArgumentSet.Argument<bool>('v', "param verbose")
+            {
+                Action = (v) =>
+                {
+                    verbosity = v;
+                }
+            });
+
+            options.Add(new ArgumentSet.Argument<int>('v', "show verbose")
+            {
+                Action = (r) =>
+                {
+                    repeat = r;
+                }
+            });
+
+            options.Add(new ArgumentSet.Argument<bool>("help", "show help")
+            {
+                Action = (h) =>
+                {
+                    shouldShowHelp = h;
+                }
+            });
+
+            options.Parse(args);
+
+            if (options.ArgumentsInvalid.Empty())
+            {
+                Assert.IsTrue(verbosity == true);
+                Assert.IsTrue(shouldShowHelp == true);
+                Assert.IsTrue(names.Count == 4);
+                Assert.IsTrue(repeat == 10);
+            }
+            else
+            {
+                Assert.Fail();
             }
         }
     }

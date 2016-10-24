@@ -152,7 +152,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mono.Options.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

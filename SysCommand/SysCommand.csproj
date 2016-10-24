@@ -49,8 +49,7 @@
     <Compile Include="Parsing\DefaultParseStrategy.cs" />
     <Compile Include="Parsing\IParseStrategy.cs" />
     <Compile Include="Utils\AppHelpers.cs" />
-    <Compile Include="Utils\Extras\ArgumentSet\ArgumentResult.cs" />
-    <Compile Include="Utils\Extras\ArgumentSet\ArgumentSet.cs" />
+    <Compile Include="Utils\Extras\ArgumentSet.cs" />
     <Compile Include="Execution\ExecutionError.cs" />
     <Compile Include="Execution\ExecutionScope.cs" />
     <Compile Include="Parsing\ParseResult.cs" />
