@@ -72,6 +72,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CommandParserUtils.cs" />
     <Compile Include="Console.App\Commands\T00\Command1.cs" />
     <Compile Include="Console.App\Commands\T25\Command1.cs" />
     <Compile Include="Console.App\Commands\T25\Command2.cs" />

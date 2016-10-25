@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using SysCommand.Test;
-using SysCommand.Execution;
 using SysCommand.Utils;
 using SysCommand.Utils.Extras;
 
@@ -26,9 +25,9 @@ namespace SysCommand.Tests.UnitTests
             var names = new List<string>();
             var repeat = 1;
 
-            var options = new ArgumentSet();
+            var options = new OptionSet();
 
-            options.Add(new ArgumentSet.Argument<List<string>>("name", "the name of someone to greet.")
+            options.Add(new OptionSet.Argument<List<string>>("name", "the name of someone to greet.")
             {
                 Action = (n) =>
                 {
@@ -36,7 +35,7 @@ namespace SysCommand.Tests.UnitTests
                 }
             });
 
-            options.Add(new ArgumentSet.Argument<int>('r', "param C")
+            options.Add(new OptionSet.Argument<int>('r', "param C")
             {
                 Action = (r) =>
                 {
@@ -44,7 +43,7 @@ namespace SysCommand.Tests.UnitTests
                 }
             });
 
-            options.Add(new ArgumentSet.Argument<bool>('v', "param verbose")
+            options.Add(new OptionSet.Argument<bool>('v', "param verbose")
             {
                 Action = (v) =>
                 {
@@ -52,7 +51,7 @@ namespace SysCommand.Tests.UnitTests
                 }
             });
 
-            options.Add(new ArgumentSet.Argument<int>('v', "show verbose")
+            options.Add(new OptionSet.Argument<int>('v', "show verbose")
             {
                 Action = (r) =>
                 {
@@ -60,7 +59,7 @@ namespace SysCommand.Tests.UnitTests
                 }
             });
 
-            options.Add(new ArgumentSet.Argument<bool>("help", "show help")
+            options.Add(new OptionSet.Argument<bool>("help", "show help")
             {
                 Action = (h) =>
                 {

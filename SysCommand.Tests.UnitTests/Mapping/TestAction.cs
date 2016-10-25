@@ -2,8 +2,9 @@
 using SysCommand.Mapping;
 using SysCommand.Parsing;
 using SysCommand.Test;
-using SysCommand.Utils;
+using SysCommand.Parsing;
 using System.Collections.Generic;
+using SysCommand.Utils;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -85,7 +86,7 @@ namespace SysCommand.Tests.UnitTests
         public void CallActionMainAndEmptyArguments()
         {
             var actionMaps = CommandParserUtils.GetActionsMapsFromTargetObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
-            this.TestActionParsed(actionMaps, CommandParserUtils.MAIN_METHOD_NAME, true, TestHelper.GetCurrentMethodName());
+            this.TestActionParsed(actionMaps, DefaultExecutor.DefaultExecutor.MAIN_METHOD_NAME, true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]

@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 
 namespace SysCommand.Utils
 {
@@ -93,6 +92,23 @@ namespace SysCommand.Utils
             ConstructorInfo ci = t.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, paramTypes, null);
 
             return (T)ci.Invoke(paramValues);
+        }
+
+        public static bool IsEnum(Type type)
+        {
+            return GetTypeOrTypeOfNullable(type).IsEnum;
+        }
+
+        public static Type GetTypeOrTypeOfNullable(Type type)
+        {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                return type.GetGenericArguments()[0];
+            return type;
+        }
+
+        public static object GetDefaultForType(Type targetType)
+        {
+            return targetType.IsValueType ? Activator.CreateInstance(targetType) : null;
         }
 
         #endregion
@@ -222,185 +238,22 @@ namespace SysCommand.Utils
                 return defaultValueStr;
         }
 
+        public static bool HasCharAtFirst(string value, char firstChar)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return false;
+
+            return (value[0] == firstChar);
+        }
+
+        public static bool IsScaped(string value, char scapeChar = '\\')
+        {
+            return AppHelpers.HasCharAtFirst(value, scapeChar);
+        }
+
         #endregion
 
         #region console application
-
-        //public static Dictionary<string, string> ArgsToDictionary(string[] args)
-        //{
-        //    var dictionary = new Dictionary<string, string>();
-        //    var trueChar = '+';
-        //    var falseChar = '-';
-        //    var enumerator = args.GetEnumerator();
-        //    string value;
-
-        //    var i = 0;
-        //    while (enumerator.MoveNext())
-        //    {
-        //        // if is non parameter: [value] [123] [true] [\--scape-parameter]
-        //        var arg = (string)enumerator.Current;
-        //        if (!AppHelpers.IsArgumentFormat(arg))
-        //        {
-        //            dictionary.Add(i.ToString(), arg);
-        //            i++;
-        //            continue;
-        //        }
-
-        //        // -x=true     -> posLeft = "-x"; posRight = "true"
-        //        // -x          -> posLeft = "-x"; posRight = null
-        //        // --x:true    -> posLeft = "-x"; posRight = "true"
-        //        // --x:=true   -> posLeft = "-x"; posRight = "=true"
-        //        // --x=:true   -> posLeft = "-x"; posRight = ":true"
-                
-        //        var split = arg.Split(new char[] { '=', ':' }, 2, StringSplitOptions.RemoveEmptyEntries);
-        //        var posLeft = split.Length > 0 ? split[0] : null;
-        //        var posRight = split.Length > 1 ? split[1] : null;
-
-        //        var char0 = (posLeft.Length > 0) ? posLeft[0] : default(char);
-        //        var char1 = (posLeft.Length > 1) ? posLeft[1] : default(char);                
-        //        var lastLeftChar = posLeft.Last();
-
-        //        // check if exists "+" or "-": [-x+] or [-x-]
-        //        if (lastLeftChar.In(trueChar, falseChar))
-        //        {
-        //            posLeft = posLeft.Remove(posLeft.Length - 1);
-        //            value = lastLeftChar == trueChar ? "true" : "false";
-        //        }
-        //        else if (posRight == null)
-        //        {
-        //            // get next arg
-        //            value = args.Length >= (i + 1) ? args[i + 1] : null;
-
-        //            // ignore if next arg is parameter: [-xyz --next-parameter ...]
-        //            if (AppHelpers.IsArgumentFormat(value))
-        //                value = null;
-        //            // jump the next arg if is value: [-xyz value]
-        //            else
-        //                enumerator.MoveNext();
-        //        }
-        //        else
-        //        {
-        //            value = posRight;
-        //        }
-
-        //        //if (string.IsNullOrWhiteSpace(value))
-        //        //    value = "true";
-
-        //        // -x -> single parameter
-        //        if (char0 == '-' && char1 != '-')
-        //        {
-        //            // remove "-": -xyz -> xyz
-        //            var keys = posLeft.Substring(1);
-        //            foreach (var key in keys)
-        //                dictionary[key.ToString()] = value;
-        //        }
-        //        else
-        //        {
-        //            string key = posLeft;
-
-        //            // remove "--": --xyz -> xyz
-        //            if (char0 == '-' && char1 == '-')
-        //                key = key.Substring(1).Substring(1);
-        //            // remove "/": /xyz -> xyz
-        //            else
-        //                key = arg.Substring(1);
-
-        //            dictionary[key] = value;
-        //        }
-
-        //        i++;
-        //    }
-
-        //    return dictionary;
-        //}
-
-        public static Dictionary<string, string> ArgsToDictionary(string[] Args)
-        {
-            var Parameters = new Dictionary<string, string>();
-            Regex Spliter = new Regex(@"^-{1,2}|^/|=|:", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-            // original
-            // Regex Remover = new Regex(@"^['""]?(.*?)['""]?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            // fix to command: "test \"blabla\""
-            // the result without the fix is: test "blabla
-            Regex Remover = new Regex(@"^['""]?(.*?)['""]?", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-            string Parameter = null;
-            string[] Parts;
-
-            // Valid parameters forms:
-            // {-,/,--}param{ ,=,:}((",')value(",'))
-            // Examples: 
-            // -param1 value1 --param2 /param3:"Test-:-work" 
-            //   /param4=happy -param5 '--=nice=--'
-            foreach (string Txt in Args)
-            {
-                // Look for new parameters (-,/ or --) and a
-                // possible enclosed value (=,:)
-                Parts = Spliter.Split(Txt, 3);
-
-                switch (Parts.Length)
-                {
-                    // Found a value (for the last parameter 
-                    // found (space separator))
-                    case 1:
-                        if (Parameter != null)
-                        {
-                            if (!Parameters.ContainsKey(Parameter))
-                            {
-                                Parts[0] =
-                                    Remover.Replace(Parts[0], "$1");
-
-                                Parameters.Add(Parameter, Parts[0]);
-                            }
-                            Parameter = null;
-                        }
-                        // else Error: no parameter waiting for a value (skipped)
-                        break;
-
-                    // Found just a parameter
-                    case 2:
-                        // The last parameter is still waiting. 
-                        // With no value, set it to true.
-                        if (Parameter != null)
-                        {
-                            if (!Parameters.ContainsKey(Parameter))
-                                Parameters.Add(Parameter, "true");
-                        }
-                        Parameter = Parts[1];
-                        break;
-
-                    // Parameter with enclosed value
-                    case 3:
-                        // The last parameter is still waiting. 
-                        // With no value, set it to true.
-                        if (Parameter != null)
-                        {
-                            if (!Parameters.ContainsKey(Parameter))
-                                Parameters.Add(Parameter, "true");
-                        }
-
-                        Parameter = Parts[1];
-
-                        // Remove possible enclosing characters (",')
-                        if (!Parameters.ContainsKey(Parameter))
-                        {
-                            Parts[2] = Remover.Replace(Parts[2], "$1");
-                            Parameters.Add(Parameter, Parts[2]);
-                        }
-
-                        Parameter = null;
-                        break;
-                }
-            }
-            // In case a parameter is still waiting
-            if (Parameter != null)
-            {
-                if (!Parameters.ContainsKey(Parameter))
-                    Parameters.Add(Parameter, "true");
-            }
-            return Parameters;
-        }
 
         [DllImport("shell32.dll", SetLastError = true)]
         static extern IntPtr CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
@@ -489,40 +342,7 @@ namespace SysCommand.Utils
 
         #region syscommand
 
-        public static bool IsArgumentFormat(string value)
-        {
-            var argsDelimiter = new char[] { '-', '/' };
-
-            if (value == null || value.Length == 0)
-                return false;
-
-            return value[0].In(argsDelimiter);
-        }
-
-        public static bool HasCharAtFirst(string value, char firstChar)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return false;
-
-            return (value[0] == firstChar);
-        }
-
-        public static string RemoveFirstCharIfFound(string value, char charFind)
-        {
-            if (AppHelpers.IsScaped(value, charFind))
-                return value.Substring(1);
-            return value;
-        }
-
-        public static bool IsScaped(string value, char scapeChar = '\\')
-        {
-            return AppHelpers.HasCharAtFirst(value, scapeChar);
-        }
-
-        public static string RemoveScape(string value, char scapeChar = '\\')
-        {
-            return AppHelpers.RemoveFirstCharIfFound(value, scapeChar);
-        }
+       
 
         #endregion
 

@@ -50,8 +50,8 @@
     <Compile Include="ApplicationResult.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="Formatters\IMessageFormatter.cs" />
-    <Compile Include="Formatters\DefaultMessageFormatter.cs" />
+    <Compile Include="Descriptors\Descriptor.cs" />
+    <Compile Include="Descriptors\DefaultDescriptor.cs" />
     <Compile Include="Handlers\IApplicationHandler.cs" />
     <Compile Include="Loader\AppDomainCommandLoader.cs" />
     <Compile Include="Commands\System\HelpCommand.cs" />

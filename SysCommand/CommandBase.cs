@@ -1,6 +1,6 @@
 ﻿using SysCommand.Execution;
 
-namespace SysCommand.Mapping
+namespace SysCommand
 {
     public abstract class CommandBase
     {

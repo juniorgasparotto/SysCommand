@@ -1,13 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SysCommand.Mapping;
-using SysCommand.Utils;
+using SysCommand.Parsing;
 
-namespace SysCommand.Parsing
+namespace SysCommand.DefaultExecutor
 {
-    public class DefaultParseStrategy : IParseStrategy
+    internal class InternalParser
     {
-        public virtual ParseResult Parse(string[] args, IEnumerable<CommandMap> commandsMap, bool enableMultiAction)
+        private ActionParser actionParser;
+        private ArgumentParser argumentParser;
+        private ArgumentRawParser argumentRawParser;
+
+        public InternalParser(ArgumentRawParser argumentRawParser, ArgumentParser argumentParser, ActionParser actionParser)
+        {
+            this.argumentRawParser = argumentRawParser;
+            this.argumentParser = argumentParser;
+            this.actionParser = actionParser;
+        }
+
+        public ParseResult Parse(string[] args, IEnumerable<CommandMap> commandsMap, bool enableMultiAction)
         {
             var parseResult = new ParseResult();
             parseResult.Args = args;
@@ -15,10 +26,10 @@ namespace SysCommand.Parsing
             parseResult.EnableMultiAction = enableMultiAction;
 
             var allMethodsMaps = commandsMap.GetMethods();
-            var argumentsRaw = CommandParserUtils.ParseArgumentsRaw(args, allMethodsMaps);
+            var argumentsRaw = this.argumentRawParser.Parse(args, allMethodsMaps);
 
             IEnumerable<ArgumentRaw> initialExtraArguments;
-            var methodsParsed = CommandParserUtils.GetActionsParsed(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
+            var methodsParsed = this.actionParser.Parse(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
 
             var hasMethodsParsed = methodsParsed.Count > 0;
             var hasExtras = initialExtraArguments.Any();
@@ -111,7 +122,7 @@ namespace SysCommand.Parsing
         
         private void ParseProperties(CommandMap commandMap, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
         {
-            var parseds = CommandParserUtils.GetArgumentsParsed(argumentsRaw, commandMap.Command.EnablePositionalArgs, commandMap.Properties);
+            var parseds = this.argumentParser.Parse(argumentsRaw, commandMap.Command.EnablePositionalArgs, commandMap.Properties);
             commandParse.AddProperties(parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.Valid)));
 
             // Don't considere invalid args in this situation:

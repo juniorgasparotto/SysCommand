@@ -2,18 +2,27 @@
 using System;
 using System.Linq;
 using SysCommand.Parsing;
-using System.Collections;
 using SysCommand.Mapping;
 using System.Reflection;
+using SysCommand.DefaultExecutor;
 
 namespace SysCommand.Utils.Extras
 {
-    public sealed class ArgumentSet
+    public sealed class OptionSet
     {
         private List<ArgumentMap> argumentsMap = new List<ArgumentMap>();
+        private ArgumentParser argumentParser;
+        private ArgumentRawParser argumentRawParser;
+
         public IEnumerable<ArgumentParsed> ArgumentsValid { get; private set; }
         public IEnumerable<ArgumentParsed> ArgumentsInvalid { get; private set; }
         public bool HasError { get { return ArgumentsInvalid.Any(); } }
+
+        public OptionSet()
+        {
+            this.argumentRawParser = new ArgumentRawParser();
+            this.argumentParser = new ArgumentParser();
+        }
 
         public void Add<T>(string longName, string helpText, Action<T> action)
         {
@@ -53,8 +62,8 @@ namespace SysCommand.Utils.Extras
 
         public void Parse(string[] args, bool enablePositionalArgs = false)
         {
-            var argumentsRaw = CommandParserUtils.ParseArgumentsRaw(args, null);
-            var parseds = CommandParserUtils.GetArgumentsParsed(argumentsRaw, enablePositionalArgs, this.argumentsMap);
+            var argumentsRaw = this.argumentRawParser.Parse(args, null);
+            var parseds = this.argumentParser.Parse(argumentsRaw, enablePositionalArgs, this.argumentsMap);
             this.ArgumentsValid = parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.Valid));
             this.ArgumentsInvalid = parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.IsInvalid) && !f.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsNotRequired));
             this.Execute();

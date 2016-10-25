@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using SysCommand.Mapping;
 using SysCommand.Execution;
+using SysCommand.Parsing;
 using SysCommand.Utils;
 
 namespace SysCommand.ConsoleApp

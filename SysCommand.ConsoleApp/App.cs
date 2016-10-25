@@ -4,8 +4,8 @@ using System;
 using System.Reflection;
 using SysCommand.Execution;
 using SysCommand.Mapping;
-using SysCommand.Utils;
 using SysCommand.Parsing;
+using SysCommand.Utils;
 
 namespace SysCommand.ConsoleApp
 {
@@ -20,10 +20,8 @@ namespace SysCommand.ConsoleApp
         public event AppRunOnMethodReturnHandler OnMethodReturn;
 
         private bool enableMultiAction;
-        private IMappingStrategy mapper;
-        private IParseStrategy parser;
-        private IExecutionStrategy executor;
-        private IMessageFormatter messageFormatter;
+        private IExecutor executor;
+        private IDescriptor descriptor;
         private ConsoleWrapper console;
 
         public bool ReadArgsWhenIsDebug { get; set; }
@@ -44,27 +42,25 @@ namespace SysCommand.ConsoleApp
             }
         }
 
-        public IMessageFormatter MessageFormatter
+        public IDescriptor Descriptor
         {
             get
             {
-                return messageFormatter ?? new DefaultMessageFormatter();
+                return descriptor ?? new DefaultDescriptor();
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("This property can't be null.");
 
-                messageFormatter = value;
+                descriptor = value;
             }
         }
 
         public App(
             IEnumerable<Command> commands = null,
             bool enableMultiAction = true,
-            IMappingStrategy mapper = null,
-            IParseStrategy parser = null,
-            IExecutionStrategy executor = null,
+            IExecutor executor = null,
             bool addDefaultAppHandler = true
         )
         {
@@ -89,16 +85,14 @@ namespace SysCommand.ConsoleApp
 
             // defaults
             this.Console = new ConsoleWrapper();
-            this.mapper = mapper ?? new DefaultMappingStrategy();
-            this.executor = executor ?? new DefaultExecutionStrategy();
-            this.parser = parser ?? new DefaultParseStrategy();
+            this.executor = executor ?? new DefaultExecutor.DefaultExecutor();
 
             // add handler default
             if (addDefaultAppHandler)
                 this.AddApplicationHandler(new DefaultApplicationHandler());
 
             // mapping
-            this.Maps = this.mapper.DoMappping(commands).ToList();
+            this.Maps = this.executor.GetMaps(commands).ToList();
         }
 
         public App AddApplicationHandler(IApplicationHandler handler)
@@ -136,10 +130,9 @@ namespace SysCommand.ConsoleApp
                 var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
                 if (manageCommand != null)
                 {
-                    var parserHistory = new DefaultParseStrategy();
-                    var evaluatorHistory = new DefaultExecutionStrategy();
-                    var parseResultHistory = parserHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
-                    var newArgs = evaluatorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
+                    var executorHistory = new DefaultExecutor.DefaultExecutor();
+                    var parseResultHistory = executorHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
+                    var newArgs = executorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
                     if (newArgs != null)
                         appResult.Args = newArgs;
 
@@ -163,7 +156,7 @@ namespace SysCommand.ConsoleApp
                 //    userMaps.Remove(helpCommand);
                 //}
 
-                appResult.ParseResult = this.parser.Parse(appResult.Args, userMaps, this.enableMultiAction);
+                appResult.ParseResult = this.executor.Parse(appResult.Args, userMaps, this.enableMultiAction);
                 appResult.ExecutionResult = this.executor.Execute(appResult.ParseResult, (member) => this.MemberInvoke(appResult, member));
 
                 if (this.OnComplete != null)

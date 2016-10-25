@@ -2,6 +2,7 @@
 using System.Linq;
 using System;
 using SysCommand.Mapping;
+using System.Text;
 using SysCommand.Utils;
 
 namespace SysCommand.Parsing
@@ -24,7 +25,7 @@ namespace SysCommand.Parsing
         {
             get
             {
-                return CommandParserUtils.GetValueRaw(this.allRaw.Select(f => f.ValueRaw).ToArray());
+                return GetValueRaw(this.allRaw.Select(f => f.ValueRaw).ToArray());
             }
         }
 
@@ -88,6 +89,36 @@ namespace SysCommand.Parsing
         public override string ToString()
         {
             return "[" + this.Name + ", " + this.Value + "]";
+        }
+
+        public static string GetValueRaw(params string[] values)
+        {
+            var hasString = false;
+            var strBuilder = new StringBuilder();
+            foreach (var v in values)
+            {
+                if (!string.IsNullOrEmpty(v))
+                {
+                    var value = v.Replace("\"", "\\\"");
+
+                    hasString = true;
+                    if (strBuilder.Length > 0)
+                        strBuilder.Append(" ");
+
+                    if (value.Contains(" "))
+                    {
+                        strBuilder.Append("\"");
+                        strBuilder.Append(value);
+                        strBuilder.Append("\"");
+                    }
+                    else
+                    {
+                        strBuilder.Append(value);
+                    }
+                }
+            }
+
+            return hasString ? strBuilder.ToString() : null;
         }
 
     }

@@ -16,11 +16,11 @@ namespace SysCommand.ConsoleApp
                     break;
                 case ExecutionState.NotFound:
                     appResult.App.Console.ExitCode = ExitCodeConstants.Error;
-                    appResult.App.MessageFormatter.ShowNotFound(appResult);
+                    appResult.App.Descriptor.ShowNotFound(appResult);
                     break;
                 case ExecutionState.HasError:
                     appResult.App.Console.ExitCode = ExitCodeConstants.Error;
-                    appResult.App.MessageFormatter.ShowErrors(appResult);
+                    appResult.App.Descriptor.ShowErrors(appResult);
                     break;
             }
         }
@@ -47,11 +47,11 @@ namespace SysCommand.ConsoleApp
                 if (method.Value.GetType() != typeof(string) && typeof(IEnumerable).IsAssignableFrom(method.Value.GetType()))
                 {
                     foreach (var value in (IEnumerable)method.Value)
-                        appResult.App.MessageFormatter.ShowMethodReturn(appResult, method, value);
+                        appResult.App.Descriptor.ShowMethodReturn(appResult, method, value);
                 }
                 else
                 {
-                    appResult.App.MessageFormatter.ShowMethodReturn(appResult, method, method.Value);
+                    appResult.App.Descriptor.ShowMethodReturn(appResult, method, method.Value);
                 }
             }
         }

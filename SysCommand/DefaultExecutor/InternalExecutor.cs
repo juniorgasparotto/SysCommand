@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
-using SysCommand.Mapping;
 using SysCommand.Parsing;
 using SysCommand.Utils;
+using SysCommand.Execution;
 
-namespace SysCommand.Execution
+namespace SysCommand.DefaultExecutor
 {
-    public class DefaultExecutionStrategy : IExecutionStrategy
+    internal class InternalExecutor
     {
         public ExecutionResult Execute(ParseResult parseResult, Action<IMemberResult> onInvoke)
         {
@@ -138,7 +138,7 @@ namespace SysCommand.Execution
 
         private MethodMainResult CreateMainMethod(object command)
         {
-            var mainMethod = command.GetType().GetMethods().Where(f => f.Name.ToLower() == CommandParserUtils.MAIN_METHOD_NAME && f.GetParameters().Length == 0).FirstOrDefault();
+            var mainMethod = command.GetType().GetMethods().Where(f => f.Name.ToLower() == DefaultExecutor.MAIN_METHOD_NAME && f.GetParameters().Length == 0).FirstOrDefault();
             if (mainMethod != null)
                 return new MethodMainResult(mainMethod.Name, command, mainMethod);
             return null;

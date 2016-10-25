@@ -8,7 +8,7 @@ using SysCommand.Utils;
 
 namespace SysCommand.ConsoleApp
 {
-    public class DefaultMessageFormatter : IMessageFormatter
+    public class DefaultDescriptor : IDescriptor
     {
         public virtual void ShowErrors(ApplicationResult appResult)
         {

@@ -4,7 +4,7 @@ using SysCommand.Parsing;
 
 namespace SysCommand.ConsoleApp
 {
-    public interface IMessageFormatter
+    public interface IDescriptor
     {
         void ShowErrors(ApplicationResult appResult);
         void ShowNotFound(ApplicationResult appResult);
