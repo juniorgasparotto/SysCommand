@@ -6,7 +6,7 @@ using SysCommand.Mapping;
 
 namespace SysCommand.DefaultExecutor
 {
-    public class DefaultExecutor : IExecutor
+    public class Executor : IExecutor
     {
         public const string MAIN_METHOD_NAME = "main";
         private CommandMapper commandMapper;

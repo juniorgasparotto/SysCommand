@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultExecutor\DefaultExecutor.cs" />
+    <Compile Include="DefaultExecutor\Executor.cs" />
     <Compile Include="DefaultExecutor\InternalExecutor.cs" />
     <Compile Include="DefaultExecutor\Mapping\ActionMapper.cs" />
     <Compile Include="DefaultExecutor\Mapping\ArgumentMapper.cs" />

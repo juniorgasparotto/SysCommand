@@ -30,7 +30,7 @@ namespace SysCommand.DefaultExecutor
             {
                 var attribute = Attribute.GetCustomAttribute(method, typeof(ActionAttribute)) as ActionAttribute;
 
-                var isMainMethod = method.Name.ToLower() == DefaultExecutor.MAIN_METHOD_NAME;
+                var isMainMethod = method.Name.ToLower() == Executor.MAIN_METHOD_NAME;
                 var countParameters = method.GetParameters().Length;
 
                 // the main method, with zero arguments, can't be a action

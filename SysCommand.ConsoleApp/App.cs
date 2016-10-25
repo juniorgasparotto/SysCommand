@@ -85,7 +85,7 @@ namespace SysCommand.ConsoleApp
 
             // defaults
             this.Console = new ConsoleWrapper();
-            this.executor = executor ?? new DefaultExecutor.DefaultExecutor();
+            this.executor = executor ?? new DefaultExecutor.Executor();
 
             // add handler default
             if (addDefaultAppHandler)
@@ -130,7 +130,7 @@ namespace SysCommand.ConsoleApp
                 var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
                 if (manageCommand != null)
                 {
-                    var executorHistory = new DefaultExecutor.DefaultExecutor();
+                    var executorHistory = new DefaultExecutor.Executor();
                     var parseResultHistory = executorHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
                     var newArgs = executorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
                     if (newArgs != null)

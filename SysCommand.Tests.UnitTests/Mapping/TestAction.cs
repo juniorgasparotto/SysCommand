@@ -86,7 +86,7 @@ namespace SysCommand.Tests.UnitTests
         public void CallActionMainAndEmptyArguments()
         {
             var actionMaps = CommandParserUtils.GetActionsMapsFromTargetObject(new Git(), onlyWithAttribute: false, usePrefixInAllMethods: false, prefix: null);
-            this.TestActionParsed(actionMaps, DefaultExecutor.DefaultExecutor.MAIN_METHOD_NAME, true, TestHelper.GetCurrentMethodName());
+            this.TestActionParsed(actionMaps, DefaultExecutor.Executor.MAIN_METHOD_NAME, true, TestHelper.GetCurrentMethodName());
         }
 
         [TestMethod]

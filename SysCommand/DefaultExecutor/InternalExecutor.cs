@@ -138,7 +138,7 @@ namespace SysCommand.DefaultExecutor
 
         private MethodMainResult CreateMainMethod(object command)
         {
-            var mainMethod = command.GetType().GetMethods().Where(f => f.Name.ToLower() == DefaultExecutor.MAIN_METHOD_NAME && f.GetParameters().Length == 0).FirstOrDefault();
+            var mainMethod = command.GetType().GetMethods().Where(f => f.Name.ToLower() == Executor.MAIN_METHOD_NAME && f.GetParameters().Length == 0).FirstOrDefault();
             if (mainMethod != null)
                 return new MethodMainResult(mainMethod.Name, command, mainMethod);
             return null;
