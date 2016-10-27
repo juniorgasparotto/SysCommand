@@ -3,13 +3,13 @@ using System.Linq;
 using System;
 using System.Globalization;
 
-namespace SysCommand.Utils
+namespace SysCommand.Helpers
 {
-    public static class Converters
+    internal static class ConverterHelper
     {
         public static object TryConvertEnum(Type type, string[] values, out bool hasInvalidInput, Action<int> successConvertCallback = null)
         {
-            Type typeOriginal = AppHelpers.GetTypeOrTypeOfNullable(type);
+            Type typeOriginal = ReflectionHelper.GetTypeOrTypeOfNullable(type);
             int valueConverted = 0;
             var enumNames = Enum.GetNames(typeOriginal);
             var enumValues = Enum.GetValues(typeOriginal).Cast<int>().Select(f => f.ToString()).ToList();
@@ -131,11 +131,11 @@ namespace SysCommand.Utils
             object valueConverted = null;
             hasInvalidInput = false;
             hasUnsuporttedType = false;
-            Type typeOriginal = AppHelpers.GetTypeOrTypeOfNullable(type);
+            Type typeOriginal = ReflectionHelper.GetTypeOrTypeOfNullable(type);
 
             if (value == null && typeOriginal != typeof(bool))
             {
-                valueConverted = AppHelpers.GetDefaultForType(type);
+                valueConverted = ReflectionHelper.GetDefaultForType(type);
             }
             else
             {

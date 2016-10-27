@@ -3,7 +3,7 @@ using System.Linq;
 using System;
 using System.Reflection;
 using SysCommand.Parsing;
-using SysCommand.Utils;
+using SysCommand.Helpers;
 using SysCommand.Mapping;
 
 namespace SysCommand.DefaultExecutor
@@ -127,12 +127,12 @@ namespace SysCommand.DefaultExecutor
 
         public string GetLongName(string name)
         {
-            return AppHelpers.ToLowerSeparate(name, '-');
+            return StringHelper.ToLowerSeparate(name, '-');
         }
 
         public string GetLongNameByType(Type type)
         {
-            var prefix = AppHelpers.ToLowerSeparate(type.Name, '-');
+            var prefix = StringHelper.ToLowerSeparate(type.Name, '-');
             var split = prefix.Split('-').ToList();
             if (split.Last() == "command")
             {

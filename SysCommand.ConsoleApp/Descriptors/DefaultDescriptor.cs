@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using SysCommand.Execution;
 using SysCommand.Mapping;
-using SysCommand.Utils;
+using SysCommand.Helpers;
 
 namespace SysCommand.ConsoleApp
 {
@@ -32,7 +32,7 @@ namespace SysCommand.ConsoleApp
             string args = null;
             foreach (var arg in map.ArgumentsMaps)
             {
-                var typeName = AppHelpers.CSharpName(arg.Type);
+                var typeName = ReflectionHelper.CSharpName(arg.Type);
                 args += args == null ? typeName : ", " + typeName;
             }
             return string.Format(format, map.ActionName, args);

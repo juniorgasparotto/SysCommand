@@ -2,7 +2,7 @@
 using System.Linq;
 using System;
 using SysCommand.Mapping;
-using SysCommand.Utils;
+using SysCommand.Helpers;
 using SysCommand.Parsing;
 
 namespace SysCommand.DefaultExecutor
@@ -182,7 +182,7 @@ namespace SysCommand.DefaultExecutor
 
         public string GetValueScaped(string value, IEnumerable<ActionMap> actionMaps)
         {
-            if (AppHelpers.IsScaped(value))
+            if (StringHelper.IsScaped(value))
             {
                 string[] escapableEquals = null;
 

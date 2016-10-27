@@ -44,15 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileObject\Attributes\ObjectFileAttribute.cs" />
+    <Compile Include="FileObject\ObjectFileAttribute.cs" />
     <Compile Include="FileObject\FileHelper.cs" />
     <Compile Include="Handlers\ApplicationDelegates.cs" />
     <Compile Include="ApplicationResult.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="Descriptors\Descriptor.cs" />
+    <Compile Include="Descriptors\IDescriptor.cs" />
     <Compile Include="Descriptors\DefaultDescriptor.cs" />
     <Compile Include="Handlers\IApplicationHandler.cs" />
+    <Compile Include="Helpers\ConsoleAppHelper.cs" />
     <Compile Include="Loader\AppDomainCommandLoader.cs" />
     <Compile Include="Commands\System\HelpCommand.cs" />
     <Compile Include="Commands\System\IHelpCommand.cs" />

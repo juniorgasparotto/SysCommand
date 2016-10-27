@@ -4,7 +4,7 @@ using System;
 using System.Text;
 using System.Collections;
 using SysCommand.Mapping;
-using SysCommand.Utils;
+using SysCommand.Helpers;
 using SysCommand.Parsing;
 
 namespace SysCommand.DefaultExecutor
@@ -140,7 +140,7 @@ namespace SysCommand.DefaultExecutor
         {
             if (argRaw.Value == null && map.Type != typeof(bool))
             {
-                argMapped.Value = AppHelpers.GetDefaultForType(map.Type);
+                argMapped.Value = ReflectionHelper.GetDefaultForType(map.Type);
             }
             else
             {
@@ -159,13 +159,13 @@ namespace SysCommand.DefaultExecutor
                     }
                 };
 
-                if (AppHelpers.IsEnum(map.Type))
+                if (ReflectionHelper.IsEnum(map.Type))
                 {
                     var values = new List<string>() { argRaw.Value };
                     values.AddRange(GetUnamedValues(argumentsRaw, i + 1));
                     var valueArray = values.ToArray();
                     argMapped.ValueParsed = ArgumentParsed.GetValueRaw(valueArray);
-                    valueConverted = Converters.TryConvertEnum(map.Type, valueArray, out hasInvalidInput, actionConvertSuccess);
+                    valueConverted = ConverterHelper.TryConvertEnum(map.Type, valueArray, out hasInvalidInput, actionConvertSuccess);
                     i = iDelegate;
                 }
                 else if (map.Type != typeof(string) && typeof(IEnumerable).IsAssignableFrom(map.Type))
@@ -175,12 +175,12 @@ namespace SysCommand.DefaultExecutor
                     var valueArray = values.ToArray();
                     argMapped.ValueParsed = ArgumentParsed.GetValueRaw(valueArray);
 
-                    valueConverted = Converters.TryConvertCollection(map.Type, valueArray, out hasInvalidInput, out hasUnsuporttedType, actionConvertSuccess);
+                    valueConverted = ConverterHelper.TryConvertCollection(map.Type, valueArray, out hasInvalidInput, out hasUnsuporttedType, actionConvertSuccess);
                     i = iDelegate;
                 }
                 else
                 {
-                    valueConverted = Converters.TryConvertPrimitives(map.Type, value, out hasInvalidInput, out hasUnsuporttedType);
+                    valueConverted = ConverterHelper.TryConvertPrimitives(map.Type, value, out hasInvalidInput, out hasUnsuporttedType);
                 }
 
                 argMapped.HasInvalidInput = hasInvalidInput;

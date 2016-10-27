@@ -4,7 +4,8 @@ using SysCommand.Parsing;
 using SysCommand.Test;
 using SysCommand.Parsing;
 using System.Collections.Generic;
-using SysCommand.Utils;
+using SysCommand.Helpers;
+using SysCommand.ConsoleApp;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -17,7 +18,7 @@ namespace SysCommand.Tests.UnitTests
             string testContext = null;
             string[] args;
             if (!string.IsNullOrWhiteSpace(input))
-                args = AppHelpers.CommandLineToArgs(input);
+                args = ConsoleAppHelper.CommandLineToArgs(input);
             else
                 args = new string[0];
 

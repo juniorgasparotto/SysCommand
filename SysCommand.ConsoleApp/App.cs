@@ -5,7 +5,8 @@ using System.Reflection;
 using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.Parsing;
-using SysCommand.Utils;
+using SysCommand.Helpers;
+using SysCommand.ConsoleApp;
 
 namespace SysCommand.ConsoleApp
 {
@@ -78,7 +79,7 @@ namespace SysCommand.ConsoleApp
                 command.App = this;
 
             // validate if the list is empty
-            if (commands.Empty())
+            if (!commands.Any())
                 throw new Exception("No command found");
 
             this.enableMultiAction = enableMultiAction;
@@ -112,7 +113,7 @@ namespace SysCommand.ConsoleApp
 
         public ApplicationResult Run(string arg)
         {
-            return this.Run(AppHelpers.StringToArgs(arg));
+            return this.Run(ConsoleAppHelper.StringToArgs(arg));
         }
 
         public ApplicationResult Run(string[] args)
@@ -206,7 +207,7 @@ namespace SysCommand.ConsoleApp
             if (App.IsDebug && this.ReadArgsWhenIsDebug)
             {
                 var args = this.Console.Read(Strings.GetArgumentsInDebug);
-                return AppHelpers.StringToArgs(args);
+                return ConsoleAppHelper.StringToArgs(args);
             }
             else
             {

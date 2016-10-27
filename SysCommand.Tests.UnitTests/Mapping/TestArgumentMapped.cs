@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using SysCommand.Test;
 using SysCommand.Mapping;
-using SysCommand.Parsing;
-using SysCommand.Utils;
+using SysCommand.ConsoleApp;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -35,7 +34,7 @@ namespace SysCommand.Tests.UnitTests
         private void TestArgsMappedAuto(IEnumerable<ArgumentMap> maps, string input, bool enablePositionedArgs, string testMethodName)
         {
             string testContext = null;
-            var args = AppHelpers.CommandLineToArgs(input);
+            var args = ConsoleAppHelper.CommandLineToArgs(input);
             var argsRaw = CommandParserUtils.ParseArgumentsRaw(args);
             var argsMappeds = CommandParserUtils.GetArgumentsParsed(argsRaw, enablePositionedArgs, maps.ToArray());
             var objectTest = new { input, maps, argsMappeds };

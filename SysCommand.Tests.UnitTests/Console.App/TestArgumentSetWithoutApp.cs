@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using SysCommand.Test;
-using SysCommand.Utils;
-using SysCommand.Utils.Extras;
+using SysCommand.Extras;
+using System.Linq;
+using SysCommand.ConsoleApp;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -17,7 +18,7 @@ namespace SysCommand.Tests.UnitTests
         [TestMethod]
         public void TestWithoutApp()
         {
-            var args = AppHelpers.StringToArgs("--name glauber donizeti gasparotto junior -r 10 -v --help+");
+            var args = ConsoleAppHelper.StringToArgs("--name glauber donizeti gasparotto junior -r 10 -v --help+");
 
             // these variables will be set when the command line is parsed
             bool verbosity = false;
@@ -69,7 +70,7 @@ namespace SysCommand.Tests.UnitTests
 
             options.Parse(args);
 
-            if (options.ArgumentsInvalid.Empty())
+            if (!options.ArgumentsInvalid.Any())
             {
                 Assert.IsTrue(verbosity == true);
                 Assert.IsTrue(shouldShowHelp == true);

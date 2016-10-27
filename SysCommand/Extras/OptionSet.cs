@@ -6,7 +6,7 @@ using SysCommand.Mapping;
 using System.Reflection;
 using SysCommand.DefaultExecutor;
 
-namespace SysCommand.Utils.Extras
+namespace SysCommand.Extras
 {
     public sealed class OptionSet
     {
