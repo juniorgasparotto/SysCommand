@@ -1,0 +1,28 @@
+{
+  "Args": "main 1 2",
+  "Members": [
+    "Command1.main(Int32, Int32)",
+    "Command1.main(String[])"
+  ],
+  "Values": [
+    "Command1.Main=Main(1, 2)"
+  ],
+  "ExpectedResult": [
+    "Main(1, 2)"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.main(Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

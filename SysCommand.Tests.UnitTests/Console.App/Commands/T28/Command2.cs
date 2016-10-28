@@ -5,23 +5,21 @@ using SysCommand.ConsoleApp;
 using SysCommand.Parsing;
 using SysCommand.Mapping;
 
-namespace SysCommand.Tests.UnitTests.Commands.T27
+namespace SysCommand.Tests.UnitTests.Commands.T28
 {
     public class Command2 : Command
     {
+        public int C { get; set; }
+        public int D { get; set; }
+
         public Command2()
         {
             this.EnablePositionalArgs = true;
         }
 
-        public string Main(string[] a)
-        {
-            return $"Main(string[] a)";
-        }
-
         public string Main(int a, int b)
         {
-            return $"Main({a}, {b})";
+            return "Main= a:" + a + "; b:" + b;
         }
     }
 }

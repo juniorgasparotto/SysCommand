@@ -131,11 +131,11 @@ namespace SysCommand.ConsoleApp
                 var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
                 if (manageCommand != null)
                 {
-                    var executorHistory = new DefaultExecutor.Executor();
-                    var parseResultHistory = executorHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
-                    var newArgs = executorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
-                    if (newArgs != null)
-                        appResult.Args = newArgs;
+                    //var executorHistory = new DefaultExecutor.Executor();
+                    //var parseResultHistory = executorHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
+                    //var newArgs = executorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
+                    //if (newArgs != null)
+                    //    appResult.Args = newArgs;
 
                     userMaps.Remove(manageCommand);
                 }

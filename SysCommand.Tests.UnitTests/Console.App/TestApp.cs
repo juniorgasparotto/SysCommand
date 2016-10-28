@@ -1217,28 +1217,66 @@ namespace SysCommand.Tests.UnitTests
             );
         }
 
-        //[TestMethod]
-        //public void Test27_2CommandsAndDefaultMethodImplicitAndArgsMixedWithValidAndInvalid()
-        //{
-        //    this.Compare(
-        //            args: "a b 1 2",
-        //            commands: GetCmds(
-        //                new Commands.T27.Command1(),
-        //                new Commands.T27.Command2()
-        //            ),
-        //            funcName: TestHelper.GetCurrentMethodName(),
-        //            data: null
-        //    );
-        //}
+        [TestMethod]
+        public void Test27_1CommandsWithOverrideArrayString()
+        {
+            this.Compare(
+                    args: "main 1 2 3",
+                    commands: GetCmds(
+                        new Commands.T27.Command1()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
 
         [TestMethod]
-        public void Test27_2CommandsAndWithDiffSignature()
+        public void Test27_1CommandsWithOverrideArrayString2()
+        {
+            this.Compare(
+                    args: "main 1 2",
+                    commands: GetCmds(
+                        new Commands.T27.Command1()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test27_1CommandsWithOverrideArrayString3()
+        {
+            this.Compare(
+                    args: "main 1",
+                    commands: GetCmds(
+                        new Commands.T27.Command1()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test27_1CommandsWithOverrideArrayStringWithInverseDeclaretedOrder()
+        {
+            this.Compare(
+                    args: "main 1 2",
+                    commands: GetCmds(
+                        new Commands.T27.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test28_2CommandsAndWithDiffSignature()
         {
             this.Compare(
                     args: "1 2 3 4",
                     commands: GetCmds(
-                        new Commands.T27.Command1(),
-                        new Commands.T27.Command2()
+                        new Commands.T28.Command1(),
+                        new Commands.T28.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName(),
                     data: null
@@ -1333,90 +1371,14 @@ namespace SysCommand.Tests.UnitTests
         //    );
         //}
 
-        private void Compare(string args, Command[] commands, TestData data, string funcName)
+        private void Compare(string args, Command[] commands, CompareHelper.TestData data, string funcName)
         {
-            var app = new App(
-                    commands: commands
-                );
-
-            app.Console.Out = new StringWriter();
-
-            var appResult = app.Run(args);
-            
-            var output = app.Console.Out.ToString();
-
-            var test = new TestData();
-            test.Args = args;
-
-            foreach(var cmd in commands)
-            { 
-                test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Properties.Select(s => s.Target.GetType().Name + "." + s.TargetMember.ToString() + (s.IsOptional ? "" : " (obrigatory)") + (cmd.EnablePositionalArgs ? "" : " (NOT accept positional)"))));
-                test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Methods.Select(s => s.Target.GetType().Name + "." + app.Descriptor.GetMethodSpecification(s))));
-            }
-
-            test.ExpectedResult = output.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            test.Values = appResult.ExecutionResult.Results.Select(f => f.Target.GetType().Name + "." + f.Name + "=" + f.Value);
-
-            foreach(var level in appResult.ParseResult.Levels)
-            {
-                var testLevel = new TestData.Level();
-                testLevel.LevelNumber = level.LevelNumber;
-                test.Levels.Add(testLevel);
-
-                testLevel.CommandsValid.AddRange(level.Commands.Where(f => f.IsValid).Select(f => f.Command.GetType().Name));
-                testLevel.CommandsWithError.AddRange(level.Commands.Where(f => f.HasError).Select(f => f.Command.GetType().Name));
-
-                foreach (var cmd in level.Commands)
-                { 
-                    testLevel.MethodsValid.AddRange(cmd.Methods.Select(s => cmd.Command.GetType().Name + "." + app.Descriptor.GetMethodSpecification(s.ActionMap)));
-                    testLevel.MethodsInvalid.AddRange(cmd.MethodsInvalid.Select(s => cmd.Command.GetType().Name + "." + app.Descriptor.GetMethodSpecification(s.ActionMap)));
-                    testLevel.PropertiesValid.AddRange(cmd.Properties.Select(s => cmd.Command.GetType().Name + "." + s.Map.TargetMember.ToString()));
-                    testLevel.PropertiesInvalid.AddRange(cmd.PropertiesInvalid.Select(s => cmd.Command.GetType().Name + "." + (s.Name ?? s.Value)));
-                }
-            }
-
-            Assert.IsTrue(TestHelper.CompareObjects<TestApp>(test, null, funcName));
+            CompareHelper.Compare<TestApp>(args, commands, data, funcName);
         }
 
-        private class TestData
+        private Command[] GetCmds(params Command[] command)
         {
-            public class Level
-            {
-                public int LevelNumber { get; internal set; }
-                public List<string> CommandsValid { get; set; }
-                public List<string> PropertiesValid { get; internal set; }
-                public List<string> MethodsValid { get; internal set; }
-                public List<string> CommandsWithError { get; set; }
-                public List<string> PropertiesInvalid { get; internal set; }
-                public List<string> MethodsInvalid { get; internal set; }
-
-                public Level()
-                {
-                    this.MethodsValid = new List<string>();
-                    this.MethodsInvalid = new List<string>();
-                    this.PropertiesValid = new List<string>();
-                    this.PropertiesInvalid = new List<string>();
-                    this.CommandsValid = new List<string>();
-                    this.CommandsWithError = new List<string>();
-                }
-            }
-
-            public string Args { get; internal set; }
-            public List<string> Members { get; internal set; }
-            public IEnumerable<object> Values { get; internal set; }
-            public string[] ExpectedResult { get; set; }
-            public List<Level> Levels { get; internal set; }
-
-            public TestData()
-            {
-                this.Members = new List<string>();
-                this.Levels = new List<Level>();
-            }
-        }
-
-        private Command[] GetCmds(params Command[] commands)
-        {
-            return commands;
+            return CompareHelper.GetCmds(command);
         }
     }
 }

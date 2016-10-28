@@ -145,19 +145,28 @@ namespace SysCommand.DefaultExecutor
                         method = m,
                         countParameters = m.ActionMap.ArgumentsMaps.Count(),
                         countMappedParameters = m.Arguments.Count(a => a.IsMapped),
-                        countValidParameters = m.Arguments.Count(a => a.ParsingStates.HasFlag(ArgumentParsedState.Valid))
-                        //countTotalParsed = m.ArgumentsExtras.Count() + m.Arguments.Count()
+                        countValidParameters = m.Arguments.Count(a => a.ParsingStates.HasFlag(ArgumentParsedState.Valid)),
+                        countExtras = m.ArgumentsExtras.Count()
                     })
                     .OrderByDescending(o => o.countMappedParameters)
                     .ThenBy(o => o.countParameters)
                     .ToList();
 
+            // if have more than one valid, select the method
+            // that have less extras arguments.
+            // Main(int a, int b)
+            // Main(string[] lst)
+            // input1: main 1 2   -> Main(int a, int b) = 0 extras - selected because have more mapped args
+            // input1: main 1 2   -> Main(string[] lst) = 0 extras
+            // input2: main 1 2 3 -> Main(int a, int b) = 1 extras
+            // input2: main 1 2 3 -> Main(string[] lst) = 0 extras - selected because no have extras
             var allValid = candidates.Where(
-                    m => 
+                    m =>
                     {
                         return m.countParameters == m.countValidParameters;
                     }
-                );
+                )
+                .OrderBy(f => f.countExtras);
 
             if (allValid.Any())
             {

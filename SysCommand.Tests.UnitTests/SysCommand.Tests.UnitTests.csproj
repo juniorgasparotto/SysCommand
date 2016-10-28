@@ -75,8 +75,10 @@
     <Compile Include="CommandParserUtils.cs" />
     <Compile Include="Console.App\Commands\T00\Command1.cs" />
     <Compile Include="Console.App\Commands\T26\Command8.cs" />
-    <Compile Include="Console.App\Commands\T27\Command1.cs" />
     <Compile Include="Console.App\Commands\T27\Command2.cs" />
+    <Compile Include="Console.App\Commands\T28\Command1.cs" />
+    <Compile Include="Console.App\Commands\T28\Command2.cs" />
+    <Compile Include="Console.App\Commands\T27\Command1.cs" />
     <Compile Include="Console.App\Commands\T26\Command1.cs" />
     <Compile Include="Console.App\Commands\T26\Command7.cs" />
     <Compile Include="Console.App\Commands\T26\Command6.cs" />
@@ -131,6 +133,8 @@
     <Compile Include="Console.App\Commands\T06\Command1.cs" />
     <Compile Include="Console.App\Commands\T05\Command1.cs" />
     <Compile Include="Console.App\Commands\T04\Command1.cs" />
+    <Compile Include="CompareHelper.cs" />
+    <Compile Include="Console.App\TestAppHistory.cs" />
     <Compile Include="Console.App\TestArgumentSetWithoutApp.cs" />
     <Compile Include="Mapping\Commands\ArgumentMappedTestObject.cs" />
     <Compile Include="Mapping\Commands\EnumTest1.cs" />
