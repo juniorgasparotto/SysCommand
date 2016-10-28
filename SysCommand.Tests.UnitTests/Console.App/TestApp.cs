@@ -1074,6 +1074,177 @@ namespace SysCommand.Tests.UnitTests
             );
         }
 
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithoutParameterImplicit()
+        {
+            this.Compare(
+                    args: "value",
+                    commands: GetCmds(
+                        new Commands.T26.Command1()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithoutParameterExplicit()
+        {
+            this.Compare(
+                    args: "default value",
+                    commands: GetCmds(
+                        new Commands.T26.Command1()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithParameterImplicit()
+        {
+            this.Compare(
+                    args: "value",
+                    commands: GetCmds(
+                        new Commands.T26.Command3()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithParameterAndNotAcceptPositionalArgsAndImplicit()
+        {
+            this.Compare(
+                    args: "value",
+                    commands: GetCmds(
+                        new Commands.T26.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithParameterAndNotAcceptPositionalArgsAndImplicit2()
+        {
+            this.Compare(
+                    args: "--property-value 1",
+                    commands: GetCmds(
+                        new Commands.T26.Command4()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithParameterAndNotAcceptPositionalArgsAndImplicit3()
+        {
+            this.Compare(
+                    args: "--value a --property-value 1",
+                    commands: GetCmds(
+                        new Commands.T26.Command5()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithParameterAndImplicit()
+        {
+            this.Compare(
+                    args: "PropertyValue",
+                    commands: GetCmds(
+                        new Commands.T26.Command6()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithParameterAndImplicit2()
+        {
+            this.Compare(
+                    args: "1 value",
+                    commands: GetCmds(
+                        new Commands.T26.Command6()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithParameterAndImplicit3()
+        {
+            this.Compare(
+                    args: "a",
+                    commands: GetCmds(
+                        new Commands.T26.Command6()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithParameterAndImplicitWithDefaultValue()
+        {
+            this.Compare(
+                    args: "value",
+                    commands: GetCmds(
+                        new Commands.T26.Command7()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        [TestMethod]
+        public void Test26_1CommandsAnd1ArgsAnd1DefaultMethodWithParameterAndImplicitWithList()
+        {
+            this.Compare(
+                    args: "1 2 3 a b c d e f g",
+                    commands: GetCmds(
+                        new Commands.T26.Command8()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
+        //[TestMethod]
+        //public void Test27_2CommandsAndDefaultMethodImplicitAndArgsMixedWithValidAndInvalid()
+        //{
+        //    this.Compare(
+        //            args: "a b 1 2",
+        //            commands: GetCmds(
+        //                new Commands.T27.Command1(),
+        //                new Commands.T27.Command2()
+        //            ),
+        //            funcName: TestHelper.GetCurrentMethodName(),
+        //            data: null
+        //    );
+        //}
+
+        [TestMethod]
+        public void Test27_2CommandsAndWithDiffSignature()
+        {
+            this.Compare(
+                    args: "1 2 3 4",
+                    commands: GetCmds(
+                        new Commands.T27.Command1(),
+                        new Commands.T27.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName(),
+                    data: null
+            );
+        }
+
         //[TestMethod]
         //public void Test22_3CommandsAndHave2PropertiesTheOtherCommandInLevel2()
         //{

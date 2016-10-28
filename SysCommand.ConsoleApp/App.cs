@@ -74,7 +74,7 @@ namespace SysCommand.ConsoleApp
             }
             
             // load all in app domain if the list = null
-            commands = commands ?? new AppDomainCommandLoader().GetFromAppDomain(IsDebug);
+            commands = commands ?? new AppDomainCommandLoader().GetFromAppDomain(false);
             foreach (var command in commands)
                 command.App = this;
 
@@ -215,6 +215,23 @@ namespace SysCommand.ConsoleApp
                 // remove the app path that added auto by .net
                 listArgs.RemoveAt(0);
                 return listArgs.ToArray();
+            }
+        }
+
+        public static int RunInfiniteIfDebug(App app = null)
+        {
+            app = app ?? new App();
+
+            bool lastBreakLineInNextWrite = false;
+            while (true)
+            {
+                app.ReadArgsWhenIsDebug = true;
+                app.Console.BreakLineInNextWrite = lastBreakLineInNextWrite;
+                app.Run();
+                lastBreakLineInNextWrite = app.Console.BreakLineInNextWrite;
+
+                if (!App.IsDebug)
+                    return app.Console.ExitCode;
             }
         }
 

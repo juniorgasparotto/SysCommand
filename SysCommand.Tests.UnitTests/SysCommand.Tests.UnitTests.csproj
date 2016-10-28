@@ -74,6 +74,16 @@
   <ItemGroup>
     <Compile Include="CommandParserUtils.cs" />
     <Compile Include="Console.App\Commands\T00\Command1.cs" />
+    <Compile Include="Console.App\Commands\T26\Command8.cs" />
+    <Compile Include="Console.App\Commands\T27\Command1.cs" />
+    <Compile Include="Console.App\Commands\T27\Command2.cs" />
+    <Compile Include="Console.App\Commands\T26\Command1.cs" />
+    <Compile Include="Console.App\Commands\T26\Command7.cs" />
+    <Compile Include="Console.App\Commands\T26\Command6.cs" />
+    <Compile Include="Console.App\Commands\T26\Command5.cs" />
+    <Compile Include="Console.App\Commands\T26\Command4.cs" />
+    <Compile Include="Console.App\Commands\T26\Command3.cs" />
+    <Compile Include="Console.App\Commands\T26\Command2.cs" />
     <Compile Include="Console.App\Commands\T25\Command1.cs" />
     <Compile Include="Console.App\Commands\T25\Command2.cs" />
     <Compile Include="Console.App\Commands\T24\Command1.cs" />

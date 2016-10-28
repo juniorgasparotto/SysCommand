@@ -49,7 +49,7 @@
     <Compile Include="Handlers\ApplicationDelegates.cs" />
     <Compile Include="ApplicationResult.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="Descriptors\IDescriptor.cs" />
     <Compile Include="Descriptors\DefaultDescriptor.cs" />
     <Compile Include="Handlers\IApplicationHandler.cs" />

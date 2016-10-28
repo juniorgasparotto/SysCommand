@@ -1,0 +1,27 @@
+{
+  "Args": "a",
+  "Members": [
+    "Command7.default(Int32)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command7",
+    "Error in method: default(Int32)",
+    "The argument '--value' is invalid"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command7"
+      ],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": [
+        "Command7.default(Int32)"
+      ]
+    }
+  ]
+}

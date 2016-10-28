@@ -1,0 +1,28 @@
+{
+  "Args": "1 2 3 a b c d e f g",
+  "Members": [
+    "Command8.System.Collections.Generic.List`1[System.String] list",
+    "Command8.default(List<Int32>, List<Int32>)"
+  ],
+  "Values": [
+    "Command8.list=System.Collections.Generic.List`1[System.String]"
+  ],
+  "ExpectedResult": [
+    ""
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command8"
+      ],
+      "PropertiesValid": [
+        "Command8.System.Collections.Generic.List`1[System.String] list"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

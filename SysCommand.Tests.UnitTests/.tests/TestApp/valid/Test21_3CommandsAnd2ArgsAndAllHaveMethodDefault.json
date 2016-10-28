@@ -19,8 +19,6 @@
       ],
       "PropertiesValid": [],
       "MethodsValid": [
-        "Command1.default()",
-        "Command2.default()",
         "Command3.main(String, String)"
       ],
       "CommandsWithError": [

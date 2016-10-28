@@ -2,6 +2,7 @@
 using System.Linq;
 using SysCommand.Mapping;
 using SysCommand.Parsing;
+using SysCommand.Helpers;
 
 namespace SysCommand.DefaultExecutor
 {
@@ -45,7 +46,7 @@ namespace SysCommand.DefaultExecutor
                     commandParse.Command = commandMap.Command;
                     level.Add(commandParse);
 
-                    this.ParseProperties(commandMap, commandParse, initialExtraArguments);
+                    this.ParseProperties(commandMap.Properties, commandMap.Command.EnablePositionalArgs, commandParse, initialExtraArguments);
                 }
             }
 
@@ -62,24 +63,68 @@ namespace SysCommand.DefaultExecutor
                     var commandsGroups = levelGroup.GroupBy(f => f.ActionMap.Target);
                     foreach (var commandGroup in commandsGroups)
                     {
-                        var commandParse = new ParseResult.CommandParse();
-                        commandParse.Command = (CommandBase)commandGroup.Key;
+                        var commandParse = new ParseResult.CommandParse()
+                        {
+                            Command = (CommandBase)commandGroup.Key
+                        };
+
+                        var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
+                        var argumentsMap = commandMap.Properties;
+
                         level.Add(commandParse);
 
                         bool isBestMethodButHasError;
                         var bestMethod = this.GetBestMethod(commandGroup, out isBestMethodButHasError);
+                        var argumentsExtras = bestMethod.ArgumentsExtras;
 
-                        if (isBestMethodButHasError)
-                            commandParse.AddMethodInvalid(bestMethod);
-                        else
-                            commandParse.AddMethod(bestMethod);
+                        // Dosen't add this method to be executed in this scenary:
+                        // 1) is default 
+                        // 2) and input is implicit (without action name)
+                        var addMethod = true;
+                        var isDefaultAndInputIsImplicit = bestMethod.ActionMap.IsDefault
+                                                       && bestMethod.ArgumentRawOfAction == null;
 
-                        // in this part of the code the method is 100% valid
-                        // but can be exists extra arguments that are used 
-                        // with properties inputs.
-                        var argumentsExtras = bestMethod.ArgumentsExtras.SelectMany(f => f.AllRaw).ToList();
-                        var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
-                        this.ParseProperties(commandMap, commandParse, argumentsExtras);
+                        if (isDefaultAndInputIsImplicit)
+                        {
+                            var countParameter = bestMethod.ActionMap.ArgumentsMaps.Count();
+
+                            // 1) the default method dosen't have arguments
+                            // 2) and have one or more input arguments
+                            if (countParameter == 0 && args.Length > 0)
+                            {
+                                addMethod = false;
+                            }
+                            // 1) if default method has parameter, but exists error
+                            //    else ignore this default method and use your parameters
+                            //    to be used as input for the properties. This rule mantain
+                            //    the fluent match.
+                            // 2) Is obrigatory exists an less one property map to ignore 
+                            //    this method.
+                            // scenary:
+                            // ----
+                            //  default(int a)
+                            //  string PropertyValue
+                            // ----
+                            //$ --property-value "invalid-value-for-default-method"
+                            // expected: PropertyValue = invalid-value-for-default-method
+                            else if (countParameter > 0 && isBestMethodButHasError && argumentsMap.Any())
+                            { 
+                                addMethod = false;
+                                argumentsExtras = bestMethod.Arguments.Concat(bestMethod.ArgumentsExtras);
+                            }
+                        }
+                        
+                        // parse properties in same command with extras arguments the current method
+                        var argumentsRawProperties = argumentsExtras.SelectMany(f => f.AllRaw).ToList();
+                        this.ParseProperties(commandMap.Properties, commandMap.Command.EnablePositionalArgs, commandParse, argumentsRawProperties);
+
+                        if (addMethod)
+                        {
+                            if (isBestMethodButHasError)
+                                commandParse.AddMethodInvalid(bestMethod);
+                            else
+                                commandParse.AddMethod(bestMethod);
+                        }
                     }
                 }
             }
@@ -101,13 +146,17 @@ namespace SysCommand.DefaultExecutor
                         countParameters = m.ActionMap.ArgumentsMaps.Count(),
                         countMappedParameters = m.Arguments.Count(a => a.IsMapped),
                         countValidParameters = m.Arguments.Count(a => a.ParsingStates.HasFlag(ArgumentParsedState.Valid))
+                        //countTotalParsed = m.ArgumentsExtras.Count() + m.Arguments.Count()
                     })
                     .OrderByDescending(o => o.countMappedParameters)
                     .ThenBy(o => o.countParameters)
                     .ToList();
 
             var allValid = candidates.Where(
-                    m => m.countParameters == m.countValidParameters
+                    m => 
+                    {
+                        return m.countParameters == m.countValidParameters;
+                    }
                 );
 
             if (allValid.Any())
@@ -120,9 +169,9 @@ namespace SysCommand.DefaultExecutor
             return candidates.First().method;
         }
         
-        private void ParseProperties(CommandMap commandMap, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
+        private void ParseProperties(IEnumerable<ArgumentMap> argumentsMaps, bool enablePositionalArgs, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
         {
-            var parseds = this.argumentParser.Parse(argumentsRaw, commandMap.Command.EnablePositionalArgs, commandMap.Properties);
+            var parseds = this.argumentParser.Parse(argumentsRaw, enablePositionalArgs, argumentsMaps);
             commandParse.AddProperties(parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.Valid)));
 
             // Don't considere invalid args in this situation:
