@@ -55,14 +55,14 @@
     <Compile Include="Handlers\IApplicationHandler.cs" />
     <Compile Include="Helpers\ConsoleAppHelper.cs" />
     <Compile Include="Loader\AppDomainCommandLoader.cs" />
-    <Compile Include="Commands\System\HelpCommand.cs" />
-    <Compile Include="Commands\System\IHelpCommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\IHelpCommand.cs" />
     <Compile Include="Commands\System\IManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\System\ManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\Debug\ClearCommand.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Commands\System\ManagerCommand2.cs" />
-    <Compile Include="Commands\User\VerboseCommand.cs" />
+    <Compile Include="Commands\VerboseCommand.cs" />
     <Compile Include="Handlers\DefaultApplicationHandler.cs" />
     <Compile Include="Console\ExitCodeConstants.cs" />
     <Compile Include="Console\ConsoleWrapper.cs" />
@@ -78,6 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\User\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
