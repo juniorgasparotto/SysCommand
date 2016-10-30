@@ -1,0 +1,2 @@
+﻿@using System.Linq;
+Hello @Model.Count(), welcome to RazorEngine! 22

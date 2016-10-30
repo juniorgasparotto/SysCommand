@@ -36,6 +36,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +64,13 @@
     <Compile Include="Commands\System\IManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\System\ManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\Debug\ClearCommand.cs" />
+    <Compile Include="Razor\Compiler.cs" />
+    <Compile Include="Razor\CompilerServicesUtility.cs" />
+    <Compile Include="Razor\IRazorTemplateGenerator.cs" />
+    <Compile Include="Razor\RazorTemplateBase.cs" />
+    <Compile Include="Razor\RazorTemplateEntry.cs" />
+    <Compile Include="Razor\RazorTemplateGenerator.cs" />
+    <Compile Include="Razor\TemplateCompileException.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Commands\System\ManagerCommand2.cs" />
     <Compile Include="Commands\VerboseCommand.cs" />
@@ -69,6 +80,8 @@
     <Compile Include="JsonUtils\TypeNameSerializationBinder.cs" />
     <Compile Include="Console\Verbose.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Razor\View.cs" />
+    <EmbeddedResource Include="Views\Help\help.view" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SysCommand\SysCommand.csproj">
@@ -81,6 +94,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\User\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

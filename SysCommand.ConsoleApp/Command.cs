@@ -44,5 +44,30 @@ namespace SysCommand.ConsoleApp
             //  3.2) f.IsInvoked = false: save 7 8 9 -> FIRST: IsInvoked = FALSE
             return thisMethodForEachLevel.First(f => !f.IsInvoked);
         }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public string View<T>(T model, bool searchInResourse = false)
+        {
+            var view = new View();
+            StackTrace st = new StackTrace();
+            StackFrame sf = st.GetFrame(1);
+
+            var executeInfo = new View.ExecuteInfo
+            {
+                Method = (MethodInfo)sf.GetMethod(),
+                Type = this.GetType()
+            };
+
+            return view.ProcessByViewName<T>(model, executeInfo, searchInResourse);
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public string ViewContent<T>(T model, string content)
+        {
+            var view = new View();
+            StackTrace st = new StackTrace();
+            StackFrame sf = st.GetFrame(1);
+            return view.ProcessByContent<T>(model, content);
+        }
     }
 }

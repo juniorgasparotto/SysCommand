@@ -2,7 +2,7 @@
 {
     public interface IHelpCommand
     {
-        void Help();
-        void Help(char m);
+        //void Help();
+        //void Help(char m);
     }
 }
