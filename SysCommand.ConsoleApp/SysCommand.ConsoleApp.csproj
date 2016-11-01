@@ -35,7 +35,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
@@ -48,6 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\User\Help\HelpTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HelpTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="FileObject\ObjectFileAttribute.cs" />
     <Compile Include="FileObject\FileHelper.cs" />
     <Compile Include="Handlers\ApplicationDelegates.cs" />
@@ -59,29 +66,32 @@
     <Compile Include="Handlers\IApplicationHandler.cs" />
     <Compile Include="Helpers\ConsoleAppHelper.cs" />
     <Compile Include="Loader\AppDomainCommandLoader.cs" />
-    <Compile Include="Commands\HelpCommand.cs" />
-    <Compile Include="Commands\IHelpCommand.cs" />
+    <Compile Include="Commands\User\Help\HelpCommand.cs" />
+    <Compile Include="Commands\User\Help\IHelpCommand.cs" />
     <Compile Include="Commands\System\IManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\System\ManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\Debug\ClearCommand.cs" />
-    <Compile Include="Razor\Compiler.cs" />
-    <Compile Include="Razor\CompilerServicesUtility.cs" />
-    <Compile Include="Razor\IRazorTemplateGenerator.cs" />
-    <Compile Include="Razor\RazorTemplateBase.cs" />
-    <Compile Include="Razor\RazorTemplateEntry.cs" />
-    <Compile Include="Razor\RazorTemplateGenerator.cs" />
-    <Compile Include="Razor\TemplateCompileException.cs" />
+    <Compile Include="View\Razor\Compiler.cs" />
+    <Compile Include="View\Razor\CompilerServicesUtility.cs" />
+    <Compile Include="View\Razor\IRazorTemplateGenerator.cs" />
+    <Compile Include="View\Razor\RazorTemplateBase.cs" />
+    <Compile Include="View\Razor\RazorTemplateEntry.cs" />
+    <Compile Include="View\Razor\RazorTemplateGenerator.cs" />
+    <Compile Include="View\Razor\TemplateCompileException.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Commands\System\ManagerCommand2.cs" />
-    <Compile Include="Commands\VerboseCommand.cs" />
+    <Compile Include="Commands\User\VerboseCommand.cs" />
     <Compile Include="Handlers\DefaultApplicationHandler.cs" />
     <Compile Include="Console\ExitCodeConstants.cs" />
     <Compile Include="Console\ConsoleWrapper.cs" />
     <Compile Include="JsonUtils\TypeNameSerializationBinder.cs" />
     <Compile Include="Console\Verbose.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Razor\View.cs" />
-    <EmbeddedResource Include="Views\Help\help.view" />
+    <Compile Include="View\Razor\RazorView.cs" />
+    <Compile Include="View\T4\T4Helper.cs" />
+    <EmbeddedResource Include="Commands\User\Help\help.razor">
+      <Generator>RazorTransformTool</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SysCommand\SysCommand.csproj">
@@ -93,10 +103,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\User\" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="Commands\User\Help\HelpTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>HelpTemplate.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text;
 using SysCommand.Mapping;
-using System;
 
 namespace SysCommand.ConsoleApp
 {
@@ -10,7 +9,15 @@ namespace SysCommand.ConsoleApp
     {
         public string Help(string action = null, string command = null)
         {
-            return View(this.App.Maps, true);
+            //var help = new Commands.User.Help.help();
+            //help.Session = new Dictionary<string, object>();
+            //help.Session.Add("Model", this.App.Maps);
+            //help.Initialize();
+            //return help.TransformText();
+            //return ViewT4<Commands.User.Help.HelpTemplate, IEnumerable<CommandMap>>(this.App.Maps);
+
+            //return View<IEnumerable<CommandMap>>(null);
+            return View(this.App.Maps);
 
             var strBuilder = new StringBuilder();
             foreach (var map in this.App.Maps)

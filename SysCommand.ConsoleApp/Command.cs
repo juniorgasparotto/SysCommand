@@ -5,6 +5,8 @@ using System.Runtime.CompilerServices;
 using SysCommand.Mapping;
 using SysCommand.Execution;
 using SysCommand.Helpers;
+using System;
+using System.Collections.Generic;
 
 namespace SysCommand.ConsoleApp
 {
@@ -46,28 +48,38 @@ namespace SysCommand.ConsoleApp
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public string View<T>(T model, bool searchInResourse = false)
+        public string View<T>(T model = default(T), string viewName = null, bool searchOnlyInResources = false)
         {
-            var view = new View();
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(1);
-
-            var executeInfo = new View.ExecuteInfo
+            var view = new RazorView();
+            
+            if (viewName != null)
             {
-                Method = (MethodInfo)sf.GetMethod(),
-                Type = this.GetType()
-            };
+                return view.ProcessByViewName<T>(model, viewName, searchOnlyInResources);
+            }
+            else
+            {
+                StackTrace st = new StackTrace();
+                StackFrame sf = st.GetFrame(1);
+                var executeInfo = new RazorView.ExecuteInfo
+                {
+                    Method = (MethodInfo)sf.GetMethod(),
+                    Type = this.GetType()
+                };
 
-            return view.ProcessByViewName<T>(model, executeInfo, searchInResourse);
+                return view.ProcessByViewName<T>(model, executeInfo, searchOnlyInResources);
+            }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public string ViewContent<T>(T model, string content)
+        public string ViewContent<T>(T model = default(T), string content = null)
         {
-            var view = new View();
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(1);
+            var view = new RazorView();
             return view.ProcessByContent<T>(model, content);
+        }
+
+        public string ViewT4<TTemplate, TModel>(TModel model = default(TModel))
+        {
+            return T4Helper.Execute<TTemplate, TModel>(model);
         }
     }
 }
