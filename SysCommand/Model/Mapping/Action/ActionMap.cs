@@ -12,13 +12,14 @@ namespace SysCommand.Mapping
         public object Target { get; private set; }
         public MethodInfo Method { get; private set; }
         public string Prefix { get; private set; }
+        public string HelpText { get; private set; }
         public bool UsePrefix { get; private set; }
         public Type ReturnType { get; private set; }
         public bool IsDefault { get; set; }
         public bool EnablePositionalArgs { get; set; }
         public IEnumerable<ArgumentMap> ArgumentsMaps { get; private set; }
 
-        public ActionMap(object target, MethodInfo method, string actionName, string prefix, string actionNameRaw, bool usePrefix, bool isDefault, bool enablePositionalArgs, IEnumerable<ArgumentMap> argumentsMaps)
+        public ActionMap(object target, MethodInfo method, string actionName, string prefix, string actionNameRaw, bool usePrefix, string helpText, bool isDefault, bool enablePositionalArgs, IEnumerable<ArgumentMap> argumentsMaps)
         {
             this.Target = target;
             this.Method = method;
@@ -26,6 +27,7 @@ namespace SysCommand.Mapping
             this.ActionName = actionName;
             this.ActionNameRaw = actionNameRaw;
             this.Prefix = prefix;
+            this.HelpText = helpText;
             this.UsePrefix = usePrefix;
             this.ReturnType = method.ReturnType;
             this.ArgumentsMaps = new List<ArgumentMap>(argumentsMaps);

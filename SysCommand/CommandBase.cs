@@ -13,5 +13,6 @@ namespace SysCommand
         public bool OnlyMethodsWithAttribute { get; set; }
         public bool OnlyPropertiesWithAttribute { get; set; }
         public bool EnablePositionalArgs { get; set; }
+        public string HelpText { get; set; }
     }
 }

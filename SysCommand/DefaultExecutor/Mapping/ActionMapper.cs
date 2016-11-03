@@ -71,9 +71,11 @@ namespace SysCommand.DefaultExecutor
                 if (isMainMethod || (attribute != null && attribute.IsDefault))
                     isDefaultAction = true;
 
+                var helpText = attribute == null ? null : attribute.Help;
                 var enablePositionalArgs = attribute == null ? true : attribute.EnablePositionalArgs;
+
                 var argsMaps = this.argumentMapper.GetFromMethod(target, method);
-                maps.Add(new ActionMap(target, method, actionName, prefix, actionNameRaw, usePrefixFinal, isDefaultAction, enablePositionalArgs, argsMaps));
+                maps.Add(new ActionMap(target, method, actionName, prefix, actionNameRaw, usePrefixFinal, helpText, isDefaultAction, enablePositionalArgs, argsMaps));
             }
 
             return maps;

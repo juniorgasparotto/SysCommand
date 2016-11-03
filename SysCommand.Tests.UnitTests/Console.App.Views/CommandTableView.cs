@@ -10,6 +10,11 @@ namespace SysCommand.Tests.UnitTests
 {
     public class CommandTableView : Command
     {
+        public CommandTableView()
+        {
+            this.HelpText = "command help";
+        }
+
         [Argument(Help = "Give the output in the short-format.", ShortName = 's', LongName = "short", ShowHelpComplement = true, DefaultValue = true)]
         public bool IsShort { get; set; }
 
@@ -22,7 +27,7 @@ namespace SysCommand.Tests.UnitTests
         [Argument(Help = "In addition to the names of files that have been changed,", ShortName = 'v', ShowHelpComplement = true, DefaultValue = Verbose.All)]
         public Verbose Verbose { get; set; }
 
-        [Action]
+        [Action(Help="action help")]
         public string Status()
         {
             return "";

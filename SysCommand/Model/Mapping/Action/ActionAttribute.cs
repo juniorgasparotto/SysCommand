@@ -9,6 +9,7 @@ namespace SysCommand.Mapping
         public bool Ignore { get; set; }
         public bool IsDefault { get; set; }
         public bool EnablePositionalArgs { get; set; }
+        public string Help { get; set; }
 
         public ActionAttribute()
         {
