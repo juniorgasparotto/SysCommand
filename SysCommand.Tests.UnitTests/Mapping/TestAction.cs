@@ -2,9 +2,7 @@
 using SysCommand.Mapping;
 using SysCommand.Parsing;
 using SysCommand.Test;
-using SysCommand.Parsing;
 using System.Collections.Generic;
-using SysCommand.Helpers;
 using SysCommand.ConsoleApp;
 
 namespace SysCommand.Tests.UnitTests

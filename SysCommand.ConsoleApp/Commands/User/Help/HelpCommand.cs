@@ -2,6 +2,9 @@
 using System.Linq;
 using System.Text;
 using SysCommand.Mapping;
+using SysCommand.ConsoleApp.View;
+using SysCommand.DefaultExecutor;
+using System;
 
 namespace SysCommand.ConsoleApp
 {
@@ -9,6 +12,42 @@ namespace SysCommand.ConsoleApp
     {
         public string Help(string action = null, string command = null)
         {
+            var table = new TableView();
+            table.AddLineSeparator = true;
+            table.AddColumnSeparator = true;
+
+            table.PaddingLeft = 2;
+            table.PaddingTop = 1;
+            table.PaddingBottom = 2;
+            table.IncludeHeader = true;
+            table.AddColumnDefinition("A", 10, 0, 2);
+            table.AddColumnDefinition("B", 10);
+            table.AddColumnDefinition("C", 10);
+            table.AddColumnDefinition("D", 10);
+
+            table.AddRow()
+                .AddColumnInRow("0000000000000000000000")
+                .AddColumnInRow("111111111111 11111111111111 1111")
+                .AddColumnInRow("22222222222 222222222 222222222 2222222")
+                .AddColumnInRow("33333333333333333333333333 333333333333 333 3 3 3333 3");
+
+            table.AddRow()
+                .AddColumnInRow("4444000000000")
+                .AddColumnInRow("5555 11111111111111 1111")
+                .AddColumnInRow("66666 222222222 222222222 2222222")
+                .AddColumnInRow("777777 333333333333 333 3 3 3333 3");
+
+            table.AddRow()
+                .AddColumnInRow("88888888888800")
+                .AddColumnInRow("AAAAAA AAAAAAAAA AAAAAAAAAAAA")
+                .AddColumnInRow("CCCCCCCCC 222222222 222222222 2222222")
+                .AddColumnInRow("It is a long established fact that a reader It is a long established fact that a reader");
+
+            table.Build();
+            return table.ToString();
+
+            return this.App.Descriptor.GetHelpText(this.App.Maps);
+
             //var help = new Commands.User.Help.help();
             //help.Session = new Dictionary<string, object>();
             //help.Session.Add("Model", this.App.Maps);

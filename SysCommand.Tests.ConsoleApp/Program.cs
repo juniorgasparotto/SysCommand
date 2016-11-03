@@ -1,4 +1,5 @@
 ﻿using SysCommand.ConsoleApp;
+using System;
 
 namespace SysCommand.Tests.ConsoleApp
 {

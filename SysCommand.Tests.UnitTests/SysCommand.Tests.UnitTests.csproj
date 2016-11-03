@@ -73,6 +73,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommandParserUtils.cs" />
+    <Compile Include="Console.App.Views\CommandTableView.cs" />
+    <Compile Include="Console.App.Views\TestAppViews.cs" />
     <Compile Include="Console.App\Commands\T00\Command1.cs" />
     <Compile Include="Console.App\Commands\T26\Command8.cs" />
     <Compile Include="Console.App\Commands\T27\Command2.cs" />

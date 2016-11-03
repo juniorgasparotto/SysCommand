@@ -60,11 +60,11 @@ namespace SysCommand.Helpers
             }
         }
 
-        public static IEnumerable<string> ChunksLetters(string str, int chunkSize)
-        {
-            for (int i = 0; i < str.Length; i += chunkSize)
-                yield return str.Substring(i, Math.Min(chunkSize, str.Length - i));
-        }
+        //public static IEnumerable<string> ChunksLetters(string str, int chunkSize)
+        //{
+        //    for (int i = 0; i < str.Length; i += chunkSize)
+        //        yield return str.Substring(i, Math.Min(chunkSize, str.Length - i));
+        //}
 
         /// <summary>
         /// Converts a List of string arrays to a string where each element in each line is correctly padded.
@@ -103,7 +103,10 @@ namespace SysCommand.Helpers
                 {
                     var value = line[i];
                     // Append the value with padding of the maximum length of any value for this element
-                    sb.Append(value.PadRight(maxValues[i]));
+                    if (i == line.Length - 1)
+                        sb.Append(value);
+                    else
+                        sb.Append(value.PadRight(maxValues[i]));
                 }
             }
             return sb.ToString();

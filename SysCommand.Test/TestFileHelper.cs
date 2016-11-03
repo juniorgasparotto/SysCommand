@@ -53,17 +53,24 @@ namespace SysCommand.Test
 
         public static string GetContentJsonFromObject(object obj, JsonSerializerSettings config = null)
         {
-            if (config == null)
+            if (obj is string)
             {
-                config = new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Auto,
-                    Binder = binder,
-                    Formatting = Formatting.Indented
-                };
+                return obj.ToString();
             }
+            else
+            { 
+                if (config == null)
+                {
+                    config = new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.Auto,
+                        Binder = binder,
+                        Formatting = Formatting.Indented
+                    };
+                }
 
-            return JsonConvert.SerializeObject(obj, config.Formatting, config);
+                return JsonConvert.SerializeObject(obj, config.Formatting, config);
+            }
         }
 
         public static T GetObjectFromContentJson<T>(string contentJson, JsonSerializerSettings config = null)

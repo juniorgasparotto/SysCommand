@@ -74,7 +74,7 @@ namespace SysCommand.ConsoleApp
             }
             
             // load all in app domain if the list = null
-            commands = commands ?? new AppDomainCommandLoader().GetFromAppDomain(false);
+            commands = commands ?? new AppDomainCommandLoader().GetFromAppDomain(IsDebug);
             foreach (var command in commands)
                 command.App = this;
 

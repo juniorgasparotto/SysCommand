@@ -90,7 +90,6 @@ namespace SysCommand.Test
             config = config ?? GetJsonConfig();
 
             var typeName = typeof(TType).Name;
-            //// add if not exists, and the first add must be correct
             SaveUncheckedFileIfValidNotExists<dynamic>(typeName, objectTest, testContext, testMethodName, config);
 
             var outputTest = TestFileHelper.GetContentJsonFromObject(objectTest, config);
@@ -102,5 +101,22 @@ namespace SysCommand.Test
            
             return outputTest == outputCorrect;
         }
+
+        //public static bool CompareObjectsString<TType>(string objectTest, string testContext, string testMethodName, JsonSerializerSettings config = null)
+        //{
+        //    config = config ?? GetJsonConfig();
+
+        //    var typeName = typeof(TType).Name;
+        //    SaveUncheckedFileIfValidNotExists(typeName, objectTest, testContext, testMethodName, config);
+
+        //    var outputTest = objectTest;
+        //    var outputCorrect = TestFileHelper.GetContentFromFile(GetValidTestFileName(typeName, testContext, testMethodName));
+        //    var test = outputTest == outputCorrect;
+
+        //    if (!test)
+        //        SaveInvalidFileIfValidExists<dynamic>(typeName, objectTest, testContext, testMethodName, config);
+
+        //    return outputTest == outputCorrect;
+        //}
     }
 }
