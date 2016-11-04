@@ -41,7 +41,7 @@ namespace SysCommand.DefaultExecutor
             string longName = null;
             char? shortName = null;
             string helpText = null;
-            bool showHelpComplement = false;
+            bool showHelpComplement = true;
             int? position = null;
             bool hasPosition = false;
             bool isOptional = true;
@@ -69,7 +69,7 @@ namespace SysCommand.DefaultExecutor
             shortName = shortName == default(char) ? null : shortName;
             position = hasPosition ? position : null;
 
-            if (longName == null || shortName == null)
+            if (longName == null && shortName == null)
             {
                 if (mapName.Length == 1)
                 {
@@ -91,7 +91,7 @@ namespace SysCommand.DefaultExecutor
             string longName = null;
             char? shortName = null;
             string helpText = null;
-            bool showHelpComplement = false;
+            bool showHelpComplement = true;
             int? position = null;
             bool hasPosition = false;
             bool isOptional = parameter.IsOptional;

@@ -102,6 +102,26 @@ namespace SysCommand.Tests.ConsoleApp.Commands
             return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
+        public string Delete1()
+        {
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+        }
+
+        public string Delete2()
+        {
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+        }
+
+        public string Delete3()
+        {
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+        }
+
+        public string Delete4()
+        {
+            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+        }
+
         private string GetDebugName(ActionMap map, MethodResult result)
         {
             if (map != result.ActionParsed.ActionMap)

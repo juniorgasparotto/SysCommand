@@ -6,15 +6,12 @@ using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.Helpers;
 using System;
+using SysCommand.ConsoleApp.View;
 
 namespace SysCommand.ConsoleApp
 {
     public class DefaultDescriptor : IDescriptor
     {
-        private const int PADDING_SPACE_PROPERTIES = 4;
-        private const int PADDING_SPACE_METHOD = 4;
-        private const int PADDING_SPACE_METHOD_PARAMS = 8;
-
         public virtual void ShowErrors(ApplicationResult appResult)
         {
             var strBuilder = this.GetErrors(appResult.ExecutionResult.Errors);
@@ -31,47 +28,88 @@ namespace SysCommand.ConsoleApp
             appResult.App.Console.Write(method.Value);
         }
 
-        public virtual string GetMethodSpecification(ActionMap map)
+        public string GetHelpText(IEnumerable<CommandMap> commandMaps)
         {
-            var format = "{0}({1})";
-            string args = null;
-            foreach (var arg in map.ArgumentsMaps)
+            const int WIDTH_USAGE_LEFT = 10;
+            const int WIDTH_USAGE_RIGHT = 60;
+            const int WIDTH_COMMAND = 80;
+            const int WIDTH_MEMBER_LEFT = 0;
+            const int WIDTH_MEMBER_RIGHT = 40;
+            const int PADDING_RIGHT = 4;
+
+            var strBuilder = new StringBuilder();
+            var tableUsage = new TableView(strBuilder);
+            tableUsage.AddLineSeparator = false;
+            tableUsage.AddColumnSeparator = false;
+
+            tableUsage.AddColumnDefinition(null, WIDTH_USAGE_LEFT, 0, PADDING_RIGHT);
+            tableUsage.AddColumnDefinition(null, WIDTH_USAGE_RIGHT);
+            tableUsage.AddRow()
+                .AddColumnInRow("usage: git")
+                .AddColumnInRow("[--version] [--help] [-C <path>] [-c name=value] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path] [-p | --paginate | --no-pager] --no-replace-objects] [--bare] [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>] <command> [<args>]");
+            tableUsage.AddRowSummary("");
+            tableUsage.Build();
+
+            var tableHelp = new TableView(strBuilder);
+            tableHelp.AddLineSeparator = false;
+            tableHelp.AddColumnSeparator = false;
+            tableHelp.AddColumnDefinition(null, WIDTH_MEMBER_LEFT, 3, PADDING_RIGHT);
+            tableHelp.AddColumnDefinition(null, WIDTH_MEMBER_RIGHT);
+
+            foreach (var cmd in commandMaps)
             {
-                var typeName = ReflectionHelper.CSharpName(arg.Type);
-                args += args == null ? typeName : ", " + typeName;
+                var hasProperty = cmd.Properties.Any();
+                var hasMethod = cmd.Methods.Any();
+
+                if (hasProperty || hasMethod)
+                {
+                    tableHelp.AddRowSummary("");
+                    tableHelp.AddRowSummary(cmd.Command.HelpText ?? cmd.Command.GetType().Name, WIDTH_COMMAND);
+                    tableHelp.AddRowSummary("");
+
+                    foreach (var property in cmd.Properties)
+                    {
+                        tableHelp.AddRow()
+                            .AddColumnInRow(this.GetArgumentNameWithPrefix(property))
+                            .AddColumnInRow(this.GetArgumentHelpText(property));
+                    }
+
+                    if (hasProperty && hasMethod && cmd.Methods.First().ArgumentsMaps.Any())
+                        tableHelp.AddRowSummary("");
+
+                    var lastMethod = cmd.Methods.LastOrDefault();
+                    int index = 0;
+                    foreach (var method in cmd.Methods)
+                    {
+                        var next = cmd.Methods.ElementAtOrDefault(index + 1);
+                        tableHelp.AddRow()
+                            .AddColumnInRow(method.ActionName)
+                            .AddColumnInRow(method.HelpText);
+
+                        foreach (var arg in method.ArgumentsMaps)
+                        {
+                            tableHelp.AddRow()
+                                .AddColumnInRow("   " + this.GetArgumentNameWithPrefix(arg))
+                                .AddColumnInRow(this.GetArgumentHelpText(arg));
+                        }
+
+                        if (method != lastMethod)
+                        {
+                            var addBreakLine =
+                                   method.ArgumentsMaps.Any()
+                                || (next != null && next.ArgumentsMaps.Any());
+
+                            if (addBreakLine)
+                                tableHelp.AddRowSummary("");
+                        }
+
+                        index++;
+                    }
+                }
             }
-            return string.Format(format, map.ActionName, args);
-        }
 
-        public virtual string GetPropertyErrorDescription(ArgumentParsed argumentParsed)
-        {
-            if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentAlreadyBeenSet))
-                return string.Format(Strings.ArgumentAlreadyBeenSet, argumentParsed.GetArgumentNameInputted());
-            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByName))
-                return string.Format(Strings.ArgumentNotExistsByName, argumentParsed.GetArgumentNameInputted());
-            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByValue))
-                return string.Format(Strings.ArgumentNotExistsByValue, argumentParsed.Raw);
-            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsRequired))
-                return string.Format(Strings.ArgumentIsRequired, argumentParsed.GetArgumentNameInputted());
-            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasInvalidInput))
-                return string.Format(Strings.ArgumentHasInvalidInput, argumentParsed.GetArgumentNameInputted());
-            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasUnsupportedType))
-                return string.Format(Strings.ArgumentHasUnsupportedType, argumentParsed.GetArgumentNameInputted());
-            return null;
-        }
-
-        public string GetArgumentNameWithPrefix(ArgumentMap arg)
-        {
-            string key = null;
-            var shortName = arg.ShortName != null ? arg.ShortName.ToString() : null;
-            if (!string.IsNullOrWhiteSpace(shortName) && !string.IsNullOrWhiteSpace(arg.LongName))
-                key = "-" + arg.ShortName + ", --" + arg.LongName;
-            else if (!string.IsNullOrWhiteSpace(shortName))
-                key = "-" + arg.ShortName;
-            else if (!string.IsNullOrWhiteSpace(arg.LongName))
-                key = "--" + arg.LongName;
-
-            return key;
+            tableHelp.Build();
+            return strBuilder.ToString();
         }
 
         private StringBuilder GetErrors(IEnumerable<ExecutionError> commandsErrors)
@@ -133,96 +171,77 @@ namespace SysCommand.ConsoleApp
             }
         }
 
-        public string GetHelpText(IEnumerable<CommandMap> commandMaps)
+
+        public virtual string GetMethodSpecification(ActionMap map)
         {
-            var strBuilder = new StringBuilder();
-            var last = commandMaps.LastOrDefault();
-            foreach (var cmd in commandMaps)
+            var format = "{0}({1})";
+            string args = null;
+            foreach (var arg in map.ArgumentsMaps)
             {
-                strBuilder.Append(this.GetHelpText(cmd));
-                if (cmd != last)
-                { 
-                    strBuilder.AppendLine();
-                    strBuilder.AppendLine();
-                }
+                var typeName = ReflectionHelper.CSharpName(arg.Type);
+                args += args == null ? typeName : ", " + typeName;
             }
-            return strBuilder.ToString();
+            return string.Format(format, map.ActionName, args);
         }
 
-        public string GetHelpText(CommandMap commandMap)
+        public virtual string GetPropertyErrorDescription(ArgumentParsed argumentParsed)
         {
-            var strBuilder = new StringBuilder();
-            var commandDesc = commandMap.Command.GetType().Name + ":";
+            if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentAlreadyBeenSet))
+                return string.Format(Strings.ArgumentAlreadyBeenSet, argumentParsed.GetArgumentNameInputted());
+            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByName))
+                return string.Format(Strings.ArgumentNotExistsByName, argumentParsed.GetArgumentNameInputted());
+            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByValue))
+                return string.Format(Strings.ArgumentNotExistsByValue, argumentParsed.Raw);
+            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsRequired))
+                return string.Format(Strings.ArgumentIsRequired, argumentParsed.GetArgumentNameInputted());
+            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasInvalidInput))
+                return string.Format(Strings.ArgumentHasInvalidInput, argumentParsed.GetArgumentNameInputted());
+            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasUnsupportedType))
+                return string.Format(Strings.ArgumentHasUnsupportedType, argumentParsed.GetArgumentNameInputted());
+            return null;
+        }
 
-            var hasProperties = commandMap.Properties.Any();
-            var hasMethods = commandMap.Methods.Any();
-            if (hasProperties || hasMethods)
+        private string GetArgumentNameWithPrefix(ArgumentMap arg)
+        {
+            string key = null;
+            var shortName = arg.ShortName != null ? arg.ShortName.ToString() : null;
+            if (!string.IsNullOrWhiteSpace(shortName) && !string.IsNullOrWhiteSpace(arg.LongName))
+                key = "-" + arg.ShortName + ", --" + arg.LongName;
+            else if (!string.IsNullOrWhiteSpace(shortName))
+                key = "-" + arg.ShortName;
+            else if (!string.IsNullOrWhiteSpace(arg.LongName))
+                key = "--" + arg.LongName;
+
+            return key + " (" + ReflectionHelper.CSharpName(arg.Type) + ")";
+        }
+
+        private string GetArgumentHelpText(ArgumentMap arg)
+        {
+            string help = null;
+            if (!string.IsNullOrWhiteSpace(arg.HelpText))
+                help = arg.HelpText;
+            //else if (this.parent.arguments is IHelp)
+            //    help = ((IHelp)this.parent.arguments).GetHelp(property.Name);
+
+            if (arg.ShowHelpComplement)
             {
-                strBuilder.Append(commandDesc);
-                strBuilder.AppendLine();
-                if (hasProperties)
-                { 
-                    strBuilder.Append(this.GetHelpText(commandMap.Properties, PADDING_SPACE_PROPERTIES));
-                    if (hasMethods)
-                        strBuilder.AppendLine();
-                }
-
-                if (hasMethods)
-                    strBuilder.Append(this.GetHelpText(commandMap.Methods));
-            }
-            else
-            {
-                strBuilder.Append(commandDesc);
+                if (arg.IsOptional)
+                    help = this.ConcatHelpWithDefaultValue(help, arg.DefaultValue);
+                else
+                    help = this.ConcatHelpWithRequired(help);
             }
 
-            return strBuilder.ToString();
+            return help;
         }
 
-        public string GetHelpText(IEnumerable<ActionMap> actionsMap)
+        private string ConcatHelpWithDefaultValue(string help, object defaultValue)
         {
-            var strBuilder = new StringBuilder();
-            var last = actionsMap.Last();
-            foreach (var action in actionsMap)
-            { 
-                strBuilder.Append(this.GetHelpText(action, PADDING_SPACE_METHOD, PADDING_SPACE_METHOD_PARAMS));
-                if (action != last)
-                    strBuilder.AppendLine();
-            }
-            return strBuilder.ToString();
+            return StringHelper.ConcatFinalPhase(help, "Is optional (default \"" + defaultValue + "\").");
         }
 
-        public string GetHelpText(ActionMap actionMap, int padding, int paddingParams)
+        private string ConcatHelpWithRequired(string help)
         {
-            var strBuilder = new StringBuilder();
-            var defaultHelp = actionMap.IsDefault ? " *" : "";
-            var actionDesc = string.Format("{0}{1}", actionMap.ActionName, defaultHelp);
-            actionDesc = actionDesc.PadLeft(actionDesc.Length + padding, ' ');
-
-            strBuilder.Append(actionDesc);
-            if (actionMap.ArgumentsMaps.Any())
-            { 
-                strBuilder.AppendLine();
-                strBuilder.Append(this.GetHelpText(actionMap.ArgumentsMaps, paddingParams));
-            }
-
-            return strBuilder.ToString();
+            return StringHelper.ConcatFinalPhase(help, "Is required.");
         }
-
-        public string GetHelpText(IEnumerable<ArgumentMap> argumentMap, int padding)
-        {
-            var dicProperty = new Dictionary<string, string>();
-            foreach (var parameter in argumentMap)
-            {
-                var key = this.GetArgumentNameWithPrefix(parameter);
-                dicProperty[key] = this.GetHelpText(parameter);
-            }
-            return ConsoleAppHelper.GetConsoleHelper(dicProperty, padding);
-        }
-
-        public string GetHelpText(ArgumentMap argumentMap)
-        {
-            var argDesc = string.IsNullOrWhiteSpace(argumentMap.HelpText) ? "--" : argumentMap.HelpText;
-            return argDesc;
-        }   
     }
 }

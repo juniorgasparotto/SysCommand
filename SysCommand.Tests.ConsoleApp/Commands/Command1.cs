@@ -10,6 +10,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 {
     public class Command1 : Command
     {
+        [Argument(Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum ")]
         public int Id { get; set; }
 
         public Command1()
@@ -32,35 +33,44 @@ namespace SysCommand.Tests.ConsoleApp.Commands
             return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
-        [Action(IsDefault = true)]
+        [Action(IsDefault = true, Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum")]
         public string Default()
         {
             return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
+        [Action(Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum")]
         public string Delete()
         {
             return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
-        [Action(Name = "delete")]
+        [Action(Name = "delete", Help = "Lorem ipsulum Lorem ipsulum Lorem")]
         public string OtherName(int param = 0)
         {
             return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
+        [Action(Name = "delete", Help = "Lorem ipsulum Lorem ipsulum Lorem")]
         public string Save()
         {
             return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
+        [Action(Name = "delete", Help = "Lorem ipsulum Lorem ipsulum Lorem")]
         public string Save(int id)
         {
             return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }
 
-        [Action(IsDefault=true)]
-        public string Save(int id, string description = null, decimal? value = null)
+        [Action(IsDefault=true, Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum ")]
+        public string Save(
+            [Argument(LongName = "Identification", Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum ")]
+            int id,
+            [Argument(Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum ")]
+            string description = null,
+            [Argument(Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum ")]
+            decimal? value = null)
         {
             return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
         }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SysCommand.ConsoleApp.View
@@ -150,9 +151,11 @@ namespace SysCommand.ConsoleApp.View
                 foreach (var column in row.Columns)
                 {
                     var definition = this.ColumnsDefinition[indexColumn];
-                    var newsLines = this.ChunksWords(column.Text, definition.Width);
+                    //column.Text = column.Text != null ? column.Text.TrimEnd('\r', '\n') : null;
 
-                    if (newsLines.Count() > 1)
+                    var newsLines = this.ChunksWords(column.Text, definition.Width).ToArray();
+
+                    if (newsLines.Length > 1)
                     {
                         var indexNewRow = 0;
                         foreach (var newLine in newsLines)
@@ -306,31 +309,35 @@ namespace SysCommand.ConsoleApp.View
             if (chunkSize > 0)
             {
                 str = str ?? "";
-
-                int partLength = chunkSize;
-                string sentence = str;
-                string[] words = sentence.Split(' ');
-                var parts = new Dictionary<int, string>();
-                string part = string.Empty;
-                int partCounter = 0;
-                foreach (var word in words)
+                var lines = str.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var line in lines)
                 {
-                    if (part.Length + word.Length < partLength)
+                    int partLength = chunkSize;
+                    string sentence = line;
+                    //string[] words = sentence.Split(new string[] { " " } , StringSplitOptions.None);
+                    string[] words = Regex.Split(str, @"(\s+)");
+                    var parts = new Dictionary<int, string>();
+                    string part = string.Empty;
+                    int partCounter = 0;
+                    foreach (var word in words)
                     {
-                        part += string.IsNullOrEmpty(part) ? word : " " + word;
+                        if (part.Length + word.Length <= partLength)
+                        {
+                            part += word;
+                        }
+                        else
+                        {
+                            parts.Add(partCounter, part);
+                            part = word;
+                            partCounter++;
+                        }
                     }
-                    else
+                    parts.Add(partCounter, part);
+                    foreach (var item in parts)
                     {
-                        parts.Add(partCounter, part);
-                        part = word;
-                        partCounter++;
+                        if (!string.IsNullOrEmpty(item.Value))
+                            yield return item.Value;
                     }
-                }
-                parts.Add(partCounter, part);
-                foreach (var item in parts)
-                {
-                    if (!string.IsNullOrEmpty(item.Value))
-                        yield return item.Value;
                 }
             }
         }

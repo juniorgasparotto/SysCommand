@@ -10,7 +10,7 @@ namespace SysCommand.ConsoleApp
 {
     public class HelpCommand : Command, IHelpCommand
     {
-        public string Help(string action = null, string command = null)
+        public string Help(string action = null)
         {
             return this.App.Descriptor.GetHelpText(this.App.Maps);
 

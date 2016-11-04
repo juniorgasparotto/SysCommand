@@ -14,6 +14,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public Command5()
         {
+            this.HelpText = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum ";
             this.EnablePositionalArgs = true;
         }
 

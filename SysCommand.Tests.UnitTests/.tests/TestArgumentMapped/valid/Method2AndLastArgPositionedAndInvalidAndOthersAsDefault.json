@@ -10,7 +10,7 @@
       "DefaultValue": null,
       "IsOptional": false,
       "HelpText": null,
-      "ShowHelpComplement": false,
+      "ShowHelpComplement": true,
       "Position": null,
       "Target": {
         "Prop1": null,
@@ -30,7 +30,7 @@
       "DefaultValue": null,
       "IsOptional": false,
       "HelpText": null,
-      "ShowHelpComplement": false,
+      "ShowHelpComplement": true,
       "Position": null,
       "Target": {
         "Prop1": null,
@@ -50,7 +50,7 @@
       "DefaultValue": null,
       "IsOptional": false,
       "HelpText": null,
-      "ShowHelpComplement": false,
+      "ShowHelpComplement": true,
       "Position": null,
       "Target": {
         "Prop1": null,
@@ -81,7 +81,7 @@
         "DefaultValue": null,
         "IsOptional": false,
         "HelpText": null,
-        "ShowHelpComplement": false,
+        "ShowHelpComplement": true,
         "Position": null,
         "Target": {
           "Prop1": null,
@@ -127,7 +127,7 @@
         "DefaultValue": null,
         "IsOptional": false,
         "HelpText": null,
-        "ShowHelpComplement": false,
+        "ShowHelpComplement": true,
         "Position": null,
         "Target": {
           "Prop1": null,
@@ -173,7 +173,7 @@
         "DefaultValue": null,
         "IsOptional": false,
         "HelpText": null,
-        "ShowHelpComplement": false,
+        "ShowHelpComplement": true,
         "Position": null,
         "Target": {
           "Prop1": null,
