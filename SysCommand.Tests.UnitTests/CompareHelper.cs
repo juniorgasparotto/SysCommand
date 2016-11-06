@@ -19,7 +19,6 @@ namespace SysCommand.Tests.UnitTests
             app.Console.Out = strBuilder ?? new StringWriter();
 
             var appResult = app.Run(args);
-
             var output = app.Console.Out.ToString();
 
             var test = new TestData();

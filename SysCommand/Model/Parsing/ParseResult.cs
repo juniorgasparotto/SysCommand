@@ -10,6 +10,7 @@ namespace SysCommand.Parsing
         public IEnumerable<Level> Levels { get { return levels; } }
 
         public string[] Args { get; internal set; }
+        public IEnumerable<ArgumentRaw> ArgumentsRaw { get; internal set; }
         public IEnumerable<CommandMap> Maps { get; internal set; }
         public bool EnableMultiAction { get; internal set; }
 

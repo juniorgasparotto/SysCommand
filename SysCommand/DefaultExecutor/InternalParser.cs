@@ -27,10 +27,10 @@ namespace SysCommand.DefaultExecutor
             parseResult.EnableMultiAction = enableMultiAction;
 
             var allMethodsMaps = commandsMap.GetMethods();
-            var argumentsRaw = this.argumentRawParser.Parse(args, allMethodsMaps);
+            parseResult.ArgumentsRaw = this.argumentRawParser.Parse(args, allMethodsMaps);
 
             IEnumerable<ArgumentRaw> initialExtraArguments;
-            var methodsParsed = this.actionParser.Parse(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
+            var methodsParsed = this.actionParser.Parse(parseResult.ArgumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
 
             var hasMethodsParsed = methodsParsed.Count > 0;
             var hasExtras = initialExtraArguments.Any();

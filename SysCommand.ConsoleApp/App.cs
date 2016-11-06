@@ -229,7 +229,6 @@ namespace SysCommand.ConsoleApp
         public static int RunInfiniteIfDebug(App app = null)
         {
             app = app ?? new App();
-
             bool lastBreakLineInNextWrite = false;
             while (true)
             {
