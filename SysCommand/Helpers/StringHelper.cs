@@ -140,5 +140,10 @@ namespace SysCommand.Helpers
         {
             return StringHelper.HasCharAtFirst(value, scapeChar);
         }
+
+        public static string ConcatFinalPhase(string help, object helpArgDescDefaultValue)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -198,6 +198,11 @@ namespace SysCommand.ConsoleApp.View
             }
         }
 
+        internal void AddRowSummary(object helpFooterDesc)
+        {
+            throw new NotImplementedException();
+        }
+
         private void AddPaddingInRows(List<IRow> rows)
         {
             var maxPaddingsColumns = this.GetMaxPaddingsForEachColumn(rows);
@@ -236,7 +241,7 @@ namespace SysCommand.ConsoleApp.View
             }
         }
 
-        public void Build()
+        public TableView Build()
         {
             this.Validate();
             var newRows = this.Rows.ToList();
@@ -256,6 +261,7 @@ namespace SysCommand.ConsoleApp.View
                     StrBuilder.AppendLine();
             }
             this.AddPaddingBottom();
+            return this;
         }
 
         private void AddRowsHeader(List<IRow> newRows)
@@ -306,6 +312,7 @@ namespace SysCommand.ConsoleApp.View
 
         private IEnumerable<string> ChunksWords(string str, int chunkSize)
         {
+            var lst = new List<string>();
             if (chunkSize > 0)
             {
                 str = str ?? "";
@@ -336,10 +343,17 @@ namespace SysCommand.ConsoleApp.View
                     foreach (var item in parts)
                     {
                         if (!string.IsNullOrEmpty(item.Value))
-                            yield return item.Value;
+                            lst.Add(item.Value);
                     }
                 }
+
+                for (var i = 1; i < lst.Count; i++)
+                    lst[i] = lst[i].TrimStart(' ');
+
+                lst.RemoveAll(f => string.IsNullOrEmpty(f));
             }
+
+            return lst;
         }
 
         private void Validate()
@@ -415,6 +429,11 @@ namespace SysCommand.ConsoleApp.View
             public override string ToString()
             {
                 return string.Join("", this.Columns.Select(f => f.Text));
+            }
+
+            internal object AddColumnInRow(object helpUsageLabel)
+            {
+                throw new NotImplementedException();
             }
         }
 

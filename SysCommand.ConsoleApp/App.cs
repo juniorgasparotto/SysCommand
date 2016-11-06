@@ -4,9 +4,7 @@ using System;
 using System.Reflection;
 using SysCommand.Execution;
 using SysCommand.Mapping;
-using SysCommand.Parsing;
-using SysCommand.Helpers;
-using SysCommand.ConsoleApp;
+using SysCommand.ConsoleApp.Commands;
 
 namespace SysCommand.ConsoleApp
 {
@@ -60,11 +58,13 @@ namespace SysCommand.ConsoleApp
 
         public App(
             IEnumerable<Command> commands = null,
-            bool enableMultiAction = true,
             IExecutor executor = null,
+            bool enableMultiAction = true,
             bool addDefaultAppHandler = true
         )
         {
+            this.enableMultiAction = enableMultiAction;
+
             // validate if some commands is attached in another app.
             if (commands != null)
             {
@@ -75,14 +75,16 @@ namespace SysCommand.ConsoleApp
             
             // load all in app domain if the list = null
             commands = commands ?? new AppDomainCommandLoader().GetFromAppDomain(IsDebug);
-            foreach (var command in commands)
-                command.App = this;
 
             // validate if the list is empty
             if (!commands.Any())
                 throw new Exception("No command found");
 
-            this.enableMultiAction = enableMultiAction;
+            if (!commands.Any(f => f is IHelpCommand))
+                commands = new List<Command>(commands) { new HelpCommand() };
+
+            foreach (var command in commands)
+                command.App = this;
 
             // defaults
             this.Console = new ConsoleWrapper();
@@ -126,6 +128,7 @@ namespace SysCommand.ConsoleApp
             try
             {
                 var userMaps = this.Maps.ToList();
+                var executed = false;
 
                 // system feature: "manage args history"
                 var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
@@ -141,24 +144,26 @@ namespace SysCommand.ConsoleApp
                 }
 
                 // system feature: "help"
-                //var helpCommand = this.Maps.GetMap<IHelpCommand>();
-                //if (helpCommand != null)
-                //{
+                var helpCommand = this.Maps.GetMap<IHelpCommand>();
+                if (helpCommand != null)
+                {
+                    var executorHelp = new DefaultExecutor.Executor();
+                    var parseResultHelp = executorHelp.Parse(appResult.Args, new List<CommandMap> { helpCommand }, false);
+                    var executionResult = executorHelp.Execute(parseResultHelp, (member) => this.MemberInvoke(appResult, member));
+                    if (executionResult.State == ExecutionState.Success)
+                    {
+                        appResult.ParseResult = parseResultHelp;
+                        appResult.ExecutionResult = executionResult;
+                        executed = true;
+                    }
+                    userMaps.Remove(helpCommand);
+                }
 
-                //    var evaluator = new Evaluator(this.Args, helpCommand, false, this.evaluationStrategy);
-                //    evaluator.Eval();
-
-                //    if (evaluator.EvalState == EvalState.Success)
-                //    { 
-                //        this.Result.AddRange(evaluator.Result);
-                //        return this;
-                //    }
-
-                //    userMaps.Remove(helpCommand);
-                //}
-
-                appResult.ParseResult = this.executor.Parse(appResult.Args, userMaps, this.enableMultiAction);
-                appResult.ExecutionResult = this.executor.Execute(appResult.ParseResult, (member) => this.MemberInvoke(appResult, member));
+                if (!executed)
+                { 
+                    appResult.ParseResult = this.executor.Parse(appResult.Args, userMaps, this.enableMultiAction);
+                    appResult.ExecutionResult = this.executor.Execute(appResult.ParseResult, (member) => this.MemberInvoke(appResult, member));
+                }
 
                 if (this.OnComplete != null)
                     this.OnComplete(appResult);

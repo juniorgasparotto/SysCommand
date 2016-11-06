@@ -11,8 +11,10 @@ namespace SysCommand.ConsoleApp
         void ShowNotFound(ApplicationResult appResult);
         void ShowMethodReturn(ApplicationResult appResult, IMemberResult method, object value);
         string GetMethodSpecification(ActionMap map);
-        string GetPropertyErrorDescription(ArgumentParsed argumentParsed);
+        //string GetPropertyErrorDescription(ArgumentParsed argumentParsed);
         string GetHelpText(IEnumerable<CommandMap> commandMaps);
+        string GetHelpText(IEnumerable<CommandMap> commandMaps, string actionName);
+
         //string GetHelpText(CommandMap commandMap);
         //string GetHelpText(IEnumerable<ActionMap> actionsMap);
         //string GetHelpText(ActionMap actionMap, int padding, int paddingParams);

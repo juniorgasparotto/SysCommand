@@ -10,23 +10,23 @@ namespace SysCommand.Tests.UnitTests
 {
     public static class CompareHelper
     {
-        public static void Compare<T>(string args, Command[] commands, TestData data, string funcName)
+        public static TestData GetTestData(string args, Command[] commands, StringWriter strBuilder = null)
         {
             var app = new App(
                     commands: commands
                 );
 
-            app.Console.Out = new StringWriter();
+            app.Console.Out = strBuilder ?? new StringWriter();
 
             var appResult = app.Run(args);
-            
+
             var output = app.Console.Out.ToString();
 
             var test = new TestData();
             test.Args = args;
 
-            foreach(var cmd in commands)
-            { 
+            foreach (var cmd in commands)
+            {
                 test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Properties.Select(s => s.Target.GetType().Name + "." + s.TargetMember.ToString() + (s.IsOptional ? "" : " (obrigatory)") + (cmd.EnablePositionalArgs ? "" : " (NOT accept positional)"))));
                 test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Methods.Select(s => s.Target.GetType().Name + "." + app.Descriptor.GetMethodSpecification(s))));
             }
@@ -34,7 +34,7 @@ namespace SysCommand.Tests.UnitTests
             test.ExpectedResult = output.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             test.Values = appResult.ExecutionResult.Results.Select(f => f.Target.GetType().Name + "." + f.Name + "=" + f.Value);
 
-            foreach(var level in appResult.ParseResult.Levels)
+            foreach (var level in appResult.ParseResult.Levels)
             {
                 var testLevel = new TestData.Level();
                 testLevel.LevelNumber = level.LevelNumber;
@@ -44,7 +44,7 @@ namespace SysCommand.Tests.UnitTests
                 testLevel.CommandsWithError.AddRange(level.Commands.Where(f => f.HasError).Select(f => f.Command.GetType().Name));
 
                 foreach (var cmd in level.Commands)
-                { 
+                {
                     testLevel.MethodsValid.AddRange(cmd.Methods.Select(s => cmd.Command.GetType().Name + "." + app.Descriptor.GetMethodSpecification(s.ActionMap)));
                     testLevel.MethodsInvalid.AddRange(cmd.MethodsInvalid.Select(s => cmd.Command.GetType().Name + "." + app.Descriptor.GetMethodSpecification(s.ActionMap)));
                     testLevel.PropertiesValid.AddRange(cmd.Properties.Select(s => cmd.Command.GetType().Name + "." + s.Map.TargetMember.ToString()));
@@ -52,7 +52,14 @@ namespace SysCommand.Tests.UnitTests
                 }
             }
 
+            return test;
+        }
+
+        public static TestData Compare<T>(string args, Command[] commands, string funcName)
+        {
+            var test = GetTestData(args, commands);
             Assert.IsTrue(TestHelper.CompareObjects<T>(test, null, funcName));
+            return test;
         }
 
         public class TestData

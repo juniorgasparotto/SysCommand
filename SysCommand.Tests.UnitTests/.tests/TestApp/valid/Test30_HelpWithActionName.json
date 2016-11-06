@@ -1,0 +1,13 @@
+HelpCommand.help(String)
+Command2.System.String Prop1 (NOT accept positional)
+Command2.System.Decimal Prop2 (obrigatory) (NOT accept positional)
+Command2.save(String, List<Int32>, Enum1)
+Command2.save(String, List<Int32>, Enum2)
+-----------------------------
+Loren ipsulum Loren ipsulum Loren ipsulum Loren
+   usage: save    [--value=<phrase>] [--lst=<list of number>] [--enum1=<Y|N>]
+
+Loren ipsulum Loren ipsulum Loren ipsulum Loren
+   usage: save    --value=<phrase> [--lst=<list of number>] 
+                  [--enum2=<Value1|Value2>]
+

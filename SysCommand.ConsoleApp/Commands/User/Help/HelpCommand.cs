@@ -2,17 +2,22 @@
 using System.Linq;
 using System.Text;
 using SysCommand.Mapping;
-using SysCommand.ConsoleApp.View;
-using SysCommand.DefaultExecutor;
-using System;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.Commands
 {
     public class HelpCommand : Command, IHelpCommand
     {
+        public HelpCommand()
+        {
+            HelpText = "displays help information";
+        }
+
         public string Help(string action = null)
         {
-            return this.App.Descriptor.GetHelpText(this.App.Maps);
+            if (action == null)
+                return this.App.Descriptor.GetHelpText(this.App.Maps);
+            else
+                return this.App.Descriptor.GetHelpText(this.App.Maps, action);
 
             //var help = new Commands.User.Help.help();
             //help.Session = new Dictionary<string, object>();

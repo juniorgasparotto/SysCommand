@@ -7,6 +7,7 @@ using SysCommand.Mapping;
 using SysCommand.Helpers;
 using System;
 using SysCommand.ConsoleApp.View;
+using System.Collections;
 
 namespace SysCommand.ConsoleApp
 {
@@ -35,20 +36,31 @@ namespace SysCommand.ConsoleApp
             const int WIDTH_COMMAND = 80;
             const int WIDTH_MEMBER_LEFT = 0;
             const int WIDTH_MEMBER_RIGHT = 40;
+            const int WIDTH_FOOTER = 50;
             const int PADDING_RIGHT = 4;
 
             var strBuilder = new StringBuilder();
-            var tableUsage = new TableView(strBuilder);
-            tableUsage.AddLineSeparator = false;
-            tableUsage.AddColumnSeparator = false;
 
-            tableUsage.AddColumnDefinition(null, WIDTH_USAGE_LEFT, 0, PADDING_RIGHT);
-            tableUsage.AddColumnDefinition(null, WIDTH_USAGE_RIGHT);
-            tableUsage.AddRow()
-                .AddColumnInRow("usage: git")
-                .AddColumnInRow("[--version] [--help] [-C <path>] [-c name=value] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path] [-p | --paginate | --no-pager] --no-replace-objects] [--bare] [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>] <command> [<args>]");
-            tableUsage.AddRowSummary("");
-            tableUsage.Build();
+            var usage = this.GetUsage(commandMaps);
+            if (usage != null)
+            {
+                var tableUsage = new TableView(strBuilder);
+                tableUsage.AddLineSeparator = false;
+                tableUsage.AddColumnSeparator = false;
+
+                tableUsage.AddColumnDefinition(null, WIDTH_USAGE_LEFT, 0, PADDING_RIGHT);
+                tableUsage.AddColumnDefinition(null, WIDTH_USAGE_RIGHT);
+                //tableUsage.AddRow()
+                //    .AddColumnInRow("usage: git")
+                //    .AddColumnInRow("[--version] [--help] [-C <path>] [-c name=value] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path] [-p | --paginate | --no-pager] --no-replace-objects] [--bare] [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>] <command> [<args>]");
+
+                tableUsage.AddRow()
+                    .AddColumnInRow(Strings.HelpUsageLabel)
+                    .AddColumnInRow(usage);
+
+                tableUsage.AddRowSummary("");
+                tableUsage.Build();
+            }
 
             var tableHelp = new TableView(strBuilder);
             tableHelp.AddLineSeparator = false;
@@ -81,9 +93,13 @@ namespace SysCommand.ConsoleApp
                     int index = 0;
                     foreach (var method in cmd.Methods)
                     {
+                        var methodName = method.ActionName;
+                        if (method.IsDefault)
+                            methodName += " *";
+
                         var next = cmd.Methods.ElementAtOrDefault(index + 1);
                         tableHelp.AddRow()
-                            .AddColumnInRow(method.ActionName)
+                            .AddColumnInRow(methodName)
                             .AddColumnInRow(method.HelpText);
 
                         foreach (var arg in method.ArgumentsMaps)
@@ -107,9 +123,97 @@ namespace SysCommand.ConsoleApp
                     }
                 }
             }
+            if (strBuilder.Length > 0)
+            {
+                tableHelp.AddRowSummary("");
+                tableHelp.AddRowSummary(Strings.HelpFooterDesc, WIDTH_FOOTER);
+            }
+           
+            var output = tableHelp.Build().ToString();
+            if (output.Length == 0)
+                return Strings.HelpEmpty;
+            else
+                return output;
+        }
 
-            tableHelp.Build();
-            return strBuilder.ToString();
+        public string GetHelpText(IEnumerable<CommandMap> commandMaps, string actionName)
+        {
+            const int WIDTH_USAGE_LEFT = 0;
+            const int WIDTH_USAGE_RIGHT = 60;
+            const int PADDING_RIGHT = 4;
+            const int WIDTH_METHOD_DESC = 80;
+
+            var actions = commandMaps
+                .GetMethods()
+                .Where(f => f.ActionName.ToLower() == actionName.ToLower())
+                .OrderBy(f => string.IsNullOrWhiteSpace(f.HelpText) ? 0 : 1)
+                .ToList();
+            var strBuilder = new StringBuilder();
+            var last = actions.LastOrDefault();
+
+            foreach (var action in actions)
+            {
+               
+                var usage = this.GetUsage(action.ArgumentsMaps);
+                var tableUsage = new TableView(strBuilder);
+                tableUsage.AddLineSeparator = false;
+                tableUsage.AddColumnSeparator = false;
+
+                tableUsage.AddColumnDefinition(null, WIDTH_USAGE_LEFT, 0, PADDING_RIGHT);
+                tableUsage.AddColumnDefinition(null, WIDTH_USAGE_RIGHT);
+
+                if (!string.IsNullOrWhiteSpace(action.HelpText))
+                    tableUsage.AddRowSummary(action.HelpText, WIDTH_METHOD_DESC);
+
+                var addSpace = !string.IsNullOrWhiteSpace(action.HelpText);
+                tableUsage.AddRow()
+                    .AddColumnInRow((addSpace ? "   " : "") + string.Format(Strings.HelpUsageActionLabel, action.ActionName))
+                    .AddColumnInRow(usage);
+
+                if (action != null)
+                { 
+                    tableUsage.AddRowSummary("");
+                    tableUsage.AddRowSummary("");
+                }
+
+                tableUsage.Build();
+            }
+
+            if (strBuilder.Length == 0)
+                return Strings.HelpNoActionFound;
+            else
+                return strBuilder.ToString();
+        }
+
+        public string GetUsage(IEnumerable<ArgumentMap> properties)
+        {
+            string usage = null;
+            properties = properties.OrderBy(f => f.IsOptional ? 1 : 0);
+            var last = properties.LastOrDefault();
+            foreach (var prop in properties)
+            {
+                var propUsage = this.GetArgumentNameWithPrefix(prop, false, true);
+                if (prop.IsOptional)
+                    propUsage = "[" + propUsage + "]";
+
+                if (last != prop)
+                    propUsage += " ";
+
+                usage += propUsage;
+            }
+            return usage;
+        }
+
+        public string GetUsage(IEnumerable<CommandMap> commandMaps)
+        {
+            string usage = this.GetUsage(commandMaps.GetProperties());
+            if (commandMaps.GetMethods().Any())
+            {
+                var actionsUsage = string.Format("<{0}[{1}]>", Strings.HelpUsageMethodsLabel, Strings.HelpUsageMethodsParamsLabel);
+                usage +=  (usage != null) ? " " + actionsUsage : actionsUsage;
+            }
+
+            return usage;
         }
 
         private StringBuilder GetErrors(IEnumerable<ExecutionError> commandsErrors)
@@ -119,7 +223,7 @@ namespace SysCommand.ConsoleApp
             var iErr = 0;
             foreach (var commandError in commandsErrors)
             {
-                strBuilder.AppendLine(string.Format("There are errors in command: {0}", commandError.Command.GetType().Name));
+                strBuilder.AppendLine(string.Format(Strings.ErrorInCommand, commandError.Command.GetType().Name));
                 var hasPropertyError = commandError.PropertiesInvalid.Any();
                 var hasMethodError = commandError.MethodsInvalid.Any();
 
@@ -150,7 +254,7 @@ namespace SysCommand.ConsoleApp
 
             foreach (var invalid in methodsInvalid)
             {
-                strBuilder.AppendLine(string.Format("Error in method: {0}", GetMethodSpecification(invalid.ActionMap)));
+                strBuilder.AppendLine(string.Format(Strings.ErrorInvalidMethod, GetMethodSpecification(invalid.ActionMap)));
                 this.ShowInvalidProperties(strBuilder, invalid.Arguments.Where(f=>f.ParsingStates.HasFlag(ArgumentParsedState.IsInvalid)));
                 if (++iErr < count)
                     strBuilder.AppendLine("\r\n");
@@ -184,7 +288,7 @@ namespace SysCommand.ConsoleApp
             return string.Format(format, map.ActionName, args);
         }
 
-        public virtual string GetPropertyErrorDescription(ArgumentParsed argumentParsed)
+        private string GetPropertyErrorDescription(ArgumentParsed argumentParsed)
         {
             if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentAlreadyBeenSet))
                 return string.Format(Strings.ArgumentAlreadyBeenSet, argumentParsed.GetArgumentNameInputted());
@@ -201,7 +305,7 @@ namespace SysCommand.ConsoleApp
             return null;
         }
 
-        private string GetArgumentNameWithPrefix(ArgumentMap arg)
+        private string GetArgumentNameWithPrefix(ArgumentMap arg, bool includeTypeDesc = false, bool includeSampleValue = false)
         {
             string key = null;
             var shortName = arg.ShortName != null ? arg.ShortName.ToString() : null;
@@ -212,7 +316,70 @@ namespace SysCommand.ConsoleApp
             else if (!string.IsNullOrWhiteSpace(arg.LongName))
                 key = "--" + arg.LongName;
 
-            return key + " (" + ReflectionHelper.CSharpName(arg.Type) + ")";
+            if (includeSampleValue)
+            {
+                var sample = this.GetExampleValueForType(arg.Type);
+                if (sample != null)
+                    key = string.Format("{0}=<{1}>", key, sample);
+            }
+
+            if (includeTypeDesc)
+                return key + " (" + ReflectionHelper.CSharpName(arg.Type) + ")";
+
+            return key;
+        }
+
+        private string GetExampleValueForType(Type type)
+        {
+            Type typeOriginal = ReflectionHelper.GetTypeOrTypeOfNullable(type);
+
+            if (typeOriginal != typeof(bool))
+            {
+                var listNumbers = new List<Type>()
+                {
+                    typeof(decimal),
+                    typeof(int),
+                    typeof(double),
+                    typeof(byte),
+                    typeof(short),
+                    typeof(ushort),
+                    typeof(uint),
+                    typeof(long),
+                    typeof(ulong),
+                    typeof(float)
+                };
+
+                if (listNumbers.Contains(typeOriginal))
+                {
+                    return Strings.HelpUsageNumberLabel;
+                }
+                else if (typeOriginal == typeof(char))
+                {
+                    return Strings.HelpUsageLetterLabel;
+                }
+                else if (typeOriginal == typeof(string))
+                {
+                    return Strings.HelpUsagePhraseLabel;
+                }
+                else if (ReflectionHelper.IsEnum(typeOriginal))
+                {
+                    var values = Enum.GetNames(typeOriginal);
+                    return string.Join("|", values);
+                }
+                else if (typeof(IEnumerable).IsAssignableFrom(typeOriginal))
+                {
+                    Type typeList;
+                    var isArray = type.IsArray && type.GetElementType() != null;
+                    if (isArray)
+                        typeList = typeOriginal.GetElementType();
+                    else
+                        typeList = typeOriginal.GetGenericArguments().FirstOrDefault();
+                    var sampleType = this.GetExampleValueForType(typeList);
+                    return string.Format(Strings.HelpUsageListOfLabel, sampleType);
+                }
+            }
+
+            return null;
         }
 
         private string GetArgumentHelpText(ArgumentMap arg)
@@ -226,7 +393,7 @@ namespace SysCommand.ConsoleApp
             if (arg.ShowHelpComplement)
             {
                 if (arg.IsOptional)
-                    help = this.ConcatHelpWithDefaultValue(help, arg.DefaultValue);
+                    help = this.ConcatHelpWithOptional(help, arg.DefaultValue);
                 else
                     help = this.ConcatHelpWithRequired(help);
             }
@@ -234,14 +401,16 @@ namespace SysCommand.ConsoleApp
             return help;
         }
 
-        private string ConcatHelpWithDefaultValue(string help, object defaultValue)
+        private string ConcatHelpWithOptional(string help, object defaultValue)
         {
-            return StringHelper.ConcatFinalPhase(help, "Is optional (default \"" + defaultValue + "\").");
+            if (defaultValue != null)
+                return StringHelper.ConcatFinalPhase(help, string.Format(Strings.HelpArgDescOptionalWithDefaultValue, defaultValue));
+            return StringHelper.ConcatFinalPhase(help, Strings.HelpArgDescOptionalWithoutDefaultValue);
         }
 
         private string ConcatHelpWithRequired(string help)
         {
-            return StringHelper.ConcatFinalPhase(help, "Is required.");
+            return StringHelper.ConcatFinalPhase(help, Strings.HelpArgDescRequired);
         }
     }
 }

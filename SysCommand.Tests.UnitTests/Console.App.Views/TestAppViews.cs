@@ -84,7 +84,7 @@ namespace SysCommand.Tests.UnitTests
             table.AddLineSeparator = true;
             table.AddColumnSeparator = true;
             table.PaddingTop = 1;
-            table.AddRowSummary("is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy ", 30, 30);
+            table.AddRowSummary("is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy", 30, 30);
             table.Build();
             this.Compare(table.ToString(), TestHelper.GetCurrentMethodName());
         }
