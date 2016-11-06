@@ -1382,6 +1382,20 @@ namespace SysCommand.Tests.UnitTests
             );
         }
 
+        [TestMethod]
+        public void Test30_HelpInEnd()
+        {
+            this.CompareOutput(
+                    args: "save help",
+                    commands: GetCmds(
+                        new HelpCommand(),
+                        new Commands.T30.Command3()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName()
+
+            );
+        }
+
         //[TestMethod]
         //public void Test22_3CommandsAndHave2PropertiesTheOtherCommandInLevel2()
         //{
@@ -1455,24 +1469,10 @@ namespace SysCommand.Tests.UnitTests
         //    );
         //}
 
-        //[TestMethod]
-        //public void TestHelpInEnd()
-        //{
-        //    this.Compare(
-        //        args: "save help",
-        //        commands: GetCmds(
-        //            new Commands.T18.Command1(),
-        //            new Commands.T18.Command2(),
-        //            new Commands.T18.Command3()
-        //        ),
-        //        funcName: TestHelper.GetCurrentMethodName()
-        //        
-        //    );
-        //}
+
 
         private void CompareAll(string args, Command[] commands, string funcName)
         {
-            
             CompareHelper.Compare<TestApp>(args, commands, funcName);
         }
 

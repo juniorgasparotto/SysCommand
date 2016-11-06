@@ -80,7 +80,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
             if (map != result.ActionParsed.ActionMap)
                 throw new Exception("There are errors in one of the methods: GetCurrentMethodMap() or GetCurrentMethodResult()");
 
-            var specification = App.Descriptor.GetMethodSpecification(map);
+            var specification = Program.GetMethodSpecification(map);
             return this.GetType().Name + "." + specification;
         }
     }

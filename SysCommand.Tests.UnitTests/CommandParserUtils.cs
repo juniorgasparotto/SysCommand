@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System;
 using System.Reflection;
-using System.Text;
-using System.Globalization;
-using System.Collections;
 using SysCommand.Mapping;
 using SysCommand.Parsing;
 using SysCommand.DefaultExecutor;
+using SysCommand.Helpers;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -54,6 +51,18 @@ namespace SysCommand.Tests.UnitTests
         {
             var parser = new ArgumentParser();
             return parser.Parse(argumentsRaw, enablePositionalArgs, maps);
+        }
+
+        public static string GetMethodSpecification(ActionMap map)
+        {
+            var format = "{0}({1})";
+            string args = null;
+            foreach (var arg in map.ArgumentsMaps)
+            {
+                var typeName = ReflectionHelper.CSharpName(arg.Type);
+                args += args == null ? typeName : ", " + typeName;
+            }
+            return string.Format(format, map.ActionName, args);
         }
     }
 }

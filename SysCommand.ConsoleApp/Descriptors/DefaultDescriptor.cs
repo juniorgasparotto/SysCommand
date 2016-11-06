@@ -185,7 +185,7 @@ namespace SysCommand.ConsoleApp
                 return strBuilder.ToString();
         }
 
-        public string GetUsage(IEnumerable<ArgumentMap> properties)
+        private string GetUsage(IEnumerable<ArgumentMap> properties)
         {
             string usage = null;
             properties = properties.OrderBy(f => f.IsOptional ? 1 : 0);
@@ -204,7 +204,7 @@ namespace SysCommand.ConsoleApp
             return usage;
         }
 
-        public string GetUsage(IEnumerable<CommandMap> commandMaps)
+        private string GetUsage(IEnumerable<CommandMap> commandMaps)
         {
             string usage = this.GetUsage(commandMaps.GetProperties());
             if (commandMaps.GetMethods().Any())
@@ -275,8 +275,7 @@ namespace SysCommand.ConsoleApp
             }
         }
 
-
-        public virtual string GetMethodSpecification(ActionMap map)
+        private string GetMethodSpecification(ActionMap map)
         {
             var format = "{0}({1})";
             string args = null;

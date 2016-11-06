@@ -30,14 +30,16 @@ namespace SysCommand.ConsoleApp
         {
             get
             {
-                return console ?? new ConsoleWrapper();
+                if (this.console == null)
+                    this.console = new ConsoleWrapper();
+                return this.console;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("This property can't be null.");
 
-                console = value;
+                this.console = value;
             }
         }
 
@@ -45,7 +47,9 @@ namespace SysCommand.ConsoleApp
         {
             get
             {
-                return descriptor ?? new DefaultDescriptor();
+                if (descriptor == null)
+                    descriptor = new DefaultDescriptor();
+                return descriptor;
             }
             set
             {
@@ -86,8 +90,7 @@ namespace SysCommand.ConsoleApp
             foreach (var command in commands)
                 command.App = this;
 
-            // defaults
-            this.Console = new ConsoleWrapper();
+            // default executor
             this.executor = executor ?? new DefaultExecutor.Executor();
 
             // add handler default
