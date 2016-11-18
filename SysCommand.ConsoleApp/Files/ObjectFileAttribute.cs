@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.Files
 {
     public class ObjectFileAttribute : Attribute
     {

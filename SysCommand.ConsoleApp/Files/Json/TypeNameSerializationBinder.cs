@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System;
-using Newtonsoft.Json;
+﻿using System;
 using System.Runtime.Serialization;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.Files
 {
     internal class TypeNameSerializationBinder : SerializationBinder
     {

@@ -1,4 +1,5 @@
 ﻿using SysCommand.ConsoleApp;
+using SysCommand.ConsoleApp.Files;
 using SysCommand.Helpers;
 using SysCommand.Mapping;
 
@@ -8,7 +9,11 @@ namespace SysCommand.Tests.ConsoleApp
     {
         static int Main(string[] args)
         {
-            return App.RunInfiniteIfDebug();
+            var app = new App();
+            var jsonFiles = app.Items.GetOrCreate<JsonFiles>();
+            jsonFiles.DefaultFilePrefix = "file-";
+
+            return App.RunInfiniteIfDebug(app);
         }
 
         public static string GetMethodSpecification(ActionMap map)

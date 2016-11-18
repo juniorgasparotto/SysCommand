@@ -9,7 +9,6 @@ namespace SysCommand.ConsoleApp
 {
     public class ConsoleWrapper
     {
-        private static TypeNameSerializationBinder binder = new TypeNameSerializationBinder();
         public bool BreakLineInNextWrite { get; set; }
 
         private int exitCode;

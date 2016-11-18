@@ -1,4 +1,5 @@
-﻿using SysCommand.Helpers;
+﻿using SysCommand.ConsoleApp.Helpers;
+using SysCommand.Helpers;
 using System;
 using System.IO;
 using System.Linq;
@@ -10,8 +11,6 @@ namespace SysCommand.ConsoleApp
     public class RazorView
     {
         public static string FileExtension = ".razor";
-
-        private bool IsDebug { get { return System.Diagnostics.Debugger.IsAttached; } }
         private RazorTemplateGenerator generator;
 
         public class ExecuteInfo
@@ -19,7 +18,6 @@ namespace SysCommand.ConsoleApp
             public Type Type { get; set; }
             public MethodInfo Method { get; set; }
         }
-
 
         public RazorView()
         {

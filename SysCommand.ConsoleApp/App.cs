@@ -5,13 +5,14 @@ using System.Reflection;
 using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.ConsoleApp.Commands;
+using SysCommand.ConsoleApp.Helpers;
+using SysCommand.ConsoleApp.Files;
+using System.Collections;
 
 namespace SysCommand.ConsoleApp
 {
     public class App
     {
-        public static bool IsDebug { get { return System.Diagnostics.Debugger.IsAttached; } }
-
         public event AppRunCompleteHandler OnComplete;
         public event AppRunExceptionHandler OnException;
         public event AppRunOnBeforeMemberInvokeHandler OnBeforeMemberInvoke;
@@ -22,6 +23,7 @@ namespace SysCommand.ConsoleApp
         private IExecutor executor;
         private IDescriptor descriptor;
         private ConsoleWrapper console;
+        private ItemCollection items;
 
         public bool ReadArgsWhenIsDebug { get; set; }
         public IEnumerable<CommandMap> Maps { get; private set; }
@@ -60,6 +62,17 @@ namespace SysCommand.ConsoleApp
             }
         }
 
+        public ItemCollection Items
+        {
+            get
+            {
+                if (this.items == null)
+                    this.items = new ItemCollection();
+
+                return this.items;
+            }
+        }
+
         public App(
             IEnumerable<Command> commands = null,
             IExecutor executor = null,
@@ -68,7 +81,7 @@ namespace SysCommand.ConsoleApp
         )
         {
             this.enableMultiAction = enableMultiAction;
-
+            
             // validate if some commands is attached in another app.
             if (commands != null)
             {
@@ -78,7 +91,7 @@ namespace SysCommand.ConsoleApp
             }
             
             // load all in app domain if the list = null
-            commands = commands ?? new AppDomainCommandLoader().GetFromAppDomain(IsDebug);
+            commands = commands ?? new AppDomainCommandLoader().GetFromAppDomain(DebugHelper.IsDebug);
 
             // validate if the list is empty
             if (!commands.Any())
@@ -137,11 +150,11 @@ namespace SysCommand.ConsoleApp
                 var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
                 if (manageCommand != null)
                 {
-                    //var executorHistory = new DefaultExecutor.Executor();
-                    //var parseResultHistory = executorHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
-                    //var newArgs = executorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
-                    //if (newArgs != null)
-                    //    appResult.Args = newArgs;
+                    var executorHistory = new DefaultExecutor.Executor();
+                    var parseResultHistory = executorHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
+                    var newArgs = executorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
+                    if (newArgs != null)
+                        appResult.Args = newArgs;
 
                     userMaps.Remove(manageCommand);
                 }
@@ -212,7 +225,7 @@ namespace SysCommand.ConsoleApp
 
         private string[] GetArguments()
         {
-            if (App.IsDebug && this.ReadArgsWhenIsDebug)
+            if (DebugHelper.IsDebug && this.ReadArgsWhenIsDebug)
             {
                 var args = this.Console.Read(Strings.GetArgumentsInDebug);
                 return ConsoleAppHelper.StringToArgs(args);
@@ -237,7 +250,7 @@ namespace SysCommand.ConsoleApp
                 app.Run();
                 lastBreakLineInNextWrite = app.Console.BreakLineInNextWrite;
 
-                if (!App.IsDebug)
+                if (!DebugHelper.IsDebug)
                     return app.Console.ExitCode;
             }
         }

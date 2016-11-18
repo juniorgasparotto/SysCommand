@@ -4,7 +4,7 @@ using System;
 using System.Runtime.InteropServices;
 using SysCommand.Helpers;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.Helpers
 {
     public static class ConsoleAppHelper
     {
