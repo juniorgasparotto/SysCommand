@@ -78,13 +78,19 @@ namespace SysCommand.DefaultExecutor
             return this.CommandMapper.Map(commands);
         }
 
-        public ParseResult Parse(string[] args, IEnumerable<CommandMap> commandsMap, bool enableMultiAction)
+        public IEnumerable<ArgumentRaw> ParseRaw(string[] args, IEnumerable<CommandMap> commandsMap)
         {
-            var parser = new InternalParser(this.ArgumentRawParser, this.ArgumentParser, this.ActionParser);
-            return parser.Parse(args, commandsMap, enableMultiAction);
+            var allMethodsMaps = commandsMap.GetMethods();
+            return this.ArgumentRawParser.Parse(args, allMethodsMaps);
         }
 
-        public ExecutionResult Execute(ParseResult parseResult, Action<IMemberResult> onInvoke)
+        public ParseResult Parse(string[] args, IEnumerable<ArgumentRaw> argumentsRaw, IEnumerable<CommandMap> commandsMap, bool enableMultiAction)
+        {
+            var parser = new InternalParser(this.ArgumentParser, this.ActionParser);
+            return parser.Parse(args, argumentsRaw, commandsMap, enableMultiAction);
+        }
+
+        public ExecutionResult Execute(ParseResult parseResult, Action<IMemberResult, ExecutionScope> onInvoke)
         {
             var executor = new InternalExecutor();
             return executor.Execute(parseResult, onInvoke);

@@ -39,23 +39,24 @@ namespace SysCommand.Tests.UnitTests
             }
         }
 
-        [TestMethod]
-        public void Test00_ExceptionCommandsAttachedInOtherApp()
-        {
-            try
-            {
-                var commands = new Command[1] { new Commands.T00.Command1() };
-                var app = new App(commands: commands);
-                var app2 = new App(commands: commands);
+        //[TestMethod]
+        //public void Test00_ExceptionCommandsAttachedInOtherApp()
+        //{
+        //    try
+        //    {
+        //        var commands = new Type[1] { typeof(Commands.T00.Command1) };
+        //        var app = new App(commandsTypes: commands);
+        //        var app2 = new App(commandsTypes: commands);
 
-                app.Run("");
-                app2.Run("");
-            }
-            catch (Exception ex)
-            {
-                Assert.IsTrue(ex.Message == "The command '"+ typeof(Commands.T00.Command1).FullName + "' already attached to another application.");
-            }
-        }
+        //        app.Run("");
+        //        app2.Run("");
+        //        Assert.Fail();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.IsTrue(ex.Message == "The command '"+ typeof(Commands.T00.Command1).FullName + "' already attached to another application.");
+        //    }
+        //}
 
         [TestMethod]
         public void Test01_ChoosedByAllValidsAndHaveMajorityAsMappedButInputIsInvalid()

@@ -10,27 +10,24 @@ namespace SysCommand.DefaultExecutor
     {
         private ActionParser actionParser;
         private ArgumentParser argumentParser;
-        private ArgumentRawParser argumentRawParser;
 
-        public InternalParser(ArgumentRawParser argumentRawParser, ArgumentParser argumentParser, ActionParser actionParser)
+        public InternalParser(ArgumentParser argumentParser, ActionParser actionParser)
         {
-            this.argumentRawParser = argumentRawParser;
             this.argumentParser = argumentParser;
             this.actionParser = actionParser;
         }
 
-        public ParseResult Parse(string[] args, IEnumerable<CommandMap> commandsMap, bool enableMultiAction)
+        public ParseResult Parse(string[] args, IEnumerable<ArgumentRaw> argumentsRaw, IEnumerable<CommandMap> commandsMap, bool enableMultiAction)
         {
             var parseResult = new ParseResult();
             parseResult.Args = args;
             parseResult.Maps = commandsMap;
             parseResult.EnableMultiAction = enableMultiAction;
-
-            var allMethodsMaps = commandsMap.GetMethods();
-            parseResult.ArgumentsRaw = this.argumentRawParser.Parse(args, allMethodsMaps);
+            //parseResult.ArgumentsRaw = argumentsRaw;
 
             IEnumerable<ArgumentRaw> initialExtraArguments;
-            var methodsParsed = this.actionParser.Parse(parseResult.ArgumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
+            var allMethodsMaps = commandsMap.GetMethods();
+            var methodsParsed = this.actionParser.Parse(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
 
             var hasMethodsParsed = methodsParsed.Count > 0;
             var hasExtras = initialExtraArguments.Any();

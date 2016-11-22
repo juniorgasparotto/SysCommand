@@ -154,7 +154,7 @@ namespace SysCommand.DefaultExecutor
             if (value != null && !value.In("-", "--", "/"))
             {
                 //var invalidArgStartName = new char[] { '=', ':','+', '-', '/', '\\', '*', '&', '%' };
-                var char0 = value[0];
+                var char0 = (value.Length > 0) ? value[0] : default(char);
                 var char1 = (value.Length > 1) ? value[1] : default(char);
                 var char2 = (value.Length > 2) ? value[2] : default(char);
 

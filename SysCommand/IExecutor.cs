@@ -9,7 +9,8 @@ namespace SysCommand
     public interface IExecutor
     {
         IEnumerable<CommandMap> GetMaps(IEnumerable<CommandBase> commands);
-        ParseResult Parse(string[] args, IEnumerable<CommandMap> commandsMap, bool enableMultiAction);
-        ExecutionResult Execute(ParseResult parseResult, Action<IMemberResult> onInvoke);
+        IEnumerable<ArgumentRaw> ParseRaw(string[] args, IEnumerable<CommandMap> commandsMap);
+        ParseResult Parse(string[] args, IEnumerable<ArgumentRaw> argumentsRaw, IEnumerable<CommandMap> commandsMap, bool enableMultiAction);
+        ExecutionResult Execute(ParseResult parseResult, Action<IMemberResult, ExecutionScope> onInvoke);
     }
 }

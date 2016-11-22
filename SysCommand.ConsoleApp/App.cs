@@ -6,8 +6,9 @@ using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.ConsoleApp.Commands;
 using SysCommand.ConsoleApp.Helpers;
-using SysCommand.ConsoleApp.Files;
-using System.Collections;
+using System.Reflection.Emit;
+using System.Runtime.Serialization;
+using SysCommand.ConsoleApp.Results;
 
 namespace SysCommand.ConsoleApp
 {
@@ -74,34 +75,13 @@ namespace SysCommand.ConsoleApp
         }
 
         public App(
-            IEnumerable<Command> commands = null,
+            IEnumerable<Type> commandsTypes = null,
             IExecutor executor = null,
             bool enableMultiAction = true,
             bool addDefaultAppHandler = true
         )
         {
             this.enableMultiAction = enableMultiAction;
-            
-            // validate if some commands is attached in another app.
-            if (commands != null)
-            {
-                foreach (var command in commands)
-                    if (command.App != null)
-                        throw new Exception(string.Format("The command '{0}' already attached to another application.", command.GetType().FullName));
-            }
-            
-            // load all in app domain if the list = null
-            commands = commands ?? new AppDomainCommandLoader().GetFromAppDomain(DebugHelper.IsDebug);
-
-            // validate if the list is empty
-            if (!commands.Any())
-                throw new Exception("No command found");
-
-            if (!commands.Any(f => f is IHelpCommand))
-                commands = new List<Command>(commands) { new HelpCommand() };
-
-            foreach (var command in commands)
-                command.App = this;
 
             // default executor
             this.executor = executor ?? new DefaultExecutor.Executor();
@@ -109,6 +89,34 @@ namespace SysCommand.ConsoleApp
             // add handler default
             if (addDefaultAppHandler)
                 this.AddApplicationHandler(new DefaultApplicationHandler());
+
+            // init commands
+            this.Initialize(commandsTypes);
+        }
+
+        private void Initialize(IEnumerable<Type> commandsTypes = null)
+        {
+            // load all in app domain if the list = null
+            if (commandsTypes == null)
+                commandsTypes = new AppDomainCommandLoader().GetFromAppDomain(DebugHelper.IsDebug);
+
+            var propAppName = typeof(Command).GetProperties().Where(p => p.PropertyType == typeof(App)).First().Name;
+            var commands = commandsTypes
+                .Select(type => this.CreateCommandInstance(type, propAppName))
+                .OrderBy(f => f.OrderExecution).ToList();
+
+            // remove commands that are only for debugs
+            commands.RemoveAll(f => !DebugHelper.IsDebug && f.OnlyInDebug);
+            
+            // validate if the list is empty
+            if (!commands.Any())
+                throw new Exception("No command found");
+
+            if (!commands.Any(f => f is IHelpCommand))
+                commands = new List<Command>(commands)
+                    {
+                        this.CreateCommandInstance<HelpCommand>(propAppName)
+                    };
 
             // mapping
             this.Maps = this.executor.GetMaps(commands).ToList();
@@ -141,31 +149,36 @@ namespace SysCommand.ConsoleApp
             appResult.Args = args;
             appResult.ArgsOriginal = args;
 
+        Start:
+            appResult.ArgumentsRaw = this.executor.ParseRaw(appResult.Args, this.Maps);
+
             try
             {
                 var userMaps = this.Maps.ToList();
                 var executed = false;
 
                 // system feature: "manage args history"
-                var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
-                if (manageCommand != null)
-                {
-                    var executorHistory = new DefaultExecutor.Executor();
-                    var parseResultHistory = executorHistory.Parse(appResult.Args, new List<CommandMap> { manageCommand }, false);
-                    var newArgs = executorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
-                    if (newArgs != null)
-                        appResult.Args = newArgs;
+                //var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
+                //if (manageCommand != null)
+                //{
+                //    var executorHistory = new DefaultExecutor.Executor();
+                //    var maps = new List<CommandMap> { manageCommand };
+                //    var parseResultHistory = executorHistory.Parse(appResult.Args, appResult.ArgumentsRaw, maps, false);
+                //    var newArgs = executorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
+                //    if (newArgs != null)
+                //        appResult.Args = newArgs;
 
-                    userMaps.Remove(manageCommand);
-                }
+                //    userMaps.Remove(manageCommand);
+                //}
 
                 // system feature: "help"
                 var helpCommand = this.Maps.GetMap<IHelpCommand>();
                 if (helpCommand != null)
                 {
                     var executorHelp = new DefaultExecutor.Executor();
-                    var parseResultHelp = executorHelp.Parse(appResult.Args, new List<CommandMap> { helpCommand }, false);
-                    var executionResult = executorHelp.Execute(parseResultHelp, (member) => this.MemberInvoke(appResult, member));
+                    var maps = new List<CommandMap> { helpCommand };
+                    var parseResultHelp = executorHelp.Parse(appResult.Args, appResult.ArgumentsRaw, maps, false);
+                    var executionResult = executorHelp.Execute(parseResultHelp, (member, scope) => this.MemberInvoke(appResult, member));
                     if (executionResult.State == ExecutionState.Success)
                     {
                         appResult.ParseResult = parseResultHelp;
@@ -176,9 +189,25 @@ namespace SysCommand.ConsoleApp
                 }
 
                 if (!executed)
-                { 
-                    appResult.ParseResult = this.executor.Parse(appResult.Args, userMaps, this.enableMultiAction);
-                    appResult.ExecutionResult = this.executor.Execute(appResult.ParseResult, (member) => this.MemberInvoke(appResult, member));
+                {
+                    var isRestarted = false;
+                    appResult.ParseResult = this.executor.Parse(appResult.Args, appResult.ArgumentsRaw, userMaps, this.enableMultiAction);
+                    appResult.ExecutionResult = this.executor.Execute(appResult.ParseResult, 
+                        (member, scope) => 
+                        {
+                            var actionResultIfExists = this.MemberInvoke(appResult, member);
+
+                            if (actionResultIfExists is RestartResult)
+                            {
+                                isRestarted = true;
+                                appResult.Args = ((RestartResult)actionResultIfExists).NewArgs;
+                                scope.StopPropagation();
+                            }
+                        }
+                    );
+
+                    if (isRestarted)
+                        goto Start;
                 }
 
                 if (this.OnComplete != null)
@@ -195,13 +224,13 @@ namespace SysCommand.ConsoleApp
             return appResult;
         }
 
-        private void MemberInvoke(ApplicationResult args, IMemberResult member)
+        private IActionResult MemberInvoke(ApplicationResult args, IMemberResult member)
         {
             if (!member.IsInvoked)
             {
                 if (this.OnBeforeMemberInvoke != null)
                     this.OnBeforeMemberInvoke(args, member);
-
+                
                 if (!member.IsInvoked)
                 {
                     member.Invoke();
@@ -218,9 +247,18 @@ namespace SysCommand.ConsoleApp
 
             if (method != null && method.ReturnType != typeof(void) && member.Value != null)
             {
-                if (this.OnMethodReturn != null)
-                    this.OnMethodReturn(args, member);
+                if (member.Value is IActionResult)
+                {
+                    return (IActionResult)member.Value;
+                }
+                else
+                {
+                    if (this.OnMethodReturn != null)
+                        this.OnMethodReturn(args, member);
+                }
             }
+
+            return null;
         }
 
         private string[] GetArguments()
@@ -237,6 +275,19 @@ namespace SysCommand.ConsoleApp
                 listArgs.RemoveAt(0);
                 return listArgs.ToArray();
             }
+        }
+
+        private Command CreateCommandInstance<T>(string propertyAppName)
+        {
+            return this.CreateCommandInstance(typeof(T), propertyAppName);
+        }
+
+        private Command CreateCommandInstance(Type type, string propertyAppName)
+        {
+            object obj = FormatterServices.GetUninitializedObject(type);
+            obj.GetType().GetProperty(propertyAppName).SetValue(obj, this);
+            obj.GetType().GetConstructor(Type.EmptyTypes).Invoke(obj, null);
+            return (Command)obj;
         }
 
         public static int RunInfiniteIfDebug(App app = null)

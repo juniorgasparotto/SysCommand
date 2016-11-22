@@ -20,7 +20,7 @@ namespace SysCommand.Tests.UnitTests
         public void Test_01_AppHistory()
         {
             var app = new App(
-                   commands: new AppDomainCommandLoader().GetFromAppDomain(false)
+                   commandsTypes: new AppDomainCommandLoader().GetFromAppDomain(false)
                );
 
             var argsInput = "main 1 1 1";

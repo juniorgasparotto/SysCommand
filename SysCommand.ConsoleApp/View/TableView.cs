@@ -430,11 +430,6 @@ namespace SysCommand.ConsoleApp.View
             {
                 return string.Join("", this.Columns.Select(f => f.Text));
             }
-
-            internal object AddColumnInRow(object helpUsageLabel)
-            {
-                throw new NotImplementedException();
-            }
         }
 
         public class RowLine : IRow

@@ -1,0 +1,25 @@
+{
+  "Args": "value",
+  "Members": [],
+  "Values": [],
+  "ExpectedResult": [
+    "Could not find any action."
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1",
+        "HelpCommand"
+      ],
+      "PropertiesInvalid": [
+        "Command1.value",
+        "HelpCommand.value"
+      ],
+      "MethodsInvalid": []
+    }
+  ]
+}

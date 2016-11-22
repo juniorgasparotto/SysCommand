@@ -1,4 +1,5 @@
-﻿using SysCommand.Execution;
+﻿using System.Collections.Generic;
+using SysCommand.Execution;
 using SysCommand.Parsing;
 
 namespace SysCommand.ConsoleApp
@@ -8,6 +9,7 @@ namespace SysCommand.ConsoleApp
         public App App { get; internal set; }
         public string[] Args { get; internal set; }
         public string[] ArgsOriginal { get; internal set; }
+        public IEnumerable<ArgumentRaw> ArgumentsRaw { get; internal set; }
         public ParseResult ParseResult { get; internal set; }
         public ExecutionResult ExecutionResult { get; internal set; }
         internal ApplicationResult() { }

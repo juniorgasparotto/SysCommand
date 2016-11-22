@@ -13,7 +13,7 @@ namespace SysCommand.Tests.UnitTests
         public static TestData GetTestData(string args, Command[] commands, StringWriter strBuilder = null)
         {
             var app = new App(
-                    commands: commands
+                    commandsTypes: commands.Select(f=>f.GetType())
                 );
 
             app.Console.Out = strBuilder ?? new StringWriter();
@@ -26,8 +26,8 @@ namespace SysCommand.Tests.UnitTests
 
             foreach (var cmd in commands)
             {
-                test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Properties.Select(s => s.Target.GetType().Name + "." + s.TargetMember.ToString() + (s.IsOptional ? "" : " (obrigatory)") + (cmd.EnablePositionalArgs ? "" : " (NOT accept positional)"))));
-                test.Members.AddRange(app.Maps.Where(f => f.Command == cmd).SelectMany(f => f.Methods.Select(s => s.Target.GetType().Name + "." + CommandParserUtils.GetMethodSpecification(s))));
+                test.Members.AddRange(app.Maps.Where(f => f.Command.GetType() == cmd.GetType()).SelectMany(f => f.Properties.Select(s => s.Target.GetType().Name + "." + s.TargetMember.ToString() + (s.IsOptional ? "" : " (obrigatory)") + (cmd.EnablePositionalArgs ? "" : " (NOT accept positional)"))));
+                test.Members.AddRange(app.Maps.Where(f => f.Command.GetType() == cmd.GetType()).SelectMany(f => f.Methods.Select(s => s.Target.GetType().Name + "." + CommandParserUtils.GetMethodSpecification(s))));
             }
 
             test.ExpectedResult = output.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);

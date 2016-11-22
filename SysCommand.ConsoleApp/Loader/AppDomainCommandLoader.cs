@@ -20,7 +20,7 @@ namespace SysCommand.ConsoleApp
             this.IgnoredCommands.Add(typeof(T));
         }
         
-        public IEnumerable<Command> GetFromAppDomain(bool isDebug)
+        public IEnumerable<Type> GetFromAppDomain(bool isDebug)
         {
             var listOfCommands = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()
@@ -29,11 +29,9 @@ namespace SysCommand.ConsoleApp
                                       && assemblyType.IsInterface == false
                                       && assemblyType.IsAbstract == false
                                   select assemblyType).ToList();
-
-            var commandsList = listOfCommands.Select(f => (Command)Activator.CreateInstance(f)).OrderBy(f => f.OrderExecution).ToList();
-            commandsList.RemoveAll(f => this.IgnoredCommands.Contains(f.GetType()) || (!isDebug && f.OnlyInDebug));
-            
-            return commandsList;
+            listOfCommands.RemoveAll(f => this.IgnoredCommands.Contains(f));
+            return listOfCommands;
         }
+
     }
 }

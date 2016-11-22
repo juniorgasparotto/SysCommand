@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\DebugHelper.cs" />
+    <Compile Include="Results\IActionResult.cs" />
     <Compile Include="ItemCollection.cs" />
     <Compile Include="Files\Json\JsonFiles.cs" />
     <Compile Include="Files\ObjectFileAttribute.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Commands\System\IManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\System\ManageArgsHistoryCommand.cs" />
     <Compile Include="Commands\Debug\ClearCommand.cs" />
+    <Compile Include="Results\RestartResult.cs" />
     <Compile Include="View\TableView.cs" />
     <Compile Include="View\TemplatesGenerator\Razor\Compiler.cs" />
     <Compile Include="View\TemplatesGenerator\Razor\CompilerServicesUtility.cs" />

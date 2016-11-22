@@ -27,7 +27,7 @@ namespace SysCommand.ConsoleApp.Files
             this.DefaultFileExtension = ".object";
         }
 
-        public void Save<T>(T obj, string fileName = null, bool addInRootFolder = true)
+        public void Save<T>(T obj, string fileName = null)
         {
             fileName = GetFileName<T>(fileName);
 

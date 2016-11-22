@@ -1,0 +1,31 @@
+{
+  "Args": "--str value",
+  "Members": [
+    "Command1.System.Text.StringBuilder Str"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "The argument '--str' is unsupported",
+    "",
+    "There are errors in command: HelpCommand",
+    "The argument '--str' does not exist"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1",
+        "HelpCommand"
+      ],
+      "PropertiesInvalid": [
+        "Command1.Str",
+        "HelpCommand.str"
+      ],
+      "MethodsInvalid": []
+    }
+  ]
+}

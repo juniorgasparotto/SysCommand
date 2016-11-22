@@ -46,7 +46,7 @@ namespace SysCommand.Tests.UnitTests
         {
             var listener = new CustomListener();
             var app = new App(
-                    commands: new List<Command> { new Commands.T22.Command1() },
+                    commandsTypes: new List<Type> { typeof(Commands.T22.Command1) },
                     addDefaultAppHandler: false
                 );
 
@@ -71,7 +71,7 @@ OnException: Exception!!";
         public void Test22_EventsWithActions()
         {
             var app = new App(
-                    commands: new List<SysCommand.ConsoleApp.Command> { new Commands.T22.Command1() },
+                    commandsTypes: new List<Type> { typeof(Commands.T22.Command1) },
                     addDefaultAppHandler: false
                 );
 

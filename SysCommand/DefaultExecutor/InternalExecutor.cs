@@ -9,8 +9,10 @@ namespace SysCommand.DefaultExecutor
 {
     internal class InternalExecutor
     {
-        public ExecutionResult Execute(ParseResult parseResult, Action<IMemberResult> onInvoke)
+        public ExecutionResult Execute(ParseResult parseResult, Action<IMemberResult, ExecutionScope> onInvoke)
         {
+            // (1) prepare
+
             var results = new List<IMemberResult>();
             var executionResult = new ExecutionResult();
             executionResult.Results = results;
@@ -42,29 +44,65 @@ namespace SysCommand.DefaultExecutor
 
                 if (addMainMethod.Any())
                 {
-                    List<MethodMainResult> mains = new List<MethodMainResult>();
+                    var mainsList = new List<MethodMainResult>();
                     foreach (var command in addMainMethod)
                     {
                         var main = this.CreateMainMethod(command.Key);
                         if (main != null)
-                            mains.Add(main);
+                            mainsList.Add(main);
                     }
 
-                    results.InsertRange(0, mains);
+                    results.InsertRange(0, mainsList);
                 }
 
-                var executionScope = new ExecutionScope()
-                {
-                    ParseResult = parseResult,
-                    ExecutionResult = executionResult
-                };
+                var executionScope = new ExecutionScope(parseResult, executionResult);
 
                 foreach(var cmd in executionResult.Results.Select(f=> (CommandBase)f.Target))
                     cmd.ExecutionScope = executionScope;
 
-                executionResult.Results.With<PropertyResult>().Invoke(onInvoke);
-                executionResult.Results.With<MethodMainResult>().Invoke(onInvoke);
-                executionResult.Results.With<MethodResult>().Invoke(onInvoke);
+                // (2) execution
+                var properties = executionResult.Results.With<PropertyResult>();
+                var mains = executionResult.Results.With<MethodMainResult>();
+                var methods = executionResult.Results.With<MethodResult>();
+                
+                foreach (var prop in properties)
+                { 
+                    if (!executionScope.IsStopped)
+                    { 
+                        if (onInvoke == null)
+                            prop.Invoke();
+                        else
+                            onInvoke(prop, executionScope);
+                    }
+                }
+
+                if (!executionScope.IsStopped)
+                {
+                    foreach (var main in mains)
+                    {
+                        if (!executionScope.IsStopped)
+                        {
+                            if (onInvoke == null)
+                                main.Invoke();
+                            else
+                                onInvoke(main, executionScope);
+                        }
+                    }
+                }
+
+                if (!executionScope.IsStopped)
+                {
+                    foreach (var method in methods)
+                    {
+                        if (!executionScope.IsStopped)
+                        {
+                            if (onInvoke == null)
+                                method.Invoke();
+                            else
+                                onInvoke(method, executionScope);
+                        }
+                    }
+                }
 
                 executionResult.State = ExecutionState.Success;
             }

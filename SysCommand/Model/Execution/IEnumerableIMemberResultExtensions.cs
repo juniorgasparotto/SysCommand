@@ -37,16 +37,16 @@ namespace SysCommand.Execution
             return list.Where(f => f is TFilter).Cast<TFilter>().Where(expression);
         }
 
-        public static void Invoke(this IEnumerable<IMemberResult> list, Action<IMemberResult> onInvoke)
-        {
-            foreach (var m in list)
-            {
-                if (onInvoke == null)
-                    m.Invoke();
-                else
-                    onInvoke(m);
-            }
-        }
+        //public static void Invoke(this IEnumerable<IMemberResult> list, Action<IMemberResult> onInvoke)
+        //{
+        //    foreach (var m in list)
+        //    {
+        //        if (onInvoke == null)
+        //            m.Invoke();
+        //        else
+        //            onInvoke(m);
+        //    }
+        //}
 
         public static object GetValue(this IEnumerable<IMemberResult> list, int index = 0)
         {
