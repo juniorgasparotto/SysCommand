@@ -19,8 +19,8 @@ namespace SysCommand.Tests.UnitTests.Commands.T26
         [Action(IsDefault=true)]
         public string Default(List<int> lst, List<int> lst2)
         {
-            var cur = this.CurrentMethodParse();
-            return GetDebugName(this.CurrentMethodMap(), cur);
+            var cur = this.CurrentMethodResult();
+            return GetDebugName(this.CurrentActionMap(), cur);
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)

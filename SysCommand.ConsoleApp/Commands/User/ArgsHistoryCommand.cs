@@ -7,42 +7,59 @@ using System.Text;
 
 namespace SysCommand.ConsoleApp.Commands
 {
-    public class ManageArgsHistoryCommand : Command, IManageArgsHistoryCommand
+    public class ArgsHistoryCommand : Command
     {
-        private const string FILE_NAME = "history";
-        private JsonFiles jsonFiles;
+        public const string FILE_NAME = "history";
+        private JsonFileManager fileManager;
 
-        public ManageArgsHistoryCommand()
+        public ArgsHistoryCommand()
         {
-            this.jsonFiles = App.Items.GetOrCreate<JsonFiles>();
+            this.fileManager = App.Items.GetOrCreate<JsonFileManager>();
         }
 
         public RestartResult HistoryLoad(string name)
         {
-            var histories = this.jsonFiles.GetOrCreate<List<History>>(FILE_NAME);
+            var histories = this.fileManager.GetOrCreate<List<History>>(FILE_NAME);
             var history = histories.FirstOrDefault(f => f.Name == name);
             string[] args = null;
             if (history != null)
-                args = history.Args;
+                args = history.Args.ToArray();
             return new RestartResult(args);
         }
 
         public void HistorySave(string name)
         {
-            var histories = this.jsonFiles.GetOrCreate<List<History>>(FILE_NAME);
+            var histories = this.fileManager.GetOrCreate<List<History>>(FILE_NAME);
             histories.RemoveAll(f => f.Name == name);
-            histories.Add(new History
+
+            var args = ExecutionScope.ParseResult.Args.ToList();
+            var actionMapName = this.CurrentActionMap().ActionName;
+            var curMethodArg = args.FirstOrDefault(f => f == actionMapName);
+            if (curMethodArg != null)
             {
-                Name = name,
-                Args = ExecutionScope.ParseResult.Args
-            });
-            jsonFiles.Save(histories, FILE_NAME);
+                var index = args.IndexOf(curMethodArg);
+                // remove "name" value
+                args.RemoveAt(index + 1);
+                // remove action name
+                args.Remove(curMethodArg);
+            }
+
+            if (args.Count > 0)
+            {
+                histories.Add(new History
+                {
+                    Name = name,
+                    Args = args
+                });
+
+                fileManager.Save(histories, FILE_NAME);
+            }
         }
 
         public string HistoryList()
         {
             var strBuilder = new StringBuilder();
-            var histories = this.jsonFiles.GetOrCreate<List<History>>(FILE_NAME);
+            var histories = this.fileManager.GetOrCreate<List<History>>(FILE_NAME);
             var table = new TableView();
             table.AddLineSeparator = false;
 
@@ -71,15 +88,15 @@ namespace SysCommand.ConsoleApp.Commands
 
         public void HistoryDel(string name)
         {
-            var histories = this.jsonFiles.GetOrCreate<List<History>>(FILE_NAME);
+            var histories = this.fileManager.GetOrCreate<List<History>>(FILE_NAME);
             histories.RemoveAll(f => f.Name == name);
-            jsonFiles.Save(histories, FILE_NAME);
+            fileManager.Save(histories, FILE_NAME);
         }
 
         public class History
         {
             public string Name { get; set; }
-            public string[] Args { get; set; }
+            public IEnumerable<string> Args { get; set; }
         }
     }
 }

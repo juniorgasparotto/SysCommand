@@ -6,31 +6,19 @@ using SysCommand.Parsing;
 using SysCommand.Mapping;
 using SysCommand.Execution;
 
-namespace SysCommand.Tests.UnitTests.Commands.T02
+namespace SysCommand.Tests.UnitTests.Commands.T31
 {
-    public class Command1 : Command
+    public class Command2 : Command
     {
-        [Argument(IsRequired=true)]
-        public string Description { get; set; }
-
-        public Command1()
+        public Command2()
         {
-            //this.EnablePositionalArgs = true;
         }
 
-        public string Main()
+        [Action(Help = "Loren ipsulum Loren ipsulum Loren ipsulum Loren")]
+        public string Save(int value)
         {
-            return this.GetType().Name + ".Main";
-        }
-
-        public string Save(int a, int b, int c)
-        {
-            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
-        }
-
-        public string Save(int a, int b)
-        {
-            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
+            var cur = this.CurrentMethodResult();
+            return GetDebugName(this.CurrentActionMap(), cur);
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)

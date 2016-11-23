@@ -24,23 +24,23 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public string Main(string value)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         [Action(IsDefault = true)]
         public string Default(string value)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         public string Save()
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         public string Delete(string title = null, string description = null, DateTime? date = null)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)

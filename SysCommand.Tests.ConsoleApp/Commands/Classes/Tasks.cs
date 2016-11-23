@@ -6,7 +6,6 @@ using SysCommand.ConsoleApp.Files;
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {
-    [ObjectFile(FileName = "all.json", Folder = @".app\tasks\")]
     public class Tasks
     {
         public List<Task> AllTasks = new List<Task>();

@@ -10,7 +10,7 @@ namespace SysCommand.Tests.ConsoleApp
         static int Main(string[] args)
         {
             var app = new App();
-            var jsonFiles = app.Items.GetOrCreate<JsonFiles>();
+            var jsonFiles = app.Items.GetOrCreate<JsonFileManager>();
             jsonFiles.DefaultFilePrefix = "file-";
 
             return App.RunInfiniteIfDebug(app);

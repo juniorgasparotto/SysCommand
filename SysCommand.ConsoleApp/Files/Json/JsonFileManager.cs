@@ -8,29 +8,52 @@ using System.Linq;
 
 namespace SysCommand.ConsoleApp.Files
 {
-    public class JsonFiles
+    public class JsonFileManager
     {
         private static TypeNameSerializationBinder binder = new TypeNameSerializationBinder();
         private Dictionary<string, object> objectsFiles = new Dictionary<string, object>();
+        private string defaultFolder;
 
-        public string DefaultRootFolder { get; set; }
         public string DefaultFilePrefix { get; set; }
         public string DefaultFileExtension { get; set; }
         public bool UseTypeFullName { get; set; }
         public bool SaveInRootFolderWhenIsDebug { get; set; }
 
-        public JsonFiles()
+        public string DefaultFolder
         {
-            this.SaveInRootFolderWhenIsDebug = true;
-            this.DefaultRootFolder = ".app";
-            this.DefaultFilePrefix = "";
-            this.DefaultFileExtension = ".object";
+            get
+            {
+                return this.defaultFolder;
+            }
+            set
+            {
+                this.defaultFolder = value;
+                if (DebugHelper.IsDebug && this.SaveInRootFolderWhenIsDebug)
+                    this.defaultFolder = Path.Combine(@"..\..\", this.defaultFolder);
+            }
         }
 
-        public void Save<T>(T obj, string fileName = null)
+        public JsonFileManager()
         {
-            fileName = GetFileName<T>(fileName);
+            this.SaveInRootFolderWhenIsDebug = true;
+            this.DefaultFolder = ".app";
+            this.DefaultFilePrefix = "";
+            this.DefaultFileExtension = ".json";
+        }
 
+        public void Save<T>(T obj)
+        {
+            var fileName = this.GetObjectFileName(typeof(T));
+            this.SaveInternal(obj, this.GetFilePath(fileName));
+        }
+
+        public void Save(object obj, string fileName)
+        {
+            this.SaveInternal(obj, this.GetFilePath(fileName));
+        }
+
+        private void SaveInternal(object obj, string fileName)
+        {
             if (obj != null)
             {
                 SaveToFileJson(obj, fileName);
@@ -38,10 +61,19 @@ namespace SysCommand.ConsoleApp.Files
             }
         }
 
-        public void Remove<T>(string fileName = null)
+        public void Remove<T>()
         {
-            fileName = GetFileName<T>(fileName);
+            var fileName = this.GetObjectFileName(typeof(T));
+            this.RemoveInternal(this.GetFilePath(fileName));
+        }
 
+        public void Remove(string fileName)
+        {
+            this.RemoveInternal(this.GetFilePath(fileName));
+        }
+
+        private void RemoveInternal(string fileName)
+        {
             FileHelper.RemoveFile(fileName);
             if (this.objectsFiles.ContainsKey(fileName))
                 this.objectsFiles.Remove(fileName);
@@ -49,13 +81,22 @@ namespace SysCommand.ConsoleApp.Files
 
         public T Get<T>(string fileName = null, bool refresh = false)
         {
-            return GetOrCreate<T>(fileName, true, refresh);
+            if (string.IsNullOrWhiteSpace(fileName))
+                fileName = this.GetObjectFileName(typeof(T));
+
+            return GetOrCreateInternal<T>(this.GetFilePath(fileName), true, refresh);
         }
 
-        public T GetOrCreate<T>(string fileName = null, bool onlyGet = false, bool refresh = false)
+        public T GetOrCreate<T>(string fileName = null, bool refresh = false)
         {
-            fileName = GetFileName<T>(fileName);
+            if (string.IsNullOrWhiteSpace(fileName))
+                fileName = this.GetObjectFileName(typeof(T));
 
+            return GetOrCreateInternal<T>(this.GetFilePath(fileName), false, refresh);
+        }
+
+        private T GetOrCreateInternal<T>(string fileName = null, bool onlyGet = false, bool refresh = false)
+        {
             if (this.objectsFiles.ContainsKey(fileName) && !refresh)
                 return this.objectsFiles[fileName] == null ? default(T) : (T)this.objectsFiles[fileName];
 
@@ -69,52 +110,27 @@ namespace SysCommand.ConsoleApp.Files
             return objFile;
         }
 
-        public string GetObjectFileName(Type type, string fileName = null, bool useTypeFullName = false)
+        public string GetObjectFileName(Type type)
         {
-            string folder = null;
-            if (string.IsNullOrWhiteSpace(fileName))
-            {
-                var attr = type.GetCustomAttributes(typeof(ObjectFileAttribute), true).FirstOrDefault() as ObjectFileAttribute;
-                if (attr != null && !string.IsNullOrWhiteSpace(attr.FileName))
-                {
-                    fileName = attr.FileName;
-                }
-                else
-                {
-                    useTypeFullName = !useTypeFullName ? this.UseTypeFullName : useTypeFullName;
-                    fileName = ReflectionHelper.CSharpName(type, useTypeFullName).Replace("<", "[").Replace(">", "]").Replace(@"\", "");
-                    fileName = this.DefaultFilePrefix + StringHelper.ToLowerSeparate(fileName, '.') + this.DefaultFileExtension;
-                }
+            string fileName;
 
-                folder = this.DefaultRootFolder;
-                if (attr != null && !string.IsNullOrWhiteSpace(attr.Folder))
-                    folder = attr.Folder;
+            var attr = type.GetCustomAttributes(typeof(ObjectFileAttribute), true).FirstOrDefault() as ObjectFileAttribute;
+            if (attr != null && !string.IsNullOrWhiteSpace(attr.FileName))
+            {
+                fileName = attr.FileName;
+            }
+            else
+            {
+                fileName = ReflectionHelper.CSharpName(type, this.UseTypeFullName).Replace("<", "[").Replace(">", "]").Replace(@"\", "");
+                fileName = this.DefaultFilePrefix + StringHelper.ToLowerSeparate(fileName, '.') + this.DefaultFileExtension;
             }
 
-            if (string.IsNullOrWhiteSpace(folder))
-                return this.GetPathFromRoot(fileName);
-            else
-                return this.GetPathFromRoot(folder, fileName);
+            return fileName;
         }
 
-        private string GetFileName<T>(string fileName)
+        public string GetFilePath(string fileName)
         {
-            if (string.IsNullOrWhiteSpace(fileName))
-                return this.GetObjectFileName(typeof(T), fileName);
-            else
-                return this.GetPathFromRoot(this.DefaultRootFolder, fileName);
-        }
-
-        public string GetPathFromRoot(params string[] paths)
-        {
-            if (DebugHelper.IsDebug && this.SaveInRootFolderWhenIsDebug)
-            {
-                var paths2 = paths.ToList();
-                paths2.Insert(0, @"..\..\");
-                return Path.Combine(paths2.ToArray());
-            }
-
-            return Path.Combine(paths);
+            return Path.Combine(this.DefaultFolder, fileName);
         }
 
         #region Json

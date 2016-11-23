@@ -28,6 +28,7 @@ namespace SysCommand.ConsoleApp
 
         public bool ReadArgsWhenIsDebug { get; set; }
         public IEnumerable<CommandMap> Maps { get; private set; }
+        public IEnumerable<Command> Commands { get; private set; }
 
         public ConsoleWrapper Console
         {
@@ -73,7 +74,7 @@ namespace SysCommand.ConsoleApp
                 return this.items;
             }
         }
-
+        
         public App(
             IEnumerable<Type> commandsTypes = null,
             IExecutor executor = null,
@@ -120,6 +121,7 @@ namespace SysCommand.ConsoleApp
 
             // mapping
             this.Maps = this.executor.GetMaps(commands).ToList();
+            this.Commands = commands;
         }
 
         public App AddApplicationHandler(IApplicationHandler handler)

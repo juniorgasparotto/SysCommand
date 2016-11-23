@@ -15,7 +15,7 @@ namespace SysCommand.ConsoleApp
         public App App { get; internal set; }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public ActionMap CurrentMethodMap()
+        public ActionMap CurrentActionMap()
         {
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(1);
@@ -24,7 +24,7 @@ namespace SysCommand.ConsoleApp
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public MethodResult CurrentMethodParse()
+        public MethodResult CurrentMethodResult()
         {
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(1);

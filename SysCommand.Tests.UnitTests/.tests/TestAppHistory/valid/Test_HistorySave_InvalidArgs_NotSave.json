@@ -1,0 +1,23 @@
+{
+  "Args": "save a history-save history1",
+  "Members": [
+    "Command1.System.String Prop1 (NOT accept positional)",
+    "Command1.System.Decimal Prop2 (NOT accept positional)",
+    "Command2.save(Int32)",
+    "Command3.save()",
+    "ArgsHistoryCommand.history-load(String)",
+    "ArgsHistoryCommand.history-save(String)",
+    "ArgsHistoryCommand.history-list()",
+    "ArgsHistoryCommand.history-del(String)",
+    "HelpCommand.help(String)"
+  ],
+  "ExpectedResult": [
+    "There are errors in command: Command2",
+    "Error in method: save(Int32)",
+    "The argument '--value' is invalid",
+    "",
+    "There are errors in command: Command3",
+    "Could not find an argument to the specified value: a"
+  ],
+  "HistoryFile": null
+}

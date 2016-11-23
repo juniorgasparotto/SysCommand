@@ -11,8 +11,8 @@ namespace SysCommand.Tests.UnitTests.Commands.T21
         [Action(IsDefault = true)]
         public string Main(string value = null, string value2 = null)
         {
-            var cur = this.CurrentMethodParse();
-            return GetDebugName(this.CurrentMethodMap(), cur);
+            var cur = this.CurrentMethodResult();
+            return GetDebugName(this.CurrentActionMap(), cur);
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)

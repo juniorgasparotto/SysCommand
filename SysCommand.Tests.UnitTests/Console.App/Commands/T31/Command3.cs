@@ -1,22 +1,17 @@
-﻿using SysCommand.ConsoleApp;
-using SysCommand.Execution;
-using SysCommand.Mapping;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using SysCommand.ConsoleApp;
 using SysCommand.Parsing;
-using System;
+using SysCommand.Mapping;
+using SysCommand.Execution;
 
-namespace SysCommand.Tests.UnitTests.Commands.T26
+namespace SysCommand.Tests.UnitTests.Commands.T31
 {
-    public class Command7 : Command
+    public class Command3 : Command
     {
-        public string Prop { get; set; }
-
-        public Command7()
-        {
-            this.EnablePositionalArgs = true;
-        }
-
-        [Action(IsDefault=true)]
-        public string Default(int value = 100, int b = 200)
+        [Action(Help = "Loren ipsulum Loren ipsulum Loren ipsulum Loren")]
+        public string Save()
         {
             var cur = this.CurrentMethodResult();
             return GetDebugName(this.CurrentActionMap(), cur);

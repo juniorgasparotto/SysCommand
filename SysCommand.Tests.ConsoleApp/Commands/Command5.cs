@@ -25,17 +25,17 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public string Get(int description)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         public string Get(int id, int? description = null, int? other2 = null)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         public string Get(int id, string other = null, string other2 = null)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)

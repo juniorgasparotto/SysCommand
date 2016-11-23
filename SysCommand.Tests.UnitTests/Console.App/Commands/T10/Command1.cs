@@ -22,20 +22,20 @@ namespace SysCommand.Tests.UnitTests.Commands.T10
 
         public string Save(int a, int b, int c)
         {
-            var cur = this.CurrentMethodParse();
-            return GetDebugName(this.CurrentMethodMap(), cur) + " Level" + cur.ActionParsed.Level;
+            var cur = this.CurrentMethodResult();
+            return GetDebugName(this.CurrentActionMap(), cur) + " Level" + cur.ActionParsed.Level;
         }
 
         public string Save(int a, int b)
         {
-            var cur = this.CurrentMethodParse();
-            return GetDebugName(this.CurrentMethodMap(), cur) + " Level" + cur.ActionParsed.Level;
+            var cur = this.CurrentMethodResult();
+            return GetDebugName(this.CurrentActionMap(), cur) + " Level" + cur.ActionParsed.Level;
         }
 
         public string Delete(int a)
         {
-            var cur = this.CurrentMethodParse();
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse()) + " Level" + cur.ActionParsed.Level;
+            var cur = this.CurrentMethodResult();
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult()) + " Level" + cur.ActionParsed.Level;
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)

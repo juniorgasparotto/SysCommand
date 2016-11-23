@@ -18,8 +18,8 @@ namespace SysCommand.Tests.UnitTests.Commands.T26
         [Action(IsDefault=true, EnablePositionalArgs=false)]
         public string Default(int value)
         {
-            var cur = this.CurrentMethodParse();
-            return GetDebugName(this.CurrentMethodMap(), cur);
+            var cur = this.CurrentMethodResult();
+            return GetDebugName(this.CurrentActionMap(), cur);
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)

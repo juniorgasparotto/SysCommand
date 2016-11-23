@@ -25,42 +25,42 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public string Main(int id, string p2)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         public string Main(string[] args)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         [Action(IsDefault = true, Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum")]
         public string Default()
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         [Action(Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum")]
         public string Delete()
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         [Action(Name = "delete", Help = "Lorem ipsulum Lorem ipsulum Lorem")]
         public string OtherName(int param = 0)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         [Action(Name = "delete", Help = "Lorem ipsulum Lorem ipsulum Lorem")]
         public string Save()
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         [Action(Name = "delete", Help = "Lorem ipsulum Lorem ipsulum Lorem")]
         public string Save(int id)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         [Action(IsDefault=true, Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum ")]
@@ -72,7 +72,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
             [Argument(Help = "Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum Lorem ipsulum ")]
             decimal? value = null)
         {
-            return GetDebugName(this.CurrentMethodMap(), this.CurrentMethodParse());
+            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)

@@ -25,14 +25,14 @@ namespace SysCommand.Tests.UnitTests.Commands.T13
 
         public string Delete(string value)
         {
-            var cur = this.CurrentMethodParse();
-            return GetDebugName(this.CurrentMethodMap(), cur) + "=" + value;
+            var cur = this.CurrentMethodResult();
+            return GetDebugName(this.CurrentActionMap(), cur) + "=" + value;
         }
 
         public string Delete(string value, string value2)
         {
-            var cur = this.CurrentMethodParse();
-            return GetDebugName(this.CurrentMethodMap(), cur) + "=" + value + "," + value2;
+            var cur = this.CurrentMethodResult();
+            return GetDebugName(this.CurrentActionMap(), cur) + "=" + value + "," + value2;
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)

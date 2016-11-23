@@ -50,11 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Files\ObjectFileAttribute.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Results\IActionResult.cs" />
     <Compile Include="ItemCollection.cs" />
-    <Compile Include="Files\Json\JsonFiles.cs" />
-    <Compile Include="Files\ObjectFileAttribute.cs" />
+    <Compile Include="Files\Json\JsonFileManager.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Handlers\ApplicationDelegates.cs" />
     <Compile Include="ApplicationResult.cs" />
@@ -65,10 +65,9 @@
     <Compile Include="Handlers\IApplicationHandler.cs" />
     <Compile Include="Helpers\ConsoleAppHelper.cs" />
     <Compile Include="Loader\AppDomainCommandLoader.cs" />
-    <Compile Include="Commands\User\Help\HelpCommand.cs" />
-    <Compile Include="Commands\User\Help\IHelpCommand.cs" />
-    <Compile Include="Commands\System\IManageArgsHistoryCommand.cs" />
-    <Compile Include="Commands\System\ManageArgsHistoryCommand.cs" />
+    <Compile Include="Commands\System\Help\HelpCommand.cs" />
+    <Compile Include="Commands\System\Help\IHelpCommand.cs" />
+    <Compile Include="Commands\User\ArgsHistoryCommand.cs" />
     <Compile Include="Commands\Debug\ClearCommand.cs" />
     <Compile Include="Results\RestartResult.cs" />
     <Compile Include="View\TableView.cs" />
@@ -80,7 +79,7 @@
     <Compile Include="View\TemplatesGenerator\Razor\RazorTemplateGenerator.cs" />
     <Compile Include="View\TemplatesGenerator\Razor\TemplateCompileException.cs" />
     <Compile Include="Strings.cs" />
-    <Compile Include="Commands\System\ManagerCommand2.cs" />
+    <Compile Include="Commands\ManagerCommand2.cs" />
     <Compile Include="Commands\User\VerboseCommand.cs" />
     <Compile Include="Handlers\DefaultApplicationHandler.cs" />
     <Compile Include="Console\ExitCodeConstants.cs" />

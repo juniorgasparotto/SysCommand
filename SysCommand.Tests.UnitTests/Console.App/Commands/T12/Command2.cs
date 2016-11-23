@@ -22,8 +22,8 @@ namespace SysCommand.Tests.UnitTests.Commands.T12
 
         public string Delete(string value)
         {
-            var cur = this.CurrentMethodParse();
-            return GetDebugName(this.CurrentMethodMap(), cur) + "=" + value;
+            var cur = this.CurrentMethodResult();
+            return GetDebugName(this.CurrentActionMap(), cur) + "=" + value;
         }
 
         private string GetDebugName(ActionMap map, MethodResult result)
