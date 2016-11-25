@@ -4,7 +4,7 @@
     {
         public HelpCommand()
         {
-            HelpText = "displays help information";
+            HelpText = "Displays help information";
         }
 
         public string Help(string action = null)

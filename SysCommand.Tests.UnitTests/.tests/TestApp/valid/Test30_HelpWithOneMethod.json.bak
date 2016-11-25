@@ -6,7 +6,7 @@ Command2.save(String, List<Int32>, Enum2)
 -----------------------------
 usage:    --prop2=<number> [--prop1=<phrase>] <actions[args]>
 
-Displays help information
+displays help information
 
    help           
       --action    Is optional.

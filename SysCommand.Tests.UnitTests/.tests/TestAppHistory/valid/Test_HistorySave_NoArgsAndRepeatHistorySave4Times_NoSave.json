@@ -1,5 +1,5 @@
 {
-  "Args": "save 1",
+  "Args": "history-save history1 history-save history2 history-save history3 history-save history4",
   "Members": [
     "Command1.System.String Prop1 (NOT accept positional)",
     "Command1.System.Decimal Prop2 (NOT accept positional)",
@@ -12,7 +12,7 @@
     "HelpCommand.help(String)"
   ],
   "ExpectedResult": [
-    "Command2.save(Int32)"
+    ""
   ],
-  "HistoryFile": null
+  "HistoryFile": []
 }

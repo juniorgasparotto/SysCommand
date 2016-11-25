@@ -2,7 +2,7 @@
 -----------------------------
 usage:    <actions[args]>
 
-Displays help information
+displays help information
 
    help           
       --action    Is optional.

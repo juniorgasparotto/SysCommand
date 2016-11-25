@@ -69,6 +69,7 @@
     <Compile Include="Commands\System\Help\IHelpCommand.cs" />
     <Compile Include="Commands\User\ArgsHistoryCommand.cs" />
     <Compile Include="Commands\Debug\ClearCommand.cs" />
+    <Compile Include="Results\ActionResult.cs" />
     <Compile Include="Results\RestartResult.cs" />
     <Compile Include="View\TableView.cs" />
     <Compile Include="View\TemplatesGenerator\Razor\Compiler.cs" />

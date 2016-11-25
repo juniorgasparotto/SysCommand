@@ -19,10 +19,16 @@ namespace SysCommand.Helpers
 
         public static object InvokeWithNamedParameters(this MethodBase self, object obj, IDictionary<string, object> namedParameters)
         {
-            if (namedParameters == null)
-                return self.Invoke(obj, null);
-
-            return self.Invoke(obj, MapParameters(self, namedParameters));
+            //try
+            //{
+                if (namedParameters == null)
+                    return self.Invoke(obj, null);
+                return self.Invoke(obj, MapParameters(self, namedParameters));
+            //}
+            //catch(TargetInvocationException ex)
+            //{
+            //    throw ex.InnerException;
+            //}
         }
 
         public static object[] MapParameters(MethodBase method, IDictionary<string, object> namedParameters)

@@ -8,7 +8,7 @@ Command1
    --prop1        Prop1 without show complement
    --prop2        Prop2. Is optional.
 
-Displays help information
+displays help information
 
    help           
       --action    Is optional.

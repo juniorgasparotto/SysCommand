@@ -1,6 +1,8 @@
 ﻿using SysCommand.ConsoleApp.Files;
 using SysCommand.ConsoleApp.Results;
 using SysCommand.ConsoleApp.View;
+using SysCommand.Parsing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +16,7 @@ namespace SysCommand.ConsoleApp.Commands
 
         public ArgsHistoryCommand()
         {
+            this.HelpText = "Action for argument management";
             this.fileManager = App.Items.GetOrCreate<JsonFileManager>();
         }
 
@@ -21,35 +24,46 @@ namespace SysCommand.ConsoleApp.Commands
         {
             var histories = this.fileManager.GetOrCreate<List<History>>(FILE_NAME);
             var history = histories.FirstOrDefault(f => f.Name == name);
-            string[] args = null;
-            if (history != null)
-                args = history.Args.ToArray();
-            return new RestartResult(args);
+            if (history == null)
+                 throw new Exception(string.Format("The history name '{0}' dosen't exists", name));
+
+            return new RestartResult(history.Args.ToArray());
         }
 
         public void HistorySave(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentNullException("name");
+
             var histories = this.fileManager.GetOrCreate<List<History>>(FILE_NAME);
             histories.RemoveAll(f => f.Name == name);
 
-            var args = ExecutionScope.ParseResult.Args.ToList();
-            var actionMapName = this.CurrentActionMap().ActionName;
-            var curMethodArg = args.FirstOrDefault(f => f == actionMapName);
-            if (curMethodArg != null)
+            var actionMap = this.CurrentActionMap();
+            var actionMapName = actionMap.ActionName;
+            var parameterName = "--" + actionMap.ArgumentsMaps.ElementAt(0).LongName;
+
+            var newArgs = new List<string>();
+            var argEnumerator = ExecutionScope.ParseResult.Args.ToList().GetEnumerator();
+
+            while (argEnumerator.MoveNext())
             {
-                var index = args.IndexOf(curMethodArg);
-                // remove "name" value
-                args.RemoveAt(index + 1);
-                // remove action name
-                args.Remove(curMethodArg);
+                var arg = argEnumerator.Current;
+                if (arg == actionMapName)
+                {
+                    argEnumerator.MoveNext();
+                    if (argEnumerator.Current == parameterName)
+                        argEnumerator.MoveNext();
+                    continue;
+                }
+                newArgs.Add(arg);
             }
 
-            if (args.Count > 0)
+            if (newArgs.Count > 0)
             {
                 histories.Add(new History
                 {
                     Name = name,
-                    Args = args
+                    Args = newArgs
                 });
 
                 fileManager.Save(histories, FILE_NAME);
@@ -65,7 +79,8 @@ namespace SysCommand.ConsoleApp.Commands
 
             foreach (var history in histories)
             {
-                table.AddRowSummary("[" + history.Name + "] " + string.Join(" ", history.Args));
+                var newArgs = history.Args.Select(arg => ArgumentParsed.GetValueRaw(arg));
+                table.AddRowSummary("[" + history.Name + "] " + string.Join(" ", newArgs));
             }
 
             //table.AddLineSeparator = false;
@@ -86,9 +101,13 @@ namespace SysCommand.ConsoleApp.Commands
                 .ToString();
         }
 
-        public void HistoryDel(string name)
+        public void HistoryDelete(string name)
         {
             var histories = this.fileManager.GetOrCreate<List<History>>(FILE_NAME);
+            var history = histories.FirstOrDefault(f => f.Name == name);
+            if (history == null)
+                throw new Exception(string.Format("The history name '{0}' dosen't exists"));
+
             histories.RemoveAll(f => f.Name == name);
             fileManager.Save(histories, FILE_NAME);
         }

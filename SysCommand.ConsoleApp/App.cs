@@ -152,12 +152,14 @@ namespace SysCommand.ConsoleApp
             appResult.ArgsOriginal = args;
 
         Start:
-            appResult.ArgumentsRaw = this.executor.ParseRaw(appResult.Args, this.Maps);
 
             try
             {
                 var userMaps = this.Maps.ToList();
                 var executed = false;
+                var isRestarted = false;
+
+                appResult.ArgumentsRaw = this.executor.ParseRaw(appResult.Args, this.Maps);
 
                 // system feature: "manage args history"
                 //var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
@@ -173,6 +175,27 @@ namespace SysCommand.ConsoleApp
                 //    userMaps.Remove(manageCommand);
                 //}
 
+                Action<IMemberResult, ExecutionScope> invokeAction;
+                invokeAction = (member, scope) =>
+                {
+                    var actionResult = this.InvokeMemberInternal(appResult, member);
+
+                    if (actionResult != null)
+                    {
+                        if (actionResult is RestartResult)
+                        {
+                            isRestarted = true;
+                            appResult.Args = ((RestartResult)actionResult).NewArgs;
+                            scope.StopPropagation();
+                        }
+                        else
+                        {
+                            if (this.OnMethodReturn != null)
+                                this.OnMethodReturn(appResult, member);
+                        }
+                    }
+                };
+
                 // system feature: "help"
                 var helpCommand = this.Maps.GetMap<IHelpCommand>();
                 if (helpCommand != null)
@@ -180,7 +203,7 @@ namespace SysCommand.ConsoleApp
                     var executorHelp = new DefaultExecutor.Executor();
                     var maps = new List<CommandMap> { helpCommand };
                     var parseResultHelp = executorHelp.Parse(appResult.Args, appResult.ArgumentsRaw, maps, false);
-                    var executionResult = executorHelp.Execute(parseResultHelp, (member, scope) => this.MemberInvoke(appResult, member));
+                    var executionResult = executorHelp.Execute(parseResultHelp, invokeAction);
                     if (executionResult.State == ExecutionState.Success)
                     {
                         appResult.ParseResult = parseResultHelp;
@@ -192,25 +215,12 @@ namespace SysCommand.ConsoleApp
 
                 if (!executed)
                 {
-                    var isRestarted = false;
                     appResult.ParseResult = this.executor.Parse(appResult.Args, appResult.ArgumentsRaw, userMaps, this.enableMultiAction);
-                    appResult.ExecutionResult = this.executor.Execute(appResult.ParseResult, 
-                        (member, scope) => 
-                        {
-                            var actionResultIfExists = this.MemberInvoke(appResult, member);
-
-                            if (actionResultIfExists is RestartResult)
-                            {
-                                isRestarted = true;
-                                appResult.Args = ((RestartResult)actionResultIfExists).NewArgs;
-                                scope.StopPropagation();
-                            }
-                        }
-                    );
-
-                    if (isRestarted)
-                        goto Start;
+                    appResult.ExecutionResult = this.executor.Execute(appResult.ParseResult, invokeAction);
                 }
+
+                if (isRestarted)
+                    goto Start;
 
                 if (this.OnComplete != null)
                     this.OnComplete(appResult);
@@ -226,7 +236,7 @@ namespace SysCommand.ConsoleApp
             return appResult;
         }
 
-        private IActionResult MemberInvoke(ApplicationResult args, IMemberResult member)
+        private IActionResult InvokeMemberInternal(ApplicationResult args, IMemberResult member)
         {
             if (!member.IsInvoked)
             {
@@ -255,14 +265,13 @@ namespace SysCommand.ConsoleApp
                 }
                 else
                 {
-                    if (this.OnMethodReturn != null)
-                        this.OnMethodReturn(args, member);
+                    return new ActionResult(member.Value);
                 }
             }
 
             return null;
         }
-
+        
         private string[] GetArguments()
         {
             if (DebugHelper.IsDebug && this.ReadArgsWhenIsDebug)

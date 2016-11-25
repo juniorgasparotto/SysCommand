@@ -8,7 +8,7 @@
     "ArgsHistoryCommand.history-load(String)",
     "ArgsHistoryCommand.history-save(String)",
     "ArgsHistoryCommand.history-list()",
-    "ArgsHistoryCommand.history-del(String)",
+    "ArgsHistoryCommand.history-delete(String)",
     "HelpCommand.help(String)"
   ],
   "ExpectedResult": [
