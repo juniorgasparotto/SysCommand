@@ -83,19 +83,6 @@ namespace SysCommand.ConsoleApp.Commands
                 table.AddRowSummary("[" + history.Name + "] " + string.Join(" ", newArgs));
             }
 
-            //table.AddLineSeparator = false;
-            //table.AddColumnSeparator = true;
-            //table.IncludeHeader = true;
-            //table.AddColumnDefinition("Name", 0, 0, 3);
-            //table.AddColumnDefinition("Args", 50);
-
-            //foreach (var history in histories)
-            //{
-            //    table.AddRow()
-            //        .AddColumnInRow(history.Name)
-            //        .AddColumnInRow(string.Join(" ", history.Args));
-            //}
-
             return table
                 .Build()
                 .ToString();

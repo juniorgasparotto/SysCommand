@@ -1273,20 +1273,6 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test28_2CommandsAndWithDiffSignature()
-        {
-            this.CompareAll(
-                    args: "1 2 3 4",
-                    commands: GetCmds(
-                        new Commands.T28.Command1(),
-                        new Commands.T28.Command2()
-                    ),
-                    funcName: TestHelper.GetCurrentMethodName()
-                    
-            );
-        }
-
-        [TestMethod]
         public void Test29_HelpEmpty()
         {
             this.CompareOutput(
@@ -1397,80 +1383,34 @@ namespace SysCommand.Tests.UnitTests
             );
         }
 
-        //[TestMethod]
-        //public void Test22_3CommandsAndHave2PropertiesTheOtherCommandInLevel2()
-        //{
-        //    this.Compare(
-        //            args: "--price 10 save 1 2 --id 10",
-        //            commands: GetCmds(
-        //                new Commands.T22.Command1(),
-        //                new Commands.T22.Command2(),
-        //                new Commands.T22.Command3()
-        //            ),
-        //            funcName: TestHelper.GetCurrentMethodName()
-        //            
-        //    );
-        //}
 
-        //[TestMethod]
-        //public void Test23_3CommandsAndHave2PropertiesTheOtherCommandInLevel2()
-        //{
-        //    this.Compare(
-        //            args: "save 1 2",
-        //            commands: GetCmds(
-        //                new Commands.T23.Command1(),
-        //                new Commands.T23.Command2()
-        //            ),
-        //            funcName: TestHelper.GetCurrentMethodName()
-        //            
-        //    );
-        //}
+        [TestMethod]
+        public void Test28_2CommandsAndWithDiffSignature()
+        {
+            this.CompareAll(
+                    args: "1 2 3 4",
+                    commands: GetCmds(
+                        new Commands.T28.Command1(),
+                        new Commands.T28.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName()
 
-        //[TestMethod]
-        //public void Test23_3CommandsAndHave2PropertiesTheOtherCommandInLevel3()
-        //{
-        //    this.Compare(
-        //            args: "--id 1 save --id=2 3",
-        //            commands: GetCmds(
-        //                new Commands.T23.Command1(),
-        //                new Commands.T23.Command2()
-        //            ),
-        //            funcName: TestHelper.GetCurrentMethodName()
-        //            
-        //    );
-        //}
+            );
+        }
 
-        //[TestMethod]
-        //public void TestHelpAllMembers()
-        //{
-        //    this.Compare(
-        //        args: "help",
-        //        commands: GetCmds(
-        //            new Commands.T18.Command1(),
-        //            new Commands.T18.Command2(),
-        //            new Commands.T18.Command3()
-        //        ),
-        //        funcName: TestHelper.GetCurrentMethodName()
-        //        
-        //    );
-        //}
+        [TestMethod]
+        public void Test32_2Commands1DefaultMethod2Properties_ReadProperty()
+        {
+            this.CompareAll(
+                    args: "--prop1 value",
+                    commands: GetCmds(
+                        new Commands.T32.Command1(),
+                        new Commands.T32.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName()
 
-        //[TestMethod]
-        //public void TestHelpSpecifyMember()
-        //{
-        //    this.Compare(
-        //        args: "help save",
-        //        commands: GetCmds(
-        //            new Commands.T18.Command1(),
-        //            new Commands.T18.Command2(),
-        //            new Commands.T18.Command3()
-        //        ),
-        //        funcName: TestHelper.GetCurrentMethodName()
-        //        
-        //    );
-        //}
-
-
+            );
+        }
 
         private void CompareAll(string args, Command[] commands, string funcName)
         {

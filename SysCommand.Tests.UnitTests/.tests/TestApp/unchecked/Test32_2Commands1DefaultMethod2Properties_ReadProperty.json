@@ -1,0 +1,32 @@
+{
+  "Args": "--prop1 value",
+  "Members": [
+    "Command1.System.String Prop1 (NOT accept positional)",
+    "Command1.System.Decimal Prop2 (NOT accept positional)",
+    "Command2.default(String)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command2",
+    "The argument '--prop1' does not exist",
+    "Error in method: default(String)",
+    "The argument '--value' is required"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command2"
+      ],
+      "PropertiesInvalid": [
+        "Command2.prop1"
+      ],
+      "MethodsInvalid": [
+        "Command2.default(String)"
+      ]
+    }
+  ]
+}
