@@ -1,6 +1,7 @@
 ﻿using SysCommand.Mapping;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace SysCommand.Parsing
 {
@@ -26,6 +27,11 @@ namespace SysCommand.Parsing
         public void Insert(int index , Level level)
         {
             this.levels.Insert(index, level);
+        }
+
+        public void Remove(Level level)
+        {
+            this.levels.Remove(level);
         }
 
         #region sub-classes
@@ -107,6 +113,12 @@ namespace SysCommand.Parsing
                 this.methods.AddRange(methods);
             }
 
+
+            public void RemoveMethod(ActionParsed method)
+            {
+                this.methods.Remove(method);
+            }
+            
             public void AddMethodInvalid(ActionParsed method)
             {
                 this.methodsInvalid.Add(method);
@@ -115,6 +127,11 @@ namespace SysCommand.Parsing
             public void AddMethodsInvalid(IEnumerable<ActionParsed> method)
             {
                 this.methodsInvalid.AddRange(method);
+            }
+
+            public void RemoveInvalidMethod(ActionParsed method)
+            {
+                this.methodsInvalid.Remove(method);
             }
 
             public void AddProperty(ArgumentParsed property)
@@ -127,6 +144,11 @@ namespace SysCommand.Parsing
                 this.properties.AddRange(properties);
             }
 
+            public void RemoveProperty(ArgumentParsed property)
+            {
+                this.properties.Remove(property);
+            }
+
             public void AddPropertyInvalid(ArgumentParsed property)
             {
                 this.propertiesInvalid.Add(property);
@@ -136,6 +158,12 @@ namespace SysCommand.Parsing
             {
                 this.propertiesInvalid.AddRange(properties);
             }
+
+            public void RemovePropertyInvalid(ArgumentParsed property)
+            {
+                this.propertiesInvalid.Remove(property);
+            }
+
         }
 
         #endregion

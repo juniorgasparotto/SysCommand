@@ -23,115 +23,259 @@ namespace SysCommand.DefaultExecutor
             parseResult.Args = args;
             parseResult.Maps = commandsMap;
             parseResult.EnableMultiAction = enableMultiAction;
-            //parseResult.ArgumentsRaw = argumentsRaw;
 
             IEnumerable<ArgumentRaw> initialExtraArguments;
+            var allPropertiesMap = commandsMap.GetProperties();
             var allMethodsMaps = commandsMap.GetMethods();
+            var hasPropertyMap = allPropertiesMap.Any();
+
             var methodsParsed = this.actionParser.Parse(argumentsRaw, enableMultiAction, allMethodsMaps, out initialExtraArguments).ToList();
-
             var hasMethodsParsed = methodsParsed.Count > 0;
-            var hasExtras = initialExtraArguments.Any();
-            if (hasExtras || (args.Length == 0 && !hasMethodsParsed))
+
+            // *******
+            // Step1: Parse properties if has initial extras or if doesn't have arguments and methods found.
+            // *******
+            // noArgsAndNotExistsDefaultMethods: Important to cenaries:
+            //      1) To show errors (Argument obrigatory for example)
+            //      2) Process properties with default value
+            var noArgsAndNotExistsDefaultMethods = (args.Length == 0 && !hasMethodsParsed);
+            if (initialExtraArguments.Any() || noArgsAndNotExistsDefaultMethods)
             {
-                var level = new ParseResult.Level();
-                level.LevelNumber = 0;
-                parseResult.Add(level);
-
-                foreach (var commandMap in commandsMap)
-                {
-                    var commandParse = new ParseResult.CommandParse();
-                    commandParse.Command = commandMap.Command;
-                    level.Add(commandParse);
-
-                    this.ParseProperties(commandMap.Properties, commandMap.Command.EnablePositionalArgs, commandParse, initialExtraArguments);
-                }
+                var levelInitial = this.GetLevelWithProperties(commandsMap, initialExtraArguments);
+                if (!this.IsEmptyLevel(levelInitial))
+                    parseResult.Add(levelInitial);
             }
 
-            // step1: there are methods that are candidates to be execute
             if (hasMethodsParsed)
             {
-                // step2: separate per level
+                // Separate per level
                 var levelsGroups = methodsParsed.GroupBy(f => f.Level).OrderBy(f => f.Key);
                 foreach (var levelGroup in levelsGroups)
                 {
-                    var level = new ParseResult.Level();
-                    parseResult.Add(level);
-
+                    // Separate per Command
                     var commandsGroups = levelGroup.GroupBy(f => f.ActionMap.Target);
-                    foreach (var commandGroup in commandsGroups)
+
+                    // Step2 & Step 3: Create level only with methods and separate valids and invalids methods
+                    var levelOfMethods = this.GetLevelWithMethods(args, hasPropertyMap, commandsGroups);
+                    if (levelOfMethods == null)
+                        continue;
+
+                    var bestValidMethodInLevel = this.GetBestValidMethodInLevel(levelOfMethods);
+
+                    if (bestValidMethodInLevel != null)
                     {
-                        var commandParse = new ParseResult.CommandParse()
+                        // Step2: Remove imcompatible valid methods
+                        this.RemoveIncompatibleValidMethods(levelOfMethods, bestValidMethodInLevel);
+                        if (!this.IsEmptyLevel(levelOfMethods))
+                            parseResult.Add(levelOfMethods);
+
+                        // Step3: Get extras of the best method and use as properties input to create a new level.
+                        var levelOfProperties = this.GetLevelWithPropertiesUsingMethodExtras(commandsMap, bestValidMethodInLevel);
+                        if (levelOfProperties != null && !this.IsEmptyLevel(levelOfProperties))
+                            parseResult.Add(levelOfProperties);
+                    }
+                    else
+                    {
+                        // Step4 & Step5: When not exists valid methods
+                        var allRemoved = this.RemoveInvalidImplicitDefaultMethodsIfExists(args, levelOfMethods, hasPropertyMap);
+                        if (allRemoved)
                         {
-                            Command = (CommandBase)commandGroup.Key
-                        };
-
-                        var commandMap = commandsMap.First(f => f.Command == commandParse.Command);
-                        var argumentsMap = commandMap.Properties;
-
-                        level.Add(commandParse);
-
-                        bool isBestMethodButHasError;
-                        var bestMethod = this.GetBestMethod(commandGroup, out isBestMethodButHasError);
-                        var argumentsExtras = bestMethod.ArgumentsExtras;
-
-                        // Dosen't add this method to be executed in this scenary:
-                        // 1) is default 
-                        // 2) and input is implicit (without action name)
-                        var addMethod = true;
-                        var isDefaultAndInputIsImplicit = bestMethod.ActionMap.IsDefault
-                                                       && bestMethod.ArgumentRawOfAction == null;
-
-                        if (isDefaultAndInputIsImplicit)
-                        {
-                            var countParameter = bestMethod.ActionMap.ArgumentsMaps.Count();
-
-                            // 1) the default method dosen't have arguments
-                            // 2) and have one or more input arguments
-                            if (countParameter == 0 && args.Length > 0)
-                            {
-                                addMethod = false;
-                            }
-                            // 1) if default method has parameter, but exists error
-                            //    else ignore this default method and use your parameters
-                            //    to be used as input for the properties. This rule mantain
-                            //    the fluent match.
-                            // 2) Is obrigatory exists an less one property map to ignore 
-                            //    this method.
-                            // scenary:
-                            // ----
-                            //  default(int a)
-                            //  string PropertyValue
-                            // ----
-                            //$ --property-value "invalid-value-for-default-method"
-                            // expected: PropertyValue = invalid-value-for-default-method
-                            else if (countParameter > 0 && isBestMethodButHasError && argumentsMap.Any())
-                            { 
-                                addMethod = false;
-                                argumentsExtras = bestMethod.Arguments.Concat(bestMethod.ArgumentsExtras);
-                            }
+                            // Step4: All defaults and invalid methods have been ignored to maintain the fluency 
+                            // and the process of following with properties.
+                            var levelOfProperties = this.GetLevelWithProperties(commandsMap, argumentsRaw);
+                            if (levelOfProperties != null && !this.IsEmptyLevel(levelOfProperties))
+                                parseResult.Add(levelOfProperties);
                         }
-                        
-                        // parse properties in same command with extras arguments the current method
-                        var argumentsRawProperties = argumentsExtras.SelectMany(f => f.AllRaw).ToList();
-                        this.ParseProperties(commandMap.Properties, commandMap.Command.EnablePositionalArgs, commandParse, argumentsRawProperties);
-
-                        if (addMethod)
+                        else
                         {
-                            if (isBestMethodButHasError)
-                                commandParse.AddMethodInvalid(bestMethod);
-                            else
-                                commandParse.AddMethod(bestMethod);
+                            // Step5: There are some default method that has a real problem.
+                            parseResult.Add(levelOfMethods);
                         }
                     }
                 }
             }
 
-            // organize level number
-            var i = 0;
-            foreach(var level in parseResult.Levels)
-                level.LevelNumber = i++;
+            // *******
+            // Step5: Organize level number
+            // *******
+            this.OrganizeLevelsSequence(parseResult);
 
             return parseResult;
+        }
+
+        private bool RemoveInvalidImplicitDefaultMethodsIfExists(string[] args, ParseResult.Level levelOfMethods, bool hasPropertyMap)
+        {
+            var defaultsInvalidMethodsWithImplicitInput = levelOfMethods.Commands
+                                        .SelectMany(f => f.MethodsInvalid)
+                                        .Where(f => f.ActionMap.IsDefault && f.ArgumentRawOfAction == null);
+
+            // Step4: Exists action specify with name in input: my-action --p1 2
+            if (defaultsInvalidMethodsWithImplicitInput.Empty())
+                return false;
+
+            // Step5: Exists default action without name in input: --p1 2 (action omitted)
+            var countRemove = 0;
+            foreach (var defaultMethod in defaultsInvalidMethodsWithImplicitInput)
+            {
+                var countParameter = defaultMethod.ActionMap.ArgumentsMaps.Count();
+                var removeInvalidMethod = false;
+
+                // 1) the default method dosen't have arguments
+                // 2) and have one or more input arguments
+                if (countParameter == 0 && args.Length > 0)
+                {
+                    removeInvalidMethod = true;
+                }
+                // 1) if default method has parameter, but exists error
+                //    else ignore this default method and use your parameters
+                //    to be used as input for the properties. This rule mantain
+                //    the fluent match.
+                // 2) Is obrigatory exists an less one property map to ignore 
+                //    this method.
+                // scenary:
+                // ----
+                //  default(int a)
+                //  string PropertyValue
+                // ----
+                //$ --property-value "invalid-value-for-default-method"
+                // expected: PropertyValue = invalid-value-for-default-method
+                else if (countParameter > 0 && hasPropertyMap)
+                {
+                    removeInvalidMethod = true;
+                }
+
+                if (removeInvalidMethod)
+                {
+                    foreach (var cmd in levelOfMethods.Commands)
+                        foreach (var method in cmd.Methods.ToList())
+                            if (method == defaultMethod)
+                                cmd.RemoveInvalidMethod(method);
+                    countRemove++;
+                }
+            }
+
+            var allWasRemoved = countRemove == defaultsInvalidMethodsWithImplicitInput.Count();
+            return allWasRemoved;
+        }
+
+        private void OrganizeLevelsSequence(ParseResult parseResult)
+        {
+            var i = 0;
+            foreach (var level in parseResult.Levels)
+                level.LevelNumber = i++;
+        }
+
+        private bool IsEmptyLevel(ParseResult.Level level)
+        {
+            var isEmpty = true;
+            foreach (var cmd in level.Commands)
+            {
+                if (   cmd.Methods.Any()
+                    || cmd.MethodsInvalid.Any()
+                    || cmd.Properties.Any()
+                    || cmd.PropertiesInvalid.Any())
+                {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            return isEmpty;
+        }
+
+        private void RemoveIncompatibleValidMethods(ParseResult.Level level, ActionParsed reference)
+        {
+            // Remove all valid methos there are incompatible with best valid method
+            foreach (var cmd in level.Commands)
+            {
+                foreach (var validMethod in cmd.Methods.ToList())
+                {
+                    if (validMethod == reference)
+                        continue;
+
+                    foreach (var arg in reference.Arguments)
+                    {
+                        if (validMethod.Arguments.Empty(f => f.Name == arg.Name))
+                        {
+                            cmd.RemoveMethod(validMethod);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private ParseResult.Level GetLevelWithMethods(string[] args, bool hasPropertyMap, IEnumerable<IGrouping<object, ActionParsed>> commandsGroups)
+        {
+            ParseResult.Level level = null;
+            if (commandsGroups.Any())
+            {
+                level = new ParseResult.Level();
+
+                foreach (var commandGroup in commandsGroups)
+                {
+                    var commandParse = new ParseResult.CommandParse();
+                    commandParse.Command = (CommandBase)commandGroup.Key;
+                    level.Add(commandParse);
+
+                    bool isBestMethodButHasError;
+                    var bestMethod = this.GetBestMethod(commandGroup, out isBestMethodButHasError);
+                    if (isBestMethodButHasError)
+                        commandParse.AddMethodInvalid(bestMethod);
+                    else
+                        commandParse.AddMethod(bestMethod);
+                }
+            }
+
+            return level;
+        }
+
+        private ParseResult.Level GetLevelWithPropertiesUsingMethodExtras(IEnumerable<CommandMap> commandsMap, ActionParsed bestValidMethodInLevel)
+        {
+            var argumentsRawProperties = bestValidMethodInLevel.ArgumentsExtras.SelectMany(f => f.AllRaw).ToList();
+            if (argumentsRawProperties.Any())
+                return this.GetLevelWithProperties(commandsMap, argumentsRawProperties);
+            return null;
+        }
+
+        private ParseResult.Level GetLevelWithProperties(IEnumerable<CommandMap> commandsMap, IEnumerable<ArgumentRaw> arguments)
+        {
+            var level = new ParseResult.Level();
+
+            foreach (var commandMap in commandsMap)
+            {
+                var commandParse = new ParseResult.CommandParse();
+                commandParse.Command = commandMap.Command;
+                level.Add(commandParse);
+
+                this.ParseProperties(commandMap.Properties, commandMap.Command.EnablePositionalArgs, commandParse, arguments);
+            }
+
+            return level;
+        }
+
+        private void ParseProperties(IEnumerable<ArgumentMap> argumentsMaps, bool enablePositionalArgs, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
+        {
+            var parseds = this.argumentParser.Parse(argumentsRaw, enablePositionalArgs, argumentsMaps);
+            commandParse.AddProperties(parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.Valid)));
+
+            // Don't considere invalid args in this situation:
+            // -> ArgumentMappingType.HasNoInput && ArgumentMappingState.ArgumentIsNotRequired
+            // "ArgumentMappingType.HasNoInput": Means that args don't have input.
+            // "ArgumentMappingState.ArgumentIsNotRequired": Means that args is optional.
+            // in this situation the args is not consider invalid.
+            commandParse.AddPropertiesInvalid(parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.IsInvalid) && !f.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsNotRequired)));
+        }
+
+        private ActionParsed GetBestValidMethodInLevel(ParseResult.Level level)
+        {
+            // Select the best valid method that has the major arguments inputed
+            var methodsValids = level.Commands.SelectMany(c => c.Methods);
+            var bestMethodInLevel = methodsValids
+                .OrderByDescending(m => m.Arguments.Count(a => a.IsMapped))
+                .ThenBy(m => m.ActionMap.ArgumentsMaps.Count())
+                .FirstOrDefault();
+            return bestMethodInLevel;
         }
 
         private ActionParsed GetBestMethod(IEnumerable<ActionParsed> methods, out bool isBestMethodButHasError)
@@ -170,22 +314,10 @@ namespace SysCommand.DefaultExecutor
                 isBestMethodButHasError = false;
                 return allValid.First().method;
             }
-            
+
             isBestMethodButHasError = true;
             return candidates.First().method;
         }
-        
-        private void ParseProperties(IEnumerable<ArgumentMap> argumentsMaps, bool enablePositionalArgs, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
-        {
-            var parseds = this.argumentParser.Parse(argumentsRaw, enablePositionalArgs, argumentsMaps);
-            commandParse.AddProperties(parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.Valid)));
 
-            // Don't considere invalid args in this situation:
-            // -> ArgumentMappingType.HasNoInput && ArgumentMappingState.ArgumentIsNotRequired
-            // "ArgumentMappingType.HasNoInput": Means that args don't have input.
-            // "ArgumentMappingState.ArgumentIsNotRequired": Means that args is optional.
-            // in this situation the args is not consider invalid.
-            commandParse.AddPropertiesInvalid(parseds.Where(f => f.ParsingStates.HasFlag(ArgumentParsedState.IsInvalid) && !f.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsNotRequired)));
-        }
     }
 }
