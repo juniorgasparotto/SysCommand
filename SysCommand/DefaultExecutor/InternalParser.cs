@@ -193,16 +193,64 @@ namespace SysCommand.DefaultExecutor
                     if (validMethod == reference)
                         continue;
 
-                    foreach (var arg in reference.Arguments)
-                    {
-                        if (validMethod.Arguments.Empty(f => f.Name == arg.Name))
-                        {
-                            cmd.RemoveMethod(validMethod);
-                            break;
-                        }
-                    }
+                    var argsA = reference.Arguments;
+                    var argsB = validMethod.Arguments;
+
+                    if (!this.AllRawAreEqualsOfArgumentParsed(argsA, argsB))
+                        cmd.RemoveMethod(validMethod);
                 }
             }
+        }
+
+        private bool AllRawAreEqualsOfArgumentParsed(IEnumerable<ArgumentParsed> argsA, IEnumerable<ArgumentParsed> argsB)
+        {
+            var countA = argsA.Count();
+            var countB = argsB.Count();
+
+            if (countA + countB == 0)
+                return true;
+
+            if (countA > 0)
+            {
+                for (var i = 0; i < countA; i++)
+                {
+                    var argA = argsA.ElementAt(i);
+                    var argB = argsB.ElementAtOrDefault(i);
+
+                    if (!this.AllRawAreEqualsOfArgumentParsed(argA, argB))
+                        return false;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool AllRawAreEqualsOfArgumentParsed(ArgumentParsed argA, ArgumentParsed argB) {
+            if (argA == null || argB == null)
+                return false;
+
+            var countA = argA.AllRaw.Count();
+            var countB = argA.AllRaw.Count();
+
+            if (countA + countB == 0)
+                return true;
+
+            if (countA > 0)
+            {
+                for (var i = 0; i < countA; i++)
+                {
+                    var rawA = argA.AllRaw.ElementAt(i);
+                    var rawB = argB.AllRaw.ElementAtOrDefault(i);
+                    if (rawA != rawB)
+                        return false;
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         private ParseResult.Level GetLevelWithMethods(string[] args, bool hasPropertyMap, IEnumerable<IGrouping<object, ActionParsed>> commandsGroups)
@@ -251,6 +299,45 @@ namespace SysCommand.DefaultExecutor
                 this.ParseProperties(commandMap.Properties, commandMap.Command.EnablePositionalArgs, commandParse, arguments);
             }
 
+            // Remove all invalid properties if all argumentsRaw exists in some command as valid
+            //var allRaw = level.Commands
+            //    .SelectMany(f => f.Properties)
+            //    .SelectMany(f => f.AllRaw)
+            //    .Distinct()
+            //    .OrderBy(f => f.GetHashCode())
+            //    .ToList();
+
+            //var argumentsOrdered = arguments
+            //    .OrderBy(f => f.GetHashCode())
+            //    .ToList();
+
+            //var allRawCount = arguments.Count();
+            //if (allRawCount > 0)
+            //{
+            //    var allRawRequestedIsValid = true;
+
+            //    for (var i = 0; i < allRawCount; i++)
+            //    {
+            //        var rawA = arguments.ElementAt(i);
+            //        var rawB = allRaw.ElementAtOrDefault(i);
+
+            //        foreach (var cmd in level.Commands)
+            //        {
+            //            foreach (var prop in cmd.Properties)
+            //            {
+            //                prop.AllRaw
+            //            }
+            //        }
+            //    }
+
+            //    if (allRawRequestedIsValid)
+            //    {
+            //        foreach (var cmd in level.Commands)
+            //            foreach (var prop in cmd.PropertiesInvalid)
+            //                cmd.RemovePropertyInvalid(prop);
+            //    }
+            //}
+
             return level;
         }
 
@@ -271,10 +358,11 @@ namespace SysCommand.DefaultExecutor
         {
             // Select the best valid method that has the major arguments inputed
             var methodsValids = level.Commands.SelectMany(c => c.Methods);
-            var bestMethodInLevel = methodsValids
-                .OrderByDescending(m => m.Arguments.Count(a => a.IsMapped))
-                .ThenBy(m => m.ActionMap.ArgumentsMaps.Count())
-                .FirstOrDefault();
+
+            // never has error because here only valid methods
+            bool isBestMethodButHasError;
+            var bestMethodInLevel = this.GetBestMethod(methodsValids, out isBestMethodButHasError);
+
             return bestMethodInLevel;
         }
 

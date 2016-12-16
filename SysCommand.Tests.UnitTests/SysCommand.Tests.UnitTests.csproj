@@ -78,6 +78,16 @@
     <Compile Include="Console.App\Commands\T00\Command1.cs" />
     <Compile Include="Console.App\Commands\T26\Command8.cs" />
     <Compile Include="Console.App\Commands\T27\Command2.cs" />
+    <Compile Include="Console.App\Commands\T34\Command3.cs" />
+    <Compile Include="Console.App\Commands\T35\Command1.cs" />
+    <Compile Include="Console.App\Commands\T35\Command2.cs" />
+    <Compile Include="Console.App\Commands\T34\Command1.cs" />
+    <Compile Include="Console.App\Commands\T34\Command2.cs" />
+    <Compile Include="Console.App\Commands\T33\Command1.cs" />
+    <Compile Include="Console.App\Commands\T33\Command2.cs" />
+    <Compile Include="Console.App\Commands\T33\Command5.cs" />
+    <Compile Include="Console.App\Commands\T33\Command4.cs" />
+    <Compile Include="Console.App\Commands\T33\Command3.cs" />
     <Compile Include="Console.App\Commands\T32\Command1.cs" />
     <Compile Include="Console.App\Commands\T32\Command2.cs" />
     <Compile Include="Console.App\Commands\T32\Command3.cs" />

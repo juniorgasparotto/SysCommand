@@ -1,0 +1,63 @@
+{
+  "Args": "save save",
+  "Members": [
+    "Command1.Int32 Id (obrigatory) (NOT accept positional)",
+    "Command1.System.Decimal Price (NOT accept positional)",
+    "Command1.save(Nullable<Int32>)",
+    "Command2.save(Nullable<Int32>)",
+    "Command3.System.Decimal Price (NOT accept positional)",
+    "Command3.save(Nullable<Int32>)"
+  ],
+  "Values": [
+    "Command1.Save=Command1.save(Nullable<Int32>)",
+    "Command2.Save=Command2.save(Nullable<Int32>)",
+    "Command3.Save=Command3.save(Nullable<Int32>)",
+    "Command1.Save=Command1.save(Nullable<Int32>)",
+    "Command2.Save=Command2.save(Nullable<Int32>)",
+    "Command3.Save=Command3.save(Nullable<Int32>)"
+  ],
+  "ExpectedResult": [
+    "Command1.save(Nullable<Int32>)",
+    "Command2.save(Nullable<Int32>)",
+    "Command3.save(Nullable<Int32>)",
+    "Command1.save(Nullable<Int32>)",
+    "Command2.save(Nullable<Int32>)",
+    "Command3.save(Nullable<Int32>)"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1",
+        "Command2",
+        "Command3"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Nullable<Int32>)",
+        "Command2.save(Nullable<Int32>)",
+        "Command3.save(Nullable<Int32>)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1",
+        "Command2",
+        "Command3"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Nullable<Int32>)",
+        "Command2.save(Nullable<Int32>)",
+        "Command3.save(Nullable<Int32>)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

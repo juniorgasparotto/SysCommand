@@ -1,0 +1,31 @@
+{
+  "Args": "save 1 history-save --name=history1 save 1",
+  "Members": [
+    "Command1.System.String Prop1 (NOT accept positional)",
+    "Command1.System.Decimal Prop2 (NOT accept positional)",
+    "Command2.save(Int32)",
+    "Command3.save()",
+    "ArgsHistoryCommand.history-load(String)",
+    "ArgsHistoryCommand.history-save(String)",
+    "ArgsHistoryCommand.history-list()",
+    "ArgsHistoryCommand.history-delete(String)",
+    "HelpCommand.help(String)"
+  ],
+  "ExpectedResult": [
+    "Command2.save(Int32)",
+    "Command3.save()",
+    "Command2.save(Int32)",
+    "Command3.save()"
+  ],
+  "HistoryFile": [
+    {
+      "Name": "history1",
+      "Args": [
+        "save",
+        "1",
+        "save",
+        "1"
+      ]
+    }
+  ]
+}

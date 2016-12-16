@@ -1,0 +1,22 @@
+{
+  "Args": "a",
+  "Members": [
+    "Command6.System.String PropertyValue",
+    "Command6.default(Int32)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "Could not find any action."
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

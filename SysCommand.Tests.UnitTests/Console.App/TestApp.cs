@@ -1412,6 +1412,67 @@ namespace SysCommand.Tests.UnitTests
             );
         }
 
+        [TestMethod]
+        public void Test33_5CommandsAndWithDiffSignature()
+        {
+            this.CompareAll(
+                    args: "--p1 1 --description bla -c bla",
+                    commands: GetCmds(
+                        new Commands.T33.Command1(),
+                        new Commands.T33.Command2(),
+                        new Commands.T33.Command3(),
+                        new Commands.T33.Command4(),
+                        new Commands.T33.Command5()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName()
+
+            );
+        }
+
+        [TestMethod]
+        public void Test34_3CommandsAndWithDiffSignature2()
+        {
+            this.CompareAll(
+                    args: "--a1 1 --b1 2",
+                    commands: GetCmds(
+                        new Commands.T34.Command3(),
+                        new Commands.T34.Command1(),
+                        new Commands.T34.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName()
+
+            );
+        }
+
+        [TestMethod]
+        public void Test35_5CommandsAndWithDiffSignature()
+        {
+            this.CompareAll(
+                    args: "1 2 3 4",
+                    commands: GetCmds(
+                        new Commands.T35.Command1(),
+                        new Commands.T35.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName()
+
+            );
+        }
+
+        [TestMethod]
+        public void Test35_5CommandsAndWithDiffSignature2()
+        {
+            this.CompareAll(
+                    args: "1 2 3 4 5",
+                    commands: GetCmds(
+                        new Commands.T35.Command1(),
+                        new Commands.T35.Command2()
+                    ),
+                    funcName: TestHelper.GetCurrentMethodName()
+
+            );
+        }
+
+
         private void CompareAll(string args, Command[] commands, string funcName)
         {
             CompareHelper.Compare<TestApp>(args, commands, funcName);

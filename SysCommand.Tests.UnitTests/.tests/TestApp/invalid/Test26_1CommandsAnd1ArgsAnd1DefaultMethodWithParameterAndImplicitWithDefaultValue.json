@@ -1,0 +1,22 @@
+{
+  "Args": "value",
+  "Members": [
+    "Command7.System.String Prop",
+    "Command7.default(Int32, Int32)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "Could not find any action."
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

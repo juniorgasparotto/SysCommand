@@ -1,0 +1,22 @@
+{
+  "Args": "--value a --property-value 1",
+  "Members": [
+    "Command5.Int32 PropertyValue",
+    "Command5.default(Int32)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "Could not find any action."
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

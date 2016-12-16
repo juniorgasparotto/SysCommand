@@ -1,0 +1,22 @@
+{
+  "Args": "--property-value 1",
+  "Members": [
+    "Command4.System.String PropertyValue",
+    "Command4.default(String)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "Could not find any action."
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

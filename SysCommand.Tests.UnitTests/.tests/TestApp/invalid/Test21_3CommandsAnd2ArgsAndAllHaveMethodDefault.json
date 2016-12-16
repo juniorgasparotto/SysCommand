@@ -1,26 +1,25 @@
 {
-  "Args": "1 2 3 4",
+  "Args": "value 10",
   "Members": [
-    "Command1.main(Int32, Int32, Int32, Int32)",
-    "Command2.Int32 C",
-    "Command2.Int32 D",
-    "Command2.main(Int32, Int32)"
+    "Command1.default()",
+    "Command2.default()",
+    "Command3.main(String, String)"
   ],
   "Values": [
-    "Command1.Main=Main(1, 2, 3, 4)"
+    "Command3.Main=Command3.main(String, String)"
   ],
   "ExpectedResult": [
-    "Main(1, 2, 3, 4)"
+    "Command3.main(String, String)"
   ],
   "Levels": [
     {
       "LevelNumber": 0,
       "CommandsValid": [
-        "Command1"
+        "Command3"
       ],
       "PropertiesValid": [],
       "MethodsValid": [
-        "Command1.main(Int32, Int32, Int32, Int32)"
+        "Command3.main(String, String)"
       ],
       "CommandsWithError": [],
       "PropertiesInvalid": [],
