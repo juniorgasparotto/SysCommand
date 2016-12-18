@@ -217,7 +217,7 @@ namespace SysCommand.DefaultExecutor
                     var argA = argsA.ElementAt(i);
                     var argB = argsB.ElementAtOrDefault(i);
 
-                    if (!this.AllRawAreEqualsOfArgumentParsed(argA, argB))
+                    if (!this.AllRawAreEqualsInArgumentParsed(argA, argB))
                         return false;
                 }
 
@@ -227,7 +227,7 @@ namespace SysCommand.DefaultExecutor
             return false;
         }
 
-        private bool AllRawAreEqualsOfArgumentParsed(ArgumentParsed argA, ArgumentParsed argB) {
+        private bool AllRawAreEqualsInArgumentParsed(ArgumentParsed argA, ArgumentParsed argB) {
             if (argA == null || argB == null)
                 return false;
 
@@ -299,48 +299,48 @@ namespace SysCommand.DefaultExecutor
                 this.ParseProperties(commandMap.Properties, commandMap.Command.EnablePositionalArgs, commandParse, arguments);
             }
 
-            // Remove all invalid properties if all argumentsRaw exists in some command as valid
-            //var allRaw = level.Commands
-            //    .SelectMany(f => f.Properties)
-            //    .SelectMany(f => f.AllRaw)
-            //    .Distinct()
-            //    .OrderBy(f => f.GetHashCode())
-            //    .ToList();
+            // Create arguments references
+            var allArgsRawIsMapped = true;
+            var argReferences = new List<ArgumentParsed>();
+            foreach(var raw in arguments)
+            {
+                var argParsed = this.GetFirstValidArgumentParsedByRawInLevel(level, raw);
+                if (argParsed != null)
+                {
+                    if (argReferences.Empty(arg => arg == argParsed))
+                        argReferences.Add(argParsed);
+                }
+                else
+                {
+                    allArgsRawIsMapped = false;
+                    break;
+                }
+            }
 
-            //var argumentsOrdered = arguments
-            //    .OrderBy(f => f.GetHashCode())
-            //    .ToList();
+            if (allArgsRawIsMapped && argReferences.Count > 0)
+            {
+                foreach (var cmd in level.Commands)
+                {
+                    // Remove all invalid properties because all input was mapped 
+                    // and all are valid
+                    foreach (var invalid in cmd.PropertiesInvalid.ToList())
+                        cmd.RemovePropertyInvalid(invalid);
 
-            //var allRawCount = arguments.Count();
-            //if (allRawCount > 0)
-            //{
-            //    var allRawRequestedIsValid = true;
-
-            //    for (var i = 0; i < allRawCount; i++)
-            //    {
-            //        var rawA = arguments.ElementAt(i);
-            //        var rawB = allRaw.ElementAtOrDefault(i);
-
-            //        foreach (var cmd in level.Commands)
-            //        {
-            //            foreach (var prop in cmd.Properties)
-            //            {
-            //                prop.AllRaw
-            //            }
-            //        }
-            //    }
-
-            //    if (allRawRequestedIsValid)
-            //    {
-            //        foreach (var cmd in level.Commands)
-            //            foreach (var prop in cmd.PropertiesInvalid)
-            //                cmd.RemovePropertyInvalid(prop);
-            //    }
-            //}
+                    // Remove all valid properties that are imcompatible with
+                    // reference
+                    foreach (var arg in cmd.Properties.ToList())
+                    {
+                        var isCompatibleWithSomeRefs = argReferences.Any(argRef => this.AllRawAreEqualsInArgumentParsed(argRef, arg));
+                        if (!isCompatibleWithSomeRefs)
+                            cmd.RemoveProperty(arg);
+                    }
+                }
+            }
 
             return level;
         }
 
+        
         private void ParseProperties(IEnumerable<ArgumentMap> argumentsMaps, bool enablePositionalArgs, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
         {
             var parseds = this.argumentParser.Parse(argumentsRaw, enablePositionalArgs, argumentsMaps);
@@ -364,6 +364,18 @@ namespace SysCommand.DefaultExecutor
             var bestMethodInLevel = this.GetBestMethod(methodsValids, out isBestMethodButHasError);
 
             return bestMethodInLevel;
+        }
+        
+        private ArgumentParsed GetFirstValidArgumentParsedByRawInLevel(ParseResult.Level level, ArgumentRaw raw)
+        {
+            foreach (var cmd in level.Commands)
+            {
+                var argParsed = cmd.Properties.FirstOrDefault(p => p.AllRaw.Any(r => r == raw));
+                if (argParsed != null)
+                    return argParsed;
+            }
+
+            return null;
         }
 
         private ActionParsed GetBestMethod(IEnumerable<ActionParsed> methods, out bool isBestMethodButHasError)

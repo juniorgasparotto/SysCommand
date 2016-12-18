@@ -1413,7 +1413,7 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test33_5CommandsAndWithDiffSignature()
+        public void Test33_A()
         {
             this.CompareAll(
                     args: "--p1 1 --description bla -c bla",
@@ -1430,7 +1430,7 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test34_3CommandsAndWithDiffSignature2()
+        public void Test34_A()
         {
             this.CompareAll(
                     args: "--a1 1 --b1 2",
@@ -1445,7 +1445,7 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test35_5CommandsAndWithDiffSignature()
+        public void Test35_A()
         {
             this.CompareAll(
                     args: "1 2 3 4",
@@ -1459,7 +1459,7 @@ namespace SysCommand.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Test35_5CommandsAndWithDiffSignature2()
+        public void Test35_B()
         {
             this.CompareAll(
                     args: "1 2 3 4 5",
