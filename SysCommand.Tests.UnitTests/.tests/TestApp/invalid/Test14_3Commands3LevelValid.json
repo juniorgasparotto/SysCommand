@@ -45,12 +45,8 @@
         "Command2.Int32 Id"
       ],
       "MethodsValid": [],
-      "CommandsWithError": [
-        "Command3"
-      ],
-      "PropertiesInvalid": [
-        "Command3.id"
-      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
       "MethodsInvalid": []
     },
     {
@@ -79,12 +75,8 @@
         "Command2.System.Decimal Price"
       ],
       "MethodsValid": [],
-      "CommandsWithError": [
-        "Command3"
-      ],
-      "PropertiesInvalid": [
-        "Command3.price"
-      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
       "MethodsInvalid": []
     },
     {

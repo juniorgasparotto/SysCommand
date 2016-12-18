@@ -290,6 +290,7 @@ namespace SysCommand.DefaultExecutor
         {
             var level = new ParseResult.Level();
 
+            // Step1: Create commands
             foreach (var commandMap in commandsMap)
             {
                 var commandParse = new ParseResult.CommandParse();
@@ -299,7 +300,7 @@ namespace SysCommand.DefaultExecutor
                 this.ParseProperties(commandMap.Properties, commandMap.Command.EnablePositionalArgs, commandParse, arguments);
             }
 
-            // Create arguments references
+            // Step2: Create arguments references
             var allArgsRawIsMapped = true;
             var argReferences = new List<ArgumentParsed>();
             foreach(var raw in arguments)
@@ -317,6 +318,7 @@ namespace SysCommand.DefaultExecutor
                 }
             }
 
+            // Step3: Clean commands if all is valid
             if (allArgsRawIsMapped && argReferences.Count > 0)
             {
                 foreach (var cmd in level.Commands)

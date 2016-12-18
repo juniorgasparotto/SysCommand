@@ -5,37 +5,30 @@
     "Command1.System.String A1 (NOT accept positional)",
     "Command2.System.String B2 (NOT accept positional)"
   ],
-  "Values": [],
+  "Values": [
+    "Command3.B2=2",
+    "Command1.A1=1",
+    "Command2.B2=2"
+  ],
   "ExpectedResult": [
-    "There are errors in command: Command3",
-    "The argument '--a1' does not exist",
-    "",
-    "There are errors in command: Command1",
-    "The argument '--b1' does not exist",
-    "",
-    "There are errors in command: Command2",
-    "The argument '--a1' does not exist"
+    ""
   ],
   "Levels": [
     {
       "LevelNumber": 0,
-      "CommandsValid": [],
+      "CommandsValid": [
+        "Command3",
+        "Command1",
+        "Command2"
+      ],
       "PropertiesValid": [
         "Command3.System.String B2",
         "Command1.System.String A1",
         "Command2.System.String B2"
       ],
       "MethodsValid": [],
-      "CommandsWithError": [
-        "Command3",
-        "Command1",
-        "Command2"
-      ],
-      "PropertiesInvalid": [
-        "Command3.a1",
-        "Command1.b1",
-        "Command2.a1"
-      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
       "MethodsInvalid": []
     }
   ]

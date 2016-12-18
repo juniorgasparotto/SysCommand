@@ -12,9 +12,9 @@ namespace SysCommand.Tests.UnitTests.Commands.T33
     {
         [Action(IsDefault = true)]
         public string Method5(
-            [Argument(ShortName = 'a', LongName = "p1")] string c,
-            [Argument(ShortName = 'c', LongName = "p2")] string d,
-            [Argument(ShortName = 'e', LongName = "p3")] string a = "1"
+            [Argument(ShortName = 'a', LongName = "p1")] string a,
+            [Argument(ShortName = 'c', LongName = "p2")] string c,
+            [Argument(ShortName = 'e', LongName = "p3")] string e = "1"
         )
         {
             return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());

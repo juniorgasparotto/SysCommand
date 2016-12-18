@@ -49,18 +49,8 @@
         "Command2.System.String D"
       ],
       "MethodsValid": [],
-      "CommandsWithError": [
-        "Command1",
-        "Command3",
-        "Command4",
-        "Command5"
-      ],
-      "PropertiesInvalid": [
-        "Command1.description",
-        "Command3.description",
-        "Command4.description",
-        "Command5.description"
-      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
       "MethodsInvalid": []
     }
   ]
