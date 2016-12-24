@@ -4,11 +4,6 @@ namespace SysCommand.Tests
 {
     public class TestVerboseCommand : Command
     {
-        public TestVerboseCommand()
-        {
-            this.OrderExecution = -1;
-        }
-
         public void TestVerbose()
         {
             App.Console.Info(string.Format("Info '{0}'", (int)Verbose.Info));

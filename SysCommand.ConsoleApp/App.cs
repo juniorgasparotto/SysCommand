@@ -104,10 +104,10 @@ namespace SysCommand.ConsoleApp
             if (commandsTypes == null)
                 commandsTypes = new AppDomainCommandLoader().GetFromAppDomain(DebugHelper.IsDebug);
 
-            var propAppName = typeof(Command).GetProperties().Where(p => p.PropertyType == typeof(App)).First().Name;
+            var propAppName = typeof(Command).GetProperties().First(p => p.PropertyType == typeof(App)).Name;
             var commands = commandsTypes
                 .Select(type => this.CreateCommandInstance(type, propAppName))
-                .OrderBy(f => f.OrderExecution).ToList();
+                .ToList();
 
             // remove commands that are only for debugs
             commands.RemoveAll(f => !DebugHelper.IsDebug && f.OnlyInDebug);
