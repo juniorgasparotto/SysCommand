@@ -9,7 +9,7 @@ namespace SysCommand.ConsoleApp.Commands
 
         public VerboseCommand()
         {
-            //this.OrderExecution = -1;
+            this.OrderExecution = -1;
         }
 
         public void Main()
