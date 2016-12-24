@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using SysCommand.Execution;
 using SysCommand.Mapping;
-using SysCommand.Parsing;
 
 namespace SysCommand.ConsoleApp.Descriptor
 {

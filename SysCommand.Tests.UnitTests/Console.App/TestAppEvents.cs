@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System;
-using System.Linq;
-using SysCommand.Tests.ConsoleApp.Commands;
 using SysCommand.ConsoleApp;
 using System.IO;
 using SysCommand.Execution;

@@ -6,7 +6,6 @@ using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.ConsoleApp.Commands;
 using SysCommand.ConsoleApp.Helpers;
-using System.Reflection.Emit;
 using System.Runtime.Serialization;
 using SysCommand.ConsoleApp.Results;
 using SysCommand.ConsoleApp.Handlers;

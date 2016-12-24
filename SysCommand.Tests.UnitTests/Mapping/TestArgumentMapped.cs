@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using SysCommand.Test;
 using SysCommand.Mapping;
-using SysCommand.ConsoleApp;
 using SysCommand.ConsoleApp.Helpers;
 
 namespace SysCommand.Tests.UnitTests

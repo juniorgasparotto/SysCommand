@@ -1,8 +1,5 @@
 ﻿using SysCommand.ConsoleApp;
-using SysCommand.Execution;
 using SysCommand.Mapping;
-using System;
-using System.Collections.Generic;
 
 namespace SysCommand.Tests.UnitTests.Commands.T37
 {

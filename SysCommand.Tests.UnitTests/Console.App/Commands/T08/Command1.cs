@@ -1,9 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using SysCommand.ConsoleApp;
-using SysCommand.Parsing;
-using System.Text;
+﻿using SysCommand.ConsoleApp;
 
 namespace SysCommand.Tests.UnitTests.Commands.T08
 {

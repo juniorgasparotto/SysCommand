@@ -7,8 +7,6 @@ using System.IO;
 using SysCommand.Test;
 using SysCommand.ConsoleApp.Files;
 using SysCommand.ConsoleApp.Commands;
-using System.Threading;
-using SysCommand.Tests.UnitTests.Commands.T06;
 using System.Reflection;
 
 namespace SysCommand.Tests.UnitTests

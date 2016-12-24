@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
-using SysCommand.ConsoleApp;
 using SysCommand.Mapping;
-using SysCommand.ConsoleApp.Files;
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {

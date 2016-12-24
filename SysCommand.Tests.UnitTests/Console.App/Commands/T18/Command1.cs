@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
 using SysCommand.ConsoleApp;
-using SysCommand.Parsing;
 using SysCommand.Mapping;
 using SysCommand.Execution;
 

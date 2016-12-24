@@ -3,7 +3,6 @@ using SysCommand.Mapping;
 using SysCommand.Parsing;
 using SysCommand.Test;
 using System.Collections.Generic;
-using SysCommand.ConsoleApp;
 using SysCommand.ConsoleApp.Helpers;
 
 namespace SysCommand.Tests.UnitTests

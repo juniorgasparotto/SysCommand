@@ -187,10 +187,6 @@
       <Project>{D58E8352-ABC2-4D96-BF7E-603828F56D16}</Project>
       <Name>SysCommand.ConsoleApp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SysCommand.Tests.ConsoleApp\SysCommand.Tests.ConsoleApp.csproj">
-      <Project>{C40D5C8A-E9BF-4E21-AC51-AAD23DFD952E}</Project>
-      <Name>SysCommand.Tests.ConsoleApp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SysCommand.Test\SysCommand.Test.csproj">
       <Project>{7977222F-64E3-4C58-B3A8-00700454804C}</Project>
       <Name>SysCommand.Test</Name>

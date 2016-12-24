@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Newtonsoft.Json;
 
 namespace SysCommand.ConsoleApp.Helpers
 {

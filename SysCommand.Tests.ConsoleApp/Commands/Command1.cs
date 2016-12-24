@@ -1,10 +1,7 @@
 ﻿using SysCommand.ConsoleApp;
 using SysCommand.Execution;
 using SysCommand.Mapping;
-using SysCommand.Parsing;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {

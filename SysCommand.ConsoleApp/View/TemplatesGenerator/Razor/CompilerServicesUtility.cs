@@ -4,11 +4,9 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Dynamic;
     using System.Reflection;
     using System.Runtime.CompilerServices;
-    using System.Text.RegularExpressions;
     using System.Collections;
 
     /// <summary>

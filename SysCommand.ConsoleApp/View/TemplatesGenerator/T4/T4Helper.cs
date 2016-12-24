@@ -1,10 +1,6 @@
-﻿using SysCommand.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace SysCommand.ConsoleApp.View.TemplatesGenerator.T4
 {

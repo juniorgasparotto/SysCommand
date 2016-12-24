@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System;
 using Newtonsoft.Json;
-using System.Linq;
 using System.Runtime.Serialization;
 
 namespace SysCommand.Test

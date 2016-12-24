@@ -1,5 +1,4 @@
-﻿using System;
-namespace SysCommand.ConsoleApp
+﻿namespace SysCommand.ConsoleApp
 {
     public static class Strings
     {
