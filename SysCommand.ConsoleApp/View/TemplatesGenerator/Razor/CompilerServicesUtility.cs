@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
 {
     using System;
     using System.Collections.Generic;

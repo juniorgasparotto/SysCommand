@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
 {
     public abstract class RazorTemplateBase<T>
     {

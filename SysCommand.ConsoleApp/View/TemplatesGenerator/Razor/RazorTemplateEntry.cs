@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
 {
     public class RazorTemplateEntry
     {

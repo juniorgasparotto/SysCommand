@@ -2,7 +2,7 @@
 using System.Linq;
 using System;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.Loaders
 {
     public sealed class AppDomainCommandLoader
     {

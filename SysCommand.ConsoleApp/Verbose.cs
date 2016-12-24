@@ -4,8 +4,8 @@ namespace SysCommand.ConsoleApp
     [Flags]
     public enum Verbose
     {
-        All = 0,
-        None = 1,
+        None = 0,
+        All = 1,
         Info = 2,
         Success = 4,
         Critical = 8,

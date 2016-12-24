@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
 {
     public class RazorTemplateGenerator
     {

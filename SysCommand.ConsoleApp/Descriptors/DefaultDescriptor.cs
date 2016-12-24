@@ -9,7 +9,7 @@ using System;
 using SysCommand.ConsoleApp.View;
 using System.Collections;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.Descriptor
 {
     public class DefaultDescriptor : IDescriptor
     {

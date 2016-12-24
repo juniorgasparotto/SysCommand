@@ -1,7 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
 {
     public class TemplateCompileException : Exception
     {

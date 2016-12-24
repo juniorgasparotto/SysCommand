@@ -1,7 +1,7 @@
 ﻿using SysCommand.Execution;
 using System;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.Handlers
 {
     public interface IApplicationHandler
     {

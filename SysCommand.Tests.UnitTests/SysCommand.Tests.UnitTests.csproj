@@ -165,6 +165,8 @@
     <Compile Include="Console.App\Commands\T05\Command1.cs" />
     <Compile Include="Console.App\Commands\T04\Command1.cs" />
     <Compile Include="CompareHelper.cs" />
+    <Compile Include="Console.App\Commands\TestVerboseCommand.cs" />
+    <Compile Include="Console.App\TestAppVerbose.cs" />
     <Compile Include="Console.App\TestAppMultiCommand.cs" />
     <Compile Include="Console.App\TestAppHistory.cs" />
     <Compile Include="Console.App\TestArgumentSetWithoutApp.cs" />

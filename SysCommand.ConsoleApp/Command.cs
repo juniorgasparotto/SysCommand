@@ -7,6 +7,8 @@ using SysCommand.Execution;
 using SysCommand.Helpers;
 using System;
 using System.Collections.Generic;
+using SysCommand.ConsoleApp.View.TemplatesGenerator.Razor;
+using SysCommand.ConsoleApp.View.TemplatesGenerator.T4;
 
 namespace SysCommand.ConsoleApp
 {

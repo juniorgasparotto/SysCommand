@@ -50,6 +50,7 @@ namespace SysCommand.ConsoleApp
             this.ColorRead = ConsoleColor.Cyan;
             this.In = Console.In;
             this.Out = Console.Out;
+            this.Verbose = Verbose.All;
         }
 
         private bool CheckIfWrite(Verbose verb, bool forceWrite)

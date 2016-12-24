@@ -3,7 +3,7 @@ using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.Parsing;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.Descriptor
 {
     public interface IDescriptor
     {

@@ -6,6 +6,7 @@ using SysCommand.Tests.ConsoleApp.Commands;
 using SysCommand.ConsoleApp;
 using System.IO;
 using SysCommand.Execution;
+using SysCommand.ConsoleApp.Handlers;
 
 namespace SysCommand.Tests.UnitTests
 {

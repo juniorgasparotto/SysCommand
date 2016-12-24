@@ -1,0 +1,43 @@
+{
+  "Args": "test-verbose -v none",
+  "Members": [
+    "TestVerboseCommand.test-verbose()",
+    "VerboseCommand.SysCommand.ConsoleApp.Verbose Verbose [-v|--verbose = ? (NOT accept positional)]"
+  ],
+  "Values": [
+    "VerboseCommand.Main=",
+    "TestVerboseCommand.TestVerbose=",
+    "VerboseCommand.Verbose=None"
+  ],
+  "ExpectedResult": [
+    ""
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "TestVerboseCommand"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "TestVerboseCommand.test-verbose()"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "VerboseCommand"
+      ],
+      "PropertiesValid": [
+        "VerboseCommand.SysCommand.ConsoleApp.Verbose Verbose"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.Handlers
 {
     public class DefaultApplicationHandler : IApplicationHandler
     {

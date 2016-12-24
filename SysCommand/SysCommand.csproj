@@ -60,9 +60,6 @@
     <Compile Include="Helpers\ComparationHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
-    <Compile Include="Model\Mapping\Command\CommandMapper.cs" />
-    <Compile Include="Model\Mapping\Argument\ArgumentMapper.cs" />
-    <Compile Include="Model\Mapping\Action\ActionMapper.cs" />
     <Compile Include="Helpers\ConverterHelper.cs" />
     <Compile Include="Extras\OptionSet.cs" />
     <Compile Include="Model\Execution\ExecutionError.cs" />

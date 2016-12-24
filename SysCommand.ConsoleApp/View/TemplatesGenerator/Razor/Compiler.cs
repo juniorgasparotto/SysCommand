@@ -7,7 +7,7 @@ using System.Text;
 using System.Web.Razor;
 using Microsoft.CSharp;
 
-namespace SysCommand.ConsoleApp
+namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
 {
     public class Compiler
     {
