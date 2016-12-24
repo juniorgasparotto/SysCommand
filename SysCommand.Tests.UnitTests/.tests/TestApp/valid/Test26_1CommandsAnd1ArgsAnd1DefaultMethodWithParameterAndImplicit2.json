@@ -1,15 +1,15 @@
 {
   "Args": "1 value",
   "Members": [
-    "Command6.System.String PropertyValue",
-    "Command6.default(Int32)"
+    "Command6.System.String PropertyValue [--property-value = ?]",
+    "Command6.default(Int32 --value)"
   ],
   "Values": [
-    "Command6.PropertyValue=value",
-    "Command6.Default=Command6.default(Int32)"
+    "Command6.Default=Command6.default(Int32 --value = 1)",
+    "Command6.PropertyValue=value"
   ],
   "ExpectedResult": [
-    "Command6.default(Int32)"
+    "Command6.default(Int32 --value = 1)"
   ],
   "Levels": [
     {
@@ -17,12 +17,23 @@
       "CommandsValid": [
         "Command6"
       ],
-      "PropertiesValid": [
-        "Command6.System.String PropertyValue"
-      ],
+      "PropertiesValid": [],
       "MethodsValid": [
         "Command6.default(Int32)"
       ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command6"
+      ],
+      "PropertiesValid": [
+        "Command6.System.String PropertyValue"
+      ],
+      "MethodsValid": [],
       "CommandsWithError": [],
       "PropertiesInvalid": [],
       "MethodsInvalid": []

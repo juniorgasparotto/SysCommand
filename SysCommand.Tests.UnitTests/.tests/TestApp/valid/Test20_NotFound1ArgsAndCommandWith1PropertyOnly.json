@@ -1,7 +1,7 @@
 {
   "Args": "value",
   "Members": [
-    "Command2.Char a (NOT accept positional)"
+    "Command2.Char a [-a = ? (NOT accept positional)]"
   ],
   "Values": [],
   "ExpectedResult": [

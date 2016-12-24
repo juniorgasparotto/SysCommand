@@ -5,6 +5,8 @@ using SysCommand.Mapping;
 using SysCommand.Parsing;
 using SysCommand.DefaultExecutor;
 using SysCommand.Helpers;
+using SysCommand.Execution;
+using System.Linq;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -53,6 +55,20 @@ namespace SysCommand.Tests.UnitTests
             return parser.Parse(argumentsRaw, enablePositionalArgs, maps);
         }
 
+        public static string GetMethodSpecification(MethodResult result)
+        {
+            var format = "{0}({1})";
+            string args = null;
+            foreach (var map in result.ActionParsed.ActionMap.ArgumentsMaps)
+            {
+                var typeName = ReflectionHelper.CSharpName(map.Type);
+                var value = result.ActionParsed.Arguments.Where(f => f.Map == map).First();
+                var valueWithDesc = value.GetArgumentNameInputted()  + " = " + (string.IsNullOrWhiteSpace(value.Raw) ? "?" : value.Raw);
+                args += args == null ? typeName + " " + valueWithDesc : ", " + typeName + " " + valueWithDesc;
+            }
+            return string.Format(format, result.ActionParsed.ActionMap.ActionName, args);
+        }
+
         public static string GetMethodSpecification(ActionMap map)
         {
             var format = "{0}({1})";
@@ -63,6 +79,35 @@ namespace SysCommand.Tests.UnitTests
                 args += args == null ? typeName : ", " + typeName;
             }
             return string.Format(format, map.ActionName, args);
+        }
+
+        public static string GetMethodSpecification2(ActionMap map)
+        {
+            var format = "{0}({1})";
+            string args = null;
+            foreach (var arg in map.ArgumentsMaps)
+            {
+                var typeName = ReflectionHelper.CSharpName(arg.Type);
+                var argsDef = typeName + " " + GetArgsDefinition(arg);
+                args += args == null ? argsDef : ", " + argsDef;
+            }
+            return string.Format(format, map.ActionName, args);
+        }
+
+        public static string GetArgsDefinition(ArgumentMap arg)
+        {
+            var isDefault = arg.IsOptional || arg.HasDefaultValue ? " = ?" : "";
+            var typeName = ReflectionHelper.CSharpName(arg.Type);
+            var delimiterLong = arg.LongName != null ? "--" + arg.LongName : "";
+            var delimiterShort = arg.ShortName != null ? "-" + arg.ShortName : "";
+            var delimiter = "";
+            if (delimiterLong != "" && delimiterShort != "")
+                delimiter = delimiterShort + "|" + delimiterLong;
+            else if (delimiterLong != "")
+                delimiter = delimiterLong;
+            else
+                delimiter = delimiterShort;
+            return delimiter + isDefault;
         }
     }
 }

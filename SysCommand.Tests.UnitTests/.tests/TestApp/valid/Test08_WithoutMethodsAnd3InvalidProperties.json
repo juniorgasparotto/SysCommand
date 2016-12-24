@@ -1,9 +1,9 @@
 {
   "Args": "-a invalid-value a b --arg-not-found c",
   "Members": [
-    "Command1.Int32 A",
-    "Command1.Int32 B",
-    "Command1.Int32 C"
+    "Command1.Int32 A [-a = ?]",
+    "Command1.Int32 B [-b = ?]",
+    "Command1.Int32 C [-c = ?]"
   ],
   "Values": [],
   "ExpectedResult": [

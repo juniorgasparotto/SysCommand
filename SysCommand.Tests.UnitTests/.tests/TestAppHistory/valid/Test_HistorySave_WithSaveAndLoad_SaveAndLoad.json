@@ -40,8 +40,8 @@
     ],
     "ExpectedResult": [
       "Main",
-      "Command2.save(Int32)",
-      "Command2.save(Int32)"
+      "Command2.save(Int32 --value = 1)",
+      "Command2.save(Int32 --value = 2)"
     ],
     "HistoryFile": [
       {
@@ -193,8 +193,8 @@
     ],
     "ExpectedResult": [
       "Main",
-      "Command2.save(Int32)",
-      "Command2.save(Int32)"
+      "Command2.save(Int32 --value = 1)",
+      "Command2.save(Int32 --value = 2)"
     ],
     "HistoryFile": [
       {
@@ -231,10 +231,10 @@
       "HelpCommand.help(String)"
     ],
     "ExpectedResult": [
-      "Command2.save(Int32)",
+      "Command2.save(Int32 --value = 1)",
       "Main",
-      "Command2.save(Int32)",
-      "Command2.save(Int32)"
+      "Command2.save(Int32 --value = 1)",
+      "Command2.save(Int32 --value = 2)"
     ],
     "HistoryFile": [
       {

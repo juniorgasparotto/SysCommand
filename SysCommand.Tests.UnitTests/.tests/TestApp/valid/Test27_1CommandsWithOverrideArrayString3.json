@@ -1,8 +1,8 @@
 {
   "Args": "main 1",
   "Members": [
-    "Command1.main(Int32, Int32)",
-    "Command1.main(String[])"
+    "Command1.main(Int32 -a, Int32 -b)",
+    "Command1.main(String[] -a)"
   ],
   "Values": [
     "Command1.Main=Main(string[] a)"

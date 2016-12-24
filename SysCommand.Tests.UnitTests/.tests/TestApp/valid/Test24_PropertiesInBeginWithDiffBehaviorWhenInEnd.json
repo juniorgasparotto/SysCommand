@@ -1,8 +1,8 @@
 {
   "Args": "--help save 1",
   "Members": [
-    "Command1.save(String)",
-    "Command2.Boolean Help (NOT accept positional)"
+    "Command1.save(String --id)",
+    "Command2.Boolean Help [--help = ? (NOT accept positional)]"
   ],
   "Values": [
     "Command2.Main=Main",
@@ -23,12 +23,8 @@
         "Command2.Boolean Help"
       ],
       "MethodsValid": [],
-      "CommandsWithError": [
-        "Command1"
-      ],
-      "PropertiesInvalid": [
-        "Command1.help"
-      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
       "MethodsInvalid": []
     },
     {

@@ -12,7 +12,7 @@
     "HelpCommand.help(String)"
   ],
   "ExpectedResult": [
-    "Command2.save(Int32)",
+    "Command2.save(Int32 --value = 1)",
     "Command3.save()"
   ],
   "HistoryFile": [

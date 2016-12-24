@@ -13,7 +13,7 @@
   ],
   "ExpectedResult": [
     "Main",
-    "Command2.save(Int32)"
+    "Command2.save(Int32 --value = 2)"
   ],
   "HistoryFile": [
     {

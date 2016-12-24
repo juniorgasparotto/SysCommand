@@ -1,8 +1,8 @@
 {
   "Args": "value",
   "Members": [
-    "Command7.System.String Prop",
-    "Command7.default(Int32, Int32)"
+    "Command7.System.String Prop [--prop = ?]",
+    "Command7.default(Int32 --value = ?, Int32 -b = ?)"
   ],
   "Values": [
     "Command7.Prop=value"

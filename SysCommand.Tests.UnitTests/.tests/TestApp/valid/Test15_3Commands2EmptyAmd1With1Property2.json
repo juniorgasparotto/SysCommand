@@ -1,7 +1,7 @@
 {
   "Args": "--price 1",
   "Members": [
-    "Command3.System.Decimal Price (NOT accept positional)"
+    "Command3.System.Decimal Price [--price = ? (NOT accept positional)]"
   ],
   "Values": [
     "Command3.Main=",
@@ -20,14 +20,8 @@
         "Command3.System.Decimal Price"
       ],
       "MethodsValid": [],
-      "CommandsWithError": [
-        "Command1",
-        "Command2"
-      ],
-      "PropertiesInvalid": [
-        "Command1.price",
-        "Command2.price"
-      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
       "MethodsInvalid": []
     }
   ]

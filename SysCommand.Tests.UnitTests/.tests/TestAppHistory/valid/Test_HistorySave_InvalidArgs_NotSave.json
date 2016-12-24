@@ -12,11 +12,16 @@
     "HelpCommand.help(String)"
   ],
   "ExpectedResult": [
+    "There are errors in command: Command1",
+    "Could not find an argument to the specified value: a",
+    "",
     "There are errors in command: Command2",
-    "Error in method: save(Int32)",
-    "The argument '--value' is invalid",
+    "Could not find an argument to the specified value: a",
     "",
     "There are errors in command: Command3",
+    "Could not find an argument to the specified value: a",
+    "",
+    "There are errors in command: ArgsHistoryCommand",
     "Could not find an argument to the specified value: a"
   ],
   "HistoryFile": null

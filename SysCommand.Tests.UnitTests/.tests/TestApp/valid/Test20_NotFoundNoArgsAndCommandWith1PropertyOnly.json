@@ -1,21 +1,11 @@
 {
   "Args": "",
   "Members": [
-    "Command2.Char a (NOT accept positional)"
+    "Command2.Char a [-a = ? (NOT accept positional)]"
   ],
   "Values": [],
   "ExpectedResult": [
     "Could not find any action."
   ],
-  "Levels": [
-    {
-      "LevelNumber": 0,
-      "CommandsValid": [],
-      "PropertiesValid": [],
-      "MethodsValid": [],
-      "CommandsWithError": [],
-      "PropertiesInvalid": [],
-      "MethodsInvalid": []
-    }
-  ]
+  "Levels": []
 }

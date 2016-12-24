@@ -1,8 +1,8 @@
-HelpCommand.help(String)
-Command2.System.String Prop1 (NOT accept positional)
-Command2.System.Decimal Prop2 (obrigatory) (NOT accept positional)
-Command2.save(String, List<Int32>, Enum1)
-Command2.save(String, List<Int32>, Enum2)
+HelpCommand.help(String --action = ?)
+Command2.System.String Prop1 [--prop1 = ? (NOT accept positional)]
+Command2.System.Decimal Prop2 [--prop2 (obrigatory) (NOT accept positional)]
+Command2.save(String --value = ?, List<Int32> --lst = ?, Enum1 --enum1 = ?)
+Command2.save(String --value, List<Int32> --lst = ?, Enum2 --enum2 = ?)
 -----------------------------
 usage:    --prop2=<number> [--prop1=<phrase>] <actions[args]>
 

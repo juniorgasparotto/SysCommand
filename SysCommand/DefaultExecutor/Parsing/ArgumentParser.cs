@@ -72,10 +72,17 @@ namespace SysCommand.DefaultExecutor
                 }
             }
 
-            foreach (var mapWithoutInput in mapsUseds)
+            argumentsMappeds.AddRange(this.CreateArgumentsDefaultValueOrRequired(mapsUseds));
+            this.SetState(argumentsMappeds);
+            return argumentsMappeds;
+        }
+
+        public IEnumerable<ArgumentParsed> CreateArgumentsDefaultValueOrRequired(IEnumerable<ArgumentMap> argsMaps)
+        {
+            var list = new List<ArgumentParsed>();
+            foreach (var mapWithoutInput in argsMaps)
             {
                 var argMapped = new ArgumentParsed(mapWithoutInput.MapName, null, null, mapWithoutInput.Type, mapWithoutInput);
-                argumentsMappeds.Add(argMapped);
 
                 if (mapWithoutInput.HasDefaultValue)
                 {
@@ -87,13 +94,17 @@ namespace SysCommand.DefaultExecutor
                 {
                     argMapped.ParsingType = ArgumentParsedType.HasNoInput;
                 }
+
+                list.Add(argMapped);
             }
-
-            foreach (var arg in argumentsMappeds)
-                arg.ParsingStates = GetState(arg, argumentsMappeds);
-
-            return argumentsMappeds;
+            return list;
         }
+
+        public void SetState(IEnumerable<ArgumentParsed> arguments)
+        {
+            foreach (var arg in arguments)
+                arg.ParsingStates = GetState(arg, arguments);
+        } 
 
         public ArgumentParsedState GetState(ArgumentParsed arg, IEnumerable<ArgumentParsed> argumentsMapped)
         {
@@ -119,11 +130,6 @@ namespace SysCommand.DefaultExecutor
                 else
                     return ArgumentParsedState.ArgumentIsRequired | ArgumentParsedState.IsInvalid;
             }
-            //else if (!arg.Map.IsOptional && arg.MappingType == ArgumentMappingType.HasNoInput)
-            //{
-            //    //errors.Add(new ErrorArgumentMapped(arg, ErrorCode.ArgumentIsRequired, string.Format("The argument '{0}' is required", userParameterName)));
-            //    return ArgumentMappingState.ArgumentIsRequired | ArgumentMappingState.IsInvalid;
-            //}
             else if (arg.IsMapped && arg.HasInvalidInput)
             {
                 return ArgumentParsedState.ArgumentHasInvalidInput | ArgumentParsedState.IsInvalid;

@@ -1,7 +1,7 @@
 {
   "Args": "--id 1 --price 1 delete save",
   "Members": [
-    "Command3.System.Decimal Price (NOT accept positional)"
+    "Command3.System.Decimal Price [--price = ? (NOT accept positional)]"
   ],
   "Values": [],
   "ExpectedResult": [

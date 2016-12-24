@@ -2,7 +2,7 @@
   "Args": "delete save",
   "Members": [
     "Command1.save()",
-    "Command2.delete(String)"
+    "Command2.delete(String --value)"
   ],
   "Values": [],
   "ExpectedResult": [

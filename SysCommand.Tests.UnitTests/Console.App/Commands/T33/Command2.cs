@@ -27,7 +27,7 @@ namespace SysCommand.Tests.UnitTests.Commands.T33
             if (map != result.ActionParsed.ActionMap)
                 throw new Exception("There are errors in one of the methods: GetCurrentMethodMap() or GetCurrentMethodResult()");
 
-            var specification = CommandParserUtils.GetMethodSpecification(map);
+            var specification = CommandParserUtils.GetMethodSpecification(result);
             return this.GetType().Name + "." + specification;
         }
     }

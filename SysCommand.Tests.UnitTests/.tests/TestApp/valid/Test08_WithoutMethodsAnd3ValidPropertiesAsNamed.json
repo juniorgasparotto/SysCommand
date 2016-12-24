@@ -1,9 +1,9 @@
 {
   "Args": "-a 1 -b 2 -c 3",
   "Members": [
-    "Command1.Int32 A",
-    "Command1.Int32 B",
-    "Command1.Int32 C"
+    "Command1.Int32 A [-a = ?]",
+    "Command1.Int32 B [-b = ?]",
+    "Command1.Int32 C [-c = ?]"
   ],
   "Values": [
     "Command1.Main=Command1.Main() = 1, 2, 3",

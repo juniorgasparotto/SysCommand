@@ -5,6 +5,7 @@ using System.Linq;
 using SysCommand.ConsoleApp;
 using System.IO;
 using SysCommand.Test;
+using System.Collections;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -24,14 +25,16 @@ namespace SysCommand.Tests.UnitTests
             var test = new TestData();
             test.Args = args;
 
+            var dic = new Dictionary<string, string>();
             foreach (var cmd in commands)
             {
-                test.Members.AddRange(app.Maps.Where(f => f.Command.GetType() == cmd.GetType()).SelectMany(f => f.Properties.Select(s => s.Target.GetType().Name + "." + s.TargetMember.ToString() + (s.IsOptional ? "" : " (obrigatory)") + (cmd.EnablePositionalArgs ? "" : " (NOT accept positional)"))));
-                test.Members.AddRange(app.Maps.Where(f => f.Command.GetType() == cmd.GetType()).SelectMany(f => f.Methods.Select(s => s.Target.GetType().Name + "." + CommandParserUtils.GetMethodSpecification(s))));
+                var cmdMap = app.Maps.Where(f => f.Command.GetType() == cmd.GetType()).FirstOrDefault();
+                test.Members.AddRange(cmdMap.Properties.Select(s => s.Target.GetType().Name + "." + s.TargetMember.ToString() + " [" + CommandParserUtils.GetArgsDefinition(s) + (s.IsOptional ? "" : " (obrigatory)") + (cmd.EnablePositionalArgs ? "" : " (NOT accept positional)")  + "]"));
+                test.Members.AddRange(cmdMap.Methods.Select(s => s.Target.GetType().Name + "." + CommandParserUtils.GetMethodSpecification2(s)));
             }
 
             test.ExpectedResult = output.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            test.Values = appResult.ExecutionResult.Results.Select(f => f.Target.GetType().Name + "." + f.Name + "=" + f.Value);
+            test.Values = appResult.ExecutionResult.Results.Select(f => f.Target.GetType().Name + "." + f.Name + "=" + GetValue(f.Value));
 
             foreach (var level in appResult.ParseResult.Levels)
             {
@@ -52,6 +55,23 @@ namespace SysCommand.Tests.UnitTests
             }
 
             return test;
+        }
+
+        private static string GetValue(object value)
+        {
+            if (value == null)
+                return null;
+
+            if (value.GetType() != typeof(string) && typeof(IEnumerable).IsAssignableFrom(value.GetType()))
+            {
+                string output = null;
+                foreach (var obj in ((IEnumerable)value))
+                {
+                    output += output == null ? obj : "," + obj;
+                }
+                return output;
+            }
+            return value + "";
         }
 
         public static TestData Compare<T>(string args, Command[] commands, string funcName)

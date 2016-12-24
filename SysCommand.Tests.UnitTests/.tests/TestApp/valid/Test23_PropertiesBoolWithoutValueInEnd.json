@@ -1,13 +1,13 @@
 {
   "Args": "save 1 --help",
   "Members": [
-    "Command1.Boolean Help (NOT accept positional)",
-    "Command1.save(String)"
+    "Command1.Boolean Help [--help = ? (NOT accept positional)]",
+    "Command1.save(String --id)"
   ],
   "Values": [
     "Command1.Main=Main",
-    "Command1.Help=True",
-    "Command1.Save=Save: id=1"
+    "Command1.Save=Save: id=1",
+    "Command1.Help=True"
   ],
   "ExpectedResult": [
     "Main",
@@ -19,12 +19,23 @@
       "CommandsValid": [
         "Command1"
       ],
-      "PropertiesValid": [
-        "Command1.Boolean Help"
-      ],
+      "PropertiesValid": [],
       "MethodsValid": [
         "Command1.save(String)"
       ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [
+        "Command1.Boolean Help"
+      ],
+      "MethodsValid": [],
       "CommandsWithError": [],
       "PropertiesInvalid": [],
       "MethodsInvalid": []

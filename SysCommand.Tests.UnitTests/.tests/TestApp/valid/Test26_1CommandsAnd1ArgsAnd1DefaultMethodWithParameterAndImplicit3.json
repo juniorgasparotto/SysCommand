@@ -1,8 +1,8 @@
 {
   "Args": "a",
   "Members": [
-    "Command6.System.String PropertyValue",
-    "Command6.default(Int32)"
+    "Command6.System.String PropertyValue [--property-value = ?]",
+    "Command6.default(Int32 --value)"
   ],
   "Values": [
     "Command6.PropertyValue=a"

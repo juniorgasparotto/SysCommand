@@ -1,8 +1,8 @@
 {
   "Args": "--value a --property-value 1",
   "Members": [
-    "Command5.Int32 PropertyValue",
-    "Command5.default(Int32)"
+    "Command5.Int32 PropertyValue [--property-value = ?]",
+    "Command5.default(Int32 --value)"
   ],
   "Values": [],
   "ExpectedResult": [

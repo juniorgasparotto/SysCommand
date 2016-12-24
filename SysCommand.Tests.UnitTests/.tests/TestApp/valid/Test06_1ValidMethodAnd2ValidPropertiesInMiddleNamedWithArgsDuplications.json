@@ -1,10 +1,10 @@
 {
   "Args": "--price -10.9999 save 1 --id 10 3 --id 20 --price -0.99",
   "Members": [
-    "Command1.System.Decimal Price",
-    "Command1.Int32 Id",
-    "Command1.save(Int32, Int32, Int32)",
-    "Command1.save(Int32, Int32)"
+    "Command1.System.Decimal Price [--price = ?]",
+    "Command1.Int32 Id [--id = ?]",
+    "Command1.save(Int32 -a, Int32 -b, Int32 -c)",
+    "Command1.save(Int32 -a, Int32 -b)"
   ],
   "Values": [],
   "ExpectedResult": [
@@ -27,14 +27,25 @@
     },
     {
       "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 2,
       "CommandsValid": [],
       "PropertiesValid": [
         "Command1.Int32 Id",
         "Command1.System.Decimal Price"
       ],
-      "MethodsValid": [
-        "Command1.save(Int32, Int32)"
-      ],
+      "MethodsValid": [],
       "CommandsWithError": [
         "Command1"
       ],

@@ -1,14 +1,14 @@
 {
   "Args": "save 1 2 3",
   "Members": [
-    "Command1.save(Int32, Int32, Int32)",
-    "Command1.save(Int32, Int32)"
+    "Command1.save(Int32 -a, Int32 -b, Int32 -c)",
+    "Command1.save(Int32 -a, Int32 -b)"
   ],
   "Values": [
-    "Command1.Save=Command1.save(Int32, Int32, Int32)"
+    "Command1.Save=Command1.save(Int32 -a = 1, Int32 -b = 2, Int32 -c = 3)"
   ],
   "ExpectedResult": [
-    "Command1.save(Int32, Int32, Int32)"
+    "Command1.save(Int32 -a = 1, Int32 -b = 2, Int32 -c = 3)"
   ],
   "Levels": [
     {

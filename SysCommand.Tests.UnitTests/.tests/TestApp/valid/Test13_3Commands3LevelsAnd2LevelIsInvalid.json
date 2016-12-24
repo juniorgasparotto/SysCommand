@@ -1,14 +1,14 @@
 {
   "Args": "--id 1 delete --price 99 save --id 99",
   "Members": [
-    "Command1.System.Decimal Price",
-    "Command1.Int32 Id",
+    "Command1.System.Decimal Price [--price = ?]",
+    "Command1.Int32 Id [--id = ?]",
     "Command1.save()",
-    "Command2.System.Decimal Price",
-    "Command2.Int32 Id",
-    "Command2.delete(String)",
-    "Command2.delete(String, String)",
-    "Command3.System.String Description (NOT accept positional)"
+    "Command2.System.Decimal Price [--price = ?]",
+    "Command2.Int32 Id [--id = ?]",
+    "Command2.delete(String --value)",
+    "Command2.delete(String --value, String --value2)",
+    "Command3.System.String Description [--description = ? (NOT accept positional)]"
   ],
   "Values": [],
   "ExpectedResult": [
@@ -28,20 +28,14 @@
         "Command2.Int32 Id"
       ],
       "MethodsValid": [],
-      "CommandsWithError": [
-        "Command3"
-      ],
-      "PropertiesInvalid": [
-        "Command3.id"
-      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
       "MethodsInvalid": []
     },
     {
       "LevelNumber": 1,
       "CommandsValid": [],
-      "PropertiesValid": [
-        "Command2.System.Decimal Price"
-      ],
+      "PropertiesValid": [],
       "MethodsValid": [],
       "CommandsWithError": [
         "Command2"
@@ -56,12 +50,25 @@
       "CommandsValid": [
         "Command1"
       ],
-      "PropertiesValid": [
-        "Command1.Int32 Id"
-      ],
+      "PropertiesValid": [],
       "MethodsValid": [
         "Command1.save()"
       ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 3,
+      "CommandsValid": [
+        "Command1",
+        "Command2"
+      ],
+      "PropertiesValid": [
+        "Command1.Int32 Id",
+        "Command2.Int32 Id"
+      ],
+      "MethodsValid": [],
       "CommandsWithError": [],
       "PropertiesInvalid": [],
       "MethodsInvalid": []

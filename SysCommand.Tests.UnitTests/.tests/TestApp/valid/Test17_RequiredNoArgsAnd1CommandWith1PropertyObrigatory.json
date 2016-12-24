@@ -1,9 +1,9 @@
 {
   "Args": "",
   "Members": [
-    "Command1.Int32 Id (obrigatory) (NOT accept positional)",
-    "Command1.System.Decimal Price (NOT accept positional)",
-    "Command1.save(Nullable<Int32>)"
+    "Command1.Int32 Id [--id (obrigatory) (NOT accept positional)]",
+    "Command1.System.Decimal Price [--price = ? (NOT accept positional)]",
+    "Command1.save(Nullable<Int32> -a = ?)"
   ],
   "Values": [],
   "ExpectedResult": [

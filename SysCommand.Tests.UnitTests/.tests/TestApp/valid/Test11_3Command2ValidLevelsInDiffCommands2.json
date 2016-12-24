@@ -1,17 +1,18 @@
 {
   "Args": "--price a save 1 1 delete 1 --price b",
   "Members": [
-    "Command1.System.Decimal Price",
-    "Command1.Int32 Id",
-    "Command1.save(Int32, Int32, Int32)",
-    "Command2.delete(Int32)",
-    "Command3.System.Decimal Price",
-    "Command3.Int32 Id",
-    "Command3.save(Int32, Int32)"
+    "Command1.System.Decimal Price [--price = ?]",
+    "Command1.Int32 Id [--id = ?]",
+    "Command1.save(Int32 -a, Int32 -b, Int32 -c)",
+    "Command2.delete(Int32 -a)",
+    "Command3.System.Decimal Price [--price = ?]",
+    "Command3.Int32 Id [--id = ?]",
+    "Command3.save(Int32 -a, Int32 -b)"
   ],
   "Values": [],
   "ExpectedResult": [
     "There are errors in command: Command1",
+    "The argument '--price' is invalid",
     "The argument '--price' is invalid",
     "",
     "There are errors in command: Command2",
@@ -19,6 +20,7 @@
     "The argument '--price' does not exist",
     "",
     "There are errors in command: Command3",
+    "The argument '--price' is invalid",
     "The argument '--price' is invalid"
   ],
   "Levels": [
@@ -58,16 +60,31 @@
     },
     {
       "LevelNumber": 2,
-      "CommandsValid": [],
+      "CommandsValid": [
+        "Command2"
+      ],
       "PropertiesValid": [],
       "MethodsValid": [
         "Command2.delete(Int32)"
       ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 3,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
       "CommandsWithError": [
-        "Command2"
+        "Command1",
+        "Command2",
+        "Command3"
       ],
       "PropertiesInvalid": [
-        "Command2.price"
+        "Command1.Price",
+        "Command2.price",
+        "Command3.Price"
       ],
       "MethodsInvalid": []
     }

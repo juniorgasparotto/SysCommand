@@ -33,13 +33,9 @@ namespace SysCommand.DefaultExecutor
             var hasMethodsParsed = methodsParsed.Count > 0;
 
             // *******
-            // Step1: Parse properties if has initial extras or if doesn't have arguments and methods found.
+            // Step1: Parse properties if has initial extras
             // *******
-            // noArgsAndNotExistsDefaultMethods: Important to cenaries:
-            //      1) To show errors (Argument obrigatory for example)
-            //      2) Process properties with default value
-            var noArgsAndNotExistsDefaultMethods = (args.Length == 0 && !hasMethodsParsed);
-            if (initialExtraArguments.Any() || noArgsAndNotExistsDefaultMethods)
+            if (initialExtraArguments.Any())
             {
                 var levelInitial = this.GetLevelWithProperties(commandsMap, initialExtraArguments);
                 if (!this.IsEmptyLevel(levelInitial))
@@ -64,10 +60,28 @@ namespace SysCommand.DefaultExecutor
 
                     if (bestValidMethodInLevel != null)
                     {
-                        // Step2: Remove imcompatible valid methods
-                        this.RemoveIncompatibleValidMethods(levelOfMethods, bestValidMethodInLevel);
-                        if (!this.IsEmptyLevel(levelOfMethods))
-                            parseResult.Add(levelOfMethods);
+                        // Step2: Add or not the method
+                        var canAddMethodLevel = true;
+                       
+                        if (this.IsMethodImplicitAndNoArguments(bestValidMethodInLevel))
+                        {
+                            // Step2.1: If has args, this default implicit method can't be added.
+                            //            because it is invoked only if no has input.
+                            //          eg: 
+                            //          method: void defaultMethodWithoutArgs()
+                            //          input : $ --some-args value
+                            //          result: can't executed because is invalid.
+                            if (args.Length > 0)
+                                canAddMethodLevel = false;
+                        }
+
+                        if (canAddMethodLevel)
+                        { 
+                            // Step2.2: Remove imcompatible valid methods
+                            this.RemoveIncompatibleValidMethods(levelOfMethods, bestValidMethodInLevel);
+                            if (!this.IsEmptyLevel(levelOfMethods))
+                                parseResult.Add(levelOfMethods);
+                        }
 
                         // Step3: Get extras of the best method and use as properties input to create a new level.
                         var levelOfProperties = this.GetLevelWithPropertiesUsingMethodExtras(commandsMap, bestValidMethodInLevel);
@@ -96,21 +110,30 @@ namespace SysCommand.DefaultExecutor
             }
 
             // *******
-            // Step5: Organize level number
+            // Step5: Create properties with default values if not exists
+            //        Create required properties if not exists (to show errors)
+            // *******
+            var levelDefaultOrRequired = this.GetLevelWithPropertiesDefaultOrRequired(parseResult.Levels, commandsMap);
+            if (levelDefaultOrRequired != null && !this.IsEmptyLevel(levelDefaultOrRequired))
+                parseResult.Add(levelDefaultOrRequired);
+
+            // *******
+            // Step6: Organize level number
             // *******
             this.OrganizeLevelsSequence(parseResult);
 
             return parseResult;
         }
-
+        
         private bool RemoveInvalidImplicitDefaultMethodsIfExists(string[] args, ParseResult.Level levelOfMethods, bool hasPropertyMap)
         {
             var defaultsInvalidMethodsWithImplicitInput = levelOfMethods.Commands
                                         .SelectMany(f => f.MethodsInvalid)
-                                        .Where(f => f.ActionMap.IsDefault && f.ArgumentRawOfAction == null);
+                                        .Where(f => this.IsMethodImplicit(f))
+                                        .ToList();
 
             // Step4: Exists action specify with name in input: my-action --p1 2
-            if (defaultsInvalidMethodsWithImplicitInput.Empty())
+            if (defaultsInvalidMethodsWithImplicitInput.Count == 0)
                 return false;
 
             // Step5: Exists default action without name in input: --p1 2 (action omitted)
@@ -147,40 +170,21 @@ namespace SysCommand.DefaultExecutor
                 if (removeInvalidMethod)
                 {
                     foreach (var cmd in levelOfMethods.Commands)
-                        foreach (var method in cmd.Methods.ToList())
+                    {
+                        foreach (var method in cmd.MethodsInvalid.ToList())
+                        {
                             if (method == defaultMethod)
+                            {
                                 cmd.RemoveInvalidMethod(method);
-                    countRemove++;
+                                countRemove++;
+                            }
+                        }
+                    }
                 }
             }
 
-            var allWasRemoved = countRemove == defaultsInvalidMethodsWithImplicitInput.Count();
+            var allWasRemoved = countRemove == defaultsInvalidMethodsWithImplicitInput.Count;
             return allWasRemoved;
-        }
-
-        private void OrganizeLevelsSequence(ParseResult parseResult)
-        {
-            var i = 0;
-            foreach (var level in parseResult.Levels)
-                level.LevelNumber = i++;
-        }
-
-        private bool IsEmptyLevel(ParseResult.Level level)
-        {
-            var isEmpty = true;
-            foreach (var cmd in level.Commands)
-            {
-                if (   cmd.Methods.Any()
-                    || cmd.MethodsInvalid.Any()
-                    || cmd.Properties.Any()
-                    || cmd.PropertiesInvalid.Any())
-                {
-                    isEmpty = false;
-                    break;
-                }
-            }
-
-            return isEmpty;
         }
 
         private void RemoveIncompatibleValidMethods(ParseResult.Level level, ActionParsed reference)
@@ -202,13 +206,47 @@ namespace SysCommand.DefaultExecutor
             }
         }
 
+        private bool IsMethodImplicit(ActionParsed action)
+        {
+            return action.ActionMap.IsDefault && action.ArgumentRawOfAction == null;
+        }
+
+        private bool IsMethodImplicitAndNoArguments(ActionParsed action)
+        {
+            return this.IsMethodImplicit(action) && action.ActionMap.ArgumentsMaps.Empty();
+        }
+
+        private bool IsEmptyLevel(ParseResult.Level level)
+        {
+            var isEmpty = true;
+            foreach (var cmd in level.Commands)
+            {
+                if (   cmd.Methods.Any()
+                    || cmd.MethodsInvalid.Any()
+                    || cmd.Properties.Any()
+                    || cmd.PropertiesInvalid.Any())
+                {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            return isEmpty;
+        }
+
         private bool AllRawAreEqualsOfArgumentParsed(IEnumerable<ArgumentParsed> argsA, IEnumerable<ArgumentParsed> argsB)
         {
+            argsA = argsA.Where(f => f.ParsingType != ArgumentParsedType.DefaultValue);
+            argsB = argsB.Where(f => f.ParsingType != ArgumentParsedType.DefaultValue);
+
             var countA = argsA.Count();
             var countB = argsB.Count();
 
             if (countA + countB == 0)
                 return true;
+
+            if (countA < countB)
+                return false;
 
             if (countA > 0)
             {
@@ -232,10 +270,13 @@ namespace SysCommand.DefaultExecutor
                 return false;
 
             var countA = argA.AllRaw.Count();
-            var countB = argA.AllRaw.Count();
+            var countB = argB.AllRaw.Count();
 
             if (countA + countB == 0)
                 return true;
+
+            if (countA < countB)
+                return false;
 
             if (countA > 0)
             {
@@ -289,7 +330,7 @@ namespace SysCommand.DefaultExecutor
         private ParseResult.Level GetLevelWithProperties(IEnumerable<CommandMap> commandsMap, IEnumerable<ArgumentRaw> arguments)
         {
             var level = new ParseResult.Level();
-
+            
             // Step1: Create commands
             foreach (var commandMap in commandsMap)
             {
@@ -300,40 +341,60 @@ namespace SysCommand.DefaultExecutor
                 this.ParseProperties(commandMap.Properties, commandMap.Command.EnablePositionalArgs, commandParse, arguments);
             }
 
-            // Step2: Create arguments references
+            // Step2: Create arguments references by raw
             var allArgsRawIsMapped = true;
             var argReferences = new List<ArgumentParsed>();
             foreach(var raw in arguments)
             {
-                var argParsed = this.GetFirstValidArgumentParsedByRawInLevel(level, raw);
-                if (argParsed != null)
+                if (argReferences.Empty(f => f.AllRaw.Any(r => r == raw)))
                 {
-                    if (argReferences.Empty(arg => arg == argParsed))
-                        argReferences.Add(argParsed);
-                }
-                else
-                {
-                    allArgsRawIsMapped = false;
-                    break;
+                    var argParsed = this.GetFirstValidArgumentParsedByRawInLevel(level, raw);
+                    if (argParsed != null)
+                    {
+                        if (argReferences.Empty(arg => arg == argParsed))
+                            argReferences.Add(argParsed);
+                    }
+                    else
+                    {
+                        allArgsRawIsMapped = false;
+                        break;
+                    }
                 }
             }
 
-            // Step3: Clean commands if all is valid
+            // Step3: Clean commands if all valid raw was found
             if (allArgsRawIsMapped && argReferences.Count > 0)
             {
                 foreach (var cmd in level.Commands)
                 {
                     // Remove all invalid properties because all input was mapped 
                     // and all are valid
-                    foreach (var invalid in cmd.PropertiesInvalid.ToList())
+                    var propsInvalidWithoutRequireds = cmd.PropertiesInvalid.Where(f => f.ParsingType != ArgumentParsedType.HasNoInput).ToList();
+                    foreach (var invalid in propsInvalidWithoutRequireds)
                         cmd.RemovePropertyInvalid(invalid);
 
                     // Remove all valid properties that are imcompatible with
                     // reference
-                    foreach (var arg in cmd.Properties.ToList())
+                    var props = cmd.Properties.Where(f=>f.ParsingType != ArgumentParsedType.DefaultValue).ToList();
+                    foreach (var arg in props)
                     {
                         var isCompatibleWithSomeRefs = argReferences.Any(argRef => this.AllRawAreEqualsInArgumentParsed(argRef, arg));
                         if (!isCompatibleWithSomeRefs)
+                            cmd.RemoveProperty(arg);
+                    }
+                }
+            }
+            else
+            {
+                // Step4: Remove all valid properties that was mapped if not exists invalid 
+                //        properties. This is necessary to force "not found" error when
+                //        some argument raw doesn't was found.
+                foreach (var cmd in level.Commands)
+                {
+                    if (cmd.PropertiesInvalid.Empty())
+                    {
+                        var props = cmd.Properties.Where(f => f.ParsingType != ArgumentParsedType.DefaultValue).ToList();
+                        foreach (var arg in props)
                             cmd.RemoveProperty(arg);
                     }
                 }
@@ -342,7 +403,59 @@ namespace SysCommand.DefaultExecutor
             return level;
         }
 
-        
+        private ParseResult.Level GetLevelWithPropertiesDefaultOrRequired(IEnumerable<ParseResult.Level> levels, IEnumerable<CommandMap> map)
+        {
+            ParseResult.Level level = null;
+
+            var properties = levels.SelectMany(l => l.Commands.SelectMany(c => c.Properties));
+            var propertiesInvalid = levels.SelectMany(l => l.Commands.SelectMany(c => c.PropertiesInvalid));
+            var listMapsRequiredOrDefaultNotMapped = new Dictionary<CommandBase, List<ArgumentMap>>();
+            foreach (var cmd in map)
+            {
+                foreach (var propMap in cmd.Properties)
+                {
+                    if (propMap.HasDefaultValue || !propMap.IsOptional)
+                    {
+                        var notExistsInInvalid = propertiesInvalid.Empty(f => f.Map == propMap);
+                        var notExistsInValid = properties.Empty(f => f.Map == propMap);
+                        if (notExistsInInvalid && notExistsInValid)
+                        {
+                            if (!listMapsRequiredOrDefaultNotMapped.ContainsKey(cmd.Command))
+                                listMapsRequiredOrDefaultNotMapped[cmd.Command] = new List<ArgumentMap>();
+
+                            listMapsRequiredOrDefaultNotMapped[cmd.Command].Add(propMap);
+                        }
+                    }
+                }
+            }
+
+            if (listMapsRequiredOrDefaultNotMapped.Any())
+            {
+                level = new ParseResult.Level();
+
+                foreach (var keyValue in listMapsRequiredOrDefaultNotMapped)
+                {
+                    var defaultsOrRequireds = argumentParser.CreateArgumentsDefaultValueOrRequired(keyValue.Value);
+                    argumentParser.SetState(defaultsOrRequireds);
+
+                    var commandParse = new ParseResult.CommandParse();
+                    commandParse.Command = keyValue.Key;
+                    commandParse.AddProperties(defaultsOrRequireds.Where(f=>f.ParsingType ==  ArgumentParsedType.DefaultValue));
+                    commandParse.AddPropertiesInvalid(defaultsOrRequireds.Where(f=>f.ParsingType ==  ArgumentParsedType.HasNoInput));
+                    level.Add(commandParse);
+                }
+            }
+
+            return level;
+        }
+
+        private void OrganizeLevelsSequence(ParseResult parseResult)
+        {
+            var i = 0;
+            foreach (var level in parseResult.Levels)
+                level.LevelNumber = i++;
+        }
+
         private void ParseProperties(IEnumerable<ArgumentMap> argumentsMaps, bool enablePositionalArgs, ParseResult.CommandParse commandParse, IEnumerable<ArgumentRaw> argumentsRaw)
         {
             var parseds = this.argumentParser.Parse(argumentsRaw, enablePositionalArgs, argumentsMaps);
@@ -361,23 +474,30 @@ namespace SysCommand.DefaultExecutor
             // Select the best valid method that has the major arguments inputed
             var methodsValids = level.Commands.SelectMany(c => c.Methods);
 
+            if (methodsValids.Empty())
+                return null;
+
             // never has error because here only valid methods
             bool isBestMethodButHasError;
             var bestMethodInLevel = this.GetBestMethod(methodsValids, out isBestMethodButHasError);
 
             return bestMethodInLevel;
         }
-        
+
         private ArgumentParsed GetFirstValidArgumentParsedByRawInLevel(ParseResult.Level level, ArgumentRaw raw)
         {
+            var list = new List<ArgumentParsed>();
+
             foreach (var cmd in level.Commands)
             {
-                var argParsed = cmd.Properties.FirstOrDefault(p => p.AllRaw.Any(r => r == raw));
-                if (argParsed != null)
-                    return argParsed;
+                foreach (var prop in cmd.Properties)
+                {
+                    if (prop.AllRaw.Any() && prop.AllRaw.First() == raw)
+                        list.Add(prop);
+                }
             }
 
-            return null;
+            return list.OrderByDescending(a => a.AllRaw.Count()).FirstOrDefault();
         }
 
         private ActionParsed GetBestMethod(IEnumerable<ActionParsed> methods, out bool isBestMethodButHasError)

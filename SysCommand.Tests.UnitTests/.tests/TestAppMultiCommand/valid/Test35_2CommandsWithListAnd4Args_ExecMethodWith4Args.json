@@ -1,0 +1,28 @@
+{
+  "Args": "1 2 3 4",
+  "Members": [
+    "Command1.method1(List<String> -a|--p1)",
+    "Command2.method1(String -a|--a1, String -b, String -c, String -d)"
+  ],
+  "Values": [
+    "Command2.Method1=Command2.method1(String --a1 = 1, String -b = 2, String -c = 3, String -d = 4)"
+  ],
+  "ExpectedResult": [
+    "Command2.method1(String --a1 = 1, String -b = 2, String -c = 3, String -d = 4)"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command2"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command2.method1(String, String, String, String)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 {
   "Args": "--help \\save",
   "Members": [
-    "Command2.System.String Help (NOT accept positional)",
-    "Command2.save(String)"
+    "Command2.System.String Help [--help = ? (NOT accept positional)]",
+    "Command2.save(String --id)"
   ],
   "Values": [
     "Command2.Main=Main",

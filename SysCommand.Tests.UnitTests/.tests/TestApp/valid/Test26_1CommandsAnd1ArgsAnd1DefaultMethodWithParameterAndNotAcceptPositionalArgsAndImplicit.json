@@ -1,8 +1,8 @@
 {
   "Args": "value",
   "Members": [
-    "Command2.System.String Value",
-    "Command2.default(String)"
+    "Command2.System.String Value [--value = ?]",
+    "Command2.default(String --value)"
   ],
   "Values": [
     "Command2.Value=value"

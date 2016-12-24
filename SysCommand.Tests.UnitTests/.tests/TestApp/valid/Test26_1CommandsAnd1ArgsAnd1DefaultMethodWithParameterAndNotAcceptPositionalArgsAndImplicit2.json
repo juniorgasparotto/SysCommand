@@ -1,8 +1,8 @@
 {
   "Args": "--property-value 1",
   "Members": [
-    "Command4.System.String PropertyValue",
-    "Command4.default(String)"
+    "Command4.System.String PropertyValue [--property-value = ?]",
+    "Command4.default(String --value)"
   ],
   "Values": [
     "Command4.PropertyValue=1"

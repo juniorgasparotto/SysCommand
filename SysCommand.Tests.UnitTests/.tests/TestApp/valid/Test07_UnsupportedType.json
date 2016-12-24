@@ -1,7 +1,7 @@
 {
   "Args": "--str value",
   "Members": [
-    "Command1.System.Text.StringBuilder Str"
+    "Command1.System.Text.StringBuilder Str [--str = ?]"
   ],
   "Values": [],
   "ExpectedResult": [

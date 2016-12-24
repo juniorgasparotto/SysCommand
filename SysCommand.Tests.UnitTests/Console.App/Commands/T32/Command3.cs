@@ -10,20 +10,12 @@ namespace SysCommand.Tests.UnitTests.Commands.T32
 {
     public class Command3 : Command
     {
-        [Action(Help = "Loren ipsulum Loren ipsulum Loren ipsulum Loren")]
-        public string Save()
-        {
-            var cur = this.CurrentMethodResult();
-            return GetDebugName(this.CurrentActionMap(), cur);
-        }
+        [Argument(Help = "Prop1 without show complement", ShowHelpComplement = false)]
+        public string Prop1 { get; set; }
 
-        private string GetDebugName(ActionMap map, MethodResult result)
+        public Command3()
         {
-            if (map != result.ActionParsed.ActionMap)
-                throw new Exception("There are errors in one of the methods: GetCurrentMethodMap() or GetCurrentMethodResult()");
-
-            var specification = CommandParserUtils.GetMethodSpecification(map);
-            return this.GetType().Name + "." + specification;
+            this.EnablePositionalArgs = true;
         }
     }
 }

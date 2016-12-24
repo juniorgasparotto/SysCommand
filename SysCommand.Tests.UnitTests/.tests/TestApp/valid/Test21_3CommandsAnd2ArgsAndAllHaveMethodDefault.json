@@ -3,13 +3,13 @@
   "Members": [
     "Command1.default()",
     "Command2.default()",
-    "Command3.main(String, String)"
+    "Command3.main(String --value = ?, String --value2 = ?)"
   ],
   "Values": [
-    "Command3.Main=Command3.main(String, String)"
+    "Command3.Main=Command3.main(String --value = value, String --value2 = 10)"
   ],
   "ExpectedResult": [
-    "Command3.main(String, String)"
+    "Command3.main(String --value = value, String --value2 = 10)"
   ],
   "Levels": [
     {
@@ -21,16 +21,8 @@
       "MethodsValid": [
         "Command3.main(String, String)"
       ],
-      "CommandsWithError": [
-        "Command1",
-        "Command2"
-      ],
-      "PropertiesInvalid": [
-        "Command1.value",
-        "Command1.10",
-        "Command2.value",
-        "Command2.10"
-      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
       "MethodsInvalid": []
     }
   ]

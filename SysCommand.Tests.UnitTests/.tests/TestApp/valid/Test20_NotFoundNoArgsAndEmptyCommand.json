@@ -5,15 +5,5 @@
   "ExpectedResult": [
     "Could not find any action."
   ],
-  "Levels": [
-    {
-      "LevelNumber": 0,
-      "CommandsValid": [],
-      "PropertiesValid": [],
-      "MethodsValid": [],
-      "CommandsWithError": [],
-      "PropertiesInvalid": [],
-      "MethodsInvalid": []
-    }
-  ]
+  "Levels": []
 }

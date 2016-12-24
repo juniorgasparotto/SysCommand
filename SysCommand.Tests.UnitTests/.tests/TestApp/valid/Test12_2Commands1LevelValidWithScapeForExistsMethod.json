@@ -2,13 +2,13 @@
   "Args": "delete \\save",
   "Members": [
     "Command1.save()",
-    "Command2.delete(String)"
+    "Command2.delete(String --value)"
   ],
   "Values": [
-    "Command2.Delete=Command2.delete(String)=save"
+    "Command2.Delete=Command2.delete(String --value = \\save)=save"
   ],
   "ExpectedResult": [
-    "Command2.delete(String)=save"
+    "Command2.delete(String --value = \\save)=save"
   ],
   "Levels": [
     {

@@ -1,8 +1,8 @@
 {
   "Args": "",
   "Members": [
-    "Command1.Int32 Id (obrigatory) (NOT accept positional)",
-    "Command2.Int32 Id (NOT accept positional)"
+    "Command1.Int32 Id [--id = ? (obrigatory) (NOT accept positional)]",
+    "Command2.Int32 Id [--id = ? (NOT accept positional)]"
   ],
   "Values": [
     "Command1.Main=Main= Id:100",

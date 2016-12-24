@@ -1,28 +1,43 @@
 {
   "Args": "save 1 --help",
   "Members": [
-    "Command1.save(String)",
-    "Command2.Boolean Help (NOT accept positional)"
+    "Command1.save(String --id)",
+    "Command2.Boolean Help [--help = ? (NOT accept positional)]"
   ],
-  "Values": [],
+  "Values": [
+    "Command2.Main=Main",
+    "Command1.Save=Save: id=1",
+    "Command2.Help=True"
+  ],
   "ExpectedResult": [
-    "There are errors in command: Command1",
-    "The argument '--help' does not exist"
+    "Main",
+    "Save: id=1"
   ],
   "Levels": [
     {
       "LevelNumber": 0,
-      "CommandsValid": [],
+      "CommandsValid": [
+        "Command1"
+      ],
       "PropertiesValid": [],
       "MethodsValid": [
         "Command1.save(String)"
       ],
-      "CommandsWithError": [
-        "Command1"
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command2"
       ],
-      "PropertiesInvalid": [
-        "Command1.help"
+      "PropertiesValid": [
+        "Command2.Boolean Help"
       ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
       "MethodsInvalid": []
     }
   ]

@@ -1,5 +1,5 @@
-Command1.System.String Prop1 (NOT accept positional)
-Command1.System.Decimal Prop2 (NOT accept positional)
+Command1.System.String Prop1 [--prop1 = ? (NOT accept positional)]
+Command1.System.Decimal Prop2 [--prop2 = ? (NOT accept positional)]
 -----------------------------
 usage:    [--prop1=<phrase>] [--prop2=<number>] <actions[args]>
 

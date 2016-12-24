@@ -1,4 +1,4 @@
-HelpCommand.help(String)
+HelpCommand.help(String --action = ?)
 Command3.save()
 -----------------------------
 There are errors in command: Command3
