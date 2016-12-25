@@ -14,7 +14,7 @@
     {
         public string HelloWorld(string myArg0, int? myArg1 = null)
         {
-            return string.Format("My HelloWorld (Arg0: {0}; Arg1: {1})", myArg0, myArg1);
+            return string.Format("My HelloWorld1 (Arg0: {0}; Arg1: {1})", myArg0, myArg1);
         }
     }
 
@@ -25,7 +25,7 @@
 
         public string Main()
         {
-            return string.Format("My console app like MVC  (Arg0: {0}; Arg1: {1})", MyArg0, MyArg1);
+            return string.Format("My HelloWorld2 (Arg0: {0}; Arg1: {1})", MyArg0, MyArg1);
         }
     }
 }
