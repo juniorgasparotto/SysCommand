@@ -6,7 +6,15 @@ namespace Example
     {
         public static int Main()
         {
-            return App.RunInfiniteIfDebug();
+            return App.RunApplication();
+        }
+    }
+
+    public class HelloWorldWithMethodsCommand : Command
+    {
+        public string HelloWorld(string myArg0, double? myArg1 = null)
+        {
+            return $"My HelloWorld (Arg0: {myArg0}; Arg1: {myArg1})";
         }
     }
 
@@ -18,14 +26,6 @@ namespace Example
         public string Main()
         {
             return $"My console app like MVC (Arg0: {Arg0}; Arg1: {Arg1})";
-        }
-    }
-
-    public class HelloWorldWithMethodsCommand : Command
-    {
-        public string HelloWorld(string myArg0, double? myArg1 = null)
-        {
-            return $"My HelloWorld (Arg0: {myArg0}; Arg1: {myArg1})";
         }
     }
 }

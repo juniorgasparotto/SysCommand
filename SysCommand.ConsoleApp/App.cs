@@ -303,10 +303,10 @@ namespace SysCommand.ConsoleApp
             return (Command)obj;
         }
 
-        public static int RunInfiniteIfDebug(App app = null)
+        public static int RunApplication(App app = null)
         {
             app = app ?? new App();
-            bool lastBreakLineInNextWrite = false;
+            var lastBreakLineInNextWrite = false;
             while (true)
             {
                 app.ReadArgsWhenIsDebug = true;

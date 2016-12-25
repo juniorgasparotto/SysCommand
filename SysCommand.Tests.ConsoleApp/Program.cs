@@ -12,7 +12,7 @@ namespace SysCommand.Tests.ConsoleApp
             var app = new App();
             var jsonFiles = app.Items.GetOrCreate<JsonFileManager>();
             jsonFiles.DefaultFilePrefix = "file-";
-            return App.RunInfiniteIfDebug(app);
+            return App.RunApplication(app);
         }
 
         public static string GetMethodSpecification(ActionMap map)
