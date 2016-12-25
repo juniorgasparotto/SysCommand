@@ -49,17 +49,17 @@ namespace Example
 ######Testing
 
 ```
-C:\MyApp.exe --my-arg0 ABC
-My console app like MVC  (Arg0: ABC; Arg1: )
-
-C:\MyApp.exe --my-arg0 ABC --my-arg1 DEF
-My console app like MVC  (Arg0: ABC; Arg1: DEF)
-
 C:\MyApp.exe hello-world --my-arg0 ABC
 My HelloWorld (Arg0: ABC; Arg1: )
 
 C:\MyApp.exe hello-world --my-arg0 ABC --my-arg1 10000
 My HelloWorld (Arg0: ABC; Arg1: 10000)
+
+C:\MyApp.exe --my-arg0 ABC
+My console app like MVC  (Arg0: ABC; Arg1: )
+
+C:\MyApp.exe --my-arg0 ABC --my-arg1 DEF
+My console app like MVC  (Arg0: ABC; Arg1: DEF)
 ```
 
 ##Features
