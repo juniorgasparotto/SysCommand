@@ -50,10 +50,16 @@ namespace Example
 
 ```
 C:\MyApp.exe --my-arg0 value0
+My console app like MVC  (Arg0: value0; Arg1: value1)
+
 C:\MyApp.exe --my-arg0 value0 --my-arg1 value1
+My console app like MVC  (Arg0: value0; Arg1: value1)
+
 C:\MyApp.exe hello-world --my-arg0 value0
+My HelloWorld (Arg0: value0; Arg1: )
+
 C:\MyApp.exe hello-world --my-arg0 value0 --my-arg1 1.99
-C:\MyApp.exe help
+My console app like MVC  (Arg0: value0; Arg1: 1.99)
 ```
 
 ##Features
