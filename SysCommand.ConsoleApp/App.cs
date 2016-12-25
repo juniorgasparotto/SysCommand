@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 using SysCommand.ConsoleApp.Results;
 using SysCommand.ConsoleApp.Handlers;
 using SysCommand.ConsoleApp.Descriptor;
-using SysCommand.ConsoleApp.Loaders;
+using SysCommand.ConsoleApp.Loader;
 
 namespace SysCommand.ConsoleApp
 {

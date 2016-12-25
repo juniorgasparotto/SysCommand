@@ -8,7 +8,6 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.T4
     {
         public static string Execute<TTemplate, TModel>(TModel model = default(TModel))
         {
-            var genAttributeType = typeof(global::System.CodeDom.Compiler.GeneratedCodeAttribute);
             var genAttribute = typeof(TTemplate).GetCustomAttributes(true)
                 .FirstOrDefault() as global::System.CodeDom.Compiler.GeneratedCodeAttribute;
             if (genAttribute != null)
@@ -17,18 +16,15 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.T4
                 var session = template
                     .GetType()
                     .GetProperties()
-                    .Where(f => f.Name == "Session")
-                    .FirstOrDefault();
+                    .FirstOrDefault(f => f.Name == "Session");
                 var initialize = template
                     .GetType()
                     .GetMethods()
-                    .Where(f => f.Name == "Initialize")
-                    .FirstOrDefault();
+                    .FirstOrDefault(f => f.Name == "Initialize");
                 var transform = template
                     .GetType()
                     .GetMethods()
-                    .Where(f => f.Name == "TransformText")
-                    .FirstOrDefault();
+                    .FirstOrDefault(f => f.Name == "TransformText");
 
                 if (session != null && initialize != null && transform != null)
                 {

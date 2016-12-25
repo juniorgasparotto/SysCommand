@@ -24,7 +24,7 @@ namespace SysCommand.ConsoleApp
         public TextReader In { get; set; }
 
         public bool ExitCodeHasValue { get; private set; }
-        public bool Quiet { get; set; }
+        //public bool Quiet { get; set; }
 
         public int ExitCode
         {
@@ -84,10 +84,10 @@ namespace SysCommand.ConsoleApp
             return null;
         }
 
-        public string Read(string label, string defaultValueIfQuiet = null, bool breakLine = false)
+        public string Read(string label, /*string defaultValueIfQuiet = null,*/ bool breakLine = false)
         {
-            if (this.Quiet)
-                return defaultValueIfQuiet;
+            //if (this.Quiet)
+            //    return defaultValueIfQuiet;
 
             Write(label, breakLine, this.ColorRead);
             return Read();
@@ -138,15 +138,15 @@ namespace SysCommand.ConsoleApp
 
         public void Write(object obj, bool breakLine, ConsoleColor fontColor)
         {
-            if (this.Quiet)
-                return;
+            //if (this.Quiet)
+            //    return;
 
             var str = obj != null ? obj.ToString() : null;
 
             if (BreakLineInNextWrite)
                 Out.WriteLine();
 
-            BreakLineInNextWrite = !string.IsNullOrEmpty(str) && !str.LastOrDefault().In('\n', '\r');
+            BreakLineInNextWrite = !string.IsNullOrEmpty(str) && !(str.Last() == '\n' || str.Last() == '\r');
 
             var color = Console.ForegroundColor;
             Console.ForegroundColor = fontColor;
@@ -161,37 +161,5 @@ namespace SysCommand.ConsoleApp
             }
             Console.ForegroundColor = color;
         }
-
-        internal object Read(object debugGetArguments)
-        {
-            throw new NotImplementedException();
-        }
-
-        //public string ToJson(object obj)
-        //{
-        //    string json = JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings
-        //    {
-        //        TypeNameHandling = TypeNameHandling.Auto,
-        //        Binder = binder
-        //    });
-
-        //    return json;
-        //}
-
-        //public T Input<T>()
-        //{
-        //    var objFile = default(T);
-
-        //    if (string.IsNullOrWhiteSpace(Input()))
-        //    {
-        //        objFile = JsonConvert.DeserializeObject<T>(Input(), new JsonSerializerSettings
-        //        {
-        //            TypeNameHandling = TypeNameHandling.Auto,
-        //            Binder = binder
-        //        });
-        //    }
-
-        //    return objFile;
-        //}
     }
 }

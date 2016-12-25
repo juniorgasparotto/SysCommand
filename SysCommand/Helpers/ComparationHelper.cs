@@ -4,7 +4,7 @@ using System;
 
 namespace SysCommand.Helpers
 {
-    public static class ComparationHelper
+    internal static class ComparationHelper
     {
         public static bool In<TItem>(this TItem source, Func<TItem, TItem, bool> comparer, IEnumerable<TItem> items)
         {

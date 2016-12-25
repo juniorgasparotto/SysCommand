@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System;
 
-namespace SysCommand.ConsoleApp.Loaders
+namespace SysCommand.ConsoleApp.Loader
 {
     public sealed class AppDomainCommandLoader
     {
-        public List<Type> IgnoredCommands { get; private set; }
+        public List<Type> IgnoredCommands { get; }
 
         public AppDomainCommandLoader(IEnumerable<Type> ignoredCommands = null)
         {
