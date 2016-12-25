@@ -148,12 +148,14 @@ namespace SysCommand.ConsoleApp
 
         public ApplicationResult Run(string[] args)
         {
-            var appResult = new ApplicationResult();
-            appResult.App = this;
-            appResult.Args = args;
-            appResult.ArgsOriginal = args;
+            var appResult = new ApplicationResult
+            {
+                App = this,
+                Args = args,
+                ArgsOriginal = args
+            };
 
-        Start:
+            Start:
 
             try
             {
@@ -303,12 +305,12 @@ namespace SysCommand.ConsoleApp
             return (Command)obj;
         }
 
-        public static int RunApplication(App app = null)
+        public static int RunApplication(Func<App> appFactory = null)
         {
-            app = app ?? new App();
             var lastBreakLineInNextWrite = false;
             while (true)
             {
+                var app = appFactory != null ? appFactory() : new App();
                 app.ReadArgsWhenIsDebug = true;
                 app.Console.BreakLineInNextWrite = lastBreakLineInNextWrite;
                 app.Run();

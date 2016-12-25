@@ -26,7 +26,7 @@ namespace Example
 
     public class HelloWorldWithMethodsCommand : Command
     {
-        public string HelloWorld(string myArg0, double? myArg1 = null)
+        public string HelloWorld(string myArg0, int? myArg1 = null)
         {
             return string.Format("My HelloWorld (Arg0: {0}; Arg1: {1})", myArg0, myArg1);
         }
@@ -49,17 +49,17 @@ namespace Example
 ######Testing
 
 ```
-C:\MyApp.exe --my-arg0 value0
-My console app like MVC  (Arg0: value0; Arg1: value1)
+C:\MyApp.exe --my-arg0 ABC
+My console app like MVC  (Arg0: ABC; Arg1: )
 
-C:\MyApp.exe --my-arg0 value0 --my-arg1 value1
-My console app like MVC  (Arg0: value0; Arg1: value1)
+C:\MyApp.exe --my-arg0 ABC --my-arg1 DEF
+My console app like MVC  (Arg0: ABC; Arg1: DEF)
 
-C:\MyApp.exe hello-world --my-arg0 value0
-My HelloWorld (Arg0: value0; Arg1: )
+C:\MyApp.exe hello-world --my-arg0 ABC
+My HelloWorld (Arg0: ABC; Arg1: )
 
-C:\MyApp.exe hello-world --my-arg0 value0 --my-arg1 1.99
-My console app like MVC  (Arg0: value0; Arg1: 1.99)
+C:\MyApp.exe hello-world --my-arg0 ABC --my-arg1 10000
+My HelloWorld (Arg0: ABC; Arg1: 10000)
 ```
 
 ##Features

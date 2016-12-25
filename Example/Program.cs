@@ -12,7 +12,7 @@ namespace Example
 
     public class HelloWorldWithMethodsCommand : Command
     {
-        public string HelloWorld(string myArg0, double? myArg1 = null)
+        public string HelloWorld(string myArg0, int? myArg1 = null)
         {
             return string.Format("My HelloWorld (Arg0: {0}; Arg1: {1})", myArg0, myArg1);
         }
