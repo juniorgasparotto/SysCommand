@@ -44,6 +44,16 @@ namespace Example
 
 ```
 
+##Testing
+
+```
+C:\MyApp.exe --my-arg0 value0
+C:\MyApp.exe --my-arg0 value0 --my-arg1 value1
+C:\MyApp.exe hello-world --my-arg0 value0
+C:\MyApp.exe hello-world --my-arg0 value0 --my-arg1 1.99
+C:\MyApp.exe help
+```
+
 ##Features
 
   * Console Application with MVC
