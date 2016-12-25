@@ -1,7 +1,7 @@
-﻿using SysCommand.ConsoleApp;
-
-namespace Example
+﻿namespace Example
 {
+    using SysCommand.ConsoleApp;
+
     public class Program
     {
         public static int Main()

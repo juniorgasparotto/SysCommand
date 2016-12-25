@@ -12,10 +12,10 @@ Framework for development applications using the MVC pattern.
 
 ```csharp
 
-using SysCommand.ConsoleApp;
-
 namespace Example
 {
+    using SysCommand.ConsoleApp;
+
     public class Program
     {
         public static int Main()
