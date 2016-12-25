@@ -24,7 +24,7 @@ namespace Example
         }
     }
 
-    public class HelloWorldWithMethodsCommand : Command
+    public class HelloWorld1 : Command
     {
         public string HelloWorld(string myArg0, int? myArg1 = null)
         {
@@ -32,7 +32,7 @@ namespace Example
         }
     }
 
-    public class HelloWorldWithPropertiesCommand : Command
+    public class HelloWorld2 : Command
     {
         public string MyArg0 { get; set; }
         public string MyArg1 { get; set; }
