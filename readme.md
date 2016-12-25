@@ -1,5 +1,5 @@
 #SysCommand
-Framework for development applications using the MVC pattern.
+Framework for development console application using the MVC pattern.
 
 #Install
 
