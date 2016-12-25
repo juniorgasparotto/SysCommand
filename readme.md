@@ -9,7 +9,7 @@ Framework for development applications using the MVC pattern.
 ##Features
 
   * Console Application with MVC
-  ** Razor templates: Just use the return "Command.View()" in your actions, like MVC Web application. (using System.Web.Razor dependency)
+    Razor templates: Just use the return "Command.View()" in your actions, like MVC Web application. (using System.Web.Razor dependency)
   ** T4 templates: Just use the return "Command.ViewT4()" in your actions.
   ** Indented text using the class "TableView".
   ** Functionality Multi Action to be possible invoke several actions in the same input. By default is enable 'App.EnableMultiAction'.
