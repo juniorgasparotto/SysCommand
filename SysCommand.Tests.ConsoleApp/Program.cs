@@ -5,14 +5,13 @@ using SysCommand.Mapping;
 
 namespace SysCommand.Tests.ConsoleApp
 {
-    class Program
+    internal class Program
     {
-        static int Main(string[] args)
+        static int Main()
         {
             var app = new App();
             var jsonFiles = app.Items.GetOrCreate<JsonFileManager>();
             jsonFiles.DefaultFilePrefix = "file-";
-
             return App.RunInfiniteIfDebug(app);
         }
 

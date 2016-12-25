@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using SysCommand.Mapping;
 
-namespace SysCommand.Tests.ConsoleApp.Commands
+namespace SysCommand.Tests.ConsoleApp.Commands.Classes
 {
     public class Tasks
     {
@@ -13,7 +13,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
     {
         public int Id { get; set; }
 
-        [ArgumentAttribute(Help = "Date help")]
+        [Argument(Help = "Date help")]
         public DateTime DateAndTime { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

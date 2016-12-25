@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SysCommand.Tests
+namespace SysCommand.Tests.ConsoleApp.Commands.Classes
 {
     public class AppConfig
     {
