@@ -6,6 +6,33 @@ Framework for development applications using the MVC pattern.
 * NuGet: 
 * NuGet Core CRL: 
 
+#Simple example
+
+```csharp
+
+using SysCommand.ConsoleApp;
+
+namespace Example
+{
+    public class Program
+    {
+        public static int Main()
+        {
+            return App.RunInfiniteIfDebug();
+        }
+    }
+
+    public class Command1 : Command
+    {
+        public string HelloWorld(string arg0 = null, string arg1 = null)
+        {
+            return "My first console app using MVC";
+        }
+    }
+}
+
+```
+
 ##Features
 
   * Console Application with MVC
@@ -26,47 +53,3 @@ Framework for development applications using the MVC pattern.
   * Functionality to persists anything in App scope (in memory). Just use 'App.Items".
   * Events controllers "OnComplete", "OnException" e etc...
   * Extras: Simple command line parser using "OptionSet" class.
-
-##Tutorials
-
-```
-
- -p, --path=VALUE           Set the file path to convert to SQL.
-      --delimiter=VALUE      Set the delimiter columns, default is ';'.
-      --count=VALUE          Set the count line to generate
-      --dbname=VALUE         Set the database name to determine the type of
-                               output SQL, the options are:
-                                [sqlserver].
-      --tname=VALUE          Set the table name to generate, default is '#CSV'.
-      --maxbulk=VALUE        Set the amount of 'values' that will be grouped in
-                               'inserts' section, default is '25'.
-      --insert-format=VALUE  Set the output format to 'insert values', default
-                               is 'None' and the options are:
-                                [none],
-                                [break-line],
-                                [break-line-and-show-columns]
-      --not-header           Set if the CSV hasen't header. automatically creates with format 'Field[n]'
-  -v                         Increase debug
-  -h, -?, --help             Show the help.
-
-```
-
-#Example
-
-```
- C:\CsvToSql.exe -path "C:/in.csv" > C:\output.sql
- C:\CsvToSql.exe -path "C:/in.csv" -delimiter ";" > C:\output.sql
- C:\CsvToSql.exe -path "C:/in.csv" -delimiter ";" -not-header > C:\output.sql 
- C:\CsvToSql.exe -path "C:/in.csv" -delimiter ";" -tname "myTable" > C:\output.sql
- C:\CsvToSql.exe -p "C:/in.csv" -delimiter ";" -tname "myTable" -maxbulk 1 > C:\output.sql
- C:\CsvToSql.exe -p "C:/in.csv" -count 10 -delimiter ";" -insert-format break-line > C:\output.sql
- C:\CsvToSql.exe -p "C:/in.csv" -count 10 -delimiter ";" -insert-format break-line-and-show-columns > C:\output.sql
- 
- printf "field1,field2,field3,field4\n1,2,3,4" | csvtosql.exe -delimiter ","
- 
-``` 
-
-**Open "C:\output.sql" file to show the content or omit the command "... > C:\output.sql" to show in console.**
- 
-## Contributors
- * [juniorgasparotto](https://github.com/juniorgasparotto)
