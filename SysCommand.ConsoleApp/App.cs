@@ -79,8 +79,8 @@ namespace SysCommand.ConsoleApp
         
         public App(
             IEnumerable<Type> commandsTypes = null,
-            IExecutor executor = null,
             bool enableMultiAction = true,
+            IExecutor executor = null,
             bool addDefaultAppHandler = true
         )
         {

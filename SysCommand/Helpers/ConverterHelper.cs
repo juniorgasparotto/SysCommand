@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Collections;
 using System.Globalization;
 
 namespace SysCommand.Helpers
@@ -72,32 +73,33 @@ namespace SysCommand.Helpers
         public static object TryConvertCollection(Type type, string[] values, out bool hasInvalidInput, out bool hasUnsuporttedType, Action<int> successConvertCallback = null)
         {
             object list = null;
-            var hasInvalidInputAux = false;
-            var hasUnsuporttedTypeAux = false;
             hasInvalidInput = false;
             hasUnsuporttedType = false;
 
-            var isList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && type.GetGenericArguments().Length == 1;
+            var isList = type.IsGenericType && typeof(IEnumerable).IsAssignableFrom(type.GetGenericTypeDefinition()) && type.GetGenericArguments().Length == 1;
             var isArray = type.IsArray && type.GetElementType() != null;
             if (isList || isArray)
             {
-                Type typeList;
-                if (isArray)
-                    typeList = type.GetElementType();
-                else
-                    typeList = type.GetGenericArguments().FirstOrDefault();
-
+                var typeList = isArray ? type.GetElementType() : type.GetGenericArguments().FirstOrDefault();
+                
                 var iListRef = typeof(List<>);
-                Type[] IListParam = { typeList };
-                list = Activator.CreateInstance(iListRef.MakeGenericType(IListParam));
+                Type[] listParam = { typeList };
+                list = Activator.CreateInstance(iListRef.MakeGenericType(listParam));
+
+                var methodAdd = list.GetType().GetMethod("Add");
+                if (methodAdd == null || methodAdd.GetParameters().Length != 1)
+                    throw new Exception($"Type '{list.GetType().FullName}' does not have a method named 'Add(T item)'");
 
                 for (var i = 0; values.Length > i; i++)
                 {
                     var value = values[i];
+                    bool hasInvalidInputAux;
+                    bool hasUnsuporttedTypeAux;
+
                     var convertedValue = TryConvertPrimitives(typeList, value, out hasInvalidInputAux, out hasUnsuporttedTypeAux);
                     if (!hasInvalidInputAux && !hasUnsuporttedTypeAux)
                     {
-                        list.GetType().GetMethod("Add").Invoke(list, new[] { convertedValue });
+                        methodAdd.Invoke(list, new[] { convertedValue });
                         if (successConvertCallback != null)
                             successConvertCallback(i);
                     }
@@ -116,7 +118,10 @@ namespace SysCommand.Helpers
                 }
 
                 if (list != null && isArray)
-                    list = list.GetType().GetMethod("ToArray").Invoke(list, null);
+                {
+                    var methodToArray = list.GetType().GetMethod("ToArray");
+                    list = methodToArray.Invoke(list, null);
+                }
             }
             else
             {
