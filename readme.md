@@ -84,7 +84,7 @@ C:\MyApp.exe --my-arg0 ABC --my-arg1 DEF
 My HelloWorld3 (Arg0: ABC; Arg1: DEF)
 ```
 
-####Comportamento padrão
+##Comportamento padrão
 
 Ao criar-se uma classe que herda de `Command`, em qualquer lugar do seu projeto console application, todos os seus métodos e propriedades `publicas` serão habilitados para serem chamados via prompt de comando automaticamente. Para alterar esse comportamento veja o tópico de `Inicialização`.
 
@@ -110,7 +110,7 @@ public void MyAction(string A);
 
 ```MyApp.exe -s value2 my-action -a value```
 
-#####Tipos de inputs
+##Tipos de inputs
 
 Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a longa e a curta. Na forma longa o argumento deve-se iniciar com "--" ou "/" seguido do seu nome. Na forma curta ele deve sempre iniciar com apenas um traço "-" e seguido de apenas um caracter. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
 
@@ -133,7 +133,7 @@ public void MyAction(string A, string B);
 
 Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`. Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de `Customizações`. 
 
-#####Customizações
+##Customizações
 
 SysCommand.Mapping.ActionAttribute
 
