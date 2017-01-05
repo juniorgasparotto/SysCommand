@@ -84,7 +84,97 @@ C:\MyApp.exe --my-arg0 ABC --my-arg1 DEF
 My HelloWorld3 (Arg0: ABC; Arg1: DEF)
 ```
 
-##Support types
+####Comportamento padrão
+
+Ao criar-se uma classe que herda de `Command`, em qualquer lugar do seu projeto console application, todos os seus métodos e propriedades `publicas` serão habilitados para serem chamados via prompt de comando automaticamente. Para alterar esse comportamento veja o tópico de `Inicialização`.
+
+Os métodos serão convertidos em ações e as propriedades em argumentos de acordo com a seguinte regra: Converte o nome do membro (métodos, parametros e propriedades) em minusculo e adiciona um traço "-" antes de cada letra maiuscula que estiver no meio ou no final do nome. Para alterar esse comportamento veja o tópico de `Customizações`.
+
+Exemplo:
+
+```csharp
+public string MyProperty { get;set; }
+public void MyAction(string MyArgument);
+```
+
+```MyApp.exe my-action --my-argument value --my-property value2```
+
+Em caso de propriedades ou paramentros de métodos com apenas uma letra, o padrão será deixar a letra minuscula e o input será aceito apenas na forma curta.
+
+Exemplo:
+
+```csharp
+public string S { get;set; }
+public void MyAction(string A);
+```
+
+```MyApp.exe -s value2 my-action -a value```
+
+#####Tipos de inputs
+
+Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a longa e a curta. Na forma longa o argumento deve-se iniciar com "--" ou "/" seguido do seu nome. Na forma curta ele deve sempre iniciar com apenas um traço "-" e seguido de apenas um caracter. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
+
+Existe também a possibilidade de aceitar inputs posicionais, ou seja, sem a necessidade de utilizar os nomes dos argumentos. Esse tipo de input é chamado de `input posicional`.
+
+Exemplo:
+
+```csharp
+public string MyProperty { get;set; }
+public void MyAction(string A, string B);
+```
+
+**Input nomeado**:
+
+```MyApp.exe my-action -a valueA -b valueB --my-property valueMyProperty```
+
+**Input posicional**:
+
+```MyApp.exe my-action valueA valueB valueMyProperty```
+
+Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`. Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de `Customizações`. 
+
+#####Customizações
+
+SysCommand.Mapping.ActionAttribute
+
+  * string Name: Define um nome customizado para a action. Ignora o padrão acima.
+  * bool Ignore: Permite que um método publico possa continuar sendo publico, mas deixar de ser uma action.
+  * bool EnablePositionalArgs: Habilita ou desabilita o parse positional de argumentos. Default é `true`.
+  * string Help: Texto usado para compor o help.
+  * bool UsePrefix: Define se a action terá ou não o prefixo da classe pai. Default é `false`.
+  * bool IsDefault: Define se um método pode ser acesso de forma implicita, ou seja, sem a obrigatoriedade de ter seu nome especificado no input.
+
+[Action(IsDefault=true)]
+public void MyAction(string MyArgument);
+
+Explicit input
+
+MyApp.exe my-action my-argument value
+
+Or Implicit input
+
+MyApp.exe my-argument value
+
+SysCommand.Mapping.ArgumentAttribute
+
+  * char ShortName: Indica o caracter para o argumento ser acessado de forma simples, usando apenas um traço. Por exemplo, para habilitar o verbose podemos usar a forma reduzida '-v' ao inves da forma longa '--verbose'.
+  * string LongName: Indica a string da forma longa. 
+  * bool IsRequired: 
+  * string Help: 
+  * bool HasDefaultValue: 
+  * object DefaultValue: 
+  * int Position: 
+  * HasPosition: 
+  * bool ShowHelpComplement: 
+
+
+* SysCommand.ConsoleApp.App
+* SysCommand.ConsoleApp.Command
+
+
+É interessante manter todos os seus Command's em uma pasta chamada "Commands", deixando semelhante a estrutura do Asp.NET MVC.
+
+####Support types
 
 string
 bool
@@ -146,12 +236,18 @@ MyApp.exe --verbose 32 2 Success
 
 Generic collections or Array sintax
 
-public void MyAction(IEnumerable<decimal> myLst, List<string> myLst2 = null);
+public void MyAction(IEnumerable<decimal> myLst, string[] myArray = null);
 
 MyApp.exe --my-lst 1.0 1.99
 MyApp.exe 1.0 1.99 // positional
-MyApp.exe --my-lst 1.0 1.99 --my-lst2 str1 str2
+MyApp.exe --my-lst 1.0 1.99 --my-array str1 str2
 MyApp.exe 1.0 1.99 str1 str2 // positional
+
+Importante!
+
+Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
+
+####Inicialização
 
 ##Features
 
