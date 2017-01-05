@@ -90,7 +90,7 @@ Ao criar-se uma classe que herda de `Command`, em qualquer lugar do seu projeto 
 
 Os métodos serão convertidos em ações e as propriedades em argumentos de acordo com a seguinte regra: Converte o nome do membro (métodos, parametros e propriedades) em minusculo e adiciona um traço "-" antes de cada letra maiuscula que estiver no meio ou no final do nome. Para alterar esse comportamento veja o tópico de `Customizações`.
 
-Exemplo:
+**Exemplo:**
 
 ```csharp
 public string MyProperty { get;set; }
@@ -101,7 +101,7 @@ public void MyAction(string MyArgument);
 
 Em caso de propriedades ou paramentros de métodos com apenas uma letra, o padrão será deixar a letra minuscula e o input será aceito apenas na forma curta.
 
-Exemplo:
+**Exemplo:**
 
 ```csharp
 public string S { get;set; }
@@ -116,7 +116,7 @@ Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter dua
 
 Existe também a possibilidade de aceitar inputs posicionais, ou seja, sem a necessidade de utilizar os nomes dos argumentos. Esse tipo de input é chamado de `input posicional`.
 
-Exemplo:
+**Exemplo:**
 
 ```csharp
 public string MyProperty { get;set; }
