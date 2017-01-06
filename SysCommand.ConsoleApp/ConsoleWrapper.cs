@@ -49,17 +49,17 @@ namespace SysCommand.ConsoleApp
             this.ColorRead = ConsoleColor.Cyan;
             this.In = Console.In;
             this.Out = Console.Out;
-            this.Verbose = Verbose.All;
+            this.Verbose = Verbose.Info;
         }
 
-        private bool CheckIfWrite(Verbose verb, bool forceWrite)
+        public virtual bool CheckIfWrite(Verbose verb, bool forceWrite)
         {
             if (this.Verbose.HasFlag(Verbose.All) || this.Verbose.HasFlag(verb) || forceWrite)
                 return true;
             return false;
         }
 
-        public string Read()
+        public virtual string Read()
         {
             // https://referencesource.microsoft.com/#mscorlib/system/io/textreader.cs,91b2c7adbdc4b165
 
@@ -84,16 +84,16 @@ namespace SysCommand.ConsoleApp
             return null;
         }
 
-        public string Read(string label, /*string defaultValueIfQuiet = null,*/ bool breakLine = false)
+        public virtual string Read(string label, /*string defaultValueIfQuiet = null,*/ bool breakLine = false)
         {
             //if (this.Quiet)
             //    return defaultValueIfQuiet;
 
-            Write(label, breakLine, this.ColorRead);
+            WriteInternal(label, breakLine, this.ColorRead);
             return Read();
         }
 
-        public string Input()
+        public virtual string Input()
         {
             if (Console.IsInputRedirected && Console.In != null)
                 this.input = Console.In.ReadToEnd();
@@ -101,42 +101,42 @@ namespace SysCommand.ConsoleApp
             return this.input;
         }
         
-        public void Info(object msg, bool breakLine = false, bool forceWrite = false)
+        public virtual void Write(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Info, forceWrite))
-                Write(msg, breakLine, this.ColorInfo);
+                WriteInternal(msg, breakLine, this.ColorInfo);
         }
 
-        public void Critical(object msg, bool breakLine = false, bool forceWrite = false)
+        public virtual void Critical(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Critical, forceWrite))
-                Write(msg, breakLine, this.ColorCritical);
+                WriteInternal(msg, breakLine, this.ColorCritical);
         }
 
-        public void Error(object msg, bool breakLine = false, bool forceWrite = false)
+        public virtual void Error(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Error, forceWrite))
-                Write(msg, breakLine, this.ColorError);
+                WriteInternal(msg, breakLine, this.ColorError);
         }
 
-        public void Success(object msg, bool breakLine = false, bool forceWrite = false)
+        public virtual void Success(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Success, forceWrite))
-                Write(msg, breakLine, this.ColorSuccess);
+                WriteInternal(msg, breakLine, this.ColorSuccess);
         }
 
         public void Warning(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Warning, forceWrite))
-                Write(msg, breakLine, this.ColorWarning);
+                WriteInternal(msg, breakLine, this.ColorWarning);
         }
 
-        public void Write(object msg, bool breakLine = false)
+        protected virtual void WriteInternal(object msg, bool breakLine = false)
         {
-            Write(msg, breakLine, Console.ForegroundColor);
+            WriteInternal(msg, breakLine, Console.ForegroundColor);
         }
 
-        public void Write(object obj, bool breakLine, ConsoleColor fontColor)
+        protected virtual void WriteInternal(object obj, bool breakLine, ConsoleColor fontColor)
         {
             //if (this.Quiet)
             //    return;

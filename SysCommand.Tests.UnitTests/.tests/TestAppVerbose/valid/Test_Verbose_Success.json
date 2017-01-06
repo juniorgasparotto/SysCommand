@@ -10,6 +10,7 @@
     "VerboseCommand.Verbose=Success"
   ],
   "ExpectedResult": [
+    "Info '2'",
     "Success '4'"
   ],
   "Levels": [

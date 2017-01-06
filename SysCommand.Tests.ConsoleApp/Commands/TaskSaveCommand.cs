@@ -26,7 +26,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Save()
         {
-            App.Console.Info(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.Get<List<Task>>();
             var task = new Task
@@ -43,7 +43,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Save(string title)
         {
-            App.Console.Info(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.Get<List<Task>>();
             var task = new Task
@@ -60,7 +60,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Save(string title, string description = null, DateTime? date = null)
         {
-            App.Console.Info(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.Get<List<Task>>();
             var task = new Task

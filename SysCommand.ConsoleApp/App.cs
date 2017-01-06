@@ -261,19 +261,11 @@ namespace SysCommand.ConsoleApp
             else if (member is MethodMainResult)
                 method = ((MethodMainResult)member).MethodInfo;
 
-            if (method != null && method.ReturnType != typeof(void) && member.Value != null)
-            {
-                if (member.Value is IActionResult)
-                {
-                    return (IActionResult)member.Value;
-                }
-                else
-                {
-                    return new ActionResult(member.Value);
-                }
-            }
+            if (method == null || method.ReturnType == typeof(void) || member.Value == null)
+                return null;
 
-            return null;
+            var value = member.Value as IActionResult;
+            return value ?? new ActionResult(member.Value);
         }
         
         private string[] GetArguments()

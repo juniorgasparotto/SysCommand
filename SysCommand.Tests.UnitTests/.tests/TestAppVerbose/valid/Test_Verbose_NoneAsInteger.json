@@ -10,7 +10,7 @@
     "VerboseCommand.Verbose=None"
   ],
   "ExpectedResult": [
-    ""
+    "Info '2'"
   ],
   "Levels": [
     {

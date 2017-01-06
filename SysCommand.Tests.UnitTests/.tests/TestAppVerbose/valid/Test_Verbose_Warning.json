@@ -10,6 +10,7 @@
     "VerboseCommand.Verbose=Warning"
   ],
   "ExpectedResult": [
+    "Info '2'",
     "Warning '16'"
   ],
   "Levels": [

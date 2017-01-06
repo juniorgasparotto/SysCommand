@@ -17,7 +17,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Get(string title = null, string description = null, DateTime? date = null)
         {
-            App.Console.Info(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             this.ShowTask(tasks.Where(t => t.Title == title || t.Description == description || t.DateAndTime == date));
@@ -26,7 +26,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Get(int? id = null)
         {
-            App.Console.Info(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             this.ShowTask(tasks.Where(t => t.Id == id));
@@ -34,7 +34,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Get(string title = null)
         {
-            App.Console.Info(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             this.ShowTask(tasks.Where(t => t.Title == title));
@@ -54,10 +54,10 @@ namespace SysCommand.Tests.ConsoleApp.Commands
                 return;
             }
 
-            App.Console.Info("Id: " + task.Id);
-            App.Console.Info("Title: " + task.Title ?? "-");
-            App.Console.Info("Description: " + task.Description ?? "-");
-            App.Console.Info("Date: " + task.DateAndTime);
+            App.Console.Write("Id: " + task.Id);
+            App.Console.Write("Title: " + task.Title ?? "-");
+            App.Console.Write("Description: " + task.Description ?? "-");
+            App.Console.Write("Date: " + task.DateAndTime);
         }
 
         private string GetDebugName(ActionMap map)

@@ -14,7 +14,10 @@ namespace SysCommand.ConsoleApp.Commands
 
         public void Main()
         {
-            this.App.Console.Verbose = this.Verbose;
+            if (this.Verbose.HasFlag(Verbose.Quiet))
+                this.App.Console.Verbose = Verbose.None;
+            else
+                this.App.Console.Verbose = Verbose.Info | this.Verbose;
         }
     }
 }

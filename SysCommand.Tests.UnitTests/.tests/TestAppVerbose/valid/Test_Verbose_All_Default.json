@@ -8,11 +8,7 @@
     "TestVerboseCommand.TestVerbose="
   ],
   "ExpectedResult": [
-    "Info '2'",
-    "Success '4'",
-    "Critical '8'",
-    "Warning '16'",
-    "Error '32'"
+    "Info '2'"
   ],
   "Levels": [
     {

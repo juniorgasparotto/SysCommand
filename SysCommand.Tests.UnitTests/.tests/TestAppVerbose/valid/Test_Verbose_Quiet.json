@@ -1,5 +1,5 @@
 {
-  "Args": "test-verbose -v error",
+  "Args": "test-verbose -v quiet",
   "Members": [
     "TestVerboseCommand.test-verbose()",
     "VerboseCommand.SysCommand.ConsoleApp.Verbose Verbose [-v|--verbose = ? (NOT accept positional)]"
@@ -7,11 +7,10 @@
   "Values": [
     "VerboseCommand.Main=",
     "TestVerboseCommand.TestVerbose=",
-    "VerboseCommand.Verbose=Error"
+    "VerboseCommand.Verbose=Quiet"
   ],
   "ExpectedResult": [
-    "Info '2'",
-    "Error '32'"
+    ""
   ],
   "Levels": [
     {

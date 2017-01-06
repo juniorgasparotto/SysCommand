@@ -18,6 +18,21 @@ namespace Example
 
     public class HelloWorld1 : Command
     {
+        public decimal Test()
+        {
+            var result = this.App.Console.Read("My question: ");
+
+            if (result != "S")
+            { 
+                // option1: use write method
+                this.App.Console.Write(99.99m);
+                // option2: or use return, its the same.
+                return 99.99m;
+            }
+
+            return 0;
+        }
+
         public string HelloWorld(string myArg0, int? myArg1 = null)
         {
             return string.Format("My HelloWorld1 (Arg0: {0}; Arg1: {1})", myArg0, myArg1);

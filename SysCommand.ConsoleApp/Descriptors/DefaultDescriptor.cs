@@ -16,12 +16,12 @@ namespace SysCommand.ConsoleApp.Descriptor
         public virtual void ShowErrors(ApplicationResult appResult)
         {
             var strBuilder = this.GetErrors(appResult.ExecutionResult.Errors);
-            appResult.App.Console.Write(strBuilder);
+            appResult.App.Console.Error(strBuilder, forceWrite: true);
         }
 
         public virtual void ShowNotFound(ApplicationResult appResult)
         {
-            appResult.App.Console.Error(Strings.NotFoundMessage, false);
+            appResult.App.Console.Error(Strings.NotFoundMessage, forceWrite: true);
         }
 
         public virtual void ShowMethodReturn(ApplicationResult appResult, IMemberResult method, object value)

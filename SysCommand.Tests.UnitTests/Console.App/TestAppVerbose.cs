@@ -41,6 +41,33 @@ namespace SysCommand.Tests.UnitTests
             );
         }
 
+        [TestMethod]
+        public void Test_Verbose_Quiet()
+        {
+            this.CompareAll(
+                args: "test-verbose -v quiet",
+                commands: GetCmds(
+                    new TestVerboseCommand(),
+                    new VerboseCommand()
+                ),
+                funcName: TestHelper.GetCurrentMethodName()
+
+            );
+        }
+
+        [TestMethod]
+        public void Test_Verbose_QuietAsInteger()
+        {
+            this.CompareAll(
+                args: "test-verbose -v 64",
+                commands: GetCmds(
+                    new TestVerboseCommand(),
+                    new VerboseCommand()
+                ),
+                funcName: TestHelper.GetCurrentMethodName()
+
+            );
+        }
 
         [TestMethod]
         public void Test_Verbose_All_Default()
