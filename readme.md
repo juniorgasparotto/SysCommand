@@ -288,11 +288,10 @@ public class TestOutput : Command
         { 
             // option1: use write method
             this.App.Console.Write(99.99m);
-            // option2: or use return, its the same.
-            return 99.99m;
         }
 
-        return 0;
+        // option2: or use return, its the same.
+        return 99.99m;
     }
 }
 ```
