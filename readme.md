@@ -295,6 +295,7 @@ public class TestOutput : Command
         return 0;
     }
 }
+```
 
 Input: ```MyApp.exe test```
 Outputs:
