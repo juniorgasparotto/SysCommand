@@ -94,7 +94,7 @@ public string MyProperty { get;set; }
 public void MyAction(string MyArgument);
 ```
 
-```MyApp.exe my-action --my-argument value --my-property value2```
+```MyApp.exe my-action --my-argument value1 --my-property value2```
 
 Em caso de propriedades ou paramentros de métodos com apenas uma letra, o padrão será deixar a letra minuscula e o input será aceito apenas na forma curta.
 
@@ -105,7 +105,7 @@ public string S { get;set; }
 public void MyAction(string A);
 ```
 
-```MyApp.exe -s value2 my-action -a value```
+```MyApp.exe -s value1 my-action -a value2```
 
 * Para ter mais controle de quais comandos podem ser utilizados, veja o tópico de `Inicialização`.
 * Para desabilitar a disponibilidade automatica de membros `publicos` ou customizar os nomes dos membros, veja o tópico de `Customizações`.
@@ -230,7 +230,9 @@ O controle de exibição por verbo esta contido em um comando interno chamado `V
 * Error: Verbo para mensagens de erro. O sistema força o envio desse verbo em caso de erros de parse.
 * Quiet: Verbo para não exibir nenhuma mensagem, porém se a mensagem estiver sendo forçada, esse verbo é ignorado para essa mensagem.
 
-Para que a funcionalidade funcione corretamente é obrigatorio o uso das funções de output contidas dentro da classe `ConsoleWrapper` e que tem uma instancia disponível na propriedade `App.Console`. Exemplo:
+Para que a funcionalidade funcione corretamente é obrigatorio o uso das funções de output contidas dentro da classe `ConsoleWrapper` e que tem uma instancia disponível na propriedade `App.Console`. 
+
+**Exemplo:**
 
 ```csharp
 public class TestVerbose : Command
@@ -246,6 +248,7 @@ public class TestVerbose : Command
 ```
 
 Forma curta: ```MyApp.exe test -v Critical```
+
 Forma longa: ```MyApp.exe test --verbose Critical```
 
 Outputs:
@@ -304,16 +307,8 @@ My question: N
 
 **Comandos de usuário**
 
-* SysCommand.ConsoleApp.Commands.VerboseCommand
 * SysCommand.ConsoleApp.Commands.ArgsHistoryCommand
 
-**Comandos de help**
-
-* SysCommand.ConsoleApp.Commands.HelpCommand: Comando interno para exibir o help padrão.
-
-**Comandos de debug**
-
-* SysCommand.ConsoleApp.Commands.ClearCommand
 
 Observação: Caso você opte por escolher os comandos que farão parte da sua aplicação, todos os comandos internos, com exceção do comando de `help`, NÃO serão carregados. O comando de `help` é o único que sempre será carregado.
 
