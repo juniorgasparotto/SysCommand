@@ -439,6 +439,7 @@ public class T4Command : Command
 ######Tests
 
 Input1: ```MyApp.exe t4-my-action```
+
 Input2: ```MyApp.exe t4-my-action2```
 
 Outputs:
