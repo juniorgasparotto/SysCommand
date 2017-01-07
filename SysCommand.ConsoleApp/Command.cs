@@ -77,6 +77,11 @@ namespace SysCommand.ConsoleApp
             return view.ProcessByContent<T>(model, content);
         }
 
+        public string ViewT4<TTemplate>()
+        {
+            return T4Helper.Execute<TTemplate, object>(null);
+        }
+
         public string ViewT4<TTemplate, TModel>(TModel model = default(TModel))
         {
             return T4Helper.Execute<TTemplate, TModel>(model);

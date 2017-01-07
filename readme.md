@@ -247,9 +247,9 @@ public class TestVerbose : Command
 }
 ```
 
-Forma curta: ```MyApp.exe test **-v** Critical```
+Forma curta: ```MyApp.exe test -v Critical```
 
-Forma longa: ```MyApp.exe test **--verbose** Critical```
+Forma longa: ```MyApp.exe test --verbose Critical```
 
 Outputs:
 
@@ -315,6 +315,183 @@ My question: N
 ```
 
 Por último, vale lembrar que nada disso impede você de usar os mecanismos comuns do .NET, como a classe "System.Console".
+
+##Output usando template Razor
+
+Outra opção para exibir outputs é a utilização de templates `Razor`. Esse mecanismo foi projetado para coisas simples, é muito importante dizer que ele não dispõe de diversos recursos como: debug, intellisense, highlight e analise de erros.
+
+Para utilizar `Razor` deve-se seguir alguns simples passos:
+
+* Por organização, criar uma pasta "Views"
+* Criar um arquivo de template com a extensão ".razor" dentro da pasta "Views"
+* Implementar o seu template podendo ou não usar a variável "@Model"
+* Exibir as propriedades do arquivo ".razor" e configura-lo com a **Build Action = Embedded Resource** ou com a propriedade **Copy to Output = Copy aways**. Isso é necessário para o gerenciador de template encontre o arquivo na basta "bin/" em caso do uso do **Copy to Output** ou dentro do Assembly do domínio de aplicativo padrão com o uso do **Build Action**.
+
+**Exemplo:**
+
+######RazorCommand.cs
+
+```csharp
+public class RazorCommand : Command
+{
+    public string MyAction()
+    {
+        return View<MyModel>();
+    }
+
+    public string MyAction2()
+    {
+        var model = new MyModel
+        {
+            Name = "MyName"
+        };
+
+        return View(model, "MyAction.razor");
+    }
+
+    public class MyModel
+    {
+        public string Name { get; set; }
+    }
+}
+```
+
+######MyAction.razor
+
+@if (Model == null)
+{
+    <text>#### HelloWorld {NONE} ####</text>
+}
+else {
+    <text>#### HelloWorld (@Model.Name) ####</text>
+}
+```
+
+######Tests
+
+Input1: ```MyApp.exe my-action```
+Input2: ```MyApp.exe my-action2```
+
+Outputs:
+
+```
+    #### HelloWorld {NONE} ####
+    #### HelloWorld {MyName} ####
+```
+
+######Observação
+
+* A pesquisa do template via `Arquivo físico` ou via `Embedded Resource` segue a mesma lógica. Ele busca pelo caminho mais especifico usando o nome do "command.action.extensão" e caso ele não encontre ele tentará encontrar pelo nome mais generico, sem o nome do command.
+  ** Busca 1: RazorCommand.MyAction.razor
+  ** Busca 2: MyAction.razor
+* É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automatica. como no exemplo da action "MyAction2()".
+* Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.
+
+##Output usando template T4
+
+Outra opção para exibir outputs é a utilização de templates `T4`. Esse mecanismo, ao contrário dos templates `Razor` é mais completo, ele não perdeu nenhum dos beneficios que o Visual Studio nos fornece. Basta seguir apenas alguns passos para usa-lo:
+
+* Por organização, criar uma pasta "Views"
+* Criar um arquivo T4 no formato "Runtime Text Template"
+* Se for utilizar model é preciso configurar o parametro. Por obrigatoriedade ele deve-se chamar "Model" e com o seu respectivo tipo em forma de string. Caso não utilize nenhum "Model" então ignore esse passo.
+* Implementar o seu template
+
+**Exemplo:**
+
+```csharp
+public class T4Command : Command
+{
+    public string T4MyAction()
+    {
+        return ViewT4<MyActionView>();
+    }
+
+    public string T4MyAction2()
+    {
+        var model = new MyModel
+        {
+            Name = "MyName"
+        };
+
+        return ViewT4<MyActionView, MyModel>(model);
+    }
+
+    public class MyModel
+    {
+        public string Name { get; set; }
+    }
+}
+```
+######MyActionView.tt
+
+```csharp
+<#@ parameter type="Example.T4Command.MyModel" name="Model" #>
+<# if(Model == null) { #>
+#### HelloWorld {NONE} ####
+<# } #>
+<# else { #>
+#### HelloWorld (<#= Model.Name #>) ####
+<# } #>
+```
+
+######Tests
+
+Input1: ```MyApp.exe t4-my-action```
+Input2: ```MyApp.exe t4-my-action2```
+
+Outputs:
+
+```
+    #### HelloWorld {NONE} ####
+    #### HelloWorld {MyName} ####
+```
+
+##Output tabelado
+
+A classe `SysCommand.ConsoleApp.View.TableView` tras o recurso de `output tabelado` que pode ser muito útil para apresentar informações de forma rápida e visualmente mais organizada. É claro que tudo depende da quantidade de informação que você quer exibir, quanto maior, pior a visualização.
+
+**Exemplo:**
+
+```csharp
+public class TableCommand : Command
+{
+    public string MyTable()
+    {
+        var list = new List<MyModel>
+        {
+            new MyModel() {Id = "1", Column2 = "Line 1 Line 1"},
+            new MyModel() {Id = "2 " , Column2 = "Line 2 Line 2"},
+            new MyModel() {Id = "3", Column2 = "Line 3 Line 3"}
+        };
+
+        return TableView.ToTableView(list)
+                        .Build()
+                        .ToString();
+    }
+
+    public class MyModel
+    {
+        public string Id { get; set; }
+        public string Column2 { get; set; }
+    }
+}
+```
+######Tests
+
+Input1: ```MyApp.exe my-table```
+
+Outputs:
+
+```
+Id   | Column2
+--------------------
+1    | Line 1 Line 1
+--------------------
+2    | Line 2 Line 2
+--------------------
+3    | Line 3 Line 3
+--------------------
+```
 
 **Comandos de usuário**
 

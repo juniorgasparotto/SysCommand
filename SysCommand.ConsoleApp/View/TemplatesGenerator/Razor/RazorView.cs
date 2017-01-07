@@ -124,12 +124,23 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
         public string FindContentInResourse(ExecuteInfo info, bool throwException = true)
         {
             var viewName = this.GetTypeName(info.Type) + "." + this.GetMethodName(info.Method);
-            return FindContentInResourse(viewName, throwException);
+            var content = FindContentInResourse(viewName, false);
+
+            if (content == null)
+            {
+                viewName = this.GetMethodName(info.Method);
+                content = FindContentInResourse(viewName, false);
+            }
+
+            if (content == null && throwException)
+                ThrowFindContentInResourse(viewName, GetResourceAssembly().FullName);
+
+            return content;
         }
 
         public string FindContentInResourse(string viewName, bool throwException = true)
         {
-            var curAssembly = Assembly.GetExecutingAssembly();
+            var curAssembly = GetResourceAssembly();
             var name = curAssembly.GetManifestResourceNames()
                 .FirstOrDefault(n => n.ToLower().EndsWith(viewName.ToLower()));
 
@@ -142,14 +153,19 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
             }
 
             if (throwException)
-                ThrowFindContentInResourse(curAssembly.FullName);
+                ThrowFindContentInResourse(viewName, curAssembly.FullName);
 
             return null;
         }
 
-        private void ThrowFindContentInResourse(string assemblyName)
+        private void ThrowFindContentInResourse(string actionName, string assemblyName)
         {
-            throw new Exception(string.Format("No view was found in the assembly resources '{0}'.", assemblyName));
+            throw new Exception(string.Format("No view, for the action '{0}', was found in the assembly resources '{1}'.", actionName, assemblyName));
+        }
+
+        private Assembly GetResourceAssembly()
+        {
+            return Assembly.GetEntryAssembly();
         }
     }
 }
