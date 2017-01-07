@@ -247,9 +247,9 @@ public class TestVerbose : Command
 }
 ```
 
-Forma curta: ```MyApp.exe test -v Critical```
+Forma curta: ```MyApp.exe test **-v** Critical```
 
-Forma longa: ```MyApp.exe test --verbose Critical```
+Forma longa: ```MyApp.exe test **--verbose** Critical```
 
 Outputs:
 
@@ -261,12 +261,13 @@ output of critical
 
 * Para desativar o comando `VerboseCommand` veja o tópico de `Inicialização`.
 
-##Controle de output
+##Output
 
-O mecanismo de output foi extendido para tarefas comuns em uma aplicação console application. Nada impede você de usar o mecanismo padrão do .NET com a classe "Console.Write()" e afins, mas creio que utilizar o wrapper `ConsoleWrapper` pode te dar alguns beneficios como:
+O mecanismo de output foi extendido para aumentar a produtividade.
 
-* Quebra automatica de linha ao usar os métodos `App.Console.Write(..)` e `App.Console.Read(..)`
-* Funcionalidade de verbose nativa
+Primeiro, foi criado um pequeno wrapper da classe `System.Console` chamado `SysCommand.ConsoleApp.ConsoleWrapper` que esta disponivel dentro do contexto da aplicação na propriedade `App.Console`. Esse wrapper pode ser herdado e ter seus recursos modificados ou potencializados, mas por padrão temos as seguintes funcionalidades:
+
+* Métodos de write para cada tipo de verbo
 * Possibilidade de customização da cor do texto de cada verbo
   * App.Console.ColorInfo
   * App.Console.ColorCritical
@@ -274,8 +275,11 @@ O mecanismo de output foi extendido para tarefas comuns em uma aplicação conso
   * App.Console.ColorSuccess
   * App.Console.ColorWarning
   * App.Console.ColorRead
+* Quebra de linha inteligente durante o uso dós métodos de write e read. A variável `App.Console.BreakLineInNextWrite` controla as quebras e te ajuda a não deixar linhas vazias sem necessidade.
 
-Outro beneficio é a utilização dos `retornos dos métodos` como sendo outra forma de output. É possível afirmar que esse recurso caracteriza o `SysCommand` no padrão "MVC", ficando muito semelhante ao "AspNet MVC".
+Outro recurso seria a utilização dos `returns` das actions e que serão, caso existam, utilizados como output. Esse recurso se assemelha muito ao "AspNet MVC".
+
+**Exemplo:**
 
 ```csharp
 public class TestOutput : Command
@@ -286,12 +290,15 @@ public class TestOutput : Command
 
         if (result != "S")
         { 
-            // option1: use write method
-            this.App.Console.Write(99.99m);
+            // option1: use write method in wrapper class
+            this.App.Console.Write(1.1m);
+
+            // option2: use .NET class directly
+            Console.WriteLine(2.2m);
         }
 
-        // option2: or use return, its the same.
-        return 99.99m;
+        // option3: or use return, its the same the option1
+        return 3.3m;
     }
 }
 ```
@@ -302,9 +309,12 @@ Outputs:
 
 ```
 My question: N
-99,99
-99,99
+1.1
+2.2
+3.3
 ```
+
+Por último, vale lembrar que nada disso impede você de usar os mecanismos comuns do .NET, como a classe "System.Console".
 
 **Comandos de usuário**
 
