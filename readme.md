@@ -371,6 +371,7 @@ else {
 ######Tests
 
 Input1: ```MyApp.exe my-action```
+
 Input2: ```MyApp.exe my-action2```
 
 Outputs:
