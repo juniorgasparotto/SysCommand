@@ -384,8 +384,8 @@ Outputs:
 ######Observação
 
 * A pesquisa do template via `Arquivo físico` ou via `Embedded Resource` segue a mesma lógica. Ele busca pelo caminho mais especifico usando o nome do "command.action.extensão" e caso ele não encontre ele tentará encontrar pelo nome mais generico, sem o nome do command.
-  ** Busca 1: RazorCommand.MyAction.razor
-  ** Busca 2: MyAction.razor
+  * Busca 1: RazorCommand.MyAction.razor
+  * Busca 2: MyAction.razor
 * É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automatica. como no exemplo da action "MyAction2()".
 * Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.
 
