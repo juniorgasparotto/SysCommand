@@ -507,14 +507,51 @@ Id   | Column2
 
 Esse recurso permite que você salve aqueles inputs que são utilizados com muita frequencia e podem ser persistidos indeterminadamente. O seu funcionamento é bem simples, uma `Command` interno chamado `SysCommand.ConsoleApp.Commands.ArgsHistoryCommand` é responsável por indentificar as `actions` de gerenciamento e persisti-lo em um arquivo `Json` no caminho padrão `.app/history.json`. As `actions` de gerenciamento são as seguintes:
 
-* `history-save   [name]` asda 
-* `history-load   [name]` asd asd
-* `history-delete [name]` asd 
-* `history-list` asdsdas 
+* `history-save   [name]`
+* `history-load   [name]`
+* `history-delete [name]` 
+* `history-list`
 
+**Exemplo:**
 
+```csharp
+public class TestArgsHistories : Command
+{
+    public void HistoryMyAction(string arg)
+    {
+        this.App.Console.Write("my action"); 
+    }
+}
+```
 
-Observação: Caso você opte por escolher os comandos que farão parte da sua aplicação, todos os comandos internos, com exceção do comando de `help`, NÃO serão carregados. O comando de `help` é o único que sempre será carregado.
+```
+C:\MyApp.exe test-history-action history-save "CommonCommand1"
+Testing
+
+C:\MyApp.exe history-load "CommonCommand1"
+Testing
+
+C:\MyApp.exe history-list
+[CommonCommand1] test-history-action
+
+C:\MyApp.exe history-remove "CommonCommand1"
+**{No output}**
+
+C:\MyApp.exe history-list
+**{No output}**
+```
+
+Forma longa: ```MyApp.exe test --verbose Critical```
+
+Outputs:
+
+```
+output of info
+output of error forced
+output of critical
+```
+
+* Para desativar o comando `ArgsHistoryCommand` veja o tópico de `Inicialização`.
 
 ##Controle de erro automatico
 

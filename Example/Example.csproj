@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\TestArgsHistories.cs" />
     <Compile Include="Commands\TableCommand.cs" />
     <Compile Include="Commands\ExampleT4Command.cs" />
     <Compile Include="Commands\ExampleRazorCommand.cs" />
