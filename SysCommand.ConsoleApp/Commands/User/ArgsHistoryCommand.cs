@@ -20,14 +20,14 @@ namespace SysCommand.ConsoleApp.Commands
             this.fileManager = App.Items.GetOrCreate<JsonFileManager>();
         }
 
-        public RestartResult HistoryLoad(string name)
+        public RedirectResult HistoryLoad(string name)
         {
             var histories = this.fileManager.GetOrCreate<List<History>>(FILE_NAME);
             var history = histories.FirstOrDefault(f => f.Name == name);
             if (history == null)
                  throw new Exception(string.Format("The history name '{0}' dosen't exists", name));
 
-            return new RestartResult(history.Args.ToArray());
+            return new RedirectResult(history.Args.ToArray());
         }
 
         public void HistorySave(string name)

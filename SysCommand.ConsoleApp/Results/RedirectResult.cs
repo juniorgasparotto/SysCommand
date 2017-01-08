@@ -1,10 +1,10 @@
 ﻿namespace SysCommand.ConsoleApp.Results
 {
-    public class RestartResult : IActionResult
+    public class RedirectResult : IActionResult
     {
         public string[] NewArgs { get; private set; }
 
-        public RestartResult(string[] newArgs)
+        public RedirectResult(params string[] newArgs)
         {
             this.NewArgs = newArgs;
         }

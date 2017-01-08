@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "Name": "CommonCommand1",
+    "Args": [
+      "test-history-action"
+    ]
+  }
+]

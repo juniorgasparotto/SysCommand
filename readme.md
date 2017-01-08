@@ -517,9 +517,9 @@ Esse recurso permite que você salve aqueles inputs que são utilizados com muit
 ```csharp
 public class TestArgsHistories : Command
 {
-    public void HistoryMyAction(string arg)
+    public void TestHistoryAction()
     {
-        this.App.Console.Write("my action"); 
+        this.App.Console.Write("Testing"); 
     }
 }
 ```
@@ -541,38 +541,145 @@ C:\MyApp.exe history-list
 {No output}
 ```
 
-Forma longa: ```MyApp.exe test --verbose Critical```
-
-Outputs:
-
-```
-output of info
-output of error forced
-output of critical
-```
-
 * Para desativar o comando `ArgsHistoryCommand` veja o tópico de `Inicialização`.
+* A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico `Redirecionamento de comandos`.
+
+##Redirecionamento de comandos
+
+Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instancia da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instancias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução.
+
+**Exemplo:**
+
+```csharp
+public class RedirectCommand : Command
+{
+    private int _count;
+
+    public RedirectResult RedirectNow(string arg)
+    {
+        _count++;
+        App.Console.Write($"Redirecting now!!. Count: {_count}");
+        return new RedirectResult("redirected", "--arg", arg);
+    }
+
+    public string Redirected(string arg)
+    {
+        _count++;
+        return $"Redirected: {arg}. Count: {_count}";
+    }
+}
+```
+
+```
+C:\MyApp.exe redirect-now my-value
+Redirecting now!!. Count: 1
+Redirected: my-value. Count: 2
+```
+
+##Cancelamento da continuidade da execução
+
+Quando existem muitas actions com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.
+
+**Exemplo:**
+
+```csharp
+public class StopPropagationCommand1 : Command
+{
+    public string StopPropagationAction1(bool cancel = false)
+    {
+        return "StopPropagationCommand1.StopPropagationAction1";
+    }
+
+    public string StopPropagationAction2()
+    {
+        return "StopPropagationCommand1.StopPropagationAction2";
+    }
+}
+
+public class StopPropagationCommand2 : Command
+{
+    public string StopPropagationAction1(bool cancel = false)
+    {
+        if (cancel)
+        {
+            ExecutionScope.StopPropagation();
+        }
+
+        return "StopPropagationCommand2.StopPropagationAction1";
+    }
+
+    public string StopPropagationAction2()
+    {
+        return "StopPropagationCommand2.StopPropagationAction2";
+    }
+}
+
+public class StopPropagationCommand3 : Command
+{
+    public string StopPropagationAction1(bool cancel = false)
+    {
+        return "StopPropagationCommand3.StopPropagationAction1";
+    }
+
+    public string StopPropagationAction2()
+    {
+        return "StopPropagationCommand3.StopPropagationAction2";
+    }
+}
+```
+
+```
+C:\MyApp.exe stop-propagation-action1
+StopPropagationCommand1.StopPropagationAction1
+StopPropagationCommand2.StopPropagationAction1
+StopPropagationCommand3.StopPropagationAction1
+
+C:\MyApp.exe stop-propagation-action1 --cancel
+StopPropagationCommand1.StopPropagationAction1
+StopPropagationCommand2.StopPropagationAction1
+```
+
+Perceba que ao utilizar o argumento "--cancel" a action "StopPropagationCommand3.StopPropagationAction1" não foi executada. Isso por que ela estava na última posição da pilha de execução e como a action "StopPropagationCommand2.StopPropagationAction1" cancelou a continuidade da execução, qualquer outra action da sequencia sera ignorada.
+
+Outra possibilidade de uso do `StopPropagation` é quando existem multiplas actions no mesmo input. A lógica é a mesma, será cancelado todas as actions da pilha que estão depois da action que disparou o stop.
+
+```
+C:\MyApp.exe stop-propagation-action1 stop-propagation-action2
+StopPropagationCommand1.StopPropagationAction1
+StopPropagationCommand2.StopPropagationAction1
+StopPropagationCommand3.StopPropagationAction1
+StopPropagationCommand1.StopPropagationAction2
+StopPropagationCommand2.StopPropagationAction2
+StopPropagationCommand3.StopPropagationAction2
+
+C:\MyApp.exe stop-propagation-action1 --cancel stop-propagation-action2
+StopPropagationCommand1.StopPropagationAction1
+StopPropagationCommand2.StopPropagationAction1
+```
+
+Perceba que a execução parou no mesmo ponto.
+
+* Para desabilitar o recurso de multi-action, desative a propriedade `App.EnableMultiAction` antes do método `App.Run()`.
 
 ##Controle de erro automatico
 
 ##Trabalhando com propriedades
 
-
-
 * Main()
-
-##RestartResult or ActionResult
-
-
-##Controle de execução das actions
-
-StopPropagation
 
 ##Eventos
 
 ##Métodos explicitos e implicitos
 
 * Main()
+
+####Inicialização
+
+`App.EnableMultiAction`
+`App.Run()`
+`App.RunApplication`
+
+####Json
 
 ##Tipos de inputs
 
@@ -713,7 +820,6 @@ Importante!
 
 Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
 
-####Inicialização
 
 ##Features
 

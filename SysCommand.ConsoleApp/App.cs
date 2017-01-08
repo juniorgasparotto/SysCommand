@@ -186,10 +186,10 @@ namespace SysCommand.ConsoleApp
 
                     if (actionResult != null)
                     {
-                        if (actionResult is RestartResult)
+                        if (actionResult is RedirectResult)
                         {
                             isRestarted = true;
-                            appResult.Args = ((RestartResult)actionResult).NewArgs;
+                            appResult.Args = ((RedirectResult)actionResult).NewArgs;
                             scope.StopPropagation();
                         }
                         else
