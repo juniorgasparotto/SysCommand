@@ -507,10 +507,10 @@ Id   | Column2
 
 Esse recurso permite que você salve aqueles inputs que são utilizados com muita frequencia e podem ser persistidos indeterminadamente. O seu funcionamento é bem simples, uma `Command` interno chamado `SysCommand.ConsoleApp.Commands.ArgsHistoryCommand` é responsável por indentificar as `actions` de gerenciamento e persisti-lo em um arquivo `Json` no caminho padrão `.app/history.json`. As `actions` de gerenciamento são as seguintes:
 
-* `history-save   [name]`   -> 
-* `history-load   [name]`   -> 
-* `history-delete [name]`   -> 
-* `history-list`            -> 
+* `history-save   [name]` asda 
+* `history-load   [name]` asd asd
+* `history-delete [name]` asd 
+* `history-list` asdsdas 
 
 
 
