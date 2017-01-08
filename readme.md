@@ -1,4 +1,5 @@
 #SysCommand
+
 Framework for development console application using the MVC pattern. A good option of command line parser.
 
 #Install
@@ -322,17 +323,18 @@ Outra opção para exibir outputs é a utilização de templates `Razor`. Esse m
 
 Para utilizar `Razor` deve-se seguir alguns simples passos:
 
-* Por organização, criar uma pasta "Views"
-* Criar um arquivo de template com a extensão ".razor" dentro da pasta "Views"
+* Por organização, criar uma pasta chamada "Views". 
+* Caso ainda queira mais organização, crie uma sub-pasta dentro da pasta "Views" com o nome do `Command`.
+* Criar um arquivo de template com a extensão ".razor" dentro da pasta "Views". Esse arquivo deve ter o mesmo nome da action (método)
 * Implementar o seu template podendo ou não usar a variável "@Model"
 * Exibir as propriedades do arquivo ".razor" e configura-lo com a **Build Action = Embedded Resource** ou com a propriedade **Copy to Output = Copy aways**. Isso é necessário para o gerenciador de template encontre o arquivo na basta "bin/" em caso do uso do **Copy to Output** ou dentro do Assembly do domínio de aplicativo padrão com o uso do **Build Action**.
 
 **Exemplo:**
 
-######RazorCommand.cs
+######Commands/ExampleRazorCommand.cs
 
 ```csharp
-public class RazorCommand : Command
+public class ExampleRazorCommand : Command
 {
     public string MyAction()
     {
@@ -356,7 +358,7 @@ public class RazorCommand : Command
 }
 ```
 
-######MyAction.razor
+######Views/ExampleRazor/MyAction.razor
 
 ```
 @if (Model == null)
@@ -384,9 +386,10 @@ Outputs:
 ######Observação
 
 * A pesquisa do template via `Arquivo físico` ou via `Embedded Resource` segue a mesma lógica. Ele busca pelo caminho mais especifico usando o nome do "command.action.extensão" e caso ele não encontre ele tentará encontrar pelo nome mais generico, sem o nome do command.
-  * Busca 1: RazorCommand.MyAction.razor
-  * Busca 2: MyAction.razor
+  * Busca primeiro por: "ExampleRazorCommand.MyAction.razor"
+  * Caso não encontre na primeira tentativa, então busca por: "MyAction.razor"
 * É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automatica. como no exemplo da action "MyAction2()".
+* Por questões técnicas, o método View<>() obriga o uso de uma inferencia ou um model. Infira um `object` se você não necessitar de um model `View<object>()`.
 * Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.
 
 ##Output usando template T4
@@ -395,13 +398,15 @@ Outra opção para exibir outputs é a utilização de templates `T4`. Esse meca
 
 * Por organização, criar uma pasta "Views"
 * Criar um arquivo T4 no formato "Runtime Text Template"
-* Se for utilizar model é preciso configurar o parametro. Por obrigatoriedade ele deve-se chamar "Model" e com o seu respectivo tipo em forma de string. Caso não utilize nenhum "Model" então ignore esse passo.
+* Se for utilizar model é preciso configurar um parametro, que por obrigatoriedade, deve-se chamar "Model" e ter o seu respectivo tipo em forma de string. Caso não utilize nenhum "Model" então ignore esse passo.
 * Implementar o seu template
 
 **Exemplo:**
 
+######Commands/ExampleT4Command.cs
+
 ```csharp
-public class T4Command : Command
+public class ExampleT4Command : Command
 {
     public string T4MyAction()
     {
@@ -424,7 +429,7 @@ public class T4Command : Command
     }
 }
 ```
-######MyActionView.tt
+######Views/ExampleT4/MyActionView.tt
 
 ```csharp
 <#@ parameter type="Example.T4Command.MyModel" name="Model" #>
@@ -454,6 +459,8 @@ Outputs:
 A classe `SysCommand.ConsoleApp.View.TableView` tras o recurso de `output tabelado` que pode ser muito útil para apresentar informações de forma rápida e visualmente mais organizada. É claro que tudo depende da quantidade de informação que você quer exibir, quanto maior, pior a visualização.
 
 **Exemplo:**
+
+######Commands/TableCommand.cs
 
 ```csharp
 public class TableCommand : Command
@@ -496,9 +503,15 @@ Id   | Column2
 --------------------
 ```
 
-**Comandos de usuário**
+##Gerenciamento de históricos de argumentos
 
-* SysCommand.ConsoleApp.Commands.ArgsHistoryCommand
+Esse recurso permite que você salve aqueles inputs que são utilizados com muita frequencia e podem ser persistidos indeterminadamente. O seu funcionamento é bem simples, uma `Command` interno chamado `SysCommand.ConsoleApp.Commands.ArgsHistoryCommand` é responsável por indentificar as `actions` de gerenciamento e persisti-lo em um arquivo `Json` no caminho padrão `.app/history.json`. As `actions` de gerenciamento são as seguintes:
+
+* `history-save   [name]`   -> 
+* `history-load   [name]`   -> 
+* `history-delete [name]`   -> 
+* `history-list`            -> 
+
 
 
 Observação: Caso você opte por escolher os comandos que farão parte da sua aplicação, todos os comandos internos, com exceção do comando de `help`, NÃO serão carregados. O comando de `help` é o único que sempre será carregado.
@@ -513,6 +526,10 @@ Observação: Caso você opte por escolher os comandos que farão parte da sua a
 
 ##RestartResult or ActionResult
 
+
+##Controle de execução das actions
+
+StopPropagation
 
 ##Eventos
 

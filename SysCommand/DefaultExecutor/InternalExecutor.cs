@@ -66,27 +66,27 @@ namespace SysCommand.DefaultExecutor
                 var methods = executionResult.Results.With<MethodResult>();
                 
                 foreach (var prop in properties)
-                { 
-                    if (!executionScope.IsStopped)
-                    { 
-                        if (onInvoke == null)
-                            prop.Invoke();
-                        else
-                            onInvoke(prop, executionScope);
-                    }
+                {
+                    if (executionScope.IsStopped)
+                        break;
+
+                    if (onInvoke == null)
+                        prop.Invoke();
+                    else
+                        onInvoke(prop, executionScope);
                 }
 
                 if (!executionScope.IsStopped)
                 {
                     foreach (var main in mains)
                     {
-                        if (!executionScope.IsStopped)
-                        {
-                            if (onInvoke == null)
-                                main.Invoke();
-                            else
-                                onInvoke(main, executionScope);
-                        }
+                        if (executionScope.IsStopped)
+                            break;
+                        
+                        if (onInvoke == null)
+                            main.Invoke();
+                        else
+                            onInvoke(main, executionScope);
                     }
                 }
 
@@ -94,13 +94,13 @@ namespace SysCommand.DefaultExecutor
                 {
                     foreach (var method in methods)
                     {
-                        if (!executionScope.IsStopped)
-                        {
-                            if (onInvoke == null)
-                                method.Invoke();
-                            else
-                                onInvoke(method, executionScope);
-                        }
+                        if (executionScope.IsStopped)
+                            break;
+
+                        if (onInvoke == null)
+                            method.Invoke();
+                        else
+                            onInvoke(method, executionScope);
                     }
                 }
 

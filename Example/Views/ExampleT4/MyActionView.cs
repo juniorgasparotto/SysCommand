@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace Example.Views
+namespace Example.Views.ExampleT4
 {
     using System;
     
@@ -15,7 +15,7 @@ namespace Example.Views
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\MyActionView.tt"
+    #line 1 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\ExampleT4\MyActionView.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class MyActionView : MyActionViewBase
     {
@@ -26,34 +26,34 @@ namespace Example.Views
         public virtual string TransformText()
         {
             
-            #line 2 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\MyActionView.tt"
+            #line 2 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\ExampleT4\MyActionView.tt"
  if(Model == null) { 
             
             #line default
             #line hidden
             this.Write("#### HelloWorld {NONE} ####\r\n");
             
-            #line 4 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\MyActionView.tt"
+            #line 4 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\ExampleT4\MyActionView.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 5 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\MyActionView.tt"
+            #line 5 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\ExampleT4\MyActionView.tt"
  else { 
             
             #line default
             #line hidden
             this.Write("#### HelloWorld (");
             
-            #line 6 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\MyActionView.tt"
+            #line 6 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\ExampleT4\MyActionView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.Name));
             
             #line default
             #line hidden
             this.Write(") ####\r\n");
             
-            #line 7 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\MyActionView.tt"
+            #line 7 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\ExampleT4\MyActionView.tt"
  } 
             
             #line default
@@ -61,14 +61,14 @@ namespace Example.Views
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 1 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\MyActionView.tt"
+        #line 1 "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\Example\Views\ExampleT4\MyActionView.tt"
 
-private global::Example.T4Command.MyModel _ModelField;
+private global::Example.Commands.ExampleT4Command.MyModel _ModelField;
 
 /// <summary>
 /// Access the Model parameter of the template.
 /// </summary>
-private global::Example.T4Command.MyModel Model
+private global::Example.Commands.ExampleT4Command.MyModel Model
 {
     get
     {
@@ -87,7 +87,7 @@ public virtual void Initialize()
 bool ModelValueAcquired = false;
 if (this.Session.ContainsKey("Model"))
 {
-    this._ModelField = ((global::Example.T4Command.MyModel)(this.Session["Model"]));
+    this._ModelField = ((global::Example.Commands.ExampleT4Command.MyModel)(this.Session["Model"]));
     ModelValueAcquired = true;
 }
 if ((ModelValueAcquired == false))
@@ -95,7 +95,7 @@ if ((ModelValueAcquired == false))
     object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("Model");
     if ((data != null))
     {
-        this._ModelField = ((global::Example.T4Command.MyModel)(data));
+        this._ModelField = ((global::Example.Commands.ExampleT4Command.MyModel)(data));
     }
 }
 

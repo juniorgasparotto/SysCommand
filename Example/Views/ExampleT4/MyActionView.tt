@@ -1,4 +1,4 @@
-﻿<#@ parameter type="Example.T4Command.MyModel" name="Model" #>
+﻿<#@ parameter type="Example.Commands.ExampleT4Command.MyModel" name="Model" #>
 <# if(Model == null) { #>
 #### HelloWorld {NONE} ####
 <# } #>
