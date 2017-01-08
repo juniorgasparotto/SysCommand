@@ -535,10 +535,10 @@ C:\MyApp.exe history-list
 [CommonCommand1] test-history-action
 
 C:\MyApp.exe history-remove "CommonCommand1"
-**{No output}**
+{No output}
 
 C:\MyApp.exe history-list
-**{No output}**
+{No output}
 ```
 
 Forma longa: ```MyApp.exe test --verbose Critical```
