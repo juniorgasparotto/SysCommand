@@ -291,15 +291,15 @@ namespace SysCommand.ConsoleApp.Descriptor
         {
             if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentAlreadyBeenSet))
                 return string.Format(Strings.ArgumentAlreadyBeenSet, argumentParsed.GetArgumentNameInputted());
-            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByName))
+            if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByName))
                 return string.Format(Strings.ArgumentNotExistsByName, argumentParsed.GetArgumentNameInputted());
-            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByValue))
+            if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByValue))
                 return string.Format(Strings.ArgumentNotExistsByValue, argumentParsed.Raw);
-            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsRequired))
+            if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsRequired))
                 return string.Format(Strings.ArgumentIsRequired, argumentParsed.GetArgumentNameInputted());
-            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasInvalidInput))
+            if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasInvalidInput))
                 return string.Format(Strings.ArgumentHasInvalidInput, argumentParsed.GetArgumentNameInputted());
-            else if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasUnsupportedType))
+            if (argumentParsed.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasUnsupportedType))
                 return string.Format(Strings.ArgumentHasUnsupportedType, argumentParsed.GetArgumentNameInputted());
             return null;
         }
