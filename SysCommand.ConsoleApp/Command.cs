@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -7,6 +8,7 @@ using SysCommand.Execution;
 using SysCommand.Helpers;
 using SysCommand.ConsoleApp.View.TemplatesGenerator.Razor;
 using SysCommand.ConsoleApp.View.TemplatesGenerator.T4;
+using SysCommand.Parsing;
 
 namespace SysCommand.ConsoleApp
 {
@@ -17,8 +19,8 @@ namespace SysCommand.ConsoleApp
         [MethodImpl(MethodImplOptions.NoInlining)]
         public ActionMap CurrentActionMap()
         {
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(1);
+            var st = new StackTrace();
+            var sf = st.GetFrame(1);
             var currentMethod = (MethodInfo)sf.GetMethod();
             return this.ExecutionScope.ParseResult.Maps.GetMap(this.GetType()).Methods.FirstOrDefault(m => ReflectionHelper.MethodsAreEquals(m.Method, currentMethod));
         }
@@ -45,6 +47,15 @@ namespace SysCommand.ConsoleApp
             //  3.1) f.IsInvoked = true:  save 4 5 6 -> NO
             //  3.2) f.IsInvoked = false: save 7 8 9 -> FIRST: IsInvoked = FALSE
             return thisMethodForEachLevel.First(f => !f.IsInvoked);
+        }
+
+        public PropertyResult GetPropertyResult(string name)
+        {
+            // return all properties results for this instance
+            var allPropertiesResult = this.ExecutionScope.ExecutionResult.Results.With<PropertyResult>();
+            var thisMethodForEachLevel = allPropertiesResult.Where(m => m.Target == this).ToList();
+
+            return thisMethodForEachLevel.FirstOrDefault(f => f.Name == name);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

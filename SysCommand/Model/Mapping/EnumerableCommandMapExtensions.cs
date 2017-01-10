@@ -4,16 +4,16 @@ using System;
 
 namespace SysCommand.Mapping
 {
-    public static class IEnumerableCommandMapExtensions 
+    public static class EnumerableCommandMapExtensions 
     {
         public static CommandMap GetMap<T>(this IEnumerable<CommandMap> maps)
         {
-            return maps.Where(c => c.Command is T).FirstOrDefault();
+            return maps.FirstOrDefault(c => c.Command is T);
         }
 
         public static CommandMap GetMap(this IEnumerable<CommandMap> maps, Type type)
         {
-            return maps.Where(c => c.Command.GetType() == type).FirstOrDefault();
+            return maps.FirstOrDefault(c => c.Command.GetType() == type);
         }
 
         public static IEnumerable<CommandBase> GetCommands(this IEnumerable<CommandMap> maps)

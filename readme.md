@@ -144,7 +144,7 @@ public class Program
         public string MyCustomHelp(string action = null)
         {
             foreach(var map in this.App.Maps)
-            { 
+            {
                 ... 
             }
         }
@@ -154,7 +154,7 @@ public class Program
 
 ```MyApp.exe custom-help```
 
-Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o `help` padrão utiliza os métodos de help contidos dentro dessa instancia. Essa opção não é recomendada se você deseja apenas customizar o `help`. 
+Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o `help` padrão utiliza os métodos de help contidos dentro dessa instancia. Essa opção não é recomendada se você deseja apenas customizar o `help`.
 
 Uma opção mais segura seria criar um `Descriptor` herdando da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor` e sobrescrer apenas os métodos de help.
 
@@ -208,8 +208,8 @@ public class ClearCommand : Command
 {
     public ClearCommand()
     {
-        HelpText = "Clear window. Only in debug";
-        OnlyInDebug = true;
+        this.HelpText = "Clear window. Only in debug";
+        this.OnlyInDebug = true;
     }
 
     public void Clear()
@@ -656,7 +656,6 @@ C:\MyApp.exe stop-propagation-action1 --cancel stop-propagation-action2
 StopPropagationCommand1.StopPropagationAction1
 StopPropagationCommand2.StopPropagationAction1
 ```
-
 Perceba que a execução parou no mesmo ponto.
 
 * Para desabilitar o recurso de multi-action, desative a propriedade `App.EnableMultiAction` antes do método `App.Run()`.
@@ -737,10 +736,257 @@ public class Program
 }
 ```
 
-
 ##Trabalhando com propriedades
 
-* Main()
+O trabalho com propriedades é muito simples, basta criar suas propriedades como publicas e escolher um dos dois meios abaixo para saber se uma propriedade foi inputada pelo usuário, você que escolhe qual utilizar:
+
+######Modo de uso 1
+
+Primeiro, você pode utilizar o método `Main()` sem parametro e que, por convensão de nome, será o responsável por ser invocado caso alguma de suas propriedade tenha sido utilizadas no input do usuário. O nome "Main" foi escolhido para manter o padrão de nomenclatura que o .NET utiliza em aplicações de console. 
+
+Por segurança, utilize todos os tipos primitivos como `Nullable` para garantir que o usuário fez o input. Ou utilize o método `GetPropertyResult(string name)` para verificar se uma propriedade tem resultado. Vale ressaltar que uma propriedade com `Default value` sempre terá resultado e caso necessário, utilize mais uma verificação para saber se o resultado partiu de um input do usuário.
+
+**Exemplo:**
+
+```csharp
+public string Main()
+{
+    if (this.MyProperty != null)
+        App.Console.Write("Has MyProperty");
+
+    if (this.MyPropertyInt != null)
+        App.Console.Write("Safe mode: MyPropertyInt");
+
+    if (this.MyPropertyUnsafeMode == 0)
+        App.Console.Write("Unsafe mode: Preferably, use nullable in MyPropertyUnsafeMode");
+
+    if (this.GetPropertyResult("MyPropertyUnsafeMode") != null)
+        App.Console.Write("Safe mode, but use string: MyPropertyUnsafeMode");
+
+    if (this.GetPropertyResult(nameof(MyPropertyUnsafeMode)) != null)
+        App.Console.Write("Safe mode, but only in c# 6: MyPropertyUnsafeMode");
+
+    if (this.GetPropertyResult(nameof(MyPropertyDefaultValue)) != null)
+        App.Console.Write("MyPropertyDefaultValue aways has value");
+
+    // if necessary, add this verification to know if property had input.
+    if (this.GetPropertyResult(nameof(MyPropertyDefaultValue)).ArgumentParsed.IsMapped)
+        App.Console.Write("MyPropertyDefaultValue has input");
+
+    return "Main() methods can also return values ;)";
+}
+```
+
+```
+C:\MyApp.exe --my-property value
+Has MyProperty
+Unsafe mode: Preferably, use nullable in MyPropertyUnsafeMode
+MyPropertyDefaultValue aways has value
+Main() methods can also return values ;)
+
+C:\MyApp.exe --my-property-int 0
+Safe mode: MyPropertyInt
+Unsafe mode: Preferably, use nullable in MyPropertyUnsafeMode
+MyPropertyDefaultValue aways has value
+Main() methods can also return values ;)
+
+C:\MyApp.exe --my-property-unsafe-mode 0
+Unsafe mode: Preferably, use nullable in MyPropertyUnsafeMode
+Safe mode, but use string: MyPropertyUnsafeMode
+Safe mode, but only in c# 6: MyPropertyUnsafeMode
+MyPropertyDefaultValue aways has value
+Main() methods can also return values ;)
+
+C:\MyApp.exe --my-property-default-value 0
+Unsafe mode: Preferably, use nullable in MyPropertyUnsafeMode
+MyPropertyDefaultValue aways has value
+MyPropertyDefaultValue has input
+Main() methods can also return values ;)
+```
+Tenha muito cuidado com propriedades com `Default values`, o fato dela ter valor por padrão faz com que o método `Main()` sempre seja chamado mesmo quando não exista nenhum input.
+
+```
+C:\MyApp.exe
+Unsafe mode: Preferably, use nullable in MyPropertyUnsafeMode
+MyPropertyDefaultValue aways has value
+Main() methods can also return values ;)
+```
+######Modo de uso 2
+
+Por fim, você ainda pode utilizar o `set { .. }` da sua propriedade para tomar alguma ação. Esse recurso não é recomendado, pois o método `GetPropertyResult(string name)` ainda não esta pronto para ser usado nesse momento, mas caso queira algo pontual e rápido, nada te impede de usar esse meio.
+
+```csharp
+public class TestProperty2Command : Command
+{
+    public bool MyCustomVerbose
+    {
+        set
+        {
+            if (value)
+                Console.WriteLine("MyCustomVerbose=true");
+            else
+                App.Console.Write("MyCustomVerbose=false");
+        }
+    }
+}
+```
+
+```
+C:\MyApp.exe --my-custom-verbose
+MyCustomVerbose=true
+
+C:\MyApp.exe --my-custom-verbose false
+MyCustomVerbose=false
+```
+
+######Propriedades obrigatórias
+
+Para argumentos que são obrigatórios, é necessário que você use o `ArgumentAtrribute` ligando a flag `IsRequired`.
+
+**Exemplo:**
+
+```csharp
+public class TestProperty5Command : Command
+{
+    [Argument(IsRequired = true)]
+    public string MyPropertyRequired { get; set; }
+
+    public void Main()
+    {
+        if (MyPropertyRequired != null)
+            App.Console.Write("MyPropertyRequired=" + MyPropertyRequired);
+    }
+}
+```
+
+```
+C:\MyApp.exe
+There are errors in command: TestProperty5Command
+The argument '--my-property-required' is required
+
+C:\MyApp.exe --my-property-required 123
+MyPropertyRequired=123
+```
+
+######Habilitando o input posicional
+
+Para habilitar o input posicional basta ligar a flag `EnablePositionalArgs` em seu `Command`, contudo é importante validar o quanto isso necessário, pois muitos inputs posicionais podem complicar muito o uso da sua aplicação. Apesar do `SysCommand` estar bem preparado para esse tipo de input, não queremos que você polua o seu input.
+
+```csharp
+public class TestProperty3Command : Command
+{
+    public int? MyPosicionalProperty1 { get; set; }
+    public int? MyPosicionalProperty2 { get; set; }
+
+    public TestProperty3Command()
+    {
+        this.EnablePositionalArgs = true;
+    }
+
+    public void Main()
+    {
+        if (MyPosicionalProperty1 != null)
+            App.Console.Write("MyPosicionalProperty1=" + MyPosicionalProperty1);
+        if (MyPosicionalProperty2 != null)
+            App.Console.Write("MyPosicionalProperty2=" + MyPosicionalProperty2);
+    }
+}
+```
+```
+C:\MyApp.exe --my-posicional-property1 1 --my-posicional-property2 2
+MyPosicionalProperty1=1
+MyPosicionalProperty2=2
+
+C:\MyApp.exe 1 2
+MyPosicionalProperty1=1
+MyPosicionalProperty2=2
+
+C:\MyApp.exe 1 --my-posicional-property2 2
+MyPosicionalProperty1=1
+MyPosicionalProperty2=2
+```
+
+Você pode também controlar a posição de cada propriedade dentro do input usando a configuração `Position`.
+
+**Exemplo:**
+
+```csharp
+public class TestProperty3Command : Command
+{
+    [Argument(Position = 2)]
+    public int? MyPosicionalProperty1 { get; set; }
+
+    [Argument(Position = 1)]
+    public int? MyPosicionalProperty2 { get; set; }
+
+    public TestProperty3Command()
+    {
+        this.EnablePositionalArgs = true;
+    }
+
+    public void Main()
+    {
+        if (MyPosicionalProperty1 != null)
+            App.Console.Write("MyPosicionalProperty1=" + MyPosicionalProperty1);
+        if (MyPosicionalProperty2 != null)
+            App.Console.Write("MyPosicionalProperty2=" + MyPosicionalProperty2);
+    }
+}
+```
+
+```
+C:\MyApp.exe --my-posicional-property1 1 --my-posicional-property2 2
+MyPosicionalProperty1=1
+MyPosicionalProperty2=2
+
+C:\MyApp.exe 1 2
+MyPosicionalProperty1=2
+MyPosicionalProperty2=1
+```
+
+######Ignorar propriedades publicas por uma escolha manual usando atributo
+
+Para mudar o comportamente padrão de propriedades publicas, você precisa apenas desligar a flag `OnlyPropertiesWithAttribute` do `Command`. Com ela desligada o parseador deixará de olhar para as propriedades publicas e usará apenas as propriedades publicas e que tiverem o atributo `ArgumentAtrribute`.
+
+**Exemplo:**
+
+```csharp
+public class TestProperty4Command : Command
+{
+    public int? MyPropertyWithoutAttribute { get; set; }
+
+    [Argument]
+    public int? MyPropertyWithAttribute { get; set; }
+
+    public TestProperty4Command()
+    {
+        this.OnlyPropertiesWithAttribute = true;
+    }
+
+    public void Main()
+    {
+        if (MyPropertyWithAttribute != null)
+            App.Console.Write("MyPropertyWithAttribute=" + MyPropertyWithAttribute);
+    }
+}
+```
+
+```
+C:\MyApp.exe --my-property-with-attribute 1
+MyPropertyWithAttribute=1
+
+C:\MyApp.exe --my-property-without-attribute 1
+There are errors in command: DoSomethingCommand
+The argument '--my-property-without-attribute' does not exist
+```
+
+##Adicionando um prefixo em todos os métodos
+
+Para adicionar um prefixo em todas as propriedades de seu `Command` utilize a propriedade 
+
+##Input Scaped
+
+##Acessando o mapa de propriedade ou ações
 
 ##Eventos
 
