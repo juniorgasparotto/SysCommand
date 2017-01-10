@@ -96,15 +96,15 @@ namespace Example.Commands
         }
     }
 
-    public class TestProperty5Command : Command
-    {
-        [Argument(IsRequired = true)]
-        public string MyPropertyRequired { get; set; }
+    //public class TestProperty5Command : Command
+    //{
+    //    [Argument(IsRequired = true)]
+    //    public string MyPropertyRequired { get; set; }
 
-        public void Main()
-        {
-            if (MyPropertyRequired != null)
-                App.Console.Write("MyPropertyRequired=" + MyPropertyRequired);
-        }
-    }
+    //    public void Main()
+    //    {
+    //        if (MyPropertyRequired != null)
+    //            App.Console.Write("MyPropertyRequired=" + MyPropertyRequired);
+    //    }
+    //}
 }
