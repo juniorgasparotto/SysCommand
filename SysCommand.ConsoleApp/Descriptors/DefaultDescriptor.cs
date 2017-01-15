@@ -31,29 +31,28 @@ namespace SysCommand.ConsoleApp.Descriptor
 
         public string GetHelpText(IEnumerable<CommandMap> commandMaps)
         {
-            const int WIDTH_USAGE_LEFT = 10;
-            const int WIDTH_USAGE_RIGHT = 60;
-            const int WIDTH_COMMAND = 80;
-            const int WIDTH_MEMBER_LEFT = 0;
-            const int WIDTH_MEMBER_RIGHT = 40;
-            const int WIDTH_FOOTER = 50;
-            const int PADDING_RIGHT = 4;
+            const int widthUsageLeft = 10;
+            const int widthUsageRight = 60;
+            const int widthCommand = 80;
+            const int widthMemberLeft = 0;
+            const int widthMemberRight = 40;
+            const int widthFooter = 50;
+            const int paddingRight = 4;
 
             var strBuilder = new StringBuilder();
 
-            var usage = this.GetUsage(commandMaps);
+            var commandMapsArray = commandMaps.ToArray();
+            var usage = this.GetUsage(commandMapsArray);
             if (usage != null)
             {
-                var tableUsage = new TableView(strBuilder);
-                tableUsage.AddLineSeparator = false;
-                tableUsage.AddColumnSeparator = false;
+                var tableUsage = new TableView(strBuilder)
+                {
+                    AddLineSeparator = false,
+                    AddColumnSeparator = false
+                };
 
-                tableUsage.AddColumnDefinition(null, WIDTH_USAGE_LEFT, 0, PADDING_RIGHT);
-                tableUsage.AddColumnDefinition(null, WIDTH_USAGE_RIGHT);
-                //tableUsage.AddRow()
-                //    .AddColumnInRow("usage: git")
-                //    .AddColumnInRow("[--version] [--help] [-C <path>] [-c name=value] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path] [-p | --paginate | --no-pager] --no-replace-objects] [--bare] [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>] <command> [<args>]");
-
+                tableUsage.AddColumnDefinition(null, widthUsageLeft, 0, paddingRight);
+                tableUsage.AddColumnDefinition(null, widthUsageRight);
                 tableUsage.AddRow()
                     .AddColumnInRow(Strings.HelpUsageLabel)
                     .AddColumnInRow(usage);
@@ -62,13 +61,16 @@ namespace SysCommand.ConsoleApp.Descriptor
                 tableUsage.Build();
             }
 
-            var tableHelp = new TableView(strBuilder);
-            tableHelp.AddLineSeparator = false;
-            tableHelp.AddColumnSeparator = false;
-            tableHelp.AddColumnDefinition(null, WIDTH_MEMBER_LEFT, 3, PADDING_RIGHT);
-            tableHelp.AddColumnDefinition(null, WIDTH_MEMBER_RIGHT);
+            var tableHelp = new TableView(strBuilder)
+            {
+                AddLineSeparator = false,
+                AddColumnSeparator = false
+            };
 
-            foreach (var cmd in commandMaps)
+            tableHelp.AddColumnDefinition(null, widthMemberLeft, 3, paddingRight);
+            tableHelp.AddColumnDefinition(null, widthMemberRight);
+
+            foreach (var cmd in commandMapsArray)
             {
                 var hasProperty = cmd.Properties.Any();
                 var hasMethod = cmd.Methods.Any();
@@ -76,7 +78,7 @@ namespace SysCommand.ConsoleApp.Descriptor
                 if (hasProperty || hasMethod)
                 {
                     tableHelp.AddRowSummary("");
-                    tableHelp.AddRowSummary(cmd.Command.HelpText ?? cmd.Command.GetType().Name, WIDTH_COMMAND);
+                    tableHelp.AddRowSummary(cmd.Command.HelpText ?? cmd.Command.GetType().Name, widthCommand);
                     tableHelp.AddRowSummary("");
 
                     foreach (var property in cmd.Properties)
@@ -126,7 +128,7 @@ namespace SysCommand.ConsoleApp.Descriptor
             if (strBuilder.Length > 0)
             {
                 tableHelp.AddRowSummary("");
-                tableHelp.AddRowSummary(Strings.HelpFooterDesc, WIDTH_FOOTER);
+                tableHelp.AddRowSummary(Strings.HelpFooterDesc, widthFooter);
             }
            
             var output = tableHelp.Build().ToString();
@@ -138,10 +140,10 @@ namespace SysCommand.ConsoleApp.Descriptor
 
         public string GetHelpText(IEnumerable<CommandMap> commandMaps, string actionName)
         {
-            const int WIDTH_USAGE_LEFT = 0;
-            const int WIDTH_USAGE_RIGHT = 60;
-            const int PADDING_RIGHT = 4;
-            const int WIDTH_METHOD_DESC = 80;
+            const int widthUsageLeft = 0;
+            const int widthUsageRight = 60;
+            const int paddingRight = 4;
+            const int widthMethodDesc = 80;
 
             var actions = commandMaps
                 .GetMethods()
@@ -149,40 +151,35 @@ namespace SysCommand.ConsoleApp.Descriptor
                 .OrderBy(f => string.IsNullOrWhiteSpace(f.HelpText) ? 0 : 1)
                 .ToList();
             var strBuilder = new StringBuilder();
-            var last = actions.LastOrDefault();
 
             foreach (var action in actions)
             {
                
                 var usage = this.GetUsage(action.ArgumentsMaps);
-                var tableUsage = new TableView(strBuilder);
-                tableUsage.AddLineSeparator = false;
-                tableUsage.AddColumnSeparator = false;
+                var tableUsage = new TableView(strBuilder)
+                {
+                    AddLineSeparator = false,
+                    AddColumnSeparator = false
+                };
 
-                tableUsage.AddColumnDefinition(null, WIDTH_USAGE_LEFT, 0, PADDING_RIGHT);
-                tableUsage.AddColumnDefinition(null, WIDTH_USAGE_RIGHT);
+                tableUsage.AddColumnDefinition(null, widthUsageLeft, 0, paddingRight);
+                tableUsage.AddColumnDefinition(null, widthUsageRight);
 
                 if (!string.IsNullOrWhiteSpace(action.HelpText))
-                    tableUsage.AddRowSummary(action.HelpText, WIDTH_METHOD_DESC);
+                    tableUsage.AddRowSummary(action.HelpText, widthMethodDesc);
 
                 var addSpace = !string.IsNullOrWhiteSpace(action.HelpText);
                 tableUsage.AddRow()
                     .AddColumnInRow((addSpace ? "   " : "") + string.Format(Strings.HelpUsageActionLabel, action.ActionName))
                     .AddColumnInRow(usage);
 
-                if (action != null)
-                { 
-                    tableUsage.AddRowSummary("");
-                    tableUsage.AddRowSummary("");
-                }
+                tableUsage.AddRowSummary("");
+                tableUsage.AddRowSummary("");
 
                 tableUsage.Build();
             }
 
-            if (strBuilder.Length == 0)
-                return Strings.HelpNoActionFound;
-            else
-                return strBuilder.ToString();
+            return strBuilder.Length == 0 ? Strings.HelpNoActionFound : strBuilder.ToString();
         }
 
         private string GetUsage(IEnumerable<ArgumentMap> properties)

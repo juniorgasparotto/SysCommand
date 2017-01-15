@@ -54,18 +54,18 @@ namespace SysCommand.Tests.UnitTests
             return parser.Parse(argumentsRaw, enablePositionalArgs, maps);
         }
 
-        public static string GetMethodSpecification(MethodResult result)
+        public static string GetMethodSpecification(ActionParsed parsed)
         {
             var format = "{0}({1})";
             string args = null;
-            foreach (var map in result.ActionParsed.ActionMap.ArgumentsMaps)
+            foreach (var map in parsed.ActionMap.ArgumentsMaps)
             {
                 var typeName = ReflectionHelper.CSharpName(map.Type);
-                var value = result.ActionParsed.Arguments.Where(f => f.Map == map).First();
+                var value = parsed.Arguments.First(f => f.Map == map);
                 var valueWithDesc = value.GetArgumentNameInputted()  + " = " + (string.IsNullOrWhiteSpace(value.Raw) ? "?" : value.Raw);
                 args += args == null ? typeName + " " + valueWithDesc : ", " + typeName + " " + valueWithDesc;
             }
-            return string.Format(format, result.ActionParsed.ActionMap.ActionName, args);
+            return string.Format(format, parsed.ActionMap.ActionName, args);
         }
 
         public static string GetMethodSpecification(ActionMap map)

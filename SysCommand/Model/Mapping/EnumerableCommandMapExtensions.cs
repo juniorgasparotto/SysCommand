@@ -6,14 +6,14 @@ namespace SysCommand.Mapping
 {
     public static class EnumerableCommandMapExtensions 
     {
-        public static CommandMap GetMap<T>(this IEnumerable<CommandMap> maps)
+        public static CommandMap GetCommandMap<T>(this IEnumerable<CommandMap> maps)
         {
-            return maps.FirstOrDefault(c => c.Command is T);
+            return maps.LastOrDefault(c => c.Command is T);
         }
 
-        public static CommandMap GetMap(this IEnumerable<CommandMap> maps, Type type)
+        public static CommandMap GetCommandMap(this IEnumerable<CommandMap> maps, Type type)
         {
-            return maps.FirstOrDefault(c => c.Command.GetType() == type);
+            return maps.LastOrDefault(c => c.Command.GetType() == type);
         }
 
         public static IEnumerable<CommandBase> GetCommands(this IEnumerable<CommandMap> maps)

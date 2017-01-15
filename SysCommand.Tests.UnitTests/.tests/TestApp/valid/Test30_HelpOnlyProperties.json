@@ -13,6 +13,6 @@ Displays help information
    help           
       --action    Is optional.
 
-Use 'git help --action=<name>' to view the details
-of any action. Every action with the symbol "*" 
-can have his name omitted.
+Use 'help --action=<name>' to view the details of 
+any action. Every action with the symbol "*" can 
+have his name omitted.

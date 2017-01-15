@@ -11,6 +11,7 @@ using SysCommand.ConsoleApp.Results;
 using SysCommand.ConsoleApp.Handlers;
 using SysCommand.ConsoleApp.Descriptor;
 using SysCommand.ConsoleApp.Loader;
+using SysCommand.Helpers;
 
 namespace SysCommand.ConsoleApp
 {
@@ -115,11 +116,18 @@ namespace SysCommand.ConsoleApp
             if (!commands.Any())
                 throw new Exception("No command found");
 
-            if (!commands.Any(f => f is IHelpCommand))
+            var helpCommands = commands.Where(f => f is IHelpCommand).ToList();
+            if (helpCommands.Empty())
+            {
                 commands = new List<Command>(commands)
-                    {
-                        this.CreateCommandInstance<HelpCommand>(propAppName)
-                    };
+                {
+                    this.CreateCommandInstance<HelpCommand>(propAppName)
+                };
+            }
+            else if (helpCommands.Count > 1)
+            {
+                commands.Remove(helpCommands.First(f=> f is HelpCommand));
+            }
 
             // mapping
             this.Maps = this.executor.GetMaps(commands).ToList();
@@ -201,7 +209,7 @@ namespace SysCommand.ConsoleApp
                 };
 
                 // system feature: "help"
-                var helpCommand = this.Maps.GetMap<IHelpCommand>();
+                var helpCommand = this.Maps.GetCommandMap<IHelpCommand>();
                 if (helpCommand != null)
                 {
                     var executorHelp = new DefaultExecutor.Executor();

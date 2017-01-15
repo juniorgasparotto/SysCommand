@@ -22,11 +22,11 @@ namespace SysCommand.ConsoleApp
             var st = new StackTrace();
             var sf = st.GetFrame(1);
             var currentMethod = (MethodInfo)sf.GetMethod();
-            return this.ExecutionScope.ParseResult.Maps.GetMap(this.GetType()).Methods.FirstOrDefault(m => ReflectionHelper.MethodsAreEquals(m.Method, currentMethod));
+            return this.ExecutionScope.ParseResult.Maps.GetCommandMap(this.GetType()).Methods.FirstOrDefault(m => ReflectionHelper.MethodsAreEquals(m.Method, currentMethod));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public MethodResult CurrentMethodResult()
+        public ActionParsed GetAction()
         {
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(1);
@@ -46,16 +46,16 @@ namespace SysCommand.ConsoleApp
             //  3.0) f.IsInvoked = true:  save 1 2 3 -> NO
             //  3.1) f.IsInvoked = true:  save 4 5 6 -> NO
             //  3.2) f.IsInvoked = false: save 7 8 9 -> FIRST: IsInvoked = FALSE
-            return thisMethodForEachLevel.First(f => !f.IsInvoked);
+            return thisMethodForEachLevel.First(f => !f.IsInvoked).ActionParsed;
         }
 
-        public PropertyResult GetPropertyResult(string name)
+        public ArgumentParsed GetArgument(string name)
         {
             // return all properties results for this instance
             var allPropertiesResult = this.ExecutionScope.ExecutionResult.Results.With<PropertyResult>();
             var thisMethodForEachLevel = allPropertiesResult.Where(m => m.Target == this).ToList();
 
-            return thisMethodForEachLevel.FirstOrDefault(f => f.Name == name);
+            return thisMethodForEachLevel.LastOrDefault(f => f.Name == name)?.ArgumentParsed;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

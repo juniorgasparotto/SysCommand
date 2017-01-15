@@ -32,6 +32,6 @@ Loren ipsulum Loren ipsulum Loren
       --lst       Is optional.
       --enum2     Is optional (default <Value2>).
 
-Use 'git help --action=<name>' to view the details
-of any action. Every action with the symbol "*" 
-can have his name omitted.
+Use 'help --action=<name>' to view the details of 
+any action. Every action with the symbol "*" can 
+have his name omitted.

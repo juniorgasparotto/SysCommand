@@ -1,7 +1,7 @@
 ﻿using System;
 using SysCommand.ConsoleApp;
 using SysCommand.Mapping;
-using SysCommand.Execution;
+using SysCommand.Parsing;
 
 namespace SysCommand.Tests.UnitTests.Commands.T11
 {
@@ -19,16 +19,16 @@ namespace SysCommand.Tests.UnitTests.Commands.T11
 
         public string Delete(int a)
         {
-            var cur = this.CurrentMethodResult();
-            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult()) + " Level" + cur.ActionParsed.Level;
+            var cur = this.GetAction();
+            return GetDebugName(this.CurrentActionMap(), this.GetAction()) + " Level" + cur.Level;
         }
 
-        private string GetDebugName(ActionMap map, MethodResult result)
+        private string GetDebugName(ActionMap map, ActionParsed parsed)
         {
-            if (map != result.ActionParsed.ActionMap)
+            if (map != parsed.ActionMap)
                 throw new Exception("There are errors in one of the methods: GetCurrentMethodMap() or GetCurrentMethodResult()");
 
-            var specification = CommandParserUtils.GetMethodSpecification(result);
+            var specification = CommandParserUtils.GetMethodSpecification(parsed);
             return this.GetType().Name + "." + specification;
         }
     }

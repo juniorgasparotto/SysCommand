@@ -72,9 +72,9 @@
 //            return GetDebugName(this.CurrentActionMap(), this.CurrentMethodResult());
 //        }
 
-//        private string GetDebugName(ActionMap map, MethodResult result)
+//        private string GetDebugName(ActionMap map, ActionParsed parsed)
 //        {
-//            if (map != result.ActionParsed.ActionMap)
+//            if (map != parsed.ActionMap)
 //                throw new Exception("There are errors in one of the methods: GetCurrentMethodMap() or GetCurrentMethodResult()");
 
 //            var specification = Program.GetMethodSpecification(map);

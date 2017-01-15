@@ -22,7 +22,7 @@
         public static string HelpArgDescOptionalWithDefaultValue = "Is optional (default <{0}>).";
         public static string HelpArgDescOptionalWithoutDefaultValue = "Is optional.";
         public static string HelpArgDescRequired = "Is required.";
-        public static string HelpFooterDesc = "Use 'git help --action=<name>' to view the details of any action. Every action with the symbol \"*\" can have his name omitted.";
+        public static string HelpFooterDesc = "Use 'help --action=<name>' to view the details of any action. Every action with the symbol \"*\" can have his name omitted.";
         public static string HelpEmpty = "No help information was found.";
         public static string HelpNoActionFound = "No action was found.";
 

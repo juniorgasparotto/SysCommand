@@ -24,17 +24,17 @@ namespace Example.Commands
             if (this.MyPropertyUnsafeMode == 0)
                 App.Console.Write("Unsafe mode: Preferably, use nullable in MyPropertyUnsafeMode");
 
-            if (this.GetPropertyResult("MyPropertyUnsafeMode") != null)
+            if (this.GetArgument("MyPropertyUnsafeMode") != null)
                 App.Console.Write("Safe mode, but use string: MyPropertyUnsafeMode");
 
-            if (this.GetPropertyResult(nameof(MyPropertyUnsafeMode)) != null)
+            if (this.GetArgument(nameof(MyPropertyUnsafeMode)) != null)
                 App.Console.Write("Safe mode, but only in c# 6: MyPropertyUnsafeMode");
 
-            if (this.GetPropertyResult(nameof(MyPropertyDefaultValue)) != null)
+            if (this.GetArgument(nameof(MyPropertyDefaultValue)) != null)
                 App.Console.Write("MyPropertyDefaultValue aways has value");
 
             // if necessary, add this verification to know if property had input.
-            if (this.GetPropertyResult(nameof(MyPropertyDefaultValue)).ArgumentParsed.IsMapped)
+            if (this.GetArgument(nameof(MyPropertyDefaultValue)).IsMapped)
                 App.Console.Write("MyPropertyDefaultValue has input");
 
             return "Main() methods can also return values ;)";
@@ -93,6 +93,57 @@ namespace Example.Commands
         {
             if (MyPropertyWithAttribute != null)
                 App.Console.Write("MyPropertyWithAttribute=" + MyPropertyWithAttribute);
+        }
+    }
+
+    public class CustomPropertiesNamesCommand : Command
+    {
+        // customized with long and short option
+        [Argument(LongName = "prop", ShortName = 'A')]
+        public int? MyCustomPropertyName { get; set; }
+
+        // only with long option
+        public string NormalLong { get; set; }
+
+        // customized only with short option
+        [Argument(ShortName = 'B')]
+        public string ForcedShort { get; set; }
+
+        // only with short option
+        public int? C { get; set; }
+
+        public CustomPropertiesNamesCommand()
+        {
+        }
+
+        public void Main()
+        {
+            if (MyCustomPropertyName != null)
+                App.Console.Write("MyCustomPropertyName=" + MyCustomPropertyName);
+
+            if (NormalLong != null)
+                App.Console.Write("NormalLong=" + NormalLong);
+
+            if (ForcedShort != null)
+                App.Console.Write("ForcedShort=" + ForcedShort);
+
+            if (C != null)
+                App.Console.Write("C=" + C);
+        }
+    }
+
+    public class CustomPropertiesHelpCommand : Command
+    {
+        // customized with long and short option
+        [Argument(Help = "This is my property")]
+        public int? MyPropertyHelp { get; set; }
+
+        [Argument(Help = "This is my property 2", ShowHelpComplement = false)]
+        public int? MyPropertyHelp2 { get; set; }
+
+        public CustomPropertiesHelpCommand()
+        {
+            this.HelpText = "Custom help for CustomPropertiesHelpCommand";
         }
     }
 

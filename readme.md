@@ -135,24 +135,26 @@ public class Program
     }
 
     public class CustomHelp : Command, SysCommand.ConsoleApp.Commands.IHelpCommand
-    { 
-        public CustomHelp()
-        {
-            HelpText = "My custom help";
-        }
-
+    {
         public string MyCustomHelp(string action = null)
         {
             foreach(var map in this.App.Maps)
             {
-                ... 
+                
             }
+            return "Custom help";
         }
     }
 }
 ```
 
-```MyApp.exe custom-help```
+```
+MyApp.exe my-custom-help
+Custom help
+
+MyApp.exe help
+Could not find any action.
+```
 
 Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o `help` padrão utiliza os métodos de help contidos dentro dessa instancia. Essa opção não é recomendada se você deseja apenas customizar o `help`.
 
@@ -184,8 +186,94 @@ public class Program
 }
 ```
 
-* Para customizar os textos de cada ação ou propriedade, veja o tópido de `Customizações`.
 * O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
+
+######Formato do help padrão
+
+O formato padrão do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. O formato de saída que será exibido será o seguinte:
+
+```
+usage:    [--argument=<phrase>] [--argument-number=<number>]
+          [-v, --verbose=<None|All|Info|Success|Critical|Warning|Error|Quiet>]
+          --required-argument=<phase>
+          <actions[args]> (A)
+
+Command help (B)
+    LongName (C1), ShortName (C2)      Help text for arguments of command (properties) (C3). Complement (C4)
+    Action (D)
+      LongName (E1), ShortName (E2)    Help text for arguments of actions (parameters) (E3). Complement (E4)
+
+Use 'help --action=<name>' to view the details of
+any action. Every action with the symbol "*" can
+have his name omitted. (F)
+```
+
+A fonte de cada texto esta em cada elemento `Commands`, `Arguments`  e `Actions` e os textos complementares estão na classe estática `SysCommand.ConsoleApp.Strings`. Segue o mapeamento de cada texto conforme o formato exibido acima:
+
+* A: O texto e `usage` é gerado internamente pela classe `DefaultDescriptor` e sempre será exibido.
+* B: O texto do `Command` sempre será exibido e a sua fonte vem da propriedade `Command.HelpText` que deve ser definida no construtor do seu comando. Caso você não atribua nenhum valor para essa propriedade, o padrão será exibir o nome do comando.
+* C: Será exibido todas os argumentos (propriedades) do comando, um em baixo do outro.
+  * C1: A fonte desse texto vem do atributo `ArgumentAtrribute(LongName="")`.
+  * C2: A fonte desse texto vem do atributo `ArgumentAtrribute(ShortName="")`.
+  * C3: A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
+  * C4: Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
+    * `Strings.HelpArgDescRequired`: Quando o membro é obrigatório
+    * `Strings.HelpArgDescOptionalWithDefaultValue`: Quando o membro é opcional e tem default value.
+    * `Strings.HelpArgDescOptionalWithoutDefaultValue`: Quando o membro é opcional e não tem default value.
+* D: A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
+* E: São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
+* F: Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.
+
+**Exemplo:**
+
+```csharp
+public class HelpCommand : Command
+{
+    // With complement
+    [Argument(Help = "My property1 help")]
+    public string MyProperty1 { get; set; }
+
+    // Without complement
+    [Argument(Help = "My property2 help", ShowHelpComplement = false, IsRequired = true)]
+    public int MyProperty2 { get; set; }
+
+    public HelpCommand()
+    {
+        this.HelpText = "Help for this command";
+    }
+
+    [Action(Help = "Action help")]
+    public void MyActionHelp
+    (
+        [Argument(Help = "Argument help")]
+        string arg0, // With complement
+
+        [Argument(Help = "Argument help", ShowHelpComplement = false)]
+        string arg1  // Without complement
+    )
+    {
+
+    }
+}
+```
+
+```
+usage:    --my-property2=<number> [--my-property1=<phrase>] [-v,
+          --verbose=<None|All|Info|Success|Critical|Warning|Error|Quiet>]
+          <actions[args]>
+
+Help for this command
+
+   --my-property1    My property1 help. Is optional.
+   --my-property2    My property2 help
+
+   my-action-help    Action help
+      --arg0         Argument help. Is required.
+      --arg1         Argument help
+```
+
+* Para mais informações sobre customizações do help em propriedades veja o tópido de `Trabalhando com propriedades`.
+* Para mais informações sobre customizações do help em ações veja o tópido de `Trabalhando com métodos`.
 
 ##Tipos de commands
 
@@ -276,6 +364,9 @@ Primeiro, foi criado um pequeno wrapper da classe `System.Console` chamado `SysC
   * App.Console.ColorSuccess
   * App.Console.ColorWarning
   * App.Console.ColorRead
+* Variavel de controle de tipo de saída `App.Console.ExitCode` onde você pode usa-la como retorno do seu método `int Main(string[] args)`:
+  * "0" : Sucesso
+  * "1" : Erro
 * Quebra de linha inteligente durante o uso dós métodos de write e read. A variável `App.Console.BreakLineInNextWrite` controla as quebras e te ajuda a não deixar linhas vazias sem necessidade.
 
 Outro recurso seria a utilização dos `returns` das actions e que serão, caso existam, utilizados como output. Esse recurso se assemelha muito ao "AspNet MVC".
@@ -756,13 +847,13 @@ public class Program
 
 ##Trabalhando com propriedades
 
-O trabalho com propriedades é muito simples, basta criar suas propriedades como publicas e escolher um dos dois meios abaixo para saber se uma propriedade foi inputada pelo usuário, você que escolhe qual utilizar:
+O trabalho com propriedades é muito simples e objetivo, basta criar suas propriedades como publicas e escolher um dos dois meios abaixo para saber se uma propriedade foi inputada pelo usuário, você que escolhe qual utilizar:
 
 ######Modo de uso 1
 
 Primeiro, você pode utilizar o método `Main()` sem parametro e que, por convensão de nome, será o responsável por ser invocado caso alguma de suas propriedade tenha sido utilizadas no input do usuário. O nome "Main" foi escolhido para manter o padrão de nomenclatura que o .NET utiliza em aplicações de console. 
 
-Por segurança, utilize todos os tipos primitivos como `Nullable` para garantir que o usuário fez o input. Ou utilize o método `GetPropertyResult(string name)` para verificar se uma propriedade tem resultado. Vale ressaltar que uma propriedade com `Default value` sempre terá resultado e caso necessário, utilize mais uma verificação para saber se o resultado partiu de um input do usuário.
+Por segurança, utilize todos os tipos primitivos como `Nullable` para garantir que o usuário fez o input. Ou utilize o método `GetArgument(string name)` para verificar se uma propriedade foi parseada. Vale ressaltar que uma propriedade com `Default value` sempre terá resultado de parse e caso necessário, utilize mais uma verificação para saber se o resultado partiu de um input do usuário.
 
 **Exemplo:**
 
@@ -778,17 +869,17 @@ public string Main()
     if (this.MyPropertyUnsafeMode == 0)
         App.Console.Write("Unsafe mode: Preferably, use nullable in MyPropertyUnsafeMode");
 
-    if (this.GetPropertyResult("MyPropertyUnsafeMode") != null)
+    if (this.GetArgument("MyPropertyUnsafeMode") != null)
         App.Console.Write("Safe mode, but use string: MyPropertyUnsafeMode");
 
-    if (this.GetPropertyResult(nameof(MyPropertyUnsafeMode)) != null)
+    if (this.GetArgument(nameof(MyPropertyUnsafeMode)) != null)
         App.Console.Write("Safe mode, but only in c# 6: MyPropertyUnsafeMode");
 
-    if (this.GetPropertyResult(nameof(MyPropertyDefaultValue)) != null)
+    if (this.GetArgument(nameof(MyPropertyDefaultValue)) != null)
         App.Console.Write("MyPropertyDefaultValue aways has value");
 
     // if necessary, add this verification to know if property had input.
-    if (this.GetPropertyResult(nameof(MyPropertyDefaultValue)).ArgumentParsed.IsMapped)
+    if (this.GetArgument(nameof(MyPropertyDefaultValue)).IsMapped)
         App.Console.Write("MyPropertyDefaultValue has input");
 
     return "Main() methods can also return values ;)";
@@ -831,7 +922,7 @@ Main() methods can also return values ;)
 ```
 ######Modo de uso 2
 
-Por fim, você ainda pode utilizar o `set { .. }` da sua propriedade para tomar alguma ação. Esse recurso não é recomendado, pois o método `GetPropertyResult(string name)` ainda não esta pronto para ser usado nesse momento, mas caso queira algo pontual e rápido, nada te impede de usar esse meio.
+Por fim, você ainda pode utilizar o `set { .. }` da sua propriedade para tomar alguma ação. Esse recurso não é recomendado, pois o método `GetArgument(string name)` ainda não esta pronto para ser usado nesse momento, mas caso queira algo pontual e rápido, nada te impede de usar esse meio.
 
 ```csharp
 public class TestProperty2Command : Command
@@ -856,6 +947,99 @@ MyCustomVerbose=true
 C:\MyApp.exe --my-custom-verbose false
 MyCustomVerbose=false
 ```
+
+######Customizando os nomes dos argumentos
+
+A regra a seguir descreve como é o comportamento padrão de nomenclatura para que uma propriedade vire um `argument`:
+
+Primeiro se converte o nome da propriedade em minusculo, depois adiciona um traço "-" antes de cada letra maiuscula que estiver no meio ou no final do nome. No caso de propriedades com apenas uma letra, o padrão será deixar a letra minuscula e o input será aceito apenas na forma curta.
+
+Essa é a regra padrão de nomenclarutura e você pode escolher usa-la ou customizada-la, para isso utilize o atributo `ArgumentAttribute`. O uso do atributo `ArgumentAttribute` é exclusivo, ao utiliza-lo você esta eliminando o padrão de nomenclatura por completo, ou seja, se você customizar a `forma curta` você será obrigado a customizar a `forma longa` também, e vice-versa. Do contrário só o formato customizado será habilitado.
+
+**Exemplo:**
+
+```csharp
+public class CustomPropertiesNamesCommand : Command
+{
+    // customized with long and short option
+    [Argument(LongName = "prop", ShortName = 'A')]
+    public int? MyCustomPropertyName { get; set; }
+
+    // only with long option
+    public string NormalLong { get; set; }
+
+    // customized only with short option
+    [Argument(ShortName = 'B')]
+    public string ForcedShort { get; set; }
+
+    // only with short option
+    public int? C { get; set; }
+
+    public CustomPropertiesNamesCommand()
+    {
+    }
+
+    public void Main()
+    {
+        if (MyCustomPropertyName != null)
+            App.Console.Write("MyCustomPropertyName=" + MyCustomPropertyName);
+
+        if (NormalLong != null)
+            App.Console.Write("NormalLong=" + NormalLong);
+
+        if (ForcedShort != null)
+            App.Console.Write("ForcedShort=" + ForcedShort);
+
+        if (C != null)
+            App.Console.Write("C=" + C);
+    }
+}
+```
+
+```
+C:\MyApp.exe --prop 111 --normal-long strvalue -B strvalue2 -c 9999
+MyCustomPropertyName=111
+NormalLong=strvalue
+ForcedShort=strvalue2
+C=9999
+
+C:\MyApp.exe -A 111 --normal-long strvalue -B strvalue2 -c 9999
+MyCustomPropertyName=111
+NormalLong=strvalue
+ForcedShort=strvalue2
+C=9999
+```
+
+######Customizando as informações de help
+
+Para configurar o texto de help utilize o atributo `ArgumentAttribute(Help="")`. Por padrão, para cada argumento será exibido um complemento após o texto do help. A informação que esse complemento nos tras é se o parametro é obrigatório ou opcional (com ou sem default value). Caso você deseje desativar esse complemento utilize o atributo `ArgumentAttribute(ShowHelpComplement=false)`.
+
+```csharp
+public class CustomPropertiesHelpCommand : Command
+{
+    // customized with long and short option
+    [Argument(Help = "This is my property")]
+    public int? MyPropertyHelp { get; set; }
+
+    [Argument(Help = "This is my property 2", ShowHelpComplement = false)]
+    public int? MyPropertyHelp2 { get; set; }
+
+    public CustomPropertiesHelpCommand()
+    {
+        this.HelpText = "Custom help for CustomPropertiesHelpCommand";
+    }
+}
+```
+
+```
+C:\MyApp.exe help
+Custom help for CustomPropertiesHelpCommand
+
+   --my-property-help              This is my property. Is optional.
+   --my-property-help2             This is my property 2
+```
+
+Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico `Help Automatico`.
 
 ######Propriedades obrigatórias
 
@@ -998,9 +1182,407 @@ There are errors in command: DoSomethingCommand
 The argument '--my-property-without-attribute' does not exist
 ```
 
-##Adicionando um prefixo em todos os métodos
+##Trabalhando com métodos
 
-Para adicionar um prefixo em todas as propriedades de seu `Command` utilize a propriedade 
+O trabalho com métodos também é muito bem simples, todos os métodos definidos como `public`, por padrão, serão habilitados para virarem `input actions` e estarem disponíveis para uso. O fato interessante é que você pode utilizar os recursos nativos do .NET deixando seu código mais limpo, como:
+
+* Métodos sem parametros
+* Métodos com parametros opcionais com `Default value`
+* Métodos com sobrecargas
+* Métodos com `return` onde o retorno do método, por padrão, será utilizado como output no console usando
+
+######Métodos sem parametros
+
+**Exemplo:**
+
+```csharp
+public class Method1Command : Command
+{
+    public string MyAction()
+    {
+        return "MyAction";
+    }
+}
+```
+
+```
+C:\MyApp.exe my-action
+MyAction
+```
+
+######Parametros optionais
+
+Os parametros opcionais são uteis para evitar a criação de sobrecargas e no caso de uma aplicação console ajuda a criar `actions` com diversas opções, mas não obrigando o usuário a preencher todas. 
+
+Por segurança, ao usar parametros opcionais, obte por utilizar todos os tipos primitivos como `Nullable` para _garantir que o usuário fez o input_. Ou utilize o método `GetAction()` para verificar se o parametro foi mapeado, ou seja, se teve algum tipo de input.
+
+**Exemplo:**
+
+```csharp
+public class Method1Command : Command
+{
+    public string MyAction2(int? arg0 = null, int arg1 = 0)
+    {
+        // unsafe, because the user can enter with value "--arg1 0" and you never know.
+        if (arg1 != 0)
+            App.Console.Write("arg1 wrong way to do it!");
+
+        // safe, but bureaucratic
+        if (this.GetAction().Arguments.Any(f => f.Name == "arg1" && f.IsMapped))
+            App.Console.Write("arg1 has input");
+
+        // recommended. the best way! 
+        if (arg0 != null)
+            App.Console.Write("arg0 has input");
+
+        return "MyAction2";
+    }
+}
+```
+```
+C:\MyApp.exe my-action2
+MyAction2
+
+C:\MyApp.exe my-action2 --arg0 99
+arg0 has input
+MyAction2
+
+C:\MyApp.exe my-action2 --arg1 0
+arg1 has input
+MyAction2
+```
+
+Observação: Não utilize o método `GetAction()` em métodos que não são `actions`, você terá uma exception.
+
+######Sobrecargas
+
+O recurso de sobrecarga de métodos é suportado da mesma forma que você faria para qualquer outra finalidade. Muitas vezes esse recurso pode ser mais interessante que usar parametros opcionais, o código fica mais limpo. Outras vezes isso não será possível, pois com parametros opcionais o usuário tem a opção de escolher qualquer parametro independentemente de sua posição no método, coisa que a sobrecarga não pode.
+
+**Exemplo:**
+
+```csharp
+public class Method1Command : Command
+{
+    public string MyAction3()
+    {
+        return "MyAction3";
+    }
+
+    public string MyAction3(int arg0)
+    {
+        return "arg0 has input";
+    }
+
+    public void MyAction3(int arg0, int arg1)
+    {
+        App.Console.Write("arg0 has input");
+        App.Console.Write("arg1 has input");
+    }
+}
+```
+```
+C:\MyApp.exe my-action3
+MyAction3
+
+C:\MyApp.exe my-action3 --arg0 9
+arg0 has input
+
+C:\MyApp.exe my-action3 --arg0 9 --arg1 99
+arg0 has input
+arg1 has input
+
+C:\MyApp.exe my-action3 --arg1 99]
+There are errors in command: Method1Command
+The argument '--arg1' does not exist
+```
+
+O último comando mostrou a limitação da sobrecarga com relação aos parametros opcionais. O parseador entendeu que os dois métodos com parametros `MyAction3` estão inválidos, veja:
+
+* MyAction3(int arg0): Não tem o input "--arg1" que foi solicitado, portanto esta inválido.
+* MyAction3(int arg0, int arg1): Tem o input "--arg1", mas não tem o input "--arg0", portanto esta inválido.
+
+Nesse caso o parseador escolhera o unico método valido, ou seja, o método `MyAction3` _sem parametros_ e usará o argumento extra "--arg1" para tentar encontra-lo como propriedade em algum `Command`, porém essa propriedade não existe em nenhum lugar, gerando o erro.
+
+######Usando inputs posicionais
+
+Outro modo de chamar sua action no console é usando `input posicional`. Por padrão, todas as `action` aceitam argumentos posicionais, mais isso pode ser desabilitado usando o atributo `ActionAttribute(EnablePositionalArgs = false)`.
+
+**Exemplo:**
+
+```csharp
+public string MyActionWithPosicional(int arg0, int arg1)
+{
+    return "MyActionWithPosicional";
+}
+
+[Action(EnablePositionalArgs = false)]
+public string MyActionWithoutPosicional(int arg0, int arg1)
+{
+    return "MyActionWithoutPosicional";
+}
+```
+```
+C:\MyApp.exe my-action-with-posicional --arg0 1 --arg1 2
+MyActionWithPosicional
+
+C:\MyApp.exe my-action-with-posicional 1 2
+MyActionWithPosicional
+
+C:\MyApp.exe my-action-without-posicional --arg0 1 --arg1 2
+MyActionWithoutPosicional
+
+C:\MyApp.exe my-action-without-posicional 1 2
+There are errors in command: Method1Command
+Error in method: my-action-without-posicional(Int32, Int32)
+The argument '--arg0' is required
+The argument '--arg1' is required
+```
+
+######Ignorar métodos publicos por uma escolha manual usando atributo
+
+Para mudar o comportamente padrão de métodos publicos, você precisa apenas desligar a flag `OnlyMethodsWithAttribute` do `Command`. Com ela desligada o parseador deixará de olhar para as métodos publicos e usará apenas os métodos publicos e que tiverem o atributo `ActionAtrribute`.
+
+**Exemplo:**
+
+```csharp
+public class Method2Command : Command
+{
+    public Method2Command()
+    {
+        this.OnlyMethodsWithAttribute = true;
+    }
+
+    [Action]
+    public string MyActionWithAttribute()
+    {
+        return "MyActionWithAttribute";
+    }
+
+    public string MyActionWithoutAttribute()
+    {
+        return "MyActionWithAttribute";
+    }
+}
+```
+
+```
+C:\MyApp.exe my-action-with-attribute
+MyActionWithAttribute
+
+C:\MyApp.exe my-action-without-attribute
+Could not find any action.
+```
+
+Outra forma de ignorar métodos publicos e sem alterar o comportamento padrão da propriedade `OnlyMethodsWithAttribute` do `Command` é utilizando o atributo `ActionAttribute(Ignore = true)`.
+
+**Exemplo:**
+
+```csharp
+public class Method3Command : Command
+{
+    public string MyActionNotIgnored()
+    {
+        return "MyActionNotIgnored";
+    }
+
+    [Action(Ignore = true)]
+    public string MyActionIgnored()
+    {
+        return "MyActionIgnored";
+    }
+}
+```
+
+```
+C:\MyApp.exe my-action-not-ignored
+MyActionNotIgnored
+
+C:\MyApp.exe my-action-ignored
+Could not find any action.
+```
+
+######Customizando nomes de actions e arguments
+
+A regra a seguir descreve como é o comportamento padrão de nomenclatura para que os métodos vire uma `action` e um parametro vire um `argument`:
+
+Primeiro se converte o nome do membro (métodos ou parametros) em minusculo, depois adiciona um traço "-" antes de cada letra maiuscula que estiver no meio ou no final do nome. No caso de paramentros com apenas uma letra, o padrão será deixar a letra minuscula e o input será aceito apenas na forma curta.
+
+Essa é a regra padrão de nomenclarutura e você pode escolher usa-la ou customizada-la de modo total ou parcial. Para isso utilize os atributos `ActionAttribute` para métodos e `ArgumentAttribute` os parametros. O uso do atributo `ArgumentAttribute` é exclusivo, ao utiliza-lo você esta eliminando o padrão de nomenclatura por completo, ou seja, se você customizar a `forma curta` você será obrigado a customizar a `forma longa` também, e vice-versa. Do contrário só o formato customizado será habilitado.
+
+**Exemplo:**
+
+```csharp
+public class Method3Command : Command
+{
+    [Action(Name = "ActionNewName")]
+    public string MyAction(
+        [Argument(LongName = "longName1", ShortName = 'a')]
+        string arg0, // customized with long and short option
+
+        string arg1, // only with long option
+
+        [Argument(ShortName = 'z')]
+        string arg2, // only with short option
+
+        string z     // only with short option
+    )
+    {
+        return "ActionNewName";
+    }
+}
+```
+
+```
+C:\MyApp.exe ActionNewName --longName1 1 --arg1 2 -z 3 -w 4
+ActionNewName
+
+C:\MyApp.exe ActionNewName -a 1 --arg1 2 -z 3 -w 4
+ActionNewName
+```
+
+Outra opção de customização é a inclusão de prefixo antes do nome de cada `action`. Isso pode ser feito de duas formas, a primeira você só precisa ligar a flag de comando `Command.UsePrefixInAllMethods`. Com essa flag ligada, todas as `actions` passarão a ter o seguinte padrão de nome "CommandName-ActionName", ou seja, elas vão conter o nome do `Command` adicionado de um "-" seguido do nome da action. Caso o nome do comando tenha o sufixo "Command" então esse sufixo será removido.
+
+Você ainda pode querer que essa flag não afete todas as suas `actions`, para isso utilize a flag `ActionAttribute(UsePrefix=false)` para que uma determinada action não tenha seu nome alterado com o prefixo.
+
+```csharp
+public class PrefixedCommand : Command
+{
+    public PrefixedCommand()
+    {
+        this.UsePrefixInAllMethods = true;
+    }
+
+    public string MyAction()
+    {
+        return "prefixed-my-action";
+    }
+
+    [Action(Name = "my-action2-custom")]
+    public string MyAction2()
+    {
+        return "prefixed-my-action2-custom";
+    }
+
+    [Action(UsePrefix = false)]
+    public string MyActionWithoutPrefix()
+    {
+        return "my-action-without-prefix";
+    }
+}
+```
+
+```
+C:\MyApp.exe prefixed-my-action
+prefixed-my-action
+
+C:\MyApp.exe prefixed-my-action2-custom
+prefixed-my-action2-custom
+
+C:\MyApp.exe my-action-without-prefix
+my-action-without-prefix
+```
+
+A segunda forma é você especificar qual será o prefixo de cada `action` usando a propriedade de commando `Command.PrefixMethods`. Assim o prefixo não será processado usando o nome do comando e sim especificado por você. Vale ressaltar que a flag `Command.UsePrefixInAllMethods` ainda precisa estar ligada.
+
+**Exemplo:**
+
+```csharp
+public class Prefixed2Command : Command
+{
+    public Prefixed2Command()
+    {
+        this.PrefixMethods = "custom-prefix";
+        this.UsePrefixInAllMethods = true;
+    }
+
+    public string MyAction()
+    {
+        return "custom-prefix-my-action";
+    }
+}
+```
+
+```
+C:\MyApp.exe custom-prefix-my-action
+custom-prefix-my-action
+```
+
+######Customizando as informações de help de actions e seus parametros
+
+Para as `actions` você precisa customizar o atributo `ActionAttribute(Help="")` e para os paramentros utilizasse o atributo `ArgumentAttribute(Help="")`. Por padrão, para cada argumento será exibido um complemento após o texto do help. A informação que esse complemento nos tras é se o parametro é obrigatório ou opcional (com ou sem default value). Caso você deseje desativar esse complemento utilize o atributo `ArgumentAttribute(ShowHelpComplement=false)`.
+
+**Exemplo:**
+
+```csharp
+public class MethodHelpCommand : Command
+{
+    public MethodHelpCommand() 
+    {
+        this.HelpText = "Help for this command";
+    }
+
+    [Action(Help = "Action help")]
+    public string MyActionHelp(
+        [Argument(Help = "Argument help")]
+        string arg0, // With complement
+
+        [Argument(Help = "Argument help", ShowHelpComplement = false)]
+        string arg1  // Without complement
+    )
+    {
+        return "Action help";
+    }
+}
+```
+
+```
+C:\MyApp.exe help
+Help for this command
+
+   my-action-help                  Action help
+      --arg0                       Argument help. Is required.
+      --arg1                       Argument help
+```
+
+Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico `Help Automatico`.
+
+######Trocando a posição de parametros posicionais
+
+A propriedade `ArgumentAttribute(Position=X)` também funciona para parametros da mesma forma que funciona para propriedades. Não é um recurso que faça muito sentido, mas é importante documenta-lo.
+
+**Exemplo:**
+
+```csharp
+public class Method5Command : Command
+{
+    public string MyActionWithArgsInverted(
+        [Argument(Position = 2)]
+        string arg0,
+        [Argument(Position = 1)]
+        string arg1
+    )
+    {
+        return "MyActionWithArgsInverted";
+    }
+}
+```
+
+```
+C:\MyApp.exe my-action-with-args-inverted 1 2
+arg0 = '2'; arg1 = '1'
+```
+
+######Propriedades do atributos ArgumentAttribute que não são utilizados
+
+As seguintes propriedades não fazem sentido no cenário de parametros de métodos e só existem por que o atributo `ArgumentAtrribute` é compartilhado no uso de propriedades.
+
+* IsRequired: Em C#, todo parametro que não tem default value é obrigatório, essa configuração é ignorada se for utilizada.
+* DefaultValue: Como o proprio C# já nos dá a opção de default value para parametros, essa configuração é redundante, sendo assim ela é ignorada por que o padrão do .NET já é suficiente e mais limpo.
+
+######Métodos default
+
+#alterar nome de propriedade e adicionar help
+#melhorar help
 
 ##Input Scaped
 
@@ -1008,9 +1590,17 @@ Para adicionar um prefixo em todas as propriedades de seu `Command` utilize a pr
 
 ##Eventos
 
-##Métodos explicitos e implicitos
+##ReadArgsWhenIsDebug
 
-* Main()
+##enableMultiAction
+
+##Maps
+
+##Items
+
+##ApplicationResult
+
+##IExecutor
 
 ####Inicialização
 
