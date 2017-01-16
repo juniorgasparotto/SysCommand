@@ -144,18 +144,16 @@ namespace SysCommand.ConsoleApp
             return this;
         }
 
-        public ApplicationResult Run()
-        {
-            return this.Run(GetArguments());
-        }
-
         public ApplicationResult Run(string arg)
         {
             return this.Run(ConsoleAppHelper.StringToArgs(arg));
         }
 
-        public ApplicationResult Run(string[] args)
+        public ApplicationResult Run(string[] args = null)
         {
+            if (args == null)
+                args = GetArguments();
+
             var appResult = new ApplicationResult
             {
                 App = this,
@@ -307,13 +305,18 @@ namespace SysCommand.ConsoleApp
 
         public static int RunApplication(Func<App> appFactory = null)
         {
+            return RunApplication(null, appFactory);
+        }
+
+        public static int RunApplication(string[] args, Func<App> appFactory = null)
+        {
             var lastBreakLineInNextWrite = false;
             while (true)
             {
                 var app = appFactory != null ? appFactory() : new App();
                 app.ReadArgsWhenIsDebug = true;
                 app.Console.BreakLineInNextWrite = lastBreakLineInNextWrite;
-                app.Run();
+                app.Run(args);
                 lastBreakLineInNextWrite = app.Console.BreakLineInNextWrite;
 
                 if (!DebugHelper.IsDebug)

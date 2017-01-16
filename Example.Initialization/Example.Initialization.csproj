@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{06874726-8A76-4604-B240-17B2E9948D6A}</ProjectGuid>
+    <ProjectGuid>{A72E7D2B-8B3B-4769-8417-87287CACE048}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Example.Methods</RootNamespace>
-    <AssemblyName>Example.Methods</AssemblyName>
+    <RootNamespace>Example.Initialization</RootNamespace>
+    <AssemblyName>Example.Initialization</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,8 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\MethodDefaultCommand.cs" />
-    <Compile Include="Commands\MethodsCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,7 +55,7 @@
       <Name>SysCommand.ConsoleApp</Name>
     </ProjectReference>
     <ProjectReference Include="..\SysCommand\SysCommand.csproj">
-      <Project>{4B7472B5-D979-455F-9613-4F64B98C67F4}</Project>
+      <Project>{4b7472b5-d979-455f-9613-4f64b98c67f4}</Project>
       <Name>SysCommand</Name>
     </ProjectReference>
   </ItemGroup>
