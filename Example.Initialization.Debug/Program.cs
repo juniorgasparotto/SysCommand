@@ -1,21 +1,15 @@
 ﻿using System;
 using SysCommand.ConsoleApp;
 
-namespace Example.Initialization
+namespace Example.Initialization.Debug
 {
     public class Program
     {
-        //public static int Main(string[] args)
-        //{
-        //    return App.RunApplication(args);
-        //}
-
-        static void Main(string[] args)
+        public static int Main()
         {
-            var app = new App();
-            app.Run(args);
+            return App.RunApplication();
         }
-        
+
         public class FirstCommand : Command
         {
             public string FirstProperty

@@ -1,21 +1,25 @@
-﻿using System;
-using SysCommand.ConsoleApp;
+﻿using SysCommand.ConsoleApp;
 
-namespace Example.Initialization
+namespace Example.Initialization.Inclusive
 {
     public class Program
     {
-        //public static int Main(string[] args)
-        //{
-        //    return App.RunApplication(args);
-        //}
-
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            var app = new App();
-            app.Run(args);
+            var commandsTypes = new[]
+            {
+                typeof(FirstCommand)
+            };
+
+            // Specify what you want.
+            new App(commandsTypes).Run(args); 
+
+            // Search for any class that extends from Command.
+            /*
+            new App().Run(args);
+            */
         }
-        
+
         public class FirstCommand : Command
         {
             public string FirstProperty

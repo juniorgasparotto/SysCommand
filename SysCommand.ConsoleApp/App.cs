@@ -17,19 +17,20 @@ namespace SysCommand.ConsoleApp
 {
     public class App
     {
-        public event AppRunCompleteHandler OnComplete;
-        public event AppRunExceptionHandler OnException;
-        public event AppRunOnBeforeMemberInvokeHandler OnBeforeMemberInvoke;
-        public event AppRunOnAfterMemberInvokeHandler OnAfterMemberInvoke;
-        public event AppRunOnMethodReturnHandler OnMethodReturn;
+        public Action<ApplicationResult> OnComplete { get; set; }
+        public Action<ApplicationResult, Exception> OnException { get; set; }
+        public Action<ApplicationResult, IMemberResult> OnBeforeMemberInvoke { get; set; }
+        public Action<ApplicationResult, IMemberResult> OnAfterMemberInvoke { get; set; }
+        public Action<ApplicationResult, IMemberResult> OnMethodReturn { get; set; }
 
-        private bool enableMultiAction;
-        private IExecutor executor;
-        private IDescriptor descriptor;
-        private ConsoleWrapper console;
-        private ItemCollection items;
+        private readonly bool _enableMultiAction;
+        private readonly IExecutor _executor;
 
-        public bool ReadArgsWhenIsDebug { get; set; }
+        private IDescriptor _descriptor;
+        private ConsoleWrapper _console;
+        private ItemCollection _items;
+
+        //public bool ReadArgsWhenIsDebug { get; set; }
         public IEnumerable<CommandMap> Maps { get; private set; }
         public IEnumerable<Command> Commands { get; private set; }
 
@@ -37,16 +38,14 @@ namespace SysCommand.ConsoleApp
         {
             get
             {
-                if (this.console == null)
-                    this.console = new ConsoleWrapper();
-                return this.console;
+                return this._console ?? (this._console = new ConsoleWrapper());
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("This property can't be null.");
-
-                this.console = value;
+                
+                this._console = value;
             }
         }
 
@@ -54,16 +53,14 @@ namespace SysCommand.ConsoleApp
         {
             get
             {
-                if (descriptor == null)
-                    descriptor = new DefaultDescriptor();
-                return descriptor;
+                return _descriptor ?? (_descriptor = new DefaultDescriptor());
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("This property can't be null.");
 
-                descriptor = value;
+                _descriptor = value;
             }
         }
 
@@ -71,24 +68,20 @@ namespace SysCommand.ConsoleApp
         {
             get
             {
-                if (this.items == null)
-                    this.items = new ItemCollection();
-
-                return this.items;
+                return this._items ?? (this._items = new ItemCollection());
             }
         }
         
         public App(
             IEnumerable<Type> commandsTypes = null,
             bool enableMultiAction = true,
-            IExecutor executor = null,
             bool addDefaultAppHandler = true
         )
         {
-            this.enableMultiAction = enableMultiAction;
+            this._enableMultiAction = enableMultiAction;
 
             // default executor
-            this.executor = executor ?? new DefaultExecutor.Executor();
+            this._executor = new DefaultExecutor.Executor();
 
             // add handler default
             if (addDefaultAppHandler)
@@ -102,7 +95,7 @@ namespace SysCommand.ConsoleApp
         {
             // load all in app domain if the list = null
             if (commandsTypes == null)
-                commandsTypes = new AppDomainCommandLoader().GetFromAppDomain(DebugHelper.IsDebug);
+                commandsTypes = new AppDomainCommandLoader().GetFromAppDomain();
 
             var propAppName = typeof(Command).GetProperties().First(p => p.PropertyType == typeof(App)).Name;
             var commands = commandsTypes
@@ -130,7 +123,7 @@ namespace SysCommand.ConsoleApp
             }
 
             // mapping
-            this.Maps = this.executor.GetMaps(commands).ToList();
+            this.Maps = this._executor.GetMaps(commands).ToList();
             this.Commands = commands;
         }
 
@@ -149,11 +142,8 @@ namespace SysCommand.ConsoleApp
             return this.Run(ConsoleAppHelper.StringToArgs(arg));
         }
 
-        public ApplicationResult Run(string[] args = null)
+        public ApplicationResult Run(string[] args)
         {
-            if (args == null)
-                args = GetArguments();
-
             var appResult = new ApplicationResult
             {
                 App = this,
@@ -169,22 +159,7 @@ namespace SysCommand.ConsoleApp
                 var executed = false;
                 var isRestarted = false;
 
-                appResult.ArgumentsRaw = this.executor.ParseRaw(appResult.Args, this.Maps);
-
-                // system feature: "manage args history"
-                //var manageCommand = this.Maps.GetMap<IManageArgsHistoryCommand>();
-                //if (manageCommand != null)
-                //{
-                //    var executorHistory = new DefaultExecutor.Executor();
-                //    var maps = new List<CommandMap> { manageCommand };
-                //    var parseResultHistory = executorHistory.Parse(appResult.Args, appResult.ArgumentsRaw, maps, false);
-                //    var newArgs = executorHistory.Execute(parseResultHistory, null).Results.GetValue<string[]>();
-                //    if (newArgs != null)
-                //        appResult.Args = newArgs;
-
-                //    userMaps.Remove(manageCommand);
-                //}
-
+                appResult.ArgumentsRaw = this._executor.ParseRaw(appResult.Args, this.Maps);
                 Action<IMemberResult, ExecutionScope> invokeAction;
                 invokeAction = (member, scope) =>
                 {
@@ -225,8 +200,8 @@ namespace SysCommand.ConsoleApp
 
                 if (!executed)
                 {
-                    appResult.ParseResult = this.executor.Parse(appResult.Args, appResult.ArgumentsRaw, userMaps, this.enableMultiAction);
-                    appResult.ExecutionResult = this.executor.Execute(appResult.ParseResult, invokeAction);
+                    appResult.ParseResult = this._executor.Parse(appResult.Args, appResult.ArgumentsRaw, userMaps, this._enableMultiAction);
+                    appResult.ExecutionResult = this._executor.Execute(appResult.ParseResult, invokeAction);
                 }
 
                 if (isRestarted)
@@ -274,22 +249,6 @@ namespace SysCommand.ConsoleApp
             return value ?? new ActionResult(member.Value);
         }
         
-        private string[] GetArguments()
-        {
-            if (DebugHelper.IsDebug && this.ReadArgsWhenIsDebug)
-            {
-                var args = this.Console.Read(Strings.GetArgumentsInDebug);
-                return ConsoleAppHelper.StringToArgs(args);
-            }
-            else
-            {
-                var listArgs = Environment.GetCommandLineArgs().ToList();
-                // remove the app path that added auto by .net
-                listArgs.RemoveAt(0);
-                return listArgs.ToArray();
-            }
-        }
-
         private Command CreateCommandInstance<T>(string propertyAppName)
         {
             return this.CreateCommandInstance(typeof(T), propertyAppName);
@@ -297,32 +256,43 @@ namespace SysCommand.ConsoleApp
 
         private Command CreateCommandInstance(Type type, string propertyAppName)
         {
-            object obj = FormatterServices.GetUninitializedObject(type);
+            var obj = FormatterServices.GetUninitializedObject(type);
             obj.GetType().GetProperty(propertyAppName).SetValue(obj, this);
-            obj.GetType().GetConstructor(Type.EmptyTypes).Invoke(obj, null);
-            return (Command)obj;
+            obj.GetType().GetConstructor(Type.EmptyTypes)?.Invoke(obj, null);
+            return (Command) obj;
         }
 
         public static int RunApplication(Func<App> appFactory = null)
-        {
-            return RunApplication(null, appFactory);
-        }
-
-        public static int RunApplication(string[] args, Func<App> appFactory = null)
         {
             var lastBreakLineInNextWrite = false;
             while (true)
             {
                 var app = appFactory != null ? appFactory() : new App();
-                app.ReadArgsWhenIsDebug = true;
                 app.Console.BreakLineInNextWrite = lastBreakLineInNextWrite;
-                app.Run(args);
+                app.Run(GetArguments(app));
                 lastBreakLineInNextWrite = app.Console.BreakLineInNextWrite;
 
                 if (!DebugHelper.IsDebug)
                     return app.Console.ExitCode;
             }
         }
+
+        private static string[] GetArguments(App app)
+        {
+            if (DebugHelper.IsDebug)
+            {
+                var args = app.Console.Read(Strings.GetArgumentsInDebug);
+                return ConsoleAppHelper.StringToArgs(args);
+            }
+
+            var listArgs = Environment.GetCommandLineArgs().ToList();
+
+            // remove the app path that added auto by .net
+            listArgs.RemoveAt(0);
+
+            return listArgs.ToArray();
+        }
+
 
     }
 }

@@ -51,7 +51,6 @@
     <Compile Include="ItemCollection.cs" />
     <Compile Include="Files\Json\JsonFileManager.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
-    <Compile Include="Handlers\ApplicationDelegates.cs" />
     <Compile Include="ApplicationResult.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Command.cs" />

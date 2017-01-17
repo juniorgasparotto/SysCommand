@@ -20,7 +20,7 @@ namespace SysCommand.ConsoleApp.Loader
             this.IgnoredCommands.Add(typeof(T));
         }
         
-        public IEnumerable<Type> GetFromAppDomain(bool isDebug)
+        public IEnumerable<Type> GetFromAppDomain()
         {
             var listOfCommands = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()

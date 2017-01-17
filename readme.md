@@ -113,10 +113,313 @@ public void MyAction(string A);
 
 ##Inicialização
 
-O processo de inicialização é bastante simples, você pode optar pelo meio padrão que simplifica a inicialização com apenas uma linha ou pela customização.
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instancia da class `App` com suas possíveis customizações ou atravez do método estático `App.RunApplication` que conta com um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo ou via "Command Line Arguments".
 
+A classe `App` é a principal classe do sistema, ela é responsável por manter um contexto isolado por cada instancia `App`. Nenhum recurso estático é usado aqui, isso é importante para você ter a liberdade de criar quantas instancias quiser em qualquer escopo.
 
+Em seu construtor estão as configurações mais importantes e vamos explicar cada uma delas:
 
+```csharp
+public App(
+           IEnumerable<Type> commandsTypes = null,
+           bool enableMultiAction = true,
+           bool addDefaultAppHandler = true
+       )
+```
+
+* commandsTypes: Especifica os tipos dos `Command` que serão utilidados em todo o processo. Caso seja `null` então o sistema buscará qualquer classe que extenda de `Command`. 
+* enableMultiAction: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará ligado.
+* addDefaultAppHandler: Caso seja `false` então não cria o handler de eventos que é responsável pelo mecanismo padrão de `outputs` e controles de `erros`.
+
+######Especificando os tipos de comandos
+
+Ao especificar cada `Command` que será utilizado, você perde o recurso de busca automatica, mas ganha a flexibidade de controlar quais `Commands` devem ou não fazer parte do seu sistema. Para isso você pode trabalhar de duas formas, a `inclusiva` ou a `exclusiva`. A forma inclusiva é basicamente a especificação de cada `Command` e a forma exclusiva é o oposto, primeiro se carrega tudo e depois elimina-se o que não deseja.
+
+A classe `SysCommand.ConsoleApp.Loader.AppDomainCommandLoader` é a responsável por buscar os commands de forma automatica e você pode usa-la na forma exclusiva. Internamente o sistema faz uso dela caso o parametro `commandsTypes` esteja `null`.
+
+**Exemplo de forma inclusiva:**
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var commandsTypes = new[]
+        {
+            typeof(FirstCommand)
+        };
+        
+        // Specify what you want.
+        new App(commandsTypes).Run(args);
+
+        // Search for any class that extends from Command.
+        /*
+        new App().Run(args);
+        */
+    }
+
+    public class FirstCommand : Command
+    {
+        public string FirstProperty
+        {
+            set
+            {
+                App.Console.Write("FirstProperty");
+            }
+        }
+    }
+
+    public class SecondCommand : Command
+    {
+        public string SecondProperty
+        {
+            set
+            {
+                App.Console.Write("SecondProperty");
+            }
+        }
+    }
+}
+```
+
+``` 
+MyApp.exe help
+usage:    [--first-property=<phrase>] <actions[args]>
+
+FirstCommand
+
+   --first-property    Is optional.
+
+Displays help information
+
+   help
+      --action         Is optional.
+
+Use 'help --action=<name>' to view the details of
+any action. Every action with the symbol "*" can
+have his name omitted.
+```
+
+Perceba que no help não existe nenhuma ocorrencia da class `SecondCommand`.
+
+Perceba também que existe um help para o próprio mecanismo de help, esse `Command` sempre deverá existir, caso não seja especificado na sua lista de tipos o proprio sistema se encarregará de cria-lo utilizando o help padrão `SysCommand.ConsoleApp.Commands.HelpCommand`. Para mais informações sobre customização de help consulte `help automatico`.
+
+**Exemplo de forma exclusiva:**
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // Create loader instance
+        var loader = new AppDomainCommandLoader();
+
+        // Remove unwanted command
+        loader.IgnoreCommand<FirstCommand>();
+        loader.IgnoreCommand<VerboseCommand>();
+        loader.IgnoreCommand<ArgsHistoryCommand>();
+
+        // Get all commands with 'ignored' filter
+        var commandsTypes = loader.GetFromAppDomain();
+
+        new App(commandsTypes).Run(args);
+    }
+
+    public class FirstCommand : Command
+    {
+        public string FirstProperty
+        {
+            set
+            {
+                App.Console.Write("FirstProperty");
+            }
+        }
+    }
+
+    public class SecondCommand : Command
+    {
+        public string SecondProperty
+        {
+            set
+            {
+                App.Console.Write("SecondProperty");
+            }
+        }
+    }
+}
+```
+
+```
+MyApp.exe help
+usage:    [--second-property=<phrase>] <actions[args]>
+
+SecondCommand
+
+   --second-property    Is optional.
+
+Displays help information
+
+   help
+      --action          Is optional.
+
+Use 'help --action=<name>' to view the details of
+any action. Every action with the symbol "*" can
+have his name omitted.
+```
+
+Perceba que no help não existe nenhuma ocorrencia da class `FirstCommand`.
+
+Por enquanto, não se atente agora para as classes `VerboseCommand` e `ArgsHistoryCommand` elas são commands internos e serão explicados mais adiante na documentação.
+
+######Utilizando o recurso de MultiAction
+
+Esse recurso permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso `Gerenciamento de históricos de argumentos` deixará de funcionar caso isso ocorra.
+
+Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de paramentros.
+
+**Exemplo:**
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        new App().Run(args);
+
+        // EnableMultiAction = false
+        /*
+        new App(null, false).Run(args);
+        */
+    }
+
+    public class MyCommand : Command
+    {
+        public string Action1(string value = null)
+        {
+            return "Action1";
+        }
+
+        public string Action2(string value = null)
+        {
+            return "Action2";
+        }
+    }
+}
+```
+
+```
+MyApp.exe action1
+Action1 (value = default)
+
+MyApp.exe action2
+Action2 (value = default)
+
+MyApp.exe action1 action2
+Action1 (value = default)
+Action2 (value = default)
+
+MyApp.exe action1 action2 action1 action1 action2
+Action1 (value = default)
+Action2 (value = default)
+Action1 (value = default)
+Action1 (value = default)
+Action2 (value = default)
+
+MyApp.exe action1 --value \\action2
+Action1 (value = action2)
+```
+
+O último exemplo demostra como usar o scape em seus valores que conflitam com nomes de `actions`. Um fato importante é que no exemplo foi usado duas barras invertidas para fazer o scape, mas isso pode variar de console para console, no `bash` o uso de apenas uma barra invertida não tem nenhum efeito, provavelmente ele deve usar para outros scapes antes de chegar na aplicação.
+
+######Controle de eventos
+
+Os eventos são importantes para interceptar cada passo da execução e modificar ou extender o comportamento padrão. Os eventos existentes são os seguintes:
+
+* App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult): Chamado antes do invoke de cada membro (propriedade ou metodo) que foi parseado.
+* App.OnAfterMemberInvoke(ApplicationResult, IMemberResult): Chamado depois do invoke de cada membro (propriedade ou metodo) que foi parseado.
+* App.OnMethodReturn(ApplicationResult, IMemberResult): : Chamado sempre que um metodo retorna valor
+* App.OnComplete(ApplicationResult): Chamado ao fim da execução
+* App.OnException(ApplicationResult, Exception): Chamado em caso de exception.
+
+**Exemplo:**
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var app = new App();
+        
+        app.OnBeforeMemberInvoke += (appResult, memberResult) =>
+        {
+            app.Console.Write("Before: " + memberResult.Name);
+        };
+
+        app.OnAfterMemberInvoke += (appResult, memberResult) =>
+        {
+            app.Console.Write("After: " + memberResult.Name);
+        };
+
+        app.OnMethodReturn += (appResult, memberResult) =>
+        {
+            app.Console.Write("After MethodReturn: " + memberResult.Name);
+        };
+
+        app.OnComplete += (appResult) =>
+        {
+            app.Console.Write("Count: " + appResult.ExecutionResult.Results.Count());
+            throw new Exception("Some error!!!");
+        };
+
+        app.OnException += (appResult, exception) =>
+        {
+            app.Console.Write(exception.Message);
+        };
+
+        app.Run(args);
+    }
+
+    public class FirstCommand : Command
+    {
+        public string MyProperty { get; set; }
+
+        public string MyAction()
+        {
+            return "Return MyAction";
+        }
+    }
+}
+```
+
+```
+MyApp.exe --my-property value my-action
+Before: MyProperty
+After: MyProperty
+Before: MyAction
+After: MyAction
+Return MyAction
+After MethodReturn: MyAction
+Count: 2
+Some error!!!
+```
+
+No exemplo acima o controle passou para quem implementou os eventos e cada um dos eventos foram executados em sua respectiva ordem. 
+
+Por padrão nos inserimos um handler chamado `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` que é responsável pelo mecanismo padrão de `outputs` e controles de `erros`. Esse handler foi o responsável imprimir a linha "Return MyAction" do output acima. Para desliga-lo e ter o controle total dos eventos, basta desabilitar a flag `addDefaultAppHandler = false` no construtor.
+
+```csharp
+new App(addDefaultAppHandler: false).Run(args);
+```
+
+Outro modo de adicionar eventos é usando a interface `SysCommand.ConsoleApp.Handlers.IApplicationHandler`. Dessa maneira sua regra fica isolada, mas tendo o contraponto de ser obrigado a implementar todos os métodos da interface. Para adicionar um novo handler siga o exemplo abaixo:
+
+```csharp
+new App(addDefaultAppHandler: false)
+        .AddApplicationHandler(new CustomApplicationHandler())
+        .Run(args);
+```
+
+######Usando o simulador de console no seu ambiente de desenvolvimento
 
 
 ##Help automatico
@@ -642,6 +945,7 @@ C:\MyApp.exe history-list
 
 * Para desativar o comando `ArgsHistoryCommand` veja o tópico de `Inicialização`.
 * A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico `Redirecionamento de comandos`.
+* Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
 
 ##Redirecionamento de comandos
 

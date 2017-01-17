@@ -27,7 +27,8 @@ namespace SysCommand.ConsoleApp.Handlers
 
         public virtual void OnException(ApplicationResult appResult, Exception ex)
         {
-            throw ex;
+            if (appResult.App.OnException.GetInvocationList().Length == 1)
+                throw ex;
         }
 
         public virtual void OnBeforeMemberInvoke(ApplicationResult appResult, IMemberResult member)
