@@ -1,0 +1,1 @@
+#include "../pt-br/Getting Start/Getting-start.md"

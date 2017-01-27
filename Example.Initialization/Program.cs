@@ -5,11 +5,6 @@ namespace Example.Initialization
 {
     public class Program
     {
-        //public static int Main(string[] args)
-        //{
-        //    return App.RunApplication(args);
-        //}
-
         static void Main(string[] args)
         {
             var app = new App();

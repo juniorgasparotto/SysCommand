@@ -1,0 +1,7 @@
+docs/
+tests/
+.eslintrc
+.gitignore
+.travis.yml
+gulpfile.js
+markdown.json
