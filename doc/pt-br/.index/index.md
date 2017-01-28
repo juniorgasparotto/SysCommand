@@ -1,8 +1,8 @@
 #include "../pt-br/presentation/syscommand.md"
 #include "../pt-br/presentation/how-it-works.md"
 #include "../pt-br/presentation/what-is-the-purpose.md"
-____TABLE_OF_CONTENTS____
 #include "../pt-br/install/install.md"
+____TABLE_OF_CONTENTS____
 #include "../pt-br/install/dlls.md"
 #include "../pt-br/getting-start/getting-start.md"
 #include "../pt-br/getting-start/class-app.md"
