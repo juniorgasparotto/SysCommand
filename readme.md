@@ -3,7 +3,7 @@
 * [O que é o SysCommand?](#o-que-é-o-syscommand?)
   * [Como funciona?](#como-funciona?)
   * [Qual é o objetivo deste projeto?](#qual-é-o-objetivo-deste-projeto?)
-* [Instação](#instação)
+* [Instalação](#instalação)
   * [DLLs do pacote](#dlls-do-pacote)
 * [Começando](#começando)
   * [Classe `App`](#classe--app)
@@ -50,15 +50,15 @@
 Framework for development console application using the MVC pattern. A good option of command line parser.
 ## Como funciona?
 ## Qual é o objetivo deste projeto?
-# Instação
+# Instalação
 
-* NuGet: 
+* NuGet:
 * NuGet Core CRL: 
 
 ## DLLs do pacote
 
-  * SysCommand.dll: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizada em outros tipos de projetos como Web Application ou Windows Forms. Aqui NÃO deve existir nenhum uso a classe do .NET "System.Console".
-  * SysCommand.ConsoleApp.dll: Contém diversos recursos que uma aplicação do tipo console application precisa. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
+  * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizada em outros tipos de projetos como Web Application ou Windows Forms. Aqui NÃO deve existir nenhum uso a classe do .NET "System.Console".
+  * `SysCommand.ConsoleApp.dll`: Contém diversos recursos que uma aplicação do tipo console application precisa. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
   * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
 
 # Começando
