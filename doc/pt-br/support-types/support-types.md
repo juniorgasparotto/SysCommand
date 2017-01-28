@@ -1,4 +1,4 @@
-# Support types !heading
+# Tipos suportados !heading
 
 string
 bool

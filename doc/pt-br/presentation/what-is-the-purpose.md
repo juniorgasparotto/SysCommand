@@ -1,1 +1,3 @@
 ## Qual é o objetivo deste projeto? !heading
+
+Meu objetivo é ajudar programadores de qualquer linguagem de programação que sofrem na hora de criar uma aplicação console. Muitas vezes desistimos de criar algo pela burocracia do parse e pela dificuldade de manutenção ao ver códigos onde sua lógica de parse está unida com sua lógica de negócios. Se você é como eu que adora criar mini-aplicações para resolver pequenos problemas do dia a dia usando consoles, então junte-se a nós!
