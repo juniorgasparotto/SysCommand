@@ -1,4 +1,4 @@
-# Indíce
+# Índice
 
 * [SysCommand](#syscommand)
 * [Install](#install)

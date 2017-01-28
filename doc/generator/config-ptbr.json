@@ -1,7 +1,0 @@
-{
-	"build" : "../../README.md",
-	"files" : ["index-ptbr.md"],
-	"tableOfContents": {
-		"heading": "# Indíce"
-	}
-}
