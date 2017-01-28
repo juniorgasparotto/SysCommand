@@ -38,3 +38,4 @@
 #include "../pt-br/methods/default-methods.md"
 #include "../pt-br/kind-of-inputs/kind-of-inputs.md"
 #include "../pt-br/support-types/support-types.md"
+#include "../pt-br/support-types/license.md"
