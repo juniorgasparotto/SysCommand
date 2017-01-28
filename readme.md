@@ -54,6 +54,7 @@ Framework for development console application using the MVC pattern. A good opti
 
 * NuGet: 
 * NuGet Core CRL: 
+
 ## DLLs do pacote
 
   * SysCommand.dll: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizada em outros tipos de projetos como Web Application ou Windows Forms. Aqui NÃO deve existir nenhum uso a classe do .NET "System.Console".
