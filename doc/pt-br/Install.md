@@ -1,4 +1,4 @@
-# Install !heading
+# Instação !heading
 
 * NuGet: 
 * NuGet Core CRL: 

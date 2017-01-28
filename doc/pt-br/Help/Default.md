@@ -1,4 +1,4 @@
-## Formato do help padrão !heading
+## Comportamento padrão !heading
 
 O formato padrão do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. O formato de saída que será exibido será o seguinte:
 

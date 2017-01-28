@@ -1,4 +1,4 @@
-# Iniciando com o SysCommand !heading
+# Começando !heading
 
 Esse tópico tem por objetivo resumir os principais recursos da ferramenta, não entraremos em detalhes agora, para isso veja a documentação completa. Vamos lá...
 

@@ -1,16 +1,16 @@
 # Índice
 
 * [O que é o SysCommand](#o-que-é-o-syscommand)
-* [Install](#install)
-* [Iniciando com o SysCommand](#iniciando-com-o-syscommand)
+* [Instação](#instação)
+* [Começando](#começando)
   * [DLLs do pacote](#dlls-do-pacote)
   * [Classe `App`](#classe--app)
   * [Inicializando por método estático](#inicializando-por-método-estático)
   * [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos)
   * [Utilizando o recurso de MultiAction](#utilizando-o-recurso-de-multiaction)
   * [Controle de eventos](#controle-de-eventos)
-  * [Help automatico](#help-automatico)
-  * [Formato do help padrão](#formato-do-help-padrão)
+* [Help automatico](#help-automatico)
+  * [Comportamento padrão](#comportamento-padrão)
 * [Tipos de commands](#tipos-de-commands)
 * [Verbose](#verbose)
 * [Output](#output)
@@ -45,11 +45,11 @@
 # O que é o SysCommand
 
 Framework for development console application using the MVC pattern. A good option of command line parser.
-# Install
+# Instação
 
 * NuGet: 
 * NuGet Core CRL: 
-# Iniciando com o SysCommand
+# Começando
 
 Esse tópico tem por objetivo resumir os principais recursos da ferramenta, não entraremos em detalhes agora, para isso veja a documentação completa. Vamos lá...
 
@@ -515,7 +515,7 @@ new App(addDefaultAppHandler: false)
         .Run(args);
 ```
 
-## Help automatico
+# Help automatico
 
 O `help` é gerado de forma automatica pelo sistema e para exibi-lo basta seguir os exemplos abaixo:
 
@@ -591,7 +591,7 @@ public class Program
 ```
 
 * O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
-## Formato do help padrão
+## Comportamento padrão
 
 O formato padrão do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. O formato de saída que será exibido será o seguinte:
 
