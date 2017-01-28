@@ -1,6 +1,9 @@
 # Índice
 
-* [O que é o SysCommand](#o-que-é-o-syscommand)
+* [Como funciona o SysCommand?](#como-funciona-o-syscommand?)
+* [O que é o SysCommand?](#o-que-é-o-syscommand?)
+* [Qual é o objetivo deste projeto?](#qual-é-o-objetivo-deste-projeto?)
+* [Quem usará o SysCommand?](#quem-usará-o-syscommand?)
 * [Instação](#instação)
 * [Começando](#começando)
   * [DLLs do pacote](#dlls-do-pacote)
@@ -40,11 +43,18 @@
   * [Métodos padrão](#métodos-padrão)
 * [Tipos de inputs](#tipos-de-inputs)
 * [Support types](#support-types)
+* [Licença](#licença)
 
 
-# O que é o SysCommand
+# Como funciona o SysCommand?
+# O que é o SysCommand?
 
 Framework for development console application using the MVC pattern. A good option of command line parser.
+
+# Qual é o objetivo deste projeto?
+# Quem usará o SysCommand?
+# Qual é o objetivo deste projeto?
+# Quem usará o SysCommand?
 # Instação
 
 * NuGet: 
@@ -2115,3 +2125,4 @@ MyApp.exe 1.0 1.99 str1 str2 // positional
 Importante!
 
 Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
+# Licença
