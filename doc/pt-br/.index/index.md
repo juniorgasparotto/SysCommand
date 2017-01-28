@@ -1,5 +1,5 @@
-#include "../pt-br/presentation/how-it-works.md"
 #include "../pt-br/presentation/what-is.md"
+#include "../pt-br/presentation/how-it-works.md"
 #include "../pt-br/presentation/what-is-the-purpose.md"
 #include "../pt-br/presentation/who-will-use.md"
 #include "../pt-br/install.md"
