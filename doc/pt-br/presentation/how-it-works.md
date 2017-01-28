@@ -1,1 +1,1 @@
-## Como funciona o SysCommand? !heading
+## Como funciona? !heading

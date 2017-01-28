@@ -1,9 +1,9 @@
 # Índice
 
 * [O que é o SysCommand?](#o-que-é-o-syscommand?)
-  * [Como funciona o SysCommand?](#como-funciona-o-syscommand?)
+  * [Como funciona?](#como-funciona?)
   * [Qual é o objetivo deste projeto?](#qual-é-o-objetivo-deste-projeto?)
-  * [Quem usará o SysCommand?](#quem-usará-o-syscommand?)
+  * [Quem usará?](#quem-usará?)
 * [Instação](#instação)
 * [Começando](#começando)
   * [DLLs do pacote](#dlls-do-pacote)
@@ -49,9 +49,9 @@
 # O que é o SysCommand?
 
 Framework for development console application using the MVC pattern. A good option of command line parser.
-## Como funciona o SysCommand?
+## Como funciona?
 ## Qual é o objetivo deste projeto?
-## Quem usará o SysCommand?
+## Quem usará?
 # Instação
 
 * NuGet: 
