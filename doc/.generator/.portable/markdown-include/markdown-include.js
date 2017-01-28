@@ -140,7 +140,7 @@ exports.compileFiles = function (path) {
 					var str = self.build[file].parsedData;
 
 					if (!self.options.tableOfContents.placeHolder) {
-						str = self.build[file].tableOfContents + '\n\n' + self.build[file].parsedData;
+						str = self.build[file].tableOfContents + '\n\n' + str;
 					}
 					else {
 						str = str.replace(self.options.tableOfContents.placeHolder, self.build[file].tableOfContents);
