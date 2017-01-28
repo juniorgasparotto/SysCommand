@@ -149,6 +149,8 @@ exports.compileFiles = function (path) {
 					self.build[file].parsedData = str;
 				}
 			}
+
+			console.info(self.build[file].parsedData.substr(0, 2000));
 		}
 
 		if (self.customTags && self.customTags.length) {
