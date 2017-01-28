@@ -1,3 +1,8 @@
+# SysCommand
+
+Framework for development console application using the MVC pattern. A good option of command line parser.
+## Como funciona?
+## Qual é o objetivo deste projeto?
 # Índice
 
 * [SysCommand](#syscommand)
@@ -44,13 +49,6 @@
 * [Support types](#support-types)
 * [Licença](#licença)
 
-
-# SysCommand
-
-Framework for development console application using the MVC pattern. A good option of command line parser.
-## Como funciona?
-## Qual é o objetivo deste projeto?
-____TABLE_OF_CONTENTS____
 # Instalação
 
 * NuGet:
