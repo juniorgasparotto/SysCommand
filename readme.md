@@ -3,10 +3,9 @@
 * [O que é o SysCommand?](#o-que-é-o-syscommand?)
   * [Como funciona?](#como-funciona?)
   * [Qual é o objetivo deste projeto?](#qual-é-o-objetivo-deste-projeto?)
-  * [Quem usará?](#quem-usará?)
 * [Instação](#instação)
-* [Começando](#começando)
   * [DLLs do pacote](#dlls-do-pacote)
+* [Começando](#começando)
   * [Classe `App`](#classe--app)
   * [Inicializando por método estático](#inicializando-por-método-estático)
   * [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos)
@@ -51,11 +50,16 @@
 Framework for development console application using the MVC pattern. A good option of command line parser.
 ## Como funciona?
 ## Qual é o objetivo deste projeto?
-## Quem usará?
 # Instação
 
 * NuGet: 
 * NuGet Core CRL: 
+## DLLs do pacote
+
+  * SysCommand.dll: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizada em outros tipos de projetos como Web Application ou Windows Forms. Aqui NÃO deve existir nenhum uso a classe do .NET "System.Console".
+  * SysCommand.ConsoleApp.dll: Contém diversos recursos que uma aplicação do tipo console application precisa. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
+  * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
+
 # Começando
 
 Esse tópico tem por objetivo resumir os principais recursos da ferramenta, não entraremos em detalhes agora, para isso veja a documentação completa. Vamos lá...
@@ -163,12 +167,6 @@ MyAction
 MyApp.exe custom-action -a 9999.99
 MyCustomAction
 ```
-## DLLs do pacote
-
-  * SysCommand.dll: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizada em outros tipos de projetos como Web Application ou Windows Forms. Aqui NÃO deve existir nenhum uso a classe do .NET "System.Console".
-  * SysCommand.ConsoleApp.dll: Contém diversos recursos que uma aplicação do tipo console application precisa. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
-  * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
-
 ## Classe `App`
 
 A classe `App` é a principal classe do sistema, ela é responsável por manter um contexto isolado por cada instancia `App`. Nenhum recurso estático é usado aqui, isso é importante para você ter a liberdade de criar quantas instancias quiser em qualquer escopo.
