@@ -1,24 +1,8 @@
-# SysCommand
-
-O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `Console Aplication` usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC. 
-## Como funciona?
-
-Ele funciona como um analisar de linhas de comando automático, ou seja, toda a tarefa de parse fica por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
-
-Mesmo que você utilize outros frameworks de analise de linhas de comandos, você ainda terá que configurar alguma coisa, com o `SysCommand` isso é totalmente natural.
-## Qual é o objetivo deste projeto?
-
-Nosso objetivo é ajudar programadores de qualquer linguagem de programação que sofrem na hora de criar uma aplicação console. Muitas vezes desistimos de criar algo pela burocracia do parse e pela dificuldade de manutenção ao ver códigos onde sua lógica de parse está unida com sua lógica de negócios. Se você é como eu que adora criar mini-aplicações para resolver problemas do dia a dia usando consoles, então junte-se a nós!
-# Instalação
-
-* NuGet:
-* NuGet Core CRL: 
-
 # Índice
 
 * [SysCommand](#syscommand)
   * [Como funciona?](#como-funciona?)
-  * [Qual é o objetivo deste projeto?](#qual-é-o-objetivo-deste-projeto?)
+  * [Qual o objetivo deste projeto?](#qual-o-objetivo-deste-projeto?)
 * [Instalação](#instalação)
   * [DLLs do pacote](#dlls-do-pacote)
 * [Começando](#começando)
