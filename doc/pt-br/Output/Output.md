@@ -1,4 +1,4 @@
-##Output
+# Output !heading
 
 O mecanismo de output foi extendido para aumentar a produtividade.
 

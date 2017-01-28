@@ -1,4 +1,4 @@
-######Métodos padrão
+## Métodos padrão !heading
 
 O uso de métodos padrão (ou métodos implicitos) fazem com que o recurso seja muito similar ao uso de propriedades, ou seja, você não é obrigado a especificar o nome da `action` e os seus parâmetros podem ser inseridos diretamente no input como se fossem argumentos provenientes de propriedades. 
 

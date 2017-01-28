@@ -1,4 +1,4 @@
-######Ignorar métodos publicos por uma escolha manual usando atributo
+## Ignorar métodos publicos por uma escolha manual usando atributo !heading
 
 Para mudar o comportamente padrão de métodos publicos, você precisa apenas desligar a flag `OnlyMethodsWithAttribute` do `Command`. Com ela desligada o parseador deixará de olhar para as métodos publicos e usará apenas os métodos publicos e que tiverem o atributo `ActionAtrribute`.
 

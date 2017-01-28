@@ -1,4 +1,4 @@
-##Cancelamento da continuidade da execução
+# Cancelamento da continuidade da execução !heading
 
 Quando existem muitas actions com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.
 

@@ -1,4 +1,4 @@
-##Help automatico
+## Help automatico !heading
 
 O `help` é gerado de forma automatica pelo sistema e para exibi-lo basta seguir os exemplos abaixo:
 

@@ -1,4 +1,4 @@
-######Customizando nomes de actions e arguments
+## Customizando nomes de actions e arguments !heading
 
 A regra a seguir descreve como é o comportamento padrão de nomenclatura para que os métodos vire uma `action` e um parametro vire um `argument`:
 
