@@ -1,6 +1,6 @@
 # Table of contents
 
-* [SysCommand](#syscommand)
+* [O que é o SysCommand](#o-que-é-o-syscommand)
 * [Install](#install)
 * [Iniciando com o SysCommand](#iniciando-com-o-syscommand)
   * [DLLs do pacote](#dlls-do-pacote)
@@ -42,7 +42,7 @@
 * [Support types](#support-types)
 
 
-# SysCommand
+# O que é o SysCommand
 
 Framework for development console application using the MVC pattern. A good option of command line parser.
 # Install
