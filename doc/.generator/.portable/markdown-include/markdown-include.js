@@ -136,7 +136,17 @@ exports.compileFiles = function (path) {
 				self.compileHeadingTags(file);
 
 				if (self.options.tableOfContents.heading && self.tableOfContents) {
-					self.build[file].parsedData = self.options.tableOfContents.heading + '\n\n' + self.tableOfContents + '\n\n' + self.build[file].parsedData;
+					self.build[file].tableOfContents =  self.options.tableOfContents.heading + '\n\n' + self.tableOfContents;
+					var str = self.build[file].parsedData;
+
+					if (!self.options.tableOfContents.placeHolder) {
+						str = self.build[file].tableOfContents + '\n\n' + self.build[file].parsedData;
+					}
+					else {
+						str = str.replace(self.options.tableOfContents.placeHolder, self.build[file].tableOfContents);
+					}
+
+					self.build[file].parsedData = str;
 				}
 			}
 		}

@@ -10,13 +10,13 @@ Para iniciar com o SysCommand você precisa de muitos poucos passos:
 * Instalar, via NuGet, o SysCommand em sua aplicação. Essa instalação consta com duas DLLs e duas dependencias que fazem todo o trabalho.
 * Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
 * Implemente sua classe levando em consideração que suas propriedades `publicas` serão convertidas em `arguments` e seus métodos `publicos` em `actions`.
-* No seu método `Program.Main(string[] args)`, configure uma instancia da classe `SysCommand.ConsoleApp.App` que será o contexto da execução. Ou simplementes utilize o método estático `App.RunApplication()` que além de ser mais objetivo ainda dispõe do recurso de `simulação de console`.
+* No seu método `Program.Main(string[] args)`, configure uma instância da classe `SysCommand.ConsoleApp.App` que será o contexto da execução. Ou simplementes utilize o método estático `App.RunApplication()` que além de ser mais objetivo ainda dispõe do recurso de `simulação de console`.
 * Execute o contexto usando o método `myApp.Run(args)` caso NÃO esteja usando o método estatico `App.RunApplication()`.
 
 **Passos opcionais:**
 
 * Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, help text, obrigatóriedade e dentro outros.
-* Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console.
+* Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
 * Você pode utilizar o retorno dos métodos como `output`.
 * Crie um método chamado `Main()` (sem parametros) dentro da sua classe para poder trabalhar com propriedades. Utilize tipos `Nullable` para ter condições de identificar que o usuário fez o input de um determinado argumento que corresponda a uma propriedade. O nome "Main" foi convensionado para esse tipo de uso, mas apenas quando esse método não tiver parametros.
 

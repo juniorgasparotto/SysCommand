@@ -1,6 +1,7 @@
 #include "../pt-br/presentation/what-is.md"
 #include "../pt-br/presentation/how-it-works.md"
 #include "../pt-br/presentation/what-is-the-purpose.md"
+____TABLE_OF_CONTENTS____
 #include "../pt-br/install/install.md"
 #include "../pt-br/install/dlls.md"
 #include "../pt-br/getting-start/getting-start.md"
