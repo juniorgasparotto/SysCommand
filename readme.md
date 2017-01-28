@@ -8,7 +8,11 @@ Ele funciona como um analisar de linhas de comando automático, ou seja, toda a 
 Mesmo que você utilize outros frameworks de analise de linhas de comandos, você ainda terá que configurar alguma coisa, com o `SysCommand` isso é totalmente natural.
 ## Qual é o objetivo deste projeto?
 
-Meu objetivo é ajudar programadores de qualquer linguagem de programação que sofrem na hora de criar uma aplicação console. Muitas vezes desistimos de criar algo pela burocracia do parse e pela dificuldade de manutenção ao ver códigos onde sua lógica de parse está unida com sua lógica de negócios. Se você é como eu que adora criar mini-aplicações para resolver pequenos problemas do dia a dia usando consoles, então junte-se a nós!
+Nosso objetivo é ajudar programadores de qualquer linguagem de programação que sofrem na hora de criar uma aplicação console. Muitas vezes desistimos de criar algo pela burocracia do parse e pela dificuldade de manutenção ao ver códigos onde sua lógica de parse está unida com sua lógica de negócios. Se você é como eu que adora criar mini-aplicações para resolver problemas do dia a dia usando consoles, então junte-se a nós!
+# Instalação
+
+* NuGet:
+* NuGet Core CRL: 
 # Índice
 
 * [SysCommand](#syscommand)
@@ -55,10 +59,6 @@ Meu objetivo é ajudar programadores de qualquer linguagem de programação que 
 * [Tipos suportados](#tipos-suportados)
 * [Licença](#licença)
 
-# Instalação
-
-* NuGet:
-* NuGet Core CRL: 
 
 ## DLLs do pacote
 
