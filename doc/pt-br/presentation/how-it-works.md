@@ -46,13 +46,13 @@ output
 cmd> MyApp.exe --property 123
 MyProperty
 
-cmd> MyApp.exe --property2 123.99
+cmd> MyApp.exe --property2=123.99
 MyProperty2
 
 cmd> MyApp.exe my-action --my-parameter value
 MyAction
 
-cmd> MyApp.exe my-action --my-parameter value --property 123 --property2 0.1
+cmd> MyApp.exe my-action --my-parameter value /property:123 --property2 0.1
 MyAction
 Use property here if you want!
 MyProperty
@@ -60,6 +60,10 @@ MyProperty2
 ```
 
 * Os tipos de input se dividem entre `arguments` (representados por propriedades) ou `actions` (representados por métodos). Veja [Trabalhando com propriedades](#trabalhando-com-propriedades) e [Trabalhando com métodos](#trabalhando-com-métodos)
-* A sintaxe dos inputs se baseia no modelo: `[action-name ][-|--|/][argument-name][=|:| ][value]`
-* Todos os tipos primitivos do .NET, Enums e Collections são suportados. Veja o tópico de [Tipos suportados](#tipos-suportados)
 * Existe suporte nativo para o `help` e `verbose`. Veja [Help automatico](#help-automatico) e [Verbose](#verbose)
+* A sintaxe dos inputs se baseia no modelo: `[action-name ][-|--|/][argument-name][=|:| ][value]`. O caracter "|" significa "ou"
+  * A forma curta é representada apenas por apenas um traço `-`
+  * A forma longa pode ser representada por dois traços `--` ou pelo caracter `/`
+  * O valor do argumento deve vir depois de um espaço ` ` ou unido com o nome do argumento por um `=` ou `:`
+  * Todos os tipos primitivos do .NET, Enums e Collections são suportados.
+  * Veja o tópico de [Tipos suportados](#tipos-suportados)
