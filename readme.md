@@ -72,7 +72,7 @@ MyProperty2
   * Todos os tipos primitivos do .NET, Enums e Collections são suportados.
   * Veja o tópico de [Tipos suportados](#tipos-suportados)
 
-  Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#começando)
+Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#começando)
 
 ## Qual o objetivo deste projeto?
 
