@@ -112,6 +112,7 @@ exports.buildLinkString = function (str) {
 exports.compileFiles = function (path) {
 	var deferred = q.defer();
 	var self = this;
+	self.A = "junior";
 
 	fs.readFile(path, function (err, data) {
 		if (err) {
@@ -121,6 +122,7 @@ exports.compileFiles = function (path) {
 		self.options = JSON.parse(data.toString());
 		var files = self.options.files;
 		var i;
+		var output = "";
 
 		for (i = 0; i < files.length; i += 1) {
 			var file = files[i];
@@ -135,12 +137,11 @@ exports.compileFiles = function (path) {
 			if (self.options.tableOfContents) {
 				self.compileHeadingTags(file);
 
-				if (self.options.tableOfContents.heading && self.tableOfContents) {
-					self.build[file].tableOfContents =  self.options.tableOfContents.heading + '\n\n' + self.tableOfContents;
+				if (self.build[file].tableOfContents) {
 					var str = self.build[file].parsedData;
 
 					if (!self.options.tableOfContents.placeHolder) {
-						str = self.build[file].tableOfContents + '\n\n' + str;
+						str = self.build[file].tableOfContents + str;
 					}
 					else {
 						str = str.replace(self.options.tableOfContents.placeHolder, self.build[file].tableOfContents);
@@ -150,14 +151,14 @@ exports.compileFiles = function (path) {
 				}
 			}
 
-			console.info(self.build[file].parsedData.substr(0, 2000));
+			if (self.customTags && self.customTags.length) {
+				self.build[file].parsedData = self.resolveCustomTags(self.build[file].parsedData);
+			}
+
+			output += self.build[file].parsedData;
 		}
 
-		if (self.customTags && self.customTags.length) {
-			self.build[file].parsedData = self.resolveCustomTags(self.build[file].parsedData);
-		}
-
-		deferred.resolve(self.writeFile(self.build[file].parsedData));
+		deferred.resolve(self.writeFile(output));
 	});
 
 	return deferred.promise;
@@ -174,10 +175,11 @@ exports.compileHeadingTags = function (file) {
 	var parsedHeading;
 	var i;
 
+	this.build[file].tableOfContents = "";
 	for (i = 0; i < headingTags.length; i += 1) {
 		replacedHeadingTag = headingTags[i].replace(this.headingTag, '');
 		parsedHeading = this.parseHeadingTag(replacedHeadingTag);
-		this.tableOfContents += this.buildContentItem(parsedHeading);
+		this.build[file].tableOfContents += this.buildContentItem(parsedHeading);
 	}
 
 	this.build[file].parsedData = this.stripTagsInFile({
