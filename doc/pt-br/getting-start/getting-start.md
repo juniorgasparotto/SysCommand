@@ -6,8 +6,9 @@ Para iniciar com o SysCommand você precisa de muitos poucos passos:
 
 **Passos obrigatórios:**
 
-* Criar seu projeto do tipo Console Application
-* Instalar, via NuGet, o SysCommand em sua aplicação. Essa instalação consta com duas DLLs e duas dependencias que fazem todo o trabalho.
+* Instalar o Visual Studio em sua máquina (Windows)
+* Criar seu projeto do tipo `Console Application`
+* Instalar o `SysCommand` em sua aplicação.
 * Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
 * Implemente sua classe levando em consideração que suas propriedades `publicas` serão convertidas em `arguments` e seus métodos `publicos` em `actions`.
 * No seu método `Program.Main(string[] args)`, configure uma instância da classe `SysCommand.ConsoleApp.App` que será o contexto da execução. Ou simplementes utilize o método estático `App.RunApplication()` que além de ser mais objetivo ainda dispõe do recurso de `simulação de console`.

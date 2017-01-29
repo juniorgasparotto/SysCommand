@@ -71,8 +71,8 @@ MyProperty2
   * O valor do argumento deve vir depois de um espaço ` ` ou unido com o nome do argumento por um `=` ou `:`
   * Todos os tipos primitivos do .NET, Enums e Collections são suportados.
   * Veja o tópico de [Tipos suportados](#tipos-suportados)
-
-Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação)
+ 
+Esse inicio aborta apenas o básico do comportamento padrão, mas você pode customização do jeito que achar necessário. Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação)
 
 ## Qual o objetivo deste projeto?
 
@@ -141,8 +141,9 @@ Para iniciar com o SysCommand você precisa de muitos poucos passos:
 
 **Passos obrigatórios:**
 
-* Criar seu projeto do tipo Console Application
-* Instalar, via NuGet, o SysCommand em sua aplicação. Essa instalação consta com duas DLLs e duas dependencias que fazem todo o trabalho.
+* Instalar o Visual Studio em sua máquina (Windows)
+* Criar seu projeto do tipo `Console Application`
+* Instalar o `SysCommand` em sua aplicação.
 * Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
 * Implemente sua classe levando em consideração que suas propriedades `publicas` serão convertidas em `arguments` e seus métodos `publicos` em `actions`.
 * No seu método `Program.Main(string[] args)`, configure uma instância da classe `SysCommand.ConsoleApp.App` que será o contexto da execução. Ou simplementes utilize o método estático `App.RunApplication()` que além de ser mais objetivo ainda dispõe do recurso de `simulação de console`.

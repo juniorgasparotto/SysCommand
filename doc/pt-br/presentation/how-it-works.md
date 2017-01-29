@@ -67,5 +67,5 @@ MyProperty2
   * O valor do argumento deve vir depois de um espaço ` ` ou unido com o nome do argumento por um `=` ou `:`
   * Todos os tipos primitivos do .NET, Enums e Collections são suportados.
   * Veja o tópico de [Tipos suportados](#tipos-suportados)
-
-Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação)
+ 
+Esse inicio aborta apenas o básico do comportamento padrão, mas você pode customização do jeito que achar necessário. Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação)
