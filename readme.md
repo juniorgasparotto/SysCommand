@@ -25,7 +25,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 # Indice
 
 * [Começando](#começando)
-  * [Classe `App`](#classe--app)
+  * [Classe App](#classe-app)
   * [Inicializando por método estático](#inicializando-por-método-estático)
   * [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos)
   * [Utilizando o recurso de MultiAction](#utilizando-o-recurso-de-multiaction)
@@ -171,7 +171,7 @@ MyAction
 MyApp.exe custom-action -a 9999.99
 MyCustomAction
 ```
-## Classe `App`
+## Classe App
 
 A classe `App` é a principal classe do sistema, ela é responsável por manter um contexto isolado por cada instancia `App`. Nenhum recurso estático é usado aqui, isso é importante para você ter a liberdade de criar quantas instancias quiser em qualquer escopo.
 
