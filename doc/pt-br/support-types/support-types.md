@@ -21,7 +21,7 @@ Arrays
 
 Syntax
 
-[action-name ][-|--|/][name][=|:| ][value]
+[action-name ][-|--|/][argument-name][=|:| ][value]
 
 Boolean syntax
 

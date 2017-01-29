@@ -15,9 +15,13 @@ public class Program
 
 public class MyCommand : Command
 {
+    // Argument1
     public int? MyProperty { get; set; }
+    // Argument2..You can create as many as you want.
     public decimal? MyProperty2 { get; set; }
 
+    // Method to process arguments if any exist.
+    // This signature "Main()" is reserved for this use only.
     public void Main()
     {
         if (MyProperty != null)
@@ -26,8 +30,11 @@ public class MyCommand : Command
             Console.WriteLine("MyProperty2");
     }
 
+    // Action to do something... you can create as many as you want.
     public string MyAction(string myParameter)
     {
+        if (MyProperty != null)
+            Console.WriteLine("Use property here if you want!");
         return "MyAction";
     }
 }
@@ -36,21 +43,23 @@ public class MyCommand : Command
 output
 
 ```
-MyApp.exe --property 123
+cmd> MyApp.exe --property 123
 MyProperty
 
-MyApp.exe --property2 123.99
+cmd> MyApp.exe --property2 123.99
 MyProperty2
 
-MyApp.exe my-action --my-parameter value
+cmd> MyApp.exe my-action --my-parameter value
 MyAction
 
-MyApp.exe my-action --my-parameter value --property 123 --property2 0.1
+cmd> MyApp.exe my-action --my-parameter value --property 123 --property2 0.1
 MyAction
+Use property here if you want!
 MyProperty
 MyProperty2
 ```
 
+* Os tipos de input se dividem entre `arguments` (representados por propriedades) ou `actions` (representados por métodos). Veja [Trabalhando com propriedades](#trabalhando-com-propriedades) e [Trabalhando com métodos](#trabalhando-com-métodos)
+* A sintaxe dos inputs se baseia no modelo: `[action-name ][-|--|/][argument-name][=|:| ][value]`
 * Todos os tipos primitivos do .NET, Enums e Collections são suportados. Veja o tópico de [Tipos suportados](#tipos-suportados)
-
-    Supported Syntax
+* Existe suporte nativo para o `help` e `verbose`. Veja [Help automatico](#help-automatico) e [Verbose](#verbose)
