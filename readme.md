@@ -27,7 +27,6 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
 
 
-
 # Índice
 
 * [Começando](#começando)
