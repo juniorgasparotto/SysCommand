@@ -1,4 +1,4 @@
-# Indice
+# Índice
 
 ____TABLE_OF_CONTENTS____
 
@@ -8,6 +8,7 @@ ____TABLE_OF_CONTENTS____
 #include "../pt-br/getting-start/specifying-commands.md"
 #include "../pt-br/getting-start/using-the-multi-action-feature.md"
 #include "../pt-br/getting-start/events.md"
+#include "../pt-br/support-types/support-types.md"
 #include "../pt-br/help/help.md"
 #include "../pt-br/help/default.md"
 #include "../pt-br/kind-of-commands/kind-of-commands.md"
@@ -38,5 +39,4 @@ ____TABLE_OF_CONTENTS____
 #include "../pt-br/methods/properties-of-argumentattribute-attributes-that-are-not-used.md"
 #include "../pt-br/methods/default-methods.md"
 #include "../pt-br/kind-of-inputs/kind-of-inputs.md"
-#include "../pt-br/support-types/support-types.md"
 #include "../pt-br/license.md"

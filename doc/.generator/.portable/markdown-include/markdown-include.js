@@ -291,6 +291,8 @@ exports.processFile = function (file, currentFile) {
 		else {
 			this.build[file].parsedData = rawData;
 		}
+
+		this.build[file].parsedData += '\r\n';
 	}
 };
 

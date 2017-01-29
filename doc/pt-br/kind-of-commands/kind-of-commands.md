@@ -1,4 +1,4 @@
-# Tipos de commands !heading
+# Tipos de comandos !heading
 
 Atualmente existem tres tipos de comandos:
 
