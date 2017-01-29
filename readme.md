@@ -22,7 +22,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * `SysCommand.ConsoleApp.dll`: Contém diversos recursos que uma aplicação do tipo console application precisa. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
   * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
 
---# Indice
+# Indice
 
 * [Começando](#começando)
   * [Classe `App`](#classe--app)
