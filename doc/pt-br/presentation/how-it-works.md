@@ -1,6 +1,15 @@
 ## Como funciona? !heading
 
-Ele funciona como um analisar de linhas de comando automático, ou seja, toda a tarefa de parse fica por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
+Ele funciona como um analisar de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação. 
+
+**Entidades básicas:**
+
+Existem quatro entidades que são a base do framework:
+
+* `App`: É o contexto da aplicação, onde uma `App` contém diversos `Commands`. Em C# representa a classe `SysCommand.ConsoleApp.App` e ela deve ser iniciada no método `Main`. Veja [Classe App](#classe-app).
+* `Command`: Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos `Controllers` do MVC. Em c# representa uma classe que herda de `SysCommand.ConsoleApp.Command`. Pode haver quantos comandos for necessário. Veja [Tipos de comandos](#tipos-de-comandos) e [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos).
+* `Argument`: Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name valor`, `-a` e etc. Em c# eles são representados pelas propriedades do comando. Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido para uso de aplicativos de console foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` ou pelo caracter `/` acompanhado do nome do argumento e os curtos com apenas um traço `-` acompanhado de apenas um caracter. Outra forma comum em diversos aplicativos é a possibilidade da omissão do nome do argumento usando `inputs posicionais` para inputar os valores. Veja [Tipos de inputs](#tipos-de-inputs) e [Tipos suportados](#tipos-suportados). Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
+* `Action`: As ações representam uma determinada ação dentro do seu negócio, igual as `Actions dos Controllers do MVC`. Em c# representam os métodos do comando e seus parâmetros serão convertidos em `arguments` que só serão acessados acompanhado do nome da `actions`, com exceção dos `Métodos padrão`. Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`. Veja [Trabalhando com métodos](#trabalhando-com-métodos) e [Métodos padrão](#métodos-padrão).
 
 **Exemplo:**
 
@@ -10,32 +19,82 @@ public class Program
     public static int Main(string[] args)
     {
         return App.RunApplication();
+        
+        // OR without "simulate console"
+        // var myApp = new App();
+        // myApp.Run(args);
+        // return myApp.Console.ExitCode;
+    }
+}
+
+public class GitCommand : Command
+{
+    public void Add(bool all)
+    { 
+        App.Console.Write("Add"); 
+    }
+
+    public void Commit(string message) 
+    { 
+        App.Console.Write("Commit"); 
     }
 }
 
 public class MyCommand : Command
 {
-    // Argument1
-    public int? MyProperty { get; set; }
-    // Argument2..You can create as many as you want.
-    public decimal? MyProperty2 { get; set; }
+    // "Argument without customization"
+    // usage:
+    // MyApp.exe --my-property value
+    public string MyProperty { get; set; }
 
-    // Method to process arguments if any exist.
+    // "Argument customized"
+    // usage:
+    // MyApp.exe --custom-property 123
+    // MyApp.exe -p 123
+    [Argument(LongName="custom-property", ShortName='p', Help="My custom argument ")]
+    public decimal? MyPropertyDecimal { get; set; }
+
+    // Method to process arguments/properties, if any exist.
     // This signature "Main()" is reserved for this use only.
-    public void Main()
+    public decimal Main()
     {
+        
         if (MyProperty != null)
-            Console.WriteLine("MyProperty");
-        if (MyProperty2 != null)
-            Console.WriteLine("MyProperty2");
+            App.Console.Write("MyProperty");
+
+        if (MyPropertyDecimal != null)
+            App.Console.Write("MyPropertyDecimal");
+
+        return MyPropertyDecimal ?? 99.0;
     }
 
-    // Action to do something... you can create as many as you want.
-    public string MyAction(string myParameter)
+    // "Action without customization"
+    // usage:
+    // MyApp.exe my-action -p value
+    public string MyAction(string p)
     {
-        if (MyProperty != null)
-            Console.WriteLine("Use property here if you want!");
+        // Example showing that properties are executed before methods
+        if (MyPropertyDecimal != null)
+            App.Console.Write("Use property here if you want!");
+        
         return "MyAction";
+    }
+
+    // "Action customized"
+    // usage:
+    // MyApp.exe custom-action
+    // MyApp.exe custom-action -o
+    [Action(Name="custom-action", Help = "My custom action")]
+    public string MyAction
+    (
+        [Argument(ShortName = 'o')]
+        bool? optionalParameter = null
+    )
+    {
+        if (optionalParameter != null)
+            App.Console.Error("optionalParameter");
+        
+        return "MyCustomAction";
     }
 }
 ```
@@ -59,13 +118,23 @@ MyProperty
 MyProperty2
 ```
 
-* Os tipos de input se dividem entre `arguments` (representados por propriedades) ou `actions` (representados por métodos). Veja [Trabalhando com propriedades](#trabalhando-com-propriedades) e [Trabalhando com métodos](#trabalhando-com-métodos)
-* Existe suporte nativo para o `help` e `verbose`. Veja [Help automatico](#help-automatico) e [Verbose](#verbose)
+**Observações do exemplo acima:**
+
+* No seu método `Program.Main(string[] args)`, configure uma instância da classe `SysCommand.ConsoleApp.App` que será o contexto da execução. Ou simplementes utilize o método estático `App.RunApplication()` que além de ser mais objetivo ainda dispõe do recurso de `simulação de console`. Veja XXXXXXXXX
+* Crie um método chamado `Main()` (sem parametros) dentro da sua classe para poder trabalhar com propriedades. Utilize tipos `Nullable` para ter condições de identificar que o usuário fez o input de um determinado argumento que corresponda a uma propriedade. O nome "Main" foi convensionado para esse tipo de uso, mas apenas quando esse método não tiver parametros. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
+* Todos os tipos primitivos do .NET, Enums e Collections são suportados. Veja o tópico de [Tipos suportados](#tipos-suportados).
+* Use `App.Console.Write()`, `App.Console.Error()` entre outros para imprimir seus outputs e usufruir de recursos como o `verbose`, mas isso NÃO é obrigatório. Veja [Verbose](#verbose).
+* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](#output).
+* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, help text, obrigatóriedade e dentro outros. Veja [Customizando os nomes dos argumentos](#customizando-os-nomes-dos-argumentos) e [Customizando nomes de actions e arguments](#customizando-nomes-de-actions-e-arguments).
+* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual em c#. Veja [Sobrecargas](#sobrecargas)
+* Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
 * A sintaxe dos inputs se baseia no modelo: `[action-name ][-|--|/][argument-name][=|:| ][value]`. O caracter "|" significa "ou".
   * A forma curta é representada apenas por apenas um traço `-`
   * A forma longa pode ser representada por dois traços `--` ou pelo caracter `/`
   * O valor do argumento deve vir depois de um espaço ` ` ou unido com o nome do argumento por um `=` ou `:`
   * Todos os tipos primitivos do .NET, Enums e Collections são suportados.
   * Veja o tópico de [Tipos suportados](#tipos-suportados)
- 
-Esse inicio aborta apenas o básico do comportamento padrão, mas você pode customização do jeito que achar necessário. Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação)
+* Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automático](#help-automatico).
+
+
+Esse inicio aborta apenas o básico do comportamento padrão, mas você pode customização do jeito que achar necessário. Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação).
