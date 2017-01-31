@@ -9,6 +9,7 @@ Tecnicamente, existem quatro entidades que são a base do framework:
 Outro modo de iniciar sua aplicação é utilizando o método estático `App.RunApplication()` que além de ser mais objetivo ainda dispõe do recurso de `simulação de console`. Veja [Classe App](#classe-app) e [Inicializando por método estático com simulador de console](#inicializando-por-método-estático-com-simulador-de-console).
 
 **`Command`**: Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos `Controllers do MVC`. Programaticamente representa uma classe que herda de `SysCommand.ConsoleApp.Command`. Pode haver quantos comandos for necessário. Veja [Tipos de comandos](#tipos-de-comandos) e [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos).
+
 **`Argument`**: Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name valor`, `-a` e etc. Programaticamente eles são representados pelas propriedades do `Command`. 
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` ou pelo caracter `/` acompanhado do nome do argumento e os curtos com apenas um traço `-` acompanhado de apenas um caracter. 
