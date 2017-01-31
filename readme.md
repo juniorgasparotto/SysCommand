@@ -26,7 +26,7 @@ Os argumentos representam o meio mais básico de uma aplicação console, são o
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` ou pelo caracter `/` acompanhado do nome do argumento e os curtos com apenas um traço `-` acompanhado de apenas um caracter. Inputs posicionais também são suportados sendo possível omitir os nomes dos argumentos. 
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades), [Ignorar propriedades publicas por uma escolha manual usando atributo], [Tipos de inputs](#tipos-de-inputs) e [Tipos suportados](#tipos-suportados).
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades), [Ignorar propriedades publicas por uma escolha manual usando atributo](#ignorar-propriedades-publicas-por-uma-escolha-manual-usando-atributo), [Tipos de inputs](#tipos-de-inputs) e [Tipos suportados](#tipos-suportados).
 
 **`Action`**
 
