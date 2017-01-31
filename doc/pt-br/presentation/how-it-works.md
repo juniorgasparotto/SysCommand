@@ -12,7 +12,7 @@ Outro modo de iniciar sua aplicação é utilizando o método estático `App.Run
 
 **`Command`**
 
- Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos `Controllers do MVC`. Programaticamente representa uma classe que herda de `SysCommand.ConsoleApp.Command`. Pode haver quantos comandos for necessário.
+ Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente representa uma classe que herda de `SysCommand.ConsoleApp.Command`. Pode haver quantos comandos for necessário.
  
  Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja [Tipos de comandos](#tipos-de-comandos) e [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos).
 
@@ -26,7 +26,7 @@ Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas 
 
 **`Action`**
 
-Representam ações iguais as `Actions dos Controllers do MVC`. Programaticamente representam os métodos do `Command` e seus parâmetros (se existir) serão convertidos em `arguments` que só serão acessados acompanhado do nome da `actions`, com exceção dos `Métodos padrão`. 
+Representam ações iguais as _Actions dos Controllers do MVC_. Programaticamente representam os métodos do `Command` e seus parâmetros (se existir) serão convertidos em `arguments` que só serão acessados acompanhado do nome da `actions`, com exceção dos `Métodos padrão`. 
 
 Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`.
 
@@ -150,4 +150,4 @@ MyProperty2
 * Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
 * Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automático](#help-automatico).
 
-Esse inicio aborta apenas o básico do comportamento padrão, mas você pode customização do jeito que achar necessário. Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação).
+Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação).
