@@ -12,21 +12,25 @@ Outro modo de iniciar sua aplicação é utilizando o método estático `App.Run
 
 **`Command`**
 
- Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos `Controllers do MVC`. Programaticamente representa uma classe que herda de `SysCommand.ConsoleApp.Command`. Pode haver quantos comandos for necessário. Veja [Tipos de comandos](#tipos-de-comandos) e [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos).
+ Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos `Controllers do MVC`. Programaticamente representa uma classe que herda de `SysCommand.ConsoleApp.Command`. Pode haver quantos comandos for necessário.
+ 
+ Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja [Tipos de comandos](#tipos-de-comandos) e [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos).
 
 **`Argument`**
 
 Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name valor`, `-a` e etc. Programaticamente eles são representados pelas propriedades do `Command`. 
 
-Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` ou pelo caracter `/` acompanhado do nome do argumento e os curtos com apenas um traço `-` acompanhado de apenas um caracter. 
-    
-Inputs posicionais também são suportados sendo possível omitir nomes de argumentos. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades), [Tipos de inputs](#tipos-de-inputs) e [Tipos suportados](#tipos-suportados).
+Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` ou pelo caracter `/` acompanhado do nome do argumento e os curtos com apenas um traço `-` acompanhado de apenas um caracter. Inputs posicionais também são suportados sendo possível omitir nomes de argumentos. 
+
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades), [Tipos de inputs](#tipos-de-inputs) e [Tipos suportados](#tipos-suportados).
 
 **`Action`**
 
 Representam ações iguais as `Actions dos Controllers do MVC`. Programaticamente representam os métodos do `Command` e seus parâmetros (se existir) serão convertidos em `arguments` que só serão acessados acompanhado do nome da `actions`, com exceção dos `Métodos padrão`. 
 
-Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`. Veja [Trabalhando com métodos](#trabalhando-com-métodos) e [Métodos padrão](#métodos-padrão).
+Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`.
+
+Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](#trabalhando-com-métodos) e [Métodos padrão](#métodos-padrão).
 
 **Exemplo:**
 
