@@ -6,9 +6,7 @@ O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `
 
 Ele funciona como um analisar de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação. 
 
-**Entidades básicas:**
-
-Existem quatro entidades que são a base do framework:
+Tecnicamente, existem quatro entidades que são a base do framework:
 
 * `App`: É o contexto da aplicação, onde uma `App` contém diversos `Commands`. Em C# representa a classe `SysCommand.ConsoleApp.App` e ela deve ser iniciada no método `Main`. Veja [Classe App](#classe-app).
 * `Command`: Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos `Controllers` do MVC. Em c# representa uma classe que herda de `SysCommand.ConsoleApp.Command`. Pode haver quantos comandos for necessário. Veja [Tipos de comandos](#tipos-de-comandos) e [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos).
