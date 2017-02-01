@@ -51,7 +51,6 @@
         // This signature "Main()" is reserved for this use only.
         public string Main()
         {
-
             if (MyProperty != null)
                 App.Console.Write(string.Format("Main MyProperty='{0}'", MyProperty));
 

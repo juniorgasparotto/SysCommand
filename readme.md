@@ -38,7 +38,7 @@ Ainda é possível usar uma `action` omitindo seu nome no input, esse recurso n�
 
 Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](#trabalhando-com-métodos), [Ignorar métodos publicos por uma escolha manual usando atributo](#ignorar-métodos-publicos-por-uma-escolha-manual-usando-atributo) e [Métodos padrão](#métodos-padrão).
 
-**Exemplo:**
+**Exemplificando:**
 
 ```csharp
 namespace Example.Initialization.GettingStart
@@ -94,7 +94,6 @@ namespace Example.Initialization.GettingStart
         // This signature "Main()" is reserved for this use only.
         public string Main()
         {
-
             if (MyProperty != null)
                 App.Console.Write(string.Format("Main MyProperty='{0}'", MyProperty));
 
@@ -184,7 +183,7 @@ Return methods can also be used as output
 Commit
 ```
 
-**Observações do exemplo acima:**
+**Saiba mais...:**
 
 * O método chamado `Main()` (sem parametros) dentro da classe acima é utilizado para poder interceptar que uma ou mais propriedades foram inputadas pelo usuário. Note que os tipos primitivos de cada propriedade estão `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
 * Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](#tipos-suportados).
