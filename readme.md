@@ -183,9 +183,9 @@ Return methods can also be used as output
 Commit
 ```
 
-**Saiba mais...:**
+**Saiba mais...**
 
-* O método chamado `Main()` (sem parametros) dentro da classe acima é utilizado para poder interceptar que uma ou mais propriedades foram inputadas pelo usuário. Note que os tipos primitivos de cada propriedade estão `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
+* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
 * Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](#tipos-suportados).
 * Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja [Verbose](#verbose).
 * Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](#output).
@@ -194,7 +194,7 @@ Commit
 * Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
 * Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automático](#help-automatico).
 
-Para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação).
+Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação).
 
 ## Qual o objetivo deste projeto?
 
