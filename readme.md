@@ -6,23 +6,23 @@ O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `
 
 Ele funciona como um analisar de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação. 
 
-Tecnicamente, existem quatro entidades que são a base do framework:
+Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 **`App`**
 
-É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e ela deve ser instanciada no método `Main` dando inicio a todo o processo. 
+É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`. 
 
-Outro modo de iniciar sua aplicação é utilizando o método estático `App.RunApplication()` que além de ser mais objetivo ainda dispõe do recurso de `simulação de console`. Veja [Classe App](#classe-app) e [Inicializando por método estático com simulador de console](#inicializando-por-método-estático-com-simulador-de-console).
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instancia da class `App` com suas possíveis customizações ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo ou via "Command Line Arguments". Veja [Classe App](#classe-app) e [Inicializando por método estático com simulador de console](#inicializando-por-método-estático-com-simulador-de-console).
 
 **`Command`**
 
- Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente representa uma classe que herda de `SysCommand.ConsoleApp.Command`. Pode haver quantos comandos for necessário.
+ Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
  
  Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja [Tipos de comandos](#tipos-de-comandos) e [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos).
 
 **`Argument`**
 
-Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-a` e etc. Programaticamente eles são representados pelas propriedades do `Command`. 
+Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-a` e etc. Programaticamente eles são representados pelas propriedades do `Command` e devem ser acompanhados de um método chamado `Main()` (sem parâmetros) para poder interceptar se uma propriedade teve ou não input. O nome "Main" foi escolhido pela similaridade de conceito com o método `Main(string[] args)` do .NET.
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
@@ -184,7 +184,7 @@ Commit
 
 **Observações do exemplo acima:**
 
-* O método chamado `Main()` (sem parametros) dentro da classe acima é utilizado para poder interceptar que uma ou mais propriedades foram inputadas pelo usuário. Note que os tipos primitivos de cada propriedade estão `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. O nome "Main" foi convensionado para esse tipo de uso, mas apenas quando esse método não tiver parametros. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
+* O método chamado `Main()` (sem parametros) dentro da classe acima é utilizado para poder interceptar que uma ou mais propriedades foram inputadas pelo usuário. Note que os tipos primitivos de cada propriedade estão `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
 * Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](#tipos-suportados).
 * Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja [Verbose](#verbose).
 * Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](#output).
