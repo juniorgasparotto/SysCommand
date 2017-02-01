@@ -1,8 +1,11 @@
 # Tipos de inputs !heading
 
-Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com "--" ou "/" seguido do seu nome. Na forma `curta` ele deve sempre iniciar com apenas um traço "-" e seguido de apenas um caracter. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
+Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
+
+Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.
 
 Existe também a possibilidade de aceitar inputs posicionais, ou seja, sem a necessidade de utilizar os nomes dos argumentos. Esse tipo de input é chamado de `input posicional`.
+
 
 **Exemplo:**
 
@@ -14,6 +17,10 @@ public void MyAction(string A, string B);
 **Input nomeado**:
 
 ```MyApp.exe my-action -a valueA -b valueB --my-property valueMyProperty```
+
+OU usando o delimitador `/` e os separadores `=` e `:`
+
+```MyApp.exe my-action -a valueA /b:valueB --my-property=valueMyProperty```
 
 **Input posicional**:
 

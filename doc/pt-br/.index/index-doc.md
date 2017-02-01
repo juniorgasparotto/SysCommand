@@ -2,7 +2,6 @@
 
 ____TABLE_OF_CONTENTS____
 
-#include "../pt-br/getting-start/getting-start.md"
 #include "../pt-br/getting-start/class-app.md"
 #include "../pt-br/getting-start/initializing-by-static-method.md"
 #include "../pt-br/getting-start/specifying-commands.md"

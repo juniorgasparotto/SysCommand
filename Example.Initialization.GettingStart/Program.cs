@@ -2,7 +2,6 @@
 {
     using SysCommand.ConsoleApp;
     using SysCommand.Mapping;
-    using System;
 
     public class Program
     {
@@ -10,53 +9,82 @@
         {
             return App.RunApplication();
 
-            var myApp = new App();
-            myApp.Run(args);
-            return myApp.Console.ExitCode;
+            // OR without "simulate console"
+            // var myApp = new App();
+            // myApp.Run(args);
+            // return myApp.Console.ExitCode;
+        }
+    }
+
+    public class GitCommand : Command
+    {
+        // usage:
+        // MyApp.exe add --all
+        public void Add(bool all)
+        {
+            App.Console.Write("Add");
+        }
+
+        // usage:
+        // MyApp.exe commit -m "comments"
+        public void Commit(string m)
+        {
+            App.Console.Write("Commit");
         }
     }
 
     public class MyCommand : Command
     {
-        public string MyPropertyString { get; set; }
+        // "Argument without customization"
+        // usage:
+        // MyApp.exe --my-property value
+        public string MyProperty { get; set; }
 
-        [Argument(LongName="property", ShortName='p', Help="My property help")]
-        public int? MyPropertyInt { get; set; }
+        // "Argument customized"
+        // usage:
+        // MyApp.exe --custom-property 123
+        // MyApp.exe -p 123
+        [Argument(LongName = "custom-property", ShortName = 'p', Help = "My custom argument ")]
+        public decimal? MyPropertyDecimal { get; set; }
 
-        public void Main()
+        // Method to process arguments/properties, if any exist.
+        // This signature "Main()" is reserved for this use only.
+        public string Main()
         {
-            if (MyPropertyString != null)
-            {
-                // using in your prompt to use this argument: 
-                // MyApp.exe --my-property-string value
-                Console.WriteLine("MyPropertyString");
-            }
 
-            if (MyPropertyInt != null)
-            {
-                // using in your prompt to use this argument: 
-                // MyApp.exe --property 123
-                // MyApp.exe -p 123
-                Console.WriteLine("MyPropertyInt");
-            }
+            if (MyProperty != null)
+                App.Console.Write(string.Format("Main MyProperty='{0}'", MyProperty));
+
+            if (MyPropertyDecimal != null)
+                App.Console.Write(string.Format("Main MyPropertyDecimal='{0}'", MyPropertyDecimal));
+
+            return "Return methods can also be used as output";
         }
 
-        public string MyAction(string myParameter)
+        // "Action without customization"
+        // usage:
+        // MyApp.exe my-action -p value
+        public string MyAction(string p)
         {
-            // using in your prompt to use this action: 
-            // MyApp.exe my-action --my-parameter value
-            return "MyAction";
+            // Example showing that properties are executed before methods
+            if (MyPropertyDecimal != null)
+                App.Console.Write("Use property here if you want!");
+
+            return string.Format("MyAction p='{0}'", p);
         }
 
-        [Action(Name="custom-action", Help = "Action help")]
-        public string MyCustomAction
+        // "Action customized"
+        // usage:
+        // MyApp.exe custom-action
+        // MyApp.exe custom-action -o
+        [Action(Name = "custom-action", Help = "My custom action")]
+        public string MyAction
         (
-            [Argument(ShortName = 'a')]
-            decimal myParameter)
+            [Argument(ShortName = 'o')]
+            bool? optionalParameter = null
+        )
         {
-            // using in your prompt to use this action:
-            // MyApp.exe custom-action -a 9999.99
-            return "MyCustomAction";
+            return string.Format("MyCustomAction optionalParameter='{0}'", optionalParameter);
         }
     }
 }

@@ -22,9 +22,9 @@ Outro modo de iniciar sua aplicação é utilizando o método estático `App.Run
 
 **`Argument`**
 
-Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name valor`, `-a` e etc. Programaticamente eles são representados pelas propriedades do `Command`. 
+Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-a` e etc. Programaticamente eles são representados pelas propriedades do `Command`. 
 
-Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` ou pelo caracter `/` acompanhado do nome do argumento e os curtos com apenas um traço `-` acompanhado de apenas um caracter. Inputs posicionais também são suportados sendo possível omitir os nomes dos argumentos. 
+Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
 Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades), [Ignorar propriedades publicas por uma escolha manual usando atributo](#ignorar-propriedades-publicas-por-uma-escolha-manual-usando-atributo), [Tipos de inputs](#tipos-de-inputs) e [Tipos suportados](#tipos-suportados).
 
@@ -39,87 +39,94 @@ Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para
 **Exemplo:**
 
 ```csharp
-public class Program
+namespace Example.Initialization.GettingStart
 {
-    public static int Main(string[] args)
+    using SysCommand.ConsoleApp;
+    using SysCommand.Mapping;
+
+    public class Program
     {
-        return App.RunApplication();
-        
-        // OR without "simulate console"
-        // var myApp = new App();
-        // myApp.Run(args);
-        // return myApp.Console.ExitCode;
-    }
-}
+        public static int Main(string[] args)
+        {
+            return App.RunApplication();
 
-public class GitCommand : Command
-{
-    public void Add(bool all)
-    { 
-        App.Console.Write("Add"); 
+            // OR without "simulate console"
+            // var myApp = new App();
+            // myApp.Run(args);
+            // return myApp.Console.ExitCode;
+        }
     }
 
-    public void Commit(string message)
-    { 
-        App.Console.Write("Commit"); 
-    }
-}
-
-public class MyCommand : Command
-{
-    // "Argument without customization"
-    // usage:
-    // MyApp.exe --my-property value
-    public string MyProperty { get; set; }
-
-    // "Argument customized"
-    // usage:
-    // MyApp.exe --custom-property 123
-    // MyApp.exe -p 123
-    [Argument(LongName="custom-property", ShortName='p', Help="My custom argument ")]
-    public decimal? MyPropertyDecimal { get; set; }
-
-    // Method to process arguments/properties, if any exist.
-    // This signature "Main()" is reserved for this use only.
-    public decimal Main()
+    public class GitCommand : Command
     {
-        
-        if (MyProperty != null)
-            App.Console.Write("MyProperty");
+        // usage:
+        // MyApp.exe add --all
+        public void Add(bool all)
+        {
+            App.Console.Write("Add");
+        }
 
-        if (MyPropertyDecimal != null)
-            App.Console.Write("MyPropertyDecimal");
-
-        return MyPropertyDecimal ?? 99.0;
+        // usage:
+        // MyApp.exe commit -m "comments"
+        public void Commit(string m)
+        {
+            App.Console.Write("Commit");
+        }
     }
 
-    // "Action without customization"
-    // usage:
-    // MyApp.exe my-action -p value
-    public string MyAction(string p)
+    public class MyCommand : Command
     {
-        // Example showing that properties are executed before methods
-        if (MyPropertyDecimal != null)
-            App.Console.Write("Use property here if you want!");
-        
-        return "MyAction";
-    }
+        // "Argument without customization"
+        // usage:
+        // MyApp.exe --my-property value
+        public string MyProperty { get; set; }
 
-    // "Action customized"
-    // usage:
-    // MyApp.exe custom-action
-    // MyApp.exe custom-action -o
-    [Action(Name="custom-action", Help = "My custom action")]
-    public string MyAction
-    (
-        [Argument(ShortName = 'o')]
-        bool? optionalParameter = null
-    )
-    {
-        if (optionalParameter != null)
-            App.Console.Error("optionalParameter");
-        
-        return "MyCustomAction";
+        // "Argument customized"
+        // usage:
+        // MyApp.exe --custom-property 123
+        // MyApp.exe -p 123
+        [Argument(LongName = "custom-property", ShortName = 'p', Help = "My custom argument ")]
+        public decimal? MyPropertyDecimal { get; set; }
+
+        // Method to process arguments/properties, if any exist.
+        // This signature "Main()" is reserved for this use only.
+        public string Main()
+        {
+
+            if (MyProperty != null)
+                App.Console.Write(string.Format("Main MyProperty='{0}'", MyProperty));
+
+            if (MyPropertyDecimal != null)
+                App.Console.Write(string.Format("Main MyPropertyDecimal='{0}'", MyPropertyDecimal));
+
+            return "Return methods can also be used as output";
+        }
+
+        // "Action without customization"
+        // usage:
+        // MyApp.exe my-action -p value
+        public string MyAction(string p)
+        {
+            // Example showing that properties are executed before methods
+            if (MyPropertyDecimal != null)
+                App.Console.Write("Use property here if you want!");
+
+            return string.Format("MyAction p='{0}'", p);
+        }
+
+        // "Action customized"
+        // usage:
+        // MyApp.exe custom-action
+        // MyApp.exe custom-action -o
+        [Action(Name = "custom-action", Help = "My custom action")]
+        public string MyAction
+        (
+            [Argument(ShortName = 'o')]
+            bool? optionalParameter = null
+        )
+        {
+            return string.Format("MyCustomAction optionalParameter='{0}'", optionalParameter);
+        }
     }
 }
 ```
@@ -127,30 +134,59 @@ public class MyCommand : Command
 output
 
 ```
-cmd> MyApp.exe --property 123
-MyProperty
+cmd> MyApp.exe add --all
+Add
 
-cmd> MyApp.exe --property2=123.99
-MyProperty2
+cmd> MyApp.exe commit -m "comments"
+Commit
 
-cmd> MyApp.exe my-action --my-parameter value
-MyAction
+cmd> MyApp.exe --my-property value
+Main MyProperty='value'
+Return methods can also be used as output
 
-cmd> MyApp.exe my-action --my-parameter value /property:123 --property2 0.1
-MyAction
-Use property here if you want!
-MyProperty
-MyProperty2
+cmd> MyApp.exe --my-property=value
+Main MyProperty='value'
+Return methods can also be used as output
+
+cmd> MyApp.exe --custom-property 123
+Main MyPropertyDecimal='123'
+Return methods can also be used as output
+
+cmd> MyApp.exe --custom-property:123
+Main MyPropertyDecimal='123'
+Return methods can also be used as output
+
+cmd> MyApp.exe -p 123
+Main MyPropertyDecimal='123'
+Return methods can also be used as output
+
+cmd> MyApp.exe my-action -p value
+MyAction p='value'
+
+cmd> MyApp.exe my-action /p value
+MyAction p='value'
+
+cmd> MyApp.exe custom-action
+MyCustomAction optionalParameter=''
+
+cmd> MyApp.exe custom-action -o
+MyCustomAction optionalParameter='True'
+
+cmd> MyApp.exe custom-action -o --my-property=value --custom-property:123
+Main MyProperty='value'
+Main MyPropertyDecimal='123'
+Return methods can also be used as output
+MyCustomAction optionalParameter='True'
 ```
 
 **Observações do exemplo acima:**
 
-* Crie um método chamado `Main()` (sem parametros) dentro da sua classe para poder trabalhar com propriedades. Utilize tipos `Nullable` para ter condições de identificar que o usuário fez o input de um determinado argumento que corresponda a uma propriedade. O nome "Main" foi convensionado para esse tipo de uso, mas apenas quando esse método não tiver parametros. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
+* O método chamado `Main()` (sem parametros) dentro da classe acima é utilizado para poder interceptar que uma ou mais propriedades foram inputadas pelo usuário. Note que os tipos primitivos de cada propriedade estão `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. O nome "Main" foi convensionado para esse tipo de uso, mas apenas quando esse método não tiver parametros. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
 * Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](#tipos-suportados).
 * Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja [Verbose](#verbose).
 * Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](#output).
 * Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja [Customizando os nomes dos argumentos](#customizando-os-nomes-dos-argumentos) e [Customizando nomes de actions e arguments](#customizando-nomes-de-actions-e-arguments).
-* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em c#. Veja [Sobrecargas](#sobrecargas)
+* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja [Sobrecargas](#sobrecargas)
 * Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
 * Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automático](#help-automatico).
 
@@ -173,9 +209,21 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * `SysCommand.ConsoleApp.dll`: Contém diversos recursos que uma aplicação do tipo `Console Application` necessita. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
   * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
 
+## Passo a passo
+
+* Instalar o Visual Studio em sua máquina (Windows)
+* Criar seu projeto do tipo `Console Application`
+* Instalar o `SysCommand` em seu projeto `Console Application`
+* Na primeira linha de seu método `public int Program.Main(string[] args)` adicione o código `return App.RunApplication()`.
+* Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
+* Criar suas propriedades com seus tipos `Nullable` e deixe-as como publicas. Elas se tornarão `arguments` no prompt de comando.
+* Crie um método `Main()` sem parametros em sua classe para poder interceptar os inputs de suas propriedades. Utilize `Property != null` para identificar que a propriedade foi inputada.
+* Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros deixe seus tipos como `Nullable` pela mesma razão acima.
+* Digite `help` no prompt de comando que abrirá para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
+* Agora é só usar!
+
 # Documentação
 
-* [Começando](#começando)
   * [Classe App](#classe-app)
   * [Inicializando por método estático com simulador de console](#inicializando-por-método-estático-com-simulador-de-console)
   * [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos)
@@ -214,115 +262,6 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Tipos de inputs](#tipos-de-inputs)
 * [Licença](#licença)
 
-
-# Começando
-
-Esse tópico tem por objetivo resumir os principais recursos da ferramenta, não entraremos em detalhes agora, para isso veja a documentação completa. Vamos lá...
-
-Para iniciar com o SysCommand você precisa de muitos poucos passos:
-
-**Passos obrigatórios:**
-
-* Instalar o Visual Studio em sua máquina (Windows)
-* Criar seu projeto do tipo `Console Application`
-* Instalar o `SysCommand` em sua aplicação.
-* Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
-* Implemente sua classe levando em consideração que suas propriedades `publicas` serão convertidas em `arguments` e seus métodos `publicos` em `actions`.
-* No seu método `Program.Main(string[] args)`, configure uma instância da classe `SysCommand.ConsoleApp.App` que será o contexto da execução. Ou simplementes utilize o método estático `App.RunApplication()` que além de ser mais objetivo ainda dispõe do recurso de `simulação de console`.
-* Execute o contexto usando o método `myApp.Run(args)` caso NÃO esteja usando o método estatico `App.RunApplication()`.
-
-**Passos opcionais:**
-
-* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, help text, obrigatóriedade e dentro outros.
-* Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
-* Você pode utilizar o retorno dos métodos como `output`.
-* Crie um método chamado `Main()` (sem parametros) dentro da sua classe para poder trabalhar com propriedades. Utilize tipos `Nullable` para ter condições de identificar que o usuário fez o input de um determinado argumento que corresponda a uma propriedade. O nome "Main" foi convensionado para esse tipo de uso, mas apenas quando esse método não tiver parametros.
-
-**Exemplo:**
-
-```csharp
-namespace Example.Initialization.GettingStart
-{
-    using SysCommand.ConsoleApp;
-    using SysCommand.Mapping;
-    using System;
-
-    public class Program
-    {
-        public static int Main(string[] args)
-        {
-            var myApp = new App();
-            myApp.Run(args);
-            return myApp.Console.ExitCode;
-
-            // OR use static run, it's more simple and you can debug yours inputs directly in visual studio
-            // return App.RunApplication();
-        }
-    }
-
-    public class MyCommand : Command
-    {
-        public string MyPropertyString { get; set; }
-
-        [Argument(LongName="property", ShortName='p', Help="My property help")]
-        public int? MyPropertyInt { get; set; }
-
-        public void Main()
-        {
-            if (MyPropertyString != null)
-            {
-                // using in your prompt to use this argument: 
-                // MyApp.exe --my-property-string value
-                Console.WriteLine("MyPropertyString");
-            }
-
-            if (MyPropertyInt != null)
-            {
-                // using in your prompt to use this argument: 
-                // MyApp.exe --property 123
-                // MyApp.exe -p 123
-                Console.WriteLine("MyPropertyInt");
-            }
-        }
-
-        public string MyAction(string myParameter)
-        {
-            // using in your prompt to use this action:
-            // MyApp.exe my-action --my-parameter value
-            return "MyAction";
-        }
-
-        [Action(Name="custom-action", Help = "Action help")]
-        public string MyCustomAction
-        (
-            [Argument(ShortName = 'a')]
-            decimal myParameter
-        )
-        {
-            // using in your prompt to use this action:
-            // MyApp.exe custom-action -a 9999.99
-            return "MyCustomAction";
-        }
-    }
-}
-```
-
-```
-MyApp.exe --my-property-string value
-MyPropertyString
-
-MyApp.exe --property 123
-MyPropertyInt
-
-MyApp.exe -p 123
-MyPropertyInt
-
-MyApp.exe my-action --my-parameter value
-MyAction
-
-MyApp.exe custom-action -a 9999.99
-MyCustomAction
-```
 
 ## Classe App
 
@@ -705,7 +644,7 @@ Arrays
 
 Syntax
 
-[action-name ][-|--|/][argument-name][=|:| ][value]
+[action-name ][-|/|--][argument-name][=|:| ][value]
 
 Boolean syntax
 
@@ -2291,9 +2230,12 @@ ActionWhenNotExistsInput()
 
 # Tipos de inputs
 
-Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com "--" ou "/" seguido do seu nome. Na forma `curta` ele deve sempre iniciar com apenas um traço "-" e seguido de apenas um caracter. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
+Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
+
+Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.
 
 Existe também a possibilidade de aceitar inputs posicionais, ou seja, sem a necessidade de utilizar os nomes dos argumentos. Esse tipo de input é chamado de `input posicional`.
+
 
 **Exemplo:**
 
@@ -2305,6 +2247,10 @@ public void MyAction(string A, string B);
 **Input nomeado**:
 
 ```MyApp.exe my-action -a valueA -b valueB --my-property valueMyProperty```
+
+OU usando o delimitador `/` e os separadores `=` e `:`
+
+```MyApp.exe my-action -a valueA /b:valueB --my-property=valueMyProperty```
 
 **Input posicional**:
 

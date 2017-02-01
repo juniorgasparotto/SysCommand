@@ -143,7 +143,8 @@ namespace SysCommand.DefaultExecutor
 
         private void ProcessValue(IEnumerator<ArgumentRaw> enumerator, IEnumerable<ArgumentRaw> argumentsRaw, ref int i, ArgumentRaw argRaw, ArgumentMap map, ArgumentParsed argMapped)
         {
-            if (argRaw.Value == null && map.Type != typeof(bool))
+            Type typeOriginal = ReflectionHelper.GetTypeOrTypeOfNullable(map.Type);
+            if (argRaw.Value == null && typeOriginal != typeof(bool))
             {
                 argMapped.Value = ReflectionHelper.GetDefaultForType(map.Type);
             }
