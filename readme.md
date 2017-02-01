@@ -131,9 +131,12 @@ namespace Example.Initialization.GettingStart
 }
 ```
 
-output
+outputs
 
 ```
+cmd> MyApp.exe help
+... show help here ...
+
 cmd> MyApp.exe add --all
 Add
 
@@ -172,11 +175,11 @@ MyCustomAction optionalParameter=''
 cmd> MyApp.exe custom-action -o
 MyCustomAction optionalParameter='True'
 
-cmd> MyApp.exe custom-action -o --my-property=value --custom-property:123
+cmd> MyApp.exe commit -m "my commit" --my-property=value --custom-property:123
 Main MyProperty='value'
 Main MyPropertyDecimal='123'
 Return methods can also be used as output
-MyCustomAction optionalParameter='True'
+Commit
 ```
 
 **Observações do exemplo acima:**
