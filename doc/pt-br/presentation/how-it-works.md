@@ -18,7 +18,7 @@ A inicialização do contexto da aplicação pode ser feita de duas formas, por 
 
 **`Argument`**
 
-Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-a` e etc. Programaticamente eles são representados pelas propriedades do `Command` e devem ser acompanhados de um método chamado `Main()` (sem parâmetros) para poder interceptar se uma propriedade teve ou não input. O nome "Main" foi escolhido pela similaridade de conceito com o método `Main(string[] args)` do .NET.
+Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-v` e etc. Programaticamente eles são representados pelas propriedades do `Command` e devem ser acompanhados de um método chamado `Main()` (sem parâmetros) para poder interceptar se uma propriedade teve ou não input. O nome "Main" foi escolhido pela similaridade de conceito com o método `Main(string[] args)` do .NET.
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
@@ -26,9 +26,11 @@ Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas 
 
 **`Action`**
 
-Representam ações iguais as _Actions dos Controllers do MVC_. Programaticamente representam os métodos do `Command` e seus parâmetros (se existir) serão convertidos em `arguments` que só serão acessados acompanhado do nome da `actions`, com exceção dos `Métodos padrão`. 
+Representam ações iguais as _Actions dos Controllers do MVC_. Programaticamente representam os métodos do `Command` e seus parâmetros (se existir) serão convertidos em `arguments` que só serão acessados quando acompanhados do nome da `actions`.
 
 Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`.
+
+Ainda é possível usar uma `action` omitindo seu nome no input, esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
 
 Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](#trabalhando-com-métodos), [Ignorar métodos publicos por uma escolha manual usando atributo](#ignorar-métodos-publicos-por-uma-escolha-manual-usando-atributo) e [Métodos padrão](#métodos-padrão).
 
