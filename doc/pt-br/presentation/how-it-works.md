@@ -12,9 +12,9 @@ namespace Example.Initialization.GettingStart
 
     public class Program
     {
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
-            new App().Run(args);
+            return App.RunApplication();
         }
     }
 
