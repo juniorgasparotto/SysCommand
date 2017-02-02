@@ -2,7 +2,7 @@
 
 Ele funciona como um analisar de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
 
-Veja abaixo um exemplo básico de como funciona:
+Veja abaixo um exemplo básico:
 
 ```csharp
 namespace Example.Initialization.GettingStart
@@ -52,10 +52,12 @@ cmd> MyApp.exe --my-property value
 Main MyProperty='value'
 
 cmd> MyApp.exe my-action -v
-MyAction p='value'
+MyAction v='True'
 ```
 
 **_Note que não existe nenhum código de parse, seu código está limpo e pronto para receber comandos._**
+
+### Entenda melhor
 
 Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
