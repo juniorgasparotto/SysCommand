@@ -9,7 +9,7 @@ Ele funciona como um analisar de linhas de comando automático onde todas as tar
 **Exemplo simples:**
 
 ```csharp
-namespace Example.Initialization.GettingStart
+namespace Example.Initialization.Simple
 {
     using SysCommand.ConsoleApp;
     using SysCommand.Mapping;
@@ -98,7 +98,7 @@ Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para
 **Exemplo avançado:**
 
 ```csharp
-namespace Example.Initialization.GettingStart
+namespace Example.Initialization.Advanced
 {
     using SysCommand.ConsoleApp;
     using SysCommand.Mapping;
@@ -122,6 +122,7 @@ namespace Example.Initialization.GettingStart
         // MyApp.exe add --all
         public void Add(bool all)
         {
+            this.App.Console.Error("Add error");
             this.App.Console.Write("Add");
         }
 
@@ -129,6 +130,7 @@ namespace Example.Initialization.GettingStart
         // MyApp.exe commit -m "comments"
         public void Commit(string m)
         {
+            this.App.Console.Error("Commit error");
             this.App.Console.Write("Commit");
         }
     }
@@ -189,55 +191,64 @@ namespace Example.Initialization.GettingStart
 }
 ```
 
-outputs
+_Input para exibir o help automático:_
 
 ```
 cmd> MyApp.exe help
 ... show help here ...
+```
 
+_Inputs similares ao uso do git:_
+
+```
 cmd> MyApp.exe add --all
 Add
 
 cmd> MyApp.exe commit -m "comments"
 Commit
+```
 
+_Inputs com os 3 tipos de separadores de valor:_
+
+```
 cmd> MyApp.exe --my-property value
-Main MyProperty='value'
-Return methods can also be used as output
 
 cmd> MyApp.exe --my-property=value
-Main MyProperty='value'
-Return methods can also be used as output
-
-cmd> MyApp.exe --custom-property 123
-Main MyPropertyDecimal='123'
-Return methods can also be used as output
 
 cmd> MyApp.exe --custom-property:123
-Main MyPropertyDecimal='123'
-Return methods can also be used as output
+```
 
+_Inputs com os 2 tipos de delimitador de argumentos na forma curta:_
+
+```
 cmd> MyApp.exe -p 123
-Main MyPropertyDecimal='123'
-Return methods can also be used as output
 
-cmd> MyApp.exe my-action -p value
-MyAction p='value'
 
-cmd> MyApp.exe my-action /p value
-MyAction p='value'
+cmd> MyApp.exe /p 123
+```
 
+_Inputs posicionais:_
+
+```
+cmd> MyApp.exe my-action positional-value
+
+```
+
+_Inputs com parâmetros opcionais:_
+
+```
 cmd> MyApp.exe custom-action
 MyCustomAction optionalParameter=''
 
 cmd> MyApp.exe custom-action -o
 MyCustomAction optionalParameter='True'
+```
 
-cmd> MyApp.exe commit -m "my commit" --my-property=value --custom-property:123
-Main MyProperty='value'
-Main MyPropertyDecimal='123'
-Return methods can also be used as output
-Commit
+_Input com argumentos de 2 comandos diferentes e com argumento de verbose para exibir Erros:_
+
+```
+cmd> MyApp.exe commit -m "my commit" --my-property=value --custom-property:123 --verbose Error
+
 ```
 
 **Saiba mais...**
