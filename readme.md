@@ -6,7 +6,7 @@ O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `
 
 Ele funciona como um analisar de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
 
-Veja abaixo um exemplo básico:
+**Exemplo simples:**
 
 ```csharp
 namespace Example.Initialization.GettingStart
@@ -95,7 +95,7 @@ Ainda é possível usar uma `action` omitindo seu nome no input, esse recurso n�
 
 Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](#trabalhando-com-métodos), [Ignorar métodos publicos por uma escolha manual usando atributo](#ignorar-métodos-publicos-por-uma-escolha-manual-usando-atributo) e [Métodos padrão](#métodos-padrão).
 
-Veja abaixo um exemplo mais customizado:
+**Exemplo avançado:**
 
 ```csharp
 namespace Example.Initialization.GettingStart
