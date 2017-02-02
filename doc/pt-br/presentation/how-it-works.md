@@ -1,6 +1,6 @@
 ## Como funciona? !heading
 
-Ele funciona como um analisar de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
+Ele funciona como um analisar de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação. Além disso, ele dispõe de recursos que são essenciais em uma aplicação console como: `help`, `verbose`, `tratamento de erros` entre outros.
 
 **Exemplo simples:**
 
@@ -34,9 +34,9 @@ namespace Example.Initialization.GettingStart
             }
         }
 
-        public void MyAction(bool v)
+        public void MyAction(bool a)
         {
-            this.App.Console.Write(string.Format("MyAction v='{0}'", v));
+            this.App.Console.Write(string.Format("MyAction a='{0}'", a));
         }
     }
 }
@@ -51,8 +51,8 @@ cmd> MyApp.exe help
 cmd> MyApp.exe --my-property value
 Main MyProperty='value'
 
-cmd> MyApp.exe my-action -v
-MyAction v='True'
+cmd> MyApp.exe my-action -a
+MyAction a='True'
 ```
 
 **_Note que não existe nenhum código de parse, seu código está limpo e pronto para receber comandos._**
