@@ -91,7 +91,7 @@ Ainda é possível usar uma `action` omitindo seu nome no input, esse recurso n�
 
 Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](#trabalhando-com-métodos), [Ignorar métodos publicos por uma escolha manual usando atributo](#ignorar-métodos-publicos-por-uma-escolha-manual-usando-atributo) e [Métodos padrão](#métodos-padrão).
 
-**Exemplificando:**
+Veja abaixo um exemplo mais customizado:
 
 ```csharp
 namespace Example.Initialization.GettingStart
