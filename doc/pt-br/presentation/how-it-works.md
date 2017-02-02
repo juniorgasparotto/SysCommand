@@ -219,8 +219,8 @@ _Inputs com os 2 tipos de delimitador de argumentos na forma curta:_
 ```
 cmd> MyApp.exe -p 123
 
-
 cmd> MyApp.exe /p 123
+
 ```
 
 _Inputs posicionais:_
@@ -234,13 +234,13 @@ _Inputs com parâmetros opcionais:_
 
 ```
 cmd> MyApp.exe custom-action
-MyCustomAction optionalParameter=''
+
 
 cmd> MyApp.exe custom-action -o
-MyCustomAction optionalParameter='True'
+
 ```
 
-_Input com argumentos de 2 comandos diferentes e com argumento de verbose para exibir Erros:_
+_Input com argumentos de diferentes comandos e com o argumento de --verbose para permitir mostrar Erros:_
 
 ```
 cmd> MyApp.exe commit -m "my commit" --my-property=value --custom-property:123 --verbose Error
