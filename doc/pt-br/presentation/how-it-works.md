@@ -1,6 +1,61 @@
 ## Como funciona? !heading
 
-Ele funciona como um analisar de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação. 
+Ele funciona como um analisar de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
+
+Veja abaixo um exemplo básico de como funciona:
+
+```csharp
+namespace Example.Initialization.GettingStart
+{
+    using SysCommand.ConsoleApp;
+    using SysCommand.Mapping;
+
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            new App().Run(args);
+        }
+    }
+
+    // Classes inheriting from `Command` will be automatically found by the system
+    // and its public properties and methods will be available for use.
+    public class MyCommand : Command
+    {
+        public string MyProperty { get; set; }
+
+        // This signature "Main()" is reserved to process arguments/properties.
+        public void Main()
+        {
+            // verify if property was inputed by user.
+            if (MyProperty != null)
+            {
+                App.Console.Write(string.Format("Main MyProperty='{0}'", MyProperty));
+            }
+        }
+
+        public void MyAction(bool v)
+        {
+            App.Console.Write(string.Format("MyAction v='{0}'", v));
+        }
+    }
+}
+```
+
+outputs
+
+```
+cmd> MyApp.exe help
+... the automatic help text will be shown ...
+
+cmd> MyApp.exe --my-property value
+Main MyProperty='value'
+
+cmd> MyApp.exe my-action -v
+MyAction p='value'
+```
+
+**_Note que não existe nenhum código de parse, seu código está limpo e pronto para receber comandos._**
 
 Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
