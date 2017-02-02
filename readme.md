@@ -34,13 +34,13 @@ namespace Example.Initialization.GettingStart
             // verify if property was inputed by user.
             if (MyProperty != null)
             {
-                App.Console.Write(string.Format("Main MyProperty='{0}'", MyProperty));
+                this.App.Console.Write(string.Format("Main MyProperty='{0}'", MyProperty));
             }
         }
 
         public void MyAction(bool v)
         {
-            App.Console.Write(string.Format("MyAction v='{0}'", v));
+            this.App.Console.Write(string.Format("MyAction v='{0}'", v));
         }
     }
 }
@@ -61,7 +61,7 @@ MyAction v='True'
 
 **_Note que não existe nenhum código de parse, seu código está limpo e pronto para receber comandos._**
 
-### Entenda melhor
+### Entenda melhor...
 
 Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
@@ -122,14 +122,14 @@ namespace Example.Initialization.GettingStart
         // MyApp.exe add --all
         public void Add(bool all)
         {
-            App.Console.Write("Add");
+            this.App.Console.Write("Add");
         }
 
         // usage:
         // MyApp.exe commit -m "comments"
         public void Commit(string m)
         {
-            App.Console.Write("Commit");
+            this.App.Console.Write("Commit");
         }
     }
 
@@ -152,10 +152,10 @@ namespace Example.Initialization.GettingStart
         public string Main()
         {
             if (MyProperty != null)
-                App.Console.Write(string.Format("Main MyProperty='{0}'", MyProperty));
+                this.App.Console.Write(string.Format("Main MyProperty='{0}'", MyProperty));
 
             if (MyPropertyDecimal != null)
-                App.Console.Write(string.Format("Main MyPropertyDecimal='{0}'", MyPropertyDecimal));
+                this.App.Console.Write(string.Format("Main MyPropertyDecimal='{0}'", MyPropertyDecimal));
 
             return "Return methods can also be used as output";
         }
@@ -167,7 +167,7 @@ namespace Example.Initialization.GettingStart
         {
             // Example showing that properties are executed before methods
             if (MyPropertyDecimal != null)
-                App.Console.Write("Use property here if you want!");
+                this.App.Console.Write("Use property here if you want!");
 
             return string.Format("MyAction p='{0}'", p);
         }
