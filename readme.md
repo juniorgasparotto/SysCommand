@@ -2,7 +2,7 @@
 
 O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `Console Aplication` usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC. 
 
-## Como funciona? (#especificando-os-tipos-de-comandos)
+## Como funciona? [](#especificando-os-tipos-de-comandos)
 
 Ele funciona como um analisador de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
 
