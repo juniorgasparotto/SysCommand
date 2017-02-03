@@ -8,7 +8,7 @@ Ele funciona como um analisador de linhas de comando automático onde todas as t
 
 Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento. 
 
-Existe também outros recursos como `help automático`, `verbose`, `tratamento de erros` e muitos outros que vão te ajudar a não perder tempo com as burocracias de uma aplicação console.
+Outros recursos essenciais como `help`, `verbose`, `tratamento de erros` e outros também são suportados.
 
 **Exemplo simples:**
 
