@@ -42,16 +42,16 @@ namespace Example.Initialization.Simple
 }
 ```
 
-outputs
+**Testes:**
 
 ```
-cmd> MyApp.exe help
+C:\Users\MyUser> MyApp.exe help
 ... the automatic help text will be shown ...
 
-cmd> MyApp.exe --my-property value
+C:\Users\MyUser> MyApp.exe --my-property value
 Main MyProperty='value'
 
-cmd> MyApp.exe my-action -a
+C:\Users\MyUser> MyApp.exe my-action -a
 MyAction a='True'
 ```
 

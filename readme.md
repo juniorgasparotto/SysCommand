@@ -46,16 +46,16 @@ namespace Example.Initialization.Simple
 }
 ```
 
-outputs
+**Testes:**
 
 ```
-cmd> MyApp.exe help
+C:\Users\MyUser> MyApp.exe help
 ... the automatic help text will be shown ...
 
-cmd> MyApp.exe --my-property value
+C:\Users\MyUser> MyApp.exe --my-property value
 Main MyProperty='value'
 
-cmd> MyApp.exe my-action -a
+C:\Users\MyUser> MyApp.exe my-action -a
 MyAction a='True'
 ```
 
@@ -290,7 +290,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
 * Criar suas propriedades com seus tipos `Nullable` e deixe-as como publicas. Elas se tornarão `arguments` no prompt de comando.
 * Crie um método `Main()` sem parametros em sua classe para poder interceptar os inputs de suas propriedades. Utilize `Property != null` para identificar que a propriedade foi inputada.
-* Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros deixe seus tipos como `Nullable` pela mesma razão acima.
+* Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros optionais deixe-os como `Nullable` pela mesma razão acima.
 * Digite `help` no prompt de comando que abrirá para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
 * Agora é só usar!
 
@@ -394,13 +394,13 @@ A chamada é bastante simples, basta uma linha para que tudo funcione usando as 
 }
 ```
 
-Ao iniciar esse código no Visual Studio um prompt padrão com um label "Enter with args:" será exibido. Isso indica que você pode iniciar seus testes quantas vezes for necessário. Para sair você pode usar o atalho padrão "CTRL+C" ou apertar o botão "stop" do Visual Studio.
+Ao iniciar esse código no Visual Studio um prompt padrão com um label `cmd>` será exibido. Isso indica que você pode iniciar seus testes quantas vezes for necessário. Para sair você pode usar o atalho padrão "CTRL+C" ou apertar o botão "stop" do Visual Studio.
 
 
 ```
-Enter with args: --my-property value
+cmd> --my-property value
 value
-Enter with args: --my-property otherValue
+cmd> --my-property otherValue
 otherValue
 ```
 

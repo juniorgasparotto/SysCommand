@@ -36,12 +36,12 @@ A chamada é bastante simples, basta uma linha para que tudo funcione usando as 
 }
 ```
 
-Ao iniciar esse código no Visual Studio um prompt padrão com um label "Enter with args:" será exibido. Isso indica que você pode iniciar seus testes quantas vezes for necessário. Para sair você pode usar o atalho padrão "CTRL+C" ou apertar o botão "stop" do Visual Studio.
+Ao iniciar esse código no Visual Studio um prompt padrão com um label `cmd>` será exibido. Isso indica que você pode iniciar seus testes quantas vezes for necessário. Para sair você pode usar o atalho padrão "CTRL+C" ou apertar o botão "stop" do Visual Studio.
 
 
 ```
-Enter with args: --my-property value
+cmd> --my-property value
 value
-Enter with args: --my-property otherValue
+cmd> --my-property otherValue
 otherValue
 ```

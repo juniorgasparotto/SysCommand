@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BD7C8051-6565-4B0B-BBF8-BDCAD5623BA1}</ProjectGuid>
+    <ProjectGuid>{36CBE29A-56DC-4CF3-B029-2DB283A20516}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Example.Initialization.GettingStart</RootNamespace>
-    <AssemblyName>Example.Initialization.GettingStart</AssemblyName>
+    <RootNamespace>Examplo.GettingStart.Simple</RootNamespace>
+    <AssemblyName>Examplo.GettingStart.Simple</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
