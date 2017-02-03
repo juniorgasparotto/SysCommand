@@ -1,10 +1,10 @@
-## Como funciona? !heading
+## Como funciona? !heading (#especificando-os-tipos-de-comandos)
 
 Ele funciona como um analisador de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
 
 Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento. 
 
-Outros recursos essenciais como `help`, `verbose`, `tratamento de erros` e outros também são suportados.
+Outros recursos essênciais como `help`, `verbose`, `tratamento de erros` e outros também são suportados.
 
 **Exemplo simples:**
 
