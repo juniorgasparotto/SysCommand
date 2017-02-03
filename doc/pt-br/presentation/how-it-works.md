@@ -1,6 +1,10 @@
 ## Como funciona? !heading
 
-Ele funciona como um analisar de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação. Além disso, ele dispõe de recursos que são essenciais em uma aplicação console como: `help`, `verbose`, `tratamento de erros` entre outros.
+Ele funciona como um analisador de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
+
+Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento. 
+
+Existe também outros recursos como `help automático`, `verbose`, `tratamento de erros` e muitos outros que vão te ajudar a não perder tempo com as burocracias de uma aplicação console.
 
 **Exemplo simples:**
 
@@ -42,7 +46,7 @@ namespace Example.Initialization.Simple
 }
 ```
 
-**Testes:**
+**Testes no prompt de comando:**
 
 ```
 C:\Users\MyUser> MyApp.exe help
@@ -52,6 +56,20 @@ C:\Users\MyUser> MyApp.exe --my-property value
 Main MyProperty='value'
 
 C:\Users\MyUser> MyApp.exe my-action -a
+MyAction a='True'
+```
+
+
+**Testes no Visual Studio usando o simulador de console:**
+
+```
+cmd> help
+... the automatic help text will be shown ...
+
+cmd> --my-property value
+Main MyProperty='value'
+
+cmd> my-action -a
 MyAction a='True'
 ```
 
@@ -65,7 +83,7 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`. 
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo. Veja [Classe App](#classe-app) e [Inicializando por método estático com simulador de console](#inicializando-por-método-estático-com-simulador-de-console).
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Classe App](#classe-app) e [Inicializando por método estático com simulador de console](#inicializando-por-método-estático-com-simulador-de-console).
 
 **`Command`**
 
