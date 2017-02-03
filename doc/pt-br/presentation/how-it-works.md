@@ -93,7 +93,7 @@ A inicialização do contexto da aplicação pode ser feita de duas formas, por 
 
 **`Argument`**
 
-Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-v` e etc. Programaticamente eles são representados pelas propriedades do `Command` e devem ser acompanhados de um método chamado `Main()` (sem parâmetros) para poder interceptar se uma propriedade teve ou não input. O nome "Main" foi escolhido pela similaridade de conceito com o método `Main(string[] args)` do .NET.
+Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-v` e etc. Programaticamente eles são representados pelas _propriedades_ do `Command` e devem ser acompanhados de um método chamado `Main()` (sem parâmetros) para poder interceptar se uma propriedade teve ou não input. O nome "Main" foi escolhido pela similaridade de conceito com o método `Main(string[] args)` do .NET.
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
@@ -101,7 +101,7 @@ Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas 
 
 **`Action`**
 
-Representam ações iguais as _Actions dos Controllers do MVC_. Programaticamente representam os métodos do `Command` e seus parâmetros (se existir) serão convertidos em `arguments` que só serão acessados quando acompanhados do nome da `actions`.
+Representam ações iguais as _Actions dos Controllers do MVC_. Programaticamente representam os _métodos_ do `Command` e seus parâmetros (se existir) serão convertidos em `arguments` que só serão acessados quando acompanhados do nome da `actions`.
 
 Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`.
 
@@ -188,12 +188,20 @@ namespace Example.Initialization.Advanced
             return string.Format("MyAction p='{0}'", p);
         }
 
+        // "Action without customization and is a overload"
+        // usage:
+        // MyApp.exe my-action -p value --p2
+        public string MyAction(string p, bool p2)
+        {
+            return string.Format("MyAction p='{0}'; p2='{1}'", p, p2);
+        }
+
         // "Action customized"
         // usage:
         // MyApp.exe custom-action
         // MyApp.exe custom-action -o
         [Action(Name = "custom-action", Help = "My custom action")]
-        public string MyAction
+        public string CustomAction
         (
             [Argument(ShortName = 'o')]
             bool? optionalParameter = null
@@ -208,61 +216,87 @@ namespace Example.Initialization.Advanced
 _Input para exibir o help automático:_
 
 ```
-cmd> MyApp.exe help
+cmd> help
 ... show help here ...
 ```
 
 _Inputs similares ao uso do git:_
 
 ```
-cmd> MyApp.exe add --all
+cmd> add --all
 Add
 
-cmd> MyApp.exe commit -m "comments"
+cmd> commit -m "comments"
 Commit
 ```
 
 _Inputs com os 3 tipos de separadores de valor:_
 
 ```
-cmd> MyApp.exe --my-property value
+cmd> --my-property value
+Main MyProperty='value'
+Return methods can also be used as output
 
-cmd> MyApp.exe --my-property=value
+cmd> --my-property=value
+Main MyProperty='value'
+Return methods can also be used as output
 
-cmd> MyApp.exe --custom-property:123
+cmd> --custom-property:123
+Main MyPropertyDecimal='123'
+Return methods can also be used as output
 ```
 
 _Inputs com os 2 tipos de delimitador de argumentos na forma curta:_
 
 ```
-cmd> MyApp.exe -p 123
+cmd> -p 123
+Main MyPropertyDecimal='123'
+Return methods can also be used as output
 
-cmd> MyApp.exe /p 123
+cmd> /p 123
+Main MyPropertyDecimal='123'
+Return methods can also be used as output
+```
 
+_Inputs com as 2 sobrecargas do método MyAction:_
+
+```
+cmd> my-action -p value
+MyAction p='value'
+
+cmd> my-action -p value --p2
+MyAction p='value'; p2='True'
 ```
 
 _Inputs posicionais:_
 
 ```
-cmd> MyApp.exe my-action positional-value
+cmd> my-action positional-value
+MyAction p='positional-value'
 
+cmd> my-action positional-value false
+MyAction p='positional-value'; p2='False'
 ```
 
 _Inputs com parâmetros opcionais:_
 
 ```
-cmd> MyApp.exe custom-action
+cmd> custom-action
+MyCustomAction optionalParameter=''
 
-
-cmd> MyApp.exe custom-action -o
-
+cmd> custom-action -o
+MyCustomAction optionalParameter='True'
 ```
 
 _Input com argumentos de diferentes comandos e com o argumento de --verbose para permitir mostrar Erros:_
 
 ```
-cmd> MyApp.exe commit -m "my commit" --my-property=value --custom-property:123 --verbose Error
-
+cmd> commit -m "my commit" --my-property=value --custom-property:123 --verbose Error
+Main MyProperty='value'
+Main MyPropertyDecimal='123'
+Return methods can also be used as output
+Commit error
+Commit
 ```
 
 **Saiba mais...**

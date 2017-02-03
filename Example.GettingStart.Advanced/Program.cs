@@ -74,12 +74,20 @@
             return string.Format("MyAction p='{0}'", p);
         }
 
+        // "Action without customization and is a overload"
+        // usage:
+        // MyApp.exe my-action -p value --p2
+        public string MyAction(string p, bool p2)
+        {
+            return string.Format("MyAction p='{0}'; p2='{1}'", p, p2);
+        }
+
         // "Action customized"
         // usage:
         // MyApp.exe custom-action
         // MyApp.exe custom-action -o
         [Action(Name = "custom-action", Help = "My custom action")]
-        public string MyAction
+        public string CustomAction
         (
             [Argument(ShortName = 'o')]
             bool? optionalParameter = null
