@@ -46,7 +46,7 @@ namespace Example.Initialization.Simple
 }
 ```
 
-**Testes no prompt de comando:** <a name="pookie"></a>
+**Testes no prompt de comando:** 
 
 ```
 C:\Users\MyUser> MyApp.exe help

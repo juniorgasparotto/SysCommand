@@ -1,7 +1,7 @@
-# SysCommand # SysCommand<a name="presentation"></a>
+# SysCommand <a name="presentation"></a>
 
 O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `Console Aplication` usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC. 
-## Como funciona? ## Como funciona?<a name="presentation-how-it-works"></a>
+## Como funciona? <a name="presentation-how-it-works"></a>
 
 Ele funciona como um analisador de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
 
@@ -49,7 +49,7 @@ namespace Example.Initialization.Simple
 }
 ```
 
-**Testes no prompt de comando:** <a name="pookie"></a>
+**Testes no prompt de comando:** 
 
 ```
 C:\Users\MyUser> MyApp.exe help
@@ -314,22 +314,22 @@ Commit
 * Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automático](#help-automatico).
 
 Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação).
-## Qual o objetivo deste projeto? ## Qual o objetivo deste projeto?<a name="what-is-the-purpose"></a>
+## Qual o objetivo deste projeto? <a name="what-is-the-purpose"></a>
 
 O objetivo é ajudar programadores de qualquer linguagem de programação que sofrem na hora de criar uma aplicação console. Muitas vezes desistimos de criar algo pela burocracia do parse e pela dificuldade de manutenção ao ver códigos onde sua lógica de parse está unida com sua lógica de negócios. Se você é como eu que adora criar mini-aplicações para resolver problemas do dia a dia usando consoles, então junte-se a nós!
 
 Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade de conhece-lo. Com o novo .NET (Core Clr) você pode criar softwares em qualquer sistema operacional e somado aos beneficios do `SysCommand` você pode criar sua coleção de aplicativos de console da forma mais fácil possível.
-# Instalação # Instalação<a name="install"></a>
+# Instalação <a name="install"></a>
 
 * NuGet:
 * NuGet Core CRL: 
-## DLLs do pacote ## DLLs do pacote<a name="install-dlls"></a>
+## DLLs do pacote <a name="install-dlls"></a>
 
   * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizado em outros tipos de projetos como `Web Application` ou `Windows Forms`.
   * `SysCommand.ConsoleApp.dll`: Contém diversos recursos que uma aplicação do tipo `Console Application` necessita. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
   * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
 
-## Passo a passo ## Passo a passo<a name="install-step-a-step"></a>
+## Passo a passo <a name="install-step-a-step"></a>
 
 * Instalar o Visual Studio em sua máquina (Windows)
 * Criar seu projeto do tipo `Console Application`
@@ -383,7 +383,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Tipos de inputs](#kind-of-inputs)
 * [Licença](#license)
 
-# Classe App # Classe App<a name="class-app"></a>
+# Classe App <a name="class-app"></a>
 
 A classe `App` é a principal classe do sistema, ela é responsável por manter um contexto isolado por cada instancia `App`. Nenhum recurso estático é usado aqui, isso é importante para você ter a liberdade de criar quantas instancias quiser em qualquer escopo.
 
@@ -403,7 +403,7 @@ public App(
 * `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará ligado. Entenda melhor em `Utilizando o recurso de MultiAction`
 * `addDefaultAppHandler`: Caso seja `false` então NÃO cria o handler de eventos que é responsável pelo mecanismo padrão de `outputs` e controles de `erros` e dentre outros. O padrão é `true`. Entenda melhor em `Controle de eventos`
 
-## Inicializando por método estático com simulador de console ## Inicializando por método estático com simulador de console<a name="initializing-by-static-method"></a>
+## Inicializando por método estático com simulador de console <a name="initializing-by-static-method"></a>
 
 O método estático `App.RunApplication` disponibiliza um recurso muito interressante de `simulação de console` que ajuda você a testar seus inputs dentro do próprio Visual Studio sem a necessidade de executar seu ".exe" em um console externo ou via "Command Line Arguments". É importante ressaltar que esse simulador só será exibido dentro do Visual Studio, quando executar seu aplicativo final em outro console o comportamento será o mesmo do modo por instancia.
 
@@ -450,7 +450,7 @@ value
 cmd> --my-property otherValue
 otherValue
 ```
-## Especificando os tipos de comandos ## Especificando os tipos de comandos<a name="specifying-commands"></a>
+## Especificando os tipos de comandos <a name="specifying-commands"></a>
 
 Ao especificar cada `Command` que será utilizado, você perde o recurso de busca automatica, mas ganha a flexibidade de controlar quais `Commands` devem ou não fazer parte do seu sistema. Para isso você pode trabalhar de duas formas, a `inclusiva` ou a `exclusiva`. A forma inclusiva é basicamente a especificação de cada `Command` e a forma exclusiva é o oposto, primeiro se carrega tudo e depois elimina-se o que não deseja.
 
@@ -589,7 +589,7 @@ have his name omitted.
 Perceba que no help não existe nenhuma ocorrencia da class `FirstCommand`.
 
 Por enquanto, não se atente agora para as classes `VerboseCommand` e `ArgsHistoryCommand` elas são commands internos e serão explicados mais adiante na documentação.
-## Utilizando o recurso de MultiAction ## Utilizando o recurso de MultiAction<a name="using-the-multi-action-feature"></a>
+## Utilizando o recurso de MultiAction <a name="using-the-multi-action-feature"></a>
 
 Esse recurso permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso `Gerenciamento de históricos de argumentos` deixará de funcionar caso isso ocorra.
 
@@ -648,7 +648,7 @@ Action1 (value = action2)
 ```
 
 O último exemplo demostra como usar o scape em seus valores que conflitam com nomes de `actions`. Um fato importante é que no exemplo foi usado duas barras invertidas para fazer o scape, mas isso pode variar de console para console, no `bash` o uso de apenas uma barra invertida não tem nenhum efeito, provavelmente ele deve usar para outros scapes antes de chegar na aplicação.
-## Controle de eventos ## Controle de eventos<a name="events"></a>
+## Controle de eventos <a name="events"></a>
 
 Os eventos são importantes para interceptar cada passo da execução e modificar ou extender o comportamento padrão. Os eventos existentes são os seguintes:
 
@@ -736,7 +736,7 @@ new App(addDefaultAppHandler: false)
         .Run(args);
 ```
 
-# Tipos suportados # Tipos suportados<a name="support-types"></a>
+# Tipos suportados <a name="support-types"></a>
 
 string
 bool
@@ -809,7 +809,7 @@ MyApp.exe 1.0 1.99 str1 str2 // positional
 Importante!
 
 Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
-# Help automatico # Help automatico<a name="help"></a>
+# Help automatico <a name="help"></a>
 
 O `help` é gerado de forma automatica pelo sistema e para exibi-lo basta seguir os exemplos abaixo:
 
@@ -885,7 +885,7 @@ public class Program
 ```
 
 * O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
-## Comportamento padrão ## Comportamento padrão<a name="help-default"></a>
+## Comportamento padrão <a name="help-default"></a>
 
 O formato padrão do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. O formato de saída que será exibido será o seguinte:
 
@@ -971,7 +971,7 @@ Help for this command
 
 * Para mais informações sobre customizações do help em propriedades veja o tópido de `Trabalhando com propriedades`.
 * Para mais informações sobre customizações do help em ações veja o tópido de `Trabalhando com métodos`.
-# Tipos de comandos # Tipos de comandos<a name="kind-of-commands"></a>
+# Tipos de comandos <a name="kind-of-commands"></a>
 
 Atualmente existem tres tipos de comandos:
 
@@ -1002,7 +1002,7 @@ public class ClearCommand : Command
     }
 }
 ```
-# Verbose # Verbose<a name="verbose"></a>
+# Verbose <a name="verbose"></a>
 
 O controle de exibição por verbo esta contido em um comando interno chamado `VerboseCommand`. A sua função é alterar o valor da propriedade `App.Console.Verbose` caso o usuário envie um input de verbose. Atualmente, os verbos suportados são:
 
@@ -1044,7 +1044,7 @@ output of critical
 ```
 
 * Para desativar o comando `VerboseCommand` veja o tópico de `Inicialização`.
-# Output # Output<a name="output"></a>
+# Output <a name="output"></a>
 
 O mecanismo de output foi extendido para aumentar a produtividade.
 
@@ -1102,7 +1102,7 @@ My question: N
 
 Por último, vale lembrar que nada disso impede você de usar os mecanismos comuns do .NET, como a classe "System.Console".
 
-# Output usando template Razor # Output usando template Razor<a name="output-razor"></a>
+# Output usando template Razor <a name="output-razor"></a>
 
 Outra opção para exibir outputs é a utilização de templates `Razor`. Esse mecanismo foi projetado para coisas simples, é muito importante dizer que ele não dispõe de diversos recursos como: debug, intellisense, highlight e analise de erros.
 
@@ -1176,7 +1176,7 @@ Outputs:
 * É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automatica. como no exemplo da action "MyAction2()".
 * Por questões técnicas, o método View<>() obriga o uso de uma inferencia ou um model. Infira um `object` se você não necessitar de um model `View<object>()`.
 * Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.
-# Output usando template T4 # Output usando template T4<a name="output-t4"></a>
+# Output usando template T4 <a name="output-t4"></a>
 
 Outra opção para exibir outputs é a utilização de templates `T4`. Esse mecanismo, ao contrário dos templates `Razor` é mais completo, ele não perdeu nenhum dos beneficios que o Visual Studio nos fornece. Basta seguir apenas alguns passos para usa-lo:
 
@@ -1237,7 +1237,7 @@ Outputs:
     #### HelloWorld {NONE} ####
     #### HelloWorld {MyName} ####
 ```
-# Output tabelado # Output tabelado<a name="output-tabulated"></a>
+# Output tabelado <a name="output-tabulated"></a>
 
 A classe `SysCommand.ConsoleApp.View.TableView` tras o recurso de `output tabelado` que pode ser muito útil para apresentar informações de forma rápida e visualmente mais organizada. É claro que tudo depende da quantidade de informação que você quer exibir, quanto maior, pior a visualização.
 
@@ -1285,7 +1285,7 @@ Id   | Column2
 3    | Line 3 Line 3
 --------------------
 ```
-# Gerenciamento de históricos de argumentos # Gerenciamento de históricos de argumentos<a name="argument-history-manager"></a>
+# Gerenciamento de históricos de argumentos <a name="argument-history-manager"></a>
 
 Esse recurso permite que você salve aqueles inputs que são utilizados com muita frequencia e podem ser persistidos indeterminadamente. O seu funcionamento é bem simples, uma `Command` interno chamado `SysCommand.ConsoleApp.Commands.ArgsHistoryCommand` é responsável por indentificar as `actions` de gerenciamento e persisti-lo em um arquivo `Json` no caminho padrão `.app/history.json`. As `actions` de gerenciamento são as seguintes:
 
@@ -1326,7 +1326,7 @@ C:\MyApp.exe history-list
 * Para desativar o comando `ArgsHistoryCommand` veja o tópico de `Inicialização`.
 * A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico `Redirecionamento de comandos`.
 * Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
-# Redirecionamento de comandos # Redirecionamento de comandos<a name="redirectiong-commands"></a>
+# Redirecionamento de comandos <a name="redirectiong-commands"></a>
 
 Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instancia da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instancias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
 
@@ -1375,7 +1375,7 @@ Redirected: my-value. Count: 2
 ```
 
 * Para desabilitar o recurso de multi-action, desative a propriedade `App.EnableMultiAction` antes do método `App.Run()`.
-# Cancelamento da continuidade da execução # Cancelamento da continuidade da execução<a name="stop-propagation"></a>
+# Cancelamento da continuidade da execução <a name="stop-propagation"></a>
 
 Quando existem muitas actions com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.
 
@@ -1458,7 +1458,7 @@ StopPropagationCommand2.StopPropagationAction1
 Perceba que a execução parou no mesmo ponto.
 
 * Para desabilitar o recurso de multi-action, desative a propriedade `App.EnableMultiAction` antes do método `App.Run()`.
-# Tratamento de erros # Tratamento de erros<a name="error"></a>
+# Tratamento de erros <a name="error"></a>
 
 O tratamento de erro é gerado de forma automatica pelo sistem e são categorizados da seguinte forma:
 
@@ -1533,11 +1533,11 @@ public class Program
     }
 }
 ```
-# Trabalhando com propriedades # Trabalhando com propriedades<a name="properties"></a>
+# Trabalhando com propriedades <a name="properties"></a>
 
 O trabalho com propriedades é muito simples e objetivo, basta criar suas propriedades como publicas e escolher um dos dois meios abaixo para saber se uma propriedade foi inputada pelo usuário, você que escolhe qual utilizar:
 
-## Modo de uso 1 ## Modo de uso 1<a name="properties-use-mode1"></a>
+## Modo de uso 1 <a name="properties-use-mode1"></a>
 
 Primeiro, você pode utilizar o método `Main()` sem parametro e que, por convensão de nome, será o responsável por ser invocado caso alguma de suas propriedade tenha sido utilizadas no input do usuário. O nome "Main" foi escolhido para manter o padrão de nomenclatura que o .NET utiliza em aplicações de console. 
 
@@ -1608,7 +1608,7 @@ Unsafe mode: Preferably, use nullable in MyPropertyUnsafeMode
 MyPropertyDefaultValue aways has value
 Main() methods can also return values ;)
 ```
-## Modo de uso 2 ## Modo de uso 2<a name="properties-use-mode2"></a>
+## Modo de uso 2 <a name="properties-use-mode2"></a>
 
 Por fim, você ainda pode utilizar o `set { .. }` da sua propriedade para tomar alguma ação. Esse recurso não é recomendado, pois o método `GetArgument(string name)` ainda não esta pronto para ser usado nesse momento, mas caso queira algo pontual e rápido, nada te impede de usar esse meio.
 
@@ -1635,7 +1635,7 @@ MyCustomVerbose=true
 C:\MyApp.exe --my-custom-verbose false
 MyCustomVerbose=false
 ```
-## Customizando os nomes dos argumentos ## Customizando os nomes dos argumentos<a name="properties-customizing-name"></a>
+## Customizando os nomes dos argumentos <a name="properties-customizing-name"></a>
 
 A regra a seguir descreve como é o comportamento padrão de nomenclatura para que uma propriedade vire um `argument`:
 
@@ -1696,7 +1696,7 @@ NormalLong=strvalue
 ForcedShort=strvalue2
 C=9999
 ```
-## Customizando as informações de help ## Customizando as informações de help<a name="properties-customizing-help"></a>
+## Customizando as informações de help <a name="properties-customizing-help"></a>
 
 Para configurar o texto de help utilize o atributo `ArgumentAttribute(Help="")`. Por padrão, para cada argumento será exibido um complemento após o texto do help. A informação que esse complemento nos tras é se o parametro é obrigatório ou opcional (com ou sem default value). Caso você deseje desativar esse complemento utilize o atributo `ArgumentAttribute(ShowHelpComplement=false)`.
 
@@ -1726,7 +1726,7 @@ Custom help for CustomPropertiesHelpCommand
 ```
 
 Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico `Help Automatico`.
-## Propriedades obrigatórias ## Propriedades obrigatórias<a name="properties-required"></a>
+## Propriedades obrigatórias <a name="properties-required"></a>
 
 Para argumentos que são obrigatórios, é necessário que você use o `ArgumentAtrribute` ligando a flag `IsRequired`.
 
@@ -1754,7 +1754,7 @@ The argument '--my-property-required' is required
 C:\MyApp.exe --my-property-required 123
 MyPropertyRequired=123
 ```
-## Habilitando o input posicional ## Habilitando o input posicional<a name="properties-positional"></a>
+## Habilitando o input posicional <a name="properties-positional"></a>
 
 Para habilitar o input posicional basta ligar a flag `EnablePositionalArgs` em seu `Command`, contudo é importante validar o quanto isso necessário, pois muitos inputs posicionais podem complicar muito o uso da sua aplicação. Apesar do `SysCommand` estar bem preparado para esse tipo de input, não queremos que você polua o seu input.
 
@@ -1829,7 +1829,7 @@ C:\MyApp.exe 1 2
 MyPosicionalProperty1=2
 MyPosicionalProperty2=1
 ```
-## Ignorar propriedades publicas por uma escolha manual usando atributo ## Ignorar propriedades publicas por uma escolha manual usando atributo<a name="properties-ignore-public"></a>
+## Ignorar propriedades publicas por uma escolha manual usando atributo <a name="properties-ignore-public"></a>
 
 Para mudar o comportamente padrão de propriedades publicas, você precisa apenas desligar a flag `OnlyPropertiesWithAttribute` do `Command`. Com ela desligada o parseador deixará de olhar para as propriedades publicas e usará apenas as propriedades publicas e que tiverem o atributo `ArgumentAtrribute`.
 
@@ -1864,7 +1864,7 @@ C:\MyApp.exe --my-property-without-attribute 1
 There are errors in command: DoSomethingCommand
 The argument '--my-property-without-attribute' does not exist
 ```
-# Trabalhando com métodos # Trabalhando com métodos<a name="methods"></a>
+# Trabalhando com métodos <a name="methods"></a>
 
 O trabalho com métodos também é muito bem simples, todos os métodos definidos como `public`, por padrão, serão habilitados para virarem `input actions` e estarem disponíveis para uso. O fato interessante é que você pode utilizar os recursos nativos do .NET deixando seu código mais limpo, como:
 
@@ -1872,7 +1872,7 @@ O trabalho com métodos também é muito bem simples, todos os métodos definido
 * Métodos com parametros opcionais com `Default value`
 * Métodos com sobrecargas
 * Métodos com `return` onde o retorno do método, por padrão, será utilizado como output no console usando
-## Métodos sem parametros ## Métodos sem parametros<a name="methods-without-params"></a>
+## Métodos sem parametros <a name="methods-without-params"></a>
 
 **Exemplo:**
 
@@ -1890,7 +1890,7 @@ public class Method1Command : Command
 C:\MyApp.exe my-action
 MyAction
 ```
-## Parametros optionais ## Parametros optionais<a name="methods-optional-params"></a>
+## Parametros optionais <a name="methods-optional-params"></a>
 
 Os parametros opcionais são uteis para evitar a criação de sobrecargas e no caso de uma aplicação console ajuda a criar `actions` com diversas opções, mas não obrigando o usuário a preencher todas. 
 
@@ -1933,7 +1933,7 @@ MyAction2
 ```
 
 Observação: Não utilize o método `GetAction()` em métodos que não são `actions`, você terá uma exception.
-## Sobrecargas ## Sobrecargas<a name="methods-overloads"></a>
+## Sobrecargas <a name="methods-overloads"></a>
 
 O recurso de sobrecarga de métodos é suportado da mesma forma que você faria para qualquer outra finalidade. Muitas vezes esse recurso pode ser mais interessante que usar parametros opcionais, o código fica mais limpo. Outras vezes isso não será possível, pois com parametros opcionais o usuário tem a opção de escolher qualquer parametro independentemente de sua posição no método, coisa que a sobrecarga não pode.
 
@@ -1981,7 +1981,7 @@ O último comando mostrou a limitação da sobrecarga com relação aos parametr
 * MyAction3(int arg0, int arg1): Tem o input "--arg1", mas não tem o input "--arg0", portanto esta inválido.
 
 Nesse caso o parseador escolhera o unico método valido, ou seja, o método `MyAction3` _sem parametros_ e usará o argumento extra "--arg1" para tentar encontra-lo como propriedade em algum `Command`, porém essa propriedade não existe em nenhum lugar, gerando o erro.
-## Usando inputs posicionais ## Usando inputs posicionais<a name="methods-positional-inputs"></a>
+## Usando inputs posicionais <a name="methods-positional-inputs"></a>
 
 Outro modo de chamar sua action no console é usando `input posicional`. Por padrão, todas as `action` aceitam argumentos posicionais, mais isso pode ser desabilitado usando o atributo `ActionAttribute(EnablePositionalArgs = false)`.
 
@@ -2015,7 +2015,7 @@ Error in method: my-action-without-posicional(Int32, Int32)
 The argument '--arg0' is required
 The argument '--arg1' is required
 ```
-## Ignorar métodos publicos por uma escolha manual usando atributo ## Ignorar métodos publicos por uma escolha manual usando atributo<a name="methods-ignore-public"></a>
+## Ignorar métodos publicos por uma escolha manual usando atributo <a name="methods-ignore-public"></a>
 
 Para mudar o comportamente padrão de métodos publicos, você precisa apenas desligar a flag `OnlyMethodsWithAttribute` do `Command`. Com ela desligada o parseador deixará de olhar para as métodos publicos e usará apenas os métodos publicos e que tiverem o atributo `ActionAtrribute`.
 
@@ -2077,7 +2077,7 @@ MyActionNotIgnored
 C:\MyApp.exe my-action-ignored
 Could not find any action.
 ```
-## Customizando nomes de actions e arguments ## Customizando nomes de actions e arguments<a name="methods-customizing-names"></a>
+## Customizando nomes de actions e arguments <a name="methods-customizing-names"></a>
 
 A regra a seguir descreve como é o comportamento padrão de nomenclatura para que os métodos vire uma `action` e um parametro vire um `argument`:
 
@@ -2182,7 +2182,7 @@ public class Prefixed2Command : Command
 C:\MyApp.exe custom-prefix-my-action
 custom-prefix-my-action
 ```
-## Customizando as informações de help de actions e seus parametros ## Customizando as informações de help de actions e seus parametros<a name="methods-customizing-help"></a>
+## Customizando as informações de help de actions e seus parametros <a name="methods-customizing-help"></a>
 
 Para as `actions` você precisa customizar o atributo `ActionAttribute(Help="")` e para os paramentros utilizasse o atributo `ArgumentAttribute(Help="")`. Por padrão, para cada argumento será exibido um complemento após o texto do help. A informação que esse complemento nos tras é se o parametro é obrigatório ou opcional (com ou sem default value). Caso você deseje desativar esse complemento utilize o atributo `ArgumentAttribute(ShowHelpComplement=false)`.
 
@@ -2220,7 +2220,7 @@ Help for this command
 ```
 
 Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico `Help Automatico`.
-## Trocando a posição de parametros posicionais ## Trocando a posição de parametros posicionais<a name="methods-changing-position"></a>
+## Trocando a posição de parametros posicionais <a name="methods-changing-position"></a>
 
 A propriedade `ArgumentAttribute(Position=X)` também funciona para parametros da mesma forma que funciona para propriedades. Não é um recurso que faça muito sentido, mas é importante documenta-lo.
 
@@ -2245,13 +2245,13 @@ public class Method5Command : Command
 C:\MyApp.exe my-action-with-args-inverted 1 2
 arg0 = '2'; arg1 = '1'
 ```
-## Propriedades do atributos ArgumentAttribute que não são utilizados ## Propriedades do atributos ArgumentAttribute que não são utilizados<a name="methods-not-used-attrs"></a>
+## Propriedades do atributos ArgumentAttribute que não são utilizados <a name="methods-not-used-attrs"></a>
 
 As seguintes propriedades não fazem sentido no cenário de parametros de métodos e só existem por que o atributo `ArgumentAtrribute` é compartilhado no uso de propriedades.
 
 * IsRequired: Em C#, todo parametro que não tem default value é obrigatório, essa configuração é ignorada se for utilizada.
 * DefaultValue: Como o proprio C# já nos dá a opção de default value para parametros, essa configuração é redundante, sendo assim ela é ignorada por que o padrão do .NET já é suficiente e mais limpo.
-## Métodos padrão ## Métodos padrão<a name="methods-default"></a>
+## Métodos padrão <a name="methods-default"></a>
 
 O uso de métodos padrão (ou métodos implicitos) fazem com que o recurso seja muito similar ao uso de propriedades, ou seja, você não é obrigado a especificar o nome da `action` e os seus parâmetros podem ser inseridos diretamente no input como se fossem argumentos provenientes de propriedades. 
 
@@ -2313,7 +2313,7 @@ ActionWhenNotExistsInput()
 
 * É importante ressaltar que o todos os métodos padrão ainda podem ser chamados de forma explicita, ou seja, com o seu nome sendo especifico.
 * O uso de método padrão sem argumentos só funciona se não existir nenhum argumento required, do contrário esse método nunca será chamado, pois haverá um erro obrigando o uso do argumento.'
-# Tipos de inputs # Tipos de inputs<a name="kind-of-inputs"></a>
+# Tipos de inputs <a name="kind-of-inputs"></a>
 
 Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
 
@@ -2343,4 +2343,4 @@ OU usando o delimitador `/` e os separadores `=` e `:`
 
 * Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`. 
 * Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de `Customizações`. 
-# Licença # Licença<a name="license"></a>
+# Licença <a name="license"></a>
