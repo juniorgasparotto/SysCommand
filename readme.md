@@ -347,7 +347,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * Agora é só usar!
 
 
-# Documentação<a name="documentation"></a>
+# <a name="documentation"></a>Documentação
 
 * [Classe App](#class-app)
   * [Inicializando por método estático com simulador de console](#initializing-by-static-method)
