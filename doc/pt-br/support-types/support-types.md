@@ -1,4 +1,4 @@
-# Tipos suportados !heading
+# Tipos suportados <header-set anchor-name="support-types" />
 
 string
 bool

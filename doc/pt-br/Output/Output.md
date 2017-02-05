@@ -1,4 +1,4 @@
-# Output !heading
+# Output <header-set anchor-name="output" />
 
 O mecanismo de output foi extendido para aumentar a produtividade.
 

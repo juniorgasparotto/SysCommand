@@ -1,4 +1,4 @@
-## Controle de eventos !heading
+## Controle de eventos <header-set anchor-name="events" />
 
 Os eventos são importantes para interceptar cada passo da execução e modificar ou extender o comportamento padrão. Os eventos existentes são os seguintes:
 

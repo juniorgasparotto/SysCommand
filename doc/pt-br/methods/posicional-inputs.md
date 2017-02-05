@@ -1,4 +1,4 @@
-## Usando inputs posicionais !heading
+## Usando inputs posicionais <header-set anchor-name="methods-positional-inputs" />
 
 Outro modo de chamar sua action no console é usando `input posicional`. Por padrão, todas as `action` aceitam argumentos posicionais, mais isso pode ser desabilitado usando o atributo `ActionAttribute(EnablePositionalArgs = false)`.
 

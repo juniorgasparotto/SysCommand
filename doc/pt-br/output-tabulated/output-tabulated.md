@@ -1,4 +1,4 @@
-# Output tabelado !heading
+# Output tabelado <header-set anchor-name="output-tabulated" />
 
 A classe `SysCommand.ConsoleApp.View.TableView` tras o recurso de `output tabelado` que pode ser muito útil para apresentar informações de forma rápida e visualmente mais organizada. É claro que tudo depende da quantidade de informação que você quer exibir, quanto maior, pior a visualização.
 

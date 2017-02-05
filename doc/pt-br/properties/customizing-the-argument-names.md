@@ -1,4 +1,4 @@
-## Customizando os nomes dos argumentos !heading
+## Customizando os nomes dos argumentos <header-set anchor-name="properties-customizing-name" />
 
 A regra a seguir descreve como é o comportamento padrão de nomenclatura para que uma propriedade vire um `argument`:
 

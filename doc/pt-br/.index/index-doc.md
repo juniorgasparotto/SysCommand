@@ -1,6 +1,6 @@
 # Documentação
 
-____TABLE_OF_CONTENTS____
+<table-of-contents/>
 
 #include "../pt-br/getting-start/class-app.md"
 #include "../pt-br/getting-start/initializing-by-static-method.md"

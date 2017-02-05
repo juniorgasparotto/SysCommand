@@ -1,4 +1,4 @@
-# Verbose !heading
+# Verbose <header-set anchor-name="verbose" />
 
 O controle de exibição por verbo esta contido em um comando interno chamado `VerboseCommand`. A sua função é alterar o valor da propriedade `App.Console.Verbose` caso o usuário envie um input de verbose. Atualmente, os verbos suportados são:
 

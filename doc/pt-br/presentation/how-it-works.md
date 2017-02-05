@@ -1,4 +1,4 @@
-## Como funciona? !heading [pookie](#pookie)
+## Como funciona? <header-set anchor-name="presentation-how-it-works" />
 
 Ele funciona como um analisador de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
 

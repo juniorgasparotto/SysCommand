@@ -1,4 +1,4 @@
-## Customizando as informações de help de actions e seus parametros !heading
+## Customizando as informações de help de actions e seus parametros <header-set anchor-name="methods-customizing-help" />
 
 Para as `actions` você precisa customizar o atributo `ActionAttribute(Help="")` e para os paramentros utilizasse o atributo `ArgumentAttribute(Help="")`. Por padrão, para cada argumento será exibido um complemento após o texto do help. A informação que esse complemento nos tras é se o parametro é obrigatório ou opcional (com ou sem default value). Caso você deseje desativar esse complemento utilize o atributo `ArgumentAttribute(ShowHelpComplement=false)`.
 

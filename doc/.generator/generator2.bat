@@ -1,0 +1,1 @@
+.portable\MarkdownMerge\MarkdownMerge.exe -i ..\pt-br\.index\index-presentation.md ..\pt-br\.index\index-doc.md  -o ..\..\README.md

@@ -1,4 +1,4 @@
-# Help automatico !heading
+# Help automatico <header-set anchor-name="help" />
 
 O `help` é gerado de forma automatica pelo sistema e para exibi-lo basta seguir os exemplos abaixo:
 

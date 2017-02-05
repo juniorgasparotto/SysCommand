@@ -1,4 +1,4 @@
-## Utilizando o recurso de MultiAction !heading
+## Utilizando o recurso de MultiAction <header-set anchor-name="using-the-multi-action-feature" />
 
 Esse recurso permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso `Gerenciamento de históricos de argumentos` deixará de funcionar caso isso ocorra.
 

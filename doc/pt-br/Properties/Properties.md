@@ -1,8 +1,8 @@
-# Trabalhando com propriedades !heading
+# Trabalhando com propriedades <header-set anchor-name="properties" />
 
 O trabalho com propriedades é muito simples e objetivo, basta criar suas propriedades como publicas e escolher um dos dois meios abaixo para saber se uma propriedade foi inputada pelo usuário, você que escolhe qual utilizar:
 
-######Modo de uso 1
+## Modo de uso 1 <header-set anchor-name="properties-use-mode1" />
 
 Primeiro, você pode utilizar o método `Main()` sem parametro e que, por convensão de nome, será o responsável por ser invocado caso alguma de suas propriedade tenha sido utilizadas no input do usuário. O nome "Main" foi escolhido para manter o padrão de nomenclatura que o .NET utiliza em aplicações de console. 
 
@@ -73,7 +73,7 @@ Unsafe mode: Preferably, use nullable in MyPropertyUnsafeMode
 MyPropertyDefaultValue aways has value
 Main() methods can also return values ;)
 ```
-######Modo de uso 2
+## Modo de uso 2 <header-set anchor-name="properties-use-mode2" />
 
 Por fim, você ainda pode utilizar o `set { .. }` da sua propriedade para tomar alguma ação. Esse recurso não é recomendado, pois o método `GetArgument(string name)` ainda não esta pronto para ser usado nesse momento, mas caso queira algo pontual e rápido, nada te impede de usar esse meio.
 

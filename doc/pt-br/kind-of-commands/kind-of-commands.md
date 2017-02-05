@@ -1,4 +1,4 @@
-# Tipos de comandos !heading
+# Tipos de comandos <header-set anchor-name="kind-of-commands" />
 
 Atualmente existem tres tipos de comandos:
 

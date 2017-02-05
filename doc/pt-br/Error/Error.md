@@ -1,4 +1,4 @@
-# Tratamento de erros !heading
+# Tratamento de erros <header-set anchor-name="error" />
 
 O tratamento de erro é gerado de forma automatica pelo sistem e são categorizados da seguinte forma:
 
