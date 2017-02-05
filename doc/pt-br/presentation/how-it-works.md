@@ -83,13 +83,13 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`. 
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Classe App](#classe-app) e [Inicializando por método estático com simulador de console](#inicializando-por-método-estático-com-simulador-de-console).
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <anchor-get name="class-app" /> e <anchor-get name="initializing-by-static-method" />.
 
 **`Command`**
 
  Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
  
- Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja [Tipos de comandos](#tipos-de-comandos) e [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos).
+ Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja <anchor-get name="kind-of-commands" /> e <anchor-get name="specifying-commands" />.
 
 **`Argument`**
 
@@ -97,7 +97,7 @@ Os argumentos representam o meio mais básico de uma aplicação console, são o
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades), [Ignorar propriedades publicas por uma escolha manual usando atributo](#ignorar-propriedades-publicas-por-uma-escolha-manual-usando-atributo), [Tipos de inputs](#tipos-de-inputs) e [Tipos suportados](#tipos-suportados).
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja <anchor-get name="properties" />, <anchor-get name="properties-ignore-public" />, <anchor-get name="kind-of-inputs" /> e <anchor-get name="support-types" />.
 
 **`Action`**
 
@@ -107,7 +107,7 @@ Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; 
 
 Ainda é possível usar uma `action` omitindo seu nome no input, esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
 
-Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](#trabalhando-com-métodos), [Ignorar métodos publicos por uma escolha manual usando atributo](#ignorar-métodos-publicos-por-uma-escolha-manual-usando-atributo) e [Métodos padrão](#métodos-padrão).
+Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja <anchor-get name="methods" />, <anchor-get name="methods-ignore-public" /> e <anchor-get name="methods-default" />.
 
 **Exemplo avançado:**
 
@@ -301,14 +301,14 @@ Commit
 
 **Saiba mais...**
 
-* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
-* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](#tipos-suportados).
-* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja [Verbose](#verbose).
-* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](#output).
-* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja [Customizando os nomes dos argumentos](#customizando-os-nomes-dos-argumentos) e [Customizando nomes de actions e arguments](#customizando-nomes-de-actions-e-arguments).
-* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja [Sobrecargas](#sobrecargas)
+* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja <anchor-get name="properties" />.
+* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de <anchor-get name="support-types" />.
+* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja <anchor-get name="verbose" />.
+* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja <anchor-get name="output" />.
+* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja <anchor-get name="properties-customizing-name" /> e <anchor-get name="methods-customizing-names" />.
+* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja <anchor-get name="methods-overloads" />
 * Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
-* Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automático](#help-automatico).
+* Existe também o suporte nativo para gerar o texto de ajuda. Veja <anchor-get name="help" />.
 
-Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação).
+Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa <anchor-get name="documentation" />.
 

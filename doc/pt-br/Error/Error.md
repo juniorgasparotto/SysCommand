@@ -8,7 +8,7 @@ O tratamento de erro é gerado de forma automatica pelo sistem e são categoriza
   * `ArgumentParsedState.ArgumentNotExistsByValue`: Indica que um argumento posicional não existe
   * `ArgumentParsedState.ArgumentIsRequired`: Indica que um argumento é obrigatório
   * `ArgumentParsedState.ArgumentHasInvalidInput`: Indica que um argumento esta inválido
-  * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados.
+  * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados em <anchor-get name="support-types" />.
 * Not Found: Nenhuma rota encontrada para o input solicitado.
 * Exception génerica: Não existe nenhum tipo de tratamento padrão, mas é possível interceptar qualquer exception dentro do evento `App.OnException`.
 

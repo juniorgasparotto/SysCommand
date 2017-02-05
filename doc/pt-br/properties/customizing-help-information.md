@@ -27,4 +27,4 @@ Custom help for CustomPropertiesHelpCommand
    --my-property-help2             This is my property 2
 ```
 
-Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico `Help Automatico`.
+Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico <anchor-get name="help" />.

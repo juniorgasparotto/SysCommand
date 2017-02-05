@@ -82,6 +82,6 @@ Help for this command
       --arg1         Argument help
 ```
 
-* Para mais informações sobre customizações do help em propriedades veja o tópido de `Trabalhando com propriedades`.
-* Para mais informações sobre customizações do help em ações veja o tópido de `Trabalhando com métodos`.
+* Para mais informações sobre customizações do help em propriedades veja o tópido de <anchor-get name="properties-customizing-help" />.
+* Para mais informações sobre customizações do help em ações veja o tópido de <anchor-get name="methods-customizing-help" />.
 

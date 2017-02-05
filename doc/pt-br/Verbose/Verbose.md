@@ -39,5 +39,5 @@ output of error forced
 output of critical
 ```
 
-* Para desativar o comando `VerboseCommand` veja o tópico de `Inicialização`.
+* Para desativar o comando `VerboseCommand` veja o tópico de <anchor-get name="specifying-commands" />.
 

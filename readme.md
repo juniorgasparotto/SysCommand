@@ -86,13 +86,13 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`. 
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Classe App](#classe-app) e [Inicializando por método estático com simulador de console](#inicializando-por-método-estático-com-simulador-de-console).
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Classe App](#class-app) e [Inicializando por método estático com simulador de console](#initializing-by-static-method).
 
 **`Command`**
 
  Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
  
- Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja [Tipos de comandos](#tipos-de-comandos) e [Especificando os tipos de comandos](#especificando-os-tipos-de-comandos).
+ Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja [Tipos de comandos](#kind-of-commands) e [Especificando os tipos de comandos](#specifying-commands).
 
 **`Argument`**
 
@@ -100,7 +100,7 @@ Os argumentos representam o meio mais básico de uma aplicação console, são o
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades), [Ignorar propriedades publicas por uma escolha manual usando atributo](#ignorar-propriedades-publicas-por-uma-escolha-manual-usando-atributo), [Tipos de inputs](#tipos-de-inputs) e [Tipos suportados](#tipos-suportados).
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#properties), [Ignorar propriedades publicas por uma escolha manual usando atributo](#properties-ignore-public), [Tipos de inputs](#kind-of-inputs) e [Tipos suportados](#support-types).
 
 **`Action`**
 
@@ -110,7 +110,7 @@ Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; 
 
 Ainda é possível usar uma `action` omitindo seu nome no input, esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
 
-Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](#trabalhando-com-métodos), [Ignorar métodos publicos por uma escolha manual usando atributo](#ignorar-métodos-publicos-por-uma-escolha-manual-usando-atributo) e [Métodos padrão](#métodos-padrão).
+Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](#methods), [Ignorar métodos publicos por uma escolha manual usando atributo](#methods-ignore-public) e [Métodos padrão](#methods-default).
 
 **Exemplo avançado:**
 
@@ -304,16 +304,16 @@ Commit
 
 **Saiba mais...**
 
-* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](#trabalhando-com-propriedades).
-* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](#tipos-suportados).
+* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](#properties).
+* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](#support-types).
 * Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja [Verbose](#verbose).
 * Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](#output).
-* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja [Customizando os nomes dos argumentos](#customizando-os-nomes-dos-argumentos) e [Customizando nomes de actions e arguments](#customizando-nomes-de-actions-e-arguments).
-* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja [Sobrecargas](#sobrecargas)
+* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja [Customizando os nomes dos argumentos](#properties-customizing-name) e [Customizando nomes de actions e arguments](#methods-customizing-names).
+* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja [Sobrecargas](#methods-overloads)
 * Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
-* Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automático](#help-automatico).
+* Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automatico](#help).
 
-Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação).
+Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação](#documentation).
 
 
 ## <a name="what-is-the-purpose"></a>Qual o objetivo deste projeto?
@@ -347,7 +347,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * Agora é só usar!
 
 
-# Documentação
+# Documentação<a name="documentation"></a>
 
 * [Classe App](#class-app)
   * [Inicializando por método estático com simulador de console](#initializing-by-static-method)
@@ -979,8 +979,8 @@ Help for this command
       --arg1         Argument help
 ```
 
-* Para mais informações sobre customizações do help em propriedades veja o tópido de `Trabalhando com propriedades`.
-* Para mais informações sobre customizações do help em ações veja o tópido de `Trabalhando com métodos`.
+* Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](#properties-customizing-help).
+* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parametros](#methods-customizing-help).
 
 
 # <a name="kind-of-commands"></a>Tipos de comandos
@@ -1055,7 +1055,7 @@ output of error forced
 output of critical
 ```
 
-* Para desativar o comando `VerboseCommand` veja o tópico de `Inicialização`.
+* Para desativar o comando `VerboseCommand` veja o tópico de [Especificando os tipos de comandos](#specifying-commands).
 
 
 # <a name="output"></a>Output
@@ -1490,7 +1490,7 @@ O tratamento de erro é gerado de forma automatica pelo sistem e são categoriza
   * `ArgumentParsedState.ArgumentNotExistsByValue`: Indica que um argumento posicional não existe
   * `ArgumentParsedState.ArgumentIsRequired`: Indica que um argumento é obrigatório
   * `ArgumentParsedState.ArgumentHasInvalidInput`: Indica que um argumento esta inválido
-  * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados.
+  * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados em [Tipos suportados](#support-types).
 * Not Found: Nenhuma rota encontrada para o input solicitado.
 * Exception génerica: Não existe nenhum tipo de tratamento padrão, mas é possível interceptar qualquer exception dentro do evento `App.OnException`.
 
@@ -1747,7 +1747,7 @@ Custom help for CustomPropertiesHelpCommand
    --my-property-help2             This is my property 2
 ```
 
-Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico `Help Automatico`.
+Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico [Help automatico](#help).
 ## <a name="properties-required"></a>Propriedades obrigatórias
 
 Para argumentos que são obrigatórios, é necessário que você use o `ArgumentAtrribute` ligando a flag `IsRequired`.
@@ -2243,7 +2243,7 @@ Help for this command
       --arg1                       Argument help
 ```
 
-Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico `Help Automatico`.
+Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico [Help automatico](#help).
 ## <a name="methods-changing-position"></a>Trocando a posição de parametros posicionais
 
 A propriedade `ArgumentAttribute(Position=X)` também funciona para parametros da mesma forma que funciona para propriedades. Não é um recurso que faça muito sentido, mas é importante documenta-lo.
@@ -2369,8 +2369,10 @@ OU usando o delimitador `/` e os separadores `=` e `:`
 
 ```MyApp.exe my-action valueA valueB valueMyProperty```
 
-* Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`. 
-* Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de `Customizações`. 
+* Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
+* Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).
+
+
 
 
 # <a name="license"></a>Licença
