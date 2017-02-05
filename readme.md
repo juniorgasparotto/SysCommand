@@ -314,6 +314,8 @@ Commit
 * Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automático](#help-automatico).
 
 Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação).
+
+
 ## <a name="what-is-the-purpose"></a>Qual o objetivo deste projeto?
 
 O objetivo é ajudar programadores de qualquer linguagem de programação que sofrem na hora de criar uma aplicação console. Muitas vezes desistimos de criar algo pela burocracia do parse e pela dificuldade de manutenção ao ver códigos onde sua lógica de parse está unida com sua lógica de negócios. Se você é como eu que adora criar mini-aplicações para resolver problemas do dia a dia usando consoles, então junte-se a nós!
@@ -323,6 +325,8 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 
 * NuGet:
 * NuGet Core CRL: 
+
+
 ## <a name="install-dlls"></a>DLLs do pacote
 
   * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizado em outros tipos de projetos como `Web Application` ou `Windows Forms`.
@@ -341,6 +345,8 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros optionais deixe-os como `Nullable` pela mesma razão acima.
 * Digite `help` no prompt de comando que abrirá para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
 * Agora é só usar!
+
+
 # Documentação
 
 * [Classe App](#class-app)
@@ -402,6 +408,8 @@ public App(
 * `commandsTypes`: Especifica os tipos dos `Command` que serão utilidados em todo o processo. Caso seja `null` então o sistema buscará automaticamente qualquer classe que extenda de `Command`. Entenda melhor em `Especificando os tipos de comandos`.
 * `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará ligado. Entenda melhor em `Utilizando o recurso de MultiAction`
 * `addDefaultAppHandler`: Caso seja `false` então NÃO cria o handler de eventos que é responsável pelo mecanismo padrão de `outputs` e controles de `erros` e dentre outros. O padrão é `true`. Entenda melhor em `Controle de eventos`
+
+
 
 ## <a name="initializing-by-static-method"></a>Inicializando por método estático com simulador de console
 
@@ -886,6 +894,7 @@ public class Program
 
 * O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
 
+
 ## <a name="help-default"></a>Comportamento padrão
 
 O formato padrão do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. O formato de saída que será exibido será o seguinte:
@@ -1047,6 +1056,8 @@ output of critical
 ```
 
 * Para desativar o comando `VerboseCommand` veja o tópico de `Inicialização`.
+
+
 # <a name="output"></a>Output
 
 O mecanismo de output foi extendido para aumentar a produtividade.
@@ -1179,6 +1190,8 @@ Outputs:
 * É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automatica. como no exemplo da action "MyAction2()".
 * Por questões técnicas, o método View<>() obriga o uso de uma inferencia ou um model. Infira um `object` se você não necessitar de um model `View<object>()`.
 * Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.
+
+
 # <a name="output-t4"></a>Output usando template T4
 
 Outra opção para exibir outputs é a utilização de templates `T4`. Esse mecanismo, ao contrário dos templates `Razor` é mais completo, ele não perdeu nenhum dos beneficios que o Visual Studio nos fornece. Basta seguir apenas alguns passos para usa-lo:
@@ -1329,6 +1342,8 @@ C:\MyApp.exe history-list
 * Para desativar o comando `ArgsHistoryCommand` veja o tópico de `Inicialização`.
 * A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico `Redirecionamento de comandos`.
 * Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
+
+
 # <a name="redirectiong-commands"></a>Redirecionamento de comandos
 
 Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instancia da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instancias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
@@ -1378,6 +1393,8 @@ Redirected: my-value. Count: 2
 ```
 
 * Para desabilitar o recurso de multi-action, desative a propriedade `App.EnableMultiAction` antes do método `App.Run()`.
+
+
 # <a name="stop-propagation"></a>Cancelamento da continuidade da execução
 
 Quando existem muitas actions com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.
@@ -1461,6 +1478,8 @@ StopPropagationCommand2.StopPropagationAction1
 Perceba que a execução parou no mesmo ponto.
 
 * Para desabilitar o recurso de multi-action, desative a propriedade `App.EnableMultiAction` antes do método `App.Run()`.
+
+
 # <a name="error"></a>Tratamento de erros
 
 O tratamento de erro é gerado de forma automatica pelo sistem e são categorizados da seguinte forma:
@@ -1875,6 +1894,8 @@ O trabalho com métodos também é muito bem simples, todos os métodos definido
 * Métodos com parametros opcionais com `Default value`
 * Métodos com sobrecargas
 * Métodos com `return` onde o retorno do método, por padrão, será utilizado como output no console usando
+
+
 ## <a name="methods-without-params"></a>Métodos sem parametros
 
 **Exemplo:**
@@ -2254,6 +2275,8 @@ As seguintes propriedades não fazem sentido no cenário de parametros de métod
 
 * IsRequired: Em C#, todo parametro que não tem default value é obrigatório, essa configuração é ignorada se for utilizada.
 * DefaultValue: Como o proprio C# já nos dá a opção de default value para parametros, essa configuração é redundante, sendo assim ela é ignorada por que o padrão do .NET já é suficiente e mais limpo.
+
+
 ## <a name="methods-default"></a>Métodos padrão
 
 O uso de métodos padrão (ou métodos implicitos) fazem com que o recurso seja muito similar ao uso de propriedades, ou seja, você não é obrigado a especificar o nome da `action` e os seus parâmetros podem ser inseridos diretamente no input como se fossem argumentos provenientes de propriedades. 
@@ -2316,6 +2339,8 @@ ActionWhenNotExistsInput()
 
 * É importante ressaltar que o todos os métodos padrão ainda podem ser chamados de forma explicita, ou seja, com o seu nome sendo especifico.
 * O uso de método padrão sem argumentos só funciona se não existir nenhum argumento required, do contrário esse método nunca será chamado, pois haverá um erro obrigando o uso do argumento.'
+
+
 # <a name="kind-of-inputs"></a>Tipos de inputs
 
 Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
@@ -2346,4 +2371,6 @@ OU usando o delimitador `/` e os separadores `=` e `:`
 
 * Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`. 
 * Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de `Customizações`. 
+
+
 # <a name="license"></a>Licença

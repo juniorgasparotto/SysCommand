@@ -311,3 +311,4 @@ Commit
 * Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automático](#help-automatico).
 
 Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação completa](#documentação).
+

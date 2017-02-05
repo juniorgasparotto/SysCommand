@@ -28,3 +28,4 @@ OU usando o delimitador `/` e os separadores `=` e `:`
 
 * Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`. 
 * Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de `Customizações`. 
+

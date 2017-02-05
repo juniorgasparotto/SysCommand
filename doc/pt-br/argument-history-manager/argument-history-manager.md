@@ -39,3 +39,4 @@ C:\MyApp.exe history-list
 * Para desativar o comando `ArgsHistoryCommand` veja o tópico de `Inicialização`.
 * A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico `Redirecionamento de comandos`.
 * Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
+

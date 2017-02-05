@@ -40,3 +40,4 @@ output of critical
 ```
 
 * Para desativar o comando `VerboseCommand` veja o tópico de `Inicialização`.
+

@@ -6,3 +6,4 @@ O trabalho com métodos também é muito bem simples, todos os métodos definido
 * Métodos com parametros opcionais com `Default value`
 * Métodos com sobrecargas
 * Métodos com `return` onde o retorno do método, por padrão, será utilizado como output no console usando
+

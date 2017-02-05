@@ -74,3 +74,4 @@ public class Program
 ```
 
 * O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
+

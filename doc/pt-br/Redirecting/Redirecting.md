@@ -47,3 +47,4 @@ Redirected: my-value. Count: 2
 ```
 
 * Para desabilitar o recurso de multi-action, desative a propriedade `App.EnableMultiAction` antes do método `App.Run()`.
+
