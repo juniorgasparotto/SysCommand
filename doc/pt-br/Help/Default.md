@@ -84,3 +84,4 @@ Help for this command
 
 * Para mais informações sobre customizações do help em propriedades veja o tópido de `Trabalhando com propriedades`.
 * Para mais informações sobre customizações do help em ações veja o tópido de `Trabalhando com métodos`.
+
