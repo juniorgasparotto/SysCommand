@@ -1,2 +1,1 @@
-.portable\node.exe .portable\markdown-include\bin\cli.js ..\pt-br\.index\.config
-.portable\node.exe .portable\markdown-include\bin\cli.js ..\en\.index\.config
+MarkdownMerge\MarkdownMerge.exe -i ..\pt-br\.index\index-presentation.md ..\pt-br\.index\index-doc.md  -o ..\..\README.md
