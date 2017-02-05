@@ -885,6 +885,7 @@ public class Program
 ```
 
 * O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
+
 ## <a name="help-default"></a>Comportamento padrão
 
 O formato padrão do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. O formato de saída que será exibido será o seguinte:
