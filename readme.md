@@ -1339,8 +1339,8 @@ C:\MyApp.exe history-list
 {No output}
 ```
 
-* Para desativar o comando `ArgsHistoryCommand` veja o tópico [specifying-commands](#specifying-commands).
-* A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico [redirectiong-commands](#redirectiong-commands).
+* Para desativar o comando `ArgsHistoryCommand` veja o tópico [Especificando os tipos de comandos](#specifying-commands).
+* A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico [Redirecionamento de comandos](#redirectiong-commands).
 * Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
 
 
