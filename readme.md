@@ -589,7 +589,7 @@ have his name omitted.
 Perceba que no help não existe nenhuma ocorrencia da class `FirstCommand`.
 
 Por enquanto, não se atente agora para as classes `VerboseCommand` e `ArgsHistoryCommand` elas são commands internos e serão explicados mais adiante na documentação.
-## Utilizando o recurso de MultiAction <a name="using-the-multi-action-feature"></a>
+## <a name="using-the-multi-action-feature"></a>Utilizando o recurso de MultiAction 
 
 Esse recurso permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso `Gerenciamento de históricos de argumentos` deixará de funcionar caso isso ocorra.
 
