@@ -86,7 +86,7 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`. 
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Classe App](#class-app) e [Inicializando por método estático com simulador de console](#initializing-by-static-method).
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Introdução ao contexto](#class-app) e [Inicializando por método estático com simulador de console](#initializing-by-static-method).
 
 **`Command`**
 
@@ -349,7 +349,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 
 # <a name="documentation"></a>Documentação
 
-* [Classe App](#class-app)
+* [Introdução ao contexto](#class-app)
   * [Inicializando por método estático com simulador de console](#initializing-by-static-method)
   * [Especificando os tipos de comandos](#specifying-commands)
   * [Utilizando o recurso de MultiAction](#using-the-multi-action-feature)
@@ -389,7 +389,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Tipos de inputs](#kind-of-inputs)
 * [Licença](#license)
 
-# <a name="class-app"></a>Classe App
+# <a name="class-app"></a>Introdução ao contexto
 
 A classe `App` é a principal classe do sistema, ela é responsável por manter um contexto isolado por cada instancia `App`. Nenhum recurso estático é usado aqui, isso é importante para você ter a liberdade de criar quantas instancias quiser em qualquer escopo.
 

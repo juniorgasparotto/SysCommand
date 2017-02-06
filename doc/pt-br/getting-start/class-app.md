@@ -1,4 +1,4 @@
-# Classe App <header-set anchor-name="class-app" />
+# Introdução ao contexto <header-set anchor-name="class-app" />
 
 A classe `App` é a principal classe do sistema, ela é responsável por manter um contexto isolado por cada instancia `App`. Nenhum recurso estático é usado aqui, isso é importante para você ter a liberdade de criar quantas instancias quiser em qualquer escopo.
 
