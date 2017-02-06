@@ -69,7 +69,7 @@ have his name omitted.
 
 Perceba que no help não existe nenhuma ocorrencia da class `SecondCommand`.
 
-Perceba também que existe um help para o próprio mecanismo de help, esse `Command` sempre deverá existir, caso não seja especificado na sua lista de tipos o proprio sistema se encarregará de cria-lo utilizando o help padrão `SysCommand.ConsoleApp.Commands.HelpCommand`. Para mais informações sobre customização de help consulte `help automatico`.
+Perceba também que existe um help para o próprio mecanismo de help, esse `Command` sempre deverá existir, caso não seja especificado na sua lista de tipos o proprio sistema se encarregará de cria-lo utilizando o help padrão `SysCommand.ConsoleApp.Commands.HelpCommand`. Para mais informações sobre customização de help consulte <anchor-get name="help" />.
 
 **Exemplo de forma exclusiva:**
 
