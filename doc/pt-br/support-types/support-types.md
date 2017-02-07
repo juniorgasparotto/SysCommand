@@ -156,7 +156,7 @@ MyApp.exe Success EnumNotContainsThisString     // positional
 
 No último exemplo, o valor "EnumNotContainsThisString" não pertence ao enum `Verbose`, sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
 
-**Coleções genéricas e Arrays**
+**Sintaxe para coleções genéricas e arrays**
 
 As listas/arrays tem o mesmo padrão de input, separe com um espaço para adicionar um novo item da lista. Caso seu texto tenha espaço em seu conteúdo, então o adicione entre aspas.
 

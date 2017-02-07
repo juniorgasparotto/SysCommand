@@ -12,7 +12,7 @@ No formato padrão, existem duas formas de exibir o help: o `help completo` e o 
 
 ```MyApp.exe help```
 
-Para o `help completo`, o formato de saída que será exibido será o seguinte:
+Para o help completo, o formato de saída que será exibido será o seguinte:
 
 ```
 usage:    [--argument=<phrase>] [--argument-number=<number>]
