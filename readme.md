@@ -1136,7 +1136,7 @@ O controle de exibição por verbo esta contido em um comando interno chamado `S
 * `Error`: Verbo para mensagens de erro. O sistema força o envio desse verbo em caso de erros de parse.
 * `Quiet`: Verbo para não exibir nenhuma mensagem, porém se a mensagem estiver sendo forçada, esse verbo é ignorado para essa mensagem.
 
-Para que a funcionalidade funcione corretamente é obrigatorio o uso das funções de output contidas dentro da classe `ConsoleWrapper` e que tem uma instancia disponível na propriedade `App.Console`. 
+Para que a funcionalidade funcione corretamente é obrigatorio o uso das funções de output contidas dentro da classe `SysCommand.ConsoleApp.ConsoleWrapper` e que tem uma instância disponível na propriedade `App.Console`.
 
 **Exemplo:**
 
@@ -1153,9 +1153,13 @@ public class TestVerbose : Command
 }
 ```
 
-Forma curta: ```MyApp.exe test -v Critical```
+_Forma curta: _
 
-Forma longa: ```MyApp.exe test --verbose Critical```
+```MyApp.exe test -v Critical```
+
+_Forma longa: _
+
+```MyApp.exe test --verbose Critical```
 
 Outputs:
 
