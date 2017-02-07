@@ -20,11 +20,11 @@ Todos os tipos primitivos do .NET são suportados, incluindo suas versões anul�
 * `Generic collections` (`IEnumerable`, `IList`, `ICollection`)
 * `Arrays`
 
-_Sintaxe genérica:_
+**Sintaxe genérica:**
 
 ```[action-name ][-|/|--][argument-name][=|:| ][value]```
 
-_Sintaxe para `Boolean`:_
+**Sintaxe para `Boolean`:**
 
 * Para o valor TRUE use: `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
 * Para o valor FALSE use: `false`, `0`, `-` (separado por espaço ou unido com o nome do argumento).
@@ -41,7 +41,7 @@ MyApp.exe -a 0 // true
 MyApp.exe -a 1 // false
 ```
 
-_Atribuições multiplas_:
+**Atribuições multiplas:**
 
 Para argumentos que estão configurados com a `forma curta`, é possível definir o mesmo valor em diversos argumentos com apenas um traço `-`, veja:
 
@@ -55,7 +55,7 @@ MyApp.exe -abc- // false for a, b and c
 MyApp.exe -abc+ // true for a, b and c
 ```
 
-_Sintaxe para `Enums`:_
+**Sintaxe para `Enums`:**
 
 Os valores de entrada podem variar entre o nome do `Enum` no formato case-sensitive ou o seu número interno. Para `Enum Flags` utilize espaços para adicionar ao valor do argumento.
 
@@ -82,9 +82,9 @@ MyApp.exe --verbose 32 2 Success
 MyApp.exe Success EnumNotContainsThisString     // positional
 ```
 
-No último exemplo (posicional), o valor "EnumNotContainsThisString" não pertence ao enum `Verbose` sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
+No último exemplo, o valor "EnumNotContainsThisString" não pertence ao enum `Verbose`, sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
 
-_Coleções genéricas e Arrays_
+**Coleções genéricas e Arrays**
 
 As listas/arrays tem o mesmo padrão de input, separe com um espaço para adicionar um novo item da lista. Caso seu texto tenha espaço em seu conteúdo, então adicione entre aspas no inicio e no fim de seu texto.
 
@@ -100,7 +100,7 @@ MyApp.exe --my-lst 1.0 1.99 --my-array "string with spaces" "other string" uniqu
 MyApp.exe 1.0 1.99 str1 str2 // positional
 ```
 
-No último exemplo (posicional), o valor "str1" quebra a sequencia de números "1.0 1.99", sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
+No último exemplo, o valor "str1" quebra a sequencia de números "1.0 1.99", sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
 
 **Importante!**
 
