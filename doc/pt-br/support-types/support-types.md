@@ -22,7 +22,7 @@ Todos os tipos primitivos do .NET são suportados, incluindo suas versões anul�
 
 **Sintaxe:**
 
-[action-name ][-|/|--][argument-name][=|:| ][value]
+```[action-name ][-|/|--][argument-name][=|:| ][value]```
 
 _Sintaxe para `Boolean`:_
 
