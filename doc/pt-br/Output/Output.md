@@ -6,12 +6,12 @@ Primeiro, foi criado um pequeno wrapper da classe `System.Console` chamado `SysC
 
 * Métodos de write para cada tipo de verbo
 * Possibilidade de customização da cor do texto de cada verbo
-  * App.Console.ColorInfo
-  * App.Console.ColorCritical
-  * App.Console.ColorError
-  * App.Console.ColorSuccess
-  * App.Console.ColorWarning
-  * App.Console.ColorRead
+  * `App.Console.ColorInfo`
+  * `App.Console.ColorCritical`
+  * `App.Console.ColorError`
+  * `App.Console.ColorSuccess`
+  * `App.Console.ColorWarning`
+  * `App.Console.ColorRead`
 * Variavel de controle de tipo de saída `App.Console.ExitCode` onde você pode usa-la como retorno do seu método `int Main(string[] args)`:
   * "0" : Sucesso
   * "1" : Erro
