@@ -28,8 +28,8 @@ Todos os tipos primitivos do .NET são suportados, incluindo suas versões anul�
 
 As `strings` podem ser utilizadas de duas formas:
 
-* Um texto com espaços: Utilize aspas `" "` para textos com espaços. Do contrário você terá um erro de parse.
-* Um texto sem espaços: Não é obrigatório o uso de aspas, basta inserir seu valor diretamente.
+* Texto com espaços: Utilize aspas `" "` para textos com espaços. Do contrário você terá um erro de parse.
+* Texto sem espaços: Não é obrigatório o uso de aspas, basta inserir seu valor diretamente.
 
 ```
 MyApp.exe --my-string oneWord
@@ -39,7 +39,7 @@ MyApp.exe --my-string "two words"
 
 **Sintaxe para `char`:**
 
-Assim como em .NET os chars podem ter valores com apenas um caracter ou com um número que represente seu valor na escala de caracteres.]
+Assim como em .NET os chars podem ter valores com apenas um caracter ou com um número que represente seu valor na escala de caracteres.
 
 ```
 MyApp.exe --my-char 1
@@ -58,7 +58,7 @@ MyApp.exe --my-number 999999
 
 **Sintaxe para `decimal`, `double` e `float`:**
 
-Para esses tipos é possível utilizar números inteiros ou números decimais. Só fique atento para a configuração de cultura da sua aplicação. Se for `pt-br` utilize o separador `,`; Para o formato americano utilize `.`;
+Para esses tipos é possível utilizar números inteiros ou números decimais. Só fique atento para a configuração de cultura da sua aplicação. Se for `pt-br` utilize o separador `,` / Para o formato americano utilize `.`
 
 _EN-US:_
 
@@ -91,7 +91,7 @@ MyApp.exe -a 0 // true
 MyApp.exe -a 1 // false
 ```
 
-**Atribuições multiplas:**
+_Atribuições multiplas:_
 
 Para argumentos que estão configurados com a `forma curta`, é possível definir o mesmo valor em diversos argumentos com apenas um traço `-`, veja:
 
@@ -158,7 +158,7 @@ No último exemplo, o valor "EnumNotContainsThisString" não pertence ao enum `V
 
 **Coleções genéricas e Arrays**
 
-As listas/arrays tem o mesmo padrão de input, separe com um espaço para adicionar um novo item da lista. Caso seu texto tenha espaço em seu conteúdo, então adicione entre aspas no inicio e no fim de seu texto.
+As listas/arrays tem o mesmo padrão de input, separe com um espaço para adicionar um novo item da lista. Caso seu texto tenha espaço em seu conteúdo, então o adicione entre aspas.
 
 ```csharp
 public void Main(IEnumerable<decimal> myLst, string[] myArray = null);
