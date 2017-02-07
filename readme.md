@@ -357,7 +357,6 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Tipos suportados](#support-types)
 * [Help](#help)
   * [Customizando](#help-default)
-  * [Customizando](#help-default)
 * [Tipos de comandos](#kind-of-commands)
 * [Verbose](#verbose)
 * [Output](#output)
@@ -958,19 +957,19 @@ have his name omitted. (F)
 
 A fonte de cada texto esta em cada elemento `Commands`, `Arguments`  e `Actions` e os textos complementares estão na classe estática `SysCommand.ConsoleApp.Strings`. Segue o mapeamento de cada texto conforme o formato exibido acima:
 
-* A: O texto e `usage` é gerado internamente pela classe `DefaultDescriptor` e sempre será exibido.
-* B: O texto do `Command` sempre será exibido e a sua fonte vem da propriedade `Command.HelpText` que deve ser definida no construtor do seu comando. Caso você não atribua nenhum valor para essa propriedade, o padrão será exibir o nome do comando.
-* C: Será exibido todas os argumentos (propriedades) do comando, um em baixo do outro.
-  * C1: A fonte desse texto vem do atributo `ArgumentAtrribute(LongName="")`.
-  * C2: A fonte desse texto vem do atributo `ArgumentAtrribute(ShortName="")`.
-  * C3: A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
-  * C4: Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
+* **A:** O texto `usage` é gerado internamente pela classe `DefaultDescriptor` e sempre será exibido.
+* **B:** O texto do `Command` sempre será exibido e a sua fonte vem da propriedade `Command.HelpText` que deve ser definida no construtor do seu comando. Caso você não atribua nenhum valor para essa propriedade, o padrão será exibir o nome do comando.
+* **C:** Será exibido todas os argumentos (propriedades) do comando, um em baixo do outro.
+  * **C1:** A fonte desse texto vem do atributo `ArgumentAtrribute(LongName="")`.
+  * **C2:** A fonte desse texto vem do atributo `ArgumentAtrribute(ShortName="")`.
+  * **C3:** A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
+  * **C4:** Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
     * `Strings.HelpArgDescRequired`: Quando o membro é obrigatório
     * `Strings.HelpArgDescOptionalWithDefaultValue`: Quando o membro é opcional e tem default value.
     * `Strings.HelpArgDescOptionalWithoutDefaultValue`: Quando o membro é opcional e não tem default value.
-* D: A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
-* E: São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
-* F: Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.
+* **D:** A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
+* **E:** São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
+* **F:** Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.
 
 **Exemplo:**
 
@@ -1020,77 +1019,7 @@ Help for this command
       --arg1         Argument help
 ```
 
-* Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](#properties-customizing-help).
-* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parametros](#methods-customizing-help).
 
-## <a name="help-default"></a>Customizando
-
-A funcionalidade de `help` nada mais é que um comando interno `SysCommand.ConsoleApp.Commands.HelpCommand.cs` que define as duas `actions` de help que foram apresentadas no tópico anterior. Por definição, todo comando de help precisa herdar da interface `SysCommand.ConsoleApp.Commands.IHelpCommand`, assim o sistema entende que esse comando fará esse papel. Obrigatóriamente, sempre haverá um comando de help, caso o usuário não customize, o comando padrão será utilizado.
-
-Abaixo, segue um exemplo de um help completamente customizado:
-
-```csharp
-using SysCommand.ConsoleApp;
-public class Program
-{
-    public static int Main()
-    {
-        return App.RunApplication();
-    }
-
-    public class CustomHelp : Command, SysCommand.ConsoleApp.Commands.IHelpCommand
-    {
-        public string MyCustomHelp(string action = null)
-        {
-            foreach(var map in this.App.Maps)
-            {
-                
-            }
-            return "Custom help";
-        }
-    }
-}
-```
-
-```
-MyApp.exe my-custom-help
-Custom help
-
-MyApp.exe help
-Could not find any action.
-```
-
-Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o help padrão utiliza os métodos de help contidos dentro dessa instancia. Essa opção não é recomendada se você deseja apenas customizar o `help`.
-
-Uma opção mais segura seria criar um `Descriptor` herdando da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor` e sobrescrer apenas os métodos de help.
-
-```csharp
-using SysCommand.ConsoleApp;
-public class Program
-{
-    public static int Main()
-    {
-        return App.RunApplication(
-            () => {
-                var app = new App();
-                app.Descriptor = new CustomDescriptor();
-                // OR
-                app.Descriptor = new CustomDescriptor2();
-                return app;
-            }
-        );
-    }
-
-    public class CustomDescriptor : IDescriptor { ... }
-    public class CustomDescriptor2 : DefaultDescriptor
-    { 
-        public override string GetHelpText(IEnumerable<CommandMap> commandMaps) { ... }
-        public override string GetHelpText(IEnumerable<CommandMap> commandMaps, string actionName) { ... }
-    }
-}
-```
-
-* O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
 ## <a name="help-default"></a>Customizando
 
 A funcionalidade de `help` nada mais é que um comando interno `SysCommand.ConsoleApp.Commands.HelpCommand.cs` que define as duas `actions` de help que foram apresentadas no tópico anterior. Por definição, todo comando de help precisa herdar da interface `SysCommand.ConsoleApp.Commands.IHelpCommand`, assim o sistema entende que esse comando fará esse papel. Obrigatóriamente, sempre haverá um comando de help, caso o usuário não customize, o comando padrão será utilizado.
