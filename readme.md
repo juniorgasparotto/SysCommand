@@ -311,7 +311,7 @@ Commit
 * Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja [Customizando os nomes dos argumentos](#properties-customizing-name) e [Customizando nomes de actions e arguments](#methods-customizing-names).
 * Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja [Sobrecargas](#methods-overloads)
 * Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
-* Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help automatico](#help).
+* Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help](#help).
 
 Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação](#documentation).
 
@@ -355,8 +355,9 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Utilizando o recurso de MultiAction](#using-the-multi-action-feature)
   * [Controle de eventos](#events)
 * [Tipos suportados](#support-types)
-* [Help automatico](#help)
-  * [Comportamento padrão](#help-default)
+* [Help](#help)
+  * [Customizando](#help-default)
+  * [Customizando](#help-default)
 * [Tipos de comandos](#kind-of-commands)
 * [Verbose](#verbose)
 * [Output](#output)
@@ -529,7 +530,7 @@ have his name omitted.
 
 Perceba que no help não existe nenhuma ocorrencia da class `SecondCommand`.
 
-Perceba também que existe um help para o próprio mecanismo de help, esse `Command` sempre deverá existir, caso não seja especificado na sua lista de tipos o proprio sistema se encarregará de cria-lo utilizando o help padrão `SysCommand.ConsoleApp.Commands.HelpCommand`. Para mais informações sobre customização de help consulte [Help automatico](#help).
+Perceba também que existe um help para o próprio mecanismo de help, esse `Command` sempre deverá existir, caso não seja especificado na sua lista de tipos o proprio sistema se encarregará de cria-lo utilizando o help padrão `SysCommand.ConsoleApp.Commands.HelpCommand`. Para mais informações sobre customização de help consulte [Help](#help).
 
 **Exemplo de forma exclusiva:**
 
@@ -923,87 +924,21 @@ No último exemplo, o valor "str1" quebra a sequencia de números "1.0 1.99", se
 **Importante!**
 
 Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
-# <a name="help"></a>Help automatico
+# <a name="help"></a>Help
 
-O `help` é gerado de forma automatica pelo sistema e para exibi-lo basta seguir os exemplos abaixo:
+O formato do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. Ele é gerado de forma automática utilizando os textos de help de cada um desses elementos, por isso é importante manter essas informações preenchidas e atualizadas, isso ajudará você e quem for utilizar sua aplicação. 
+
+No formato padrão, existem duas formas de exibir o help: o `help completo` e o `help por action`:
+
+**Exibe o help para uma ação especifica:**
+
+```MyApp.exe help my-action-name```
 
 **Exibe o help completo:**
 
 ```MyApp.exe help```
 
-**Exibe o help para uma ação especifica:**
-
-```MyApp.exe help my-action```
-
-O texto do `help` é gerado por um comando interno do sistema, mas é possível customizar esse texto, basta criar um novo `Command` que herda da interface `SysCommand.ConsoleApp.Commands.IHelpCommand` e o help padrão será ignorado.
-
-```csharp
-using SysCommand.ConsoleApp;
-public class Program
-{
-    public static int Main()
-    {
-        return App.RunApplication();
-    }
-
-    public class CustomHelp : Command, SysCommand.ConsoleApp.Commands.IHelpCommand
-    {
-        public string MyCustomHelp(string action = null)
-        {
-            foreach(var map in this.App.Maps)
-            {
-                
-            }
-            return "Custom help";
-        }
-    }
-}
-```
-
-```
-MyApp.exe my-custom-help
-Custom help
-
-MyApp.exe help
-Could not find any action.
-```
-
-Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o `help` padrão utiliza os métodos de help contidos dentro dessa instancia. Essa opção não é recomendada se você deseja apenas customizar o `help`.
-
-Uma opção mais segura seria criar um `Descriptor` herdando da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor` e sobrescrer apenas os métodos de help.
-
-```csharp
-using SysCommand.ConsoleApp;
-public class Program
-{
-    public static int Main()
-    {
-        return App.RunApplication(
-            () => {
-                var app = new App();
-                app.Descriptor = new CustomDescriptor();
-                // OR
-                app.Descriptor = new CustomDescriptor2();
-                return app;
-            }
-        );
-    }
-
-    public class CustomDescriptor : IDescriptor { ... }
-    public class CustomDescriptor2 : DefaultDescriptor
-    { 
-        public override string GetHelpText(IEnumerable<CommandMap> commandMaps) { ... }
-        public override string GetHelpText(IEnumerable<CommandMap> commandMaps, string actionName) { ... }
-    }
-}
-```
-
-* O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
-
-
-## <a name="help-default"></a>Comportamento padrão
-
-O formato padrão do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. O formato de saída que será exibido será o seguinte:
+Para o `help completo`, o formato de saída que será exibido será o seguinte:
 
 ```
 usage:    [--argument=<phrase>] [--argument-number=<number>]
@@ -1088,6 +1023,144 @@ Help for this command
 * Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](#properties-customizing-help).
 * Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parametros](#methods-customizing-help).
 
+## <a name="help-default"></a>Customizando
+
+A funcionalidade de `help` nada mais é que um comando interno `SysCommand.ConsoleApp.Commands.HelpCommand.cs` que define as duas `actions` de help que foram apresentadas no tópico anterior. Por definição, todo comando de help precisa herdar da interface `SysCommand.ConsoleApp.Commands.IHelpCommand`, assim o sistema entende que esse comando fará esse papel. Obrigatóriamente, sempre haverá um comando de help, caso o usuário não customize, o comando padrão será utilizado.
+
+Abaixo, segue um exemplo de um help completamente customizado:
+
+```csharp
+using SysCommand.ConsoleApp;
+public class Program
+{
+    public static int Main()
+    {
+        return App.RunApplication();
+    }
+
+    public class CustomHelp : Command, SysCommand.ConsoleApp.Commands.IHelpCommand
+    {
+        public string MyCustomHelp(string action = null)
+        {
+            foreach(var map in this.App.Maps)
+            {
+                
+            }
+            return "Custom help";
+        }
+    }
+}
+```
+
+```
+MyApp.exe my-custom-help
+Custom help
+
+MyApp.exe help
+Could not find any action.
+```
+
+Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o help padrão utiliza os métodos de help contidos dentro dessa instancia. Essa opção não é recomendada se você deseja apenas customizar o `help`.
+
+Uma opção mais segura seria criar um `Descriptor` herdando da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor` e sobrescrer apenas os métodos de help.
+
+```csharp
+using SysCommand.ConsoleApp;
+public class Program
+{
+    public static int Main()
+    {
+        return App.RunApplication(
+            () => {
+                var app = new App();
+                app.Descriptor = new CustomDescriptor();
+                // OR
+                app.Descriptor = new CustomDescriptor2();
+                return app;
+            }
+        );
+    }
+
+    public class CustomDescriptor : IDescriptor { ... }
+    public class CustomDescriptor2 : DefaultDescriptor
+    { 
+        public override string GetHelpText(IEnumerable<CommandMap> commandMaps) { ... }
+        public override string GetHelpText(IEnumerable<CommandMap> commandMaps, string actionName) { ... }
+    }
+}
+```
+
+* O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
+## <a name="help-default"></a>Customizando
+
+A funcionalidade de `help` nada mais é que um comando interno `SysCommand.ConsoleApp.Commands.HelpCommand.cs` que define as duas `actions` de help que foram apresentadas no tópico anterior. Por definição, todo comando de help precisa herdar da interface `SysCommand.ConsoleApp.Commands.IHelpCommand`, assim o sistema entende que esse comando fará esse papel. Obrigatóriamente, sempre haverá um comando de help, caso o usuário não customize, o comando padrão será utilizado.
+
+Abaixo, segue um exemplo de um help completamente customizado:
+
+```csharp
+using SysCommand.ConsoleApp;
+public class Program
+{
+    public static int Main()
+    {
+        return App.RunApplication();
+    }
+
+    public class CustomHelp : Command, SysCommand.ConsoleApp.Commands.IHelpCommand
+    {
+        public string MyCustomHelp(string action = null)
+        {
+            foreach(var map in this.App.Maps)
+            {
+                
+            }
+            return "Custom help";
+        }
+    }
+}
+```
+
+```
+MyApp.exe my-custom-help
+Custom help
+
+MyApp.exe help
+Could not find any action.
+```
+
+Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o help padrão utiliza os métodos de help contidos dentro dessa instancia. Essa opção não é recomendada se você deseja apenas customizar o `help`.
+
+Uma opção mais segura seria criar um `Descriptor` herdando da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor` e sobrescrer apenas os métodos de help.
+
+```csharp
+using SysCommand.ConsoleApp;
+public class Program
+{
+    public static int Main()
+    {
+        return App.RunApplication(
+            () => {
+                var app = new App();
+                app.Descriptor = new CustomDescriptor();
+                // OR
+                app.Descriptor = new CustomDescriptor2();
+                return app;
+            }
+        );
+    }
+
+    public class CustomDescriptor : IDescriptor { ... }
+    public class CustomDescriptor2 : DefaultDescriptor
+    { 
+        public override string GetHelpText(IEnumerable<CommandMap> commandMaps) { ... }
+        public override string GetHelpText(IEnumerable<CommandMap> commandMaps, string actionName) { ... }
+    }
+}
+```
+
+* O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
+* Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](#properties-customizing-help).
+* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parametros](#methods-customizing-help).
 
 # <a name="kind-of-commands"></a>Tipos de comandos
 
@@ -1853,7 +1926,7 @@ Custom help for CustomPropertiesHelpCommand
    --my-property-help2             This is my property 2
 ```
 
-Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico [Help automatico](#help).
+Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico [Help](#help).
 ## <a name="properties-required"></a>Propriedades obrigatórias
 
 Para argumentos que são obrigatórios, é necessário que você use o `ArgumentAtrribute` ligando a flag `IsRequired`.
@@ -2349,7 +2422,7 @@ Help for this command
       --arg1                       Argument help
 ```
 
-Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico [Help automatico](#help).
+Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico [Help](#help).
 ## <a name="methods-changing-position"></a>Trocando a posição de parametros posicionais
 
 A propriedade `ArgumentAttribute(Position=X)` também funciona para parametros da mesma forma que funciona para propriedades. Não é um recurso que faça muito sentido, mas é importante documenta-lo.
