@@ -1153,11 +1153,11 @@ public class TestVerbose : Command
 }
 ```
 
-_Forma curta: _
+_Forma curta:_
 
 ```MyApp.exe test -v Critical```
 
-_Forma longa: _
+_Forma longa:_
 
 ```MyApp.exe test --verbose Critical```
 
