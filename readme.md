@@ -766,7 +766,7 @@ Todos os tipos primitivos do .NET são suportados, incluindo suas versões anul�
 * `Generic collections` (`IEnumerable`, `IList`, `ICollection`)
 * `Arrays`
 
-**Sintaxe:**
+_Sintaxe genérica:_
 
 ```[action-name ][-|/|--][argument-name][=|:| ][value]```
 
