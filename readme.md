@@ -772,8 +772,8 @@ _Sintaxe genérica:_
 
 _Sintaxe para `Boolean`:_
 
-* Para o valor TRUE: `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
-* Para o valor FALSE: `false`, `0`, `-` (separado por espaço ou unido com o nome do argumento).
+* Para o valor TRUE use: `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
+* Para o valor FALSE use: `false`, `0`, `-` (separado por espaço ou unido com o nome do argumento).
 
 ```
 MyApp.exe -a  // true
@@ -819,7 +819,6 @@ public enum Verbose
     Quiet = 64
 }
 
-```csharp
 public void Main(Verbose verbose, string otherParameter = null);
 ```
 
