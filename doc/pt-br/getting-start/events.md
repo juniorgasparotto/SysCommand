@@ -2,11 +2,11 @@
 
 Os eventos são importantes para interceptar cada passo da execução e modificar ou extender o comportamento padrão. Os eventos existentes são os seguintes:
 
-* App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult): Chamado antes do invoke de cada membro (propriedade ou metodo) que foi parseado.
-* App.OnAfterMemberInvoke(ApplicationResult, IMemberResult): Chamado depois do invoke de cada membro (propriedade ou metodo) que foi parseado.
-* App.OnMethodReturn(ApplicationResult, IMemberResult): : Chamado sempre que um metodo retorna valor
-* App.OnComplete(ApplicationResult): Chamado ao fim da execução
-* App.OnException(ApplicationResult, Exception): Chamado em caso de exception.
+* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: Chamado antes do invoke de cada membro (propriedade ou metodo) que foi parseado.
+* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: Chamado depois do invoke de cada membro (propriedade ou metodo) que foi parseado.
+* `App.OnMethodReturn(ApplicationResult, IMemberResult)`: : Chamado sempre que um metodo retorna valor
+* `App.OnComplete(ApplicationResult)`: Chamado ao fim da execução
+* `App.OnException(ApplicationResult, Exception)`: Chamado em caso de exception.
 
 **Exemplo:**
 
