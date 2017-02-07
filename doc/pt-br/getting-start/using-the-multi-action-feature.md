@@ -21,14 +21,14 @@ public class Program
 
     public class MyCommand : Command
     {
-        public string Action1(string value = null)
+        public string Action1(string value = "default")
         {
-            return "Action1";
+            return $"Action1 (value = {value})";
         }
 
-        public string Action2(string value = null)
+        public string Action2(string value = "default")
         {
-            return "Action2";
+            return $"Action2 (value = {value})";
         }
     }
 }
