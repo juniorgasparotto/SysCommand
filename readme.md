@@ -1089,7 +1089,7 @@ public class Program
 
 **Observações:**
 
-* O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
+* O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, o comando `SysCommand.ConsoleApp.Commands.HelpCommand.cs` será adicionado internamente.
 * Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](#properties-customizing-help).
 * Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parametros](#methods-customizing-help).
 
@@ -1857,7 +1857,7 @@ Custom help for CustomPropertiesHelpCommand
    --my-property-help2             This is my property 2
 ```
 
-Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico [Help](#help).
+Para mais informações sobre o help veja no tópico [Help](#help).
 ## <a name="properties-required"></a>Propriedades obrigatórias
 
 Para argumentos que são obrigatórios, é necessário que você use o `ArgumentAtrribute` ligando a flag `IsRequired`.
@@ -2353,7 +2353,7 @@ Help for this command
       --arg1                       Argument help
 ```
 
-Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico [Help](#help).
+Para mais informações sobre o help veja no tópico [Help](#help).
 ## <a name="methods-changing-position"></a>Trocando a posição de parametros posicionais
 
 A propriedade `ArgumentAttribute(Position=X)` também funciona para parametros da mesma forma que funciona para propriedades. Não é um recurso que faça muito sentido, mas é importante documenta-lo.

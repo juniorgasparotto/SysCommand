@@ -67,6 +67,6 @@ public class Program
 
 **Observações:**
 
-* O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, ele será adicionado internamente.
+* O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, o comando `SysCommand.ConsoleApp.Commands.HelpCommand.cs` será adicionado internamente.
 * Para mais informações sobre customizações do help em propriedades veja o tópido de <anchor-get name="properties-customizing-help" />.
 * Para mais informações sobre customizações do help em ações veja o tópido de <anchor-get name="methods-customizing-help" />.

@@ -35,4 +35,4 @@ Help for this command
       --arg1                       Argument help
 ```
 
-Esse tópico apenas apresentará os atributos que configuram o help. Para mais informações sobre o help veja no tópico <anchor-get name="help" />.
+Para mais informações sobre o help veja no tópico <anchor-get name="help" />.
