@@ -1506,10 +1506,6 @@ C:\MyApp.exe redirect-now my-value something
 Redirecting now!!. Count: 1
 Redirected: my-value. Count: 2
 ```
-
-* Para desabilitar o recurso de multi-action, desative a propriedade `App.EnableMultiAction` antes do método `App.Run()`.
-
-
 # <a name="stop-propagation"></a>Cancelamento da continuidade da execução
 
 Quando existem muitas actions com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.

@@ -45,6 +45,3 @@ C:\MyApp.exe redirect-now my-value something
 Redirecting now!!. Count: 1
 Redirected: my-value. Count: 2
 ```
-
-* Para desabilitar o recurso de multi-action, desative a propriedade `App.EnableMultiAction` antes do método `App.Run()`.
-
