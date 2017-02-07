@@ -770,6 +770,56 @@ Todos os tipos primitivos do .NET são suportados, incluindo suas versões anul�
 
 ```[action-name ][-|/|--][argument-name][=|:| ][value]```
 
+**Sintaxe para `string`:**
+
+As `strings` podem ser utilizadas de duas formas:
+
+* Um texto com espaços: Utilize aspas `"..."` para determinar o valor de um argumento string que contém espaços em seu conteúdo, do contrário você terá um erro de parse.
+* Um texto sem espaços: Não é obrigatório o uso de aspas, basta inserir seu valor diretamente.
+
+```
+MyApp.exe --my-string oneWord
+MyApp.exe --my-string "oneWord"
+MyApp.exe --my-string "two words"
+```
+
+**Sintaxe para `char`:**
+
+Assim como em .NET os chars podem ter valores com apenas um caracter ou com um número que represente seu valor na escala de caracteres.]
+
+```
+MyApp.exe --my-char 1
+MyApp.exe --my-char A
+```
+
+**Sintaxe para `int`, `long`, `short` e suas variações "u" :**
+
+São entradas númericas onde a única regra é o valor inserido não ultrapassar o limite de cada tipo.
+
+```
+MyApp.exe --my-number 1
+MyApp.exe --my-number 2
+MyApp.exe --my-number 999999
+```
+
+**Sintaxe para `decimal`, `double` e `float`:**
+
+Para esses tipos é possível utilizar números inteiros ou números decimais. Só fique atento para a configuração de cultura da sua aplicação. Se for `pt-br` utilize o separador `,`; Para o formato americano utilize `.`;
+
+_EN-US:_
+
+```
+MyApp.exe --my-number 10
+MyApp.exe --my-number 0.99
+```
+
+_PT-BR:_
+
+```
+MyApp.exe --my-number 10
+MyApp.exe --my-number 0,99
+```
+
 **Sintaxe para `Boolean`:**
 
 * Para o valor TRUE use: `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
@@ -799,6 +849,28 @@ public void Main(char a, char b, char c) {};
 MyApp.exe -abc  // true for a, b and c
 MyApp.exe -abc- // false for a, b and c
 MyApp.exe -abc+ // true for a, b and c
+```
+
+**Sintaxe para `DateTime`:**
+
+Assim como os números decimais, o formato de data suportado depende da cultura que estiver configurado em sua aplicação.
+
+_EN-US:_
+
+```
+MyApp.exe --my-date "12/13/2000 00:00:00"
+```
+
+_PT-BR:_
+
+```
+MyApp.exe --my-date "13/12/2000 00:00:00"
+```
+
+_UNIVERSAL:_
+
+```
+MyApp.exe --my-date "2000-12-13 00:00:00"
 ```
 
 **Sintaxe para `Enums`:**
