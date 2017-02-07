@@ -4,13 +4,13 @@ O controle de exibição por verbo esta contido em um comando interno chamado `S
 
 * `All`: Exibe todos os verbos
 * `Info`: É o verbo padrão, sempre será exibido, ao menos que o usuário envie o verbo `Quiet`.
-* `Success`: Verbo para mensagens de sucesso.
-* `Critical`: Verbo para mensagens criticas.
-* `Warning`: Verbo para mensagens de warning.
-* `Error`: Verbo para mensagens de erro. O sistema força o envio desse verbo em caso de erros de parse.
+* `Success`: Verbo para mensagens de sucesso. Só será exibido se o usuário solicitar.
+* `Critical`: Verbo para mensagens criticas. Só será exibido se o usuário solicitar.
+* `Warning`: Verbo para mensagens de warning. Só será exibido se o usuário solicitar.
+* `Error`: Verbo para mensagens de erro. O sistema força o envio desse verbo em caso de erros de parse. Só será exibido se o usuário solicitar.
 * `Quiet`: Verbo para não exibir nenhuma mensagem, porém se a mensagem estiver sendo forçada, esse verbo é ignorado para essa mensagem.
 
-Para que a funcionalidade funcione corretamente é obrigatorio o uso das funções de output contidas dentro da classe `SysCommand.ConsoleApp.ConsoleWrapper` e que tem uma instância disponível na propriedade `App.Console`.
+Para que a funcionalidade funcione corretamente é obrigatorio o uso das funções de output contidas dentro da classe `SysCommand.ConsoleApp.ConsoleWrapper` e que tem uma instância disponível na propriedade `App.Console`. 
 
 **Exemplo:**
 
@@ -43,5 +43,7 @@ output of error forced
 output of critical
 ```
 
-* Para desativar o comando `VerboseCommand` veja o tópico de <anchor-get name="specifying-commands" />.
+É importante dizer que você pode desligar esse recurso e implementar seu próprio mecanismo de verbose. Para isso você precisa desativar o comando `VerboseCommand` e criar seu próprio conjunto de funções para cada verbo. 
+
+* Para desativar o comando `VerboseCommand` utilize a forma exclusiva de especificação de comandos. Veja o tópico <anchor-get name="specifying-commands" />.
 
