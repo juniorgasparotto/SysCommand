@@ -28,7 +28,7 @@ Todos os tipos primitivos do .NET são suportados, incluindo suas versões anul�
 
 As `strings` podem ser utilizadas de duas formas:
 
-* Um texto com espaços: Utilize aspas `"..."` para determinar o valor de um argumento string que contém espaços em seu conteúdo, do contrário você terá um erro de parse.
+* Um texto com espaços: Utilize aspas `" "` para textos com espaços. Do contrário você terá um erro de parse.
 * Um texto sem espaços: Não é obrigatório o uso de aspas, basta inserir seu valor diretamente.
 
 ```
