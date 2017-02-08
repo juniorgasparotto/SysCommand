@@ -6,8 +6,8 @@
 #include "../pt-br/getting-start/initializing-by-static-method.md"
 #include "../pt-br/getting-start/specifying-commands.md"
 #include "../pt-br/getting-start/kind-of-commands.md"
-#include "../pt-br/getting-start/using-the-multi-action-feature.md"
 #include "../pt-br/getting-start/events.md"
+#include "../pt-br/getting-start/using-the-multi-action-feature.md"
 
 #include "../pt-br/output/output.md"
 #include "../pt-br/output/output-using-razor.md"

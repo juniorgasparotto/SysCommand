@@ -86,7 +86,7 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`. 
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Introdução ao contexto](#class-app) e [Inicializando por método estático com simulador de console](#initializing-by-static-method).
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Iniciando](#class-app) e [Inicializando por método estático com simulador de console](#initializing-by-static-method).
 
 **`Command`**
 
@@ -349,12 +349,12 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 
 # <a name="documentation"></a>Documentação
 
-* [Introdução ao contexto](#class-app)
+* [Iniciando](#class-app)
   * [Inicializando por método estático com simulador de console](#initializing-by-static-method)
   * [Especificando os tipos de comandos](#specifying-commands)
   * [Tipos de comandos](#kind-of-commands)
-  * [Utilizando o recurso de MultiAction](#using-the-multi-action-feature)
   * [Controle de eventos](#events)
+  * [Utilizando o recurso de MultiAction](#using-the-multi-action-feature)
 * [Output](#output)
   * [Usando template Razor](#output-razor)
   * [Usando template T4](#output-t4)
@@ -389,11 +389,11 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Gerenciamento de históricos de argumentos](#argument-history-manager)
 * [Licença](#license)
 
-# <a name="class-app"></a>Introdução ao contexto
+# <a name="class-app"></a>Iniciando
 
-A classe `App` é a principal classe do sistema, ela é responsável por manter um contexto isolado por cada instancia `App`. Nenhum recurso estático é usado aqui, isso é importante para você ter a liberdade de criar quantas instancias quiser em qualquer escopo.
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` com suas possíveis customizações ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo ou via "Command Line Arguments".
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instancia da class `App` com suas possíveis customizações ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo ou via "Command Line Arguments".
+A classe `App` esta no topo da hierarquia de classes do sistema, cada instância é responsável por manter um contexto isolado da execução. Nenhum recurso estático é usado aqui e isso é importante para ter a liberdade de criar quantas instancias quiser em qualquer escopo.
 
 Em seu construtor estão as primeiras configurações:
 
@@ -628,65 +628,6 @@ public class ClearCommand : Command
     }
 }
 ```
-## <a name="using-the-multi-action-feature"></a>Utilizando o recurso de MultiAction
-
-Esse recurso permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](#argument-history-manager) deixará de funcionar caso isso ocorra.
-
-Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de paramentros.
-
-**Exemplo:**
-
-```csharp
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        new App().Run(args);
-
-        // EnableMultiAction = false
-        /*
-        new App(null, false).Run(args);
-        */
-    }
-
-    public class MyCommand : Command
-    {
-        public string Action1(string value = "default")
-        {
-            return $"Action1 (value = {value})";
-        }
-
-        public string Action2(string value = "default")
-        {
-            return $"Action2 (value = {value})";
-        }
-    }
-}
-```
-
-```
-MyApp.exe action1
-Action1 (value = default)
-
-MyApp.exe action2
-Action2 (value = default)
-
-MyApp.exe action1 action2
-Action1 (value = default)
-Action2 (value = default)
-
-MyApp.exe action1 action2 action1 action1 action2
-Action1 (value = default)
-Action2 (value = default)
-Action1 (value = default)
-Action1 (value = default)
-Action2 (value = default)
-
-MyApp.exe action1 --value \\action2
-Action1 (value = action2)
-```
-
-O último exemplo demostra como usar o scape em seus valores que conflitam com nomes de `actions`. Um fato importante é que no exemplo foi usado duas barras invertidas para fazer o scape, mas isso pode variar de console para console, no `bash` o uso de apenas uma barra invertida não tem nenhum efeito, provavelmente ele deve usar para outros scapes antes de chegar na aplicação.
 ## <a name="events"></a>Controle de eventos
 
 Os eventos são importantes para interceptar cada passo da execução e modificar ou extender o comportamento padrão. Os eventos existentes são os seguintes:
@@ -775,6 +716,65 @@ new App(addDefaultAppHandler: false)
         .Run(args);
 ```
 
+## <a name="using-the-multi-action-feature"></a>Utilizando o recurso de MultiAction
+
+Esse recurso permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](#argument-history-manager) deixará de funcionar caso isso ocorra.
+
+Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de paramentros.
+
+**Exemplo:**
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        new App().Run(args);
+
+        // EnableMultiAction = false
+        /*
+        new App(null, false).Run(args);
+        */
+    }
+
+    public class MyCommand : Command
+    {
+        public string Action1(string value = "default")
+        {
+            return $"Action1 (value = {value})";
+        }
+
+        public string Action2(string value = "default")
+        {
+            return $"Action2 (value = {value})";
+        }
+    }
+}
+```
+
+```
+MyApp.exe action1
+Action1 (value = default)
+
+MyApp.exe action2
+Action2 (value = default)
+
+MyApp.exe action1 action2
+Action1 (value = default)
+Action2 (value = default)
+
+MyApp.exe action1 action2 action1 action1 action2
+Action1 (value = default)
+Action2 (value = default)
+Action1 (value = default)
+Action1 (value = default)
+Action2 (value = default)
+
+MyApp.exe action1 --value \\action2
+Action1 (value = action2)
+```
+
+O último exemplo demostra como usar o scape em seus valores que conflitam com nomes de `actions`. Um fato importante é que no exemplo foi usado duas barras invertidas para fazer o scape, mas isso pode variar de console para console, no `bash` o uso de apenas uma barra invertida não tem nenhum efeito, provavelmente ele deve usar para outros scapes antes de chegar na aplicação.
 # <a name="output"></a>Output
 
 O mecanismo de output foi extendido para aumentar a produtividade.
