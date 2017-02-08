@@ -1,6 +1,6 @@
 # Tratamento de erros <header-set anchor-name="error" />
 
-O tratamento de erro é gerado de forma automatica pelo sistem e são categorizados da seguinte forma:
+O tratamento de erro é gerado de forma automatica pelo sistema e são categorizados da seguinte forma:
 
 * Erros no processo de parse: São erros que ocorrem no processo de parse e são sub-categorizados da seguinte forma:
   * `ArgumentParsedState.ArgumentAlreadyBeenSet`: Indica que um argumento esta duplicado no mesmo input.
@@ -11,6 +11,10 @@ O tratamento de erro é gerado de forma automatica pelo sistem e são categoriza
   * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados em <anchor-get name="support-types" />.
 * Not Found: Nenhuma rota encontrada para o input solicitado.
 * Exception génerica: Não existe nenhum tipo de tratamento padrão, mas é possível interceptar qualquer exception dentro do evento `App.OnException`.
+
+O responsável por formatar e imprimir os erros é o handler padrão `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` que intercepta o resultado final da execução e caso tenha erros chama o método `ShowErrors(ApplicationResult appResult)` ou `ShowNotFound(ApplicationResult appResult)` da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor`. 
+
+Caso queira customizar as mensagens de erro, você pode trocar o handler `DefaultApplicationHandler` por completo (não recomendado) ou criar uma classe que herde de `DefaultDescriptor` subrescrevendo apenas os métodos de erros.
 
 **Exemplo:**
 
@@ -35,7 +39,7 @@ public class Program
     }
 
     public class CustomDescriptor : DefaultDescriptor
-    { 
+    {
         public override void ShowErrors(ApplicationResult appResult)
         {
             foreach (ExecutionError error in appResult.ExecutionResult.Errors)
