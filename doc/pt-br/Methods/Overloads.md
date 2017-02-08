@@ -35,7 +35,7 @@ C:\MyApp.exe my-action3 --arg0 9 --arg1 99
 arg0 has input
 arg1 has input
 
-C:\MyApp.exe my-action3 --arg1 99]
+C:\MyApp.exe my-action3 --arg1 99
 There are errors in command: Method1Command
 The argument '--arg1' does not exist
 ```
