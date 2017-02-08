@@ -100,7 +100,7 @@ Os argumentos representam o meio mais básico de uma aplicação console, são o
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#properties), [Ignorar propriedades publicas por uma escolha manual usando atributo](#properties-ignore-public), [Tipos de inputs](#kind-of-inputs) e .
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#properties), [Ignorar propriedades publicas por uma escolha manual usando atributo](#properties-ignore-public), [Argumento nomeado](#kind-of-inputs) e .
 
 **`Action`**
 
@@ -355,7 +355,9 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Tipos de comandos](#kind-of-commands)
   * [Controle de eventos](#events)
 * [Input](#input)
-  * [Tipos de inputs](#kind-of-inputs)
+  * [Argumento nomeado](#kind-of-inputs)
+  * [Argumento posicional](#input-positional)
+  * [Tipo "Argumento"](#kind-of-inputs)
   * [Utilizando o recurso de MultiAction](#using-the-multi-action-feature)
 * [Output](#output)
   * [Usando template Razor](#output-razor)
@@ -719,14 +721,11 @@ new App(addDefaultAppHandler: false)
 # <a name="input"></a>Input
 
 Chamamos de input todas as linhas de comandos que o usuário digita e envia para o aplicativo. Basicamente existem apenas dois tipos de inputs: os `arguments` e as `actions`. Cada um deles tem suas peculiaridades e vamos explicar abaixo:
-## <a name="kind-of-inputs"></a>Tipos de inputs
+## <a name="kind-of-inputs"></a>Argumento nomeado
 
 Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
 
 Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.
-
-Existe também a possibilidade de aceitar inputs posicionais, ou seja, sem a necessidade de utilizar os nomes dos argumentos. Esse tipo de input é chamado de `input posicional`.
-
 
 **Exemplo:**
 
@@ -735,23 +734,40 @@ public string MyProperty { get;set; }
 public void MyAction(string A, string B);
 ```
 
-**Input nomeado**:
-
-```MyApp.exe my-action -a valueA -b valueB --my-property valueMyProperty```
+```
+MyApp.exe my-action -a valueA -b valueB --my-property valueMyProperty
+```
 
 OU usando o delimitador `/` e os separadores `=` e `:`
 
-```MyApp.exe my-action -a valueA /b:valueB --my-property=valueMyProperty```
+```
+MyApp.exe my-action -a valueA /b:valueB --my-property=valueMyProperty
+```
 
-**Input posicional**:
+## <a name="input-positional"></a>Argumento posicional
 
-```MyApp.exe my-action valueA valueB valueMyProperty```
+Existe também a possibilidade de aceitar inputs posicionais, ou seja, sem a necessidade de utilizar os nomes dos argumentos. Esse tipo de input é chamado de `input posicional`.
+
+**Exemplo:**
+
+```csharp
+public string MyProperty { get;set; }
+public void MyAction(string A, string B);
+```
+
+```
+MyApp.exe my-action valueA valueB valueMyProperty
+```
 
 * Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
-* Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).
+* **Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).**
 
 
 
+
+
+
+## <a name="kind-of-inputs"></a>Tipo "Argumento"
 
 
 ## <a name="using-the-multi-action-feature"></a>Utilizando o recurso de MultiAction
