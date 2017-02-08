@@ -362,7 +362,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Output](#output)
   * [Usando template Razor](#output-razor)
   * [Usando template T4](#output-t4)
-  * [Tabelado](#output-tabulated)
+  * [Dados tabelado](#output-tabulated)
 * [Gerenciamento de históricos de argumentos](#argument-history-manager)
 * [Redirecionamento de comandos](#redirectiong-commands)
 * [Cancelamento da continuidade da execução](#stop-propagation)
@@ -1369,7 +1369,7 @@ Outputs:
     #### HelloWorld {NONE} ####
     #### HelloWorld {MyName} ####
 ```
-## <a name="output-tabulated"></a>Tabelado
+## <a name="output-tabulated"></a>Dados tabelado
 
 A classe `SysCommand.ConsoleApp.View.TableView` tras o recurso de `output tabelado` que pode ser muito útil para apresentar informações de forma rápida e visualmente mais organizada. É claro que tudo depende da quantidade de informação que você quer exibir, quanto maior, pior a visualização.
 
