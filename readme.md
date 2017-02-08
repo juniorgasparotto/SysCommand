@@ -1588,8 +1588,6 @@ StopPropagationCommand2.StopPropagationAction1
 ```
 Perceba que a execução parou no mesmo ponto.
 
-* Para desabilitar o recurso de multi-action, desative a propriedade `App.EnableMultiAction` antes do método `App.Run()`.
-
 
 # <a name="error"></a>Tratamento de erros
 
