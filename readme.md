@@ -359,7 +359,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Customizando](#help-default)
 * [Tipos de comandos](#kind-of-commands)
 * [Verbose](#verbose)
-  * [Output](#output)
+* [Output](#output)
   * [Output usando template Razor](#output-razor)
   * [Output usando template T4](#output-t4)
   * [Output tabelado](#output-tabulated)
@@ -1174,7 +1174,7 @@ output of critical
 * Para desativar o comando `VerboseCommand` utilize a forma exclusiva de especificação de comandos. Veja o tópico [Especificando os tipos de comandos](#specifying-commands).
 
 
-## <a name="output"></a>Output
+# <a name="output"></a>Output
 
 O mecanismo de output foi extendido para aumentar a produtividade.
 
