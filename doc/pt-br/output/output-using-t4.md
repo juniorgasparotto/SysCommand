@@ -1,4 +1,4 @@
-# Output usando template T4 <header-set anchor-name="output-t4" />
+## Output usando template T4 <header-set anchor-name="output-t4" />
 
 Outra opção para exibir outputs é a utilização de templates `T4`. Esse mecanismo, ao contrário dos templates `Razor` é mais completo, ele não perdeu nenhum dos beneficios que o Visual Studio nos fornece. Basta seguir apenas alguns passos para usa-lo:
 
