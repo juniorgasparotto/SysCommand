@@ -360,9 +360,9 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Tipos de comandos](#kind-of-commands)
 * [Verbose](#verbose)
 * [Output](#output)
-  * [Output usando template Razor](#output-razor)
-  * [Output usando template T4](#output-t4)
-  * [Output tabelado](#output-tabulated)
+  * [Usando template Razor](#output-razor)
+  * [Usando template T4](#output-t4)
+  * [Tabelado](#output-tabulated)
 * [Gerenciamento de históricos de argumentos](#argument-history-manager)
 * [Redirecionamento de comandos](#redirectiong-commands)
 * [Cancelamento da continuidade da execução](#stop-propagation)
@@ -1232,7 +1232,7 @@ My question: N
 
 Por último, vale lembrar que nada disso impede você de usar os mecanismos comuns do .NET, como a classe "System.Console".
 
-## <a name="output-razor"></a>Output usando template Razor
+## <a name="output-razor"></a>Usando template Razor
 
 Outra opção para exibir outputs é a utilização de templates `Razor`. Esse mecanismo foi projetado para coisas simples, é muito importante dizer que ele não dispõe de diversos recursos como: debug, intellisense, highlight e analise de erros.
 
@@ -1308,7 +1308,7 @@ Outputs:
 * Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.
 
 
-## <a name="output-t4"></a>Output usando template T4
+## <a name="output-t4"></a>Usando template T4
 
 Outra opção para exibir outputs é a utilização de templates `T4`. Esse mecanismo, ao contrário dos templates `Razor` é mais completo, ele não perdeu nenhum dos beneficios que o Visual Studio nos fornece. Basta seguir apenas alguns passos para usa-lo:
 
@@ -1369,7 +1369,7 @@ Outputs:
     #### HelloWorld {NONE} ####
     #### HelloWorld {MyName} ####
 ```
-## <a name="output-tabulated"></a>Output tabelado
+## <a name="output-tabulated"></a>Tabelado
 
 A classe `SysCommand.ConsoleApp.View.TableView` tras o recurso de `output tabelado` que pode ser muito útil para apresentar informações de forma rápida e visualmente mais organizada. É claro que tudo depende da quantidade de informação que você quer exibir, quanto maior, pior a visualização.
 

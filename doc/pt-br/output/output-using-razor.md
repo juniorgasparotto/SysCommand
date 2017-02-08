@@ -1,4 +1,4 @@
-## Output usando template Razor <header-set anchor-name="output-razor" />
+## Usando template Razor <header-set anchor-name="output-razor" />
 
 Outra opção para exibir outputs é a utilização de templates `Razor`. Esse mecanismo foi projetado para coisas simples, é muito importante dizer que ele não dispõe de diversos recursos como: debug, intellisense, highlight e analise de erros.
 
