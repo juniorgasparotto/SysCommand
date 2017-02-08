@@ -352,9 +352,9 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Introdução ao contexto](#class-app)
   * [Inicializando por método estático com simulador de console](#initializing-by-static-method)
   * [Especificando os tipos de comandos](#specifying-commands)
+  * [Tipos de comandos](#kind-of-commands)
   * [Utilizando o recurso de MultiAction](#using-the-multi-action-feature)
   * [Controle de eventos](#events)
-* [Tipos de comandos](#kind-of-commands)
 * [Output](#output)
   * [Usando template Razor](#output-razor)
   * [Usando template T4](#output-t4)
@@ -597,6 +597,37 @@ have his name omitted.
 Perceba que no help não existe nenhuma ocorrencia da class `FirstCommand`.
 
 Por enquanto, não se atente agora para as classes `VerboseCommand` e `ArgsHistoryCommand` elas são commands internos e serão explicados mais adiante na documentação.
+## <a name="kind-of-commands"></a>Tipos de comandos
+
+Atualmente existem tres tipos de comandos:
+
+**Comandos de usuário**
+
+São os comandos comuns e que herdam apenas da class `Command`. 
+
+**Comandos de help**
+
+São os comandos que herdam da classe `Command` e implementam a interface `IHelpCommand`. Contudo, apenas um será utilizado. 
+
+**Comandos de debug**
+
+Os comandos de debug são comandos que são carregados apenas durante o debugging do Visual Studio. Um bom exemplo seria o comando interno "ClearCommand", ele disponibiliza a action "clear" para limpar o prompt de comando que o Visual Studio abre durante o processo de debug. Para criar um comando de debug basta habilitar a flag `Command.OnlyInDebug`.
+
+```csharp
+public class ClearCommand : Command
+{
+    public ClearCommand()
+    {
+        this.HelpText = "Clear window. Only in debug";
+        this.OnlyInDebug = true;
+    }
+
+    public void Clear()
+    {
+        Console.Clear();
+    }
+}
+```
 ## <a name="using-the-multi-action-feature"></a>Utilizando o recurso de MultiAction
 
 Esse recurso permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](#argument-history-manager) deixará de funcionar caso isso ocorra.
@@ -744,37 +775,6 @@ new App(addDefaultAppHandler: false)
         .Run(args);
 ```
 
-# <a name="kind-of-commands"></a>Tipos de comandos
-
-Atualmente existem tres tipos de comandos:
-
-**Comandos de usuário**
-
-São os comandos comuns e que herdam apenas da class `Command`. 
-
-**Comandos de help**
-
-São os comandos que herdam da classe `Command` e implementam a interface `IHelpCommand`. Contudo, apenas um será utilizado. 
-
-**Comandos de debug**
-
-Os comandos de debug são comandos que são carregados apenas durante o debugging do Visual Studio. Um bom exemplo seria o comando interno "ClearCommand", ele disponibiliza a action "clear" para limpar o prompt de comando que o Visual Studio abre durante o processo de debug. Para criar um comando de debug basta habilitar a flag `Command.OnlyInDebug`.
-
-```csharp
-public class ClearCommand : Command
-{
-    public ClearCommand()
-    {
-        this.HelpText = "Clear window. Only in debug";
-        this.OnlyInDebug = true;
-    }
-
-    public void Clear()
-    {
-        Console.Clear();
-    }
-}
-```
 # <a name="output"></a>Output
 
 O mecanismo de output foi extendido para aumentar a produtividade.
