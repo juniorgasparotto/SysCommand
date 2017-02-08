@@ -1,4 +1,4 @@
-# Tipos suportados <header-set anchor-name="support-types" />
+## Tipos suportados <header-set anchor-name="support-types" />
 
 Todos os tipos primitivos do .NET são suportados, incluindo suas versões anuláveis: `Nullable<?>`.
 

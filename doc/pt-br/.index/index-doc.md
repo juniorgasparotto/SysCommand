@@ -7,15 +7,16 @@
 #include "../pt-br/getting-start/specifying-commands.md"
 #include "../pt-br/getting-start/kind-of-commands.md"
 #include "../pt-br/getting-start/events.md"
-#include "../pt-br/getting-start/using-the-multi-action-feature.md"
+
+#include "../pt-br/input/input.md"
+#include "../pt-br/input/kind-of-inputs.md"
+#include "../pt-br/input/support-types.md"
+#include "../pt-br/input/using-the-multi-action-feature.md"
 
 #include "../pt-br/output/output.md"
 #include "../pt-br/output/output-using-razor.md"
 #include "../pt-br/output/output-using-t4.md"
 #include "../pt-br/output/output-tabulated.md"
-
-#include "../pt-br/kind-of-inputs/kind-of-inputs.md"
-#include "../pt-br/support-types/support-types.md"
 
 #include "../pt-br/properties/properties.md"
 #include "../pt-br/properties/customizing-the-argument-names.md"
