@@ -354,19 +354,13 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Especificando os tipos de comandos](#specifying-commands)
   * [Utilizando o recurso de MultiAction](#using-the-multi-action-feature)
   * [Controle de eventos](#events)
-* [Tipos suportados](#support-types)
-* [Help](#help)
-  * [Customizando](#help-default)
 * [Tipos de comandos](#kind-of-commands)
-* [Verbose](#verbose)
 * [Output](#output)
   * [Usando template Razor](#output-razor)
   * [Usando template T4](#output-t4)
   * [Dados tabelado](#output-tabulated)
-* [Gerenciamento de históricos de argumentos](#argument-history-manager)
-* [Redirecionamento de comandos](#redirectiong-commands)
-* [Cancelamento da continuidade da execução](#stop-propagation)
-* [Tratamento de erros](#error)
+* [Tipos de inputs](#kind-of-inputs)
+* [Tipos suportados](#support-types)
 * [Trabalhando com propriedades](#properties)
   * [Modo de uso 1](#properties-use-mode1)
   * [Modo de uso 2](#properties-use-mode2)
@@ -386,7 +380,13 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Trocando a posição de parametros posicionais](#methods-changing-position)
   * [Propriedades do atributos ArgumentAttribute que não são utilizados](#methods-not-used-attrs)
   * [Métodos padrão](#methods-default)
-* [Tipos de inputs](#kind-of-inputs)
+* [Help](#help)
+  * [Customizando](#help-default)
+* [Verbose](#verbose)
+* [Tratamento de erros](#error)
+* [Redirecionamento de comandos](#redirectiong-commands)
+* [Cancelamento da continuidade da execução](#stop-propagation)
+* [Gerenciamento de históricos de argumentos](#argument-history-manager)
 * [Licença](#license)
 
 # <a name="class-app"></a>Introdução ao contexto
@@ -744,355 +744,6 @@ new App(addDefaultAppHandler: false)
         .Run(args);
 ```
 
-# <a name="support-types"></a>Tipos suportados
-
-Todos os tipos primitivos do .NET são suportados, incluindo suas versões anuláveis: `Nullable<?>`.
-
-* `string`
-* `bool` ou `bool?`
-* `decimal` ou `decimal?`
-* `double` ou `double?`
-* `int` ou `int?`
-* `uint` ou `uint?`
-* `DateTime` ou `DateTime?`
-* `byte` ou `byte?`
-* `short` ou `short?`
-* `ushort` ou `ushort?`
-* `long` ou `long?`
-* `ulong` ou `ulong?`
-* `float` ou `float?`
-* `char` ou `char?`
-* `Enum`/`Enum Flags` ou `Enum?`
-* `Generic collections` (`IEnumerable`, `IList`, `ICollection`)
-* `Arrays`
-
-**Sintaxe genérica:**
-
-```[action-name ][-|/|--][argument-name][=|:| ][value]```
-
-**Sintaxe para `string`:**
-
-As `strings` podem ser utilizadas de duas formas:
-
-* Texto com espaços: Utilize aspas `" "` para textos com espaços. Do contrário você terá um erro de parse.
-* Texto sem espaços: Não é obrigatório o uso de aspas, basta inserir seu valor diretamente.
-
-```
-MyApp.exe --my-string oneWord
-MyApp.exe --my-string "oneWord"
-MyApp.exe --my-string "two words"
-```
-
-**Sintaxe para `char`:**
-
-Assim como em .NET os chars podem ter valores com apenas um caracter ou com um número que represente seu valor na escala de caracteres.
-
-```
-MyApp.exe --my-char 1
-MyApp.exe --my-char A
-```
-
-**Sintaxe para `int`, `long`, `short` e suas variações "u" :**
-
-São entradas númericas onde a única regra é o valor inserido não ultrapassar o limite de cada tipo.
-
-```
-MyApp.exe --my-number 1
-MyApp.exe --my-number 2
-MyApp.exe --my-number 999999
-```
-
-**Sintaxe para `decimal`, `double` e `float`:**
-
-Para esses tipos é possível utilizar números inteiros ou números decimais. Só fique atento para a configuração de cultura da sua aplicação. Se for `pt-br` utilize o separador `,` / Para o formato americano utilize `.`
-
-_EN-US:_
-
-```
-MyApp.exe --my-number 10
-MyApp.exe --my-number 0.99
-```
-
-_PT-BR:_
-
-```
-MyApp.exe --my-number 10
-MyApp.exe --my-number 0,99
-```
-
-**Sintaxe para `Boolean`:**
-
-* Para o valor TRUE use: `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
-* Para o valor FALSE use: `false`, `0`, `-` (separado por espaço ou unido com o nome do argumento).
-
-```
-MyApp.exe -a  // true
-MyApp.exe -a- // false
-MyApp.exe -a+ // true
-MyApp.exe -a - // false
-MyApp.exe -a + // true
-MyApp.exe -a true // true
-MyApp.exe -a false // false
-MyApp.exe -a 0 // true
-MyApp.exe -a 1 // false
-```
-
-_Atribuições multiplas:_
-
-Para argumentos que estão configurados com a `forma curta`, é possível definir o mesmo valor em diversos argumentos com apenas um traço `-`, veja:
-
-```csharp
-public void Main(char a, char b, char c) {};
-```
-
-```
-MyApp.exe -abc  // true for a, b and c
-MyApp.exe -abc- // false for a, b and c
-MyApp.exe -abc+ // true for a, b and c
-```
-
-**Sintaxe para `DateTime`:**
-
-Assim como os números decimais, o formato de data suportado depende da cultura que estiver configurado em sua aplicação.
-
-_EN-US:_
-
-```
-MyApp.exe --my-date "12/13/2000 00:00:00"
-```
-
-_PT-BR:_
-
-```
-MyApp.exe --my-date "13/12/2000 00:00:00"
-```
-
-_UNIVERSAL:_
-
-```
-MyApp.exe --my-date "2000-12-13 00:00:00"
-```
-
-**Sintaxe para `Enums`:**
-
-Os valores de entrada podem variar entre o nome do `Enum` no formato case-sensitive ou o seu número interno. Para `Enum Flags` utilize espaços para adicionar ao valor do argumento.
-
-```csharp
-[Flags]
-public enum Verbose
-{
-    None = 0,
-    All = 1,
-    Info = 2,
-    Success = 4,
-    Critical = 8,
-    Warning = 16,
-    Error = 32,
-    Quiet = 64
-}
-
-public void Main(Verbose verbose, string otherParameter = null);
-```
-
-```
-MyApp.exe --verbose Error Info Success
-MyApp.exe --verbose 32 2 Success
-MyApp.exe Success EnumNotContainsThisString     // positional
-```
-
-No último exemplo, o valor "EnumNotContainsThisString" não pertence ao enum `Verbose`, sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
-
-**Sintaxe para coleções genéricas e arrays**
-
-As listas/arrays tem o mesmo padrão de input, separe com um espaço para adicionar um novo item da lista. Caso seu texto tenha espaço em seu conteúdo, então o adicione entre aspas.
-
-```csharp
-public void Main(IEnumerable<decimal> myLst, string[] myArray = null);
-```
-
-```
-MyApp.exe --my-lst 1.0 1.99
-MyApp.exe 1.0 1.99 // positional
-MyApp.exe --my-lst 1.0 1.99 --my-array str1 str2
-MyApp.exe --my-lst 1.0 1.99 --my-array "string with spaces" "other string" uniqueWord
-MyApp.exe 1.0 1.99 str1 str2 // positional
-```
-
-No último exemplo, o valor "str1" quebra a sequencia de números "1.0 1.99", sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
-
-**Importante!**
-
-Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
-# <a name="help"></a>Help
-
-O formato do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. Ele é gerado de forma automática utilizando os textos de help de cada um desses elementos, por isso é importante manter essas informações preenchidas e atualizadas, isso ajudará você e quem for utilizar sua aplicação. 
-
-No formato padrão, existem duas formas de exibir o help: o `help completo` e o `help por action`:
-
-**Exibe o help para uma ação especifica:**
-
-```MyApp.exe help my-action-name```
-
-**Exibe o help completo:**
-
-```MyApp.exe help```
-
-Para o help completo, o formato de saída que será exibido será o seguinte:
-
-```
-usage:    [--argument=<phrase>] [--argument-number=<number>]
-          [-v, --verbose=<None|All|Info|Success|Critical|Warning|Error|Quiet>]
-          --required-argument=<phase>
-          <actions[args]> (A)
-
-Command help (B)
-    LongName (C1), ShortName (C2)      Help text for arguments of command (properties) (C3). Complement (C4)
-    Action (D)
-      LongName (E1), ShortName (E2)    Help text for arguments of actions (parameters) (E3). Complement (E4)
-
-Use 'help --action=<name>' to view the details of
-any action. Every action with the symbol "*" can
-have his name omitted. (F)
-```
-
-A fonte de cada texto esta em cada elemento `Commands`, `Arguments`  e `Actions` e os textos complementares estão na classe estática `SysCommand.ConsoleApp.Strings`. Segue o mapeamento de cada texto conforme o formato exibido acima:
-
-* **A:** O texto `usage` é gerado internamente pela classe `DefaultDescriptor` e sempre será exibido.
-* **B:** O texto do `Command` sempre será exibido e a sua fonte vem da propriedade `Command.HelpText` que deve ser definida no construtor do seu comando. Caso você não atribua nenhum valor para essa propriedade, o padrão será exibir o nome do comando.
-* **C:** Será exibido todas os argumentos (propriedades) do comando, um em baixo do outro.
-  * **C1:** A fonte desse texto vem do atributo `ArgumentAtrribute(LongName="")`.
-  * **C2:** A fonte desse texto vem do atributo `ArgumentAtrribute(ShortName="")`.
-  * **C3:** A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
-  * **C4:** Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
-    * `Strings.HelpArgDescRequired`: Quando o membro é obrigatório
-    * `Strings.HelpArgDescOptionalWithDefaultValue`: Quando o membro é opcional e tem default value.
-    * `Strings.HelpArgDescOptionalWithoutDefaultValue`: Quando o membro é opcional e não tem default value.
-* **D:** A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
-* **E:** São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
-* **F:** Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.
-
-**Exemplo:**
-
-```csharp
-public class HelpCommand : Command
-{
-    // With complement
-    [Argument(Help = "My property1 help")]
-    public string MyProperty1 { get; set; }
-
-    // Without complement
-    [Argument(Help = "My property2 help", ShowHelpComplement = false, IsRequired = true)]
-    public int MyProperty2 { get; set; }
-
-    public HelpCommand()
-    {
-        this.HelpText = "Help for this command";
-    }
-
-    [Action(Help = "Action help")]
-    public void MyActionHelp
-    (
-        [Argument(Help = "Argument help")]
-        string arg0, // With complement
-
-        [Argument(Help = "Argument help", ShowHelpComplement = false)]
-        string arg1  // Without complement
-    )
-    {
-
-    }
-}
-```
-
-```
-usage:    --my-property2=<number> [--my-property1=<phrase>] [-v,
-          --verbose=<None|All|Info|Success|Critical|Warning|Error|Quiet>]
-          <actions[args]>
-
-Help for this command
-
-   --my-property1    My property1 help. Is optional.
-   --my-property2    My property2 help
-
-   my-action-help    Action help
-      --arg0         Argument help. Is required.
-      --arg1         Argument help
-```
-
-
-## <a name="help-default"></a>Customizando
-
-A funcionalidade de `help` nada mais é que um comando interno `SysCommand.ConsoleApp.Commands.HelpCommand.cs` que define as duas `actions` de help que foram apresentadas no tópico anterior. Por definição, todo comando de help precisa herdar da interface `SysCommand.ConsoleApp.Commands.IHelpCommand`, assim o sistema entende que esse comando fará esse papel. Obrigatóriamente, sempre haverá um comando de help, caso o usuário não customize, o comando padrão `HelpCommand` será utilizado.
-
-Abaixo, segue um exemplo de um help completamente customizado:
-
-```csharp
-using SysCommand.ConsoleApp;
-public class Program
-{
-    public static int Main()
-    {
-        return App.RunApplication();
-    }
-
-    public class CustomHelp : Command, SysCommand.ConsoleApp.Commands.IHelpCommand
-    {
-        public string MyCustomHelp(string action = null)
-        {
-            foreach(var map in this.App.Maps)
-            {
-                
-            }
-            return "Custom help";
-        }
-    }
-}
-```
-
-```
-MyApp.exe my-custom-help
-Custom help
-
-MyApp.exe help
-Could not find any action.
-```
-
-Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o help padrão utiliza os métodos de help contidos dentro dessa instancia. Essa opção não é recomendada se você deseja apenas customizar o `help`.
-
-Uma opção mais segura seria criar um `Descriptor` herdando da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor` e sobrescrer apenas os métodos de help.
-
-```csharp
-using SysCommand.ConsoleApp;
-public class Program
-{
-    public static int Main()
-    {
-        return App.RunApplication(
-            () => {
-                var app = new App();
-                app.Descriptor = new CustomDescriptor();
-                // OR
-                app.Descriptor = new CustomDescriptor2();
-                return app;
-            }
-        );
-    }
-
-    public class CustomDescriptor : IDescriptor { ... }
-    public class CustomDescriptor2 : DefaultDescriptor
-    { 
-        public override string GetHelpText(IEnumerable<CommandMap> commandMaps) { ... }
-        public override string GetHelpText(IEnumerable<CommandMap> commandMaps, string actionName) { ... }
-    }
-}
-```
-
-**Observações:**
-
-* O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, o comando `SysCommand.ConsoleApp.Commands.HelpCommand.cs` será adicionado internamente.
-* Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](#properties-customizing-help).
-* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parametros](#methods-customizing-help).
-
 # <a name="kind-of-commands"></a>Tipos de comandos
 
 Atualmente existem tres tipos de comandos:
@@ -1124,56 +775,6 @@ public class ClearCommand : Command
     }
 }
 ```
-# <a name="verbose"></a>Verbose
-
-O controle de exibição por verbo esta contido em um comando interno chamado `SysCommand.ConsoleApp.Commands.VerboseCommand`. A sua função é alterar o valor da propriedade `App.Console.Verbose` caso o usuário envie um input de verbose. Atualmente, os verbos suportados são:
-
-* `All`: Exibe todos os verbos
-* `Info`: É o verbo padrão, sempre será exibido, ao menos que o usuário envie o verbo `Quiet`.
-* `Success`: Verbo para mensagens de sucesso. Só será exibido se o usuário solicitar.
-* `Critical`: Verbo para mensagens criticas. Só será exibido se o usuário solicitar.
-* `Warning`: Verbo para mensagens de warning. Só será exibido se o usuário solicitar.
-* `Error`: Verbo para mensagens de erro. O sistema força o envio desse verbo em caso de erros de parse. Só será exibido se o usuário solicitar.
-* `Quiet`: Verbo para não exibir nenhuma mensagem, porém se a mensagem estiver sendo forçada, esse verbo é ignorado para essa mensagem.
-
-Para que a funcionalidade funcione corretamente é obrigatorio o uso das funções de output contidas dentro da classe `SysCommand.ConsoleApp.ConsoleWrapper` e que tem uma instância disponível na propriedade `App.Console`. 
-
-**Exemplo:**
-
-```csharp
-public class TestVerbose : Command
-{
-    public void Test()
-    {
-        this.App.Console.Write("output of info"); 
-        this.App.Console.Error("output of error");
-        this.App.Console.Error("output of error forced", forceWrite: true);
-        this.App.Console.Critical("output of critical");
-    }
-}
-```
-
-_Forma curta:_
-
-```MyApp.exe test -v Critical```
-
-_Forma longa:_
-
-```MyApp.exe test --verbose Critical```
-
-Outputs:
-
-```
-output of info
-output of error forced
-output of critical
-```
-
-É importante dizer que você pode desligar esse recurso e implementar seu próprio mecanismo de verbose. Para isso você precisa desativar o comando `VerboseCommand` e criar seu próprio conjunto de funções para cada verbo. 
-
-* Para desativar o comando `VerboseCommand` utilize a forma exclusiva de especificação de comandos. Veja o tópico [Especificando os tipos de comandos](#specifying-commands).
-
-
 # <a name="output"></a>Output
 
 O mecanismo de output foi extendido para aumentar a produtividade.
@@ -1417,257 +1018,219 @@ Id   | Column2
 3    | Line 3 Line 3
 --------------------
 ```
-# <a name="argument-history-manager"></a>Gerenciamento de históricos de argumentos
+# <a name="kind-of-inputs"></a>Tipos de inputs
 
-Esse recurso permite que você salve aqueles inputs que são utilizados com muita frequencia e podem ser persistidos indeterminadamente. O seu funcionamento é bem simples, um `Command` interno chamado `SysCommand.ConsoleApp.Commands.ArgsHistoryCommand` é responsável por salvar os comandos e carrega-los quando solicitado. O arquivo `.app/history.json` é onde ficam salvos os comandos no formato `Json`. As `actions` de gerenciamento são as seguintes:
+Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
 
-* `history-save   [name]`: Utilize para salvar um comando. É obrigatório especificar um nome.
-* `history-load   [name]`: Utilize para carregar um comando usando um nome salvo anteriormente.
-* `history-delete [name]`: Utilize para deletar um comando.
-* `history-list`: Utilize para listar todos os comandos salvos.
+Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.
+
+Existe também a possibilidade de aceitar inputs posicionais, ou seja, sem a necessidade de utilizar os nomes dos argumentos. Esse tipo de input é chamado de `input posicional`.
+
 
 **Exemplo:**
 
 ```csharp
-public class TestArgsHistories : Command
-{
-    public void TestHistoryAction()
-    {
-        this.App.Console.Write("Testing"); 
-    }
-}
+public string MyProperty { get;set; }
+public void MyAction(string A, string B);
 ```
 
+**Input nomeado**:
+
+```MyApp.exe my-action -a valueA -b valueB --my-property valueMyProperty```
+
+OU usando o delimitador `/` e os separadores `=` e `:`
+
+```MyApp.exe my-action -a valueA /b:valueB --my-property=valueMyProperty```
+
+**Input posicional**:
+
+```MyApp.exe my-action valueA valueB valueMyProperty```
+
+* Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
+* Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).
+
+
+
+
+# <a name="support-types"></a>Tipos suportados
+
+Todos os tipos primitivos do .NET são suportados, incluindo suas versões anuláveis: `Nullable<?>`.
+
+* `string`
+* `bool` ou `bool?`
+* `decimal` ou `decimal?`
+* `double` ou `double?`
+* `int` ou `int?`
+* `uint` ou `uint?`
+* `DateTime` ou `DateTime?`
+* `byte` ou `byte?`
+* `short` ou `short?`
+* `ushort` ou `ushort?`
+* `long` ou `long?`
+* `ulong` ou `ulong?`
+* `float` ou `float?`
+* `char` ou `char?`
+* `Enum`/`Enum Flags` ou `Enum?`
+* `Generic collections` (`IEnumerable`, `IList`, `ICollection`)
+* `Arrays`
+
+**Sintaxe genérica:**
+
+```[action-name ][-|/|--][argument-name][=|:| ][value]```
+
+**Sintaxe para `string`:**
+
+As `strings` podem ser utilizadas de duas formas:
+
+* Texto com espaços: Utilize aspas `" "` para textos com espaços. Do contrário você terá um erro de parse.
+* Texto sem espaços: Não é obrigatório o uso de aspas, basta inserir seu valor diretamente.
+
 ```
-C:\MyApp.exe test-history-action history-save "CommonCommand1"
-Testing
-
-C:\MyApp.exe history-load "CommonCommand1"
-Testing
-
-C:\MyApp.exe history-list
-[CommonCommand1] test-history-action
-
-C:\MyApp.exe history-remove "CommonCommand1"
-C:\MyApp.exe history-list
+MyApp.exe --my-string oneWord
+MyApp.exe --my-string "oneWord"
+MyApp.exe --my-string "two words"
 ```
 
-Os dois últimos comandos não retornam outpus.
+**Sintaxe para `char`:**
 
-* Para desativar o comando `ArgsHistoryCommand` veja o tópico [Especificando os tipos de comandos](#specifying-commands).
-* A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico [Redirecionamento de comandos](#redirectiong-commands).
-* Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
+Assim como em .NET os chars podem ter valores com apenas um caracter ou com um número que represente seu valor na escala de caracteres.
 
+```
+MyApp.exe --my-char 1
+MyApp.exe --my-char A
+```
 
-# <a name="redirectiong-commands"></a>Redirecionamento de comandos
+**Sintaxe para `int`, `long`, `short` e suas variações "u" :**
 
-Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instancia da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instancias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
+São entradas númericas onde a única regra é o valor inserido não ultrapassar o limite de cada tipo.
 
-**Exemplo:**
+```
+MyApp.exe --my-number 1
+MyApp.exe --my-number 2
+MyApp.exe --my-number 999999
+```
+
+**Sintaxe para `decimal`, `double` e `float`:**
+
+Para esses tipos é possível utilizar números inteiros ou números decimais. Só fique atento para a configuração de cultura da sua aplicação. Se for `pt-br` utilize o separador `,` / Para o formato americano utilize `.`
+
+_EN-US:_
+
+```
+MyApp.exe --my-number 10
+MyApp.exe --my-number 0.99
+```
+
+_PT-BR:_
+
+```
+MyApp.exe --my-number 10
+MyApp.exe --my-number 0,99
+```
+
+**Sintaxe para `Boolean`:**
+
+* Para o valor TRUE use: `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
+* Para o valor FALSE use: `false`, `0`, `-` (separado por espaço ou unido com o nome do argumento).
+
+```
+MyApp.exe -a  // true
+MyApp.exe -a- // false
+MyApp.exe -a+ // true
+MyApp.exe -a - // false
+MyApp.exe -a + // true
+MyApp.exe -a true // true
+MyApp.exe -a false // false
+MyApp.exe -a 0 // true
+MyApp.exe -a 1 // false
+```
+
+_Atribuições multiplas:_
+
+Para argumentos que estão configurados com a `forma curta`, é possível definir o mesmo valor em diversos argumentos com apenas um traço `-`, veja:
 
 ```csharp
-public class RedirectCommand : Command
-{
-    private int _count;
-
-    public RedirectResult RedirectNow(string arg)
-    {
-        _count++;
-        App.Console.Write($"Redirecting now!!. Count: {_count}");
-        return new RedirectResult("redirected", "--arg", arg);
-    }
-
-    public string Something()
-    {
-        return "Something";
-    }
-    
-    public string Redirected(string arg)
-    {
-        _count++;
-        return $"Redirected: {arg}. Count: {_count}";
-    }
-}
+public void Main(char a, char b, char c) {};
 ```
 
-No exemplo abaixo a action `Something` será executada, pois esta antes do redirect.
-
 ```
-C:\MyApp.exe something redirect-now my-value
-Something
-Redirecting now!!. Count: 1
-Redirected: my-value. Count: 2
+MyApp.exe -abc  // true for a, b and c
+MyApp.exe -abc- // false for a, b and c
+MyApp.exe -abc+ // true for a, b and c
 ```
 
-No exemplo abaixo a action `Something` não será executada, pois esta depois do redirect.
+**Sintaxe para `DateTime`:**
+
+Assim como os números decimais, o formato de data suportado depende da cultura que estiver configurado em sua aplicação.
+
+_EN-US:_
 
 ```
-C:\MyApp.exe redirect-now my-value something
-Redirecting now!!. Count: 1
-Redirected: my-value. Count: 2
+MyApp.exe --my-date "12/13/2000 00:00:00"
 ```
-# <a name="stop-propagation"></a>Cancelamento da continuidade da execução
 
-Quando existem muitas actions com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.
+_PT-BR:_
 
-**Exemplo:**
+```
+MyApp.exe --my-date "13/12/2000 00:00:00"
+```
+
+_UNIVERSAL:_
+
+```
+MyApp.exe --my-date "2000-12-13 00:00:00"
+```
+
+**Sintaxe para `Enums`:**
+
+Os valores de entrada podem variar entre o nome do `Enum` no formato case-sensitive ou o seu número interno. Para `Enum Flags` utilize espaços para adicionar ao valor do argumento.
 
 ```csharp
-public class StopPropagationCommand1 : Command
+[Flags]
+public enum Verbose
 {
-    public string StopPropagationAction1(bool cancel = false)
-    {
-        return "StopPropagationCommand1.StopPropagationAction1";
-    }
-
-    public string StopPropagationAction2()
-    {
-        return "StopPropagationCommand1.StopPropagationAction2";
-    }
+    None = 0,
+    All = 1,
+    Info = 2,
+    Success = 4,
+    Critical = 8,
+    Warning = 16,
+    Error = 32,
+    Quiet = 64
 }
 
-public class StopPropagationCommand2 : Command
-{
-    public string StopPropagationAction1(bool cancel = false)
-    {
-        if (cancel)
-        {
-            ExecutionScope.StopPropagation();
-        }
-
-        return "StopPropagationCommand2.StopPropagationAction1";
-    }
-
-    public string StopPropagationAction2()
-    {
-        return "StopPropagationCommand2.StopPropagationAction2";
-    }
-}
-
-public class StopPropagationCommand3 : Command
-{
-    public string StopPropagationAction1(bool cancel = false)
-    {
-        return "StopPropagationCommand3.StopPropagationAction1";
-    }
-
-    public string StopPropagationAction2()
-    {
-        return "StopPropagationCommand3.StopPropagationAction2";
-    }
-}
+public void Main(Verbose verbose, string otherParameter = null);
 ```
 
 ```
-C:\MyApp.exe stop-propagation-action1
-StopPropagationCommand1.StopPropagationAction1
-StopPropagationCommand2.StopPropagationAction1
-StopPropagationCommand3.StopPropagationAction1
-
-C:\MyApp.exe stop-propagation-action1 --cancel
-StopPropagationCommand1.StopPropagationAction1
-StopPropagationCommand2.StopPropagationAction1
+MyApp.exe --verbose Error Info Success
+MyApp.exe --verbose 32 2 Success
+MyApp.exe Success EnumNotContainsThisString     // positional
 ```
 
-Perceba que ao utilizar o argumento "--cancel" a action "StopPropagationCommand3.StopPropagationAction1" não foi executada. Isso por que ela estava na última posição da pilha de execução e como a action "StopPropagationCommand2.StopPropagationAction1" cancelou a continuidade da execução, qualquer outra action da sequencia sera ignorada.
+No último exemplo, o valor "EnumNotContainsThisString" não pertence ao enum `Verbose`, sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
 
-Outra possibilidade de uso do `StopPropagation` é quando existem multiplas actions no mesmo input. A lógica é a mesma, será cancelado todas as actions da pilha que estão depois da action que disparou o stop.
+**Sintaxe para coleções genéricas e arrays**
 
-```
-C:\MyApp.exe stop-propagation-action1 stop-propagation-action2
-StopPropagationCommand1.StopPropagationAction1
-StopPropagationCommand2.StopPropagationAction1
-StopPropagationCommand3.StopPropagationAction1
-StopPropagationCommand1.StopPropagationAction2
-StopPropagationCommand2.StopPropagationAction2
-StopPropagationCommand3.StopPropagationAction2
-
-C:\MyApp.exe stop-propagation-action1 --cancel stop-propagation-action2
-StopPropagationCommand1.StopPropagationAction1
-StopPropagationCommand2.StopPropagationAction1
-```
-Perceba que a execução parou no mesmo ponto.
-
-
-# <a name="error"></a>Tratamento de erros
-
-O tratamento de erro é gerado de forma automatica pelo sistema e são categorizados da seguinte forma:
-
-* Erros no processo de parse: São erros que ocorrem no processo de parse e são sub-categorizados da seguinte forma:
-  * `ArgumentParsedState.ArgumentAlreadyBeenSet`: Indica que um argumento esta duplicado no mesmo input.
-  * `ArgumentParsedState.ArgumentNotExistsByName`: Indica que um argumento nomeado não existe.
-  * `ArgumentParsedState.ArgumentNotExistsByValue`: Indica que um argumento posicional não existe
-  * `ArgumentParsedState.ArgumentIsRequired`: Indica que um argumento é obrigatório
-  * `ArgumentParsedState.ArgumentHasInvalidInput`: Indica que um argumento esta inválido
-  * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados em [Tipos suportados](#support-types).
-* Not Found: Nenhuma rota encontrada para o input solicitado.
-* Exception génerica: Não existe nenhum tipo de tratamento padrão, mas é possível interceptar qualquer exception dentro do evento `App.OnException`.
-
-O responsável por formatar e imprimir os erros é o handler padrão `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` que intercepta o resultado final da execução e caso tenha erros chama o método `ShowErrors(ApplicationResult appResult)` ou `ShowNotFound(ApplicationResult appResult)` da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor`. 
-
-Caso queira customizar as mensagens de erro, você pode trocar o handler `DefaultApplicationHandler` por completo (não recomendado) ou criar uma classe que herde de `DefaultDescriptor` subrescrevendo apenas os métodos de erros.
-
-**Exemplo:**
+As listas/arrays tem o mesmo padrão de input, separe com um espaço para adicionar um novo item da lista. Caso seu texto tenha espaço em seu conteúdo, então o adicione entre aspas.
 
 ```csharp
-using SysCommand.ConsoleApp;
-public class Program
-{
-    public static int Main()
-    {
-        return App.RunApplication(
-            () => {
-                var app = new App();
-                app.Descriptor = new CustomDescriptor();
-                app.OnException += (appResult, exception) =>
-                {
-                    app.Console.ExitCode = ExitCodeConstants.Error;
-                    app.Console.Write(exception.Message);
-                };
-                return app;
-            }
-        );
-    }
-
-    public class CustomDescriptor : DefaultDescriptor
-    {
-        public override void ShowErrors(ApplicationResult appResult)
-        {
-            foreach (ExecutionError error in appResult.ExecutionResult.Errors)
-            {
-                foreach (ArgumentParsed prop in error.PropertiesInvalid)
-                {
-                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentAlreadyBeenSet))
-                        appResult.App.Console.Error(string.Format("The argument '{0}' has already been set", prop.GetArgumentNameInputted()));
-                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByName))
-                        appResult.App.Console.Error(string.Format("The argument '{0}' does not exist", prop.GetArgumentNameInputted()));
-                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByValue))
-                        appResult.App.Console.Error(string.Format("Could not find an argument to the specified value: {0}", prop.Raw));
-                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsRequired))
-                        appResult.App.Console.Error(string.Format("The argument '{0}' is required", prop.GetArgumentNameInputted()));
-                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasInvalidInput))
-                        appResult.App.Console.Error(string.Format("The argument '{0}' is invalid", prop.GetArgumentNameInputted()));
-                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasUnsupportedType))
-                        appResult.App.Console.Error(string.Format("The argument '{0}' is unsupported", prop.GetArgumentNameInputted()));
-                }
-
-                foreach (ActionParsed method in error.MethodsInvalid)
-                {
-                    foreach (ArgumentParsed parameter in method.Arguments)
-                    {
-                        ...
-                    }
-                }
-            }
-        }
-
-        public override void ShowNotFound(ApplicationResult appResult)
-        {
-            appResult.App.Console.Error("Could not find any action.", forceWrite: true);
-        }
-    }
-}
+public void Main(IEnumerable<decimal> myLst, string[] myArray = null);
 ```
+
+```
+MyApp.exe --my-lst 1.0 1.99
+MyApp.exe 1.0 1.99 // positional
+MyApp.exe --my-lst 1.0 1.99 --my-array str1 str2
+MyApp.exe --my-lst 1.0 1.99 --my-array "string with spaces" "other string" uniqueWord
+MyApp.exe 1.0 1.99 str1 str2 // positional
+```
+
+No último exemplo, o valor "str1" quebra a sequencia de números "1.0 1.99", sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
+
+**Importante!**
+
+Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
 # <a name="properties"></a>Trabalhando com propriedades
 
 O trabalho com propriedades é muito simples e objetivo, basta criar suas propriedades como publicas e escolher um dos dois meios abaixo para saber se uma propriedade foi inputada pelo usuário, você que escolhe qual utilizar:
@@ -2458,38 +2021,475 @@ ActionWhenNotExistsInput()
 * O uso de método padrão sem argumentos só funciona se não existir nenhum argumento required, do contrário esse método nunca será chamado, pois haverá um erro obrigando o uso do argumento.'
 
 
-# <a name="kind-of-inputs"></a>Tipos de inputs
+# <a name="help"></a>Help
 
-Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
+O formato do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. Ele é gerado de forma automática utilizando os textos de help de cada um desses elementos, por isso é importante manter essas informações preenchidas e atualizadas, isso ajudará você e quem for utilizar sua aplicação. 
 
-Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.
+No formato padrão, existem duas formas de exibir o help: o `help completo` e o `help por action`:
 
-Existe também a possibilidade de aceitar inputs posicionais, ou seja, sem a necessidade de utilizar os nomes dos argumentos. Esse tipo de input é chamado de `input posicional`.
+**Exibe o help para uma ação especifica:**
 
+```MyApp.exe help my-action-name```
+
+**Exibe o help completo:**
+
+```MyApp.exe help```
+
+Para o help completo, o formato de saída que será exibido será o seguinte:
+
+```
+usage:    [--argument=<phrase>] [--argument-number=<number>]
+          [-v, --verbose=<None|All|Info|Success|Critical|Warning|Error|Quiet>]
+          --required-argument=<phase>
+          <actions[args]> (A)
+
+Command help (B)
+    LongName (C1), ShortName (C2)      Help text for arguments of command (properties) (C3). Complement (C4)
+    Action (D)
+      LongName (E1), ShortName (E2)    Help text for arguments of actions (parameters) (E3). Complement (E4)
+
+Use 'help --action=<name>' to view the details of
+any action. Every action with the symbol "*" can
+have his name omitted. (F)
+```
+
+A fonte de cada texto esta em cada elemento `Commands`, `Arguments`  e `Actions` e os textos complementares estão na classe estática `SysCommand.ConsoleApp.Strings`. Segue o mapeamento de cada texto conforme o formato exibido acima:
+
+* **A:** O texto `usage` é gerado internamente pela classe `DefaultDescriptor` e sempre será exibido.
+* **B:** O texto do `Command` sempre será exibido e a sua fonte vem da propriedade `Command.HelpText` que deve ser definida no construtor do seu comando. Caso você não atribua nenhum valor para essa propriedade, o padrão será exibir o nome do comando.
+* **C:** Será exibido todas os argumentos (propriedades) do comando, um em baixo do outro.
+  * **C1:** A fonte desse texto vem do atributo `ArgumentAtrribute(LongName="")`.
+  * **C2:** A fonte desse texto vem do atributo `ArgumentAtrribute(ShortName="")`.
+  * **C3:** A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
+  * **C4:** Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
+    * `Strings.HelpArgDescRequired`: Quando o membro é obrigatório
+    * `Strings.HelpArgDescOptionalWithDefaultValue`: Quando o membro é opcional e tem default value.
+    * `Strings.HelpArgDescOptionalWithoutDefaultValue`: Quando o membro é opcional e não tem default value.
+* **D:** A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
+* **E:** São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
+* **F:** Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.
 
 **Exemplo:**
 
 ```csharp
-public string MyProperty { get;set; }
-public void MyAction(string A, string B);
+public class HelpCommand : Command
+{
+    // With complement
+    [Argument(Help = "My property1 help")]
+    public string MyProperty1 { get; set; }
+
+    // Without complement
+    [Argument(Help = "My property2 help", ShowHelpComplement = false, IsRequired = true)]
+    public int MyProperty2 { get; set; }
+
+    public HelpCommand()
+    {
+        this.HelpText = "Help for this command";
+    }
+
+    [Action(Help = "Action help")]
+    public void MyActionHelp
+    (
+        [Argument(Help = "Argument help")]
+        string arg0, // With complement
+
+        [Argument(Help = "Argument help", ShowHelpComplement = false)]
+        string arg1  // Without complement
+    )
+    {
+
+    }
+}
 ```
 
-**Input nomeado**:
+```
+usage:    --my-property2=<number> [--my-property1=<phrase>] [-v,
+          --verbose=<None|All|Info|Success|Critical|Warning|Error|Quiet>]
+          <actions[args]>
 
-```MyApp.exe my-action -a valueA -b valueB --my-property valueMyProperty```
+Help for this command
 
-OU usando o delimitador `/` e os separadores `=` e `:`
+   --my-property1    My property1 help. Is optional.
+   --my-property2    My property2 help
 
-```MyApp.exe my-action -a valueA /b:valueB --my-property=valueMyProperty```
-
-**Input posicional**:
-
-```MyApp.exe my-action valueA valueB valueMyProperty```
-
-* Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
-* Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).
+   my-action-help    Action help
+      --arg0         Argument help. Is required.
+      --arg1         Argument help
+```
 
 
+## <a name="help-default"></a>Customizando
+
+A funcionalidade de `help` nada mais é que um comando interno `SysCommand.ConsoleApp.Commands.HelpCommand.cs` que define as duas `actions` de help que foram apresentadas no tópico anterior. Por definição, todo comando de help precisa herdar da interface `SysCommand.ConsoleApp.Commands.IHelpCommand`, assim o sistema entende que esse comando fará esse papel. Obrigatóriamente, sempre haverá um comando de help, caso o usuário não customize, o comando padrão `HelpCommand` será utilizado.
+
+Abaixo, segue um exemplo de um help completamente customizado:
+
+```csharp
+using SysCommand.ConsoleApp;
+public class Program
+{
+    public static int Main()
+    {
+        return App.RunApplication();
+    }
+
+    public class CustomHelp : Command, SysCommand.ConsoleApp.Commands.IHelpCommand
+    {
+        public string MyCustomHelp(string action = null)
+        {
+            foreach(var map in this.App.Maps)
+            {
+                
+            }
+            return "Custom help";
+        }
+    }
+}
+```
+
+```
+MyApp.exe my-custom-help
+Custom help
+
+MyApp.exe help
+Could not find any action.
+```
+
+Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o help padrão utiliza os métodos de help contidos dentro dessa instancia. Essa opção não é recomendada se você deseja apenas customizar o `help`.
+
+Uma opção mais segura seria criar um `Descriptor` herdando da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor` e sobrescrer apenas os métodos de help.
+
+```csharp
+using SysCommand.ConsoleApp;
+public class Program
+{
+    public static int Main()
+    {
+        return App.RunApplication(
+            () => {
+                var app = new App();
+                app.Descriptor = new CustomDescriptor();
+                // OR
+                app.Descriptor = new CustomDescriptor2();
+                return app;
+            }
+        );
+    }
+
+    public class CustomDescriptor : IDescriptor { ... }
+    public class CustomDescriptor2 : DefaultDescriptor
+    { 
+        public override string GetHelpText(IEnumerable<CommandMap> commandMaps) { ... }
+        public override string GetHelpText(IEnumerable<CommandMap> commandMaps, string actionName) { ... }
+    }
+}
+```
+
+**Observações:**
+
+* O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, o comando `SysCommand.ConsoleApp.Commands.HelpCommand.cs` será adicionado internamente.
+* Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](#properties-customizing-help).
+* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parametros](#methods-customizing-help).
+
+# <a name="verbose"></a>Verbose
+
+O controle de exibição por verbo esta contido em um comando interno chamado `SysCommand.ConsoleApp.Commands.VerboseCommand`. A sua função é alterar o valor da propriedade `App.Console.Verbose` caso o usuário envie um input de verbose. Atualmente, os verbos suportados são:
+
+* `All`: Exibe todos os verbos
+* `Info`: É o verbo padrão, sempre será exibido, ao menos que o usuário envie o verbo `Quiet`.
+* `Success`: Verbo para mensagens de sucesso. Só será exibido se o usuário solicitar.
+* `Critical`: Verbo para mensagens criticas. Só será exibido se o usuário solicitar.
+* `Warning`: Verbo para mensagens de warning. Só será exibido se o usuário solicitar.
+* `Error`: Verbo para mensagens de erro. O sistema força o envio desse verbo em caso de erros de parse. Só será exibido se o usuário solicitar.
+* `Quiet`: Verbo para não exibir nenhuma mensagem, porém se a mensagem estiver sendo forçada, esse verbo é ignorado para essa mensagem.
+
+Para que a funcionalidade funcione corretamente é obrigatorio o uso das funções de output contidas dentro da classe `SysCommand.ConsoleApp.ConsoleWrapper` e que tem uma instância disponível na propriedade `App.Console`. 
+
+**Exemplo:**
+
+```csharp
+public class TestVerbose : Command
+{
+    public void Test()
+    {
+        this.App.Console.Write("output of info"); 
+        this.App.Console.Error("output of error");
+        this.App.Console.Error("output of error forced", forceWrite: true);
+        this.App.Console.Critical("output of critical");
+    }
+}
+```
+
+_Forma curta:_
+
+```MyApp.exe test -v Critical```
+
+_Forma longa:_
+
+```MyApp.exe test --verbose Critical```
+
+Outputs:
+
+```
+output of info
+output of error forced
+output of critical
+```
+
+É importante dizer que você pode desligar esse recurso e implementar seu próprio mecanismo de verbose. Para isso você precisa desativar o comando `VerboseCommand` e criar seu próprio conjunto de funções para cada verbo. 
+
+* Para desativar o comando `VerboseCommand` utilize a forma exclusiva de especificação de comandos. Veja o tópico [Especificando os tipos de comandos](#specifying-commands).
+
+
+# <a name="error"></a>Tratamento de erros
+
+O tratamento de erro é gerado de forma automatica pelo sistema e são categorizados da seguinte forma:
+
+* Erros no processo de parse: São erros que ocorrem no processo de parse e são sub-categorizados da seguinte forma:
+  * `ArgumentParsedState.ArgumentAlreadyBeenSet`: Indica que um argumento esta duplicado no mesmo input.
+  * `ArgumentParsedState.ArgumentNotExistsByName`: Indica que um argumento nomeado não existe.
+  * `ArgumentParsedState.ArgumentNotExistsByValue`: Indica que um argumento posicional não existe
+  * `ArgumentParsedState.ArgumentIsRequired`: Indica que um argumento é obrigatório
+  * `ArgumentParsedState.ArgumentHasInvalidInput`: Indica que um argumento esta inválido
+  * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados em [Tipos suportados](#support-types).
+* Not Found: Nenhuma rota encontrada para o input solicitado.
+* Exception génerica: Não existe nenhum tipo de tratamento padrão, mas é possível interceptar qualquer exception dentro do evento `App.OnException`.
+
+O responsável por formatar e imprimir os erros é o handler padrão `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` que intercepta o resultado final da execução e caso tenha erros chama o método `ShowErrors(ApplicationResult appResult)` ou `ShowNotFound(ApplicationResult appResult)` da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor`. 
+
+Caso queira customizar as mensagens de erro, você pode trocar o handler `DefaultApplicationHandler` por completo (não recomendado) ou criar uma classe que herde de `DefaultDescriptor` subrescrevendo apenas os métodos de erros.
+
+**Exemplo:**
+
+```csharp
+using SysCommand.ConsoleApp;
+public class Program
+{
+    public static int Main()
+    {
+        return App.RunApplication(
+            () => {
+                var app = new App();
+                app.Descriptor = new CustomDescriptor();
+                app.OnException += (appResult, exception) =>
+                {
+                    app.Console.ExitCode = ExitCodeConstants.Error;
+                    app.Console.Write(exception.Message);
+                };
+                return app;
+            }
+        );
+    }
+
+    public class CustomDescriptor : DefaultDescriptor
+    {
+        public override void ShowErrors(ApplicationResult appResult)
+        {
+            foreach (ExecutionError error in appResult.ExecutionResult.Errors)
+            {
+                foreach (ArgumentParsed prop in error.PropertiesInvalid)
+                {
+                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentAlreadyBeenSet))
+                        appResult.App.Console.Error(string.Format("The argument '{0}' has already been set", prop.GetArgumentNameInputted()));
+                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByName))
+                        appResult.App.Console.Error(string.Format("The argument '{0}' does not exist", prop.GetArgumentNameInputted()));
+                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentNotExistsByValue))
+                        appResult.App.Console.Error(string.Format("Could not find an argument to the specified value: {0}", prop.Raw));
+                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentIsRequired))
+                        appResult.App.Console.Error(string.Format("The argument '{0}' is required", prop.GetArgumentNameInputted()));
+                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasInvalidInput))
+                        appResult.App.Console.Error(string.Format("The argument '{0}' is invalid", prop.GetArgumentNameInputted()));
+                    if (prop.ParsingStates.HasFlag(ArgumentParsedState.ArgumentHasUnsupportedType))
+                        appResult.App.Console.Error(string.Format("The argument '{0}' is unsupported", prop.GetArgumentNameInputted()));
+                }
+
+                foreach (ActionParsed method in error.MethodsInvalid)
+                {
+                    foreach (ArgumentParsed parameter in method.Arguments)
+                    {
+                        ...
+                    }
+                }
+            }
+        }
+
+        public override void ShowNotFound(ApplicationResult appResult)
+        {
+            appResult.App.Console.Error("Could not find any action.", forceWrite: true);
+        }
+    }
+}
+```
+# <a name="redirectiong-commands"></a>Redirecionamento de comandos
+
+Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instancia da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instancias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
+
+**Exemplo:**
+
+```csharp
+public class RedirectCommand : Command
+{
+    private int _count;
+
+    public RedirectResult RedirectNow(string arg)
+    {
+        _count++;
+        App.Console.Write($"Redirecting now!!. Count: {_count}");
+        return new RedirectResult("redirected", "--arg", arg);
+    }
+
+    public string Something()
+    {
+        return "Something";
+    }
+    
+    public string Redirected(string arg)
+    {
+        _count++;
+        return $"Redirected: {arg}. Count: {_count}";
+    }
+}
+```
+
+No exemplo abaixo a action `Something` será executada, pois esta antes do redirect.
+
+```
+C:\MyApp.exe something redirect-now my-value
+Something
+Redirecting now!!. Count: 1
+Redirected: my-value. Count: 2
+```
+
+No exemplo abaixo a action `Something` não será executada, pois esta depois do redirect.
+
+```
+C:\MyApp.exe redirect-now my-value something
+Redirecting now!!. Count: 1
+Redirected: my-value. Count: 2
+```
+# <a name="stop-propagation"></a>Cancelamento da continuidade da execução
+
+Quando existem muitas actions com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.
+
+**Exemplo:**
+
+```csharp
+public class StopPropagationCommand1 : Command
+{
+    public string StopPropagationAction1(bool cancel = false)
+    {
+        return "StopPropagationCommand1.StopPropagationAction1";
+    }
+
+    public string StopPropagationAction2()
+    {
+        return "StopPropagationCommand1.StopPropagationAction2";
+    }
+}
+
+public class StopPropagationCommand2 : Command
+{
+    public string StopPropagationAction1(bool cancel = false)
+    {
+        if (cancel)
+        {
+            ExecutionScope.StopPropagation();
+        }
+
+        return "StopPropagationCommand2.StopPropagationAction1";
+    }
+
+    public string StopPropagationAction2()
+    {
+        return "StopPropagationCommand2.StopPropagationAction2";
+    }
+}
+
+public class StopPropagationCommand3 : Command
+{
+    public string StopPropagationAction1(bool cancel = false)
+    {
+        return "StopPropagationCommand3.StopPropagationAction1";
+    }
+
+    public string StopPropagationAction2()
+    {
+        return "StopPropagationCommand3.StopPropagationAction2";
+    }
+}
+```
+
+```
+C:\MyApp.exe stop-propagation-action1
+StopPropagationCommand1.StopPropagationAction1
+StopPropagationCommand2.StopPropagationAction1
+StopPropagationCommand3.StopPropagationAction1
+
+C:\MyApp.exe stop-propagation-action1 --cancel
+StopPropagationCommand1.StopPropagationAction1
+StopPropagationCommand2.StopPropagationAction1
+```
+
+Perceba que ao utilizar o argumento "--cancel" a action "StopPropagationCommand3.StopPropagationAction1" não foi executada. Isso por que ela estava na última posição da pilha de execução e como a action "StopPropagationCommand2.StopPropagationAction1" cancelou a continuidade da execução, qualquer outra action da sequencia sera ignorada.
+
+Outra possibilidade de uso do `StopPropagation` é quando existem multiplas actions no mesmo input. A lógica é a mesma, será cancelado todas as actions da pilha que estão depois da action que disparou o stop.
+
+```
+C:\MyApp.exe stop-propagation-action1 stop-propagation-action2
+StopPropagationCommand1.StopPropagationAction1
+StopPropagationCommand2.StopPropagationAction1
+StopPropagationCommand3.StopPropagationAction1
+StopPropagationCommand1.StopPropagationAction2
+StopPropagationCommand2.StopPropagationAction2
+StopPropagationCommand3.StopPropagationAction2
+
+C:\MyApp.exe stop-propagation-action1 --cancel stop-propagation-action2
+StopPropagationCommand1.StopPropagationAction1
+StopPropagationCommand2.StopPropagationAction1
+```
+Perceba que a execução parou no mesmo ponto.
+
+
+# <a name="argument-history-manager"></a>Gerenciamento de históricos de argumentos
+
+Esse recurso permite que você salve aqueles inputs que são utilizados com muita frequencia e podem ser persistidos indeterminadamente. O seu funcionamento é bem simples, um `Command` interno chamado `SysCommand.ConsoleApp.Commands.ArgsHistoryCommand` é responsável por salvar os comandos e carrega-los quando solicitado. O arquivo `.app/history.json` é onde ficam salvos os comandos no formato `Json`. As `actions` de gerenciamento são as seguintes:
+
+* `history-save   [name]`: Utilize para salvar um comando. É obrigatório especificar um nome.
+* `history-load   [name]`: Utilize para carregar um comando usando um nome salvo anteriormente.
+* `history-delete [name]`: Utilize para deletar um comando.
+* `history-list`: Utilize para listar todos os comandos salvos.
+
+**Exemplo:**
+
+```csharp
+public class TestArgsHistories : Command
+{
+    public void TestHistoryAction()
+    {
+        this.App.Console.Write("Testing"); 
+    }
+}
+```
+
+```
+C:\MyApp.exe test-history-action history-save "CommonCommand1"
+Testing
+
+C:\MyApp.exe history-load "CommonCommand1"
+Testing
+
+C:\MyApp.exe history-list
+[CommonCommand1] test-history-action
+
+C:\MyApp.exe history-remove "CommonCommand1"
+C:\MyApp.exe history-list
+```
+
+Os dois últimos comandos não retornam outpus.
+
+* Para desativar o comando `ArgsHistoryCommand` veja o tópico [Especificando os tipos de comandos](#specifying-commands).
+* A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico [Redirecionamento de comandos](#redirectiong-commands).
+* Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
 
 
 # <a name="license"></a>Licença
