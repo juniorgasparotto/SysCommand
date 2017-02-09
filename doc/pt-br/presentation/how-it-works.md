@@ -97,7 +97,7 @@ Os argumentos representam o meio mais básico de uma aplicação console, são o
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja <anchor-get name="properties" />, <anchor-get name="properties-ignore-public" />, <anchor-get name="kind-of-inputs" /> e <anchor-get name="support-types" />.
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja <anchor-get name="properties" />, <anchor-get name="properties-ignore-public" />, <anchor-get name="input" /> e <anchor-get name="support-types" />.
 
 **`Action`**
 

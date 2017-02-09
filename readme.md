@@ -100,7 +100,7 @@ Os argumentos representam o meio mais básico de uma aplicação console, são o
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#properties), [Ignorar propriedades publicas por uma escolha manual usando atributo](#properties-ignore-public), [Argumento nomeado](#kind-of-inputs) e .
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#properties), [Ignorar propriedades publicas por uma escolha manual usando atributo](#properties-ignore-public), [Input](#input) e [Tipos suportados](#support-types).
 
 **`Action`**
 
@@ -305,7 +305,7 @@ Commit
 **Saiba mais...**
 
 * Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](#properties).
-* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de .
+* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](#support-types).
 * Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja [Verbose](#verbose).
 * Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](#output).
 * Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja [Customizando os nomes dos argumentos](#properties-customizing-name) e [Customizando nomes de actions e arguments](#methods-customizing-names).
@@ -355,9 +355,9 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Tipos de comandos](#kind-of-commands)
   * [Controle de eventos](#events)
 * [Input](#input)
-  * [Argumento nomeado](#kind-of-inputs)
-  * [Argumento posicional](#input-positional)
-  * [Tipo "Argumento"](#kind-of-inputs)
+   * [Input nomeado](#input-named)
+   * [Input posicional](#input-positional)
+  * [Tipos suportados](#support-types)
   * [Utilizando o recurso de MultiAction](#using-the-multi-action-feature)
 * [Output](#output)
   * [Usando template Razor](#output-razor)
@@ -720,10 +720,31 @@ new App(addDefaultAppHandler: false)
 
 # <a name="input"></a>Input
 
-Chamamos de input todas as linhas de comandos que o usuário digita e envia para o aplicativo. Basicamente existem apenas dois tipos de inputs: os `arguments` e as `actions`. Cada um deles tem suas peculiaridades e vamos explicar abaixo:
-## <a name="kind-of-inputs"></a>Argumento nomeado
+Chamamos de input todas as linhas de comandos que o usuário digita e envia para o aplicativo. Os formatos de input se dividem entre `arguments` e `actions`.
 
-Os argumentos, sejam eles paramentros de métodos ou propriedades, podem ter duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento. Esse tipo de input (longo ou curto) é chamado de `input nomeado`.
+Os `arguments` representam o meio mais básico de uma aplicação console, são normalmente representados da seguinte forma:
+
+```
+C:\MyApp.exe --argument-name value     // Long
+C:\MyApp.exe -v value                  // Short
+C:\MyApp.exe value                     // Positional
+```
+Programaticamente, os `arguments` podem ser derivados de `properties` ou dos parâmetros dos `methods`.
+
+Já as `actions` são palavras reservadas para executar uma determinada ação em seu aplicativo. Elas não precisam de nenhum sufixo como ocorre com os `arguments`,basta usa-las diretamente em seu input. Um bom exemplo de `action` são os recursos do `git` como:
+
+```
+git add -A; 
+git commit -m "comments"
+```
+
+Onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`.
+
+Programaticamente, as `actions` são derivadas dos `methods`.
+
+### <a name="input-named"></a>Input nomeado
+
+O input nomeado é caracterizado por duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento.
 
 Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.
 
@@ -731,45 +752,236 @@ Os valores dos argumentos devem estar na frente do nome do argumento separados p
 
 ```csharp
 public string MyProperty { get;set; }
-public void MyAction(string A, string B);
+public string v { get;set; }
 ```
 
-```
-MyApp.exe my-action -a valueA -b valueB --my-property valueMyProperty
-```
-
-OU usando o delimitador `/` e os separadores `=` e `:`
+_Input longo:_
 
 ```
-MyApp.exe my-action -a valueA /b:valueB --my-property=valueMyProperty
+MyApp.exe --my-property value
+MyApp.exe -v value
 ```
 
-## <a name="input-positional"></a>Argumento posicional
+_Input curto:_
 
-Existe também a possibilidade de aceitar inputs posicionais, ou seja, sem a necessidade de utilizar os nomes dos argumentos. Esse tipo de input é chamado de `input posicional`.
+```
+MyApp.exe -v value
+```
+
+_OU usando o delimitador `/` e os separadores `=` e `:`_
+
+```
+MyApp.exe --my-property=value
+MyApp.exe /v:value
+```
+
+### <a name="input-positional"></a>Input posicional
+
+Os inputs posicionais funcionam sem a necessidade de utilizar os nomes dos argumentos. Basta inserir seus valores diretamente. Só é preciso tomar cuidado com esse recurso, pois pode confundir o usuário em caso de muitos argumentos posicionais.
 
 **Exemplo:**
 
 ```csharp
-public string MyProperty { get;set; }
-public void MyAction(string A, string B);
+public string PropA { get;set; }
+public string PropB { get;set; }
+public string PropC { get;set; }
 ```
 
+_Input nomeado:_
+
 ```
-MyApp.exe my-action valueA valueB valueMyProperty
+MyApp.exe --prop-a ValueA --prop-b ValueB --prop-c ValueC
 ```
+
+_Input posicional:_
+
+```
+MyApp.exe ValueA ValueB ValueC
+```
+_Observações:_
 
 * Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
-* **Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).**
+* Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).
 
+## <a name="support-types"></a>Tipos suportados
 
+Todos os tipos primitivos do .NET são suportados, incluindo suas versões anuláveis: `Nullable<?>`.
 
+* `string`
+* `bool` ou `bool?`
+* `decimal` ou `decimal?`
+* `double` ou `double?`
+* `int` ou `int?`
+* `uint` ou `uint?`
+* `DateTime` ou `DateTime?`
+* `byte` ou `byte?`
+* `short` ou `short?`
+* `ushort` ou `ushort?`
+* `long` ou `long?`
+* `ulong` ou `ulong?`
+* `float` ou `float?`
+* `char` ou `char?`
+* `Enum`/`Enum Flags` ou `Enum?`
+* `Generic collections` (`IEnumerable`, `IList`, `ICollection`)
+* `Arrays`
 
+**Sintaxe genérica:**
 
+```[action-name ][-|/|--][argument-name][=|:| ][value]```
 
-## <a name="kind-of-inputs"></a>Tipo "Argumento"
+**Sintaxe para `string`:**
 
+As `strings` podem ser utilizadas de duas formas:
 
+* Texto com espaços: Utilize aspas `" "` para textos com espaços. Do contrário você terá um erro de parse.
+* Texto sem espaços: Não é obrigatório o uso de aspas, basta inserir seu valor diretamente.
+
+```
+MyApp.exe --my-string oneWord
+MyApp.exe --my-string "oneWord"
+MyApp.exe --my-string "two words"
+```
+
+**Sintaxe para `char`:**
+
+Assim como em .NET os chars podem ter valores com apenas um caracter ou com um número que represente seu valor na escala de caracteres.
+
+```
+MyApp.exe --my-char 1
+MyApp.exe --my-char A
+```
+
+**Sintaxe para `int`, `long`, `short` e suas variações "u" :**
+
+São entradas númericas onde a única regra é o valor inserido não ultrapassar o limite de cada tipo.
+
+```
+MyApp.exe --my-number 1
+MyApp.exe --my-number 2
+MyApp.exe --my-number 999999
+```
+
+**Sintaxe para `decimal`, `double` e `float`:**
+
+Para esses tipos é possível utilizar números inteiros ou números decimais. Só fique atento para a configuração de cultura da sua aplicação. Se for `pt-br` utilize o separador `,` / Para o formato americano utilize `.`
+
+_EN-US:_
+
+```
+MyApp.exe --my-number 10
+MyApp.exe --my-number 0.99
+```
+
+_PT-BR:_
+
+```
+MyApp.exe --my-number 10
+MyApp.exe --my-number 0,99
+```
+
+**Sintaxe para `Boolean`:**
+
+* Para o valor TRUE use: `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
+* Para o valor FALSE use: `false`, `0`, `-` (separado por espaço ou unido com o nome do argumento).
+
+```
+MyApp.exe -a  // true
+MyApp.exe -a- // false
+MyApp.exe -a+ // true
+MyApp.exe -a - // false
+MyApp.exe -a + // true
+MyApp.exe -a true // true
+MyApp.exe -a false // false
+MyApp.exe -a 0 // true
+MyApp.exe -a 1 // false
+```
+
+_Atribuições multiplas:_
+
+Para argumentos que estão configurados com a `forma curta`, é possível definir o mesmo valor em diversos argumentos com apenas um traço `-`, veja:
+
+```csharp
+public void Main(char a, char b, char c) {};
+```
+
+```
+MyApp.exe -abc  // true for a, b and c
+MyApp.exe -abc- // false for a, b and c
+MyApp.exe -abc+ // true for a, b and c
+```
+
+**Sintaxe para `DateTime`:**
+
+Assim como os números decimais, o formato de data suportado depende da cultura que estiver configurado em sua aplicação.
+
+_EN-US:_
+
+```
+MyApp.exe --my-date "12/13/2000 00:00:00"
+```
+
+_PT-BR:_
+
+```
+MyApp.exe --my-date "13/12/2000 00:00:00"
+```
+
+_UNIVERSAL:_
+
+```
+MyApp.exe --my-date "2000-12-13 00:00:00"
+```
+
+**Sintaxe para `Enums`:**
+
+Os valores de entrada podem variar entre o nome do `Enum` no formato case-sensitive ou o seu número interno. Para `Enum Flags` utilize espaços para adicionar ao valor do argumento.
+
+```csharp
+[Flags]
+public enum Verbose
+{
+    None = 0,
+    All = 1,
+    Info = 2,
+    Success = 4,
+    Critical = 8,
+    Warning = 16,
+    Error = 32,
+    Quiet = 64
+}
+
+public void Main(Verbose verbose, string otherParameter = null);
+```
+
+```
+MyApp.exe --verbose Error Info Success
+MyApp.exe --verbose 32 2 Success
+MyApp.exe Success EnumNotContainsThisString     // positional
+```
+
+No último exemplo, o valor "EnumNotContainsThisString" não pertence ao enum `Verbose`, sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
+
+**Sintaxe para coleções genéricas e arrays**
+
+As listas/arrays tem o mesmo padrão de input, separe com um espaço para adicionar um novo item da lista. Caso seu texto tenha espaço em seu conteúdo, então o adicione entre aspas.
+
+```csharp
+public void Main(IEnumerable<decimal> myLst, string[] myArray = null);
+```
+
+```
+MyApp.exe --my-lst 1.0 1.99
+MyApp.exe 1.0 1.99 // positional
+MyApp.exe --my-lst 1.0 1.99 --my-array str1 str2
+MyApp.exe --my-lst 1.0 1.99 --my-array "string with spaces" "other string" uniqueWord
+MyApp.exe 1.0 1.99 str1 str2 // positional
+```
+
+No último exemplo, o valor "str1" quebra a sequencia de números "1.0 1.99", sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
+
+**Importante!**
+
+Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
 ## <a name="using-the-multi-action-feature"></a>Utilizando o recurso de MultiAction
 
 Esse recurso permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](#argument-history-manager) deixará de funcionar caso isso ocorra.
@@ -2092,7 +2304,7 @@ O tratamento de erro é gerado de forma automatica pelo sistema e são categoriz
   * `ArgumentParsedState.ArgumentNotExistsByValue`: Indica que um argumento posicional não existe
   * `ArgumentParsedState.ArgumentIsRequired`: Indica que um argumento é obrigatório
   * `ArgumentParsedState.ArgumentHasInvalidInput`: Indica que um argumento esta inválido
-  * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados em .
+  * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados em [Tipos suportados](#support-types).
 * Not Found: Nenhuma rota encontrada para o input solicitado.
 * Exception génerica: Não existe nenhum tipo de tratamento padrão, mas é possível interceptar qualquer exception dentro do evento `App.OnException`.
 
