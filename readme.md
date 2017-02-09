@@ -355,6 +355,8 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Tipos de comandos](#kind-of-commands)
   * [Controle de eventos](#events)
 * [Input](#input)
+   * [Argument](#input-arguments)
+   * [Action](#input-actions)
    * [Input nomeado](#input-named)
    * [Input posicional](#input-positional)
   * [Tipos suportados](#support-types)
@@ -722,6 +724,8 @@ new App(addDefaultAppHandler: false)
 
 Chamamos de input todas as linhas de comandos que o usuário digita e envia para o aplicativo. Os formatos de input se dividem entre `arguments` e `actions`.
 
+### <a name="input-arguments"></a>Argument
+
 Os `arguments` representam o meio mais básico de uma aplicação console, são normalmente representados da seguinte forma:
 
 ```
@@ -730,6 +734,8 @@ C:\MyApp.exe -v value                  // Short
 C:\MyApp.exe value                     // Positional
 ```
 Programaticamente, os `arguments` podem ser derivados de `properties` ou dos parâmetros dos `methods`.
+
+### <a name="input-actions"></a>Action
 
 Já as `actions` são palavras reservadas para executar uma determinada ação em seu aplicativo. Elas não precisam de nenhum sufixo como ocorre com os `arguments`,basta usa-las diretamente em seu input. Um bom exemplo de `action` são os recursos do `git` como:
 

@@ -2,6 +2,8 @@
 
 Chamamos de input todas as linhas de comandos que o usuário digita e envia para o aplicativo. Os formatos de input se dividem entre `arguments` e `actions`.
 
+### Argument <header-set anchor-name="input-arguments" />
+
 Os `arguments` representam o meio mais básico de uma aplicação console, são normalmente representados da seguinte forma:
 
 ```
@@ -10,6 +12,8 @@ C:\MyApp.exe -v value                  // Short
 C:\MyApp.exe value                     // Positional
 ```
 Programaticamente, os `arguments` podem ser derivados de `properties` ou dos parâmetros dos `methods`.
+
+### Action <header-set anchor-name="input-actions" />
 
 Já as `actions` são palavras reservadas para executar uma determinada ação em seu aplicativo. Elas não precisam de nenhum sufixo como ocorre com os `arguments`,basta usa-las diretamente em seu input. Um bom exemplo de `action` são os recursos do `git` como:
 
