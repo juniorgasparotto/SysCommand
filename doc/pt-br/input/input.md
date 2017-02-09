@@ -2,7 +2,7 @@
 
 Chamamos de input todas as linhas de comandos que o usuário digita e envia para o aplicativo. Os formatos de input se dividem entre `arguments` e `actions`.
 
-## Arguments <header-set anchor-name="input-arguments" />
+## `Arguments` <header-set anchor-name="input-arguments" />
 
 Os argumentos representam o meio mais básico de uma aplicação console, são normalmente representados da seguinte forma:
 
@@ -74,12 +74,12 @@ _Observações:_
 * Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
 * Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de <anchor-get name="methods-positional-inputs" />.
 
-## Actions <header-set anchor-name="input-actions" />
+## `Actions` <header-set anchor-name="input-actions" />
 
 Já as `actions` são palavras reservadas para executar uma determinada ação em seu aplicativo. Elas não precisam de nenhum sufixo como ocorre com os `arguments`,basta usa-las diretamente em seu input. Um bom exemplo de `action` são os recursos do `git` como:
 
 ```
-git add -A; 
+git add -A;
 git commit -m "comments"
 ```
 

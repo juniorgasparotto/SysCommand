@@ -355,10 +355,10 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Tipos de comandos](#kind-of-commands)
   * [Controle de eventos](#events)
 * [Input](#input)
-  * [Arguments](#input-arguments)
+  * [`Arguments`](#input-arguments)
     * [Argumento nomeado](#input-named)
     * [Argumento posicional](#input-positional)
-  * [Actions](#input-actions)
+  * [`Actions`](#input-actions)
   * [Tipos suportados](#support-types)
     * [Multi-action](#using-the-multi-action-feature)
 * [Output](#output)
@@ -724,7 +724,7 @@ new App(addDefaultAppHandler: false)
 
 Chamamos de input todas as linhas de comandos que o usuário digita e envia para o aplicativo. Os formatos de input se dividem entre `arguments` e `actions`.
 
-## <a name="input-arguments"></a>Arguments
+## <a name="input-arguments"></a>`Arguments`
 
 Os argumentos representam o meio mais básico de uma aplicação console, são normalmente representados da seguinte forma:
 
@@ -796,12 +796,12 @@ _Observações:_
 * Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
 * Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).
 
-## <a name="input-actions"></a>Actions
+## <a name="input-actions"></a>`Actions`
 
 Já as `actions` são palavras reservadas para executar uma determinada ação em seu aplicativo. Elas não precisam de nenhum sufixo como ocorre com os `arguments`,basta usa-las diretamente em seu input. Um bom exemplo de `action` são os recursos do `git` como:
 
 ```
-git add -A; 
+git add -A;
 git commit -m "comments"
 ```
 
