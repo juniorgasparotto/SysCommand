@@ -9,9 +9,10 @@
 #include "../pt-br/getting-start/events.md"
 
 #include "../pt-br/input/input.md"
-#include "../pt-br/input/kind-of-inputs.md"
+#include "../pt-br/input/arguments.md"
+#include "../pt-br/input/actions.md"
+#include "../pt-br/input/multi-action.md"
 #include "../pt-br/input/support-types.md"
-#include "../pt-br/input/using-the-multi-action-feature.md"
 
 #include "../pt-br/output/output.md"
 #include "../pt-br/output/output-using-razor.md"

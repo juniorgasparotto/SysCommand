@@ -359,8 +359,8 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
     * [Argumento nomeado](#input-named)
     * [Argumento posicional](#input-positional)
   * [`Actions`](#input-actions)
-  * [Tipos suportados](#support-types)
     * [Multi-action](#using-the-multi-action-feature)
+  * [Tipos suportados](#support-types)
 * [Output](#output)
   * [Usando template Razor](#output-razor)
   * [Usando template T4](#output-t4)
@@ -723,7 +723,6 @@ new App(addDefaultAppHandler: false)
 # <a name="input"></a>Input
 
 Chamamos de input todas as linhas de comandos que o usuário digita e envia para o aplicativo. Os formatos de input se dividem entre `arguments` e `actions`.
-
 ## <a name="input-arguments"></a>`Arguments`
 
 Os argumentos representam o meio mais básico de uma aplicação console, são normalmente representados da seguinte forma:
@@ -796,6 +795,7 @@ _Observações:_
 * Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
 * Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).
 
+
 ## <a name="input-actions"></a>`Actions`
 
 Já as `actions` são palavras reservadas para executar uma determinada ação em seu aplicativo. Elas não precisam de nenhum sufixo como ocorre com os `arguments`,basta usa-las diretamente em seu input. Um bom exemplo de `action` são os recursos do `git` como:
@@ -808,7 +808,65 @@ git commit -m "comments"
 Onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`.
 
 Programaticamente, as `actions` são derivadas dos `methods`.
+### <a name="using-the-multi-action-feature"></a>Multi-action
 
+O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](#argument-history-manager) deixará de funcionar caso isso ocorra.
+
+Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de paramentros.
+
+**Exemplo:**
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        new App().Run(args);
+
+        // EnableMultiAction = false
+        /*
+        new App(null, false).Run(args);
+        */
+    }
+
+    public class MyCommand : Command
+    {
+        public string Action1(string value = "default")
+        {
+            return $"Action1 (value = {value})";
+        }
+
+        public string Action2(string value = "default")
+        {
+            return $"Action2 (value = {value})";
+        }
+    }
+}
+```
+
+```
+MyApp.exe action1
+Action1 (value = default)
+
+MyApp.exe action2
+Action2 (value = default)
+
+MyApp.exe action1 action2
+Action1 (value = default)
+Action2 (value = default)
+
+MyApp.exe action1 action2 action1 action1 action2
+Action1 (value = default)
+Action2 (value = default)
+Action1 (value = default)
+Action1 (value = default)
+Action2 (value = default)
+
+MyApp.exe action1 --value \\action2
+Action1 (value = action2)
+```
+
+O último exemplo demostra como usar o scape em seus valores que conflitam com nomes de `actions`. Um fato importante é que no exemplo foi usado duas barras invertidas para fazer o scape, mas isso pode variar de console para console, no `bash` o uso de apenas uma barra invertida não tem nenhum efeito, provavelmente ele deve usar para outros scapes antes de chegar na aplicação.
 ## <a name="support-types"></a>Tipos suportados
 
 Todos os tipos primitivos do .NET são suportados, incluindo suas versões anuláveis: `Nullable<?>`.
@@ -988,65 +1046,6 @@ No último exemplo, o valor "str1" quebra a sequencia de números "1.0 1.99", se
 **Importante!**
 
 Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
-### <a name="using-the-multi-action-feature"></a>Multi-action
-
-O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](#argument-history-manager) deixará de funcionar caso isso ocorra.
-
-Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de paramentros.
-
-**Exemplo:**
-
-```csharp
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        new App().Run(args);
-
-        // EnableMultiAction = false
-        /*
-        new App(null, false).Run(args);
-        */
-    }
-
-    public class MyCommand : Command
-    {
-        public string Action1(string value = "default")
-        {
-            return $"Action1 (value = {value})";
-        }
-
-        public string Action2(string value = "default")
-        {
-            return $"Action2 (value = {value})";
-        }
-    }
-}
-```
-
-```
-MyApp.exe action1
-Action1 (value = default)
-
-MyApp.exe action2
-Action2 (value = default)
-
-MyApp.exe action1 action2
-Action1 (value = default)
-Action2 (value = default)
-
-MyApp.exe action1 action2 action1 action1 action2
-Action1 (value = default)
-Action2 (value = default)
-Action1 (value = default)
-Action1 (value = default)
-Action2 (value = default)
-
-MyApp.exe action1 --value \\action2
-Action1 (value = action2)
-```
-
-O último exemplo demostra como usar o scape em seus valores que conflitam com nomes de `actions`. Um fato importante é que no exemplo foi usado duas barras invertidas para fazer o scape, mas isso pode variar de console para console, no `bash` o uso de apenas uma barra invertida não tem nenhum efeito, provavelmente ele deve usar para outros scapes antes de chegar na aplicação.
 # <a name="output"></a>Output
 
 O mecanismo de output foi extendido para aumentar a produtividade.
