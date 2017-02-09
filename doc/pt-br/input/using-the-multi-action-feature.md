@@ -1,6 +1,6 @@
-## Utilizando o recurso de MultiAction <header-set anchor-name="using-the-multi-action-feature" />
+### Multi-action <header-set anchor-name="using-the-multi-action-feature" />
 
-Esse recurso permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso <anchor-get name="argument-history-manager" /> deixará de funcionar caso isso ocorra.
+O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso <anchor-get name="argument-history-manager" /> deixará de funcionar caso isso ocorra.
 
 Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de paramentros.
 

@@ -355,12 +355,12 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Tipos de comandos](#kind-of-commands)
   * [Controle de eventos](#events)
 * [Input](#input)
-   * [Argument](#input-arguments)
-   * [Action](#input-actions)
-   * [Input nomeado](#input-named)
-   * [Input posicional](#input-positional)
+  * [Arguments](#input-arguments)
+   * [Argmento nomeado](#input-named)
+   * [Argumento posicional](#input-positional)
+  * [Actions](#input-actions)
   * [Tipos suportados](#support-types)
-  * [Utilizando o recurso de MultiAction](#using-the-multi-action-feature)
+   * [Multi-action](#using-the-multi-action-feature)
 * [Output](#output)
   * [Usando template Razor](#output-razor)
   * [Usando template T4](#output-t4)
@@ -410,7 +410,7 @@ public App(
 ```
 
 * `commandsTypes`: Especifica os tipos dos `Command` que serão utilidados em todo o processo. Caso seja `null` então o sistema buscará automaticamente qualquer classe que extenda de `Command`. Entenda melhor em [Especificando os tipos de comandos](#specifying-commands).
-* `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará ligado. Entenda melhor em [Utilizando o recurso de MultiAction](#using-the-multi-action-feature).
+* `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará ligado. Entenda melhor em [Multi-action](#using-the-multi-action-feature).
 * `addDefaultAppHandler`: Caso seja `false` então NÃO cria o handler de eventos que é responsável pelo mecanismo padrão de `outputs` e controles de `erros` e dentre outros. O padrão é `true`. Entenda melhor em [Controle de eventos](#events).
 
 
@@ -724,9 +724,9 @@ new App(addDefaultAppHandler: false)
 
 Chamamos de input todas as linhas de comandos que o usuário digita e envia para o aplicativo. Os formatos de input se dividem entre `arguments` e `actions`.
 
-### <a name="input-arguments"></a>Argument
+## <a name="input-arguments"></a>Arguments
 
-Os `arguments` representam o meio mais básico de uma aplicação console, são normalmente representados da seguinte forma:
+Os argumentos representam o meio mais básico de uma aplicação console, são normalmente representados da seguinte forma:
 
 ```
 C:\MyApp.exe --argument-name value     // Long
@@ -735,22 +735,9 @@ C:\MyApp.exe value                     // Positional
 ```
 Programaticamente, os `arguments` podem ser derivados de `properties` ou dos parâmetros dos `methods`.
 
-### <a name="input-actions"></a>Action
+### <a name="input-named"></a>Argmento nomeado
 
-Já as `actions` são palavras reservadas para executar uma determinada ação em seu aplicativo. Elas não precisam de nenhum sufixo como ocorre com os `arguments`,basta usa-las diretamente em seu input. Um bom exemplo de `action` são os recursos do `git` como:
-
-```
-git add -A; 
-git commit -m "comments"
-```
-
-Onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`.
-
-Programaticamente, as `actions` são derivadas dos `methods`.
-
-### <a name="input-named"></a>Input nomeado
-
-O input nomeado é caracterizado por duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento.
+Argumentos nomeados são caracterizado por duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento.
 
 Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.
 
@@ -781,9 +768,9 @@ MyApp.exe --my-property=value
 MyApp.exe /v:value
 ```
 
-### <a name="input-positional"></a>Input posicional
+### <a name="input-positional"></a>Argumento posicional
 
-Os inputs posicionais funcionam sem a necessidade de utilizar os nomes dos argumentos. Basta inserir seus valores diretamente. Só é preciso tomar cuidado com esse recurso, pois pode confundir o usuário em caso de muitos argumentos posicionais.
+Argumentos posicionais funcionam sem a necessidade de utilizar os nomes dos argumentos. Basta inserir seus valores diretamente. Só é preciso tomar cuidado com esse recurso, pois pode confundir o usuário em caso de muitos argumentos posicionais.
 
 **Exemplo:**
 
@@ -808,6 +795,19 @@ _Observações:_
 
 * Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
 * Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).
+
+## <a name="input-actions"></a>Actions
+
+Já as `actions` são palavras reservadas para executar uma determinada ação em seu aplicativo. Elas não precisam de nenhum sufixo como ocorre com os `arguments`,basta usa-las diretamente em seu input. Um bom exemplo de `action` são os recursos do `git` como:
+
+```
+git add -A; 
+git commit -m "comments"
+```
+
+Onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`.
+
+Programaticamente, as `actions` são derivadas dos `methods`.
 
 ## <a name="support-types"></a>Tipos suportados
 
@@ -988,9 +988,9 @@ No último exemplo, o valor "str1" quebra a sequencia de números "1.0 1.99", se
 **Importante!**
 
 Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
-## <a name="using-the-multi-action-feature"></a>Utilizando o recurso de MultiAction
+### <a name="using-the-multi-action-feature"></a>Multi-action
 
-Esse recurso permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](#argument-history-manager) deixará de funcionar caso isso ocorra.
+O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](#argument-history-manager) deixará de funcionar caso isso ocorra.
 
 Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de paramentros.
 
