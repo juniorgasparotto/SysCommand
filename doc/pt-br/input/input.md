@@ -13,7 +13,7 @@ C:\MyApp.exe value                     // Positional
 ```
 Programaticamente, os `arguments` podem ser derivados de `properties` ou dos parâmetros dos `methods`.
 
-### Argmento nomeado <header-set anchor-name="input-named" />
+### Argumento nomeado <header-set anchor-name="input-named" />
 
 Argumentos nomeados são caracterizado por duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento.
 

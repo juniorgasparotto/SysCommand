@@ -356,7 +356,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Controle de eventos](#events)
 * [Input](#input)
   * [Arguments](#input-arguments)
-   * [Argmento nomeado](#input-named)
+   * [Argumento nomeado](#input-named)
    * [Argumento posicional](#input-positional)
   * [Actions](#input-actions)
   * [Tipos suportados](#support-types)
@@ -735,7 +735,7 @@ C:\MyApp.exe value                     // Positional
 ```
 Programaticamente, os `arguments` podem ser derivados de `properties` ou dos parâmetros dos `methods`.
 
-### <a name="input-named"></a>Argmento nomeado
+### <a name="input-named"></a>Argumento nomeado
 
 Argumentos nomeados são caracterizado por duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento.
 
