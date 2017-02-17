@@ -73,7 +73,7 @@ Por fim, uma lista do tipo `IEnumerable<ArgumentRaw>`.
 
 É a etapa mais longa, onde combina o resultado do mapeamento com o resultado do parser simples. O objetivo é obter as melhores rotas.
 
-A primeira etapa consiste em encontrar os métodos de cada `action` que esta no input de entrada. Para isso será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando isso acontece uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada argumento será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
+A primeira etapa consiste em encontrar os métodos de acordo com o input de entrada. Para isso será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
 
 Após o parse dos métodos, será feito a divisão em níveis de acordo com o input que foi enviado. Cada nível é separado por uma ocorrência de `action` ou por uma sequência de `arguments`. 
 
