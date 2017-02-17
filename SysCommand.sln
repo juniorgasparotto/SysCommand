@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examplo.GettingStart.Simple
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.GettingStart.Advanced", "Example.GettingStart.Advanced\Example.GettingStart.Advanced.csproj", "{9161B6A2-700D-44E6-A7AB-39531C69F63F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Input.Parser", "Example.Input.Parser\Example.Input.Parser.csproj", "{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -184,6 +186,14 @@ Global
 		{9161B6A2-700D-44E6-A7AB-39531C69F63F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9161B6A2-700D-44E6-A7AB-39531C69F63F}.Release|x86.ActiveCfg = Release|Any CPU
 		{9161B6A2-700D-44E6-A7AB-39531C69F63F}.Release|x86.Build.0 = Release|Any CPU
+		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Debug|x86.Build.0 = Debug|Any CPU
+		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Release|x86.ActiveCfg = Release|Any CPU
+		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -205,5 +215,6 @@ Global
 		{8F0C7EC7-B309-44AD-9548-170ACDE8B24A} = {AC52C443-A12D-4A08-97A3-4EACC095378B}
 		{36CBE29A-56DC-4CF3-B029-2DB283A20516} = {AC52C443-A12D-4A08-97A3-4EACC095378B}
 		{9161B6A2-700D-44E6-A7AB-39531C69F63F} = {AC52C443-A12D-4A08-97A3-4EACC095378B}
+		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C} = {AC52C443-A12D-4A08-97A3-4EACC095378B}
 	EndGlobalSection
 EndGlobal

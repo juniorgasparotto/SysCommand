@@ -52,7 +52,7 @@ namespace SysCommand.DefaultExecutor
                     var commandsGroups = levelGroup.GroupBy(f => f.ActionMap.Target);
 
                     // Step2 & Step 3: Create level only with methods and separate valids and invalids methods
-                    var levelOfMethods = this.GetLevelWithMethods(args, hasPropertyMap, commandsGroups);
+                    var levelOfMethods = this.GetLevelWithMethods(hasPropertyMap, commandsGroups);
                     if (levelOfMethods == null)
                         continue;
 
@@ -294,7 +294,7 @@ namespace SysCommand.DefaultExecutor
             return false;
         }
 
-        private ParseResult.Level GetLevelWithMethods(string[] args, bool hasPropertyMap, IEnumerable<IGrouping<object, ActionParsed>> commandsGroups)
+        private ParseResult.Level GetLevelWithMethods(bool hasPropertyMap, IEnumerable<IGrouping<object, ActionParsed>> commandsGroups)
         {
             ParseResult.Level level = null;
             if (commandsGroups.Any())
@@ -484,6 +484,14 @@ namespace SysCommand.DefaultExecutor
             return bestMethodInLevel;
         }
 
+        /// <summary>
+        /// Find the best valid property reference by raw. 
+        /// OBS: This rule does not exist for the methods by which the parameters 
+        /// of the best methods are already references.
+        /// </summary>
+        /// <param name="level">Level to search</param>
+        /// <param name="raw">Raw reference</param>
+        /// <returns>The best argument parsed</returns>
         private ArgumentParsed GetFirstValidArgumentParsedByRawInLevel(ParseResult.Level level, ArgumentRaw raw)
         {
             var list = new List<ArgumentParsed>();

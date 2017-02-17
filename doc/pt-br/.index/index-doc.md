@@ -13,6 +13,7 @@
 #include "../pt-br/input/actions.md"
 #include "../pt-br/input/multi-action.md"
 #include "../pt-br/input/support-types.md"
+#include "../pt-br/input/parser.md"
 
 #include "../pt-br/output/output.md"
 #include "../pt-br/output/output-using-razor.md"
