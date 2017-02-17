@@ -361,17 +361,17 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [`Actions`](#input-actions)
     * [Multi-action](#using-the-multi-action-feature)
   * [Tipos suportados](#support-types)
-* [Parser](#input-parser)
-  * [Mapeamento](#input-parser-mapping)
-    * [Retorno](#input-parser-mapping-return)
-  * [Parser simples](#input-parser-simple)
-    * [Retorno](#input-parser-simple-return)
-  * [Parser complexo](#input-parser-complex)
-    * [Escolhendo os melhores métodos](#input-parser-complex-methods)
-    * [Escolhendo as melhores propriedades](#input-parser-complex-properties)
-    * [Retorno](#input-parser-complex-return)
-  * [Execução](#input-parser-execution)
-    * [Retorno](#input-parser-execution-return)
+  * [Parser](#input-parser)
+    * [Mapeamento](#input-parser-mapping)
+      * [Retorno](#input-parser-mapping-return)
+    * [Parser simples](#input-parser-simple)
+      * [Retorno](#input-parser-simple-return)
+    * [Parser complexo](#input-parser-complex)
+      * [Escolhendo os melhores métodos](#input-parser-complex-methods)
+      * [Escolhendo as melhores propriedades](#input-parser-complex-properties)
+      * [Retorno](#input-parser-complex-return)
+    * [Execução](#input-parser-execution)
+      * [Retorno](#input-parser-execution-return)
 * [Output](#output)
   * [Usando template Razor](#output-razor)
   * [Usando template T4](#output-t4)
@@ -1057,7 +1057,7 @@ No último exemplo, o valor "str1" quebra a sequencia de números "1.0 1.99", se
 **Importante!**
 
 Todos as conversões levam em consideração a cultura configurada na propriedade estática "CultureInfo.CurrentCulture".
-# <a name="input-parser"></a>Parser
+## <a name="input-parser"></a>Parser
 
 O parser é dividido em 4 etapas fundamentais e o namespace `SysCommand.DefaultExecutor` é o responsável por conter as lógicas de cada etapa. A interface `SysCommand.DefaultExecutor.IExecutor` contém 4 métodos que representam cada uma dessas etapas e a classe `SysCommand.DefaultExecutor.Executor` implementa essa interface com as regras padrão do `SysCommand`.
 
@@ -1078,7 +1078,7 @@ public interface IExecutor
 }
 ```
 
-## <a name="input-parser-mapping"></a>Mapeamento
+### <a name="input-parser-mapping"></a>Mapeamento
 
 No mapeamento o foco é popular uma lista do modelo `SysCommand.Mapping.CommandMap` onde cada item de `CommandMap` representa um `Command`, ou seja, o mapa do comando com todas as suas `Properties` e `Methods`.
 
@@ -1086,11 +1086,11 @@ Para cada `Property` temos a classe `SysCommand.Mapping.ArgumentMap` que contém
 
 Para cada `Action` temos a classe `SysCommand.Mapping.ActionMap` que contém todas as informações de uma ação para que ela se torne um `action` na linha de comando. Basicamente, essas informações refletem o atributo `ActionAttribute` somado de outras informações internas. Essa classe contém uma lista com a assinatura `IEnumerable<ArgumentMap> ArgumentsMaps` que representa os seus parâmetros.
 
-### <a name="input-parser-mapping-return"></a>Retorno
+#### <a name="input-parser-mapping-return"></a>Retorno
 
 Por fim, uma lista do tipo `IEnumerable<CommandMap>` é retornada contendo o mapa de cada `Command`.
 
-## <a name="input-parser-simple"></a>Parser simples
+### <a name="input-parser-simple"></a>Parser simples
 
 É o momento onde ocorre a transformação de um `input` em objeto da forma mais simples possível, a única informação adicional que essa etapa precisa é de uma lista de `ActionMap`, assim é possível saber quando uma `action` foi inputada. Cada item é representado pela classe `SysCommand.Parsing.ArgumentRaw` que contém todas as informações do argumento como por exemplo `Name`, `Value` e `ArgumentFormat` que determina o formato do input, veja suas possibilidades:
 
@@ -1124,11 +1124,11 @@ MyApp.exe action1 \action1
 
 Assim o parser sabe que o input `\action1` significa `action1`, ou seja, sem a barra de escape `\`.
 
-### <a name="input-parser-simple-return"></a>Retorno
+#### <a name="input-parser-simple-return"></a>Retorno
 
 Por fim, uma lista do tipo `IEnumerable<ArgumentRaw>`.
 
-## <a name="input-parser-complex"></a>Parser complexo
+### <a name="input-parser-complex"></a>Parser complexo
 
 É a etapa mais longa, onde combina o resultado do mapeamento com o resultado do parser simples. O objetivo é obter as melhores rotas.
 
@@ -1217,7 +1217,7 @@ MyApp.exe --property1 value action1 action2 --property2 value2
 
 No exemplo D o argumento `--property2` foi derivado dos argumentos extras da ação `action2`. Observe que essa ação não teve seu argumento `--value` especificado no input e o argumento `--property2` não faz parte de seu mapa, sendo assim esse argumento entra como extra e insumo para o próximo nível de argumentos.
 
-### <a name="input-parser-complex-methods"></a>Escolhendo os melhores métodos
+#### <a name="input-parser-complex-methods"></a>Escolhendo os melhores métodos
 
 Com a divisão de níveis por `action` concluída, é feito a escolha dos melhores métodos dentro de cada nível. 
 
@@ -1320,7 +1320,7 @@ _Explicação:_
 
 Todos os métodos "não escolhidos" foram descartados do processo. Essa regra é primordial para que mais de uma `action` seja chamada no mesmo nível.
 
-### <a name="input-parser-complex-properties"></a>Escolhendo as melhores propriedades
+#### <a name="input-parser-complex-properties"></a>Escolhendo as melhores propriedades
 
 Essa escolha trabalha da seguinte forma:
 
@@ -1488,7 +1488,7 @@ _Explicação:_
 
 Todos as propriedades "não escolhidas" foram descartados do processo. Essa regra é primordial para que mais de uma propriedade seja chamada no mesmo nível.
 
-### <a name="input-parser-complex-return"></a>Retorno
+#### <a name="input-parser-complex-return"></a>Retorno
 
 Por fim, uma instância do tipo `SysCommand.Parsing.ParseResult` é retornada contendo:
 
@@ -1497,7 +1497,7 @@ Por fim, uma instância do tipo `SysCommand.Parsing.ParseResult` é retornada co
 * `Maps`: A lista de mapas que deram inicio ao parse.
 * `EnableMultiAction`: O mesmo parâmetro de entrada que deu inicio ao parse.
 
-## <a name="input-parser-execution"></a>Execução
+### <a name="input-parser-execution"></a>Execução
 
 A execução só ocorre se todos os níveis tiverem ao menos um `Command` válido. 
 
@@ -1515,7 +1515,7 @@ Se tudo estiver certo, a ordem da execução será a seguinte:
 * Para cada `Command` válido: Caso o comando tenha propriedades, então executa o método `Main()` se estiver implementado.
 * Executa todos os métodos de cada nível na ordem do menor para o maior (ou da esquerda para a direita do input).
 
-### <a name="input-parser-execution-return"></a>Retorno
+#### <a name="input-parser-execution-return"></a>Retorno
 
 Por fim, uma instância do tipo `SysCommand.Execution` é retornada contendo:
 
