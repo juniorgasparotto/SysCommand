@@ -73,13 +73,16 @@ Por fim, uma lista do tipo `IEnumerable<ArgumentRaw>`.
 
 É a etapa mais longa, onde combina o resultado do mapeamento com o resultado do parser simples. O objetivo é obter as melhores rotas.
 
-A primeira etapa consiste em encontrar os métodos de acordo com o input de entrada. Para isso será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
+A primeira etapa consiste em encontrar os métodos de acordo com o input de entrada. Para isso, será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
 
-Após o parse dos métodos, será feito a divisão em níveis de acordo com o input que foi enviado. Cada nível é separado por uma ocorrência de `action` ou por uma sequência de `arguments`. 
+Após encontrar todos os métodos de cada `action` do input, será feito a divisão em níveis. Cada nível é criado da seguinte forma:
 
-As sequências de `arguments` podem ser encontradas em 2 lugares, no inicio, antes de qualquer `action`, ou após uma `action` onde os seus argumentos extras serão insumos para a próxima sequência de `arguments` e consequentemente a criação de um novo nível. Cada propriedade parseada será representada pela classe `SysCommand.Parsing.ArgumentParsed` assim como os parâmetros dos métodos.
+* Inputs que iniciam com argumentos formaram o primeiro nível
+* A cada ocorrência de `action` no input será criado um novo nível
+* Os argumentos que não fazem parte do mapa da `action` (sobras) formaram outro nível. Esse nível é na sequencia do nível da `action`.
+* Caso não encontre nenhum método, então haverá apenas um nível.
 
-Caso não exista nenhuma ação no input, então haverá apenas um nível e todos os `ArgumentRaw` serão considerados como possíveis argumentos.
+Todos os níveis que não são de `action` serão usados para encontrar as proprieades. Quando isso acontece, cada propriedade será representada pela classe `SysCommand.Parsing.ArgumentParsed` assim como os parâmetros dos métodos.
 
 ```csharp
 namespace Example.Input.Parser
@@ -127,28 +130,28 @@ namespace Example.Input.Parser
 }
 ```
 
-_A) 2 níveis:_
+_A) 2 níveis com duas actions:_
 
 ```
 MyApp.exe action1 action2
           |  L1  |   L2 |
 ```
 
-_B) 3 níveis:_
+_B) 3 níveis, iniciando com 1 argumentos:_
 
 ```
 MyApp.exe --property1 value action1 action2
           |        L1      |   L2  |  L3  |
 ```
 
-_C) 3 níveis:_
+_C) 3 níveis, iniciando com 2 argumentos:_
 
 ```
 MyApp.exe --property1 value --property2 value2 action1 action2
           |                L1                 |   L2  |   L3 |
 ```
 
-_D) 4 níveis:_
+_D) 4 níveis, com sobras de argumentos na 'action2':_
 
 ```
 MyApp.exe --property1 value action1 action2 --property2 value2
@@ -156,7 +159,7 @@ MyApp.exe --property1 value action1 action2 --property2 value2
 
 ```
 
-No exemplo D o argumento `--property2` foi derivado dos argumentos extras da ação `action2`. Observe que essa ação não teve seu argumento `--value` especificado no input e o argumento `--property2` não faz parte de seu mapa, sendo assim esse argumento entra como extra e insumo para o próximo nível de argumentos.
+No exemplo D o argumento `--property2` foi derivado dos argumentos extras da ação `action2`. Observe que essa ação não teve seu argumento `--value` especificado no input e o argumento `--property2` não faz parte de seu mapa, sendo assim esse argumento entra como extra e insumo para o próximo nível de argumentos. Esses extras podem estar em qualquer lugar depois do nome da `action`, após seu nome, no meio ou no final.
 
 #### Escolhendo os melhores métodos <header-set anchor-name="input-parser-complex-methods" />
 
