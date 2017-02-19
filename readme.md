@@ -1132,13 +1132,21 @@ Por fim, uma lista do tipo `IEnumerable<ArgumentRaw>`.
 
 É a etapa mais longa, onde combina o resultado do mapeamento com o resultado do parser simples. O objetivo é obter as melhores rotas.
 
-A primeira etapa consiste em encontrar os métodos de acordo com o input de entrada. Para isso será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
+1. A primeira etapa consiste em encontrar os métodos de acordo com o input de entrada. Para isso, será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
 
-Após o parse dos métodos, será feito a divisão em níveis de acordo com o input que foi enviado. Cada nível é separado por uma ocorrência de `action` ou por uma sequência de `arguments`. 
+2. A primeira `action` pode ter seu nome omitido, mas para isso ela precisa ser do tipo `Default`. Veja <header-get name="methods-default" />. Caso existam, elas só serão utilizadas quando o primeiro `ArgumentRaw` do input não é uma `action`. Nesse cenário todos os métodos `Default` serão escolhidos para a próxima etapa. Daí para frente o processo será o mesmo.
 
-As sequências de `arguments` podem ser encontradas em 2 lugares, no inicio, antes de qualquer `action`, ou após uma `action` onde os seus argumentos extras serão insumos para a próxima sequência de `arguments` e consequentemente a criação de um novo nível. Cada propriedade parseada será representada pela classe `SysCommand.Parsing.ArgumentParsed` assim como os parâmetros dos métodos.
+3. Após encontrar todos os métodos de cada `action` do input, será feito a divisão em níveis. Cada nível será criado da seguinte forma:
 
-Caso não exista nenhuma ação no input, então haverá apenas um nível e todos os `ArgumentRaw` serão considerados como possíveis argumentos.
+* Se o input iniciar com argumentos então formaram o primeiro nível. Isso se não existir nenhum método `Default`.
+* Caso exista mais de uma `action` no input, incluindo `Defaults`, cada uma representará um novo nível.
+* Os argumentos que não fazem parte do mapa da `action` (sobras) formaram outro nível. Esse nível será criado na sequência do nível da `action`.
+* Caso não encontre nenhuma `action` no input e apenas argumentos, então haverá apenas um nível.
+* Caso não exista nenhum input, mas exista métodos `Default` sem parâmetros, então eles serão escolhidos para a execução.
+
+4. Todos os níveis que não são de `action` (apenas argumentos) serão usados para encontrar as proprieades. Quando isso acontece, cada propriedade será representada pela classe `SysCommand.Parsing.ArgumentParsed` assim como os parâmetros dos métodos.
+
+**Exemplo:**
 
 ```csharp
 namespace Example.Input.Parser
@@ -1157,6 +1165,11 @@ namespace Example.Input.Parser
     public class Command1 : Command
     {
         public string Property1 { get; set; }
+
+        public void Main(string a, string b, string c)
+        {
+            
+        }
 
         public void Action1(string value = null)
         {
@@ -1186,28 +1199,35 @@ namespace Example.Input.Parser
 }
 ```
 
-_A) 2 níveis:_
+_A) 2 níveis com o primeiro pertencendo ao método default 'Main(...)':_
+
+```
+MyApp.exe --a 1 --b 2 --c 3 action2
+          |      L1        |  L2   |
+```
+
+_B) 2 níveis com duas actions:_
 
 ```
 MyApp.exe action1 action2
           |  L1  |   L2 |
 ```
 
-_B) 3 níveis:_
+_C) 3 níveis, iniciando com 1 argumentos:_
 
 ```
 MyApp.exe --property1 value action1 action2
           |        L1      |   L2  |  L3  |
 ```
 
-_C) 3 níveis:_
+_D) 3 níveis, iniciando com 2 argumentos:_
 
 ```
 MyApp.exe --property1 value --property2 value2 action1 action2
           |                L1                 |   L2  |   L3 |
 ```
 
-_D) 4 níveis:_
+_E) 4 níveis, com sobras de argumentos na 'action2':_
 
 ```
 MyApp.exe --property1 value action1 action2 --property2 value2
@@ -1215,13 +1235,13 @@ MyApp.exe --property1 value action1 action2 --property2 value2
 
 ```
 
-No exemplo D o argumento `--property2` foi derivado dos argumentos extras da ação `action2`. Observe que essa ação não teve seu argumento `--value` especificado no input e o argumento `--property2` não faz parte de seu mapa, sendo assim esse argumento entra como extra e insumo para o próximo nível de argumentos.
+No exemplo E o argumento `--property2` foi derivado dos argumentos extras da ação `action2`. Observe que essa ação não teve seu argumento `--value` especificado no input e o argumento `--property2` não faz parte de seu mapa, sendo assim esse argumento entra como extra e insumo para o próximo nível de argumentos. Esses extras podem estar em qualquer lugar depois do nome da `action`, após seu nome, no meio ou no final.
 
 #### <a name="input-parser-complex-methods"></a>Escolhendo os melhores métodos
 
 Com a divisão de níveis por `action` concluída, é feito a escolha dos melhores métodos dentro de cada nível. 
 
-Essa escolha trabalha da seguinte forma:
+1. Essa escolha trabalha da seguinte forma:
 
 * Seleciona os métodos que tem todos os parâmetros válidos
 * Entre os métodos válidos, seleciona o primeiro método que tenha, respectivamente:
@@ -1229,7 +1249,7 @@ Essa escolha trabalha da seguinte forma:
   * A menor quantidade de parâmetros em seu mapa
   * A menor quantidade de argumentos extras
 
-Com o melhor método em mãos para cada nível, a próxima etapa é remover todos os métodos do mesmo nível que não combinam com o melhor método. Isso não significa que tenham que ter a mesma assinatura, ou seja, não é preciso ter o mesmo nome, nem a mesma quantidade de parâmetros e nem os mesmos tipos, nada disso importa, o que vale é a relação do input com o método.
+2. Com o melhor método em mãos para cada nível, a próxima etapa é remover todos os métodos do mesmo nível que não combinam com o melhor método. Isso não significa que tenham que ter a mesma assinatura, ou seja, não é preciso ter o mesmo nome, nem a mesma quantidade de parâmetros e nem os mesmos tipos, nada disso importa, o que vale é a relação do input com o método.
 
 A combinação desejada é que todos os outros métodos tenham as mesmas quantidades de parâmetros parseados (`ArgumentParsed`) e que os inputs de seus parâmetros (`IEnumerable<ArgumentRaw> AllRaw`) combinem com os inputs do melhor método, inclusive, com a mesma sequência. Isso significa que a estratégia de parse do input foi a mesma para os métodos que combinaram, assim garante que não haverá o uso do mesmo input para finalidades diferentes.
 
@@ -1324,9 +1344,11 @@ Todos os métodos "não escolhidos" foram descartados do processo. Essa regra é
 
 Essa escolha trabalha da seguinte forma:
 
-* Encontra a propriedade de referência para cada input (`ArgumentRaw`) do mesmo nível. Para isso, seleciona a primeira propriedade válida que tem o primeiro input, depois a segunda propriedade válida que tem o segundo input e assim sucessivamente até que todos os inputs sejam completamente combinados. É possível que apenas uma propriedade de referência tenha mais de um input, é o caso de listas ou `Enums Flags`. Esses tipos terão preferência para serem referências, pois combinam mais de um input. Essa regra não existe para os métodos por que os parâmetros dos melhores métodos já são referências para os demais.
-* Depois de localizar as referências, a segunda etapa é excluir as outras propriedades válidas que não combinam com as referências. Aqui é a mesma regra dos parâmetros dos métodos, ou seja, para combinar as propriedades devem ter os mesmos inputs (`ArgumentRaw`) e com as mesmas sequências. Assim garante que não haverá o uso do mesmo input para finalidades diferentes.
-* Se algum `ArgumentRaw` não for combinado, então todos os argumentos válidos serão eliminados.
+1. Encontra a propriedade de referência para cada input (`ArgumentRaw`) do mesmo nível. Para isso, seleciona a primeira propriedade válida que tem o primeiro input, depois a segunda propriedade válida que tem o segundo input e assim sucessivamente até que todos os inputs sejam completamente combinados. É possível que apenas uma propriedade de referência tenha mais de um input, é o caso de listas ou `Enums Flags`. Esses tipos terão preferência para serem referências, pois combinam mais de um input. Essa regra não existe para os métodos por que os parâmetros dos melhores métodos já são referências para os demais.
+
+2. Depois de localizar as referências, a segunda etapa é excluir as outras propriedades válidas que não combinam com as referências. Aqui é a mesma regra dos parâmetros dos métodos, ou seja, para combinar as propriedades devem ter os mesmos inputs (`ArgumentRaw`) e com as mesmas sequências. Assim garante que não haverá o uso do mesmo input para finalidades diferentes.
+
+3. Se algum `ArgumentRaw` não for combinado, então todos os argumentos válidos serão eliminados.
 
 **Exemplos:**
 

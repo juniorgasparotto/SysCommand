@@ -16,13 +16,18 @@
     {
         public string Property1 { get; set; }
 
+        public void Main(string a, string b, string c)
+        {
+            App.Console.Write("Main(string a, string b, string c)");
+        }
+
         public void Action1(string value = null)
         {
 
         }
         public void Action2(string value = null)
         {
-
+            App.Console.Write("Action2(string value = null)");
         }
 
         public void Action3(string value = null)
