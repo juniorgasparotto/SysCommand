@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.GettingStart.Advanc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Input.Parser", "Example.Input.Parser\Example.Input.Parser.csproj", "{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.ContextVariable", "Example.ContextVariable\Example.ContextVariable.csproj", "{CE221057-B586-45E7-AAF0-816264464545}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -194,6 +196,14 @@ Global
 		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Release|x86.ActiveCfg = Release|Any CPU
 		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C}.Release|x86.Build.0 = Release|Any CPU
+		{CE221057-B586-45E7-AAF0-816264464545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE221057-B586-45E7-AAF0-816264464545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE221057-B586-45E7-AAF0-816264464545}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CE221057-B586-45E7-AAF0-816264464545}.Debug|x86.Build.0 = Debug|Any CPU
+		{CE221057-B586-45E7-AAF0-816264464545}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE221057-B586-45E7-AAF0-816264464545}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE221057-B586-45E7-AAF0-816264464545}.Release|x86.ActiveCfg = Release|Any CPU
+		{CE221057-B586-45E7-AAF0-816264464545}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -216,5 +226,6 @@ Global
 		{36CBE29A-56DC-4CF3-B029-2DB283A20516} = {AC52C443-A12D-4A08-97A3-4EACC095378B}
 		{9161B6A2-700D-44E6-A7AB-39531C69F63F} = {AC52C443-A12D-4A08-97A3-4EACC095378B}
 		{5FB0DA1E-446F-4125-8780-4FF8C3CAEA5C} = {AC52C443-A12D-4A08-97A3-4EACC095378B}
+		{CE221057-B586-45E7-AAF0-816264464545} = {AC52C443-A12D-4A08-97A3-4EACC095378B}
 	EndGlobalSection
 EndGlobal

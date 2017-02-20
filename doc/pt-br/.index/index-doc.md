@@ -44,8 +44,11 @@
 #include "../pt-br/verbose/verbose.md"
 #include "../pt-br/error/error.md"
 
+#include "../pt-br/variable/variable.md"
+#include "../pt-br/file-manager/file-manager.md"
 #include "../pt-br/redirecting/redirecting.md"
 #include "../pt-br/stop-propagation/stop-propagation.md"
 #include "../pt-br/argument-history-manager/argument-history-manager.md"
+#include "../pt-br/extras/extras.md"
 
 #include "../pt-br/license.md"
