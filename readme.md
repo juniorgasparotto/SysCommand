@@ -399,9 +399,12 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * [Customizando](#help-default)
 * [Verbose](#verbose)
 * [Tratamento de erros](#error)
+* [Variáveis de contexto](#variable)
+* [FileManager](#file-manager)
 * [Redirecionamento de comandos](#redirectiong-commands)
 * [Cancelamento da continuidade da execução](#stop-propagation)
 * [Gerenciamento de históricos de argumentos](#argument-history-manager)
+* [Extras](#extras)
 * [Licença](#license)
 
 # <a name="class-app"></a>Iniciando
@@ -2878,8 +2881,8 @@ public class Program
     }
 }
 ```
-# Variáveis de contexto
-# FileManager
+# <a name="variable"></a>Variáveis de contexto
+# <a name="file-manager"></a>FileManager
 # <a name="redirectiong-commands"></a>Redirecionamento de comandos
 
 Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instancia da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instancias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
@@ -3052,5 +3055,5 @@ Os dois últimos comandos não retornam outpus.
 * Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
 
 
-# Extras
+# <a name="extras"></a>Extras
 # <a name="license"></a>Licença
