@@ -400,7 +400,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Verbose](#verbose)
 * [Tratamento de erros](#error)
 * [Variáveis de contexto](#variable)
-* [FileManager](#file-manager)
+* [Gerênciador de objetos em forma de arquivos](#file-manager)
 * [Redirecionamento de comandos](#redirectiong-commands)
 * [Cancelamento da continuidade da execução](#stop-propagation)
 * [Gerenciamento de históricos de argumentos](#argument-history-manager)
@@ -2937,11 +2937,11 @@ MyApp.exe action action2
 ```
 
 Note que a variável `variable1` foi atribuída na criação do contexto `App` e foi incrementada quando passou na action `action2`.
-# <a name="file-manager"></a>FileManager
+# <a name="file-manager"></a>Gerênciador de objetos em forma de arquivos
 
 Esse recurso é muito útil para persistir informações em arquivo no formato `Json`. Ele utiliza a dependência do framework `NewtonSoft.Json` para fazer todo o trabalho de serialização e deserialização.
 
-A classe `SysCommand.ConsoleApp.Files.JsonFileManager` é a responsável pelo controle padrão de gerência de arquivos. Nela contém alguns recursos que vão te ajudar a ganhar tempo caso precise salvar ou ler objetos no formato `Json`.
+A classe `SysCommand.ConsoleApp.Files.JsonFileManager` é a responsável pelo controle padrão de gerência de objetos em forma de arquivos. Nela contém alguns recursos que vão te ajudar a ganhar tempo caso precise salvar ou ler objetos no formato `Json`.
 
 _Propriedades:_
 
