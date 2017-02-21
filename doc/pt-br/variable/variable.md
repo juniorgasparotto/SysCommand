@@ -1,6 +1,6 @@
 # Variáveis de contexto <header-set anchor-name="variable" />
 
-A propriedade `App.Items` é uma coleção de objetos (chave/valor) que pode auxiliar na passagem de valores dentro do escopo do contexto corrente. Como o contexto é único para todos os `Command`, então todos esses valores serão compartilhados entre si.
+A propriedade `App.Items` é a responsável por manter um escopo isolado de variáveis por cada instância da classe `App`. Na prática ela é uma coleção de objetos (chave/valor) que pode auxiliar na passagem de valores entre os comandos.
 
 Essa coleção herda de `Dictionary<object, object>` e foi estendida com a adição de alguns métodos de ajuda:
 
