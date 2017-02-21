@@ -12,8 +12,6 @@ namespace SysCommand.Tests.ConsoleApp.Commands.Classes
     public class Task
     {
         public int Id { get; set; }
-
-        [Argument(Help = "Date help")]
         public DateTime DateAndTime { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

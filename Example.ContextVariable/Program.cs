@@ -1,4 +1,4 @@
-﻿namespace Example.Initialization.Advanced
+﻿namespace Example.ContextVariable
 {
     using SysCommand.ConsoleApp;
 

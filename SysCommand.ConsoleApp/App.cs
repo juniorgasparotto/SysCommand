@@ -281,7 +281,7 @@ namespace SysCommand.ConsoleApp
         {
             if (DebugHelper.IsDebug)
             {
-                var args = app.Console.Read(Strings.GetArgumentsInDebug);
+                var args = app.Console.Read(Strings.CmdIndicator);
                 return ConsoleAppHelper.StringToArgs(args);
             }
 

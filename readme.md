@@ -404,7 +404,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Redirecionamento de comandos](#redirectiong-commands)
 * [Cancelamento da continuidade da execução](#stop-propagation)
 * [Gerenciamento de históricos de argumentos](#argument-history-manager)
-* [Extras](#extras)
+* [Extras - OptionSet](#extras)
 * [Licença](#license)
 
 # <a name="class-app"></a>Iniciando
@@ -2882,7 +2882,200 @@ public class Program
 }
 ```
 # <a name="variable"></a>Variáveis de contexto
+
+A propriedade `App.Items` é uma coleção de objetos (chave/valor) que pode auxiliar na passagem de valores dentro do escopo do contexto corrente. Como o contexto é único para todos os `Command`, então todos esses valores serão compartilhados entre si.
+
+Essa coleção herda de `Dictionary<object, object>` e foi estendida com a adição de alguns métodos de ajuda:
+
+* `T Get<T>()`: Retorna o primeiro elemento do tipo `T`, se não encontrar então retorna `null` para tipos complexos e `Exception` para `struct`.
+* `T Get<T>(object key)`: Retorna o primeiro elemento da chave informada, o comportamento de retorno é o mesmo do método acima.
+* `T GetOrCreate<T>()`: Se existir, retorna o primeiro elemento do tipo `T` ou cria uma nova instância via reflexão onde o tipo `T` será a chave.
+* `T GetOrCreate<T>(object key)`: Se existir, retorna o primeiro elemento da chave informada ou cria uma nova instância via reflexão.
+
+Nota: Para a criação de novas instâncias via reflexão é necessário que a classe tenha um construtor sem parâmetros.
+
+**Exemplo: **
+
+```csharp
+namespace Example.ContextVariable
+{
+    using SysCommand.ConsoleApp;
+
+    public class Program
+    {
+        public static int Main(string[] args)
+        {
+            return App.RunApplication(delegate()
+            {
+                var app = new App();
+                app.Items["variable1"] = 1;
+                return app;
+            });
+        }
+    }
+
+    public class Command1 : Command
+    {
+        public void Action()
+        {
+            this.App.Console.Write(App.Items["variable1"]);
+            App.Items["variable1"] = (int)App.Items["variable1"] + 1;
+        }
+
+        public void Action2()
+        {
+            this.App.Console.Write(App.Items["variable1"]);
+        }
+    }
+}
+```
+
+```
+MyApp.exe action action2
+1
+2
+```
+
+Note que a variável `variable1` foi atribuída na criação do contexto `App` e foi incrementada quando passou na action `action2`.
 # <a name="file-manager"></a>FileManager
+
+Esse recurso é muito útil para persistir informações em arquivo no formato `Json`. Ele utiliza a dependência do framework `NewtonSoft.Json` para fazer todo o trabalho de serialização e deserialização.
+
+A classe `SysCommand.ConsoleApp.Files.JsonFileManager` é a responsável pelo controle padrão de gerência de arquivos. Nela contém alguns recursos que vão te ajudar a ganhar tempo caso precise salvar ou ler objetos no formato `Json`.
+
+_Propriedades:_
+
+* `DefaultFolder`: Nome da pasta padrão. O padrão é `.app`.
+* `bool SaveInRootFolderWhenIsDebug`: Determina se a pasta padrão será criada na raiz do projeto quando esta em modo de debug dentro do Visual Studio. Isso ajuda a visualizar os arquivos gerados usando a opção `Show all files` do `Solution Explorer`.
+* `string DefaultFilePrefix`: Adiciona um prefixo em todos os arquivos. O padrão é `null`.
+* `string DefaultFileExtension`: Especifica a extensão dos arquivos. O padrão é `.json`.
+* `bool UseTypeFullName`: Determina se a formatação dos tipos `T` contemplará o nome completo do tipo. O padrão é `false`.
+
+_Métodos:_
+
+* `Save<T>(T obj)`: Salva um objeto na pasta padrão onde o nome do arquivo será o nome tipo `T` formatado, com exceção de classes que tem o atributo `ObjectFile`.
+* `Save(object obj, string fileName)`: Salva um objeto na pasta padrão com um nome especifico.
+* `Remove<T>()`: Remove um objeto na pasta padrão onde o nome do arquivo será o nome tipo `T` formatado, com exceção de classes que tem o atributo `ObjectFile`.
+* `Remove(string fileName)`: Remove um objeto na pasta padrão com um nome especifico.
+* `T Get<T>(string fileName = null, bool refresh = false)`: Retorna um objeto da pasta padrão.
+  * `fileName`: Indica o nome do arquivo, caso seja `null` o nome do tipo `T` será usado na busca, com exceção de classes que tem o atributo `ObjectFile`.
+  * `refresh`: Se `false` buscará no cache interno caso já tenha sido carregado anteriormente. Do contrário será forçado o carregamento do arquivo.
+* `T GetOrCreate<T>(string fileName = null, bool refresh = false)`: Mesmo comparmento do método acima, porém cria uma nova instância quando não encontrar o arquivo na pasta padrão. É importância dizer que o arquivo não será criado, apenas a instância do tipo `T`. Para salvar fisicamente é necessário utilizar o método `Save`.
+* `string GetObjectFileName(Type type)`: Retorna o nome do tipo formatado ou se estiver usando o atributo `ObjectFile`, retorna o valor da propriedade `FileName`.
+* `string GetFilePath(string fileName)`: Retorna o caminho do arquivo dentro da pasta padrão.
+
+_Atributo `ObjectFile`:_
+
+Esse atributo é útil para fixar um nome de arquivo em uma determinada classe. Assim, ao usar os métodos `Save<T>(T obj)`, `Get<T>()`, `Remove<T>()` ou `GetOrCreate<T>()` o nome do tipo do objeto não será mais utilizado. O nome fixado na propriedade `ObjectFile(FileName="file.json")` será sempre usado para esse tipo.
+
+**Exemplo:**
+
+```csharp
+namespace Example.FileManager
+{
+    using SysCommand.ConsoleApp;
+    using SysCommand.ConsoleApp.Files;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public class Program
+    {
+        public static int Main(string[] args)
+        {
+            return App.RunApplication();
+        }
+    }
+
+    public class Command1 : Command
+    {
+        private JsonFileManager fileManager;
+
+        public Command1()
+        {
+            fileManager = App.Items.GetOrCreate<JsonFileManager>();
+        }
+
+        public void Save(string title, string description = null)
+        {
+            var tasks = fileManager.GetOrCreate<Tasks>();
+            tasks.LastUpdate = DateTime.Now;
+
+            var task = tasks.AllTasks.FirstOrDefault(t => t.Title == title);
+            if (task == null)
+            {
+                task = new Task
+                {
+                    Id = tasks.AllTasks.Count + 1,
+                    Title = title,
+                    Description = description,
+                    DateAndTime = DateTime.Now
+                };
+                tasks.AllTasks.Add(task);
+            }
+
+            fileManager.Save(tasks);
+        }
+
+        public void Get(string title)
+        {
+            var tasks = fileManager.GetOrCreate<Tasks>();
+            this.ShowTask(tasks.AllTasks.Where(t => t.Title.Contains(title)));
+        }
+
+        private void ShowTask(IEnumerable<Task> tasks)
+        {
+            foreach (var task in tasks)
+                this.ShowTask(task);
+        }
+
+        private void ShowTask(Task task)
+        {
+            if (task == null)
+            {
+                App.Console.Error("Task not found");
+                return;
+            }
+
+            App.Console.Write("Id: " + task.Id);
+            App.Console.Write("Title: " + task.Title ?? "-");
+            App.Console.Write("Description: " + task.Description ?? "-");
+            App.Console.Write("Date: " + task.DateAndTime);
+        }
+
+        [ObjectFile(FileName = "tasks")]
+        public class Tasks
+        {
+            public DateTime LastUpdate { get; set; }
+            public List<Task> AllTasks { get; set; } = new List<Task>();
+        }
+
+        public class Task
+        {
+            public int Id { get; set; }
+            public DateTime DateAndTime { get; set; }
+            public string Title { get; set; }
+            public string Description { get; set; }
+        }
+    }
+}
+```
+
+```
+MyApp.exe save "title1" "description1"
+MyApp.exe save "title2" "description2"
+MyApp.exe get "title"
+Id: 1
+Title: title1
+Description: description1
+Date: 20/02/2017 21:22:19
+Id: 2
+Title: title2
+Description:
+Date: 20/02/2017 21:24:20
+```
+
+Note que para criar uma instância de `JsonFileManager` foi utilizado o escopo do contexto `App.Items`, isso é útil para manter apenas uma instância desse gerenciador, economizando memória e mantendo as mesmas configurações em qualquer lugar que for utiliza-lo. É claro que se as configurações forem especificas, então será necessário criar uma nova instância com outras configurações no escopo que achar melhor.
 # <a name="redirectiong-commands"></a>Redirecionamento de comandos
 
 Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instancia da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instancias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
@@ -3055,5 +3248,98 @@ Os dois últimos comandos não retornam outpus.
 * Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
 
 
-# <a name="extras"></a>Extras
+# <a name="extras"></a>Extras - OptionSet
+
+Esse extra foi criado para uma ocasição especifica de parse onde o foco é ser simples. Com a classe `SysCommand.Extras.OptionSet` é possível fazer o parse de argumentos da forma tradicional.
+
+_Métodos:_
+
+* `void Add<T>(string longName, string helpText, Action<T> action)`: Adiciona uma configuração no formato `longo`
+* `void Add<T>(char shortName, string helpText, Action<T> action)`: Adiciona uma configuração no formato `curto`
+* `Add<T>(string longName, char? shortName, string helpText, Action<T> action)`: Adiciona uma configuração no formato `longo` e `curto`.
+* `Add<T>(Argument<T> argument)`: Adiciona uma configuração completa
+* `void Parse(string[] args, bool enablePositionalArgs = false)`: Executa o parse
+
+_Propriedades:_
+
+* `ArgumentsValid`: Depois do parse essa informação contém todos os argumentos válidos
+* `ArgumentsInvalid`: Depois do parse essa informação contém todos os argumentos inválidos
+* `HasError`: Indica se existe erros no parse
+
+**Exemplo:**
+
+```csharp
+using SysCommand.ConsoleApp;
+using SysCommand.ConsoleApp.Helpers;
+using SysCommand.Extras;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Example.Extras
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.Write(Strings.CmdIndicator);
+                args = ConsoleAppHelper.StringToArgs(Console.ReadLine());
+
+                bool verbosity = false;
+                var shouldShowHelp = false;
+                var names = new List<string>();
+
+                var options = new OptionSet();
+
+                options.Add(new OptionSet.Argument<List<string>>("name", "the name of someone to greet.")
+                {
+                    Action = (n) =>
+                    {
+                        if (n != null)
+                            names.AddRange(n);
+                    }
+                });
+
+                options.Add(new OptionSet.Argument<bool>('v', "show verbose")
+                {
+                    Action = (v) =>
+                    {
+                        verbosity = v;
+                    }
+                });
+
+                options.Add(new OptionSet.Argument<bool>("help", "show help")
+                {
+                    Action = (h) =>
+                    {
+                        shouldShowHelp = h;
+                    }
+                });
+
+                options.Parse(args);
+
+                if (!options.ArgumentsInvalid.Any())
+                {
+                    Console.WriteLine("verbosity: " + verbosity);
+                    Console.WriteLine("shouldShowHelp: " + shouldShowHelp);
+                    Console.WriteLine("names.Count: " + names.Count);
+                }
+                else
+                {
+                    Console.WriteLine("error");
+                }
+            }
+        }
+    }
+}
+```
+
+```
+cmd> --name a b c -v --help
+verbosity: True
+shouldShowHelp: True
+names.Count: 3
+```
 # <a name="license"></a>Licença
