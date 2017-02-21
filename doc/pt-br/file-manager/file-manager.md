@@ -2,7 +2,7 @@
 
 Esse recurso é muito útil para persistir informações em arquivo no formato `Json`. Ele utiliza a dependência do framework `NewtonSoft.Json` para fazer todo o trabalho de serialização e deserialização.
 
-A classe `SysCommand.ConsoleApp.Files.JsonFileManager` é a responsável pelo controle padrão de gerência de objetos em forma de arquivos. Nela contém alguns recursos que vão te ajudar a ganhar tempo caso precise salvar ou ler objetos no formato `Json`.
+A classe `SysCommand.ConsoleApp.Files.JsonFileManager` é a responsável pelo controle padrão de gerência de objetos em forma de arquivos. Nela contém alguns recursos que vão te ajudar a ganhar tempo caso precise persistir objetos. O formato será sempre `Json`.
 
 _Propriedades:_
 
