@@ -1549,6 +1549,8 @@ Por fim, uma instância do tipo `SysCommand.Execution` é retornada contendo:
 * `Results`: Os resultados de cada membro (métodos ou propriedades)
 * `Errors`: Lista com os erros, caso existam.
 * `State`: Success, HasError, NotFound
+
+
 # <a name="output"></a>Output
 
 O mecanismo de output foi extendido para aumentar a produtividade.
@@ -2937,6 +2939,8 @@ MyApp.exe action action2
 ```
 
 Note que a variável `variable1` foi atribuída na criação do contexto `App` e foi incrementada quando passou na action `action2`.
+
+
 # <a name="file-manager"></a>Gerênciador de objetos em forma de arquivos
 
 Esse recurso é muito útil para persistir informações em arquivo no formato `Json`. Ele utiliza a dependência do framework `NewtonSoft.Json` para fazer todo o trabalho de serialização e deserialização.
@@ -2960,7 +2964,7 @@ _Métodos:_
 * `T Get<T>(string fileName = null, bool refresh = false)`: Retorna um objeto da pasta padrão.
   * `fileName`: Indica o nome do arquivo, caso seja `null` o nome do tipo `T` será usado na busca, com exceção de classes que tem o atributo `ObjectFile`.
   * `refresh`: Se `false` buscará no cache interno caso já tenha sido carregado anteriormente. Do contrário será forçado o carregamento do arquivo.
-* `T GetOrCreate<T>(string fileName = null, bool refresh = false)`: Mesmo comparmento do método acima, porém cria uma nova instância quando não encontrar o arquivo na pasta padrão. É importância dizer que o arquivo não será criado, apenas a instância do tipo `T`. Para salvar fisicamente é necessário utilizar o método `Save`.
+* `T GetOrCreate<T>(string fileName = null, bool refresh = false)`: Mesmo comportamento do método acima, porém cria uma nova instância quando não encontrar o arquivo na pasta padrão. É importância dizer que o arquivo não será criado, apenas a instância do tipo `T`. Para salvar fisicamente é necessário utilizar o método `Save`.
 * `string GetObjectFileName(Type type)`: Retorna o nome do tipo formatado ou se estiver usando o atributo `ObjectFile`, retorna o valor da propriedade `FileName`.
 * `string GetFilePath(string fileName)`: Retorna o caminho do arquivo dentro da pasta padrão.
 
@@ -3076,6 +3080,8 @@ Date: 20/02/2017 21:24:20
 ```
 
 Note que para criar uma instância de `JsonFileManager` foi utilizado o escopo do contexto `App.Items`, isso é útil para manter apenas uma instância desse gerenciador, economizando memória e mantendo as mesmas configurações em qualquer lugar que for utiliza-lo. É claro que se as configurações forem especificas, então será necessário criar uma nova instância com outras configurações no escopo que achar melhor.
+
+
 # <a name="redirectiong-commands"></a>Redirecionamento de comandos
 
 Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instancia da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instancias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
@@ -3342,4 +3348,6 @@ verbosity: True
 shouldShowHelp: True
 names.Count: 3
 ```
+
+
 # <a name="license"></a>Licença

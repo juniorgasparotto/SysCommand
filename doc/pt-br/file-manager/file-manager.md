@@ -21,7 +21,7 @@ _Métodos:_
 * `T Get<T>(string fileName = null, bool refresh = false)`: Retorna um objeto da pasta padrão.
   * `fileName`: Indica o nome do arquivo, caso seja `null` o nome do tipo `T` será usado na busca, com exceção de classes que tem o atributo `ObjectFile`.
   * `refresh`: Se `false` buscará no cache interno caso já tenha sido carregado anteriormente. Do contrário será forçado o carregamento do arquivo.
-* `T GetOrCreate<T>(string fileName = null, bool refresh = false)`: Mesmo comparmento do método acima, porém cria uma nova instância quando não encontrar o arquivo na pasta padrão. É importância dizer que o arquivo não será criado, apenas a instância do tipo `T`. Para salvar fisicamente é necessário utilizar o método `Save`.
+* `T GetOrCreate<T>(string fileName = null, bool refresh = false)`: Mesmo comportamento do método acima, porém cria uma nova instância quando não encontrar o arquivo na pasta padrão. É importância dizer que o arquivo não será criado, apenas a instância do tipo `T`. Para salvar fisicamente é necessário utilizar o método `Save`.
 * `string GetObjectFileName(Type type)`: Retorna o nome do tipo formatado ou se estiver usando o atributo `ObjectFile`, retorna o valor da propriedade `FileName`.
 * `string GetFilePath(string fileName)`: Retorna o caminho do arquivo dentro da pasta padrão.
 
@@ -137,3 +137,4 @@ Date: 20/02/2017 21:24:20
 ```
 
 Note que para criar uma instância de `JsonFileManager` foi utilizado o escopo do contexto `App.Items`, isso é útil para manter apenas uma instância desse gerenciador, economizando memória e mantendo as mesmas configurações em qualquer lugar que for utiliza-lo. É claro que se as configurações forem especificas, então será necessário criar uma nova instância com outras configurações no escopo que achar melhor.
+

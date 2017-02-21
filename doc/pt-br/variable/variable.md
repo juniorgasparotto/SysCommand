@@ -54,3 +54,4 @@ MyApp.exe action action2
 ```
 
 Note que a variável `variable1` foi atribuída na criação do contexto `App` e foi incrementada quando passou na action `action2`.
+

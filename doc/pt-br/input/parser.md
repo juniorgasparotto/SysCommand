@@ -487,3 +487,4 @@ Por fim, uma instância do tipo `SysCommand.Execution` é retornada contendo:
 * `Results`: Os resultados de cada membro (métodos ou propriedades)
 * `Errors`: Lista com os erros, caso existam.
 * `State`: Success, HasError, NotFound
+
