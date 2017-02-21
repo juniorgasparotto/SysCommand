@@ -2892,9 +2892,9 @@ Essa coleção herda de `Dictionary<object, object>` e foi estendida com a adiç
 * `T GetOrCreate<T>()`: Se existir, retorna o primeiro elemento do tipo `T` ou cria uma nova instância via reflexão onde o tipo `T` será a chave.
 * `T GetOrCreate<T>(object key)`: Se existir, retorna o primeiro elemento da chave informada ou cria uma nova instância via reflexão.
 
-Nota: Para a criação de novas instâncias via reflexão é necessário que a classe tenha um construtor sem parâmetros.
+_Nota: Para a criação de novas instâncias via reflexão é necessário que a classe tenha um construtor sem parâmetros._
 
-**Exemplo: **
+**Exemplo:**
 
 ```csharp
 namespace Example.ContextVariable
