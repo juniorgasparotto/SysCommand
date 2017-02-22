@@ -323,10 +323,13 @@ O objetivo é ajudar programadores de qualquer linguagem de programação que so
 Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade de conhece-lo. Com o novo .NET (Core Clr) você pode criar softwares em qualquer sistema operacional e somado aos beneficios do `SysCommand` você pode criar sua coleção de aplicativos de console da forma mais fácil possível.
 # <a name="install"></a>Instalação
 
-* NuGet:
-* NuGet Core CRL: 
+Você pode instalar via [NuGet](https://www.nuget.org/packages/SysCommand/):
 
+```
+Install-Package SysCommand
+```
 
+_Nota: O pacote traz o arquivo `Program.cs.txt` que contém um template bem objetivo. Você pode utiliza-lo trocando seu `Program.cs` por esse arquivo._
 ## <a name="install-dlls"></a>DLLs do pacote
 
   * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizado em outros tipos de projetos como `Web Application` ou `Windows Forms`.
@@ -335,9 +338,8 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 
 ## <a name="install-step-a-step"></a>Passo a passo
 
-* Instalar o Visual Studio em sua máquina (Windows)
 * Criar seu projeto do tipo `Console Application`
-* Instalar o `SysCommand` em seu projeto `Console Application`
+* Instale o `SysCommand` no seu projeto `Console Application`
 * Na primeira linha de seu método `public int Program.Main(string[] args)` adicione o código `return App.RunApplication()`.
 * Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
 * Criar suas propriedades com seus tipos `Nullable` e deixe-as como publicas. Elas se tornarão `arguments` no prompt de comando.
@@ -345,6 +347,10 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros optionais deixe-os como `Nullable` pela mesma razão acima.
 * Digite `help` no prompt de comando que abrirá para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
 * Agora é só usar!
+
+
+
+
 
 
 # <a name="documentation"></a>Documentação

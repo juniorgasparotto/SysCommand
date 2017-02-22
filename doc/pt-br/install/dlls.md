@@ -6,9 +6,8 @@
 
 ## Passo a passo <header-set anchor-name="install-step-a-step" />
 
-* Instalar o Visual Studio em sua máquina (Windows)
 * Criar seu projeto do tipo `Console Application`
-* Instalar o `SysCommand` em seu projeto `Console Application`
+* Instale o `SysCommand` no seu projeto `Console Application`
 * Na primeira linha de seu método `public int Program.Main(string[] args)` adicione o código `return App.RunApplication()`.
 * Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
 * Criar suas propriedades com seus tipos `Nullable` e deixe-as como publicas. Elas se tornarão `arguments` no prompt de comando.
@@ -16,4 +15,8 @@
 * Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros optionais deixe-os como `Nullable` pela mesma razão acima.
 * Digite `help` no prompt de comando que abrirá para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
 * Agora é só usar!
+
+
+
+
 
