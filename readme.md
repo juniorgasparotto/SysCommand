@@ -1,6 +1,38 @@
 # <a name="presentation"></a>SysCommand
 
 O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `Console Aplication` usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC. 
+# <a name="install"></a>Instalação
+
+Você pode instalar via [NuGet](https://www.nuget.org/packages/SysCommand/):
+
+```
+Install-Package SysCommand
+```
+
+_Nota: O pacote traz o arquivo `Program.cs.txt` que contém um template bem objetivo. Você pode utiliza-lo trocando seu `Program.cs` por esse arquivo._
+## <a name="install-dlls"></a>DLLs do pacote
+
+  * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizado em outros tipos de projetos como `Web Application` ou `Windows Forms`.
+  * `SysCommand.ConsoleApp.dll`: Contém diversos recursos que uma aplicação do tipo `Console Application` necessita. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
+  * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
+
+## <a name="install-step-a-step"></a>Passo a passo
+
+* Criar seu projeto do tipo `Console Application`
+* Instale o `SysCommand` no seu projeto `Console Application`
+* Na primeira linha de seu método `public int Program.Main(string[] args)` adicione o código `return App.RunApplication()`.
+* Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
+* Criar suas propriedades com seus tipos `Nullable` e deixe-as como publicas. Elas se tornarão `arguments` no prompt de comando.
+* Crie um método `Main()` sem parametros em sua classe para poder interceptar os inputs de suas propriedades. Utilize `Property != null` para identificar que a propriedade foi inputada.
+* Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros optionais deixe-os como `Nullable` pela mesma razão acima.
+* Digite `help` no prompt de comando que abrirá para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
+* Agora é só usar!
+
+
+
+
+
+
 ## <a name="presentation-how-it-works"></a>Como funciona?
 
 Ele funciona como um analisador de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
@@ -321,38 +353,6 @@ Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [D
 O objetivo é ajudar programadores de qualquer linguagem de programação que sofrem na hora de criar uma aplicação console. Muitas vezes desistimos de criar algo pela burocracia do parse e pela dificuldade de manutenção ao ver códigos onde sua lógica de parse está unida com sua lógica de negócios. Se você é como eu que adora criar mini-aplicações para resolver problemas do dia a dia usando consoles, então junte-se a nós!
 
 Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade de conhece-lo. Com o novo .NET (Core Clr) você pode criar softwares em qualquer sistema operacional e somado aos beneficios do `SysCommand` você pode criar sua coleção de aplicativos de console da forma mais fácil possível.
-# <a name="install"></a>Instalação
-
-Você pode instalar via [NuGet](https://www.nuget.org/packages/SysCommand/):
-
-```
-Install-Package SysCommand
-```
-
-_Nota: O pacote traz o arquivo `Program.cs.txt` que contém um template bem objetivo. Você pode utiliza-lo trocando seu `Program.cs` por esse arquivo._
-## <a name="install-dlls"></a>DLLs do pacote
-
-  * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizado em outros tipos de projetos como `Web Application` ou `Windows Forms`.
-  * `SysCommand.ConsoleApp.dll`: Contém diversos recursos que uma aplicação do tipo `Console Application` necessita. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
-  * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
-
-## <a name="install-step-a-step"></a>Passo a passo
-
-* Criar seu projeto do tipo `Console Application`
-* Instale o `SysCommand` no seu projeto `Console Application`
-* Na primeira linha de seu método `public int Program.Main(string[] args)` adicione o código `return App.RunApplication()`.
-* Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
-* Criar suas propriedades com seus tipos `Nullable` e deixe-as como publicas. Elas se tornarão `arguments` no prompt de comando.
-* Crie um método `Main()` sem parametros em sua classe para poder interceptar os inputs de suas propriedades. Utilize `Property != null` para identificar que a propriedade foi inputada.
-* Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros optionais deixe-os como `Nullable` pela mesma razão acima.
-* Digite `help` no prompt de comando que abrirá para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
-* Agora é só usar!
-
-
-
-
-
-
 # <a name="documentation"></a>Documentação
 
 * [Iniciando](#class-app)
