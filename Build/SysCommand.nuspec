@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>SysCommand</id>
+        <version>1.0.5</version>
+        <title>SysCommand</title>
+        <authors>Glauber Donizeti Gasparotto Junior</authors>
+        <owners>Glauber Donizeti Gasparotto Junior</owners>
+        <licenseUrl>https://github.com/juniorgasparotto/SysCommand/blob/master/licence</licenseUrl>
+        <projectUrl>https://github.com/juniorgasparotto/SysCommand</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>SysCommand is a powerful framework for application application development using .NET. It is simple, strongly typed and with great influences of the MVC standard. It working as an automatic command line parser where all parse tasks are left over by the framework, leaving the programmer to focus on the business rules of your application.</description>
+        <language>en-US</language>
+        <tags>command-line-parser mvc console</tags>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5.2">
+                <dependency id="Microsoft.AspNet.Razor" version="3.2.3" />
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="content\Program.cs.txt" target="content\Program.cs.txt" />
+        <file src="lib\SysCommand.ConsoleApp.dll" target="lib\SysCommand.ConsoleApp.dll" />
+        <file src="lib\SysCommand.dll" target="lib\SysCommand.dll" />
+    </files>
+</package>
