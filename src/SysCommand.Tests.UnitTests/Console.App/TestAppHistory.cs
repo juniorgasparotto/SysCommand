@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using SysCommand.ConsoleApp;
 using System.IO;
-using SysCommand.Test;
+using SysCommand.TestUtils;
 using SysCommand.ConsoleApp.Files;
 using SysCommand.ConsoleApp.Commands;
 using System.Reflection;

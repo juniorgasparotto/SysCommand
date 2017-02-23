@@ -7,8 +7,8 @@
     <ProjectGuid>{7977222F-64E3-4C58-B3A8-00700454804C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SysCommand.Test</RootNamespace>
-    <AssemblyName>SysCommand.Test</AssemblyName>
+    <RootNamespace>SysCommand.TestUtils</RootNamespace>
+    <AssemblyName>SysCommand.TestUtils</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

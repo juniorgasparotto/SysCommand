@@ -1,6 +1,6 @@
 # Instalação <header-set anchor-name="install" />
 
-Você pode instalar via [NuGet](https://www.nuget.org/packages/SysCommand/):
+Via [NuGet](https://www.nuget.org/packages/SysCommand/):
 
 ```
 Install-Package SysCommand

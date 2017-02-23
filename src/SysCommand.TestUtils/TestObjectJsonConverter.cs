@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace SysCommand.Test
+namespace SysCommand.TestUtils
 {
     public class TestObjectJsonConverter : JsonConverter
     {

@@ -3,7 +3,7 @@ using System;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
-namespace SysCommand.Test
+namespace SysCommand.TestUtils
 {
     public static class TestFileHelper
     {

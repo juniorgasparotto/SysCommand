@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SysCommand.Test;
+using SysCommand.TestUtils;
 using System.Text;
 using SysCommand.ConsoleApp.View;
 using SysCommand.DefaultExecutor;

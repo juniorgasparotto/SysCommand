@@ -3,7 +3,7 @@
 O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `Console Aplication` usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC. 
 # <a name="install"></a>Instalação
 
-Você pode instalar via [NuGet](https://www.nuget.org/packages/SysCommand/):
+Via [NuGet](https://www.nuget.org/packages/SysCommand/):
 
 ```
 Install-Package SysCommand

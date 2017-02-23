@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SysCommand.ConsoleApp;
-using SysCommand.Test;
+using SysCommand.TestUtils;
 
 namespace SysCommand.Tests.UnitTests
 {

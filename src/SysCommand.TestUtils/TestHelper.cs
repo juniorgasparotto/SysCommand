@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using Newtonsoft.Json;
 
-namespace SysCommand.Test
+namespace SysCommand.TestUtils
 {
     public static class TestHelper
     {

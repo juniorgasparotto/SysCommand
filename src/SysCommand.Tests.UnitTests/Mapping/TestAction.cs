@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SysCommand.Mapping;
 using SysCommand.Parsing;
-using SysCommand.Test;
+using SysCommand.TestUtils;
 using System.Collections.Generic;
 using SysCommand.ConsoleApp.Helpers;
 

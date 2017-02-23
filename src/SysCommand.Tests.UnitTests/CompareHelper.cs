@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using SysCommand.ConsoleApp;
 using System.IO;
-using SysCommand.Test;
+using SysCommand.TestUtils;
 using System.Collections;
 
 namespace SysCommand.Tests.UnitTests

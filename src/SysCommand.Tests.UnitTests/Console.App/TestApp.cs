@@ -2,7 +2,7 @@
 using System;
 using SysCommand.ConsoleApp;
 using System.IO;
-using SysCommand.Test;
+using SysCommand.TestUtils;
 using SysCommand.ConsoleApp.Commands;
 
 namespace SysCommand.Tests.UnitTests
