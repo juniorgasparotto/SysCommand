@@ -33,8 +33,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SysCommand, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SysCommand.1.0.6\lib\SysCommand.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SysCommand.ConsoleApp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SysCommand.1.0.6\lib\SysCommand.ConsoleApp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,16 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SysCommand.ConsoleApp\SysCommand.ConsoleApp.csproj">
-      <Project>{D58E8352-ABC2-4D96-BF7E-603828F56D16}</Project>
-      <Name>SysCommand.ConsoleApp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SysCommand\SysCommand.csproj">
-      <Project>{4B7472B5-D979-455F-9613-4F64B98C67F4}</Project>
-      <Name>SysCommand</Name>
-    </ProjectReference>
+    <Content Include="Program.cs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
