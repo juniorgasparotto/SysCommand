@@ -5,6 +5,7 @@ using SysCommand.Parsing;
 using SysCommand.Mapping;
 using System.Reflection;
 using SysCommand.DefaultExecutor;
+using SysCommand.Reflection;
 
 namespace SysCommand.Extras
 {
@@ -44,7 +45,7 @@ namespace SysCommand.Extras
         {
             var argumentMap = new ArgumentMap(
                 target: argument.Action.Target,
-                targetMember: argument.Action.Method,
+                targetMember: argument.Action.Method(),
                 mapName: argument.LongName ?? argument.ShortName.ToString(),
                 longName: argument.LongName,
                 shortName: argument.ShortName,

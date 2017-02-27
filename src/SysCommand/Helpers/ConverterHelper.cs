@@ -3,6 +3,8 @@ using System.Linq;
 using System;
 using System.Collections;
 using System.Globalization;
+using SysCommand.Reflection;
+using System.Reflection;
 
 namespace SysCommand.Helpers
 {
@@ -76,7 +78,7 @@ namespace SysCommand.Helpers
             hasInvalidInput = false;
             hasUnsuporttedType = false;
 
-            var isList = type.IsGenericType && typeof(IEnumerable).IsAssignableFrom(type.GetGenericTypeDefinition()) && type.GetGenericArguments().Length == 1;
+            var isList = type.IsGenericType() && typeof(IEnumerable).IsAssignableFrom(type.GetGenericTypeDefinition()) && type.GetGenericArguments().Length == 1;
             var isArray = type.IsArray && type.GetElementType() != null;
             if (isList || isArray)
             {

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿#if !(NETSTANDARD1_6)
+using System.Linq;
 
 namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
 {
@@ -8,21 +9,22 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
     using System.Reflection;
     using System.Runtime.CompilerServices;
     using System.Collections;
+    using Reflection;
 
     /// <summary>
     /// Provides service methods for compilation.
     /// </summary>
     public static class CompilerServicesUtility
     {
-        #region Fields
+#region Fields
         private static readonly Type DynamicType = typeof(DynamicObject);
         private static readonly Type ExpandoType = typeof(ExpandoObject);
         private static readonly Type EnumerableType = typeof(IEnumerable);
         private static readonly Type EnumeratorType = typeof(IEnumerator);
         private static readonly Type GenericEnumerableType = typeof(IEnumerable<>);
-        #endregion
+#endregion
 
-        #region Methods
+#region Methods
 
         public static string BuildTypeName(Type templateType, Type modelType)
         {
@@ -206,6 +208,7 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
             return templateTypeName + "<" + modelTypeName + ">";
         }
         
-        #endregion
+#endregion
     }
 }
+#endif

@@ -6,6 +6,11 @@ using SysCommand.Mapping;
 using SysCommand.Helpers;
 using SysCommand.Parsing;
 
+#if NETSTANDARD1_6
+using SysCommand.Reflection;
+using System.Reflection;
+#endif
+
 namespace SysCommand.DefaultExecutor
 {
     public class ArgumentParser

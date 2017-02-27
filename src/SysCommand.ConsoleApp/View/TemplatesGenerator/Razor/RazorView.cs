@@ -1,4 +1,5 @@
-﻿using SysCommand.ConsoleApp.Helpers;
+﻿#if !(NETSTANDARD1_6)
+using SysCommand.ConsoleApp.Helpers;
 using System;
 using System.IO;
 using System.Linq;
@@ -169,3 +170,4 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
         }
     }
 }
+#endif

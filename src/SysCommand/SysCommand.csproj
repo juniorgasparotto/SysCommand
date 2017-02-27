@@ -46,6 +46,7 @@
     <Compile Include="DefaultExecutor\Parsing\ArgumentRawParser.cs" />
     <Compile Include="DefaultExecutor\Parsing\ArgumentParser.cs" />
     <Compile Include="DefaultExecutor\InternalParser.cs" />
+    <Compile Include="DotNetCoreCompat\ReflectionCompatibility.cs" />
     <Compile Include="Model\Execution\IEnumerableIMemberResultExtensions.cs" />
     <Compile Include="IExecutor.cs" />
     <Compile Include="Helpers\IEnumerableHelper.cs" />

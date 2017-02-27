@@ -4,6 +4,7 @@ using System;
 using System.Reflection;
 using SysCommand.Helpers;
 using SysCommand.Mapping;
+using SysCommand.Reflection;
 
 namespace SysCommand.DefaultExecutor
 {
@@ -20,7 +21,7 @@ namespace SysCommand.DefaultExecutor
             var maps = new List<ArgumentMap>();
             foreach (PropertyInfo property in properties)
             {
-                var attribute = Attribute.GetCustomAttribute(property, typeof(ArgumentAttribute)) as ArgumentAttribute;
+                var attribute = ReflectionCompatibility.GetCustomAttribute<ArgumentAttribute>(property);
 
                 if (onlyWithAttribute && attribute == null)
                     continue;
@@ -36,7 +37,7 @@ namespace SysCommand.DefaultExecutor
 
         public ArgumentMap Map(object target, PropertyInfo property)
         {
-            var attribute = Attribute.GetCustomAttribute(property, typeof(ArgumentAttribute)) as ArgumentAttribute;
+            var attribute = ReflectionCompatibility.GetCustomAttribute<ArgumentAttribute>(property);
             string longName = null;
             char? shortName = null;
             string helpText = null;
@@ -85,7 +86,7 @@ namespace SysCommand.DefaultExecutor
 
         public ArgumentMap Map(object target, ParameterInfo parameter)
         {
-            var attribute = Attribute.GetCustomAttribute(parameter, typeof(ArgumentAttribute)) as ArgumentAttribute;
+            var attribute = ReflectionCompatibility.GetCustomAttribute<ArgumentAttribute>(parameter);
 
             string longName = null;
             char? shortName = null;

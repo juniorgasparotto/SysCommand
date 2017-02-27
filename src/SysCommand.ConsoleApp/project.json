@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0-*",
+  "dependencies": {
+    "SysCommand": "1.0.0-*"
+  },
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50",
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "Newtonsoft.Json": "9.0.2-beta2",
+        "System.Reflection.Extensions": "4.3.0",
+        "System.Reflection.TypeExtensions": "4.3.0"
+      },
+      "buildOptions": {
+        "define": [ "NETSTANDARD1_6" ]
+      }
+    },
+
+    "net45": {
+      "dependencies": {
+        "Newtonsoft.Json": "9.0.1",
+        "Microsoft.AspNet.Razor": "3.0.0"
+      }
+    }
+  }
+}

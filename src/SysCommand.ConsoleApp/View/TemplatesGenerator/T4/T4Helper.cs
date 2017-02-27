@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SysCommand.Reflection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace SysCommand.ConsoleApp.View.TemplatesGenerator.T4
 {
@@ -8,8 +10,7 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.T4
     {
         public static string Execute<TTemplate, TModel>(TModel model = default(TModel))
         {
-            var genAttribute = typeof(TTemplate).GetCustomAttributes(true)
-                .FirstOrDefault() as global::System.CodeDom.Compiler.GeneratedCodeAttribute;
+            var genAttribute = typeof(TTemplate).GetCustomAttribute<global::System.CodeDom.Compiler.GeneratedCodeAttribute>(true);
             if (genAttribute != null)
             {
                 var template = Activator.CreateInstance<TTemplate>();

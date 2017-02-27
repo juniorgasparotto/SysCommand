@@ -4,6 +4,8 @@ using System;
 using SysCommand.Parsing;
 using SysCommand.Helpers;
 using SysCommand.Execution;
+using SysCommand.Reflection;
+using System.Reflection;
 
 namespace SysCommand.DefaultExecutor
 {

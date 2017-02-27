@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SysCommand.Reflection;
+using System;
 using System.Collections.Generic;
 
 namespace SysCommand.ConsoleApp
@@ -35,7 +36,7 @@ namespace SysCommand.ConsoleApp
         {
             if (obj != null)
                 return (T)obj;
-            else if (!typeof(T).IsValueType)
+            else if (!typeof(T).IsValueType())
                 return default(T);
 
             throw new Exception("Can not convert a null value to a struct type.");

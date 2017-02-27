@@ -8,6 +8,7 @@ using SysCommand.Helpers;
 using System;
 using SysCommand.ConsoleApp.View;
 using System.Collections;
+using System.Reflection;
 
 namespace SysCommand.ConsoleApp.Descriptor
 {

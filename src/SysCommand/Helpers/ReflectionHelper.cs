@@ -4,6 +4,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using SysCommand.Reflection;
 
 namespace SysCommand.Helpers
 {
@@ -11,8 +12,8 @@ namespace SysCommand.Helpers
     {
         public static bool MethodsAreEquals(MethodInfo first, MethodInfo second)
         {
-            first = first.ReflectedType == first.DeclaringType ? first : first.DeclaringType.GetMethod(first.Name, first.GetParameters().Select(p => p.ParameterType).ToArray());
-            second = second.ReflectedType == second.DeclaringType ? second : second.DeclaringType.GetMethod(second.Name, second.GetParameters().Select(p => p.ParameterType).ToArray());
+            first = first.DeclaringType.GetMethod(first.Name, first.GetParameters().Select(p => p.ParameterType).ToArray());
+            second = second.DeclaringType.GetMethod(second.Name, second.GetParameters().Select(p => p.ParameterType).ToArray());
             return first == second;
         }
 
@@ -52,7 +53,7 @@ namespace SysCommand.Helpers
             var sb = new StringBuilder();
             var name = showFullName ? type.FullName : type.Name;
             //return name;
-            if (!type.IsGenericType || name.IndexOf('`') == -1) return name;
+            if (!type.IsGenericType() || name.IndexOf('`') == -1) return name;
             sb.Append(name.Substring(0, name.IndexOf('`')));
             sb.Append("<");
             sb.Append(string.Join(", ", type.GetGenericArguments()
@@ -88,30 +89,21 @@ namespace SysCommand.Helpers
             return (PropertyInfo)Exp.Member;
         }
 
-        public static T Construct<T>(Type[] paramTypes, object[] paramValues)
-        {
-            Type t = typeof(T);
-
-            ConstructorInfo ci = t.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, paramTypes, null);
-
-            return (T)ci.Invoke(paramValues);
-        }
-
         public static bool IsEnum(Type type)
         {
-            return GetTypeOrTypeOfNullable(type).IsEnum;
+            return GetTypeOrTypeOfNullable(type).IsEnum();
         }
 
         public static Type GetTypeOrTypeOfNullable(Type type)
         {
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (type.IsGenericType() && type.GetGenericTypeDefinition() == typeof(Nullable<>))
                 return type.GetGenericArguments()[0];
             return type;
         }
 
         public static object GetDefaultForType(Type targetType)
         {
-            return targetType.IsValueType ? Activator.CreateInstance(targetType) : null;
+            return targetType.IsValueType() ? Activator.CreateInstance(targetType) : null;
         }
     }
 }

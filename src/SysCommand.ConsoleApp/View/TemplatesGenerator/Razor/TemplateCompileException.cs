@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !(NETSTANDARD1_6)
+using System;
 using System.CodeDom.Compiler;
 
 namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
@@ -15,3 +16,4 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
         public string SourceCode { get; private set; }
     }
 }
+#endif

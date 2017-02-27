@@ -4,7 +4,11 @@ using SysCommand.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Reflection;
+
+#if NETSTANDARD1_6
+using SysCommand.Reflection;
+#endif
 
 namespace SysCommand.ConsoleApp.Files
 {
@@ -114,7 +118,7 @@ namespace SysCommand.ConsoleApp.Files
         {
             string fileName;
 
-            var attr = type.GetCustomAttributes(typeof(ObjectFileAttribute), true).FirstOrDefault() as ObjectFileAttribute;
+            var attr = type.GetCustomAttribute<ObjectFileAttribute>(true);
             if (attr != null && !string.IsNullOrWhiteSpace(attr.FileName))
             {
                 fileName = attr.FileName;
@@ -133,7 +137,7 @@ namespace SysCommand.ConsoleApp.Files
             return Path.Combine(this.DefaultFolder, fileName);
         }
 
-        #region Json
+#region Json
 
         public static string GetContentJsonFromObject(object obj, JsonSerializerSettings config = null)
         {
@@ -142,9 +146,14 @@ namespace SysCommand.ConsoleApp.Files
                 config = new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Auto,
-                    Binder = binder,
                     Formatting = Formatting.Indented
                 };
+
+#if NETSTANDARD1_6
+                config.SerializationBinder = binder;
+#else
+                config.Binder = binder;
+#endif
             }
 
             return JsonConvert.SerializeObject(obj, config.Formatting, config);
@@ -156,9 +165,14 @@ namespace SysCommand.ConsoleApp.Files
             {
                 config = new JsonSerializerSettings
                 {
-                    TypeNameHandling = TypeNameHandling.Auto,
-                    Binder = binder,
+                    TypeNameHandling = TypeNameHandling.Auto
                 };
+
+#if NETSTANDARD1_6
+                config.SerializationBinder = binder;
+#else
+                config.Binder = binder;
+#endif
             }
 
             return JsonConvert.DeserializeObject<T>(contentJson, config);
@@ -179,7 +193,7 @@ namespace SysCommand.ConsoleApp.Files
             FileHelper.SaveContentToFile(GetContentJsonFromObject(obj, config), fileName);
         }
 
-        #endregion
+#endregion
 
     }
 }

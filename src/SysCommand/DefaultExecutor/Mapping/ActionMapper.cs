@@ -3,6 +3,7 @@ using System.Linq;
 using System;
 using System.Reflection;
 using SysCommand.Mapping;
+using SysCommand.Reflection;
 
 namespace SysCommand.DefaultExecutor
 {
@@ -28,7 +29,7 @@ namespace SysCommand.DefaultExecutor
 
             foreach (var method in methods)
             {
-                var attribute = Attribute.GetCustomAttribute(method, typeof(ActionAttribute)) as ActionAttribute;
+                var attribute = ReflectionCompatibility.GetCustomAttribute<ActionAttribute>(method);
 
                 var isMainMethod = method.Name.ToLower() == Executor.MAIN_METHOD_NAME;
                 var countParameters = method.GetParameters().Length;

@@ -12,6 +12,12 @@ using SysCommand.ConsoleApp.Handlers;
 using SysCommand.ConsoleApp.Descriptor;
 using SysCommand.ConsoleApp.Loader;
 using SysCommand.Helpers;
+using System.Runtime.CompilerServices;
+
+#if NETSTANDARD1_6
+using SysCommand.Reflection;
+using System.Runtime.Loader;
+#endif
 
 namespace SysCommand.ConsoleApp
 {
@@ -160,7 +166,7 @@ namespace SysCommand.ConsoleApp
                 var isRestarted = false;
 
                 appResult.ArgumentsRaw = this._executor.ParseRaw(appResult.Args, this.Maps);
-                Action<IMemberResult, ExecutionScope> invokeAction;
+                Action<IMemberResult, Execution.ExecutionScope> invokeAction;
                 invokeAction = (member, scope) =>
                 {
                     var actionResult = this.InvokeMemberInternal(appResult, member);
@@ -256,10 +262,17 @@ namespace SysCommand.ConsoleApp
 
         private Command CreateCommandInstance(Type type, string propertyAppName)
         {
+#if (NET40 || NET35 || NET20)
             var obj = FormatterServices.GetUninitializedObject(type);
+
             obj.GetType().GetProperty(propertyAppName).SetValue(obj, this);
             obj.GetType().GetConstructor(Type.EmptyTypes)?.Invoke(obj, null);
             return (Command) obj;
+#else
+            var cmd = (Command)Activator.CreateInstance(type);
+            cmd.App = this;
+            return cmd;
+#endif
         }
 
         public static int RunApplication(Func<App> appFactory = null)

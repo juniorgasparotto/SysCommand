@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !(NETSTANDARD1_6)
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
@@ -75,3 +76,4 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
         }
     }
 }
+#endif

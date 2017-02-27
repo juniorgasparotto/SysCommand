@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SysCommand.Reflection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace SysCommand.ConsoleApp.Loader
 {
@@ -19,15 +21,15 @@ namespace SysCommand.ConsoleApp.Loader
         {
             this.IgnoredCommands.Add(typeof(T));
         }
-        
+
         public IEnumerable<Type> GetFromAppDomain()
         {
-            var listOfCommands = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+            var listOfCommands = (from domainAssembly in ReflectionCompatibility.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()
                                   where
                                          typeof(Command).IsAssignableFrom(assemblyType)
-                                      && assemblyType.IsInterface == false
-                                      && assemblyType.IsAbstract == false
+                                      && assemblyType.IsInterface() == false
+                                      && assemblyType.IsAbstract() == false
                                   select assemblyType).ToList();
             listOfCommands.RemoveAll(f => this.IgnoredCommands.Contains(f));
             return listOfCommands;
