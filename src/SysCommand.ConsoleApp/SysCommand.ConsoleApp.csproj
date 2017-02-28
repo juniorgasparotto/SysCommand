@@ -1,107 +1,44 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D58E8352-ABC2-4D96-BF7E-603828F56D16}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SysCommand.ConsoleApp</RootNamespace>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <AssemblyName>SysCommand.ConsoleApp</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <PackageId>SysCommand.ConsoleApp</PackageId>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SysCommand\SysCommand.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.2-beta2" />
+    <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD1_6</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Microsoft.AspNet.Razor" Version="3.0.0" />
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Files\ObjectFileAttribute.cs" />
-    <Compile Include="Helpers\DebugHelper.cs" />
-    <Compile Include="Results\IActionResult.cs" />
-    <Compile Include="ItemCollection.cs" />
-    <Compile Include="Files\Json\JsonFileManager.cs" />
-    <Compile Include="Helpers\FileHelper.cs" />
-    <Compile Include="ApplicationResult.cs" />
-    <Compile Include="App.cs" />
-    <Compile Include="Command.cs" />
-    <Compile Include="Descriptors\IDescriptor.cs" />
-    <Compile Include="Descriptors\DefaultDescriptor.cs" />
-    <Compile Include="Handlers\IApplicationHandler.cs" />
-    <Compile Include="Helpers\ConsoleAppHelper.cs" />
-    <Compile Include="Loader\AppDomainCommandLoader.cs" />
-    <Compile Include="Commands\System\Help\HelpCommand.cs" />
-    <Compile Include="Commands\System\Help\IHelpCommand.cs" />
-    <Compile Include="Commands\User\ArgsHistoryCommand.cs" />
-    <Compile Include="Commands\Debug\ClearCommand.cs" />
-    <Compile Include="Results\ActionResult.cs" />
-    <Compile Include="Results\RedirectResult.cs" />
-    <Compile Include="View\TableView.cs" />
-    <Compile Include="View\TemplatesGenerator\Razor\Compiler.cs" />
-    <Compile Include="View\TemplatesGenerator\Razor\CompilerServicesUtility.cs" />
-    <Compile Include="View\TemplatesGenerator\Razor\RazorTemplateBase.cs" />
-    <Compile Include="View\TemplatesGenerator\Razor\RazorTemplateEntry.cs" />
-    <Compile Include="View\TemplatesGenerator\Razor\RazorTemplateGenerator.cs" />
-    <Compile Include="View\TemplatesGenerator\Razor\TemplateCompileException.cs" />
-    <Compile Include="Strings.cs" />
-    <Compile Include="Commands\User\VerboseCommand.cs" />
-    <Compile Include="Handlers\DefaultApplicationHandler.cs" />
-    <Compile Include="ExitCodeConstants.cs" />
-    <Compile Include="ConsoleWrapper.cs" />
-    <Compile Include="Files\Json\TypeNameSerializationBinder.cs" />
-    <Compile Include="Verbose.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\TemplatesGenerator\Razor\RazorView.cs" />
-    <Compile Include="View\TemplatesGenerator\T4\T4Helper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SysCommand\SysCommand.csproj">
-      <Project>{4b7472b5-d979-455f-9613-4f64b98c67f4}</Project>
-      <Name>SysCommand</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

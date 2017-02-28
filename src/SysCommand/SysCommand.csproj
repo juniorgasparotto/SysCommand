@@ -1,99 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4B7472B5-D979-455F-9613-4F64B98C67F4}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SysCommand</RootNamespace>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <AssemblyName>SysCommand</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\GITBUCKET\QuotationAnalysis\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
+    <PackageId>SysCommand</PackageId>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.0.1-beta-003206" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.0.0" />
+    <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DefaultExecutor\Executor.cs" />
-    <Compile Include="DefaultExecutor\InternalExecutor.cs" />
-    <Compile Include="DefaultExecutor\Mapping\ActionMapper.cs" />
-    <Compile Include="DefaultExecutor\Mapping\ArgumentMapper.cs" />
-    <Compile Include="DefaultExecutor\Mapping\CommandMapper.cs" />
-    <Compile Include="DefaultExecutor\Parsing\ActionParser.cs" />
-    <Compile Include="DefaultExecutor\Parsing\ArgumentRawParser.cs" />
-    <Compile Include="DefaultExecutor\Parsing\ArgumentParser.cs" />
-    <Compile Include="DefaultExecutor\InternalParser.cs" />
-    <Compile Include="DotNetCoreCompat\ReflectionCompatibility.cs" />
-    <Compile Include="Model\Execution\IEnumerableIMemberResultExtensions.cs" />
-    <Compile Include="IExecutor.cs" />
-    <Compile Include="Helpers\IEnumerableHelper.cs" />
-    <Compile Include="Helpers\ComparationHelper.cs" />
-    <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Helpers\ReflectionHelper.cs" />
-    <Compile Include="Helpers\ConverterHelper.cs" />
-    <Compile Include="Extras\OptionSet.cs" />
-    <Compile Include="Model\Execution\ExecutionError.cs" />
-    <Compile Include="Model\Execution\ExecutionScope.cs" />
-    <Compile Include="Model\Parsing\ParseResult.cs" />
-    <Compile Include="Model\Execution\ExecutionResult.cs" />
-    <Compile Include="Model\Mapping\EnumerableCommandMapExtensions.cs" />
-    <Compile Include="Model\Execution\Members\MethodMainResult.cs" />
-    <Compile Include="Model\Mapping\Command\CommandMap.cs" />
-    <Compile Include="Model\Execution\Members\PropertyResult.cs" />
-    <Compile Include="Model\Execution\Members\MethodResult.cs" />
-    <Compile Include="Model\Execution\Members\IMemberResult.cs" />
-    <Compile Include="Model\Execution\ExecutionState.cs" />
-    <Compile Include="Model\Mapping\Action\ActionAttribute.cs" />
-    <Compile Include="Model\Mapping\Argument\ArgumentAttribute.cs" />
-    <Compile Include="Model\Parsing\Argument\ArgumentParsedState.cs" />
-    <Compile Include="Model\Parsing\Action\ActionParsedState.cs" />
-    <Compile Include="Model\Parsing\ArgumentRaw\ArgumentFormat.cs" />
-    <Compile Include="Model\Mapping\Argument\ArgumentMap.cs" />
-    <Compile Include="Model\Parsing\ArgumentRaw\ArgumentRaw.cs" />
-    <Compile Include="Model\Parsing\Argument\ArgumentParsed.cs" />
-    <Compile Include="Model\Mapping\Action\ActionMap.cs" />
-    <Compile Include="Model\Parsing\Action\ActionParsed.cs" />
-    <Compile Include="Model\Parsing\Argument\ArgumentParsedType.cs" />
-    <Compile Include="CommandBase.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
