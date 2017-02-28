@@ -55,17 +55,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SysCommand.ConsoleApp\SysCommand.ConsoleApp.csproj">
-      <Project>{d58e8352-abc2-4d96-bf7e-603828f56d16}</Project>
-      <Name>SysCommand.ConsoleApp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SysCommand\SysCommand.csproj">
-      <Project>{4B7472B5-D979-455F-9613-4F64B98C67F4}</Project>
-      <Name>SysCommand</Name>
-    </ProjectReference>
+    <Folder Include=".app\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include=".app\" />
+    <ProjectReference Include="..\SysCommand\SysCommand.csproj">
+      <Project>{110d5108-768d-4b5a-9909-3a93c5c4c4ca}</Project>
+      <Name>SysCommand</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
