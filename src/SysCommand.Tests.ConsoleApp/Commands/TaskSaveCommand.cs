@@ -28,7 +28,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
         {
             App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
-            var tasks = fileManager.Get<List<Task>>();
+            var tasks = fileManager.GetOrCreate<List<Task>>();
             var task = new Task
             {
                 Id = tasks.Count + 1,
@@ -45,7 +45,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
         {
             App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
-            var tasks = fileManager.Get<List<Task>>();
+            var tasks = fileManager.GetOrCreate<List<Task>>();
             var task = new Task
             {
                 Id = tasks.Count + 1,
@@ -62,7 +62,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
         {
             App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
-            var tasks = fileManager.Get<List<Task>>();
+            var tasks = fileManager.GetOrCreate<List<Task>>();
             var task = new Task
             {
                 Id = tasks.Count + 1,

@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Commands\Classes\AppConfig.cs" />
     <Compile Include="Commands\Classes\Tasks.cs" />
+    <Compile Include="Commands\MyCommand.cs" />
     <Compile Include="Commands\UsedForTests\Command5.cs" />
     <Compile Include="Commands\UsedForTests\Command4.cs" />
     <Compile Include="Commands\UsedForTests\Command3.cs" />
@@ -59,9 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include=".app\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SysCommand\SysCommand.csproj">

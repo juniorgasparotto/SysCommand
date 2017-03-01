@@ -96,7 +96,29 @@ namespace SysCommand.DefaultExecutor
                         {
                             // Step4: All defaults and invalid methods have been ignored to maintain the fluency 
                             // and the process of following with properties.
-                            var levelOfProperties = this.GetLevelWithProperties(commandsMap, argumentsRaw);
+
+                            // select all raw before 'level 1'
+                            IEnumerable<ArgumentRaw> raws;
+                            var methodLevel1 = methodsParsed.FirstOrDefault(f => f.Level == 1);
+                            if (methodLevel1 != null)
+                            {
+                                var rawsAux = new List<ArgumentRaw>();
+                                foreach(var raw in argumentsRaw)
+                                {
+                                    if (raw != methodLevel1.ArgumentRawOfAction)
+                                        rawsAux.Add(raw);
+                                    else
+                                        break;
+                                }
+
+                                raws = rawsAux;
+                            }
+                            else
+                            {
+                                raws = argumentsRaw;
+                            }
+
+                            var levelOfProperties = this.GetLevelWithProperties(commandsMap, raws);
                             if (levelOfProperties != null && !this.IsEmptyLevel(levelOfProperties))
                                 parseResult.Add(levelOfProperties);
                         }

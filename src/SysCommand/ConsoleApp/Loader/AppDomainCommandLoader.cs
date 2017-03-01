@@ -24,7 +24,11 @@ namespace SysCommand.ConsoleApp.Loader
 
         public IEnumerable<Type> GetFromAppDomain()
         {
-            var listOfCommands = (from domainAssembly in ReflectionCompatibility.GetAssemblies()
+            var assemblies = ReflectionCompatibility.GetAssemblies().ToList();
+#if NETSTANDARD1_6
+                assemblies.Add(this.GetType().GetTypeInfo().Assembly);
+#endif
+            var listOfCommands = (from domainAssembly in assemblies
                                   from assemblyType in domainAssembly.GetTypes()
                                   where
                                          typeof(Command).IsAssignableFrom(assemblyType)

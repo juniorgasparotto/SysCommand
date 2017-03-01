@@ -19,7 +19,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
         {
             App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
-            var tasks = fileManager.Get<List<Task>>();
+            var tasks = fileManager.GetOrCreate<List<Task>>();
             tasks.RemoveAll(t => t.Id == id);
             fileManager.Save(tasks);
         }
@@ -32,7 +32,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
         {
             App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
-            var tasks = fileManager.Get<List<Task>>();
+            var tasks = fileManager.GetOrCreate<List<Task>>();
             tasks.RemoveAll(t => t.Title == title);
             fileManager.Save(tasks);
         }
@@ -41,7 +41,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
         {
             App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
-            var tasks = fileManager.Get<List<Task>>();
+            var tasks = fileManager.GetOrCreate<List<Task>>();
             tasks.RemoveAll(t => t.Title == null || t.Description == null);
             fileManager.Save(tasks);
         }

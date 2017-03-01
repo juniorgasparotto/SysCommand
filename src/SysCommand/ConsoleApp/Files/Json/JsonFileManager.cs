@@ -33,8 +33,17 @@ namespace SysCommand.ConsoleApp.Files
             {
                 this.defaultFolder = value;
                 if (DebugHelper.IsDebug && this.SaveInRootFolderWhenIsDebug)
-                    this.defaultFolder = Path.Combine(@"..\..\", this.defaultFolder);
+                    this.defaultFolder = Path.Combine(GetCurrentDebugDirectory(), this.defaultFolder);
             }
+        }
+
+        private string GetCurrentDebugDirectory()
+        {
+#if NETSTANDARD1_6
+            return Directory.GetCurrentDirectory();
+#else
+            return @"..\..\";
+#endif
         }
 
         public JsonFileManager()

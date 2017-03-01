@@ -3,9 +3,7 @@ using System.Reflection;
 
 #if NETSTANDARD1_6
 using System.Collections.Generic;
-using System.Runtime.Loader;
 using System.Linq;
-using System.IO;
 #endif
 
 namespace SysCommand.Reflection
@@ -114,16 +112,9 @@ namespace SysCommand.Reflection
         public static Assembly[] GetAssemblies()
         {
 #if NETSTANDARD1_6
-            var fileNames = Directory.GetFiles(AppContext.BaseDirectory, "*.dll", SearchOption.AllDirectories);
             var curAssembly = System.Reflection.Assembly.GetEntryAssembly();
             List<Assembly> assemblies = new List<Assembly>();
             assemblies.Add(curAssembly);
-
-            foreach (string fileName in fileNames)
-            {
-                if (curAssembly.Location != fileName)
-                    assemblies.Add(AssemblyLoadContext.Default.LoadFromAssemblyPath(fileName));
-            }
             return assemblies.ToArray();
 #else
             return AppDomain.CurrentDomain.GetAssemblies();
