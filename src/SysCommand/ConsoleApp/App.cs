@@ -275,7 +275,7 @@ namespace SysCommand.ConsoleApp
 #endif
         }
 
-        public static int RunApplication(Func<App> appFactory = null)
+        public static int RunApplication(Func<App> appFactory = null, bool breakEndLine = true)
         {
             var lastBreakLineInNextWrite = false;
             while (true)
@@ -286,7 +286,12 @@ namespace SysCommand.ConsoleApp
                 lastBreakLineInNextWrite = app.Console.BreakLineInNextWrite;
 
                 if (!DebugHelper.IsDebug)
+                {
+                    if (breakEndLine)
+                        app.Console.Write("\r\n");
+
                     return app.Console.ExitCode;
+                }
             }
         }
 

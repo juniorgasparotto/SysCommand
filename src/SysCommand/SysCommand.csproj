@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <AssemblyName>SysCommand</AssemblyName>
-    <PackageId>SysCommand.ConsoleApp</PackageId>
+    <PackageId>SysCommand</PackageId>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -15,11 +15,16 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <RootNamespace>SysCommand</RootNamespace>
+    <Version>1.0.7</Version>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Authors>Glauber Donizeti Gasparotto Junior</Authors>
+    <PackageProjectUrl>https://github.com/juniorgasparotto/SysCommand</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/juniorgasparotto/SysCommand/blob/master/licence</PackageLicenseUrl>
+    <PackageTags>command-line-parser mvc console</PackageTags>
+    <Description>SysCommand is a powerful framework for application application development using .NET. It is simple, strongly typed and with great influences of the MVC standard. It working as an automatic command line parser where all parse tasks are left over by the framework, leaving the programmer to focus on the business rules of your application.</Description>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryUrl>https://github.com/juniorgasparotto/SysCommand</RepositoryUrl>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <PackageReference Include="Newtonsoft.Json" Version="9.0.2-beta2" />
@@ -33,11 +38,19 @@
     <DefineConstants>$(DefineConstants);NETSTANDARD1_6</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.6|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="Microsoft.AspNet.Razor" Version="3.0.0" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Program.cs.txt" />
   </ItemGroup>
 
 </Project>

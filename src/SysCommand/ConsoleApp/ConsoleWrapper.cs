@@ -41,12 +41,12 @@ namespace SysCommand.ConsoleApp
 
         public ConsoleWrapper()
         {
-            this.ColorInfo = ConsoleColor.DarkGray;
-            this.ColorCritical = ConsoleColor.DarkGray;
+            this.ColorInfo = Console.ForegroundColor;
+            this.ColorCritical = ConsoleColor.Red;
             this.ColorError = ConsoleColor.Red;
             this.ColorSuccess = ConsoleColor.Blue;
             this.ColorWarning = ConsoleColor.Yellow;
-            this.ColorRead = ConsoleColor.Cyan;
+            this.ColorRead = Console.ForegroundColor;
             this.In = Console.In;
             this.Out = Console.Out;
             this.Verbose = Verbose.Info;
@@ -84,11 +84,8 @@ namespace SysCommand.ConsoleApp
             return null;
         }
 
-        public virtual string Read(string label, /*string defaultValueIfQuiet = null,*/ bool breakLine = false)
+        public virtual string Read(string label, bool breakLine = false)
         {
-            //if (this.Quiet)
-            //    return defaultValueIfQuiet;
-
             WriteInternal(label, breakLine, this.ColorRead);
             return Read();
         }
