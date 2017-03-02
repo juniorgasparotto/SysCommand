@@ -9,8 +9,8 @@ namespace SysCommand.TestUtils
         public override bool CanConvert(Type objectType)
         {
             return
-                   objectType.IsSubclassOf(typeof(System.Reflection.PropertyInfo))
-                || objectType.IsSubclassOf(typeof(System.Reflection.ParameterInfo))
+                   objectType.IsSubclassOf(typeof(PropertyInfo))
+                || objectType.IsSubclassOf(typeof(ParameterInfo))
                 || objectType.IsSubclassOf(typeof(MethodInfo));
         }
 
