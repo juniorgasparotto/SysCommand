@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysCommand.Tests.ConsoleApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysCommand.Tests.UnitTests", "SysCommand.Tests.UnitTests\SysCommand.Tests.UnitTests.csproj", "{2FC5A895-3E3C-4A99-863C-F7713E288D0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysCommand.Tests.XUnit", "SysCommand.Tests.XUnit\SysCommand.Tests.XUnit.csproj", "{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,18 +87,6 @@ Global
 		{2FC5A895-3E3C-4A99-863C-F7713E288D0D}.Release|x64.Build.0 = Release|Any CPU
 		{2FC5A895-3E3C-4A99-863C-F7713E288D0D}.Release|x86.ActiveCfg = Release|x86
 		{2FC5A895-3E3C-4A99-863C-F7713E288D0D}.Release|x86.Build.0 = Release|x86
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|x64.Build.0 = Debug|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|x86.Build.0 = Debug|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|x64.ActiveCfg = Release|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|x64.Build.0 = Release|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|x86.ActiveCfg = Release|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +97,5 @@ Global
 		{110D5108-768D-4B5A-9909-3A93C5C4C4CA} = {095CE47A-8973-41CD-A65C-06E3862F8DBB}
 		{06683D49-64F9-4B96-8F29-8F189965F6FB} = {421ED130-B6BF-4320-8267-9715059C1F0C}
 		{2FC5A895-3E3C-4A99-863C-F7713E288D0D} = {421ED130-B6BF-4320-8267-9715059C1F0C}
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47} = {421ED130-B6BF-4320-8267-9715059C1F0C}
 	EndGlobalSection
 EndGlobal
