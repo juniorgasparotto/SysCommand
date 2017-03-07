@@ -6,17 +6,18 @@ using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.ConsoleApp.Commands;
 using SysCommand.ConsoleApp.Helpers;
-using System.Runtime.Serialization;
 using SysCommand.ConsoleApp.Results;
 using SysCommand.ConsoleApp.Handlers;
 using SysCommand.ConsoleApp.Descriptor;
 using SysCommand.ConsoleApp.Loader;
 using SysCommand.Helpers;
-using System.Runtime.CompilerServices;
 
 #if NETSTANDARD1_6
 using SysCommand.Reflection;
 using System.Runtime.Loader;
+#else
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 #endif
 
 namespace SysCommand.ConsoleApp
@@ -262,7 +263,7 @@ namespace SysCommand.ConsoleApp
 
         private Command CreateCommandInstance(Type type, string propertyAppName)
         {
-#if (NET40 || NET35 || NET20)
+#if !(NETSTANDARD1_6)
             var obj = FormatterServices.GetUninitializedObject(type);
 
             obj.GetType().GetProperty(propertyAppName).SetValue(obj, this);
@@ -310,7 +311,5 @@ namespace SysCommand.ConsoleApp
 
             return listArgs.ToArray();
         }
-
-
     }
 }

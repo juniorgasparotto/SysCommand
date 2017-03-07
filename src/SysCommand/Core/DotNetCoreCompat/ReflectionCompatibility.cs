@@ -113,8 +113,10 @@ namespace SysCommand.Reflection
         {
 #if NETSTANDARD1_6
             var curAssembly = System.Reflection.Assembly.GetEntryAssembly();
-            List<Assembly> assemblies = new List<Assembly>();
-            assemblies.Add(curAssembly);
+            List<Assembly> assemblies = new List<Assembly>
+            {
+                curAssembly
+            };
             return assemblies.ToArray();
 #else
             return AppDomain.CurrentDomain.GetAssemblies();
