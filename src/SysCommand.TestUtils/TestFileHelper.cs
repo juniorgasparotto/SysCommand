@@ -40,10 +40,10 @@ namespace SysCommand.TestUtils
         /// <param name="filename">full path of the file</param>
         public static void CreateFolderIfNeeded(string filename)
         {
-            string folder = System.IO.Path.GetDirectoryName(filename);
-            if (!System.IO.Directory.Exists(folder))
+            string folder = Path.GetDirectoryName(filename);
+            if (!Directory.Exists(folder))
             {
-                System.IO.Directory.CreateDirectory(folder);
+                Directory.CreateDirectory(folder);
             }
         }
 

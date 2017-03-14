@@ -151,6 +151,7 @@
     <Compile Include="Console.App\TestAppMultiCommand.cs" />
     <Compile Include="Console.App\TestAppVerbose.cs" />
     <Compile Include="Console.App\TestArgumentSetWithoutApp.cs" />
+    <Compile Include="ConsoleInputParser\TestConsoleInputParser.cs" />
     <Compile Include="Mapping\Commands\ArgumentMappedTestObject.cs" />
     <Compile Include="Mapping\Commands\EnumTest1.cs" />
     <Compile Include="Mapping\Commands\EnumTest2.cs" />

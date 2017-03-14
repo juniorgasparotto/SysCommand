@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SysCommand.ConsoleApp")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("SysCommand is a powerful framework for application application development using .NET. It is simple, strongly typed and with great influences of the MVC standard. It working as an automatic command line parser where all parse tasks are left over by the framework, leaving the programmer to focus on the business rules of your application.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SysCommand")]
