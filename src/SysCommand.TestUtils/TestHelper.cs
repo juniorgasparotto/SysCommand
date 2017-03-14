@@ -1,7 +1,6 @@
-﻿using System.IO;
-using System.Runtime.CompilerServices;
-using System.Diagnostics;
+﻿using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace SysCommand.TestUtils
 {
@@ -9,7 +8,11 @@ namespace SysCommand.TestUtils
     {
         public static void SetCultureInfoToInvariant()
         {
+#if NETSTANDARD1_6
+
+#else
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+#endif
         }
 
         public static JsonSerializerSettings GetJsonConfig()
@@ -33,9 +36,21 @@ namespace SysCommand.TestUtils
         private static string GetFileName(string typeName, string testContext, string fileNameSuffix, string fileName, string fileNameFinal)
         {
             testContext = testContext != null ? "-" + testContext : "";
-            var fileNameFormat = @".tests\{0}{1}\{2}\{3}.json{4}";
+
+#if NETSTANDARD1_6
+            var mainFolder = "tests";
+#else
+            var mainFolder = ".tests";
+#endif
+
+            var fileNameFormat = mainFolder + @"\{0}{1}\{2}\{3}.json{4}";
             var path = string.Format(fileNameFormat, typeName, testContext, fileNameSuffix, fileName, fileNameFinal);
+
+#if NETSTANDARD1_6
+            return path;
+#else
             return Path.Combine(@"..\..\", path);
+#endif
         }
 
         private static string GetValidTestFileName(string typeName, string testContext, string fileName)
@@ -77,12 +92,12 @@ namespace SysCommand.TestUtils
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static string GetCurrentMethodName()
+        public static string GetCurrentMethodName(
+                [CallerMemberName] string memberName = "",
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int sourceLineNumber = 0)
         {
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(1);
-
-            return sf.GetMethod().Name;
+            return memberName;
         }
 
         public static bool CompareObjects<TType>(object objectTest, string testContext, string testMethodName, JsonSerializerSettings config = null)
@@ -98,7 +113,7 @@ namespace SysCommand.TestUtils
 
             if (!test)
                 SaveInvalidFileIfValidExists<dynamic>(typeName, objectTest, testContext, testMethodName, config);
-           
+            
             return outputTest == outputCorrect;
         }
 

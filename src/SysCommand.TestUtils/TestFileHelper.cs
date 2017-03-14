@@ -2,6 +2,7 @@
 using System;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Reflection;
 
 namespace SysCommand.TestUtils
 {
@@ -9,21 +10,29 @@ namespace SysCommand.TestUtils
     {
         private static TypeNameSerializationBinder binder = new TypeNameSerializationBinder();
 
+        private static string GetUniversalFileName(string fileName)
+        {
+            return fileName.Replace("\\", "/").Replace("//", "/");
+        }
+
         public static bool FileExists(string fileName)
         {
+            fileName = GetUniversalFileName(fileName);
             return File.Exists(fileName);
         }
 
         public static string GetContentFromFile(string fileName)
         {
+            fileName = GetUniversalFileName(fileName);
             if (!File.Exists(fileName))
                 return null;
 
             return File.ReadAllText(fileName);
         }
-        
+
         public static void RemoveFile(string fileName)
         {
+            fileName = GetUniversalFileName(fileName);
             if (File.Exists(fileName))
                 File.Delete(fileName);
         }
@@ -31,7 +40,7 @@ namespace SysCommand.TestUtils
         public static void SaveContentToFile(string content, string fileName)
         {
             CreateFolderIfNeeded(fileName);
-            File.WriteAllText(fileName, content);
+            WriteAllText(fileName, content);
         }
 
         /// <summary>
@@ -40,11 +49,18 @@ namespace SysCommand.TestUtils
         /// <param name="filename">full path of the file</param>
         public static void CreateFolderIfNeeded(string filename)
         {
-            string folder = Path.GetDirectoryName(filename);
-            if (!Directory.Exists(folder))
+            filename = GetUniversalFileName(filename);
+            string folder = System.IO.Path.GetDirectoryName(filename);
+            if (!System.IO.Directory.Exists(folder))
             {
-                Directory.CreateDirectory(folder);
+                System.IO.Directory.CreateDirectory(folder);
             }
+        }
+
+        public static void WriteAllText(string filename, string content)
+        {
+            filename = GetUniversalFileName(filename);
+            File.WriteAllText(filename, content);
         }
 
         #region Json
@@ -56,7 +72,7 @@ namespace SysCommand.TestUtils
                 return obj.ToString();
             }
             else
-            { 
+            {
                 if (config == null)
                 {
                     config = new JsonSerializerSettings
@@ -87,6 +103,7 @@ namespace SysCommand.TestUtils
 
         public static TFile GetObjectFromFileJson<TFile>(string fileName, JsonSerializerSettings config = null)
         {
+            fileName = GetUniversalFileName(fileName);
             var objFile = default(TFile);
 
             if (File.Exists(fileName))
@@ -110,7 +127,11 @@ namespace SysCommand.TestUtils
 
             public override void BindToName(Type serializedType, out string assemblyName, out string typeName)
             {
+#if NETSTANDARD1_6
+                assemblyName = serializedType.GetTypeInfo().Assembly.FullName;
+#else
                 assemblyName = serializedType.Assembly.FullName;
+#endif
                 typeName = serializedType.FullName;
             }
 

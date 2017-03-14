@@ -11,7 +11,8 @@ namespace SysCommand.TestUtils
             return
                    objectType.IsSubclassOf(typeof(PropertyInfo))
                 || objectType.IsSubclassOf(typeof(ParameterInfo))
-                || objectType.IsSubclassOf(typeof(MethodInfo));
+                || objectType.IsSubclassOf(typeof(MethodInfo))
+                || objectType.IsSubclassOf(typeof(Type));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
