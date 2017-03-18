@@ -1,0 +1,65 @@
+{
+  "Args": "save save",
+  "Members": [
+    "Command1.Int32 Id [--id (obrigatory) (NOT accept positional)]",
+    "Command1.System.Decimal Price [--price = ? (NOT accept positional)]",
+    "Command1.save(Nullable<Int32> -a = ?)",
+    "Command2.save(Nullable<Int32> -a = ?)",
+    "Command3.System.Decimal Price [--price = ? (NOT accept positional)]",
+    "Command3.save(Nullable<Int32> -a = ?)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "The argument '--id' is required"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1",
+        "Command2",
+        "Command3"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Nullable<Int32>)",
+        "Command2.save(Nullable<Int32>)",
+        "Command3.save(Nullable<Int32>)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1",
+        "Command2",
+        "Command3"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Nullable<Int32>)",
+        "Command2.save(Nullable<Int32>)",
+        "Command3.save(Nullable<Int32>)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 2,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1"
+      ],
+      "PropertiesInvalid": [
+        "Command1.Id"
+      ],
+      "MethodsInvalid": []
+    }
+  ]
+}

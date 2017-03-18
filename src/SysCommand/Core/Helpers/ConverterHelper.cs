@@ -3,7 +3,7 @@ using System.Linq;
 using System;
 using System.Collections;
 using System.Globalization;
-using SysCommand.Reflection;
+using SysCommand.Compatibility;
 using System.Reflection;
 
 namespace SysCommand.Helpers

@@ -1,0 +1,5 @@
+HelpCommand.help(String --action = ?)
+Command3.save()
+-----------------------------
+There are errors in command: Command3
+Could not find an argument to the specified value: help

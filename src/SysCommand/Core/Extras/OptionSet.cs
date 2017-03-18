@@ -5,7 +5,7 @@ using SysCommand.Parsing;
 using SysCommand.Mapping;
 using System.Reflection;
 using SysCommand.DefaultExecutor;
-using SysCommand.Reflection;
+using SysCommand.Compatibility;
 
 namespace SysCommand.Extras
 {

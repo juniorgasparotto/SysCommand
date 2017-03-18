@@ -1,0 +1,49 @@
+{
+  "Args": "save2 save2",
+  "Members": [
+    "Command1.Int32 Id [--id (obrigatory) (NOT accept positional)]",
+    "Command1.System.Decimal Price [--price = ? (NOT accept positional)]",
+    "Command1.save(Nullable<Int32> -a = ?)",
+    "Command2.save(Nullable<Int32> -a = ?)",
+    "Command3.System.Decimal Price [--price = ? (NOT accept positional)]",
+    "Command3.save(Nullable<Int32> -a = ?)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command1",
+    "Could not find an argument to the specified value: save2",
+    "Could not find an argument to the specified value: save2",
+    "The argument '--id' is required",
+    "",
+    "There are errors in command: Command2",
+    "Could not find an argument to the specified value: save2",
+    "Could not find an argument to the specified value: save2",
+    "",
+    "There are errors in command: Command3",
+    "Could not find an argument to the specified value: save2",
+    "Could not find an argument to the specified value: save2"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command1",
+        "Command2",
+        "Command3"
+      ],
+      "PropertiesInvalid": [
+        "Command1.save2",
+        "Command1.save2",
+        "Command1.Id",
+        "Command2.save2",
+        "Command2.save2",
+        "Command3.save2",
+        "Command3.save2"
+      ],
+      "MethodsInvalid": []
+    }
+  ]
+}

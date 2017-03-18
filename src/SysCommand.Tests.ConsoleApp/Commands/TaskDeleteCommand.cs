@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using SysCommand.ConsoleApp;
 using SysCommand.ConsoleApp.Files;
-using SysCommand.Execution;
 using SysCommand.Mapping;
 using SysCommand.Tests.ConsoleApp.Commands.Classes;
+using static SysCommand.Helpers.ReflectionHelper;
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {
@@ -17,7 +17,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Delete(int id)
         {
-            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.GetActionMap(T<int>())));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             tasks.RemoveAll(t => t.Id == id);
@@ -30,7 +30,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
             string title
         )
         {
-            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.GetActionMap(T<string>())));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             tasks.RemoveAll(t => t.Title == title);
@@ -39,7 +39,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void DeleteEmptys()
         {
-            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.GetActionMap(T())));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             tasks.RemoveAll(t => t.Title == null || t.Description == null);

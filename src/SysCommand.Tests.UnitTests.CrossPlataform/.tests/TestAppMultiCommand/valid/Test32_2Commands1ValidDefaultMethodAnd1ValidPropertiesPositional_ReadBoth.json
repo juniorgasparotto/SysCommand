@@ -1,0 +1,42 @@
+{
+  "Args": "1 2",
+  "Members": [
+    "Command2.default(String --value)",
+    "Command3.System.String Prop1 [--prop1 = ?]"
+  ],
+  "Values": [
+    "Command2.Default=Command2.default(String --value = 1)",
+    "Command3.Prop1=2"
+  ],
+  "ExpectedResult": [
+    "Command2.default(String --value = 1)"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command2"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command2.default(String)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command3"
+      ],
+      "PropertiesValid": [
+        "Command3.System.String Prop1"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

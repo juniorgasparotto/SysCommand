@@ -11,9 +11,10 @@ using SysCommand.ConsoleApp.Handlers;
 using SysCommand.ConsoleApp.Descriptor;
 using SysCommand.ConsoleApp.Loader;
 using SysCommand.Helpers;
+using System.IO;
 
-#if NETSTANDARD1_6
-using SysCommand.Reflection;
+#if NETCORE
+using SysCommand.Compatibility;
 using System.Runtime.Loader;
 #else
 using System.Runtime.CompilerServices;
@@ -95,7 +96,7 @@ namespace SysCommand.ConsoleApp
                 this.AddApplicationHandler(new DefaultApplicationHandler());
 
             // init commands
-            this.Initialize(commandsTypes);
+            this.Initialize(commandsTypes);            
         }
 
         private void Initialize(IEnumerable<Type> commandsTypes = null)
@@ -110,7 +111,7 @@ namespace SysCommand.ConsoleApp
                 .ToList();
 
             // remove commands that are only for debugs
-            commands.RemoveAll(f => !DebugHelper.IsDebug && f.OnlyInDebug);
+            commands.RemoveAll(f => !Development.IsAttached && f.OnlyInDebug);
             
             // validate if the list is empty
             if (!commands.Any())
@@ -263,7 +264,7 @@ namespace SysCommand.ConsoleApp
 
         private Command CreateCommandInstance(Type type, string propertyAppName)
         {
-#if !(NETSTANDARD1_6)
+#if !NETCORE
             var obj = FormatterServices.GetUninitializedObject(type);
 
             obj.GetType().GetProperty(propertyAppName).SetValue(obj, this);
@@ -286,7 +287,7 @@ namespace SysCommand.ConsoleApp
                 app.Run(GetArguments(app));
                 lastBreakLineInNextWrite = app.Console.BreakLineInNextWrite;
 
-                if (!DebugHelper.IsDebug)
+                if (!Development.IsAttached)
                 {
                     if (breakEndLine)
                         app.Console.Write("\r\n");
@@ -296,9 +297,15 @@ namespace SysCommand.ConsoleApp
             }
         }
 
+        public static void SetCurrentDirectory()
+        {
+            var dir = Path.GetDirectoryName(typeof(App).GetType().GetTypeInfo().Assembly.Location);
+            Directory.SetCurrentDirectory(dir);
+        }
+
         private static string[] GetArguments(App app)
         {
-            if (DebugHelper.IsDebug)
+            if (Development.IsAttached)
             {
                 var args = app.Console.Read(Strings.CmdIndicator);
                 return ConsoleAppHelper.StringToArgs(args);

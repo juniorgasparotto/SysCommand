@@ -5,6 +5,7 @@ using SysCommand.ConsoleApp;
 using SysCommand.ConsoleApp.Files;
 using SysCommand.Mapping;
 using SysCommand.Tests.ConsoleApp.Commands.Classes;
+using static SysCommand.Helpers.ReflectionHelper;
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {
@@ -17,7 +18,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Get(string title = null, string description = null, DateTime? date = null)
         {
-            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.GetActionMap(T<string, string, DateTime?>())));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             this.ShowTask(tasks.Where(t => t.Title == title || t.Description == description || t.DateAndTime == date));
@@ -26,7 +27,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Get(int? id = null)
         {
-            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.GetActionMap(T<int?>())));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             this.ShowTask(tasks.Where(t => t.Id == id));
@@ -34,7 +35,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Get(string title = null)
         {
-            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.GetActionMap(T<string>())));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             this.ShowTask(tasks.Where(t => t.Title == title));

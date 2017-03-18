@@ -1,0 +1,298 @@
+{
+  "input": "--prop1 value1 --prop2 value2 --p value3 --prop4 value4 --prop5 value5",
+  "maps": [
+    {
+      "MapName": "Prop2",
+      "LongName": "prop2",
+      "ShortName": null,
+      "Type": "System.String",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": true,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": 0,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.String Prop2"
+    },
+    {
+      "MapName": "Prop1",
+      "LongName": "prop1",
+      "ShortName": null,
+      "Type": "System.String",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": true,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": 1,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.String Prop1"
+    },
+    {
+      "MapName": "Prop3",
+      "LongName": "p",
+      "ShortName": "p",
+      "Type": "System.String",
+      "HasDefaultValue": true,
+      "DefaultValue": "default",
+      "IsOptional": false,
+      "HelpText": "Help",
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.String Prop3"
+    },
+    {
+      "MapName": "Prop5",
+      "LongName": "prop5",
+      "ShortName": null,
+      "Type": "System.String",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": true,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.String Prop5"
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "Prop1",
+      "ValueParsed": "value1",
+      "Value": "value1",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "Prop1",
+        "LongName": "prop1",
+        "ShortName": null,
+        "Type": "System.String",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": true,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": 1,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.String Prop1"
+      },
+      "Raw": "value1",
+      "AllRaw": [
+        {
+          "Name": "prop1",
+          "Value": "value1",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "value1",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 1
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "Prop2",
+      "ValueParsed": "value2",
+      "Value": "value2",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "Prop2",
+        "LongName": "prop2",
+        "ShortName": null,
+        "Type": "System.String",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": true,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": 0,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.String Prop2"
+      },
+      "Raw": "value2",
+      "AllRaw": [
+        {
+          "Name": "prop2",
+          "Value": "value2",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "value2",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 3
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "Prop3",
+      "ValueParsed": "value3",
+      "Value": "value3",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "Prop3",
+        "LongName": "p",
+        "ShortName": "p",
+        "Type": "System.String",
+        "HasDefaultValue": true,
+        "DefaultValue": "default",
+        "IsOptional": false,
+        "HelpText": "Help",
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.String Prop3"
+      },
+      "Raw": "value3",
+      "AllRaw": [
+        {
+          "Name": "p",
+          "Value": "value3",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "value3",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 5
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "prop4",
+      "ValueParsed": "value4",
+      "Value": "value4",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "NotMapped",
+      "ParsingStates": "ArgumentNotExistsByName, IsInvalid",
+      "Map": null,
+      "Raw": "value4",
+      "AllRaw": [
+        {
+          "Name": "prop4",
+          "Value": "value4",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "value4",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 7
+        }
+      ],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Name": "Prop5",
+      "ValueParsed": "value5",
+      "Value": "value5",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "Prop5",
+        "LongName": "prop5",
+        "ShortName": null,
+        "Type": "System.String",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": true,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.String Prop5"
+      },
+      "Raw": "value5",
+      "AllRaw": [
+        {
+          "Name": "prop5",
+          "Value": "value5",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "value5",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 9
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

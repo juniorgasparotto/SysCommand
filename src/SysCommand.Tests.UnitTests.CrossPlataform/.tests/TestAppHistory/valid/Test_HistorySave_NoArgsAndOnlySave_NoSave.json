@@ -1,0 +1,18 @@
+{
+  "Args": "history-save history1",
+  "Members": [
+    "Command1.System.String Prop1 (NOT accept positional)",
+    "Command1.System.Decimal Prop2 (NOT accept positional)",
+    "Command2.save(Int32)",
+    "Command3.save()",
+    "ArgsHistoryCommand.history-load(String)",
+    "ArgsHistoryCommand.history-save(String)",
+    "ArgsHistoryCommand.history-list()",
+    "ArgsHistoryCommand.history-delete(String)",
+    "HelpCommand.help(String)"
+  ],
+  "ExpectedResult": [
+    ""
+  ],
+  "HistoryFile": []
+}

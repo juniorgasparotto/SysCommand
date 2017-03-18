@@ -1,0 +1,57 @@
+{
+  "Args": "--p1 1 --description bla -c bla",
+  "Members": [
+    "Command1.System.String A1 [-c|--a1 = ? (NOT accept positional)]",
+    "Command1.method1(Int32 -a|--p1, Int32 -b|--p2)",
+    "Command2.System.String D [-d|--description = ? (NOT accept positional)]",
+    "Command2.method2(String -a|--p1, String -b|--p2)",
+    "Command3.method3(Int32 -a|--p1, Int32 -b|--p2 = ?)",
+    "Command4.method4(String -c|--a1 = ?, String -d|--a2 = ?, String -a|--p1 = ?, String -b|--p2 = ?)",
+    "Command5.method5(String -a|--p1, String -c|--p2, String -e|--p3 = ?)"
+  ],
+  "Values": [
+    "Command4.Method4=Command4.method4(String -c = bla, String --a2 = ?, String --p1 = 1, String --p2 = ?)",
+    "Command5.Method5=Command5.method5(String --p1 = 1, String -c = bla, String --p3 = ?)",
+    "Command2.D=bla"
+  ],
+  "ExpectedResult": [
+    "Command4.method4(String -c = bla, String --a2 = ?, String --p1 = 1, String --p2 = ?)",
+    "Command5.method5(String --p1 = 1, String -c = bla, String --p3 = ?)"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command4",
+        "Command5"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command4.method4(String, String, String, String)",
+        "Command5.method5(String, String, String)"
+      ],
+      "CommandsWithError": [
+        "Command1",
+        "Command2"
+      ],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": [
+        "Command1.method1(Int32, Int32)",
+        "Command2.method2(String, String)"
+      ]
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command2"
+      ],
+      "PropertiesValid": [
+        "Command2.System.String D"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

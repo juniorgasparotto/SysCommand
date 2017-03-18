@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-#if NETSTANDARD1_6
-using SysCommand.Reflection;
+#if NETCORE
+using SysCommand.Compatibility;
 #endif
 
 namespace SysCommand.ConsoleApp.Files
@@ -32,18 +32,14 @@ namespace SysCommand.ConsoleApp.Files
             set
             {
                 this.defaultFolder = value;
-                if (DebugHelper.IsDebug && this.SaveInRootFolderWhenIsDebug)
+                if (Development.IsAttached && this.SaveInRootFolderWhenIsDebug)
                     this.defaultFolder = Path.Combine(GetCurrentDebugDirectory(), this.defaultFolder);
             }
         }
 
         private string GetCurrentDebugDirectory()
         {
-#if NETSTANDARD1_6
-            return Directory.GetCurrentDirectory();
-#else
-            return @"..\..\";
-#endif
+            return Development.GetProjectDirectory();
         }
 
         public JsonFileManager()
@@ -158,7 +154,7 @@ namespace SysCommand.ConsoleApp.Files
                     Formatting = Formatting.Indented
                 };
 
-#if NETSTANDARD1_6
+#if NETCORE
                 config.SerializationBinder = binder;
 #else
                 config.Binder = binder;
@@ -177,7 +173,7 @@ namespace SysCommand.ConsoleApp.Files
                     TypeNameHandling = TypeNameHandling.Auto
                 };
 
-#if NETSTANDARD1_6
+#if NETCORE
                 config.SerializationBinder = binder;
 #else
                 config.Binder = binder;

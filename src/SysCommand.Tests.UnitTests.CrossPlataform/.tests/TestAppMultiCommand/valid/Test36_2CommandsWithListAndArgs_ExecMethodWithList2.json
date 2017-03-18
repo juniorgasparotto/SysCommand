@@ -1,0 +1,33 @@
+{
+  "Args": "--b1 1 2 3 4 5",
+  "Members": [
+    "Command1.System.String A1 [-a|--a1 = ?]",
+    "Command1.System.Collections.Generic.List`1[System.String] A2 [-b|--b1 = ?]",
+    "Command2.System.Collections.Generic.List`1[System.String] A1 [-a|--a1 = ?]",
+    "Command2.System.String[] A2 [-b|--b1 = ?]"
+  ],
+  "Values": [
+    "Command1.A2=1,2,3,4,5",
+    "Command2.A2=1,2,3,4,5"
+  ],
+  "ExpectedResult": [
+    ""
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1",
+        "Command2"
+      ],
+      "PropertiesValid": [
+        "Command1.System.Collections.Generic.List`1[System.String] A2",
+        "Command2.System.String[] A2"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

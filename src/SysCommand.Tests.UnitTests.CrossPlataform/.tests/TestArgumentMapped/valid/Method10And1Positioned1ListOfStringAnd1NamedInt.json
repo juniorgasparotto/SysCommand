@@ -1,0 +1,177 @@
+{
+  "input": "\"abc\" a b c --v2 20",
+  "maps": [
+    {
+      "MapName": "v1",
+      "LongName": "v1",
+      "ShortName": null,
+      "Type": "System.String[]",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.String[] v1"
+    },
+    {
+      "MapName": "v2",
+      "LongName": "v2",
+      "ShortName": null,
+      "Type": "System.Int32",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "Int32 v2"
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "v1",
+      "ValueParsed": "abc a b c",
+      "Value": [
+        "abc",
+        "a",
+        "b",
+        "c"
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String[]",
+      "ParsingType": "Position",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "v1",
+        "LongName": "v1",
+        "ShortName": null,
+        "Type": "System.String[]",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.String[] v1"
+      },
+      "Raw": "abc a b c",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "abc",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "abc",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 0
+        },
+        {
+          "Name": null,
+          "Value": "a",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "a",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 1
+        },
+        {
+          "Name": null,
+          "Value": "b",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "b",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 2
+        },
+        {
+          "Name": null,
+          "Value": "c",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "c",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 3
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "v2",
+      "ValueParsed": "20",
+      "Value": 20,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Int32",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "v2",
+        "LongName": "v2",
+        "ShortName": null,
+        "Type": "System.Int32",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "Int32 v2"
+      },
+      "Raw": "20",
+      "AllRaw": [
+        {
+          "Name": "v2",
+          "Value": "20",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "20",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 5
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "Args": "value",
+  "Members": [
+    "Command3.System.String Value [--value = ?]",
+    "Command3.default(String --value = ?)"
+  ],
+  "Values": [
+    "Command3.Default=Command3.default(String --value = value)"
+  ],
+  "ExpectedResult": [
+    "Command3.default(String --value = value)"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command3"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command3.default(String)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

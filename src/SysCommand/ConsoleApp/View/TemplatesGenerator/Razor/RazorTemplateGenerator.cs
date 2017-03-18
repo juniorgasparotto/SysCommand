@@ -1,4 +1,4 @@
-﻿#if !(NETSTANDARD1_6)
+﻿#if !NETCORE
 using System;
 using System.Collections.Generic;
 using System.Reflection;

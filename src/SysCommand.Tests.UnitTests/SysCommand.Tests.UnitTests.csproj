@@ -161,6 +161,9 @@
     <Compile Include="Mapping\TestAction.cs" />
     <Compile Include="Mapping\TestArgumentMapped.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestUtils\TestFileHelper.cs" />
+    <Compile Include="TestUtils\TestHelper.cs" />
+    <Compile Include="TestUtils\TestObjectJsonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".tests\TestAction\valid\CallActionAddWithAllArgsPositionedButThisActionHasPosicionalDisable.json" />
@@ -394,10 +397,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SysCommand.TestUtils\SysCommand.TestUtils.csproj">
-      <Project>{7977222f-64e3-4c58-b3a8-00700454804c}</Project>
-      <Name>SysCommand.TestUtils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SysCommand\SysCommand.csproj">
       <Project>{110d5108-768d-4b5a-9909-3a93c5c4c4ca}</Project>
       <Name>SysCommand</Name>

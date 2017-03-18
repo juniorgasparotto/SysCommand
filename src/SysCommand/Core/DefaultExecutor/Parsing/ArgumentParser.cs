@@ -6,8 +6,8 @@ using SysCommand.Mapping;
 using SysCommand.Helpers;
 using SysCommand.Parsing;
 
-#if NETSTANDARD1_6
-using SysCommand.Reflection;
+#if NETCORE
+using SysCommand.Compatibility;
 using System.Reflection;
 #endif
 

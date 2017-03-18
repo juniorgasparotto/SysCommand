@@ -1,0 +1,554 @@
+{
+  "input": "--enum1 Enum1Value1 2 enum1value3 8 --enum2 Enum2Value1 Enum2value2 Enum2value2Error --enum3 value1 Value2 Value3 --lst 1 2 3 4 5 a 8",
+  "maps": [
+    {
+      "MapName": "enum1",
+      "LongName": "enum1",
+      "ShortName": null,
+      "Type": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1]",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1] enum1"
+    },
+    {
+      "MapName": "enum2",
+      "LongName": "enum2",
+      "ShortName": null,
+      "Type": "SysCommand.Tests.UnitTests.EnumTest2",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "SysCommand.Tests.UnitTests.EnumTest2 enum2"
+    },
+    {
+      "MapName": "enum3",
+      "LongName": "enum3",
+      "ShortName": null,
+      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag enum3"
+    },
+    {
+      "MapName": "lst",
+      "LongName": "lst",
+      "ShortName": null,
+      "Type": "System.Int32[]",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "Int32[] lst"
+    },
+    {
+      "MapName": "enum4",
+      "LongName": "enum4",
+      "ShortName": null,
+      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag2",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag2 enum4"
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "enum1",
+      "ValueParsed": "Enum1Value1 2 enum1value3 8",
+      "Value": "Enum1Value1, Enum1Value2, Enum1Value3, Enum1Value4",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1]",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "enum1",
+        "LongName": "enum1",
+        "ShortName": null,
+        "Type": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1]",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1] enum1"
+      },
+      "Raw": "Enum1Value1 2 enum1value3 8",
+      "AllRaw": [
+        {
+          "Name": "enum1",
+          "Value": "Enum1Value1",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "Enum1Value1",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 1
+        },
+        {
+          "Name": null,
+          "Value": "2",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "2",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 2
+        },
+        {
+          "Name": null,
+          "Value": "enum1value3",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "enum1value3",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 3
+        },
+        {
+          "Name": null,
+          "Value": "8",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "8",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 4
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "enum2",
+      "ValueParsed": "Enum2Value1 Enum2value2 Enum2value2Error",
+      "Value": "Enum2Value1, Enum2Value2",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "SysCommand.Tests.UnitTests.EnumTest2",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "enum2",
+        "LongName": "enum2",
+        "ShortName": null,
+        "Type": "SysCommand.Tests.UnitTests.EnumTest2",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "SysCommand.Tests.UnitTests.EnumTest2 enum2"
+      },
+      "Raw": "Enum2Value1 Enum2value2",
+      "AllRaw": [
+        {
+          "Name": "enum2",
+          "Value": "Enum2Value1",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "Enum2Value1",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 6
+        },
+        {
+          "Name": null,
+          "Value": "Enum2value2",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "Enum2value2",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 7
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": null,
+      "ValueParsed": "Enum2value2Error",
+      "Value": "Enum2value2Error",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "NotMapped",
+      "ParsingStates": "ArgumentNotExistsByValue, IsInvalid",
+      "Map": null,
+      "Raw": "Enum2value2Error",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "Enum2value2Error",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "Enum2value2Error",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 8
+        }
+      ],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Name": "enum3",
+      "ValueParsed": "value1 Value2 Value3",
+      "Value": "Value1",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "enum3",
+        "LongName": "enum3",
+        "ShortName": null,
+        "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag enum3"
+      },
+      "Raw": "value1",
+      "AllRaw": [
+        {
+          "Name": "enum3",
+          "Value": "value1",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "value1",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 10
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": null,
+      "ValueParsed": "Value2",
+      "Value": "Value2",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "NotMapped",
+      "ParsingStates": "ArgumentNotExistsByValue, IsInvalid",
+      "Map": null,
+      "Raw": "Value2",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "Value2",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "Value2",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 11
+        }
+      ],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Name": null,
+      "ValueParsed": "Value3",
+      "Value": "Value3",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "NotMapped",
+      "ParsingStates": "ArgumentNotExistsByValue, IsInvalid",
+      "Map": null,
+      "Raw": "Value3",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "Value3",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "Value3",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 12
+        }
+      ],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Name": "lst",
+      "ValueParsed": "1 2 3 4 5 a 8",
+      "Value": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Int32[]",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "lst",
+        "LongName": "lst",
+        "ShortName": null,
+        "Type": "System.Int32[]",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "Int32[] lst"
+      },
+      "Raw": "1 2 3 4 5",
+      "AllRaw": [
+        {
+          "Name": "lst",
+          "Value": "1",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "1",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 14
+        },
+        {
+          "Name": null,
+          "Value": "2",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "2",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 15
+        },
+        {
+          "Name": null,
+          "Value": "3",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "3",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 16
+        },
+        {
+          "Name": null,
+          "Value": "4",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "4",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 17
+        },
+        {
+          "Name": null,
+          "Value": "5",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "5",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 18
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": null,
+      "ValueParsed": "a",
+      "Value": "a",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "NotMapped",
+      "ParsingStates": "ArgumentNotExistsByValue, IsInvalid",
+      "Map": null,
+      "Raw": "a",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "a",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "a",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 19
+        }
+      ],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Name": null,
+      "ValueParsed": "8",
+      "Value": "8",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "NotMapped",
+      "ParsingStates": "ArgumentNotExistsByValue, IsInvalid",
+      "Map": null,
+      "Raw": "8",
+      "AllRaw": [
+        {
+          "Name": null,
+          "Value": "8",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "8",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 20
+        }
+      ],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    },
+    {
+      "Name": "enum4",
+      "ValueParsed": null,
+      "Value": null,
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag2",
+      "ParsingType": "HasNoInput",
+      "ParsingStates": "ArgumentIsRequired, IsInvalid",
+      "Map": {
+        "MapName": "enum4",
+        "LongName": "enum4",
+        "ShortName": null,
+        "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag2",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag2 enum4"
+      },
+      "Raw": null,
+      "AllRaw": [],
+      "IsMapped": false,
+      "IsMappedOrHasDefaultValue": false
+    }
+  ]
+}

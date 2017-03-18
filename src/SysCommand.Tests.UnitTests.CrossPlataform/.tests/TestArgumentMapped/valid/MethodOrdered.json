@@ -1,0 +1,205 @@
+{
+  "input": "--value-order-three value1 --value-order-two value2 --value-order-one value3",
+  "maps": [
+    {
+      "MapName": "valueOrderOne",
+      "LongName": "value-order-one",
+      "ShortName": null,
+      "Type": "System.String",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": 0,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.String valueOrderOne"
+    },
+    {
+      "MapName": "valueOrderTWO",
+      "LongName": "value-order-two",
+      "ShortName": null,
+      "Type": "System.String",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": 1,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.String valueOrderTWO"
+    },
+    {
+      "MapName": "valueOrderThree",
+      "LongName": "value-order-three",
+      "ShortName": null,
+      "Type": "System.String",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.String valueOrderThree"
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "valueOrderThree",
+      "ValueParsed": "value1",
+      "Value": "value1",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "valueOrderThree",
+        "LongName": "value-order-three",
+        "ShortName": null,
+        "Type": "System.String",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.String valueOrderThree"
+      },
+      "Raw": "value1",
+      "AllRaw": [
+        {
+          "Name": "value-order-three",
+          "Value": "value1",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "value1",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 1
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "valueOrderTWO",
+      "ValueParsed": "value2",
+      "Value": "value2",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "valueOrderTWO",
+        "LongName": "value-order-two",
+        "ShortName": null,
+        "Type": "System.String",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": 1,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.String valueOrderTWO"
+      },
+      "Raw": "value2",
+      "AllRaw": [
+        {
+          "Name": "value-order-two",
+          "Value": "value2",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "value2",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 3
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "valueOrderOne",
+      "ValueParsed": "value3",
+      "Value": "value3",
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.String",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "valueOrderOne",
+        "LongName": "value-order-one",
+        "ShortName": null,
+        "Type": "System.String",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": 0,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.String valueOrderOne"
+      },
+      "Raw": "value3",
+      "AllRaw": [
+        {
+          "Name": "value-order-one",
+          "Value": "value3",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "value3",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 5
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

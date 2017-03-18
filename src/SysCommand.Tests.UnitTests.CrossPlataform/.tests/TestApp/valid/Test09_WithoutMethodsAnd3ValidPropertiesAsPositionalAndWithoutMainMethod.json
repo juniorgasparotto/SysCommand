@@ -1,0 +1,33 @@
+{
+  "Args": "1 2 3",
+  "Members": [
+    "Command1.Int32 A [-a = ?]",
+    "Command1.Int32 B [-b = ?]",
+    "Command1.Int32 C [-c = ?]"
+  ],
+  "Values": [
+    "Command1.A=1",
+    "Command1.B=2",
+    "Command1.C=3"
+  ],
+  "ExpectedResult": [
+    ""
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [
+        "Command1.Int32 A",
+        "Command1.Int32 B",
+        "Command1.Int32 C"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

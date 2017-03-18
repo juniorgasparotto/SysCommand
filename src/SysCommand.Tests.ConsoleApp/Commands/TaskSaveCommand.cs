@@ -4,6 +4,7 @@ using SysCommand.ConsoleApp;
 using SysCommand.ConsoleApp.Files;
 using SysCommand.Mapping;
 using SysCommand.Tests.ConsoleApp.Commands.Classes;
+using static SysCommand.Helpers.ReflectionHelper;
 
 namespace SysCommand.Tests.ConsoleApp.Commands
 {
@@ -26,7 +27,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Save()
         {
-            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.GetActionMap(T())));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             var task = new Task
@@ -43,7 +44,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Save(string title)
         {
-            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.GetActionMap(T<string>())));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             var task = new Task
@@ -60,7 +61,7 @@ namespace SysCommand.Tests.ConsoleApp.Commands
 
         public void Save(string title, string description = null, DateTime? date = null)
         {
-            App.Console.Write(this.GetDebugName(this.CurrentActionMap()));
+            App.Console.Write(this.GetDebugName(this.GetActionMap(T<string, string, DateTime?>())));
             var fileManager = App.Items.GetOrCreate<JsonFileManager>();
             var tasks = fileManager.GetOrCreate<List<Task>>();
             var task = new Task

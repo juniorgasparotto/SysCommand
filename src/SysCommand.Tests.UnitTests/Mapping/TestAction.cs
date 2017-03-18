@@ -30,36 +30,6 @@ namespace SysCommand.Tests.UnitTests
             Assert.IsTrue(TestHelper.CompareObjects<TestAction>(objectTest, testContext, testMethodName, jsonSerializeConfig));
         }
 
-        //public static List<string> GetActionMappedErrors(IEnumerable<ActionMapped> actionsMapped)
-        //{
-        //    var errors = new List<string>();
-        //    if (actionsMapped.Count() == 0)
-        //    {
-        //        errors.Add("No action was found");
-        //    }
-        //    else
-        //    {
-        //        foreach (var action in actionsMapped)
-        //        {
-        //            foreach(var erro in CommandParser.ValidateArgumentsMapped(action.ArgumentsMapped))
-        //            {
-        //                errors.Add(string.Format("{0}: {1}", action.ToString(), erro.DefaultMessage));
-        //            }
-        //        }
-        //    }
-        //    return errors;
-        //}
-
-        //public static List<string> GetArgumentsMappedErrors(IEnumerable<CommandParser.ErrorArgumentMapped> argumentsMappedErrors)
-        //{
-        //    var errors = new List<string>();
-        //    foreach (var erro in argumentsMappedErrors)
-        //    {
-        //        errors.Add(string.Format("{1}", erro.DefaultMessage));
-        //    }
-        //    return errors;
-        //}
-
         [TestMethod]
         public void CallWithoutIgnoredsAndOnlyMethodsWithAttributes()
         {

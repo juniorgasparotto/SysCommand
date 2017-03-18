@@ -44,11 +44,11 @@ namespace SysCommand.ConsoleApp.Commands
             var histories = this.FileManager.GetOrCreate<List<History>>(FILE_NAME);
             histories.RemoveAll(f => f.Name == name);
 
-#if !(NET40 || NET35 || NET20)
+#if NETCORE
             var actionMapName = "history-save";
             var parameterName = "--name";
 #else
-            var actionMap = this.CurrentActionMap();
+            var actionMap = this.GetActionMap();
             var actionMapName = actionMap.ActionName;
             var parameterName = "--" + actionMap.ArgumentsMaps.ElementAt(0).LongName;
 #endif

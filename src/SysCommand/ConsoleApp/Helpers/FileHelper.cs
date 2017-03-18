@@ -1,9 +1,23 @@
 ﻿using System.IO;
+using System.Reflection;
 
 namespace SysCommand.ConsoleApp.Helpers
 {
     public static class FileHelper
     {
+        public static string GetCurrentDirectory<TRef>()
+        {
+            string path;
+
+#if NETCORE
+            path = typeof(TRef).GetTypeInfo().Assembly.Location;
+#else
+            path = typeof(TRef).Assembly.Location;
+#endif
+
+            return Path.GetDirectoryName(path);
+        }
+
         public static bool FileExists(string fileName)
         {
             return File.Exists(fileName);
@@ -40,6 +54,12 @@ namespace SysCommand.ConsoleApp.Helpers
             {
                 Directory.CreateDirectory(folder);
             }
+        }
+
+        private static string GetUniversalFileName(string fileName)
+        {
+            // fix to unix
+            return fileName.Replace("\\", "/").Replace("//", "/");
         }
 
     }

@@ -3,7 +3,7 @@ using System.Linq;
 using System;
 using System.Reflection;
 using SysCommand.Mapping;
-using SysCommand.Reflection;
+using SysCommand.Compatibility;
 
 namespace SysCommand.DefaultExecutor
 {

@@ -1,0 +1,28 @@
+{
+  "Args": "value",
+  "Members": [
+    "Command7.System.String Prop [--prop = ?]",
+    "Command7.default(Int32 --value = ?, Int32 -b = ?)"
+  ],
+  "Values": [
+    "Command7.Prop=value"
+  ],
+  "ExpectedResult": [
+    ""
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command7"
+      ],
+      "PropertiesValid": [
+        "Command7.System.String Prop"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

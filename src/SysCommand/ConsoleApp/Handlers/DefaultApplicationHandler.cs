@@ -1,5 +1,5 @@
 ﻿using SysCommand.Execution;
-using SysCommand.Reflection;
+using SysCommand.Compatibility;
 using System;
 using System.Collections;
 using System.Reflection;

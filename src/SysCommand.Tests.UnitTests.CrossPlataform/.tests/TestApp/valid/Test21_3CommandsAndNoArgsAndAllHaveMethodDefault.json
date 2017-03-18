@@ -1,0 +1,37 @@
+{
+  "Args": "",
+  "Members": [
+    "Command1.default()",
+    "Command2.default()",
+    "Command3.main(String --value = ?, String --value2 = ?)"
+  ],
+  "Values": [
+    "Command1.Default=Command1.default()",
+    "Command2.Default=Command2.default()",
+    "Command3.Main=Command3.main(String --value = ?, String --value2 = ?)"
+  ],
+  "ExpectedResult": [
+    "Command1.default()",
+    "Command2.default()",
+    "Command3.main(String --value = ?, String --value2 = ?)"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1",
+        "Command2",
+        "Command3"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.default()",
+        "Command2.default()",
+        "Command3.main(String, String)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

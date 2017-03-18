@@ -1,0 +1,111 @@
+{
+  "Args": "--id 1 delete 2 --price 99 save delete 4 5",
+  "Members": [
+    "Command1.System.Decimal Price [--price = ?]",
+    "Command1.Int32 Id [--id = ?]",
+    "Command1.save(Nullable<Int32> -a = ?)",
+    "Command1.delete(Int32 --value)",
+    "Command1.delete(Int32 --value, Int32 --value2)",
+    "Command2.System.Decimal Price [--price = ?]",
+    "Command2.Int32 Id [--id = ?]",
+    "Command2.delete(Int32 --value)",
+    "Command2.delete(Int32 --value, Int32 --value2)"
+  ],
+  "Values": [
+    "Command1.Main=Command1.Main()",
+    "Command2.Main=Command2.Main()",
+    "Command1.Id=1",
+    "Command2.Id=1",
+    "Command1.Delete=Command1.delete(Int32 --value = 2)=2",
+    "Command2.Delete=Command2.delete(Int32 --value = 2)=2",
+    "Command1.Price=99",
+    "Command2.Price=99",
+    "Command1.Save=Command1.save(Nullable<Int32> -a = ?)",
+    "Command1.Delete=Command1.delete(Int32 --value = 4, Int32 --value2 = 5)=4,5",
+    "Command2.Delete=Command2.delete(Int32 --value = 4, Int32 --value2 = 5)=4,5"
+  ],
+  "ExpectedResult": [
+    "Command1.Main()",
+    "Command2.Main()",
+    "Command1.delete(Int32 --value = 2)=2",
+    "Command2.delete(Int32 --value = 2)=2",
+    "Command1.save(Nullable<Int32> -a = ?)",
+    "Command1.delete(Int32 --value = 4, Int32 --value2 = 5)=4,5",
+    "Command2.delete(Int32 --value = 4, Int32 --value2 = 5)=4,5"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1",
+        "Command2"
+      ],
+      "PropertiesValid": [
+        "Command1.Int32 Id",
+        "Command2.Int32 Id"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1",
+        "Command2"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.delete(Int32)",
+        "Command2.delete(Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 2,
+      "CommandsValid": [
+        "Command1",
+        "Command2"
+      ],
+      "PropertiesValid": [
+        "Command1.System.Decimal Price",
+        "Command2.System.Decimal Price"
+      ],
+      "MethodsValid": [],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 3,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save(Nullable<Int32>)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    },
+    {
+      "LevelNumber": 4,
+      "CommandsValid": [
+        "Command1",
+        "Command2"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.delete(Int32, Int32)",
+        "Command2.delete(Int32, Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

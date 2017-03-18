@@ -1,0 +1,11 @@
+{
+  "Args": "",
+  "Members": [
+    "Command2.Char a [-a = ? (NOT accept positional)]"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "Could not find any action."
+  ],
+  "Levels": []
+}

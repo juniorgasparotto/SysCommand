@@ -1,7 +1,7 @@
-﻿#if NETSTANDARD1_6
+﻿#if NETCORE
 
 using Newtonsoft.Json.Serialization;
-using SysCommand.Reflection;
+using SysCommand.Compatibility;
 using System;
 
 namespace SysCommand.ConsoleApp.Files

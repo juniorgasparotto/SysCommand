@@ -4,7 +4,7 @@ using System;
 using System.Reflection;
 using SysCommand.Helpers;
 using SysCommand.Mapping;
-using SysCommand.Reflection;
+using SysCommand.Compatibility;
 
 namespace SysCommand.DefaultExecutor
 {
@@ -96,7 +96,7 @@ namespace SysCommand.DefaultExecutor
             bool hasPosition = false;
             bool isOptional = parameter.IsOptional;
             bool hasDefaultValue = parameter.HasDefaultValue;
-            object defaultValue = parameter.DefaultValue;
+            object defaultValue = parameter.HasDefaultValue ? parameter.DefaultValue : null;
 
             if (attribute != null)
             {

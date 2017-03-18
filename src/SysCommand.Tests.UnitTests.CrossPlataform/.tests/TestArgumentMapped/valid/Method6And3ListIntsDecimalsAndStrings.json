@@ -1,0 +1,319 @@
+{
+  "input": "--lst 1 2 3 4 --lst2 10 10.1 10.2 10.333 --lst3 a b c \"1 2 3 4\"",
+  "maps": [
+    {
+      "MapName": "lst",
+      "LongName": "lst",
+      "ShortName": null,
+      "Type": "System.Collections.Generic.List`1[System.Double]",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.Collections.Generic.List`1[System.Double] lst"
+    },
+    {
+      "MapName": "lst2",
+      "LongName": "lst2",
+      "ShortName": null,
+      "Type": "System.Collections.Generic.List`1[System.Decimal]",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.Collections.Generic.List`1[System.Decimal] lst2"
+    },
+    {
+      "MapName": "lst3",
+      "LongName": "lst3",
+      "ShortName": null,
+      "Type": "System.Collections.Generic.List`1[System.String]",
+      "HasDefaultValue": false,
+      "DefaultValue": null,
+      "IsOptional": false,
+      "HelpText": null,
+      "ShowHelpComplement": true,
+      "Position": null,
+      "Target": {
+        "Prop1": null,
+        "Prop2": null,
+        "Prop3": null,
+        "Prop4": null,
+        "Prop5": null
+      },
+      "TargetMember": "System.Collections.Generic.List`1[System.String] lst3"
+    }
+  ],
+  "argsMappeds": [
+    {
+      "Name": "lst",
+      "ValueParsed": "1 2 3 4",
+      "Value": [
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Collections.Generic.List`1[System.Double]",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "lst",
+        "LongName": "lst",
+        "ShortName": null,
+        "Type": "System.Collections.Generic.List`1[System.Double]",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.Collections.Generic.List`1[System.Double] lst"
+      },
+      "Raw": "1 2 3 4",
+      "AllRaw": [
+        {
+          "Name": "lst",
+          "Value": "1",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "1",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 1
+        },
+        {
+          "Name": null,
+          "Value": "2",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "2",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 2
+        },
+        {
+          "Name": null,
+          "Value": "3",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "3",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 3
+        },
+        {
+          "Name": null,
+          "Value": "4",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "4",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 4
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "lst2",
+      "ValueParsed": "10 10.1 10.2 10.333",
+      "Value": [
+        10.0,
+        10.1,
+        10.2,
+        10.333
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Collections.Generic.List`1[System.Decimal]",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "lst2",
+        "LongName": "lst2",
+        "ShortName": null,
+        "Type": "System.Collections.Generic.List`1[System.Decimal]",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.Collections.Generic.List`1[System.Decimal] lst2"
+      },
+      "Raw": "10 10.1 10.2 10.333",
+      "AllRaw": [
+        {
+          "Name": "lst2",
+          "Value": "10",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "10",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 6
+        },
+        {
+          "Name": null,
+          "Value": "10.1",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "10.1",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 7
+        },
+        {
+          "Name": null,
+          "Value": "10.2",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "10.2",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 8
+        },
+        {
+          "Name": null,
+          "Value": "10.333",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "10.333",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 9
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    },
+    {
+      "Name": "lst3",
+      "ValueParsed": "a b c \"1 2 3 4\"",
+      "Value": [
+        "a",
+        "b",
+        "c",
+        "1 2 3 4"
+      ],
+      "HasUnsuporttedType": false,
+      "HasInvalidInput": false,
+      "Type": "System.Collections.Generic.List`1[System.String]",
+      "ParsingType": "Name",
+      "ParsingStates": "Valid",
+      "Map": {
+        "MapName": "lst3",
+        "LongName": "lst3",
+        "ShortName": null,
+        "Type": "System.Collections.Generic.List`1[System.String]",
+        "HasDefaultValue": false,
+        "DefaultValue": null,
+        "IsOptional": false,
+        "HelpText": null,
+        "ShowHelpComplement": true,
+        "Position": null,
+        "Target": {
+          "Prop1": null,
+          "Prop2": null,
+          "Prop3": null,
+          "Prop4": null,
+          "Prop5": null
+        },
+        "TargetMember": "System.Collections.Generic.List`1[System.String] lst3"
+      },
+      "Raw": "a b c \"1 2 3 4\"",
+      "AllRaw": [
+        {
+          "Name": "lst3",
+          "Value": "a",
+          "Format": "LongNameAndHasValue",
+          "DelimiterArgument": "--",
+          "DelimiterValueInName": null,
+          "ValueRaw": "a",
+          "IsShortName": false,
+          "IsLongName": true,
+          "Index": 11
+        },
+        {
+          "Name": null,
+          "Value": "b",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "b",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 12
+        },
+        {
+          "Name": null,
+          "Value": "c",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "c",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 13
+        },
+        {
+          "Name": null,
+          "Value": "1 2 3 4",
+          "Format": "Unnamed",
+          "DelimiterArgument": null,
+          "DelimiterValueInName": null,
+          "ValueRaw": "1 2 3 4",
+          "IsShortName": false,
+          "IsLongName": false,
+          "Index": 14
+        }
+      ],
+      "IsMapped": true,
+      "IsMappedOrHasDefaultValue": true
+    }
+  ]
+}

@@ -1,16 +1,17 @@
-﻿#if !(NETSTANDARD1_6)
-using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using SysCommand.Mapping;
-using SysCommand.Helpers;
+﻿#if !NETCORE
 using SysCommand.ConsoleApp.View.TemplatesGenerator.Razor;
+using System.Diagnostics;
 #endif
 
 using SysCommand.Execution;
 using System.Linq;
 using SysCommand.ConsoleApp.View.TemplatesGenerator.T4;
 using SysCommand.Parsing;
+using System.Runtime.CompilerServices;
+using SysCommand.Mapping;
+using SysCommand.Helpers;
+using System.Reflection;
+using System;
 
 namespace SysCommand.ConsoleApp
 {
@@ -36,28 +37,30 @@ namespace SysCommand.ConsoleApp
         {
             return T4Helper.Execute<TTemplate, TModel>(model);
         }
-
-#if !(NETSTANDARD1_6)
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public ActionMap CurrentActionMap()
+        
+        public ActionMap GetActionMap(Type[] paramTypes, [CallerMemberName] string memberName = "")
         {
-            var st = new StackTrace();
-            var sf = st.GetFrame(1);
-            var currentMethod = (MethodInfo)sf.GetMethod();
-            return this.ExecutionScope.ParseResult.Maps.GetCommandMap(this.GetType()).Methods.FirstOrDefault(m => ReflectionHelper.MethodsAreEquals(m.Method, currentMethod));
+            var currentMethod = GetMethod(memberName, paramTypes);
+            return GetActionMap(currentMethod);
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public ActionParsed GetAction()
+        public ActionMap GetActionMap(MethodInfo method)
         {
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(1);
-            var currentMethod = (MethodInfo)sf.GetMethod();
+            return this.ExecutionScope.ParseResult.Maps.GetCommandMap(this.GetType()).Methods.FirstOrDefault(m => ReflectionHelper.MethodsAreEquals(m.Method, method));
+        }
 
+        public ActionParsed GetAction(Type[] paramTypes, [CallerMemberName] string memberName = "")
+        {
+            var currentMethod = GetMethod(memberName, paramTypes);
+            return GetAction(currentMethod);
+        }
+
+        public ActionParsed GetAction(MethodInfo method)
+        {
             // return this method (eg: save) in all levels
             // -> save 1 2 3 save 4 5 6 save 7 8 9
             var allMethodResult = this.ExecutionScope.ExecutionResult.Results.With<MethodResult>();
-            var thisMethodForEachLevel = allMethodResult.Where(m => ReflectionHelper.MethodsAreEquals(m.ActionParsed.ActionMap.Method, currentMethod)).ToList();
+            var thisMethodForEachLevel = allMethodResult.Where(m => ReflectionHelper.MethodsAreEquals(m.ActionParsed.ActionMap.Method, method)).ToList();
 
             //  1.0) f.IsInvoked = false: save 1 2 3 -> FIRST: IsInvoked = FALSE
             //  1.1) f.IsInvoked = false: save 4 5 6 -> NO
@@ -71,7 +74,7 @@ namespace SysCommand.ConsoleApp
             return thisMethodForEachLevel.First(f => !f.IsInvoked).ActionParsed;
         }
 
-
+#if !NETCORE
         [MethodImpl(MethodImplOptions.NoInlining)]
         public string View<T>(T model = default(T), string viewName = null, bool searchOnlyInResources = false)
         {
@@ -101,6 +104,59 @@ namespace SysCommand.ConsoleApp
             var view = new RazorView();
             return view.ProcessByContent<T>(model, content);
         }
-#endif
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public ActionMap GetActionMap()
+        {
+            var st = new StackTrace();
+            var sf = st.GetFrame(1);
+            var currentMethod = (MethodInfo)sf.GetMethod();
+            return GetActionMap(currentMethod);
         }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public ActionParsed GetAction()
+        {
+            var st = new StackTrace();
+            var sf = st.GetFrame(1);
+            var currentMethod = (MethodInfo)sf.GetMethod();
+            return GetAction(currentMethod);
+        }
+
+#endif
+
+        private MethodInfo GetMethod(string memberName, Type[] types)
+        {
+            var methods = GetType().GetMethods().Where(f => f.Name == memberName);
+            MethodInfo currentMethod = null;
+
+            foreach (var method in methods)
+            {
+                var parameters = method.GetParameters();
+                if (parameters.Length != types.Length)
+                    continue;
+
+                var allEquals = true;
+                for (var i = 0; i < parameters.Length; i++)
+                {
+                    if (parameters[i].ParameterType != types[i])
+                    {
+                        allEquals = false;
+                        break;
+                    }
+                }
+
+                if (allEquals)
+                {
+                    currentMethod = method;
+                    break;
+                }
+            }
+
+            if (currentMethod == null)
+                throw new Exception("Method not found");
+            return currentMethod;
+        }
+
+    }
 }

@@ -1,4 +1,4 @@
-﻿using SysCommand.Reflection;
+﻿using SysCommand.Compatibility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +25,8 @@ namespace SysCommand.ConsoleApp.Loader
         public IEnumerable<Type> GetFromAppDomain()
         {
             var assemblies = ReflectionCompatibility.GetAssemblies().ToList();
-#if NETSTANDARD1_6
-                assemblies.Add(this.GetType().GetTypeInfo().Assembly);
+#if NETCORE
+            assemblies.Add(this.GetType().GetTypeInfo().Assembly);
 #endif
             var listOfCommands = (from domainAssembly in assemblies
                                   from assemblyType in domainAssembly.GetTypes()

@@ -4,7 +4,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using SysCommand.Reflection;
+using SysCommand.Compatibility;
 
 namespace SysCommand.Helpers
 {
@@ -105,5 +105,18 @@ namespace SysCommand.Helpers
         {
             return targetType.IsValueType() ? Activator.CreateInstance(targetType) : null;
         }
+
+
+        public static Type[] T() { return new Type[] { }; }
+        public static Type[] T<T1>() { return new Type[] { typeof(T1) }; }
+        public static Type[] T<T1, T2>() { return new Type[] { typeof(T1), typeof(T2) }; }
+        public static Type[] T<T1, T2, T3>() { return new Type[] { typeof(T1), typeof(T2), typeof(T3) }; }
+        public static Type[] T<T1, T2, T3, T4>() { return new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }; }
+        public static Type[] T<T1, T2, T3, T4, T5>() { return new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5) }; }
+        public static Type[] T<T1, T2, T3, T4, T5, T6>() { return new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6) }; }
+        public static Type[] T<T1, T2, T3, T4, T5, T6, T7>() { return new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7) }; }
+        public static Type[] T<T1, T2, T3, T4, T5, T6, T7, T8>() { return new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8) }; }
+        public static Type[] T<T1, T2, T3, T4, T5, T6, T7, T8, T9>() { return new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9) }; }
+        public static Type[] T<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>() { return new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9), typeof(T10) }; }
     }
 }

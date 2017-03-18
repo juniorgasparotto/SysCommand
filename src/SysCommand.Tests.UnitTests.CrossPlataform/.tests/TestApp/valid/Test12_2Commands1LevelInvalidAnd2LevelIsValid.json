@@ -1,0 +1,41 @@
+{
+  "Args": "delete save",
+  "Members": [
+    "Command1.save()",
+    "Command2.delete(String --value)"
+  ],
+  "Values": [],
+  "ExpectedResult": [
+    "There are errors in command: Command2",
+    "Error in method: delete(String)",
+    "The argument '--value' is required"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [],
+      "PropertiesValid": [],
+      "MethodsValid": [],
+      "CommandsWithError": [
+        "Command2"
+      ],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": [
+        "Command2.delete(String)"
+      ]
+    },
+    {
+      "LevelNumber": 1,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.save()"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

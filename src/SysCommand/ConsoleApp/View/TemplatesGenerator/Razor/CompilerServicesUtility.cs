@@ -1,4 +1,4 @@
-﻿#if !(NETSTANDARD1_6)
+﻿#if !NETCORE
 using System.Linq;
 
 namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
@@ -9,7 +9,7 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
     using System.Reflection;
     using System.Runtime.CompilerServices;
     using System.Collections;
-    using Reflection;
+    using Compatibility;
 
     /// <summary>
     /// Provides service methods for compilation.

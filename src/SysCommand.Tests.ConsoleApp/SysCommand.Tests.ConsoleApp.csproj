@@ -48,11 +48,6 @@
     <Compile Include="Commands\Classes\AppConfig.cs" />
     <Compile Include="Commands\Classes\Tasks.cs" />
     <Compile Include="Commands\MyCommand.cs" />
-    <Compile Include="Commands\UsedForTests\Command5.cs" />
-    <Compile Include="Commands\UsedForTests\Command4.cs" />
-    <Compile Include="Commands\UsedForTests\Command3.cs" />
-    <Compile Include="Commands\UsedForTests\Command1.cs" />
-    <Compile Include="Commands\UsedForTests\Command2.cs" />
     <Compile Include="Commands\TaskDeleteCommand.cs" />
     <Compile Include="Commands\TaskGetCommand.cs" />
     <Compile Include="Commands\TaskSaveCommand.cs" />

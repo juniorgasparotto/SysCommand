@@ -1,0 +1,20 @@
+{
+  "Args": "--prop1 a --prop2 2 save 2 history-save save",
+  "Members": [
+    "Command1.System.String Prop1 (NOT accept positional)",
+    "Command1.System.Decimal Prop2 (NOT accept positional)",
+    "Command2.save(Int32)",
+    "Command3.save()",
+    "ArgsHistoryCommand.history-load(String)",
+    "ArgsHistoryCommand.history-save(String)",
+    "ArgsHistoryCommand.history-list()",
+    "ArgsHistoryCommand.history-delete(String)",
+    "HelpCommand.help(String)"
+  ],
+  "ExpectedResult": [
+    "There are errors in command: ArgsHistoryCommand",
+    "Error in method: history-save(String)",
+    "The argument '--name' is required"
+  ],
+  "HistoryFile": null
+}

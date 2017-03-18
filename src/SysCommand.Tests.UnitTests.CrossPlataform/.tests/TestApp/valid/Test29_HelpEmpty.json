@@ -1,0 +1,12 @@
+
+-----------------------------
+usage:    <actions[args]>
+
+Displays help information
+
+   help           
+      --action    Is optional.
+
+Use 'help --action=<name>' to view the details of 
+any action. Every action with the symbol "*" can 
+have his name omitted.

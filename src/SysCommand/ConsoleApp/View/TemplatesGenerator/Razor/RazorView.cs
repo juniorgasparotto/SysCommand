@@ -1,4 +1,4 @@
-﻿#if !(NETSTANDARD1_6)
+﻿#if !NETCORE
 using SysCommand.ConsoleApp.Helpers;
 using System;
 using System.IO;
