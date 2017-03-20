@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SysCommand\SysCommand.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+    <DefineConstants>NETCORE</DefineConstants>
+  </PropertyGroup>
+</Project>

@@ -9,3 +9,4 @@ dotnet msbuild "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\src\Sy
 dotnet test "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\src\SysCommand.Tests.XUnit\SysCommand.Tests.XUnit.csproj"
 
 dotnet test "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\src\SysCommand.Tests.XUnit\SysCommand.Tests.XUnit.csproj"
+dotnet test "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\src\SysCommand.Tests.UnitTests.DotNetCore\SysCommand.Tests.UnitTests.DotNetCore.csproj"

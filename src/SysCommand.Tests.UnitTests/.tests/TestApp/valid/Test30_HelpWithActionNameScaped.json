@@ -1,7 +1,0 @@
-HelpCommand.help(String)
-Command2.System.String Prop1 (NOT accept positional)
-Command2.System.Decimal Prop2 (NOT accept positional)
-Command2.save(String, List<Int32>)
------------------------------
-usage: save    [--value=<phrase>] [--lst=<list of number>]
-

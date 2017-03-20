@@ -22,7 +22,9 @@ namespace SysCommand.ConsoleApp.Helpers
             {
                 if (projectDirectory == null)
                 {
-                    projectDirectory = FileHelper.GetCurrentDirectory<App>();
+                    var pathFull = FileHelper.GetCurrentDirectory<App>();
+
+                    projectDirectory = pathFull;
 
                     // if TRUE is because in VisualStudio
                     var i = 1;
@@ -34,7 +36,7 @@ namespace SysCommand.ConsoleApp.Helpers
                             return projectDirectory;
                         else if (Directory.GetFiles(projectDirectory, "*.xproj").Length != 0)
                             return projectDirectory;
-                        projectDirectory = GetHigherDirectoryPath(projectDirectory, i);
+                        projectDirectory = GetHigherDirectoryPath(pathFull, i);
                         i++;
                     }
                     while (projectDirectory != null);

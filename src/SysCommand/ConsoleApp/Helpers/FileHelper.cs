@@ -7,15 +7,11 @@ namespace SysCommand.ConsoleApp.Helpers
     {
         public static string GetCurrentDirectory<TRef>()
         {
-            string path;
-
 #if NETCORE
-            path = typeof(TRef).GetTypeInfo().Assembly.Location;
+            return Path.GetDirectoryName(typeof(TRef).GetTypeInfo().Assembly.Location);
 #else
-            path = typeof(TRef).Assembly.Location;
+            return Directory.GetCurrentDirectory();
 #endif
-
-            return Path.GetDirectoryName(path);
         }
 
         public static bool FileExists(string fileName)
