@@ -11,5 +11,7 @@ assembly_info:
 before_build:
   - cmd: dotnet --info
   - cmd: dotnet restore "src/SysCommand.sln"
+  - cmd: dotnet restore "src/SysCommand.Tests.UnitTests.DotNetCore/SysCommand.Tests.UnitTests.DotNetCore.csproj"
+  - cmd: dotnet restore "src/SysCommand.Tests.UnitTests.DotNetFull/SysCommand.Tests.UnitTests.DotNetFull.csproj"
   - cmd: dotnet test "src/SysCommand.Tests.UnitTests.DotNetCore/SysCommand.Tests.UnitTests.DotNetCore.csproj"
   - cmd: dotnet test "src/SysCommand.Tests.UnitTests.DotNetFull/SysCommand.Tests.UnitTests.DotNetFull.csproj" -f net452
