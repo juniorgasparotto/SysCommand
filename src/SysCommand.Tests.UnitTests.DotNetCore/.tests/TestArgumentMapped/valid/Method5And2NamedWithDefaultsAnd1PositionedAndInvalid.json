@@ -5,7 +5,7 @@
       "MapName": "enum1",
       "LongName": "enum1",
       "ShortName": null,
-      "Type": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1]",
+      "Type": "System.Nullable`1[SysCommand.Tests.UnitTests.Common.EnumTest1]",
       "HasDefaultValue": false,
       "DefaultValue": null,
       "IsOptional": false,
@@ -19,13 +19,13 @@
         "Prop4": null,
         "Prop5": null
       },
-      "TargetMember": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1] enum1"
+      "TargetMember": "System.Nullable`1[SysCommand.Tests.UnitTests.Common.EnumTest1] enum1"
     },
     {
       "MapName": "enum2",
       "LongName": "enum2",
       "ShortName": null,
-      "Type": "SysCommand.Tests.UnitTests.EnumTest2",
+      "Type": "SysCommand.Tests.UnitTests.Common.EnumTest2",
       "HasDefaultValue": false,
       "DefaultValue": null,
       "IsOptional": false,
@@ -39,13 +39,13 @@
         "Prop4": null,
         "Prop5": null
       },
-      "TargetMember": "SysCommand.Tests.UnitTests.EnumTest2 enum2"
+      "TargetMember": "SysCommand.Tests.UnitTests.Common.EnumTest2 enum2"
     },
     {
       "MapName": "enum3",
       "LongName": "enum3",
       "ShortName": null,
-      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag",
+      "Type": "SysCommand.Tests.UnitTests.Common.EnumTestNoFlag",
       "HasDefaultValue": false,
       "DefaultValue": null,
       "IsOptional": false,
@@ -59,7 +59,7 @@
         "Prop4": null,
         "Prop5": null
       },
-      "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag enum3"
+      "TargetMember": "SysCommand.Tests.UnitTests.Common.EnumTestNoFlag enum3"
     },
     {
       "MapName": "lst",
@@ -85,7 +85,7 @@
       "MapName": "enum4",
       "LongName": "enum4",
       "ShortName": null,
-      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag2",
+      "Type": "SysCommand.Tests.UnitTests.Common.EnumTestNoFlag2",
       "HasDefaultValue": false,
       "DefaultValue": null,
       "IsOptional": false,
@@ -99,7 +99,7 @@
         "Prop4": null,
         "Prop5": null
       },
-      "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag2 enum4"
+      "TargetMember": "SysCommand.Tests.UnitTests.Common.EnumTestNoFlag2 enum4"
     }
   ],
   "argsMappeds": [
@@ -109,14 +109,14 @@
       "Value": null,
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
-      "Type": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1]",
+      "Type": "System.Nullable`1[SysCommand.Tests.UnitTests.Common.EnumTest1]",
       "ParsingType": "Name",
       "ParsingStates": "Valid",
       "Map": {
         "MapName": "enum1",
         "LongName": "enum1",
         "ShortName": null,
-        "Type": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1]",
+        "Type": "System.Nullable`1[SysCommand.Tests.UnitTests.Common.EnumTest1]",
         "HasDefaultValue": false,
         "DefaultValue": null,
         "IsOptional": false,
@@ -130,7 +130,7 @@
           "Prop4": null,
           "Prop5": null
         },
-        "TargetMember": "System.Nullable`1[SysCommand.Tests.UnitTests.EnumTest1] enum1"
+        "TargetMember": "System.Nullable`1[SysCommand.Tests.UnitTests.Common.EnumTest1] enum1"
       },
       "Raw": null,
       "AllRaw": [
@@ -155,14 +155,14 @@
       "Value": null,
       "HasUnsuporttedType": false,
       "HasInvalidInput": true,
-      "Type": "SysCommand.Tests.UnitTests.EnumTest2",
+      "Type": "SysCommand.Tests.UnitTests.Common.EnumTest2",
       "ParsingType": "Name",
       "ParsingStates": "ArgumentHasInvalidInput, IsInvalid",
       "Map": {
         "MapName": "enum2",
         "LongName": "enum2",
         "ShortName": null,
-        "Type": "SysCommand.Tests.UnitTests.EnumTest2",
+        "Type": "SysCommand.Tests.UnitTests.Common.EnumTest2",
         "HasDefaultValue": false,
         "DefaultValue": null,
         "IsOptional": false,
@@ -176,7 +176,7 @@
           "Prop4": null,
           "Prop5": null
         },
-        "TargetMember": "SysCommand.Tests.UnitTests.EnumTest2 enum2"
+        "TargetMember": "SysCommand.Tests.UnitTests.Common.EnumTest2 enum2"
       },
       "Raw": "invalid",
       "AllRaw": [
@@ -201,14 +201,14 @@
       "Value": null,
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
-      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag",
+      "Type": "SysCommand.Tests.UnitTests.Common.EnumTestNoFlag",
       "ParsingType": "HasNoInput",
       "ParsingStates": "ArgumentIsRequired, IsInvalid",
       "Map": {
         "MapName": "enum3",
         "LongName": "enum3",
         "ShortName": null,
-        "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag",
+        "Type": "SysCommand.Tests.UnitTests.Common.EnumTestNoFlag",
         "HasDefaultValue": false,
         "DefaultValue": null,
         "IsOptional": false,
@@ -222,7 +222,7 @@
           "Prop4": null,
           "Prop5": null
         },
-        "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag enum3"
+        "TargetMember": "SysCommand.Tests.UnitTests.Common.EnumTestNoFlag enum3"
       },
       "Raw": null,
       "AllRaw": [],
@@ -269,14 +269,14 @@
       "Value": null,
       "HasUnsuporttedType": false,
       "HasInvalidInput": false,
-      "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag2",
+      "Type": "SysCommand.Tests.UnitTests.Common.EnumTestNoFlag2",
       "ParsingType": "HasNoInput",
       "ParsingStates": "ArgumentIsRequired, IsInvalid",
       "Map": {
         "MapName": "enum4",
         "LongName": "enum4",
         "ShortName": null,
-        "Type": "SysCommand.Tests.UnitTests.EnumTestNoFlag2",
+        "Type": "SysCommand.Tests.UnitTests.Common.EnumTestNoFlag2",
         "HasDefaultValue": false,
         "DefaultValue": null,
         "IsOptional": false,
@@ -290,7 +290,7 @@
           "Prop4": null,
           "Prop5": null
         },
-        "TargetMember": "SysCommand.Tests.UnitTests.EnumTestNoFlag2 enum4"
+        "TargetMember": "SysCommand.Tests.UnitTests.Common.EnumTestNoFlag2 enum4"
       },
       "Raw": null,
       "AllRaw": [],

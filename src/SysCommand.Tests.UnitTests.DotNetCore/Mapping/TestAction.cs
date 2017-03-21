@@ -1,9 +1,9 @@
 ﻿using SysCommand.Mapping;
 using SysCommand.Parsing;
-using SysCommand.TestUtils;
 using System.Collections.Generic;
 using SysCommand.ConsoleApp.Helpers;
 using Xunit;
+using SysCommand.Tests.UnitTests.Common;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -30,7 +30,6 @@ namespace SysCommand.Tests.UnitTests
             var objectTest = new { input, actionMaps, actionsMapped };
 
             var jsonSerializeConfig = TestHelper.GetJsonConfig();
-            jsonSerializeConfig.Converters.Add(new TestObjectJsonConverter());
             Assert.True(TestHelper.CompareObjects<TestAction>(objectTest, testContext, testMethodName, jsonSerializeConfig));
         }
 

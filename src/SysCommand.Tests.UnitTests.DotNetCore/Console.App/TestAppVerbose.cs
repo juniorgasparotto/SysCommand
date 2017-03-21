@@ -1,6 +1,6 @@
 ﻿using SysCommand.ConsoleApp;
-using SysCommand.TestUtils;
 using SysCommand.ConsoleApp.Commands;
+using SysCommand.Tests.UnitTests.Common;
 using Xunit;
 
 namespace SysCommand.Tests.UnitTests

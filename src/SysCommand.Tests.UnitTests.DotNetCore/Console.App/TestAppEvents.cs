@@ -5,7 +5,7 @@ using System.IO;
 using SysCommand.Execution;
 using SysCommand.ConsoleApp.Handlers;
 using Xunit;
-using SysCommand.TestUtils;
+using SysCommand.Tests.UnitTests.Common;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -50,7 +50,7 @@ namespace SysCommand.Tests.UnitTests
         {
             var listener = new CustomListener();
             var app = new App(
-                    commandsTypes: new List<Type> { typeof(Commands.T22.Command1) },
+                    commandsTypes: new List<Type> { typeof(Common.Commands.T22.Command1) },
                     addDefaultAppHandler: false
                 );
 
@@ -75,7 +75,7 @@ OnException: Exception!!";
         public void Test22_EventsWithActions()
         {
             var app = new App(
-                    commandsTypes: new List<Type> { typeof(Commands.T22.Command1) },
+                    commandsTypes: new List<Type> { typeof(Common.Commands.T22.Command1) },
                     addDefaultAppHandler: false
                 );
 

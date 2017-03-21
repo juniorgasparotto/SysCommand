@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using SysCommand.TestUtils;
 using SysCommand.Extras;
 using System.Linq;
 using SysCommand.ConsoleApp.Helpers;
 using Xunit;
+using SysCommand.Tests.UnitTests.Common;
 
 namespace SysCommand.Tests.UnitTests
 {

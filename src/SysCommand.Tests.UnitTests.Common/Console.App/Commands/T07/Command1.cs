@@ -1,7 +1,7 @@
 ﻿using SysCommand.ConsoleApp;
 using System.Text;
 
-namespace SysCommand.Tests.UnitTests.Commands.T07
+namespace SysCommand.Tests.UnitTests.Common.Commands.T07
 {
     public class Command1 : Command
     {

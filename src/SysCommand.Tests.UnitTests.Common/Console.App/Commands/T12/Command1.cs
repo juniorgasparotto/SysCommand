@@ -4,7 +4,7 @@ using SysCommand.Mapping;
 using SysCommand.Parsing;
 using static SysCommand.Helpers.ReflectionHelper;
 
-namespace SysCommand.Tests.UnitTests.Commands.T12
+namespace SysCommand.Tests.UnitTests.Common.Commands.T12
 {
     public class Command1 : Command
     {

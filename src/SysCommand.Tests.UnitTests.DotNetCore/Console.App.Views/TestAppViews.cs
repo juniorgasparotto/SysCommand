@@ -1,9 +1,9 @@
-﻿using SysCommand.TestUtils;
-using System.Text;
+﻿using System.Text;
 using SysCommand.ConsoleApp.View;
 using SysCommand.DefaultExecutor;
 using SysCommand.Mapping;
 using Xunit;
+using SysCommand.Tests.UnitTests.Common;
 
 namespace SysCommand.Tests.UnitTests
 {

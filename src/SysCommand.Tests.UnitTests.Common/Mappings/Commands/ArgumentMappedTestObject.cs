@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SysCommand.Tests.UnitTests
+namespace SysCommand.Tests.UnitTests.Common
 {
     public class ArgumentMappedTestObject
     {

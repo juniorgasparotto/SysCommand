@@ -1,7 +1,7 @@
 ﻿using SysCommand.ConsoleApp;
 using SysCommand.Mapping;
 
-namespace SysCommand.Tests.UnitTests.Commands.T31
+namespace SysCommand.Tests.UnitTests.Common.Commands.T31
 {
     public class Command1 : Command
     {

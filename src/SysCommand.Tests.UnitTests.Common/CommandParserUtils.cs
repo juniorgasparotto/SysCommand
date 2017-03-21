@@ -6,7 +6,7 @@ using SysCommand.DefaultExecutor;
 using SysCommand.Helpers;
 using System.Linq;
 
-namespace SysCommand.Tests.UnitTests
+namespace SysCommand.Tests.UnitTests.Common
 {
     public static class CommandParserUtils
     {

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using static SysCommand.Helpers.ReflectionHelper;
 
-namespace SysCommand.Tests.UnitTests.Commands.T26
+namespace SysCommand.Tests.UnitTests.Common.Commands.T26
 {
     public class Command8 : Command
     {

@@ -1,6 +1,6 @@
 ﻿using SysCommand.Mapping;
 
-namespace SysCommand.Tests.UnitTests
+namespace SysCommand.Tests.UnitTests.Common
 {
     public class Git
     {

@@ -3,11 +3,11 @@ using System;
 using System.Linq;
 using SysCommand.ConsoleApp;
 using System.IO;
-using SysCommand.TestUtils;
 using SysCommand.ConsoleApp.Files;
 using SysCommand.ConsoleApp.Commands;
 using System.Reflection;
 using Xunit;
+using SysCommand.Tests.UnitTests.Common;
 
 namespace SysCommand.Tests.UnitTests
 {
@@ -25,9 +25,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "save 1",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -40,9 +40,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "save 1 history-save &",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -55,9 +55,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "save 1 history-save history1",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -70,9 +70,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "save 1 history-save history1 save 1",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -85,9 +85,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "save 1 history-save --name history1",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -100,9 +100,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "save 1 history-save --name history1 save",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -117,9 +117,9 @@ namespace SysCommand.Tests.UnitTests
                 this.Compare(
                     args: "save 1 history-save --name save",
                     commandsTypes: GetCmds(
-                        new Commands.T31.Command1(),
-                        new Commands.T31.Command2(),
-                        new Commands.T31.Command3()
+                        new Common.Commands.T31.Command1(),
+                        new Common.Commands.T31.Command2(),
+                        new Common.Commands.T31.Command3()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
                 );
@@ -138,9 +138,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: @"save 1 history-save --name \save",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -153,9 +153,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "save 1 history-save --name=history1",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -168,9 +168,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "save 1 history-save --name=history1 save 1",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -183,9 +183,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "history-save history0 save 1 history-save --name=history1 history-save history2 history-save  --name:history3 save 1 history-save --name:history4",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -200,9 +200,9 @@ namespace SysCommand.Tests.UnitTests
                 this.Compare(
                     args: "save 1 history-save --name save 1",
                     commandsTypes: GetCmds(
-                        new Commands.T31.Command1(),
-                        new Commands.T31.Command2(),
-                        new Commands.T31.Command3()
+                        new Common.Commands.T31.Command1(),
+                        new Common.Commands.T31.Command2(),
+                        new Common.Commands.T31.Command3()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -222,9 +222,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "save a history-save history1",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -237,9 +237,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "history-save history1",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -252,9 +252,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: "history-save history1 history-save history2 history-save history3 history-save history4",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -267,9 +267,9 @@ namespace SysCommand.Tests.UnitTests
             this.Compare(
                 args: @"--prop1 a --prop2 2 save 2 history-save \save",
                 commandsTypes: GetCmds(
-                    new Commands.T31.Command1(),
-                    new Commands.T31.Command2(),
-                    new Commands.T31.Command3()
+                    new Common.Commands.T31.Command1(),
+                    new Common.Commands.T31.Command2(),
+                    new Common.Commands.T31.Command3()
                 ),
                 funcName: TestHelper.GetCurrentMethodName()
 
@@ -284,9 +284,9 @@ namespace SysCommand.Tests.UnitTests
                 this.Compare(
                     args: @"--prop1 a --prop2 2 save 2 history-save save",
                     commandsTypes: GetCmds(
-                        new Commands.T31.Command1(),
-                        new Commands.T31.Command2(),
-                        new Commands.T31.Command3()
+                        new Common.Commands.T31.Command1(),
+                        new Common.Commands.T31.Command2(),
+                        new Common.Commands.T31.Command3()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -303,9 +303,9 @@ namespace SysCommand.Tests.UnitTests
         {
             var strWriter = new StringWriter();
             var commandsTypes = GetCmds(
-                new Commands.T31.Command1(),
-                new Commands.T31.Command2(),
-                new Commands.T31.Command3()
+                new Common.Commands.T31.Command1(),
+                new Common.Commands.T31.Command2(),
+                new Common.Commands.T31.Command3()
             );
 
             try

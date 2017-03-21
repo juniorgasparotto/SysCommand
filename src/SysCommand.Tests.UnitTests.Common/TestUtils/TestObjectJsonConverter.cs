@@ -3,7 +3,7 @@ using System;
 using System.Reflection;
 using SysCommand.Compatibility;
 
-namespace SysCommand.TestUtils
+namespace SysCommand.Tests.UnitTests.Common
 {
     public class TestObjectJsonConverter : JsonConverter
     {

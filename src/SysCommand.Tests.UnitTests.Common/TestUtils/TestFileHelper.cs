@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Reflection;
 
-namespace SysCommand.TestUtils
+namespace SysCommand.Tests.UnitTests.Common
 {
     public static class TestFileHelper
     {

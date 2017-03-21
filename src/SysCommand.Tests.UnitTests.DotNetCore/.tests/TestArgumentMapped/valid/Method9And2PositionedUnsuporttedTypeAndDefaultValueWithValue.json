@@ -5,7 +5,7 @@
       "MapName": "unsuporttedType",
       "LongName": "unsuportted-type",
       "ShortName": null,
-      "Type": "SysCommand.Tests.UnitTests.ArgumentMappedTestObject",
+      "Type": "SysCommand.Tests.UnitTests.Common.ArgumentMappedTestObject",
       "HasDefaultValue": false,
       "DefaultValue": null,
       "IsOptional": false,
@@ -19,7 +19,7 @@
         "Prop4": null,
         "Prop5": null
       },
-      "TargetMember": "SysCommand.Tests.UnitTests.ArgumentMappedTestObject unsuporttedType"
+      "TargetMember": "SysCommand.Tests.UnitTests.Common.ArgumentMappedTestObject unsuporttedType"
     },
     {
       "MapName": "defaultValue",
@@ -49,14 +49,14 @@
       "Value": null,
       "HasUnsuporttedType": true,
       "HasInvalidInput": false,
-      "Type": "SysCommand.Tests.UnitTests.ArgumentMappedTestObject",
+      "Type": "SysCommand.Tests.UnitTests.Common.ArgumentMappedTestObject",
       "ParsingType": "Position",
       "ParsingStates": "ArgumentHasUnsupportedType, IsInvalid",
       "Map": {
         "MapName": "unsuporttedType",
         "LongName": "unsuportted-type",
         "ShortName": null,
-        "Type": "SysCommand.Tests.UnitTests.ArgumentMappedTestObject",
+        "Type": "SysCommand.Tests.UnitTests.Common.ArgumentMappedTestObject",
         "HasDefaultValue": false,
         "DefaultValue": null,
         "IsOptional": false,
@@ -70,7 +70,7 @@
           "Prop4": null,
           "Prop5": null
         },
-        "TargetMember": "SysCommand.Tests.UnitTests.ArgumentMappedTestObject unsuporttedType"
+        "TargetMember": "SysCommand.Tests.UnitTests.Common.ArgumentMappedTestObject unsuporttedType"
       },
       "Raw": "abc",
       "AllRaw": [

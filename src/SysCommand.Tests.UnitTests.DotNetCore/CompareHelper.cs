@@ -3,10 +3,10 @@ using System;
 using System.Linq;
 using SysCommand.ConsoleApp;
 using System.IO;
-using SysCommand.TestUtils;
 using System.Collections;
 using System.Reflection;
 using Xunit;
+using SysCommand.Tests.UnitTests.Common;
 
 namespace SysCommand.Tests.UnitTests
 {

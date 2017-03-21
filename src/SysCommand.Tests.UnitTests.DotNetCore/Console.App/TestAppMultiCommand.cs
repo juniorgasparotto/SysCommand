@@ -1,5 +1,5 @@
 ﻿using SysCommand.ConsoleApp;
-using SysCommand.TestUtils;
+using SysCommand.Tests.UnitTests.Common;
 using Xunit;
 
 namespace SysCommand.Tests.UnitTests
@@ -18,8 +18,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "1 2 3 4",
                     commands: GetCmds(
-                        new Commands.T28.Command1(),
-                        new Commands.T28.Command2()
+                        new Common.Commands.T28.Command1(),
+                        new Common.Commands.T28.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -32,8 +32,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "--prop1 value",
                     commands: GetCmds(
-                        new Commands.T32.Command1(),
-                        new Commands.T32.Command2()
+                        new Common.Commands.T32.Command1(),
+                        new Common.Commands.T32.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -46,8 +46,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "default --prop1 value",
                     commands: GetCmds(
-                        new Commands.T32.Command1(),
-                        new Commands.T32.Command2()
+                        new Common.Commands.T32.Command1(),
+                        new Common.Commands.T32.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -60,8 +60,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "--value value",
                     commands: GetCmds(
-                        new Commands.T32.Command1(),
-                        new Commands.T32.Command2()
+                        new Common.Commands.T32.Command1(),
+                        new Common.Commands.T32.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -74,8 +74,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "--value value --prop1 value",
                     commands: GetCmds(
-                        new Commands.T32.Command1(),
-                        new Commands.T32.Command2()
+                        new Common.Commands.T32.Command1(),
+                        new Common.Commands.T32.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -88,8 +88,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "--prop1 value --value value",
                     commands: GetCmds(
-                        new Commands.T32.Command1(),
-                        new Commands.T32.Command2()
+                        new Common.Commands.T32.Command1(),
+                        new Common.Commands.T32.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -102,8 +102,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "1 2",
                     commands: GetCmds(
-                        new Commands.T32.Command2(),
-                        new Commands.T32.Command3()
+                        new Common.Commands.T32.Command2(),
+                        new Common.Commands.T32.Command3()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -116,11 +116,11 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "--p1 1 --description bla -c bla",
                     commands: GetCmds(
-                        new Commands.T33.Command1(),
-                        new Commands.T33.Command2(),
-                        new Commands.T33.Command3(),
-                        new Commands.T33.Command4(),
-                        new Commands.T33.Command5()
+                        new Common.Commands.T33.Command1(),
+                        new Common.Commands.T33.Command2(),
+                        new Common.Commands.T33.Command3(),
+                        new Common.Commands.T33.Command4(),
+                        new Common.Commands.T33.Command5()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -133,9 +133,9 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "--a1 1 --b1 2",
                     commands: GetCmds(
-                        new Commands.T34.Command3(),
-                        new Commands.T34.Command1(),
-                        new Commands.T34.Command2()
+                        new Common.Commands.T34.Command3(),
+                        new Common.Commands.T34.Command1(),
+                        new Common.Commands.T34.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -148,8 +148,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "1 2 3 4",
                     commands: GetCmds(
-                        new Commands.T35.Command1(),
-                        new Commands.T35.Command2()
+                        new Common.Commands.T35.Command1(),
+                        new Common.Commands.T35.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -162,8 +162,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "1 2 3 4 5",
                     commands: GetCmds(
-                        new Commands.T35.Command1(),
-                        new Commands.T35.Command2()
+                        new Common.Commands.T35.Command1(),
+                        new Common.Commands.T35.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -176,8 +176,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "1 2 3 4 5",
                     commands: GetCmds(
-                        new Commands.T36.Command1(),
-                        new Commands.T36.Command2()
+                        new Common.Commands.T36.Command1(),
+                        new Common.Commands.T36.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -190,8 +190,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "--b1 1 2 3 4 5",
                     commands: GetCmds(
-                        new Commands.T36.Command1(),
-                        new Commands.T36.Command2()
+                        new Common.Commands.T36.Command1(),
+                        new Common.Commands.T36.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 
@@ -204,8 +204,8 @@ namespace SysCommand.Tests.UnitTests
             this.CompareAll(
                     args: "--a1 1 2 3 4 5",
                     commands: GetCmds(
-                        new Commands.T37.Command1(),
-                        new Commands.T37.Command2()
+                        new Common.Commands.T37.Command1(),
+                        new Common.Commands.T37.Command2()
                     ),
                     funcName: TestHelper.GetCurrentMethodName()
 

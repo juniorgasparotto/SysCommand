@@ -1,6 +1,6 @@
 ﻿using SysCommand.ConsoleApp;
 
-namespace SysCommand.Tests.UnitTests.Commands.T00
+namespace SysCommand.Tests.UnitTests.Common.Commands.T00
 {
     public class Command1 : Command
     {

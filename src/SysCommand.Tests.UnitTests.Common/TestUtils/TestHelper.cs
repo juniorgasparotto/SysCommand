@@ -6,17 +6,53 @@ using System.Text;
 using System.Globalization;
 using SysCommand.ConsoleApp.Helpers;
 using System.Reflection;
+using SysCommand.Compatibility;
+using System.Linq;
+using SysCommand.ConsoleApp;
+using System.Collections.Generic;
 
-namespace SysCommand.TestUtils
+namespace SysCommand.Tests.UnitTests.Common
 {
     public static class TestHelper
     {
         public static string FolderTests;
+        private static IEnumerable<Type> startupTypes;
+
+        public static IEnumerable<Type> StartupTypes
+        {
+            get
+            {
+                if (startupTypes == null)
+                {
+                    var assemblies = ReflectionCompatibility.GetAssemblies().Where(f => f.FullName.Contains("SysCommand")).ToList();
+                    startupTypes = (from domainAssembly in assemblies
+                                    from assemblyType in domainAssembly.GetTypes()
+                                    where
+                                           typeof(IStartup).IsAssignableFrom(assemblyType)
+                                        && assemblyType.IsInterface() == false
+                                        && assemblyType.IsAbstract() == false
+                                    select assemblyType).ToList();
+                }
+
+                return startupTypes;
+        }
+
+        }
 
         public static void Setup()
         {
             Directory.SetCurrentDirectory(Development.GetProjectDirectory());
             SetCultureInfoToInvariant();
+            RunInitializeClasses();
+        }
+
+        private static void RunInitializeClasses()
+        {
+            foreach(var t in StartupTypes)
+            {
+                var nt = (IStartup) Activator.CreateInstance(t);
+                nt.Start();
+            }
         }
 
         public static void SetCultureInfoToInvariant()
@@ -104,6 +140,7 @@ namespace SysCommand.TestUtils
         public static bool CompareObjects<TType>(object objectTest, string testContext, string testMethodName, JsonSerializerSettings config = null)
         {
             config = config ?? GetJsonConfig();
+            config.Converters.Add(new TestObjectJsonConverter());
 
             var typeName = typeof(TType).Name;
             SaveUncheckedFileIfValidNotExists<dynamic>(typeName, objectTest, testContext, testMethodName, config);
@@ -114,51 +151,13 @@ namespace SysCommand.TestUtils
 
             if (!test)
                 SaveInvalidFileIfValidExists<dynamic>(typeName, objectTest, testContext, testMethodName, config);
-            // Console.WriteLine("INICIO");
-            // Console.WriteLine(outputTest);
-            // Console.WriteLine("FIM");
-
-            //  Console.WriteLine("INICIO");
-            // Console.WriteLine(test);
-            // Console.WriteLine("FIM");
             return test;
         }
 
         public static bool CompareString(string a, string b) {
             string compareA = a.Replace("\r\n", "\n");
             string compareB = b.Replace("\r\n", "\n");
-
-            // for(int i = 0; i < compareA.Length; i++)
-            // {
-            //     Console.WriteLine(compareA[i]);
-
-            //     if (compareA[i] != compareB[i])
-            //     {
-            //         Console.WriteLine("CharNumber:" + i);
-            //         Console.WriteLine("CharA:" + (int)compareA[i]);
-            //         Console.WriteLine("CharB:" + (int)compareB[i]);
-            //         break;
-            //     }
-            // }
-
             return compareA == compareB;
         }
-
-        //public static bool CompareObjectsString<TType>(string objectTest, string testContext, string testMethodName, JsonSerializerSettings config = null)
-        //{
-        //    config = config ?? GetJsonConfig();
-
-        //    var typeName = typeof(TType).Name;
-        //    SaveUncheckedFileIfValidNotExists(typeName, objectTest, testContext, testMethodName, config);
-
-        //    var outputTest = objectTest;
-        //    var outputCorrect = TestFileHelper.GetContentFromFile(GetValidTestFileName(typeName, testContext, testMethodName));
-        //    var test = outputTest == outputCorrect;
-
-        //    if (!test)
-        //        SaveInvalidFileIfValidExists<dynamic>(typeName, objectTest, testContext, testMethodName, config);
-
-        //    return outputTest == outputCorrect;
-        //}
     }
 }

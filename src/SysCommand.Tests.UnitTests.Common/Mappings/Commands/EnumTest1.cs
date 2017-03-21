@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SysCommand.Tests.UnitTests
+namespace SysCommand.Tests.UnitTests.Common
 {
     [Flags]
     public enum EnumTest1

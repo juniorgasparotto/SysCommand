@@ -1,7 +1,7 @@
 ﻿using SysCommand.ConsoleApp;
 using SysCommand.Mapping;
 using System.Collections.Generic;
-namespace SysCommand.Tests.UnitTests.Commands.T36
+namespace SysCommand.Tests.UnitTests.Common.Commands.T36
 {
     public class Command2 : Command
     {
