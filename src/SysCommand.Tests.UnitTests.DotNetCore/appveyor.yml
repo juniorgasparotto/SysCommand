@@ -1,0 +1,19 @@
+version: 1.0.0.{build}
+os: Visual Studio 2017
+configuration: Release
+
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+
+before_build:
+  - cmd: dotnet --info
+  - cmd: dotnet restore "src/SysCommand.sln"
+  - cmd: dotnet restore "src/SysCommand.Tests.UnitTests.DotNetCore/SysCommand.Tests.UnitTests.DotNetCore.csproj"
+  - cmd: dotnet test "src/SysCommand.Tests.UnitTests.DotNetCore/SysCommand.Tests.UnitTests.DotNetCore.csproj"
+  
+  - cmd: dotnet msbuild "src/SysCommand.Tests.UnitTests.DotNetFull/SysCommand.Tests.UnitTests.DotNetFull.csproj"  
+  - cmd: dotnet restore "src/SysCommand.Tests.UnitTests.DotNetFull/SysCommand.Tests.UnitTests.DotNetFull.csproj"  
+  - cmd: dotnet test "src/SysCommand.Tests.UnitTests.DotNetFull/SysCommand.Tests.UnitTests.DotNetFull.csproj" -f net452
