@@ -10,4 +10,4 @@ assembly_info:
 
 before_build:
   - cmd: dotnet --info
-  - cmd: dotnet restore
+  - cmd: dotnet restore "src/SysCommand.Tests.UnitTests.DotNetFull/SysCommand.Tests.UnitTests.DotNetFull.csproj"
