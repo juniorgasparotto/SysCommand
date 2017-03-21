@@ -1,2 +1,0 @@
-dotnet test "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\src\SysCommand.Tests.UnitTests.DotNetCore\SysCommand.Tests.UnitTests.DotNetCore.csproj"
-dotnet test "D:\Junior\Projetos\GITHUB.COM\juniorgasparotto\SysCommand\src\SysCommand.Tests.UnitTests.DotNetFull\SysCommand.Tests.UnitTests.DotNetFull.csproj" -f net452
