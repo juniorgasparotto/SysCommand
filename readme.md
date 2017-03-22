@@ -8,8 +8,8 @@ O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `
 
 # Canais
 
-* [Reportar erro](https://github.com/juniorgasparotto/SysCommand/issues/new)
-* [Fale pelo Slack.com](https://syscommand.slack.com/)
+* [Reportar um erro](https://github.com/juniorgasparotto/SysCommand/issues/new)
+* [Mandar uma mensagem](https://syscommand.slack.com/)
 # <a name="install"></a>Instalação
 
 Via [NuGet](https://www.nuget.org/packages/SysCommand/):
