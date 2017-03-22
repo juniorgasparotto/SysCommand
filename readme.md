@@ -2,7 +2,7 @@
 
 O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `Console Aplication` usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC.
 
-*Canais:*
+**Canais:**
 
 * [Reportar um erro](https://github.com/juniorgasparotto/SysCommand/issues/new)
 * [Mandar uma mensagem](https://syscommand.slack.com/)
