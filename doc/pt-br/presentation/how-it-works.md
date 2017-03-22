@@ -12,7 +12,6 @@ Outros recursos essênciais como `help`, `verbose`, `tratamento de erros` e outr
 namespace Example.Initialization.Simple
 {
     using SysCommand.ConsoleApp;
-    using SysCommand.Mapping;
 
     public class Program
     {

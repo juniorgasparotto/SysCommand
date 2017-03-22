@@ -35,7 +35,6 @@ Outros recursos essênciais como `help`, `verbose`, `tratamento de erros` e outr
 namespace Example.Initialization.Simple
 {
     using SysCommand.ConsoleApp;
-    using SysCommand.Mapping;
 
     public class Program
     {
@@ -343,8 +342,7 @@ O objetivo é ajudar programadores de qualquer linguagem de programação que so
 Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade de conhece-lo. Com o novo .NET (Core Clr) você pode criar softwares em qualquer sistema operacional e somado aos beneficios do `SysCommand` você pode criar sua coleção de aplicativos de console da forma mais fácil possível.
 # <a name="install-dlls"></a>DLLs do pacote
 
-  * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Pode ser utilizado em outros tipos de projetos como `Web Application` ou `Windows Forms`.
-  * `SysCommand.ConsoleApp.dll`: Contém diversos recursos que uma aplicação do tipo `Console Application` necessita. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
+  * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
   * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
 
 ## <a name="install-step-a-step"></a>Passo a passo da instalação

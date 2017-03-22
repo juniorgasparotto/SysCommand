@@ -1,7 +1,6 @@
 ﻿namespace Example.Initialization.Simple
 {
     using SysCommand.ConsoleApp;
-    using SysCommand.Mapping;
 
     public class Program
     {
