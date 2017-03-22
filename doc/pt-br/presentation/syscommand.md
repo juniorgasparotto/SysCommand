@@ -9,4 +9,4 @@ O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `
 Canais:
 
 * [Reportar erro](https://github.com/juniorgasparotto/SysCommand/issues/new)
-* [Fale com o time pelo Slack.com](https://syscommand.slack.com/)
+* [Fale conosco pelo Slack.com](https://syscommand.slack.com/)
