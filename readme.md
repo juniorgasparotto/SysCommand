@@ -5,6 +5,8 @@ O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `
 | netstandard1.6 | net45+ |
 |----------|:-------------:|
 | [![Build status](https://ci.appveyor.com/api/projects/status/36vajwj2n93f4u21/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand/branch/master) |  [![Build status](https://ci.appveyor.com/api/projects/status/6hb2sox6y6g5pwmt/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand-bg4ki/branch/master) |
+
+Chat (slack): https://syscommand.slack.com/
 # <a name="install"></a>Instalação
 
 Via [NuGet](https://www.nuget.org/packages/SysCommand/):
