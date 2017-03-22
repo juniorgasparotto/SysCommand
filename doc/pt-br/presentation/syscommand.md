@@ -6,4 +6,7 @@ O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `
 |----------|:-------------:|
 | [![Build status](https://ci.appveyor.com/api/projects/status/36vajwj2n93f4u21/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand/branch/master) |  [![Build status](https://ci.appveyor.com/api/projects/status/6hb2sox6y6g5pwmt/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand-bg4ki/branch/master) |
 
-Chat (slack): https://syscommand.slack.com/
+Canais:
+
+Reportar erro: https://github.com/juniorgasparotto/SysCommand/issues/new
+Fale com o time: https://syscommand.slack.com/
