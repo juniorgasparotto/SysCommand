@@ -2,13 +2,11 @@
 using Newtonsoft.Json;
 using System.IO;
 using System;
-using System.Text;
 using System.Globalization;
 using SysCommand.ConsoleApp.Helpers;
 using System.Reflection;
 using SysCommand.Compatibility;
 using System.Linq;
-using SysCommand.ConsoleApp;
 using System.Collections.Generic;
 
 namespace SysCommand.Tests.UnitTests.Common
@@ -41,14 +39,19 @@ namespace SysCommand.Tests.UnitTests.Common
 
         public static void Setup()
         {
-#if NET452 
+            SetCurrentDirectoryToRootProjectFolder();
+            SetCultureInfoToInvariant();
+            RunInitializeClasses();
+        }
+
+        private static void SetCurrentDirectoryToRootProjectFolder()
+        {
+#if NET452
             Directory.SetCurrentDirectory(Development.GetProjectDirectory());
 #else //  when is NETCORE and use xunit in visual studio, the current directory is wrong when use Directory.GetCurrentDirectory()
             var baseDir =  Path.GetDirectoryName(typeof(TestHelper).GetTypeInfo().Assembly.Location);
             Directory.SetCurrentDirectory(Development.GetProjectDirectory(baseDir));
 #endif
-            SetCultureInfoToInvariant();
-            RunInitializeClasses();
         }
 
         private static void RunInitializeClasses()
