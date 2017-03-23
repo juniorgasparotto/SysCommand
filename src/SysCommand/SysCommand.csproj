@@ -28,9 +28,6 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.0.1-beta-003206" />
-    <PackageReference Include="System.Runtime.Loader" Version="4.0.0" />
-    <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
     <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
   </ItemGroup>
 

@@ -15,7 +15,6 @@ using System.IO;
 
 #if NETCORE
 using SysCommand.Compatibility;
-using System.Runtime.Loader;
 #else
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
