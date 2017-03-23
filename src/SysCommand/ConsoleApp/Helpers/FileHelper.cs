@@ -5,13 +5,9 @@ namespace SysCommand.ConsoleApp.Helpers
 {
     public static class FileHelper
     {
-        public static string GetCurrentDirectory<TRef>()
+        public static string GetCurrentDirectory()
         {
-#if NETCORE
-            return Path.GetDirectoryName(typeof(TRef).GetTypeInfo().Assembly.Location);
-#else
             return Directory.GetCurrentDirectory();
-#endif
         }
 
         public static bool FileExists(string fileName)

@@ -295,13 +295,7 @@ namespace SysCommand.ConsoleApp
                 }
             }
         }
-
-        public static void SetCurrentDirectory()
-        {
-            var dir = Path.GetDirectoryName(typeof(App).GetType().GetTypeInfo().Assembly.Location);
-            Directory.SetCurrentDirectory(dir);
-        }
-
+        
         private static string[] GetArguments(App app)
         {
             if (Development.IsAttached)

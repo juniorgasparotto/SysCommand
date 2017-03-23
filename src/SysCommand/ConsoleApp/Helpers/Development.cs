@@ -16,13 +16,13 @@ namespace SysCommand.ConsoleApp.Helpers
             }
         }
 
-        public static string GetProjectDirectory()
+        public static string GetProjectDirectory(string baseDir = null)
         {
             lock (thisLock)
             {
                 if (projectDirectory == null)
                 {
-                    var pathFull = FileHelper.GetCurrentDirectory<App>();
+                    var pathFull = baseDir ?? FileHelper.GetCurrentDirectory();
 
                     projectDirectory = pathFull;
 

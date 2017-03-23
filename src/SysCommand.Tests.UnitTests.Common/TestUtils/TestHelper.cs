@@ -41,7 +41,12 @@ namespace SysCommand.Tests.UnitTests.Common
 
         public static void Setup()
         {
+#if NET452 
             Directory.SetCurrentDirectory(Development.GetProjectDirectory());
+#else //  when is NETCORE and use xunit in visual studio, the current directory is wrong when use Directory.GetCurrentDirectory()
+            var baseDir =  Path.GetDirectoryName(typeof(TestHelper).GetTypeInfo().Assembly.Location);
+            Directory.SetCurrentDirectory(Development.GetProjectDirectory(baseDir));
+#endif
             SetCultureInfoToInvariant();
             RunInitializeClasses();
         }
@@ -61,7 +66,7 @@ namespace SysCommand.Tests.UnitTests.Common
             CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 #else
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
-#endif            
+#endif
         }
 
         public static JsonSerializerSettings GetJsonConfig()
