@@ -1,4 +1,4 @@
-## Limitações do NETSTANDART <header-set anchor-name="netstandard" />
+# Limitações do NETSTANDART <header-set anchor-name="netstandard" />
 
 * No netstandart temos a limitação de carregar apenas o assembly da execução e o proprio `SysCommand.dll`. Isso devido a falta da API `AppDomain`.
 * Não temos a propriedade `this.App` disponível no construtor do `Command` devido a falta da API `FormatterServices.GetUninitializedObject`
