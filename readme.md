@@ -1,6 +1,6 @@
 # <a name="presentation"></a>SysCommand
 
-O `SysCommand` é um poderoso framework para o desenvolvimento de aplicações `Console Aplication` multiplataforma usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC.
+O `SysCommand` é um poderoso framework, multiplataforma, para o desenvolvimento de aplicações `Console Aplication` usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC.
 
 ## Build Status
 
@@ -345,7 +345,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
   * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
   * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
 
-## <a name="install-step-a-step"></a>Passo a passo da instalação
+## <a name="install-step-a-step"></a>Passo a passo de como usar
 
 * Criar seu projeto do tipo `Console Application`
 * Instale o `SysCommand` no seu projeto `Console Application`
