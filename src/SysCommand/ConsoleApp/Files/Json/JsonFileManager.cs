@@ -5,10 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-
-#if NETCORE
 using SysCommand.Compatibility;
-#endif
 
 namespace SysCommand.ConsoleApp.Files
 {
@@ -154,11 +151,7 @@ namespace SysCommand.ConsoleApp.Files
                     Formatting = Formatting.Indented
                 };
 
-#if NETCORE
                 config.SerializationBinder = binder;
-#else
-                config.Binder = binder;
-#endif
             }
 
             return JsonConvert.SerializeObject(obj, config.Formatting, config);
@@ -173,11 +166,7 @@ namespace SysCommand.ConsoleApp.Files
                     TypeNameHandling = TypeNameHandling.Auto
                 };
 
-#if NETCORE
                 config.SerializationBinder = binder;
-#else
-                config.Binder = binder;
-#endif
             }
 
             return JsonConvert.DeserializeObject<T>(contentJson, config);
