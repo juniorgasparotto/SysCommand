@@ -5,11 +5,8 @@ using System.Collections;
 using SysCommand.Mapping;
 using SysCommand.Helpers;
 using SysCommand.Parsing;
-
-#if NETCORE
 using SysCommand.Compatibility;
 using System.Reflection;
-#endif
 
 namespace SysCommand.DefaultExecutor
 {

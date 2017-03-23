@@ -3269,6 +3269,7 @@ Os dois últimos comandos não retornam outpus.
 * Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
 
 
+
 # <a name="extras"></a>Extras - OptionSet
 
 Esse extra foi criado para uma ocasição especifica de parse onde o foco é ser simples. Com a classe `SysCommand.Extras.OptionSet` é possível fazer o parse de argumentos da forma tradicional.
