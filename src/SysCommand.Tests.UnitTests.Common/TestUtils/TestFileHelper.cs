@@ -3,6 +3,8 @@ using System;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Reflection;
+using SysCommand.Compatibility;
+using Newtonsoft.Json.Serialization;
 
 namespace SysCommand.Tests.UnitTests.Common
 {
@@ -79,7 +81,7 @@ namespace SysCommand.Tests.UnitTests.Common
                     config = new JsonSerializerSettings
                     {
                         TypeNameHandling = TypeNameHandling.Auto,
-                        Binder = binder,
+                        SerializationBinder = binder,
                         Formatting = Formatting.Indented
                     };
                 }
@@ -95,7 +97,7 @@ namespace SysCommand.Tests.UnitTests.Common
                 config = new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Auto,
-                    Binder = binder,
+                    SerializationBinder = binder,
                 };
             }
 
@@ -120,20 +122,19 @@ namespace SysCommand.Tests.UnitTests.Common
 
         #endregion
 
-        internal class TypeNameSerializationBinder : SerializationBinder
+        internal class TypeNameSerializationBinder : ISerializationBinder
         {
             public TypeNameSerializationBinder()
             {
             }
 
-            public override void BindToName(Type serializedType, out string assemblyName, out string typeName)
+            public void BindToName(Type serializedType, out string assemblyName, out string typeName)
             {
-                //assemblyName = serializedType.Assembly.FullName;
-                assemblyName = serializedType.GetTypeInfo().Assembly.FullName;
+                assemblyName = serializedType.Assembly().FullName;
                 typeName = serializedType.FullName;
             }
 
-            public override Type BindToType(string assemblyName, string typeName)
+            public Type BindToType(string assemblyName, string typeName)
             {
                 return Type.GetType(typeName + ", " + assemblyName, true);
             }
