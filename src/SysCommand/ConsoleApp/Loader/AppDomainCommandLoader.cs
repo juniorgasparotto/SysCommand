@@ -28,7 +28,7 @@ namespace SysCommand.ConsoleApp.Loader
 #if NETCORE
             assemblies.Add(this.GetType().GetTypeInfo().Assembly);
 #endif
-            var listOfCommands = (from domainAssembly in assemblies
+            var listOfCommands = (from domainAssembly in assemblies.Distinct()
                                   from assemblyType in domainAssembly.GetTypes()
                                   where
                                          typeof(Command).IsAssignableFrom(assemblyType)

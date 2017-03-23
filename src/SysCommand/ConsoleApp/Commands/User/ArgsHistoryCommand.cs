@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static SysCommand.Helpers.ReflectionHelper;
 
 namespace SysCommand.ConsoleApp.Commands
 {
@@ -44,14 +45,9 @@ namespace SysCommand.ConsoleApp.Commands
             var histories = this.FileManager.GetOrCreate<List<History>>(FILE_NAME);
             histories.RemoveAll(f => f.Name == name);
 
-#if NETCORE
-            var actionMapName = "history-save";
-            var parameterName = "--name";
-#else
-            var actionMap = this.GetActionMap();
+            var actionMap = this.GetActionMap(T<string>());
             var actionMapName = actionMap.ActionName;
             var parameterName = "--" + actionMap.ArgumentsMaps.ElementAt(0).LongName;
-#endif
             var newArgs = new List<string>();
             var argEnumerator = ExecutionScope.ParseResult.Args.ToList().GetEnumerator();
 
