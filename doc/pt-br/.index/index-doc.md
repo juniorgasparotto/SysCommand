@@ -49,7 +49,7 @@
 #include "../pt-br/redirecting/redirecting.md"
 #include "../pt-br/stop-propagation/stop-propagation.md"
 #include "../pt-br/argument-history-manager/argument-history-manager.md"
-#include "../pt-br/netstandard/netstandard.md"
 #include "../pt-br/extras/extras.md"
+#include "../pt-br/netstandard/netstandard.md"
 
 #include "../pt-br/license.md"

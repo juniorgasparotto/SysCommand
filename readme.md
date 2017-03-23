@@ -419,8 +419,8 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * [Redirecionamento de comandos](#redirectiong-commands)
 * [Cancelamento da continuidade da execução](#stop-propagation)
 * [Gerenciamento de históricos de argumentos](#argument-history-manager)
-* [Limitações do NETSTANDART](#netstandard)
 * [Extras - OptionSet](#extras)
+* [Limitações do NETSTANDART](#netstandard)
 * [Licença](#license)
 
 # <a name="class-app"></a>Iniciando
@@ -3270,16 +3270,6 @@ Os dois últimos comandos não retornam outpus.
 * Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
 
 
-# <a name="netstandard"></a>Limitações do NETSTANDART
-
-* No netstandart temos a limitação de carregar apenas o assembly da execução e o proprio `SysCommand.dll`. Isso devido a falta da API `AppDomain`.
-* Não temos a propriedade `this.App` disponível no construtor do `Command` devido a falta da API `FormatterServices.GetUninitializedObject`
-* Os métodos `Command.GetActionMap()` e `Command.GetAction()` só estão disponíveis com as sobrecargas `Command.GetActionMap(Type[] paramTypes)` e `Command.GetAction(Type[] paramTypes)`. Use o método `SysCommand.Helpers.Reflection.T<...>()` para facilitar o uso, ele suporta até 10 inferências.
-* Não temos a funcionalidade de template usando Razor. Será feito em breve.
-* O nuget package ainda não suporta o arquivo "Program.cs.txt"
-
-**Ficaremos atento com as próximas versões do netstandart, assim que essas APIs ficarem disponíves esses recursos também serão contemplados.**
-
 # <a name="extras"></a>Extras - OptionSet
 
 Esse extra foi criado para uma ocasição especifica de parse onde o foco é ser simples. Com a classe `SysCommand.Extras.OptionSet` é possível fazer o parse de argumentos da forma tradicional.
@@ -3375,5 +3365,15 @@ shouldShowHelp: True
 names.Count: 3
 ```
 
+
+# <a name="netstandard"></a>Limitações do NETSTANDART
+
+* No netstandart temos a limitação de carregar apenas o assembly da execução e o proprio `SysCommand.dll`. Isso devido a falta da API `AppDomain`.
+* Não temos a propriedade `this.App` disponível no construtor do `Command` devido a falta da API `FormatterServices.GetUninitializedObject`
+* Os métodos `Command.GetActionMap()` e `Command.GetAction()` só estão disponíveis com as sobrecargas `Command.GetActionMap(Type[] paramTypes)` e `Command.GetAction(Type[] paramTypes)`. Use o método `SysCommand.Helpers.Reflection.T<...>()` para facilitar o uso, ele suporta até 10 inferências.
+* Não temos a funcionalidade de template usando Razor. Será feito em breve.
+* O nuget package ainda não suporta o arquivo "Program.cs.txt"
+
+**Ficaremos atento com as próximas versões do netstandart, assim que essas APIs ficarem disponíves esses recursos também serão contemplados.**
 
 # <a name="license"></a>Licença
