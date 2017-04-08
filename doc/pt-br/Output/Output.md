@@ -43,7 +43,11 @@ public class TestOutput : Command
 }
 ```
 
-Input: ```MyApp.exe test```
+Input:
+
+```
+MyApp.exe test
+```
 
 Outputs:
 

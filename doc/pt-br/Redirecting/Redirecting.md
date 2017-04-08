@@ -20,7 +20,7 @@ public class RedirectCommand : Command
     {
         return "Something";
     }
-    
+
     public string Redirected(string arg)
     {
         _count++;

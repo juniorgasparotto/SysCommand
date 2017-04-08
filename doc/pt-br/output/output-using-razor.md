@@ -4,7 +4,7 @@ Outra opção para exibir outputs é a utilização de templates `Razor`. Esse m
 
 Para utilizar `Razor` deve-se seguir alguns simples passos:
 
-* Por organização, criar uma pasta chamada "Views". 
+* Por organização, criar uma pasta chamada "Views".
 * Caso ainda queira mais organização, crie uma sub-pasta dentro da pasta "Views" com o nome do `Command`.
 * Criar um arquivo de template com a extensão ".razor" dentro da pasta "Views". Esse arquivo deve ter o mesmo nome da action (método)
 * Implementar o seu template podendo ou não usar a variável "@Model"
@@ -53,9 +53,17 @@ else {
 
 ######Tests
 
-Input1: ```MyApp.exe my-action```
+Input1:
 
-Input2: ```MyApp.exe my-action2```
+```
+MyApp.exe my-action
+```
+
+Input2:
+
+```
+MyApp.exe my-action2
+```
 
 Outputs:
 
@@ -72,4 +80,3 @@ Outputs:
 * É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automatica. como no exemplo da action "MyAction2()".
 * Por questões técnicas, o método View<>() obriga o uso de uma inferencia ou um model. Infira um `object` se você não necessitar de um model `View<object>()`.
 * Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.
-

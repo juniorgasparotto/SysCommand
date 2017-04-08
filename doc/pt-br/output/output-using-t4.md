@@ -35,6 +35,7 @@ public class ExampleT4Command : Command
     }
 }
 ```
+
 ######Views/ExampleT4/MyActionView.tt
 
 ```csharp
@@ -49,9 +50,17 @@ public class ExampleT4Command : Command
 
 ######Tests
 
-Input1: ```MyApp.exe t4-my-action```
+Input1:
 
-Input2: ```MyApp.exe t4-my-action2```
+```
+MyApp.exe t4-my-action
+```
+
+Input2:
+
+```
+MyApp.exe t4-my-action2
+```
 
 Outputs:
 

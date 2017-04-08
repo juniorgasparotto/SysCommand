@@ -43,7 +43,7 @@ Por fim, uma lista do tipo `IEnumerable<CommandMap>` é retornada contendo o map
 * `LongNameAndHasValue`: Argumento na forma longa com valor
 * `LongNameAndHasValueInName`: Argumento na forma longa e com valor unificado com o nome do argumento usando `=` ou `:`.
 
-Essa etapa precisa conhecer as `actions`, pelo único motivo de escapar valores que conflitem com nomes de `actions`. 
+Essa etapa precisa conhecer as `actions`, pelo único motivo de escapar valores que conflitem com nomes de `actions`.
 
 Considere que `action1` é uma ação com 1 argumento opcional chamado `--value` e que aceita valores posicionais:
 
@@ -74,20 +74,16 @@ Por fim, uma lista do tipo `IEnumerable<ArgumentRaw>`.
 É a etapa mais longa, onde combina o resultado do mapeamento com o resultado do parser simples. O objetivo é obter as melhores rotas para um mesmo input.
 
 1. A primeira etapa consiste em encontrar os métodos de acordo com o input de entrada. Para isso, será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
-
 2. A primeira `action` pode ter seu nome omitido, mas para isso ela precisa ser do tipo `Default`. Veja <header-get name="methods-default" />. Caso existam, elas só serão utilizadas quando o primeiro `ArgumentRaw` do input não é uma `action`. Nesse cenário todos os métodos `Default` serão escolhidos para a próxima etapa. Daí para frente o processo será o mesmo.
-
 3. Após encontrar todos os métodos de cada `action` do input, será feito a divisão em níveis. Cada nível será criado da seguinte forma:
-
-* Se o input iniciar com argumentos então formaram o primeiro nível. Isso se não existir nenhum método `Default`.
-* Caso exista mais de uma `action` no input, incluindo `Defaults`, cada uma representará um novo nível.
-* Os argumentos que não fazem parte do mapa da `action` (sobras) formaram outro nível. Esse nível será criado na sequência do nível da `action`.
-* Caso não encontre nenhuma `action` no input e apenas argumentos, então haverá apenas um nível.
-* Caso não exista nenhum input, mas exista métodos `Default` sem parâmetros, então eles serão escolhidos para a execução.
+    * Se o input iniciar com argumentos então formaram o primeiro nível. Isso se não existir nenhum método `Default`.
+    * Caso exista mais de uma `action` no input, incluindo `Defaults`, cada uma representará um novo nível.
+    * Os argumentos que não fazem parte do mapa da `action` (sobras) formaram outro nível. Esse nível será criado na sequência do nível da `action`.
+    * Caso não encontre nenhuma `action` no input e apenas argumentos, então haverá apenas um nível.
+    * Caso não exista nenhum input, mas exista métodos `Default` sem parâmetros, então eles serão escolhidos para a execução.
+4. Todos os níveis que não são de `action` (apenas de argumentos) serão usados para encontrar as proprieades. Quando isso acontece, cada propriedade será representada pela classe `SysCommand.Parsing.ArgumentParsed` assim como os parâmetros dos métodos.
 
 Nota importante: Quando a flag `bool enableMultiAction` estiver desligada o parser aceitará apenas uma `action`.
-
-4. Todos os níveis que não são de `action` (apenas de argumentos) serão usados para encontrar as proprieades. Quando isso acontece, cada propriedade será representada pela classe `SysCommand.Parsing.ArgumentParsed` assim como os parâmetros dos métodos.
 
 **Exemplo:**
 
@@ -111,7 +107,7 @@ namespace Example.Input.Parser
 
         public void Main(string a, string b, string c)
         {
-            
+
         }
 
         public void Action1(string value = null)
@@ -182,16 +178,14 @@ No exemplo E o argumento `--property2` foi derivado dos argumentos extras da aç
 
 #### Escolhendo os melhores métodos <header-set anchor-name="input-parser-complex-methods" />
 
-Com a divisão de níveis por `action` concluída, é feito a escolha dos melhores métodos dentro de cada nível. 
+Com a divisão de níveis por `action` concluída, é feito a escolha dos melhores métodos dentro de cada nível.
 
 1. Essa escolha trabalha da seguinte forma:
-
-* Seleciona os métodos que tem todos os parâmetros válidos
-* Entre os métodos válidos, seleciona o primeiro método que tenha, respectivamente:
-  * A maior quantidade de parâmetros combinados com o input que foi enviado
-  * A menor quantidade de parâmetros em seu mapa
-  * A menor quantidade de argumentos extras
-
+    * Seleciona os métodos que tem todos os parâmetros válidos
+    * Entre os métodos válidos, seleciona o primeiro método que tenha, respectivamente:
+      * A maior quantidade de parâmetros combinados com o input que foi enviado
+      * A menor quantidade de parâmetros em seu mapa
+      * A menor quantidade de argumentos extras
 2. Com o melhor método em mãos para cada nível, a próxima etapa é remover todos os métodos do mesmo nível que não combinam com o melhor método. Isso não significa que tenham que ter a mesma assinatura, ou seja, não é preciso ter o mesmo nome, nem a mesma quantidade de parâmetros e nem os mesmos tipos, nada disso importa, o que vale é a relação do input com o método.
 
 A combinação desejada é que todos os outros métodos tenham as mesmas quantidades de parâmetros parseados (`ArgumentParsed`) e que os inputs de seus parâmetros (`IEnumerable<ArgumentRaw> AllRaw`) combinem com os inputs do melhor método, inclusive, com a mesma sequência. Isso significa que a estratégia de parse do input foi a mesma para os métodos que combinaram, assim garante que não haverá o uso do mesmo input para finalidades diferentes.
@@ -288,9 +282,7 @@ Todos os métodos "não escolhidos" foram descartados do processo. Essa regra é
 Essa escolha trabalha da seguinte forma:
 
 1. Encontra a propriedade de referência para cada input (`ArgumentRaw`) do mesmo nível. Para isso, seleciona a primeira propriedade válida que tem o primeiro input, depois a segunda propriedade válida que tem o segundo input e assim sucessivamente até que todos os inputs sejam completamente combinados. É possível que apenas uma propriedade de referência tenha mais de um input, é o caso de listas ou `Enums Flags`. Esses tipos terão preferência para serem referências, pois combinam mais de um input. Essa regra não existe para os métodos por que os parâmetros dos melhores métodos já são referências para os demais.
-
 2. Depois de localizar as referências, a segunda etapa é excluir as outras propriedades válidas que não combinam com as referências. Aqui é a mesma regra dos parâmetros dos métodos, ou seja, para combinar as propriedades devem ter os mesmos inputs (`ArgumentRaw`) e com as mesmas sequências. Assim garante que não haverá o uso do mesmo input para finalidades diferentes.
-
 3. Se algum `ArgumentRaw` não for combinado, então todos os argumentos válidos serão eliminados.
 
 **Exemplos:**
@@ -448,7 +440,7 @@ _Explicação:_
     * AllRaw { "B" }
   * Command4.Prop3: Mesmo caso do `Command4.Prop1`
     * AllRaw { "C" }
-  * Command4.Prop4:  Propriedade de referência do input "W" que é a 4 posição, posição que essa propriedade aceita.
+  * Command4.Prop4: Propriedade de referência do input "W" que é a 4 posição, posição que essa propriedade aceita.
     * AllRaw { "W" }
 
 Todos as propriedades "não escolhidas" foram descartados do processo. Essa regra é primordial para que mais de uma propriedade seja chamada no mesmo nível.
@@ -464,7 +456,7 @@ Por fim, uma instância do tipo `SysCommand.Parsing.ParseResult` é retornada co
 
 ### Execução <header-set anchor-name="input-parser-execution" />
 
-A execução só ocorre se todos os níveis tiverem ao menos um `Command` válido. 
+A execução só ocorre se todos os níveis tiverem ao menos um `Command` válido.
 
 Um `Command` é considerado válido quando ele tem ao menos um membro válido (método ou propriedade) e nenhum membro inválido.
 
@@ -487,4 +479,3 @@ Por fim, uma instância do tipo `SysCommand.Execution` é retornada contendo:
 * `Results`: Os resultados de cada membro (métodos ou propriedades)
 * `Errors`: Lista com os erros, caso existam.
 * `State`: Success, HasError, NotFound
-

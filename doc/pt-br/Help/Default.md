@@ -19,7 +19,7 @@ public class Program
         {
             foreach(var map in this.App.Maps)
             {
-                
+
             }
             return "Custom help";
         }

@@ -16,6 +16,7 @@ public string MyActionWithoutPosicional(int arg0, int arg1)
     return "MyActionWithoutPosicional";
 }
 ```
+
 ```
 C:\MyApp.exe my-action-with-posicional --arg0 1 --arg1 2
 MyActionWithPosicional

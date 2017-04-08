@@ -4,11 +4,11 @@ Atualmente existem tres tipos de comandos:
 
 **Comandos de usuário**
 
-São os comandos comuns e que herdam apenas da class `Command`. 
+São os comandos comuns e que herdam apenas da class `Command`.
 
 **Comandos de help**
 
-São os comandos que herdam da classe `Command` e implementam a interface `IHelpCommand`. Contudo, apenas um será utilizado. 
+São os comandos que herdam da classe `Command` e implementam a interface `IHelpCommand`. Contudo, apenas um será utilizado.
 
 **Comandos de debug**
 

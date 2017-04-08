@@ -24,6 +24,7 @@ public class Method1Command : Command
     }
 }
 ```
+
 ```
 C:\MyApp.exe my-action3
 MyAction3

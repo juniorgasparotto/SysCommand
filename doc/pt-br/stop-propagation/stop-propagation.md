@@ -78,5 +78,5 @@ C:\MyApp.exe stop-propagation-action1 --cancel stop-propagation-action2
 StopPropagationCommand1.StopPropagationAction1
 StopPropagationCommand2.StopPropagationAction1
 ```
-Perceba que a execução parou no mesmo ponto.
 
+Perceba que a execução parou no mesmo ponto.

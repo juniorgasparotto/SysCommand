@@ -22,6 +22,7 @@ public class TestProperty3Command : Command
     }
 }
 ```
+
 ```
 C:\MyApp.exe --my-posicional-property1 1 --my-posicional-property2 2
 MyPosicionalProperty1=1

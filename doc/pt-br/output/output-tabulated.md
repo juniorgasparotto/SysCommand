@@ -30,9 +30,14 @@ public class TableCommand : Command
     }
 }
 ```
+
 ######Tests
 
-Input1: ```MyApp.exe my-table```
+Input1:
+
+```
+MyApp.exe my-table
+```
 
 Outputs:
 

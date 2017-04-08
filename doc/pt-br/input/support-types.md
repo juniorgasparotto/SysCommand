@@ -22,7 +22,9 @@ Todos os tipos primitivos do .NET são suportados, incluindo suas versões anul�
 
 **Sintaxe genérica:**
 
-```[action-name ][-|/|--][argument-name][=|:| ][value]```
+```
+[action-name ][-|/|--][argument-name][=|:| ][value]
+```
 
 **Sintaxe para `string`:**
 

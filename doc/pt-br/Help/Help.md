@@ -1,16 +1,20 @@
 # Help <header-set anchor-name="help" />
 
-O formato do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments`  e `Actions`. Ele é gerado de forma automática utilizando os textos de help de cada um desses elementos, por isso é importante manter essas informações preenchidas e atualizadas, isso ajudará você e quem for utilizar sua aplicação. 
+O formato do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments` e `Actions`. Ele é gerado de forma automática utilizando os textos de help de cada um desses elementos, por isso é importante manter essas informações preenchidas e atualizadas, isso ajudará você e quem for utilizar sua aplicação.
 
 No formato padrão, existem duas formas de exibir o help: o `help completo` e o `help por action`:
 
 **Exibe o help para uma ação especifica:**
 
-```MyApp.exe help my-action-name```
+```
+MyApp.exe help my-action-name
+```
 
 **Exibe o help completo:**
 
-```MyApp.exe help```
+```
+MyApp.exe help
+```
 
 Para o help completo, o formato de saída que será exibido será o seguinte:
 
@@ -30,7 +34,7 @@ any action. Every action with the symbol "*" can
 have his name omitted. (F)
 ```
 
-A fonte de cada texto esta em cada elemento `Commands`, `Arguments`  e `Actions` e os textos complementares estão na classe estática `SysCommand.ConsoleApp.Strings`. Segue o mapeamento de cada texto conforme o formato exibido acima:
+A fonte de cada texto esta em cada elemento `Commands`, `Arguments` e `Actions` e os textos complementares estão na classe estática `SysCommand.ConsoleApp.Strings`. Segue o mapeamento de cada texto conforme o formato exibido acima:
 
 * **A:** O texto `usage` é gerado internamente pela classe `DefaultDescriptor` e sempre será exibido.
 * **B:** O texto do `Command` sempre será exibido e a sua fonte vem da propriedade `Command.HelpText` que deve ser definida no construtor do seu comando. Caso você não atribua nenhum valor para essa propriedade, o padrão será exibir o nome do comando.
@@ -93,4 +97,3 @@ Help for this command
       --arg0         Argument help. Is required.
       --arg1         Argument help
 ```
-

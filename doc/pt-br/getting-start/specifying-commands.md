@@ -15,7 +15,7 @@ public class Program
         {
             typeof(FirstCommand)
         };
-        
+
         // Specify what you want.
         new App(commandsTypes).Run(args);
 
@@ -49,7 +49,7 @@ public class Program
 }
 ```
 
-``` 
+```
 MyApp.exe help
 usage:    [--first-property=<phrase>] <actions[args]>
 

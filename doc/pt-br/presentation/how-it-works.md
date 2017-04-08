@@ -2,7 +2,7 @@
 
 Ele funciona como um analisador de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
 
-Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento. 
+Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento.
 
 Outros recursos essênciais como `help`, `verbose`, `tratamento de erros` e outros também são suportados.
 
@@ -45,7 +45,7 @@ namespace Example.Initialization.Simple
 }
 ```
 
-**Testes no prompt de comando:** 
+**Testes no prompt de comando:**
 
 ```
 C:\Users\MyUser> MyApp.exe help
@@ -57,7 +57,6 @@ Main MyProperty='value'
 C:\Users\MyUser> MyApp.exe my-action -a
 MyAction a='True'
 ```
-
 
 **Testes no Visual Studio usando o simulador de console:**
 
@@ -80,21 +79,21 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 **`App`**
 
-É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`. 
+É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
 
 A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <anchor-get name="class-app" /> e <anchor-get name="initializing-by-static-method" />.
 
 **`Command`**
 
- Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
- 
- Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja <anchor-get name="kind-of-commands" /> e <anchor-get name="specifying-commands" />.
+Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
+
+Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja <anchor-get name="kind-of-commands" /> e <anchor-get name="specifying-commands" />.
 
 **`Argument`**
 
 Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-v` e etc. Programaticamente eles são representados pelas _propriedades_ do `Command` e devem ser acompanhados de um método chamado `Main()` (sem parâmetros) para poder interceptar se uma propriedade teve ou não input. O nome "Main" foi escolhido pela similaridade de conceito com o método `Main(string[] args)` do .NET.
 
-Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
+Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`. Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
 Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja <anchor-get name="properties" />, <anchor-get name="properties-ignore-public" />, <anchor-get name="input" /> e <anchor-get name="support-types" />.
 
@@ -310,4 +309,3 @@ Commit
 * Existe também o suporte nativo para gerar o texto de ajuda. Veja <anchor-get name="help" />.
 
 Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa <anchor-get name="documentation" />.
-

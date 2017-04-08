@@ -1,6 +1,6 @@
 ## Parametros optionais <header-set anchor-name="methods-optional-params" />
 
-Os parametros opcionais são uteis para evitar a criação de sobrecargas e no caso de uma aplicação console ajuda a criar `actions` com diversas opções, mas não obrigando o usuário a preencher todas. 
+Os parametros opcionais são uteis para evitar a criação de sobrecargas e no caso de uma aplicação console ajuda a criar `actions` com diversas opções, mas não obrigando o usuário a preencher todas.
 
 Por segurança, ao usar parametros opcionais, obte por utilizar todos os tipos primitivos como `Nullable` para _garantir que o usuário fez o input_. Ou utilize o método `GetAction()` para verificar se o parametro foi mapeado, ou seja, se teve algum tipo de input.
 
@@ -27,6 +27,7 @@ public class Method1Command : Command
     }
 }
 ```
+
 ```
 C:\MyApp.exe my-action2
 MyAction2

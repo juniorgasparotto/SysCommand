@@ -16,7 +16,7 @@ public class Program
     public static void Main(string[] args)
     {
         var app = new App();
-        
+
         app.OnBeforeMemberInvoke += (appResult, memberResult) =>
         {
             app.Console.Write("Before: " + memberResult.Name);
@@ -70,7 +70,7 @@ Count: 2
 Some error!!!
 ```
 
-No exemplo acima o controle passou para quem implementou os eventos e cada um dos eventos foram executados em sua respectiva ordem. 
+No exemplo acima o controle passou para quem implementou os eventos e cada um dos eventos foram executados em sua respectiva ordem.
 
 Por padrão nos inserimos um handler chamado `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` que é responsável pelo mecanismo padrão de `outputs` e controles de `erros`. Esse handler foi o responsável imprimir a linha "Return MyAction" do output acima. Para desliga-lo e ter o controle total dos eventos, basta desabilitar a flag `addDefaultAppHandler = false` no construtor.
 
