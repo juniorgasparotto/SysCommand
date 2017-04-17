@@ -106,13 +106,13 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <error>The anchor 'class-app' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'initializing-by-static-method' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <error>The anchor 'class-app' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'initializing-by-static-method' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
 **`Command`**
 
 Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
 
-Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja <error>The anchor 'kind-of-commands' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'specifying-commands' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja <error>The anchor 'kind-of-commands' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'specifying-commands' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
 **`Argument`**
 
@@ -120,7 +120,7 @@ Os argumentos representam o meio mais básico de uma aplicação console, são o
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`. Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja <error>The anchor 'properties' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'properties-ignore-public' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'input' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'support-types' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja <error>The anchor 'properties' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'properties-ignore-public' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'input' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'support-types' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
 **`Action`**
 
@@ -130,7 +130,7 @@ Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; 
 
 Ainda é possível usar uma `action` omitindo seu nome no input, esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
 
-Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja <error>The anchor 'methods' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'methods-ignore-public' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'methods-default' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja <error>The anchor 'methods' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'methods-ignore-public' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'methods-default' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
 **Exemplo avançado:**
 
@@ -324,16 +324,16 @@ Commit
 
 **Saiba mais...**
 
-* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja <error>The anchor 'properties' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
-* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de <error>The anchor 'support-types' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
-* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja <error>The anchor 'verbose' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
-* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja <error>The anchor 'output' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
-* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja <error>The anchor 'properties-customizing-name' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'methods-customizing-names' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
-* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja <error>The anchor 'methods-overloads' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>
+* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja <error>The anchor 'properties' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de <error>The anchor 'support-types' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja <error>The anchor 'verbose' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja <error>The anchor 'output' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja <error>The anchor 'properties-customizing-name' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'methods-customizing-names' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja <error>The anchor 'methods-overloads' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
 * Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
-* Existe também o suporte nativo para gerar o texto de ajuda. Veja <error>The anchor 'help' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+* Existe também o suporte nativo para gerar o texto de ajuda. Veja <error>The anchor 'help' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
-Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa <error>The anchor 'documentation' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa <error>The anchor 'documentation' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
 ## <a name="what-is-the-purpose" />Qual o objetivo deste projeto?
 

@@ -1,19 +1,18 @@
-# <a name="presentation" />SysCommand
+# <a name="presentation"></a>SysCommand
 
 O `SysCommand` é um poderoso framework, multiplataforma, para o desenvolvimento de aplicações `Console Aplication` usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC.
 
 ## Build Status
 
-**netstandard1.6:** [![Build status](https://ci.appveyor.com/api/projects/status/36vajwj2n93f4u21/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand/branch/master)
-
-**net45+:** [![Build status](https://ci.appveyor.com/api/projects/status/6hb2sox6y6g5pwmt/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand-bg4ki/branch/master)
+| netstandard1.6 | net45+ |
+|----------|:-------------:|
+| [![Build status](https://ci.appveyor.com/api/projects/status/36vajwj2n93f4u21/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand/branch/master) |  [![Build status](https://ci.appveyor.com/api/projects/status/6hb2sox6y6g5pwmt/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand-bg4ki/branch/master) |
 
 ## Canais
 
 * [Reportar um erro](https://github.com/juniorgasparotto/SysCommand/issues/new)
 * [Mandar uma mensagem](https://syscommand.slack.com/)
-
-# <a name="install" />Instalação
+# <a name="install"></a>Instalação
 
 Via [NuGet](https://www.nuget.org/packages/SysCommand/):
 
@@ -23,11 +22,11 @@ Install-Package SysCommand
 
 _Nota: O pacote traz o arquivo `Program.cs.txt` que contém um template bem objetivo. Você pode utiliza-lo trocando seu `Program.cs` por esse arquivo._
 
-## <a name="presentation-how-it-works" />Como funciona?
+## <a name="presentation-how-it-works"></a>Como funciona?
 
 Ele funciona como um analisador de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
 
-Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento.
+Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento. 
 
 Outros recursos essênciais como `help`, `verbose`, `tratamento de erros` e outros também são suportados.
 
@@ -70,7 +69,7 @@ namespace Example.Initialization.Simple
 }
 ```
 
-**Testes no prompt de comando:**
+**Testes no prompt de comando:** 
 
 ```
 C:\Users\MyUser> MyApp.exe help
@@ -82,6 +81,7 @@ Main MyProperty='value'
 C:\Users\MyUser> MyApp.exe my-action -a
 MyAction a='True'
 ```
+
 
 **Testes no Visual Studio usando o simulador de console:**
 
@@ -104,23 +104,23 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 **`App`**
 
-É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
+É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`. 
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <error>The anchor 'class-app' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'initializing-by-static-method' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Iniciando](#class-app) e [Inicializando por método estático com simulador de console](#initializing-by-static-method).
 
 **`Command`**
 
-Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
-
-Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja <error>The anchor 'kind-of-commands' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'specifying-commands' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+ Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
+ 
+ Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja [Tipos de comandos](#kind-of-commands) e [Especificando os tipos de comandos](#specifying-commands).
 
 **`Argument`**
 
 Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-v` e etc. Programaticamente eles são representados pelas _propriedades_ do `Command` e devem ser acompanhados de um método chamado `Main()` (sem parâmetros) para poder interceptar se uma propriedade teve ou não input. O nome "Main" foi escolhido pela similaridade de conceito com o método `Main(string[] args)` do .NET.
 
-Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`. Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
+Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.  Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja <error>The anchor 'properties' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'properties-ignore-public' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'input' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'support-types' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](#properties), [Ignorar propriedades publicas por uma escolha manual usando atributo](#properties-ignore-public), [Input](#input) e [Tipos suportados](#support-types).
 
 **`Action`**
 
@@ -130,7 +130,7 @@ Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; 
 
 Ainda é possível usar uma `action` omitindo seu nome no input, esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
 
-Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja <error>The anchor 'methods' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'methods-ignore-public' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'methods-default' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](#methods), [Ignorar métodos publicos por uma escolha manual usando atributo](#methods-ignore-public) e [Métodos padrão](#methods-default).
 
 **Exemplo avançado:**
 
@@ -324,29 +324,29 @@ Commit
 
 **Saiba mais...**
 
-* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja <error>The anchor 'properties' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
-* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de <error>The anchor 'support-types' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
-* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja <error>The anchor 'verbose' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
-* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja <error>The anchor 'output' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
-* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja <error>The anchor 'properties-customizing-name' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'methods-customizing-names' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
-* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja <error>The anchor 'methods-overloads' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>
+* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](#properties).
+* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](#support-types).
+* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja [Verbose](#verbose).
+* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](#output).
+* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja [Customizando os nomes dos argumentos](#properties-customizing-name) e [Customizando nomes de actions e arguments](#methods-customizing-names).
+* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja [Sobrecargas](#methods-overloads)
 * Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
-* Existe também o suporte nativo para gerar o texto de ajuda. Veja <error>The anchor 'help' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+* Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help](#help).
 
-Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa <error>The anchor 'documentation' doesn't exist for language version en-us: HtmlAgilityPack.HtmlNode</error>.
+Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação](#documentation).
 
-## <a name="what-is-the-purpose" />Qual o objetivo deste projeto?
+## <a name="what-is-the-purpose"></a>Qual o objetivo deste projeto?
 
 O objetivo é ajudar programadores de qualquer linguagem de programação que sofrem na hora de criar uma aplicação console. Muitas vezes desistimos de criar algo pela burocracia do parse e pela dificuldade de manutenção ao ver códigos onde sua lógica de parse está unida com sua lógica de negócios. Se você é como eu que adora criar mini-aplicações para resolver problemas do dia a dia usando consoles, então junte-se a nós!
 
 Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade de conhece-lo. Com o novo .NET (Core Clr) você pode criar softwares em qualquer sistema operacional e somado aos beneficios do `SysCommand` você pode criar sua coleção de aplicativos de console da forma mais fácil possível.
 
-# <a name="install-dlls" />DLLs do pacote
+# <a name="install-dlls"></a>DLLs do pacote
 
 * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
 * Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
 
-## <a name="install-step-a-step" />Passo a passo de como usar
+## <a name="install-step-a-step"></a>Passo a passo de como usar
 
 * Criar seu projeto do tipo `Console Application`
 * Instale o `SysCommand` no seu projeto `Console Application`
