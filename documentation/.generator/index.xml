@@ -1,24 +1,42 @@
 ﻿<documentation url-base="">
-  <page>
+  <page url-base="https://github.com/juniorgasparotto/SysCommand">
     <languages>
       <language name="pt-br" output="readme-pt-br.md" default="true" />
       <language name="en-us" output="readme.md" />
     </languages>
     <content>
+      <a href="https://github.com/juniorgasparotto/SysCommand" rel="Inglês">
+        <img alt="Inglês" src="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/en-us.png" />
+      </a>
+
+      <a href="https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md" rel="Português">
+        <img alt="Português" src="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png" />
+      </a>
+
       <include href="documentation/.generator/pages/presentation/syscommand.md" />
       <include href="documentation/.generator/pages/presentation/install.md" />
       <include href="documentation/.generator/pages/presentation/how-it-works.md" />
       <include href="documentation/.generator/pages/presentation/what-is-the-purpose.md" />
       <include href="documentation/.generator/pages/presentation/dlls.md" />
+      <include href="documentation/.generator/pages/presentation/footer.md" />
+      <include href="documentation/.generator/pages/license.md" />
     </content>
   </page>
 
-  <page>
+  <page url-base="https://github.com/juniorgasparotto/SysCommand/blob/master">
     <languages>
       <language name="pt-br" output="documentation/pt-br.md" default="true" />
       <language name="en-us" output="documentation/en.md" />
     </languages>
     <content>
+      <a href="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md" rel="Inglês">
+        <img alt="Inglês" src="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/en-us.png" />
+      </a>
+
+      <a href="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md" rel="Português">
+        <img alt="Português" src="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png" />
+      </a>
+
       # <anchor-set name="documentation">Documentação</anchor-set>
 
       <table-of-contents/>
@@ -66,7 +84,6 @@
       <include href="documentation/.generator/pages/argument-history-manager/argument-history-manager.md" />
       <include href="documentation/.generator/pages/extras/extras.md" />
       <include href="documentation/.generator/pages/netstandard/netstandard.md" />
-      <include href="documentation/.generator/pages/license.md" />
     </content>
   </page>
 </documentation>

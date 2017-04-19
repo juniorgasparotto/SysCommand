@@ -1,63 +1,69 @@
+[
+![Inglês](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/en-us.png)
+](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md)
+[
+![Português](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png)
+](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md)
+
 # <a name="documentation" />Documentação
 
-* [Iniciando](#class-app)
-  * [Inicializando por método estático com simulador de console](#initializing-by-static-method)
-  * [Especificando os tipos de comandos](#specifying-commands)
-  * [Tipos de comandos](#kind-of-commands)
-  * [Controle de eventos](#events)
-* [Input](#input)
-  * [`Arguments`](#input-arguments)
-    * [Argumento nomeado](#input-named)
-    * [Argumento posicional](#input-positional)
-  * [`Actions`](#input-actions)
-    * [Multi-action](#using-the-multi-action-feature)
-  * [Tipos suportados](#support-types)
-  * [Parser](#input-parser)
-    * [Mapeamento](#input-parser-mapping)
-      * [Retorno](#input-parser-mapping-return)
-    * [Parser simples](#input-parser-simple)
-      * [Retorno](#input-parser-simple-return)
-    * [Parser complexo](#input-parser-complex)
-      * [Escolhendo os melhores métodos](#input-parser-complex-methods)
-      * [Escolhendo as melhores propriedades](#input-parser-complex-properties)
-      * [Retorno](#input-parser-complex-return)
-    * [Execução](#input-parser-execution)
-      * [Retorno](#input-parser-execution-return)
-* [Output](#output)
-  * [Usando template Razor](#output-razor)
-  * [Usando template T4](#output-t4)
-  * [Dados tabelado](#output-tabulated)
-* [Trabalhando com propriedades](#properties)
-  * [Modo de uso 1](#properties-use-mode1)
-  * [Modo de uso 2](#properties-use-mode2)
-  * [Customizando os nomes dos argumentos](#properties-customizing-name)
-  * [Customizando as informações de help](#properties-customizing-help)
-  * [Propriedades obrigatórias](#properties-required)
-  * [Habilitando o input posicional](#properties-positional)
-  * [Ignorar propriedades publicas por uma escolha manual usando atributo](#properties-ignore-public)
-* [Trabalhando com métodos](#methods)
-  * [Métodos sem parametros](#methods-without-params)
-  * [Parametros optionais](#methods-optional-params)
-  * [Sobrecargas](#methods-overloads)
-  * [Usando inputs posicionais](#methods-positional-inputs)
-  * [Ignorar métodos publicos por uma escolha manual usando atributo](#methods-ignore-public)
-  * [Customizando nomes de actions e arguments](#methods-customizing-names)
-  * [Customizando as informações de help de actions e seus parametros](#methods-customizing-help)
-  * [Trocando a posição de parametros posicionais](#methods-changing-position)
-  * [Propriedades do atributos ArgumentAttribute que não são utilizados](#methods-not-used-attrs)
-  * [Métodos padrão](#methods-default)
-* [Help](#help)
-  * [Customizando](#help-default)
-* [Verbose](#verbose)
-* [Tratamento de erros](#error)
-* [Variáveis de contexto](#variable)
-* [Gerênciador de objetos em forma de arquivos](#file-manager)
-* [Redirecionamento de comandos](#redirectiong-commands)
-* [Cancelamento da continuidade da execução](#stop-propagation)
-* [Gerenciamento de históricos de argumentos](#argument-history-manager)
-* [Extras - OptionSet](#extras)
-* [Limitações do NETSTANDARD](#netstandard)
-* [Licença](#license)
+* [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app)
+  * [Inicializando por método estático com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method)
+  * [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands)
+  * [Tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#kind-of-commands)
+  * [Controle de eventos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events)
+* [Input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input)
+  * [`Arguments`](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-arguments)
+    * [Argumento nomeado](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-named)
+    * [Argumento posicional](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-positional)
+  * [`Actions`](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-actions)
+    * [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#using-the-multi-action-feature)
+  * [Tipos suportados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#support-types)
+  * [Parser](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser)
+    * [Mapeamento](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser-mapping)
+      * [Retorno](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser-mapping-return)
+    * [Parser simples](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser-simple)
+      * [Retorno](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser-simple-return)
+    * [Parser complexo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser-complex)
+      * [Escolhendo os melhores métodos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser-complex-methods)
+      * [Escolhendo as melhores propriedades](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser-complex-properties)
+      * [Retorno](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser-complex-return)
+    * [Execução](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser-execution)
+      * [Retorno](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-parser-execution-return)
+* [Output](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#output)
+  * [Usando template Razor](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#output-razor)
+  * [Usando template T4](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#output-t4)
+  * [Dados tabelado](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#output-tabulated)
+* [Trabalhando com propriedades](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties)
+  * [Modo de uso 1](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-use-mode1)
+  * [Modo de uso 2](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-use-mode2)
+  * [Customizando os nomes dos argumentos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-customizing-name)
+  * [Customizando as informações de help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-customizing-help)
+  * [Propriedades obrigatórias](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-required)
+  * [Habilitando o input posicional](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-positional)
+  * [Ignorar propriedades publicas por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-ignore-public)
+* [Trabalhando com métodos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods)
+  * [Métodos sem parametros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-without-params)
+  * [Parametros optionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-optional-params)
+  * [Sobrecargas](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-overloads)
+  * [Usando inputs posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-positional-inputs)
+  * [Ignorar métodos publicos por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-ignore-public)
+  * [Customizando nomes de actions e arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-names)
+  * [Customizando as informações de help de actions e seus parametros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-help)
+  * [Trocando a posição de parametros posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-changing-position)
+  * [Propriedades do atributos ArgumentAttribute que não são utilizados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-not-used-attrs)
+  * [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-default)
+* [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#help)
+  * [Customizando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#help-default)
+* [Verbose](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#verbose)
+* [Tratamento de erros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#error)
+* [Variáveis de contexto](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#variable)
+* [Gerênciador de objetos em forma de arquivos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#file-manager)
+* [Redirecionamento de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#redirectiong-commands)
+* [Cancelamento da continuidade da execução](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#stop-propagation)
+* [Gerenciamento de históricos de argumentos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#argument-history-manager)
+* [Extras - OptionSet](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#extras)
+* [Limitações do NETSTANDARD](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#netstandard)
 
 # <a name="class-app" />Iniciando
 
@@ -75,9 +81,9 @@ public App(
        )
 ```
 
-* `commandsTypes`: Especifica os tipos dos `Command` que serão utilidados em todo o processo. Caso seja `null` então o sistema buscará automaticamente qualquer classe que extenda de `Command`. Entenda melhor em [Especificando os tipos de comandos](#specifying-commands).
-* `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará ligado. Entenda melhor em [Multi-action](#using-the-multi-action-feature).
-* `addDefaultAppHandler`: Caso seja `false` então NÃO cria o handler de eventos que é responsável pelo mecanismo padrão de `outputs` e controles de `erros` e dentre outros. O padrão é `true`. Entenda melhor em [Controle de eventos](#events).
+* `commandsTypes`: Especifica os tipos dos `Command` que serão utilidados em todo o processo. Caso seja `null` então o sistema buscará automaticamente qualquer classe que extenda de `Command`. Entenda melhor em [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands).
+* `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará ligado. Entenda melhor em [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#using-the-multi-action-feature).
+* `addDefaultAppHandler`: Caso seja `false` então NÃO cria o handler de eventos que é responsável pelo mecanismo padrão de `outputs` e controles de `erros` e dentre outros. O padrão é `true`. Entenda melhor em [Controle de eventos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events).
 
 ## <a name="initializing-by-static-method" />Inicializando por método estático com simulador de console
 
@@ -197,7 +203,7 @@ have his name omitted.
 
 Perceba que no help não existe nenhuma ocorrencia da class `SecondCommand`.
 
-Perceba também que existe um help para o próprio mecanismo de help, esse `Command` sempre deverá existir, caso não seja especificado na sua lista de tipos o proprio sistema se encarregará de cria-lo utilizando o help padrão `SysCommand.ConsoleApp.Commands.HelpCommand`. Para mais informações sobre customização de help consulte [Help](#help).
+Perceba também que existe um help para o próprio mecanismo de help, esse `Command` sempre deverá existir, caso não seja especificado na sua lista de tipos o proprio sistema se encarregará de cria-lo utilizando o help padrão `SysCommand.ConsoleApp.Commands.HelpCommand`. Para mais informações sobre customização de help consulte [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#help).
 
 **Exemplo de forma exclusiva:**
 
@@ -462,7 +468,7 @@ MyApp.exe ValueA ValueB ValueC
 _Observações:_
 
 * Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
-* Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](#methods-positional-inputs).
+* Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-positional-inputs).
 
 ## <a name="input-actions" />`Actions`
 
@@ -479,7 +485,7 @@ Programaticamente, as `actions` são derivadas dos `methods`.
 
 ### <a name="using-the-multi-action-feature" />Multi-action
 
-O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](#argument-history-manager) deixará de funcionar caso isso ocorra.
+O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#argument-history-manager) deixará de funcionar caso isso ocorra.
 
 Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de paramentros.
 
@@ -795,7 +801,7 @@ Por fim, uma lista do tipo `IEnumerable<ArgumentRaw>`.
 É a etapa mais longa, onde combina o resultado do mapeamento com o resultado do parser simples. O objetivo é obter as melhores rotas para um mesmo input.
 
 1. A primeira etapa consiste em encontrar os métodos de acordo com o input de entrada. Para isso, será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
-2. A primeira `action` pode ter seu nome omitido, mas para isso ela precisa ser do tipo `Default`. Veja [Métodos padrão](#methods-default). Caso existam, elas só serão utilizadas quando o primeiro `ArgumentRaw` do input não é uma `action`. Nesse cenário todos os métodos `Default` serão escolhidos para a próxima etapa. Daí para frente o processo será o mesmo.
+2. A primeira `action` pode ter seu nome omitido, mas para isso ela precisa ser do tipo `Default`. Veja [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-default). Caso existam, elas só serão utilizadas quando o primeiro `ArgumentRaw` do input não é uma `action`. Nesse cenário todos os métodos `Default` serão escolhidos para a próxima etapa. Daí para frente o processo será o mesmo.
 3. Após encontrar todos os métodos de cada `action` do input, será feito a divisão em níveis. Cada nível será criado da seguinte forma:
   * Se o input iniciar com argumentos então formaram o primeiro nível. Isso se não existir nenhum método `Default`.
   * Caso exista mais de uma `action` no input, incluindo `Defaults`, cada uma representará um novo nível.
@@ -1669,7 +1675,7 @@ Custom help for CustomPropertiesHelpCommand
    --my-property-help2             This is my property 2
 ```
 
-Para mais informações sobre o help veja no tópico [Help](#help).
+Para mais informações sobre o help veja no tópico [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#help).
 
 ## <a name="properties-required" />Propriedades obrigatórias
 
@@ -2145,7 +2151,7 @@ custom-prefix-my-action
 
 Para configurar o texto de help utilize o atributo `ActionAttribute(Help="my help")`. Caso você não informe esse atributo, sua ação ainda será exibido no help, mas sem informações de ajuda.
 
-Para cada paramentro utilizasse o mesmo atributo das propriedades `ArgumentAttribute(Help="")`. O comportamento é exatamente o mesmo. Veja [Customizando as informações de help](#properties-customizing-help).
+Para cada paramentro utilizasse o mesmo atributo das propriedades `ArgumentAttribute(Help="")`. O comportamento é exatamente o mesmo. Veja [Customizando as informações de help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-customizing-help).
 
 **Exemplo:**
 
@@ -2180,7 +2186,7 @@ Help for this command
       --arg1                       Argument help
 ```
 
-Para mais informações sobre o help veja no tópico [Help](#help).
+Para mais informações sobre o help veja no tópico [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#help).
 
 ## <a name="methods-changing-position" />Trocando a posição de parametros posicionais
 
@@ -2448,8 +2454,8 @@ public class Program
 **Observações:**
 
 * O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, o comando `SysCommand.ConsoleApp.Commands.HelpCommand.cs` será adicionado internamente.
-* Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](#properties-customizing-help).
-* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parametros](#methods-customizing-help).
+* Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-customizing-help).
+* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parametros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-help).
 
 # <a name="verbose" />Verbose
 
@@ -2502,7 +2508,7 @@ output of critical
 
 É importante dizer que você pode desligar esse recurso e implementar seu próprio mecanismo de verbose. Para isso você precisa desativar o comando `VerboseCommand` e criar seu próprio conjunto de funções para cada verbo.
 
-* Para desativar o comando `VerboseCommand` utilize a forma exclusiva de especificação de comandos. Veja o tópico [Especificando os tipos de comandos](#specifying-commands).
+* Para desativar o comando `VerboseCommand` utilize a forma exclusiva de especificação de comandos. Veja o tópico [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands).
 
 # <a name="error" />Tratamento de erros
 
@@ -2514,7 +2520,7 @@ O tratamento de erro é gerado de forma automatica pelo sistema e são categoriz
   * `ArgumentParsedState.ArgumentNotExistsByValue`: Indica que um argumento posicional não existe
   * `ArgumentParsedState.ArgumentIsRequired`: Indica que um argumento é obrigatório
   * `ArgumentParsedState.ArgumentHasInvalidInput`: Indica que um argumento esta inválido
-  * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados em [Tipos suportados](#support-types).
+  * `ArgumentParsedState.ArgumentHasUnsupportedType`: Indica que o esta tudo certo com o input, porém o tipo do argumento não tem suporte. Veja a lista de tipos suportados em [Tipos suportados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#support-types).
 * Not Found: Nenhuma rota encontrada para o input solicitado.
 * Exception génerica: Não existe nenhum tipo de tratamento padrão, mas é possível interceptar qualquer exception dentro do evento `App.OnException`.
 
@@ -2949,8 +2955,8 @@ C:\MyApp.exe history-list
 
 Os dois últimos comandos não retornam outpus.
 
-* Para desativar o comando `ArgsHistoryCommand` veja o tópico [Especificando os tipos de comandos](#specifying-commands).
-* A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico [Redirecionamento de comandos](#redirectiong-commands).
+* Para desativar o comando `ArgsHistoryCommand` veja o tópico [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands).
+* A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico [Redirecionamento de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#redirectiong-commands).
 * Esse recurso só vai funcionar se a flag `App.EnableMultiAction` estiver ligada.
 
 # <a name="extras" />Extras - OptionSet
@@ -3057,15 +3063,3 @@ names.Count: 3
 * O nuget package ainda não suporta o arquivo "Program.cs.txt"
 
 **Ficaremos atento com as próximas versões do netstandard, assim que essas APIs ficarem disponíves esses recursos também serão contemplados.**
-
-# <a name="license" />Licença
-
-The MIT License (MIT)
-
-Copyright (c) 2017 Glauber Donizeti Gasparotto Junior
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

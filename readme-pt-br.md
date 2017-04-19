@@ -1,3 +1,10 @@
+[
+![Inglês](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/en-us.png)
+](https://github.com/juniorgasparotto/SysCommand)
+[
+![Português](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png)
+](https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md)
+
 # <a name="presentation" />SysCommand
 
 O `SysCommand` é um poderoso framework, multiplataforma, para o desenvolvimento de aplicações `Console Aplication` usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC.
@@ -106,13 +113,13 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <error>The anchor 'class-app' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'initializing-by-static-method' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#class-app) e [Inicializando por método estático com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method).
 
 **`Command`**
 
 Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
 
-Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja <error>The anchor 'kind-of-commands' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'specifying-commands' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja [Tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#kind-of-commands) e [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#specifying-commands).
 
 **`Argument`**
 
@@ -120,7 +127,7 @@ Os argumentos representam o meio mais básico de uma aplicação console, são o
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`. Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja <error>The anchor 'properties' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'properties-ignore-public' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'input' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'support-types' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties), [Ignorar propriedades publicas por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-ignore-public), [Input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#input) e [Tipos suportados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#support-types).
 
 **`Action`**
 
@@ -130,7 +137,7 @@ Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; 
 
 Ainda é possível usar uma `action` omitindo seu nome no input, esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
 
-Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja <error>The anchor 'methods' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>, <error>The anchor 'methods-ignore-public' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'methods-default' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods), [Ignorar métodos publicos por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-ignore-public) e [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-default).
 
 **Exemplo avançado:**
 
@@ -324,16 +331,16 @@ Commit
 
 **Saiba mais...**
 
-* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja <error>The anchor 'properties' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
-* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de <error>The anchor 'support-types' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
-* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja <error>The anchor 'verbose' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
-* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja <error>The anchor 'output' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
-* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja <error>The anchor 'properties-customizing-name' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> e <error>The anchor 'methods-customizing-names' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
-* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja <error>The anchor 'methods-overloads' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties).
+* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#support-types).
+* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja [Verbose](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#verbose).
+* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#output).
+* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja [Customizando os nomes dos argumentos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-customizing-name) e [Customizando nomes de actions e arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-names).
+* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja [Sobrecargas](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-overloads)
 * Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
-* Existe também o suporte nativo para gerar o texto de ajuda. Veja <error>The anchor 'help' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+* Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#help).
 
-Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa <error>The anchor 'documentation' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#documentation).
 
 ## <a name="what-is-the-purpose" />Qual o objetivo deste projeto?
 
@@ -357,3 +364,19 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros optionais deixe-os como `Nullable` pela mesma razão acima.
 * Digite `help` no prompt de comando que abrirá para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
 * Agora é só usar!
+
+# Documentação
+
+Veja a documentação completa [clicando aqui](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#documentation)
+
+# <a name="license" />Licença
+
+The MIT License (MIT)
+
+Copyright (c) 2017 Glauber Donizeti Gasparotto Junior
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
