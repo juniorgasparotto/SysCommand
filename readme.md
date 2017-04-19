@@ -7,12 +7,12 @@
 
 # <a name="presentation" />SysCommand
 
-O `SysCommand` é um poderoso framework, multiplataforma, para o desenvolvimento de aplicações `Console Aplication` usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC.
+The `SysCommand` is a powerful cross-platform framework for `Console Aplication` application development using .NET. Is simple, type-safe, and with great influences of the MVC pattern.
 
 ## Build Status
 
 <table>
-    <tr><th>netstandard1.6</th><th>net45+</th></tr>
+    <tr><th>netstandard 1.6</th> <th>net45 +</th></tr>
     <tr>
         <td>
 
@@ -26,12 +26,12 @@ O `SysCommand` é um poderoso framework, multiplataforma, para o desenvolvimento
 
 </table>
 
-## Canais
+## Channels
 
-* [Reportar um erro](https://github.com/juniorgasparotto/SysCommand/issues/new)
-* [Mandar uma mensagem](https://syscommand.slack.com/)
+* [Report an error](https://github.com/juniorgasparotto/SysCommand/issues/new)
+* [Send a message](https://syscommand.slack.com/)
 
-# <a name="install" />Instalação
+# <a name="install" />Installation
 
 Via [NuGet](https://www.nuget.org/packages/SysCommand/):
 
@@ -39,17 +39,17 @@ Via [NuGet](https://www.nuget.org/packages/SysCommand/):
 Install-Package SysCommand
 ```
 
-_Nota: O pacote traz o arquivo `Program.cs.txt` que contém um template bem objetivo. Você pode utiliza-lo trocando seu `Program.cs` por esse arquivo._
+_Note: the package brings the `Program.cs.txt` file that contains a template well goal. You can use it by changing your `Program.cs` for this file._
 
-## <a name="presentation-how-it-works" />Como funciona?
+## <a name="presentation-how-it-works" />How does it work?
 
-Ele funciona como um analisador de linhas de comando automático onde todas as tarefas de parse ficam por conta do framework, deixando o programador focado nas regras de negócios de sua aplicação.
+It works as an automatic command line parser where all parse tasks are the framework, leaving the programmer focused on business rules of your application.
 
-Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento.
+In addition, he has a feature to simulate a command prompt within the own Visual Studio, eliminating the need to test your application outside of the development environment.
 
-Outros recursos essênciais como `help`, `verbose`, `tratamento de erros` e outros também são suportados.
+Other essential resources as `help` , `verbose` , `tratamento de erros` and others are also supported.
 
-**Exemplo simples:**
+**Simple example:**
 
 ```csharp
 namespace Example.Initialization.Simple
@@ -88,7 +88,7 @@ namespace Example.Initialization.Simple
 }
 ```
 
-**Testes no prompt de comando:**
+**Tests at the command prompt:**
 
 ```
 C:\Users\MyUser> MyApp.exe help
@@ -101,7 +101,7 @@ C:\Users\MyUser> MyApp.exe my-action -a
 MyAction a='True'
 ```
 
-**Testes no Visual Studio usando o simulador de console:**
+**Tests in Visual Studio using the Simulator from console:**
 
 ```
 cmd> help
@@ -114,43 +114,43 @@ cmd> my-action -a
 MyAction a='True'
 ```
 
-**_Note que não existe nenhum código de parse, seu código está limpo e pronto para receber comandos._**
+**_Note that there is no parse code, your code is clean and ready to receive commands._**
 
-### Entenda melhor...
+### Understand better ...
 
-Tecnicamente, existem quatro entidades de domínio que são a base do framework:
+Technically, there are four entities that are the basis of the framework:
 
 **`App`**
 
-É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
+Is the application context, where a `App` contains several `Commands` . Is represented by the class `SysCommand.ConsoleApp.App` and must be the first entity to be configured in your `Main(string[] args)` method.
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app) e [Inicializando por método estático com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method).
+The application context initialization can be done in two ways, by an instance of the class `App` or through the static method `App.RunApplication` that provides a very interressant feature of `simulação de console` helping you test inputs within the Visual Studio itself, without the need to perform your ".exe" in an external console, just press the _Play_. Veja [Starting](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app) e [Initializing for static method to the console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method).
 
 **`Command`**
 
-Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
+The commands represent a grouping of features the same business context, similar to _MVC Controllers_. Programmatically they are represented by classes that inherit from `SysCommand.ConsoleApp.Command` . Each `Command` instance will have access to the current context by the property `this.App` .
 
-Por padrão, o sistema buscará automaticamente qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao. Veja [Tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#kind-of-commands) e [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands).
+By default, the system will try to automatically any class that extend to `Command` , therefore it is not necessary to specify them in the boot record. Veja [Types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#kind-of-commands) e [Specifying the types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands).
 
 **`Argument`**
 
-Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-v` e etc. Programaticamente eles são representados pelas _propriedades_ do `Command` e devem ser acompanhados de um método chamado `Main()` (sem parâmetros) para poder interceptar se uma propriedade teve ou não input. O nome "Main" foi escolhido pela similaridade de conceito com o método `Main(string[] args)` do .NET.
+The arguments represent the most basic of a console application, are known `--argument-name value` , `-v` and etc. Programmatically they are represented by _Properties_ of `Command` and shall be accompanied by a method called `Main()` (without parameters) to be able to intercept if a property had or no input. The name "Main" was chosen by the similarity of concept with the method `Main(string[] args)` .
 
-Do lado do usuário, nenhuma sintaxe especial foi criada, todo o padrão já conhecido foi respeitado, ou seja, os argumentos longos são acessados com o prefixo `--` acompanhado do nome do argumento e os curtos com um traço `-` ou uma barra `/` acompanhado de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`. Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
+User-side, no special syntax was created, all the known standard has been complied with, that is, the long arguments are accessed with the prefix `--` with the name of the argument and short with a dash `-` or a `/` bar accompanied by only one character. The values of the arguments must be in front of the argument name separated by a space ` ` or by `:` characters or `=` . Positional inputs are also supported, allowing the omission of the name of the argument.
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties), [Ignorar propriedades publicas por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-ignore-public), [Input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input) e [Tipos suportados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#support-types).
+By default, all public properties of your `Command` are enabled to be `arguments` . Veja [Working with properties](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties), [Ignore public manual choice properties using attribute](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-ignore-public), [Input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input) e [Supported types](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#support-types).
 
 **`Action`**
 
-Representam ações iguais as _Actions dos Controllers do MVC_. Programaticamente representam os _métodos_ do `Command` e seus parâmetros (se existir) serão convertidos em `arguments` que só serão acessados quando acompanhados do nome da `actions`.
+Represent the same actions the _Actions of MVC Controllers_. Programmatically represent the _methods_ of `Command` and its parameters (if any) shall be converted into `arguments` that will only be accessed when accompanied by `actions` name.
 
-Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`.
+Its use is similar to the way we use `git` resources like: `git add -A` ; `git commit -m "comments"` , where `add` and `commit` would be the name of `actions` `-A` `-m` their respective and and `arguments` .
 
-Ainda é possível usar uma `action` omitindo seu nome no input, esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
+It is still possible to use a `action` name in your input, omitting this feature we call `Métodos Padrão` and looks very similar to the use of properties.
 
-Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods), [Ignorar métodos publicos por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-ignore-public) e [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-default).
+By default, all public methods of your `Command` are enabled to be `actions` . Veja [Working with methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods), [Ignore public methods by a manual choice using attribute](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-ignore-public) e [Standard methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-default).
 
-**Exemplo avançado:**
+**Advanced example:**
 
 ```csharp
 namespace Example.Initialization.Advanced
@@ -254,14 +254,14 @@ namespace Example.Initialization.Advanced
 }
 ```
 
-_Input para exibir o help automático:_
+_Input to display the help:_
 
 ```
 cmd> help
 ... show help here ...
 ```
 
-_Inputs similares ao uso do git:_
+_Inputs similar to using git:_
 
 ```
 cmd> add --all
@@ -271,7 +271,7 @@ cmd> commit -m "comments"
 Commit
 ```
 
-_Inputs com os 3 tipos de separadores de valor:_
+_Inputs with 3 kinds of value separators:_
 
 ```
 cmd> --my-property value
@@ -287,7 +287,7 @@ Main MyPropertyDecimal='123'
 Return methods can also be used as output
 ```
 
-_Inputs com os 2 tipos de delimitador de argumentos na forma curta:_
+_Inputs with 2 enclosing types of arguments in short form:_
 
 ```
 cmd> -p 123
@@ -299,7 +299,7 @@ Main MyPropertyDecimal='123'
 Return methods can also be used as output
 ```
 
-_Inputs com as 2 sobrecargas do método MyAction:_
+_Inputs with 2 method overloads: MyAction_
 
 ```
 cmd> my-action -p value
@@ -309,7 +309,7 @@ cmd> my-action -p value --p2
 MyAction p='value'; p2='True'
 ```
 
-_Inputs posicionais:_
+_Positional inputs:_
 
 ```
 cmd> my-action positional-value
@@ -319,7 +319,7 @@ cmd> my-action positional-value false
 MyAction p='positional-value'; p2='False'
 ```
 
-_Inputs com parâmetros opcionais:_
+_Inputs with optional parameters:_
 
 ```
 cmd> custom-action
@@ -329,7 +329,7 @@ cmd> custom-action -o
 MyCustomAction optionalParameter='True'
 ```
 
-_Input com argumentos de diferentes comandos e com o argumento de --verbose para permitir mostrar Erros:_
+_Input with different commands and arguments with the--verbose argument to enable show errors:_
 
 ```
 cmd> commit -m "my commit" --my-property=value --custom-property:123 --verbose Error
@@ -340,54 +340,54 @@ Commit error
 Commit
 ```
 
-**Saiba mais...**
+**Learn more ...**
 
-* Note que os tipos primitivos de cada propriedade estão como `Nullable`, isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties).
-* Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#support-types).
-* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja [Verbose](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#verbose).
-* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#output).
-* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda, obrigatóriedade e dentro outros. Veja [Customizando os nomes dos argumentos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-customizing-name) e [Customizando nomes de actions e arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-names).
-* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em C#. Veja [Sobrecargas](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-overloads)
-* Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
-* Existe também o suporte nativo para gerar o texto de ajuda. Veja [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#help).
+* Note, the primitive types for each property are like `Nullable` , it's important to be able to identify that the user has the input of a given property. See [Working with properties](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties).
+* All primitive types of .NET, Enums, Enums and Flags Collections are supported. See the [Supported types](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#support-types)topic.
+* Use `App.Console.Write()` , `App.Console.Error()` (among others) to print their outputs and enjoy features like the `verbose` . See [Verbose](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#verbose).
+* You can use the return of methods like `output` , including the reserved method `Main()` . Or use `void` If you do not want to use this feature. See [Output](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#output).
+* If you want, customize your `arguments` or `actions` using the attributes `ArgumentAttribute` and `ActionAttribute` . You can customize several attributes such as names, help text, and obrigatóriedade in others. Veja [Customizing the names of the arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-customizing-name) e [Customizing the names of actions and arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-names).
+* You can use methods with the same name (overloads) to define different `actions` . They can be invoked from the command prompt with the same name, but the arguments define which method to invoke, the same occurs in c #. See[Overloads](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-overloads)
+* Choose to use the `int Program.Main(string[] args)` return method, so you can return the status code for the console. (ERROR = 1 or SUCCESS = 0).
+* There is also native support to generate help text. See [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#help).
 
-Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa [Documentação](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#documentation).
+This was just a summary, for more on this see our project [Documentation](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#documentation).
 
-## <a name="what-is-the-purpose" />Qual o objetivo deste projeto?
+## <a name="what-is-the-purpose" />What is the purpose of this project?
 
-O objetivo é ajudar programadores de qualquer linguagem de programação que sofrem na hora de criar uma aplicação console. Muitas vezes desistimos de criar algo pela burocracia do parse e pela dificuldade de manutenção ao ver códigos onde sua lógica de parse está unida com sua lógica de negócios. Se você é como eu que adora criar mini-aplicações para resolver problemas do dia a dia usando consoles, então junte-se a nós!
+The goal is to help developers in any programming language that suffer in time of creating a console application. Many times we give up to create something by the bureaucracy of the parse and difficulty of maintenance to see where your code logic to parse is United with your business logic. If you are like me who loves to create gadgets to solve everyday problems using consoles, so join us!
 
-Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade de conhece-lo. Com o novo .NET (Core Clr) você pode criar softwares em qualquer sistema operacional e somado aos beneficios do `SysCommand` você pode criar sua coleção de aplicativos de console da forma mais fácil possível.
+If you have never worked with .NET, maybe this is an excellent opportunity to meet him. With the new .NET (Core Clr) you can create on any operating system and software added to the benefits of `SysCommand` you can create your collection of console applications as easy as possible.
 
-# <a name="install-dlls" />DLLs do pacote
+# <a name="install-dlls" />Package DLLs
 
-* `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Tudo foi pensado para que o padrão MVC fosse o mais natural possível.
-* Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessárias para ajudar em alguns recursos que serão explicados mais adiante na documentação.
+* `SysCommand.dll`: Contains all the logic to parse and execute command lines. Everything has been thought of for the MVC pattern was as natural as possible.
+* Dependencies `NewtonSoft.Json` and `System.Web.Razor` dependencies needed to help: in some features that will be explained later in the documentation.
 
-## <a name="install-step-a-step" />Passo a passo de como usar
+## <a name="install-step-a-step" />Step by step how to use
 
-* Criar seu projeto do tipo `Console Application`
-* Instale o `SysCommand` no seu projeto `Console Application`
-* Na primeira linha de seu método `public int Program.Main(string[] args)` adicione o código `return App.RunApplication()`.
-* Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
-* Criar suas propriedades com seus tipos `Nullable` e deixe-as como publicas. Elas se tornarão `arguments` no prompt de comando.
-* Crie um método `Main()` sem parametros em sua classe para poder interceptar os inputs de suas propriedades. Utilize `Property != null` para identificar que a propriedade foi inputada.
-* Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros optionais deixe-os como `Nullable` pela mesma razão acima.
-* Digite `help` no prompt de comando que abrirá para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
-* Agora é só usar!
+* Create your project`Console Application`
+* Install `SysCommand` in your project`Console Application`
+* In the first line of your `public int Program.Main(string[] args)` method add code `return App.RunApplication()` .
+* Create a class, anywhere, that inherits from `SysCommand.ConsoleApp.Command` .
+* Create their properties with their types `Nullable` and let them as public. They will become `arguments` at the command prompt.
+* Create a method `Main()` without parameters in your class to be able to intercept the inputs of its properties. Use `Property != null` to identify the property was inputada.
+* Create public methods, with or without parameters, so they become `actions` . If you let the optionais parameters as `Nullable` for the same reason above.
+* Type `help` in the command prompt that opens so you can view its properties and methods in `arguments` and converted `actions` .
+* Now just use!
 
-# Documentação
+# Documentation
 
-Veja a documentação completa [clicando aqui](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#documentation)
+See the full documentation [by clicking here](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#documentation)
 
-# <a name="license" />Licença
+# <a name="license" />License
 
 The MIT License (MIT)
 
 Copyright (c) 2017 Glauber Donizeti Gasparotto Junior
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so , subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN THE EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
