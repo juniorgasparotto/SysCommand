@@ -4,7 +4,6 @@
 [
 ![Português](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png)
 ](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md)
-* * *
 
 # <a name="documentation" />Documentation
 
@@ -3068,3 +3067,5 @@ names.Count: 3
 * * *
 
 <sub>This text was translated by a machine</sub>
+
+https://github.com/juniorgasparotto/MarkdownGenerator
