@@ -3,9 +3,7 @@
 ](https://github.com/juniorgasparotto/SysCommand)
 [
 ![Português](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png)
-](https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md)
-
-<sub>This text was translated by a machine</sub>
+](https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md) <sub>This text was translated by a machine</sub>
 
 # <a name="presentation" />SysCommand
 
