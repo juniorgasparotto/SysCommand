@@ -7,7 +7,7 @@ O `SysCommand` é um poderoso framework, multiplataforma, para o desenvolvimento
  
 
 <table>
-    <tr><th>**netstandard1.6**</th><th>**net45+**</th></tr>
+    <tr><th>netstandard1.6</th><th>net45+</th></tr>
     <tr>
         <td>
 
