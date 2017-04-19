@@ -29,6 +29,7 @@
         <language name="en-us">
           ---
           <sub>This text was translated by a machine</sub>
+          <sub>See: https://github.com/juniorgasparotto/MarkdownGenerator</sub>
         </language>
       </custom-translation>
     </content>
@@ -104,6 +105,7 @@
         <language name="en-us">
           ---
           <sub>This text was translated by a machine</sub>
+          <sub>See: https://github.com/juniorgasparotto/MarkdownGenerator</sub>
         </language>
       </custom-translation>
     </content>
