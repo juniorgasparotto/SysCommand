@@ -12,17 +12,7 @@
       <a href="https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md" rel="Português">
         <img alt="Português" src="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png" />
       </a>
-
-      <custom-translation>
-        <default>
-          
-        </default>
-
-        <language name="en-us">
-          <sub>This text was translated by a machine</sub>
-        </language>
-      </custom-translation>
-
+      
       <include href="documentation/.generator/pages/presentation/syscommand.md" />
       <include href="documentation/.generator/pages/presentation/install.md" />
       <include href="documentation/.generator/pages/presentation/how-it-works.md" />
@@ -30,6 +20,16 @@
       <include href="documentation/.generator/pages/presentation/dlls.md" />
       <include href="documentation/.generator/pages/presentation/footer.md" />
       <include href="documentation/.generator/pages/license.md" />
+      
+      <custom-translation>
+        <default>
+          
+        </default>
+
+        <language name="en-us">
+          <span style="color:red"><sub>This text was translated by a machine</sub></span>
+        </language>
+      </custom-translation>
     </content>
   </page>
 
@@ -94,6 +94,16 @@
       <include href="documentation/.generator/pages/argument-history-manager/argument-history-manager.md" />
       <include href="documentation/.generator/pages/extras/extras.md" />
       <include href="documentation/.generator/pages/netstandard/netstandard.md" />
+
+      <custom-translation>
+        <default>
+          
+        </default>
+
+        <language name="en-us">
+          <span style="color:red"><sub>This text was translated by a machine</sub></span>
+        </language>
+      </custom-translation>
     </content>
   </page>
 </documentation>

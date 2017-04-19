@@ -3063,3 +3063,5 @@ names.Count: 3
 * The nuget package does not yet support the file "Program.cs.txt"
 
 **We're going to stay tuned with the upcoming releases of netstandard, so these APIs stay available these resources will also be covered.**
+
+<span style="color:red"><sub>This text was translated by a machine</sub></span>
