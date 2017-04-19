@@ -5,6 +5,8 @@
 ![Português](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png)
 ](https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md)
 
+<sub>This text was translated by a machine</sub>
+
 # <a name="presentation" />SysCommand
 
 The `SysCommand` is a powerful cross-platform framework for `Console Aplication` application development using .NET. Is simple, type-safe, and with great influences of the MVC pattern.
