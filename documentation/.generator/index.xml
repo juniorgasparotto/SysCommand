@@ -12,7 +12,7 @@
       <a href="https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md" rel="Português">
         <img alt="Português" src="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png" />
       </a>
-      
+
       <include href="documentation/.generator/pages/presentation/syscommand.md" />
       <include href="documentation/.generator/pages/presentation/install.md" />
       <include href="documentation/.generator/pages/presentation/how-it-works.md" />
@@ -27,7 +27,8 @@
         </default>
 
         <language name="en-us">
-          <span style="color:red"><sub>This text was translated by a machine</sub></span>
+          ---
+          <sub>This text was translated by a machine</sub>
         </language>
       </custom-translation>
     </content>
@@ -101,7 +102,8 @@
         </default>
 
         <language name="en-us">
-          <span style="color:red"><sub>This text was translated by a machine</sub></span>
+          ---
+          <sub>This text was translated by a machine</sub>
         </language>
       </custom-translation>
     </content>
