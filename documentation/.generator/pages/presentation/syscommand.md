@@ -4,15 +4,16 @@ O `SysCommand` é um poderoso framework, multiplataforma, para o desenvolvimento
 
 ## Build Status
 
-**netstandard1.6** 
+ 
 
 <table>
+    <tr><th>**netstandard1.6**</th><th>**net45+**</th></tr>
     <tr>
         <td>
+
 [![Build status](https://ci.appveyor.com/api/projects/status/36vajwj2n93f4u21/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand/branch/master)
         </td>
         <td>
-**net45+** 
 
 [![Build status](https://ci.appveyor.com/api/projects/status/6hb2sox6y6g5pwmt/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand-bg4ki/branch/master)
         </td>
