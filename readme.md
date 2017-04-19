@@ -1,6 +1,6 @@
 [
 ![Inglês](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/en-us.png)
-](https://github.com/juniorgasparotto/SysCommand/readme.md)
+](https://github.com/juniorgasparotto/SysCommand)
 [
 ![Português](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png)
 ](https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md)
