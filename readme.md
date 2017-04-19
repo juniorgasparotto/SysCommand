@@ -395,4 +395,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 * * *
 
 <sub>This text was translated by a machine</sub>
+
 <sub>See: https://github.com/juniorgasparotto/MarkdownGenerator</sub>
