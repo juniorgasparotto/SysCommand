@@ -1,1 +1,1 @@
-MarkdownMerge\MarkdownMerge.exe -i ..\pt-br\.index\index-presentation.md ..\pt-br\.index\index-doc.md  -o ..\..\README.md
+MarkdownGenerator.exe %2 main "documentation/.generator/index.xml" "../../../" %1 --verbose error
