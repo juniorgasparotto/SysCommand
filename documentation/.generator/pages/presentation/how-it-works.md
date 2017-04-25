@@ -81,7 +81,7 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de simulação de console que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <anchor-get name="class-app" /> e <anchor-get name="initializing-by-static-method" />.
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que fornece um recurso de simulação de console que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <anchor-get name="class-app" /> e <anchor-get name="initializing-by-static-method" />.
 
 **`Command`**
 
@@ -103,7 +103,7 @@ Representam ações iguais as _Actions dos Controllers do MVC_. Programaticament
 
 Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das ações e `-A`, `-m` seus respectivos argumentos.
 
-Ainda é possível usar uma ação omitindo seu nome no input. Esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
+Ainda é possível omitir o nome da ação no input do usuário. Esse recurso é chamado de `Método Padrão` e se assemelha muito com o uso de propriedades.
 
 Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja <anchor-get name="methods" />, <anchor-get name="methods-ignore-public" /> e <anchor-get name="methods-default" />.
 
