@@ -1,4 +1,4 @@
-## Inicializando por método estático com simulador de console <header-set anchor-name="initializing-by-static-method" />
+## Inicializando com simulador de console <header-set anchor-name="initializing-by-static-method" />
 
 O método estático `App.RunApplication` disponibiliza um recurso muito interressante de `simulação de console` que ajuda você a testar seus inputs dentro do próprio Visual Studio sem a necessidade de executar seu ".exe" em um console externo ou via "Command Line Arguments". É importante ressaltar que esse simulador só será exibido dentro do Visual Studio, quando executar seu aplicativo final em outro console o comportamento será o mesmo do modo por instancia.
 

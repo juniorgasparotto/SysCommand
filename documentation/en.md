@@ -8,7 +8,7 @@
 # <a name="documentation" />Documentation
 
 * [Starting](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app)
-  * [Initializing for static method to the console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method)
+  * [Booting with console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method)
   * [Specifying the types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands)
   * [Types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#kind-of-commands)
   * [Event control](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events)
@@ -41,7 +41,7 @@
   * [Customizing the help information](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-customizing-help)
   * [Mandatory properties](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-required)
   * [Enabling the positional input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-positional)
-  * [Ignore public manual choice properties using attribute](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-ignore-public)
+  * [Manual choice of properties via attribute](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-ignore-public)
 * [Working with methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods)
   * [Methods without parameters](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-without-params)
   * [Optionais parameters](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-optional-params)
@@ -85,7 +85,7 @@ public App(
 * `enableMultiAction`: Turns the `MultiAction` behavior. By default, this behavior will be connected. Understand better in [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#using-the-multi-action-feature).
 * `addDefaultAppHandler`: If `false` so does not create the event handler that is responsible for the `outputs` standard engine and `erros` controls, and among others. The default is `true` . Understand better in [Event control](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events).
 
-## <a name="initializing-by-static-method" />Initializing for static method to the console Simulator
+## <a name="initializing-by-static-method" />Booting with console Simulator
 
 The static method `App.RunApplication` provides a very interressant feature of `simulação de console` that helps you test your inputs inside the Visual Studio without having to run your ".exe" in an external console or via "Command Line Arguments". It is important to note that this Simulator will only be displayed within Visual Studio, when you run your final application on another console the behavior will be the same way for instance.
 
@@ -1783,7 +1783,7 @@ MyPosicionalProperty1=2
 MyPosicionalProperty2=1
 ```
 
-## <a name="properties-ignore-public" />Ignore public manual choice properties using attribute
+## <a name="properties-ignore-public" />Manual choice of properties via attribute
 
 To change the default behavior of public properties, you need to just turn off the flag `OnlyPropertiesWithAttribute` of `Command` . With her off the parser will no longer look to the public properties and uses only the public properties and that have the `ArgumentAtrribute` attribute.
 

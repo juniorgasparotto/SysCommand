@@ -8,7 +8,7 @@
 # <a name="documentation" />Documentação
 
 * [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#class-app)
-  * [Inicializando por método estático com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method)
+  * [Inicializando com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method)
   * [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#specifying-commands)
   * [Tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#kind-of-commands)
   * [Controle de eventos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#events)
@@ -41,7 +41,7 @@
   * [Customizando as informações de help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-customizing-help)
   * [Propriedades obrigatórias](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-required)
   * [Habilitando o input posicional](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-positional)
-  * [Ignorar propriedades publicas por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-ignore-public)
+  * [Escolha manual de propriedades via atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-ignore-public)
 * [Trabalhando com métodos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods)
   * [Métodos sem parametros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-without-params)
   * [Parametros optionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-optional-params)
@@ -85,7 +85,7 @@ public App(
 * `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará ligado. Entenda melhor em [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#using-the-multi-action-feature).
 * `addDefaultAppHandler`: Caso seja `false` então NÃO cria o handler de eventos que é responsável pelo mecanismo padrão de `outputs` e controles de `erros` e dentre outros. O padrão é `true`. Entenda melhor em [Controle de eventos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#events).
 
-## <a name="initializing-by-static-method" />Inicializando por método estático com simulador de console
+## <a name="initializing-by-static-method" />Inicializando com simulador de console
 
 O método estático `App.RunApplication` disponibiliza um recurso muito interressante de `simulação de console` que ajuda você a testar seus inputs dentro do próprio Visual Studio sem a necessidade de executar seu ".exe" em um console externo ou via "Command Line Arguments". É importante ressaltar que esse simulador só será exibido dentro do Visual Studio, quando executar seu aplicativo final em outro console o comportamento será o mesmo do modo por instancia.
 
@@ -1783,7 +1783,7 @@ MyPosicionalProperty1=2
 MyPosicionalProperty2=1
 ```
 
-## <a name="properties-ignore-public" />Ignorar propriedades publicas por uma escolha manual usando atributo
+## <a name="properties-ignore-public" />Escolha manual de propriedades via atributo
 
 Para mudar o comportamente padrão de propriedades publicas, você precisa apenas desligar a flag `OnlyPropertiesWithAttribute` do `Command`. Com ela desligada o parseador deixará de olhar para as propriedades publicas e usará apenas as propriedades publicas e que tiverem o atributo `ArgumentAtrribute`.
 

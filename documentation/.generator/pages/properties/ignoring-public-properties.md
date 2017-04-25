@@ -1,4 +1,4 @@
-## Ignorar propriedades publicas por uma escolha manual usando atributo <header-set anchor-name="properties-ignore-public" />
+## Escolha manual de propriedades via atributo <header-set anchor-name="properties-ignore-public" />
 
 Para mudar o comportamente padrão de propriedades publicas, você precisa apenas desligar a flag `OnlyPropertiesWithAttribute` do `Command`. Com ela desligada o parseador deixará de olhar para as propriedades publicas e usará apenas as propriedades publicas e que tiverem o atributo `ArgumentAtrribute`.
 
