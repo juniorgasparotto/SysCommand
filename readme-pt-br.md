@@ -378,7 +378,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 
 # Documentação
 
-Veja a documentação completa [clicando aqui](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#documentation)
+Veja a documentação completa clicando [aqui](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#documentation)
 
 # <a name="license" />Licença
 

@@ -378,7 +378,7 @@ If you have never worked with .NET, maybe this is an excellent opportunity to me
 
 # Documentation
 
-See the full documentation [by clicking here](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#documentation)
+See the full documentation by clicking [here](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#documentation)
 
 # <a name="license" />License
 
