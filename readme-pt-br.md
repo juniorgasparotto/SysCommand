@@ -7,7 +7,7 @@
 
 # <a name="presentation" />SysCommand
 
-O `SysCommand` é um poderoso framework, multiplataforma, para desenvolver aplicações consoles usando .NET. É simples, fortemente tipado e com grandes influências do padrão MVC.
+O `SysCommand` é um poderoso framework, multiplataforma, para desenvolver `Console Applications` em .NET. É simples, fortemente tipado e com grandes influências do padrão MVC.
 
 ## Build Status
 

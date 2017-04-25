@@ -7,7 +7,7 @@
 
 # <a name="presentation" />SysCommand
 
-The `SysCommand` is a powerful cross-platform framework to develop applications using .NET consoles. Is simple, type-safe, and with great influences of the MVC pattern.
+The `SysCommand` is a powerful cross-platform framework, to develop `Console Applications` in .NET. Is simple, type-safe, and with great influences of the MVC pattern.
 
 ## Build Status
 
