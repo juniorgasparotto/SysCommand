@@ -43,7 +43,7 @@ _Nota: O pacote traz o arquivo `Program.cs.txt` que contém um template básico.
 
 ## <a name="presentation-how-it-works" />Como funciona?
 
-Ele funciona como um analisador de linhas de comando automático, deixando o programador focado nas regras de negócios de sua aplicação.
+Ele funciona como um analisador automatizado de linha de comando, permitindo que o programador se concentre nas regras de negócios de sua aplicação.
 
 Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento.
 
@@ -124,7 +124,7 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de "simulação de console" que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#class-app) e [Inicializando com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method).
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de simulação de console que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#class-app) e [Inicializando com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method).
 
 **`Command`**
 
@@ -136,7 +136,7 @@ Por padrão, o sistema tenta encontrar, de forma automática, qualquer classe qu
 
 Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-v` e etc. Programaticamente eles são representados pelas _propriedades_ do `Command` e devem ser acompanhados de um método chamado `Main()` (sem parâmetros) para poder interceptar se uma propriedade foi ou não utilizada. O nome `Main` foi escolhido pela similaridade de conceito com o método `Main(string[] args)` do .NET.
 
-Do lado do usuário, nenhuma sintaxe especial foi criada, os padrões mais conhecidos foram implementados, ou seja, os argumentos longos são acessados com o prefixo `--` e acompanhados do nome do argumento. Os argumentos curtos são acessados com um traço `-` ou uma barra `/` e são acompanhados de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`. Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
+Do lado do usuário, nenhuma sintaxe especial foi criada, os padrões mais conhecidos foram implementados. Os argumentos longos são acessados com o prefixo `--` e são acompanhados do nome do argumento. Os argumentos curtos são acessados com um traço `-` ou uma barra `/` e são acompanhados de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou `:` ou `=`. Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
 Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja [Trabalhando com propriedades](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties), [Escolha manual de propriedades via atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-ignore-public), [Input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#input) e [Tipos suportados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#support-types).
 
@@ -144,9 +144,9 @@ Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas 
 
 Representam ações iguais as _Actions dos Controllers do MVC_. Programaticamente representam os _métodos_ do `Command` e seus parâmetros (se existir) serão convertidos em `arguments` e que só serão acessados quando acompanhados do nome da ação.
 
-Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das ações e `-A` e `-m` seus respectivos `arguments`.
+Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das ações e `-A`, `-m` seus respectivos argumentos.
 
-Ainda é possível usar uma ação omitindo seu nome no input, esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
+Ainda é possível usar uma ação omitindo seu nome no input. Esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
 
 Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods), [Ignorar métodos publicos por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-ignore-public) e [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-default).
 
@@ -342,7 +342,7 @@ Commit
 
 **Saiba mais...**
 
-* Note que os tipos primitivos de. cada propriedade, estão configurados como `Nullable`. Isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja [Trabalhando com propriedades](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties).
+* Note que os tipos primitivos de cada propriedade estão configurados como `Nullable`. Isso é importante para ter condições de identificar que o usuário inseriu uma determinada propriedade. Veja [Trabalhando com propriedades](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties).
 * Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de [Tipos suportados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#support-types).
 * Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja [Verbose](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#verbose).
 * Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja [Output](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#output).
@@ -362,7 +362,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 # <a name="install-dlls" />DLLs do pacote
 
 * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Tudo foi pensado para tornar o padrão MVC tão natural quanto possível.
-* Dependencias `NewtonSoft.Json` e `System.Web.Razor`: São necessários em alguns recursos que serão explicados na documentação.
+* `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessários em alguns recursos que serão explicados na documentação.
 
 ## <a name="install-step-a-step" />Passo a passo de como usar
 
@@ -373,7 +373,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * Criar suas propriedades com seus tipos `Nullable` e deixe-as como publicas. Elas se tornarão `arguments` no prompt de comando.
 * Crie um método `Main()` sem parametros em sua classe para poder interceptar os inputs de suas propriedades. Utilize `Property != null` para identificar que a propriedade foi inserida.
 * Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros opcionais, deixe-os configurados como `Nullable` pela mesma razão acima.
-* Digite `help` no prompt de comando que abrirá para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
+* Digite `help` no prompt de comando que será aberto para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
 * Agora é só usar!
 
 # Documentação

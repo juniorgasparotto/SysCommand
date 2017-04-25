@@ -1,6 +1,6 @@
 ## Como funciona? <header-set anchor-name="presentation-how-it-works" />
 
-Ele funciona como um analisador de linhas de comando automático, deixando o programador focado nas regras de negócios de sua aplicação.
+Ele funciona como um analisador automatizado de linha de comando, permitindo que o programador se concentre nas regras de negócios de sua aplicação.
 
 Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento.
 
@@ -81,7 +81,7 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de "simulação de console" que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <anchor-get name="class-app" /> e <anchor-get name="initializing-by-static-method" />.
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de simulação de console que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <anchor-get name="class-app" /> e <anchor-get name="initializing-by-static-method" />.
 
 **`Command`**
 
@@ -93,7 +93,7 @@ Por padrão, o sistema tenta encontrar, de forma automática, qualquer classe qu
 
 Os argumentos representam o meio mais básico de uma aplicação console, são os conhecidos `--argument-name value`, `-v` e etc. Programaticamente eles são representados pelas _propriedades_ do `Command` e devem ser acompanhados de um método chamado `Main()` (sem parâmetros) para poder interceptar se uma propriedade foi ou não utilizada. O nome `Main` foi escolhido pela similaridade de conceito com o método `Main(string[] args)` do .NET.
 
-Do lado do usuário, nenhuma sintaxe especial foi criada, os padrões mais conhecidos foram implementados, ou seja, os argumentos longos são acessados com o prefixo `--` e acompanhados do nome do argumento. Os argumentos curtos são acessados com um traço `-` ou uma barra `/` e são acompanhados de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`. Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
+Do lado do usuário, nenhuma sintaxe especial foi criada, os padrões mais conhecidos foram implementados. Os argumentos longos são acessados com o prefixo `--` e são acompanhados do nome do argumento. Os argumentos curtos são acessados com um traço `-` ou uma barra `/` e são acompanhados de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou `:` ou `=`. Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
 Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja <anchor-get name="properties" />, <anchor-get name="properties-ignore-public" />, <anchor-get name="input" /> e <anchor-get name="support-types" />.
 
@@ -101,9 +101,9 @@ Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas 
 
 Representam ações iguais as _Actions dos Controllers do MVC_. Programaticamente representam os _métodos_ do `Command` e seus parâmetros (se existir) serão convertidos em `arguments` e que só serão acessados quando acompanhados do nome da ação.
 
-Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das ações e `-A` e `-m` seus respectivos `arguments`.
+Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das ações e `-A`, `-m` seus respectivos argumentos.
 
-Ainda é possível usar uma ação omitindo seu nome no input, esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
+Ainda é possível usar uma ação omitindo seu nome no input. Esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
 
 Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja <anchor-get name="methods" />, <anchor-get name="methods-ignore-public" /> e <anchor-get name="methods-default" />.
 
@@ -299,7 +299,7 @@ Commit
 
 **Saiba mais...**
 
-* Note que os tipos primitivos de. cada propriedade, estão configurados como `Nullable`. Isso é importante para ter condições de identificar que o usuário fez o input de uma determinada propriedade. Veja <anchor-get name="properties" />.
+* Note que os tipos primitivos de cada propriedade estão configurados como `Nullable`. Isso é importante para ter condições de identificar que o usuário inseriu uma determinada propriedade. Veja <anchor-get name="properties" />.
 * Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de <anchor-get name="support-types" />.
 * Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja <anchor-get name="verbose" />.
 * Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja <anchor-get name="output" />.
