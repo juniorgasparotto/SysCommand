@@ -124,7 +124,7 @@ Technically, there are four entities that are the basis of the framework:
 
 Is the application context, where a `App` contains several `Commands` . Is represented by the class `SysCommand.ConsoleApp.App` and must be the first entity to be configured in your `Main(string[] args)` method.
 
-The application context initialization can be done in two ways, by an instance of the class `App` or through the static method `App.RunApplication` that provides a resource very interressant console simulation that helps you test your inputs inside the Visual Studio itself, without the need to perform your ".exe" in an external console, just press the _Play_. Veja [Starting](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app) e [Booting with console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method).
+The application context initialization can be done in two ways, by an instance of the class `App` or through the static method `App.RunApplication` that provides a console simulation feature that helps you test your inputs inside the Visual Studio itself, without the need to perform your ".exe" in an external console, just press the _Play_. Veja [Starting](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app) e [Booting with console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method).
 
 **`Command`**
 
@@ -146,7 +146,7 @@ Represent the same actions the _Actions of MVC Controllers_. Programmatically re
 
 Its use is similar to the way we use `git` resources like: `git add -A` ; `git commit -m "comments"` , where `add` and `commit` would be the name of the stock and `-A` , `-m` their respective arguments.
 
-You can still use an action your name omitting in input. This feature we call `Métodos Padrão` and looks very similar to the use of properties.
+It is still possible to omit the name of the action in the user input. This feature is called `Método Padrão` and resembles a lot with the use of properties.
 
 By default, all public methods of your `Command` are enabled to be `actions` . Veja [Working with methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods), [Ignore public methods by a manual choice using attribute](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-ignore-public) e [Standard methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-default).
 
@@ -362,7 +362,7 @@ If you have never worked with .NET, maybe this is an excellent opportunity to me
 # <a name="install-dlls" />Package DLLs
 
 * `SysCommand.dll`: Contains all the logic to parse and execute command lines. Everything was thought to make the MVC pattern as natural as possible.
-* `NewtonSoft.Json`and `System.Web.Razor` : Are Government offices needed in some features that are explained in the documentation.
+* `NewtonSoft.Json`and `System.Web.Razor` : Are required dependencies in some features that are explained in the documentation.
 
 ## <a name="install-step-a-step" />Step by step how to use
 
@@ -373,7 +373,7 @@ If you have never worked with .NET, maybe this is an excellent opportunity to me
 * Create their properties with their types `Nullable` and let them as public. They will become `arguments` at the command prompt.
 * Create a method `Main()` without parameters in your class to be able to intercept the inputs of its properties. Use `Property != null` to identify the property was inserted.
 * Create public methods, with or without parameters, so they become `actions` . If you have optional parameters, let them set to `Nullable` for the same reason above.
-* Type `help` in the command prompt that opens so you can view its properties and methods in `arguments` and converted `actions` .
+* Type `help` in the command prompt that opens so you can view its properties and methods into `arguments` and `actions` .
 * Now just use!
 
 # Documentation

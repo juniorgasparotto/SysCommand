@@ -124,7 +124,7 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de simulação de console que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#class-app) e [Inicializando com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method).
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que fornece um recurso de simulação de console que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#class-app) e [Inicializando com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method).
 
 **`Command`**
 
@@ -146,7 +146,7 @@ Representam ações iguais as _Actions dos Controllers do MVC_. Programaticament
 
 Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das ações e `-A`, `-m` seus respectivos argumentos.
 
-Ainda é possível usar uma ação omitindo seu nome no input. Esse recurso nós chamamos de `Métodos Padrão` e se assemelha muito com o uso de propriedades.
+Ainda é possível omitir o nome da ação no input do usuário. Esse recurso é chamado de `Método Padrão` e se assemelha muito com o uso de propriedades.
 
 Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja [Trabalhando com métodos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods), [Ignorar métodos publicos por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-ignore-public) e [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-default).
 
@@ -362,7 +362,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 # <a name="install-dlls" />DLLs do pacote
 
 * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Tudo foi pensado para tornar o padrão MVC tão natural quanto possível.
-* `NewtonSoft.Json` e `System.Web.Razor`: São dependencias necessários em alguns recursos que serão explicados na documentação.
+* `NewtonSoft.Json` e `System.Web.Razor`: São dependências necessárias em alguns recursos que serão explicados na documentação.
 
 ## <a name="install-step-a-step" />Passo a passo de como usar
 
@@ -373,7 +373,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * Criar suas propriedades com seus tipos `Nullable` e deixe-as como publicas. Elas se tornarão `arguments` no prompt de comando.
 * Crie um método `Main()` sem parametros em sua classe para poder interceptar os inputs de suas propriedades. Utilize `Property != null` para identificar que a propriedade foi inserida.
 * Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros opcionais, deixe-os configurados como `Nullable` pela mesma razão acima.
-* Digite `help` no prompt de comando que será aberto para poder visualizar suas propriedades e métodos convertidos em `arguments` e `actions`.
+* Digite `help` no prompt de comando que será aberto para poder visualizar suas propriedades e métodos transformados em `arguments` e `actions`.
 * Agora é só usar!
 
 # Documentação
