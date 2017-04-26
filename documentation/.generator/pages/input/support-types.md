@@ -95,7 +95,7 @@ MyApp.exe -a 1 // false
 
 _Atribuições multiplas:_
 
-Para argumentos que estão configurados com a `forma curta`, é possível definir o mesmo valor em diversos argumentos com apenas um traço `-`, veja:
+Para argumentos que estão configurados com a **forma curta**, é possível definir o mesmo valor em diversos argumentos com apenas um traço `-`, veja:
 
 ```csharp
 public void Main(char a, char b, char c) {};

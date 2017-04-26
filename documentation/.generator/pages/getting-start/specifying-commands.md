@@ -1,8 +1,8 @@
 ## Especificando os tipos de comandos <header-set anchor-name="specifying-commands" />
 
-Ao especificar cada `Command` que será utilizado, você perde o recurso de busca automatica, mas ganha a flexibidade de controlar quais `Commands` devem ou não fazer parte do seu sistema. Para isso você pode trabalhar de duas formas, a `inclusiva` ou a `exclusiva`. A forma inclusiva é basicamente a especificação de cada `Command` e a forma exclusiva é o oposto, primeiro se carrega tudo e depois elimina-se o que não deseja.
+Ao especificar cada `Command` que será utilizado, você perde o recurso de busca automática, mas ganha a flexibidade de controlar quais `Commands` devem ou não fazer parte do seu sistema. Para isso você pode trabalhar de duas formas, a **inclusiva** ou a **exclusiva**. A forma inclusiva é basicamente a especificação de cada `Command` e a forma exclusiva é o oposto, primeiro se carrega tudo e depois elimina-se o que não deseja.
 
-A classe `SysCommand.ConsoleApp.Loader.AppDomainCommandLoader` é a responsável por buscar os commands de forma automatica e você pode usa-la na forma exclusiva. Internamente o sistema faz uso dela caso o parametro `commandsTypes` esteja `null`.
+A classe `SysCommand.ConsoleApp.Loader.AppDomainCommandLoader` é a responsável por buscar os `Commands` de forma automática e você pode usa-la caso queira usar a forma exclusiva. Internamente o sistema faz uso dela caso o parâmetro `commandsTypes` esteja `null`.
 
 **Exemplo de forma inclusiva:**
 

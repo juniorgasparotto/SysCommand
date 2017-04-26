@@ -1,6 +1,6 @@
-## Trocando a posição de parametros posicionais <header-set anchor-name="methods-changing-position" />
+## Trocando a posição de parâmetros posicionais <header-set anchor-name="methods-changing-position" />
 
-A propriedade `ArgumentAttribute(Position=X)` também funciona para parametros da mesma forma que funciona para propriedades. Não é um recurso que faça muito sentido, mas é importante documenta-lo.
+A propriedade `ArgumentAttribute(Position=X)` também funciona para parâmetros da mesma forma que funciona para propriedades. Não é um recurso que faça muito sentido, mas é importante documenta-lo.
 
 **Exemplo:**
 

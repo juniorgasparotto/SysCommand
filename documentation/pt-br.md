@@ -8,7 +8,7 @@
 # <a name="documentation" />Documentação
 
 * [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#class-app)
-  * [Inicializando com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method)
+  * [Inicializando com o simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method)
   * [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#specifying-commands)
   * [Tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#kind-of-commands)
   * [Controle de eventos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#events)
@@ -43,14 +43,14 @@
   * [Habilitando o input posicional](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-positional)
   * [Escolha manual de propriedades via atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-ignore-public)
 * [Trabalhando com métodos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods)
-  * [Métodos sem parametros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-without-params)
-  * [Parametros optionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-optional-params)
+  * [Métodos sem parâmetros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-without-params)
+  * [parâmetros optionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-optional-params)
   * [Sobrecargas](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-overloads)
   * [Usando inputs posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-positional-inputs)
   * [Ignorar métodos publicos por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-ignore-public)
   * [Customizando nomes de actions e arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-names)
-  * [Customizando as informações de help de actions e seus parametros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-help)
-  * [Trocando a posição de parametros posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-changing-position)
+  * [Customizando as informações de help de actions e seus parâmetros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-help)
+  * [Trocando a posição de parâmetros posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-changing-position)
   * [Propriedades do atributos ArgumentAttribute que não são utilizados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-not-used-attrs)
   * [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-default)
 * [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#help)
@@ -67,9 +67,9 @@
 
 # <a name="class-app" />Iniciando
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` com suas possíveis customizações ou atravez do método estático `App.RunApplication` que disponibiliza um recurso muito interressante de `simulação de console` ajudando você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo ou via "Command Line Arguments".
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` com suas possíveis customizações ou atravez do método estático `App.RunApplication` que disponibiliza um recurso chamado `console simulator` que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo.
 
-A classe `App` esta no topo da hierarquia de classes do sistema, cada instância é responsável por manter um contexto isolado da execução. Nenhum recurso estático é usado aqui e isso é importante para ter a liberdade de criar quantas instancias quiser em qualquer escopo.
+A classe `App` esta no topo da hierarquia de classes do sistema, cada instância é responsável por manter um contexto isolado da execução. Nenhum recurso estático é usado aqui e isso é importante para ter a liberdade de criar quantas instâncias quiser em qualquer escopo.
 
 Em seu construtor estão as primeiras configurações:
 
@@ -81,18 +81,18 @@ public App(
        )
 ```
 
-* `commandsTypes`: Especifica os tipos dos `Command` que serão utilidados em todo o processo. Caso seja `null` então o sistema buscará automaticamente qualquer classe que extenda de `Command`. Entenda melhor em [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#specifying-commands).
+* `commandsTypes`: Especifica os tipos dos `Command` que serão utilidados em todo o processo. Caso seja `null` então o sistema buscará automáticamente qualquer classe que extenda de `Command`. Entenda melhor em [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#specifying-commands).
 * `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará ligado. Entenda melhor em [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#using-the-multi-action-feature).
 * `addDefaultAppHandler`: Caso seja `false` então NÃO cria o handler de eventos que é responsável pelo mecanismo padrão de `outputs` e controles de `erros` e dentre outros. O padrão é `true`. Entenda melhor em [Controle de eventos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#events).
 
-## <a name="initializing-by-static-method" />Inicializando com simulador de console
+## <a name="initializing-by-static-method" />Inicializando com o simulador de console
 
-O método estático `App.RunApplication` disponibiliza um recurso muito interressante de `simulação de console` que ajuda você a testar seus inputs dentro do próprio Visual Studio sem a necessidade de executar seu ".exe" em um console externo ou via "Command Line Arguments". É importante ressaltar que esse simulador só será exibido dentro do Visual Studio, quando executar seu aplicativo final em outro console o comportamento será o mesmo do modo por instancia.
+Este recurso ajuda você a testar seus inputs dentro do próprio Visual Studio sem a necessidade de executar seu ".exe" em um console externo. É importante ressaltar que esse simulador só será exibido dentro do Visual Studio.
 
-A chamada é bastante simples, basta uma linha para que tudo funcione usando as regras padrão. Caso você queira customizar a sua instancia de `App` então utilize o construtor `App.RunApplication(Func<App> appFactory)`.
+A chamada é bastante simples, basta adicionar uma linha para que tudo funcione usando as regras padrão. Caso você queira customizar a sua instância de `App` então utilize o construtor `App.RunApplication(Func<App> appFactory)`.
 
 ```csharp
- public class Program
+public class Program
 {
     public static void Main(string[] args)
     {
@@ -134,9 +134,9 @@ otherValue
 
 ## <a name="specifying-commands" />Especificando os tipos de comandos
 
-Ao especificar cada `Command` que será utilizado, você perde o recurso de busca automatica, mas ganha a flexibidade de controlar quais `Commands` devem ou não fazer parte do seu sistema. Para isso você pode trabalhar de duas formas, a `inclusiva` ou a `exclusiva`. A forma inclusiva é basicamente a especificação de cada `Command` e a forma exclusiva é o oposto, primeiro se carrega tudo e depois elimina-se o que não deseja.
+Ao especificar cada `Command` que será utilizado, você perde o recurso de busca automática, mas ganha a flexibidade de controlar quais `Commands` devem ou não fazer parte do seu sistema. Para isso você pode trabalhar de duas formas, a **inclusiva** ou a **exclusiva**. A forma inclusiva é basicamente a especificação de cada `Command` e a forma exclusiva é o oposto, primeiro se carrega tudo e depois elimina-se o que não deseja.
 
-A classe `SysCommand.ConsoleApp.Loader.AppDomainCommandLoader` é a responsável por buscar os commands de forma automatica e você pode usa-la na forma exclusiva. Internamente o sistema faz uso dela caso o parametro `commandsTypes` esteja `null`.
+A classe `SysCommand.ConsoleApp.Loader.AppDomainCommandLoader` é a responsável por buscar os `Commands` de forma automática e você pode usa-la caso queira usar a forma exclusiva. Internamente o sistema faz uso dela caso o parâmetro `commandsTypes` esteja `null`.
 
 **Exemplo de forma inclusiva:**
 
@@ -410,7 +410,7 @@ Programaticamente, os `arguments` podem ser derivados de `properties` ou dos par
 
 ### <a name="input-named" />Argumento nomeado
 
-Argumentos nomeados são caracterizado por duas formas: a `longa` e a `curta`. Na forma `longa` o argumento deve-se iniciar com `--` seguido do seu nome. Na forma `curta` ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento.
+Argumentos nomeados são caracterizado por duas formas: a **longa** e a **curta**. Na forma **longa** o argumento deve-se iniciar com `--` seguido do seu nome. Na forma **curta** ele deve iniciar com apenas um traço `-` ou uma barra `/` seguido de apenas um caracter que representa o argumento.
 
 Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou pelos caracteres `:` ou `=`.
 
@@ -467,7 +467,7 @@ MyApp.exe ValueA ValueB ValueC
 
 _Observações:_
 
-* Para as propriedades, o `input posicional` é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
+* Para as propriedades, o **input posicional** é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
 * Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-positional-inputs).
 
 ## <a name="input-actions" />`Actions`
@@ -640,7 +640,7 @@ MyApp.exe -a 1 // false
 
 _Atribuições multiplas:_
 
-Para argumentos que estão configurados com a `forma curta`, é possível definir o mesmo valor em diversos argumentos com apenas um traço `-`, veja:
+Para argumentos que estão configurados com a **forma curta**, é possível definir o mesmo valor em diversos argumentos com apenas um traço `-`, veja:
 
 ```csharp
 public void Main(char a, char b, char c) {};
@@ -801,13 +801,13 @@ Por fim, uma lista do tipo `IEnumerable<ArgumentRaw>`.
 É a etapa mais longa, onde combina o resultado do mapeamento com o resultado do parser simples. O objetivo é obter as melhores rotas para um mesmo input.
 
 1. A primeira etapa consiste em encontrar os métodos de acordo com o input de entrada. Para isso, será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
-2. A primeira `action` pode ter seu nome omitido, mas para isso ela precisa ser do tipo `Default`. Veja [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-default). Caso existam, elas só serão utilizadas quando o primeiro `ArgumentRaw` do input não é uma `action`. Nesse cenário todos os métodos `Default` serão escolhidos para a próxima etapa. Daí para frente o processo será o mesmo.
+2. A primeira `action` pode ter seu nome omitido, mas para isso ela precisa ser do tipo **padrão**. Veja [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-default). Caso existam, elas só serão utilizadas quando o primeiro `ArgumentRaw` do input não é uma `action`. Nesse cenário todos os **métodos padrão** serão escolhidos para a próxima etapa. Daí para frente o processo será o mesmo.
 3. Após encontrar todos os métodos de cada `action` do input, será feito a divisão em níveis. Cada nível será criado da seguinte forma:
-  * Se o input iniciar com argumentos então formaram o primeiro nível. Isso se não existir nenhum método `Default`.
-  * Caso exista mais de uma `action` no input, incluindo `Defaults`, cada uma representará um novo nível.
+  * Se o input iniciar com argumentos então formaram o primeiro nível. Isso se não existir nenhum **método padrão**.
+  * Caso exista mais de uma `action` no input, incluindo os **métodos padrão**, cada uma representará um novo nível.
   * Os argumentos que não fazem parte do mapa da `action` (sobras) formaram outro nível. Esse nível será criado na sequência do nível da `action`.
   * Caso não encontre nenhuma `action` no input e apenas argumentos, então haverá apenas um nível.
-  * Caso não exista nenhum input, mas exista métodos `Default` sem parâmetros, então eles serão escolhidos para a execução.
+  * Caso não exista nenhum input, mas exista **métodos padrão** sem parâmetros, então eles serão escolhidos para a execução.
 4. Todos os níveis que não são de `action` (apenas de argumentos) serão usados para encontrar as proprieades. Quando isso acontece, cada propriedade será representada pela classe `SysCommand.Parsing.ArgumentParsed` assim como os parâmetros dos métodos.
 
 Nota importante: Quando a flag `bool enableMultiAction` estiver desligada o parser aceitará apenas uma `action`.
@@ -865,7 +865,7 @@ namespace Example.Input.Parser
 }
 ```
 
-_A) 2 níveis com o primeiro pertencendo ao método default 'Main(...)':_
+_A) 2 níveis com o primeiro pertencendo ao método padrão 'Main(...)':_
 
 ```
 MyApp.exe --a 1 --b 2 --c 3 action2
@@ -1348,7 +1348,7 @@ Outputs:
 * A pesquisa do template via `Arquivo físico` ou via `Embedded Resource` segue a mesma lógica. Ele busca pelo caminho mais especifico usando o nome do "command.action.extensão" e caso ele não encontre ele tentará encontrar pelo nome mais generico, sem o nome do command.
   * Busca primeiro por: "ExampleRazorCommand.MyAction.razor"
   * Caso não encontre na primeira tentativa, então busca por: "MyAction.razor"
-* É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automatica. como no exemplo da action "MyAction2()".
+* É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automática. como no exemplo da action "MyAction2()".
 * Por questões técnicas, o método View<>() obriga o uso de uma inferencia ou um model. Infira um `object` se você não necessitar de um model `View<object>()`.
 * Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.
 
@@ -1358,7 +1358,7 @@ Outra opção para exibir outputs é a utilização de templates `T4`. Esse meca
 
 * Por organização, criar uma pasta "Views"
 * Criar um arquivo T4 no formato "Runtime Text Template"
-* Se for utilizar model é preciso configurar um parametro, que por obrigatoriedade, deve-se chamar "Model" e ter o seu respectivo tipo configurado na tag `type`. Caso não utilize nenhum "Model" então ignore esse passo.
+* Se for utilizar model é preciso configurar um parâmetro, que por obrigatoriedade, deve-se chamar "Model" e ter o seu respectivo tipo configurado na tag `type`. Caso não utilize nenhum "Model" então ignore esse passo.
 * Implementar o seu template
 
 **Exemplo:**
@@ -1483,9 +1483,9 @@ O trabalho com propriedades é muito simples e objetivo, basta criar suas propri
 
 ## <a name="properties-use-mode1" />Modo de uso 1
 
-Primeiro, você pode utilizar o método `Main()` sem parametro e que, por convensão de nome, será o responsável por ser invocado caso alguma de suas propriedade tenha sido utilizadas no input do usuário. O nome "Main" foi escolhido para manter o padrão de nomenclatura que o .NET utiliza em aplicações de console.
+Primeiro, você pode utilizar o método `Main()` sem parâmetro e que, por convensão de nome, será o responsável por ser invocado caso alguma de suas propriedade tenha sido utilizadas no input do usuário. O nome "Main" foi escolhido para manter o padrão de nomenclatura que o .NET utiliza em aplicações de console.
 
-Por segurança, utilize todos os tipos primitivos como `Nullable` para garantir que o usuário fez o input. Ou utilize o método `GetArgument(string name)` para verificar se uma propriedade foi parseada. Vale ressaltar que uma propriedade com `Default value` sempre terá resultado de parse e caso necessário, utilize mais uma verificação para saber se o resultado partiu de um input do usuário.
+Por segurança, utilize todos os tipos primitivos como `Nullable` para garantir que o usuário fez o input. Ou utilize o método `GetArgument(string name)` para verificar se uma propriedade foi parseada. Vale ressaltar que uma propriedade com **valor padrão** sempre terá resultado de parse e caso necessário, utilize mais uma verificação para saber se o resultado partiu de um input do usuário.
 
 **Exemplo:**
 
@@ -1545,7 +1545,7 @@ MyPropertyDefaultValue has input
 Main() methods can also return values ;)
 ```
 
-Tenha muito cuidado com propriedades com `Default values`, o fato dela ter valor por padrão faz com que o método `Main()` sempre seja chamado mesmo quando não exista nenhum input.
+Tenha muito cuidado com propriedades que tenham **valores padrão**, o fato dela ter valor por padrão faz com que o método `Main()` sempre seja chamado mesmo quando não exista nenhum input.
 
 ```
 C:\MyApp.exe
@@ -1588,7 +1588,7 @@ A regra a seguir descreve como é o comportamento padrão de nomenclatura para q
 
 Primeiro se converte o nome da propriedade em minusculo, depois adiciona um traço "-" antes de cada letra maiuscula que estiver no meio ou no final do nome. No caso de propriedades com apenas uma letra, o padrão será deixar a letra minuscula e o input será aceito apenas na forma curta.
 
-Essa é a regra padrão de nomenclarutura e você pode escolher usa-la ou customizada-la, para isso utilize o atributo `ArgumentAttribute`. O uso do atributo `ArgumentAttribute` é exclusivo, ao utiliza-lo você esta eliminando o padrão de nomenclatura por completo, ou seja, se você customizar a `forma curta` você será obrigado a customizar a `forma longa` também, e vice-versa. Do contrário só o formato customizado será habilitado.
+Essa é a regra padrão de nomenclarutura e você pode escolher usa-la ou customizada-la, para isso utilize o atributo `ArgumentAttribute`. O uso do atributo `ArgumentAttribute` é exclusivo, ao utiliza-lo você esta eliminando o padrão de nomenclatura por completo, ou seja, se você customizar a **forma curta** você será obrigado a customizar a **forma longa** também, e vice-versa. Do contrário só o formato customizado será habilitado.
 
 **Exemplo:**
 
@@ -1648,7 +1648,7 @@ C=9999
 
 Para configurar o texto de help utilize o atributo `ArgumentAttribute(Help="my help")`. Caso você não informe esse atributo, seu argumento ainda será exibido no help, mas sem informações de ajuda.
 
-Contudo, ainda será exibido um texto de complemento para cada argumento, esse texto informa se o argumento é obrigatório ou opcional (com ou sem default value). Esse texto é exibido por padrão, mas você pode desativa-lo com o atributo `ArgumentAttribute(ShowHelpComplement=false)`.
+Contudo, ainda será exibido um texto de complemento para cada argumento, esse texto informa se o argumento é obrigatório ou opcional (com ou sem **valor padrão**). Esse texto é exibido por padrão, mas você pode desativa-lo com o atributo `ArgumentAttribute(ShowHelpComplement=false)`.
 
 ```csharp
 public class CustomPropertiesHelpCommand : Command
@@ -1823,12 +1823,12 @@ The argument '--my-property-without-attribute' does not exist
 
 O trabalho com métodos também é muito bem simples, todos os métodos definidos como `public`, por padrão, serão habilitados para virarem `input actions` e estarem disponíveis para uso. O fato interessante é que você pode utilizar os recursos nativos do .NET deixando seu código mais limpo, como:
 
-* Métodos sem parametros
-* Métodos com parametros opcionais com `Default value`
+* Métodos sem parâmetros
+* Métodos com parâmetros opcionais com **valor padrão**
 * Métodos com sobrecargas
 * Métodos com `return` onde o retorno do método, por padrão, será utilizado como output no console usando
 
-## <a name="methods-without-params" />Métodos sem parametros
+## <a name="methods-without-params" />Métodos sem parâmetros
 
 **Exemplo:**
 
@@ -1847,11 +1847,11 @@ C:\MyApp.exe my-action
 MyAction
 ```
 
-## <a name="methods-optional-params" />Parametros optionais
+## <a name="methods-optional-params" />parâmetros optionais
 
-Os parametros opcionais são uteis para evitar a criação de sobrecargas e no caso de uma aplicação console ajuda a criar `actions` com diversas opções, mas não obrigando o usuário a preencher todas.
+Os parâmetros opcionais são uteis para evitar a criação de sobrecargas e no caso de uma aplicação console ajuda a criar `actions` com diversas opções, mas não obrigando o usuário a preencher todas.
 
-Por segurança, ao usar parametros opcionais, obte por utilizar todos os tipos primitivos como `Nullable` para _garantir que o usuário fez o input_. Ou utilize o método `GetAction()` para verificar se o parametro foi mapeado, ou seja, se teve algum tipo de input.
+Por segurança, ao usar parâmetros opcionais, obte por utilizar todos os tipos primitivos como `Nullable` para _garantir que o usuário fez o input_. Ou utilize o método `GetAction()` para verificar se o parâmetro foi mapeado, ou seja, se teve algum tipo de input.
 
 **Exemplo:**
 
@@ -1894,7 +1894,7 @@ Observação: Não utilize o método `GetAction()` em métodos que não são `ac
 
 ## <a name="methods-overloads" />Sobrecargas
 
-O recurso de sobrecarga de métodos é suportado da mesma forma que você faria para qualquer outra finalidade. Muitas vezes esse recurso pode ser mais interessante que usar parametros opcionais, o código fica mais limpo. Outras vezes isso não será possível, pois com parametros opcionais o usuário tem a opção de escolher qualquer parametro independentemente de sua posição no método, coisa que a sobrecarga não pode.
+O recurso de sobrecarga de métodos é suportado da mesma forma que você faria para qualquer outra finalidade. Muitas vezes esse recurso pode ser mais interessante que usar parâmetros opcionais, o código fica mais limpo. Outras vezes isso não será possível, pois com parâmetros opcionais o usuário tem a opção de escolher qualquer parâmetro independentemente de sua posição no método, coisa que a sobrecarga não pode.
 
 **Exemplo:**
 
@@ -1935,16 +1935,16 @@ There are errors in command: Method1Command
 The argument '--arg1' does not exist
 ```
 
-O último comando mostrou a limitação da sobrecarga com relação aos parametros opcionais. O parseador entendeu que os dois métodos com parametros `MyAction3` estão inválidos, veja:
+O último comando mostrou a limitação da sobrecarga com relação aos parâmetros opcionais. O parseador entendeu que os dois métodos com parâmetros `MyAction3` estão inválidos, veja:
 
 * MyAction3(int arg0): Não tem o input "--arg1" que foi solicitado, portanto esta inválido.
 * MyAction3(int arg0, int arg1): Tem o input "--arg1", mas não tem o input "--arg0", portanto esta inválido.
 
-Nesse caso o parseador escolhera o unico método valido, ou seja, o método `MyAction3` _sem parametros_ e usará o argumento extra "--arg1" para tentar encontra-lo como propriedade em algum `Command`, porém essa propriedade não existe em nenhum lugar, gerando o erro.
+Nesse caso o parseador escolhera o unico método valido, ou seja, o método `MyAction3` _sem parâmetros_ e usará o argumento extra "--arg1" para tentar encontra-lo como propriedade em algum `Command`, porém essa propriedade não existe em nenhum lugar, gerando o erro.
 
 ## <a name="methods-positional-inputs" />Usando inputs posicionais
 
-Outro modo de chamar sua action no console é usando `input posicional`. Por padrão, todas as `action` aceitam argumentos posicionais, mais isso pode ser desabilitado usando o atributo `ActionAttribute(EnablePositionalArgs = false)`.
+Outro modo de chamar sua action no console é usando **input posicional**. Por padrão, todas as `action` aceitam argumentos posicionais, mais isso pode ser desabilitado usando o atributo `ActionAttribute(EnablePositionalArgs = false)`.
 
 **Exemplo:**
 
@@ -2043,11 +2043,11 @@ Could not find any action.
 
 ## <a name="methods-customizing-names" />Customizando nomes de actions e arguments
 
-A regra a seguir descreve como é o comportamento padrão de nomenclatura para que os métodos vire uma `action` e um parametro vire um `argument`:
+A regra a seguir descreve como é o comportamento padrão de nomenclatura para que os métodos vire uma `action` e um parâmetro vire um `argument`:
 
-Primeiro se converte o nome do membro (métodos ou parametros) em minusculo, depois adiciona um traço "-" antes de cada letra maiuscula que estiver no meio ou no final do nome. No caso de paramentros com apenas uma letra, o padrão será deixar a letra minuscula e o input será aceito apenas na forma curta.
+Primeiro se converte o nome do membro (métodos ou parâmetros) em minusculo, depois adiciona um traço "-" antes de cada letra maiuscula que estiver no meio ou no final do nome. No caso de paramentros com apenas uma letra, o padrão será deixar a letra minuscula e o input será aceito apenas na forma curta.
 
-Essa é a regra padrão de nomenclarutura e você pode escolher usa-la ou customizada-la de modo total ou parcial. Para isso utilize os atributos `ActionAttribute` para métodos e `ArgumentAttribute` os parametros. O uso do atributo `ArgumentAttribute` é exclusivo, ao utiliza-lo você esta eliminando o padrão de nomenclatura por completo, ou seja, se você customizar a `forma curta` você será obrigado a customizar a `forma longa` também, e vice-versa. Do contrário só o formato customizado será habilitado.
+Essa é a regra padrão de nomenclarutura e você pode escolher usa-la ou customizada-la de modo total ou parcial. Para isso utilize os atributos `ActionAttribute` para métodos e `ArgumentAttribute` os parâmetros. O uso do atributo `ArgumentAttribute` é exclusivo, ao utiliza-lo você esta eliminando o padrão de nomenclatura por completo, ou seja, se você customizar a **forma curta** você será obrigado a customizar a **forma longa** também, e vice-versa. Do contrário só o formato customizado será habilitado.
 
 **Exemplo:**
 
@@ -2147,7 +2147,7 @@ C:\MyApp.exe custom-prefix-my-action
 custom-prefix-my-action
 ```
 
-## <a name="methods-customizing-help" />Customizando as informações de help de actions e seus parametros
+## <a name="methods-customizing-help" />Customizando as informações de help de actions e seus parâmetros
 
 Para configurar o texto de help utilize o atributo `ActionAttribute(Help="my help")`. Caso você não informe esse atributo, sua ação ainda será exibido no help, mas sem informações de ajuda.
 
@@ -2188,9 +2188,9 @@ Help for this command
 
 Para mais informações sobre o help veja no tópico [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#help).
 
-## <a name="methods-changing-position" />Trocando a posição de parametros posicionais
+## <a name="methods-changing-position" />Trocando a posição de parâmetros posicionais
 
-A propriedade `ArgumentAttribute(Position=X)` também funciona para parametros da mesma forma que funciona para propriedades. Não é um recurso que faça muito sentido, mas é importante documenta-lo.
+A propriedade `ArgumentAttribute(Position=X)` também funciona para parâmetros da mesma forma que funciona para propriedades. Não é um recurso que faça muito sentido, mas é importante documenta-lo.
 
 **Exemplo:**
 
@@ -2216,16 +2216,16 @@ arg0 = '2'; arg1 = '1'
 
 ## <a name="methods-not-used-attrs" />Propriedades do atributos ArgumentAttribute que não são utilizados
 
-As seguintes propriedades não fazem sentido no cenário de parametros de métodos e só existem por que o atributo `ArgumentAtrribute` é compartilhado no uso de propriedades.
+As seguintes propriedades não fazem sentido no cenário de parâmetros de métodos e só existem por que o atributo `ArgumentAtrribute` é compartilhado no uso de propriedades.
 
-* IsRequired: Em C#, todo parametro que não tem default value é obrigatório, essa configuração é ignorada se for utilizada.
-* DefaultValue: Como o proprio C# já nos dá a opção de default value para parametros, essa configuração é redundante, sendo assim ela é ignorada por que o padrão do .NET já é suficiente e mais limpo.
+* IsRequired: Em C#, todo parâmetro que não tem **valor padrão** é obrigatório, essa configuração é ignorada se for utilizada.
+* DefaultValue: Como o proprio C# já nos dá a opção de **valor padrão** em parâmetros, essa configuração é redundante, sendo assim ela é ignorada por que o padrão do .NET já é suficiente e mais limpo.
 
 ## <a name="methods-default" />Métodos padrão
 
 O uso de métodos padrão (ou métodos implicitos) fazem com que o recurso seja muito similar ao uso de propriedades, ou seja, você não é obrigado a especificar o nome da `action` e os seus parâmetros podem ser inseridos diretamente no input como se fossem argumentos provenientes de propriedades.
 
-Por convensão, se você chamar sua `action` de "Main" e ela tiver parametros, ela será considerada como padrão. Para mudar esse comportamento você deve desligar a flag `Action(IsDefault = false)`, assim o comportamento padrão será alterado e sua action "Main" (com parametros) não será mais acessada de forma implicita e obrigará a especificação de seu nome no input. O contrário também é verdadeiro, se sua action tem outro nome e você gostaria de torna-la um método padrão então basta ligar a flag `Action(IsDefault = true)`.
+Por convensão, se você chamar sua `action` de "Main" e ela tiver parâmetros, ela será considerada como padrão. Para mudar esse comportamento você deve desligar a flag `Action(IsDefault = false)`, assim o comportamento padrão será alterado e sua action "Main" (com parâmetros) não será mais acessada de forma implicita e obrigará a especificação de seu nome no input. O contrário também é verdadeiro, se sua action tem outro nome e você gostaria de torna-la um método padrão então basta ligar a flag `Action(IsDefault = true)`.
 
 **Exemplo:**
 
@@ -2330,8 +2330,8 @@ A fonte de cada texto esta em cada elemento `Commands`, `Arguments` e `Actions` 
   * **C3:** A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
   * **C4:** Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
     * `Strings.HelpArgDescRequired`: Quando o membro é obrigatório
-    * `Strings.HelpArgDescOptionalWithDefaultValue`: Quando o membro é opcional e tem default value.
-    * `Strings.HelpArgDescOptionalWithoutDefaultValue`: Quando o membro é opcional e não tem default value.
+    * `Strings.HelpArgDescOptionalWithDefaultValue`: Quando o membro é opcional e tem **valor padrão**.
+    * `Strings.HelpArgDescOptionalWithoutDefaultValue`: Quando o membro é opcional e não tem **valor padrão**.
 * **D:** A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
 * **E:** São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
 * **F:** Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.
@@ -2421,7 +2421,7 @@ MyApp.exe help
 Could not find any action.
 ```
 
-Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o help padrão utiliza os métodos de help contidos dentro dessa instancia. Essa opção não é recomendada se você deseja apenas customizar o `help`.
+Uma outra opção é criar um `Descriptor` que herda da interface `SysCommand.ConsoleApp.Descriptor.IDescriptor` e defini-lo na sua propriedade `App.Descriptor`. Isso é possível, pois o help padrão utiliza os métodos de help contidos dentro dessa instância. Essa opção não é recomendada se você deseja apenas customizar o `help`.
 
 Uma opção mais segura seria criar um `Descriptor` herdando da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor` e sobrescrer apenas os métodos de help.
 
@@ -2455,7 +2455,7 @@ public class Program
 
 * O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, o comando `SysCommand.ConsoleApp.Commands.HelpCommand.cs` será adicionado internamente.
 * Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-customizing-help).
-* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parametros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-help).
+* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parâmetros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-help).
 
 # <a name="verbose" />Verbose
 
@@ -2512,7 +2512,7 @@ output of critical
 
 # <a name="error" />Tratamento de erros
 
-O tratamento de erro é gerado de forma automatica pelo sistema e são categorizados da seguinte forma:
+O tratamento de erro é gerado de forma automática pelo sistema e são categorizados da seguinte forma:
 
 * Erros no processo de parse: São erros que ocorrem no processo de parse e são sub-categorizados da seguinte forma:
   * `ArgumentParsedState.ArgumentAlreadyBeenSet`: Indica que um argumento esta duplicado no mesmo input.
@@ -2789,7 +2789,7 @@ Note que para criar uma instância de `JsonFileManager` foi utilizado o escopo d
 
 # <a name="redirectiong-commands" />Redirecionamento de comandos
 
-Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instancia da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instancias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
+Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instância da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instâncias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
 
 **Exemplo:**
 

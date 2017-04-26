@@ -124,7 +124,7 @@ Technically, there are four entities that are the basis of the framework:
 
 Is the application context, where a `App` contains several `Commands` . Is represented by the class `SysCommand.ConsoleApp.App` and must be the first entity to be configured in your `Main(string[] args)` method.
 
-The application context initialization can be done in two ways, by an instance of the class `App` or through the static method `App.RunApplication` that provides a console simulation feature that helps you test your inputs inside the Visual Studio itself, without the need to perform your ".exe" in an external console, just press the _Play_. Veja [Starting](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app) e [Booting with console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method).
+The application context initialization can be done in two ways, by an instance of the class `App` or through the static method `App.RunApplication` that provides a console simulation feature that helps you test your inputs inside the Visual Studio itself, without the need to perform your ".exe" in an external console, just press the _Play_. Veja [Starting](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app) e [Booting with the console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method).
 
 **`Command`**
 

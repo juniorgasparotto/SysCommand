@@ -8,7 +8,7 @@
 # <a name="documentation" />Documentation
 
 * [Starting](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app)
-  * [Booting with console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method)
+  * [Booting with the console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method)
   * [Specifying the types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands)
   * [Types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#kind-of-commands)
   * [Event control](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events)
@@ -43,8 +43,8 @@
   * [Enabling the positional input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-positional)
   * [Manual choice of properties via attribute](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-ignore-public)
 * [Working with methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods)
-  * [Methods without parameters](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-without-params)
-  * [Optionais parameters](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-optional-params)
+  * [Parameterless methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-without-params)
+  * [optionais parameters](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-optional-params)
   * [Overloads](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-overloads)
   * [Using positional inputs](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-positional-inputs)
   * [Ignore public methods by a manual choice using attribute](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-ignore-public)
@@ -67,7 +67,7 @@
 
 # <a name="class-app" />Starting
 
-The application context initialization can be done in two ways, by an instance of the class `App` with its possible customizations or through the static method `App.RunApplication` that provides a very interressant feature of `simulação de console` helping you test inputs within the Visual Studio itself, without the need to perform your ".exe" in an external console or via "Command Line Arguments".
+The application context initialization can be done in two ways, by an instance of the class `App` with its possible customizations or through the static method `App.RunApplication` that provides a feature called `console simulator` that helps you test your inputs inside the Visual Studio itself, without the need to perform your ".exe" in an external console.
 
 The class `App` is in the top of the class hierarchy of the system, each instance is responsible for maintaining a context isolated from the implementation. No static resource is used here and it's important to have the freedom to create as many instances you want in any scope.
 
@@ -85,14 +85,14 @@ public App(
 * `enableMultiAction`: Turns the `MultiAction` behavior. By default, this behavior will be connected. Understand better in [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#using-the-multi-action-feature).
 * `addDefaultAppHandler`: If `false` so does not create the event handler that is responsible for the `outputs` standard engine and `erros` controls, and among others. The default is `true` . Understand better in [Event control](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events).
 
-## <a name="initializing-by-static-method" />Booting with console Simulator
+## <a name="initializing-by-static-method" />Booting with the console Simulator
 
-The static method `App.RunApplication` provides a very interressant feature of `simulação de console` that helps you test your inputs inside the Visual Studio without having to run your ".exe" in an external console or via "Command Line Arguments". It is important to note that this Simulator will only be displayed within Visual Studio, when you run your final application on another console the behavior will be the same way for instance.
+This feature helps you test your inputs inside the Visual Studio without having to run your ".exe" in an external console. It is important to note that this Simulator will only be displayed within Visual Studio.
 
-The call is quite simple, just a line for everything to work using the standard rules. If you want to customize your instance of `App` then use the `App.RunApplication(Func<App> appFactory)` constructor.
+The call is quite simple, just add a line for everything to work using the standard rules. If you want to customize your `App` instance so use the `App.RunApplication(Func<App> appFactory)` constructor.
 
 ```csharp
- public class Program
+public class Program
 {
     public static void Main(string[] args)
     {
@@ -134,9 +134,9 @@ otherValue
 
 ## <a name="specifying-commands" />Specifying the types of commands
 
-When specifying each `Command` which will be used, you lose the automatic search feature, but gains the flexibility to control what `Commands` should or should not be part of your system. For this you can work in two ways, `inclusiva` or `exclusiva` . The inclusive form is basically the specification of each `Command` and the exclusive is the opposite, first if everything loads and then remove what you don't want.
+When specifying each `Command` which will be used, you lose the automatic search feature, but gains the flexibility to control what `Commands` should or should not be part of your system. For this you can work in two ways, the **inclusive** or **exclusive**. The inclusive form is basically the specification of each `Command` and the exclusive is the opposite, first if everything loads and then remove what you don't want.
 
-The class `SysCommand.ConsoleApp.Loader.AppDomainCommandLoader` is responsible for fetching the commands to automatically and you can use it in a unique fashion. Internally the system makes use of it if the parameter `commandsTypes` is `null` .
+The class `SysCommand.ConsoleApp.Loader.AppDomainCommandLoader` is responsible for pick up `Commands` automatically and you can use it if you want to use. Internally the system makes use of it if the `commandsTypes` parameter is `null` .
 
 **Inclusive form example:**
 
@@ -410,7 +410,7 @@ Programmatically, the `arguments` can be derived from `properties` or `methods` 
 
 ### <a name="input-named" />Named argument
 
-Named arguments are characterized by two ways: the `longa` and the `curta` . In the form `longa` the argument must begin with `--` followed by your name. In the form `curta` he should start with just a dash `-` or a forward slash `/` followed by only one character that represents the argument.
+Named arguments are characterized by two ways: the **long** and the **short**. In **long** form the argument must begin with `--` followed by your name. In **short** order he must start with just a dash `-` or a forward slash `/` followed by only one character that represents the argument.
 
 The values of the arguments must be in front of the argument name separated by a space ` ` or by `:` characters or `=` .
 
@@ -467,7 +467,7 @@ MyApp.exe ValueA ValueB ValueC
 
 _Comments:_
 
-* For the properties, `input posicional` is disabled by default, to enable him use the command property `Command.EnablePositionalArgs` .
+* For properties, the **positional input** is disabled by default, to enable him use the command property `Command.EnablePositionalArgs` .
 * For methods that kind of input is enabled by default, to disable it see in the [Using positional inputs](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-positional-inputs)topic.
 
 ## <a name="input-actions" />`Actions`
@@ -640,7 +640,7 @@ MyApp.exe -a 1 // false
 
 _Multiple assignments:_
 
-For arguments that are configured with the `forma curta` , you can set the same value in several arguments with just a trace `-` , see:
+For arguments that are configured with the **short form**, you can set the same value in several arguments with just a trace `-` , see:
 
 ```csharp
 public void Main(char a, char b, char c) {};
@@ -801,13 +801,13 @@ Finally, a list of type `IEnumerable<ArgumentRaw>` .
 Is the longest step, where the result of the mapping combines with the result of the simple parser. The goal is to obtain the best routes for the same input.
 
 1. The first step is to find the methods according to the input of entrance. For this, it will be used as references all `ArgumentRaw` in the format `Unnamed` , i.e. arguments without names. The search will be inside the map returned by this method `GetMaps` . When a method is found, an instance of the `SysCommand.Parsing.ActionParsed` type is created and each parameter of the method is represented by the class `SysCommand.Parsing.ArgumentParsed` .
-2. The first `action` may have omitted your name, but for this it needs to be of type `Default` . See [Standard methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-default). If they exist, they will only be used when the first `ArgumentRaw` of the input is not a `action` . In this scenario all methods `Default` will be chosen for the next step. From then on the process will be the same.
+2. The first `action` may have your name omitted, but for that it must be of type **default**. See [Standard methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-default). If they exist, they will only be used when the first `ArgumentRaw` of the input is not a `action` . In this scenario all the **standard methods** will be chosen for the next step. From then on the process will be the same.
 3. After finding all methods of each `action` of the input, will be made in division levels. Each level will be created as follows:
-  * If the input start with arguments then formed the first level. That if there is no `Default` method.
-  * If there is more than one `action` in input, including `Defaults` , each will represent a whole new level.
+  * If the input start with arguments then formed the first level. That if there is no **default method**.
+  * If there is more than one `action` in input, including the **standard methods**, each will represent a whole new level.
   * The arguments that are not part of the `action` map (leftovers) formed another level. This level will be created as a result of the `action` level.
   * If you cannot find any `action` in input and only arguments, then there will be only one level.
-  * If there is no input, but there's `Default` methods without parameters, so they will be chosen for the execution.
+  * If there is no input, but there is **default methods** without parameters, so they will be chosen for the execution.
 4. All levels that are not of `action` (arguments only) will be used to find the receive. When this happens, each property is represented by the class `SysCommand.Parsing.ArgumentParsed` as well as the parameters of the methods.
 
 Important note: When the flag `bool enableMultiAction` is off the parser will accept only one `action` .
@@ -865,7 +865,7 @@ namespace Example.Input.Parser
 }
 ```
 
-_The) 2 levels with the first belonging to the default ' Main (...) ':_
+_The) 2 levels with the first belonging to the default method ' Main (...) ':_
 
 ```
 MyApp.exe --a 1 --b 2 --c 3 action2
@@ -1358,7 +1358,7 @@ Another option to display outputs is to use templates `T4` . This mechanism, unl
 
 * By organization, create a folder "Views"
 * Create a file T4 in the format "Runtime Text Template"
-* If you use model is necessary to set a parameter, which obligation, you must call "Model" and have your respective type configured on the tag `type` . If you do not use any "Model" then skip this step.
+* If you use model is necessary to set a parameter, which for compulsory, you must call "Model" and have your respective type configured on the tag `type` . If you do not use any "Model" then skip this step.
 * Implement your template
 
 **Example:**
@@ -1485,7 +1485,7 @@ Working with properties is very simple and objective, simply create their proper
 
 First, you can use the method `Main()` with no parameter, name Convention, will be in charge of be invoked if any of your property has been used in input from the user. The name "Main" was chosen to keep the naming pattern that the .NET uses in the console applications.
 
-For safety, use all the primitive types such as `Nullable` to ensure that the user did input. Or use the method `GetArgument(string name)` to check whether a property has parseada. It is worth mentioning that a `Default value` property will always have a result of parse and if necessary, use a check to see if the result came from user input.
+For safety, use all the primitive types such as `Nullable` to ensure that the user did input. Or use the method `GetArgument(string name)` to check whether a property has parseada. It is worth mentioning that a property with **default value** will always have the result of parse and if necessary, use a check to see if the result came from user input.
 
 **Example:**
 
@@ -1545,7 +1545,7 @@ MyPropertyDefaultValue has input
 Main() methods can also return values ;)
 ```
 
-Be very careful with properties `Default values` , the fact that she have default value causes the method to `Main()` always be called even when there is no input.
+Be very careful with properties that have **default values**, the fact that she have default value causes the method to `Main()` always be called even when there is no input.
 
 ```
 C:\MyApp.exe
@@ -1588,7 +1588,7 @@ The following rule describes how the default behavior for a naming property beco
 
 First converts the property name in lowercase, then add a dash "-" before each letter upper case that are in the middle or at the end of the name. In the case of properties with only one letter, the default is to leave the tiny font and input will be accepted only in short form.
 
-This is the default rule of nomenclarutura and you can choose to use it or customized it for that use the `ArgumentAttribute` attribute. The `ArgumentAttribute` attribute usage is exclusive, to use it you are eliminating the naming pattern, that is, if you customize the `forma curta` you will be required to customize `forma longa` too, and vice versa. Otherwise only the custom format is enabled.
+This is the default rule of nomenclarutura and you can choose to use it or customized it for that use the `ArgumentAttribute` attribute. The `ArgumentAttribute` attribute usage is exclusive, to use it you are eliminating the naming pattern, that is, if you customize the **short form** you will be required to customize the **long form** also, and vice versa. Otherwise only the custom format is enabled.
 
 **Example:**
 
@@ -1648,7 +1648,7 @@ C=9999
 
 To configure the text of help use the `ArgumentAttribute(Help="my help")` attribute. If you do not notify this attribute, your argument will still be displayed in the help, but no help information.
 
-However, still appears a text of add-on for each argument, this text tells you whether the argument is mandatory or optional (with or without a default value). This text is displayed by default, but you can disable it with the `ArgumentAttribute(ShowHelpComplement=false)` attribute.
+However, still appears a text of add-on for each argument, this text tells you whether the argument is mandatory or optional (with or without a **default value**). This text is displayed by default, but you can disable it with the `ArgumentAttribute(ShowHelpComplement=false)` attribute.
 
 ```csharp
 public class CustomPropertiesHelpCommand : Command
@@ -1823,12 +1823,12 @@ The argument '--my-property-without-attribute' does not exist
 
 Working with methods is also very simple, all methods defined as `public` , by default, are enabled to become `input actions` and be available for use. The interesting fact is that you can use the native resources making your .NET code cleaner, such as:
 
-* Methods without parameters
-* Methods with optional parameters with`Default value`
+* Parameterless methods
+* Methods with optional parameters with **default value**
 * Methods with overloads
 * `return`Where the methods return the method, by default, will be used as output in the console using
 
-## <a name="methods-without-params" />Methods without parameters
+## <a name="methods-without-params" />Parameterless methods
 
 **Example:**
 
@@ -1847,7 +1847,7 @@ C:\MyApp.exe my-action
 MyAction
 ```
 
-## <a name="methods-optional-params" />Optionais parameters
+## <a name="methods-optional-params" />optionais parameters
 
 The optional parameters are useful to avoid creating overloads and in the case of a console application helps you `actions` with several options, but not forcing the user to fill in all.
 
@@ -1935,7 +1935,7 @@ There are errors in command: Method1Command
 The argument '--arg1' does not exist
 ```
 
-The last command showed the limitation of overhead with respect to optional parameters. The parser understood that both methods with parameters `MyAction3` are invalid, see:
+The last command showed the limitation of overload with regard to optional parameters. The parser understood that both methods with `MyAction3` parameters are invalid, see:
 
 * MyAction3 (int arg0): does not have the input "arg1" that was requested, so this invalid.
 * MyAction3 (int arg0, int arg1): Has the input "arg1", but does not have the input "--", so this invalid arg0.
@@ -1944,7 +1944,7 @@ In this case the parser had chosen the only valid method, i.e. the method `MyAct
 
 ## <a name="methods-positional-inputs" />Using positional inputs
 
-Another way to get your action in the console is using `input posicional` . By default, all `action` accept positional arguments, but it can be disabled using the `ActionAttribute(EnablePositionalArgs = false)` attribute.
+Another way to get your action in the console is using **positional input**. By default, all `action` accept positional arguments, but it can be disabled using the `ActionAttribute(EnablePositionalArgs = false)` attribute.
 
 **Example:**
 
@@ -2047,7 +2047,7 @@ The following rule describes how the default behavior for the naming methods tur
 
 First converts the member name (methods or parameters) in small, then add a dash "-" before each letter upper case that are in the middle or at the end of the name. In the case of parameters with only one letter, the default is to leave the tiny font and input will be accepted only in short form.
 
-This is the default rule of nomenclarutura and you can choose to use it or customized it so in whole or in part. For this use the attributes `ActionAttribute` for the methods and `ArgumentAttribute` parameters. The `ArgumentAttribute` attribute usage is exclusive, to use it you are eliminating the naming pattern, that is, if you customize the `forma curta` you will be required to customize `forma longa` too, and vice versa. Otherwise only the custom format is enabled.
+This is the default rule of nomenclarutura and you can choose to use it or customized it so in whole or in part. For this use the attributes `ActionAttribute` for methods and `ArgumentAttribute` parameters. The `ArgumentAttribute` attribute usage is exclusive, to use it you are eliminating the naming pattern, that is, if you customize the **short form** you will be required to customize the **long form** also, and vice versa. Otherwise only the custom format is enabled.
 
 **Example:**
 
@@ -2218,14 +2218,14 @@ arg0 = '2'; arg1 = '1'
 
 The following properties do not make sense in the setting of parameters and methods exist only for that `ArgumentAtrribute` attribute is shared in the use of properties.
 
-* IsRequired: in C #, every parameter that has no default value is required, this setting is ignored if used.
-* DefaultValue: How the own C # already gives us the option of default value for parameters, this setting is redundant, so it is ignored by the standard .NET is enough and cleaner.
+* IsRequired: in C #, every parameter that has no **default value** is required, this setting is ignored if used.
+* DefaultValue: How the own C # already gives us the option to **default value** on parameters, this setting is redundant, so it is ignored by the standard .NET is enough and cleaner.
 
 ## <a name="methods-default" />Standard methods
 
 The use of standard methods (or implicitos methods) make the feature is very similar to the use of properties, i.e., you are not required to specify the `action` name and its parameters can be entered directly in the input as if they were arguments from properties.
 
-By Convention, if you call your `action` "Main" and it has parameters, it is considered as standard. To change this behavior you must turn off the flag `Action(IsDefault = false)` , so the default behavior will be changed and your action "Main" (with parameters) will no longer be accessed so implied and will require the specification of your name in input. The reverse is also true, if your action has a different name and you would like to make it a standard method then just turn on the flag `Action(IsDefault = true)` .
+By Convention, if you call your `action` "Main" and she has parameters, it is considered as standard. To change this behavior you must turn off the flag `Action(IsDefault = false)` , so the default behavior will be changed and your action "Main" (with parameters) will no longer be accessed so implied and will require the specification of your name in input. The reverse is also true, if your action has a different name and you would like to make it a standard method then just turn on the flag `Action(IsDefault = true)` .
 
 **Example:**
 
@@ -2330,8 +2330,8 @@ The source of each text in each element `Commands` , `Arguments` and `Actions` c
   * **C3:** The source of this text comes from the `ArgumentAtrribute(Help="")` attribute.
   * **C4:** This text will only appear if the flag `ArgumentAtrribute(ShowHelpComplement=true)` is turned on. The text that will be displayed will depend on the configuration of the Member:
     * `Strings.HelpArgDescRequired`: When the Member is required
-    * `Strings.HelpArgDescOptionalWithDefaultValue`: When the Member is optional and has a default value.
-    * `Strings.HelpArgDescOptionalWithoutDefaultValue`: When the Member is optional and has no default value.
+    * `Strings.HelpArgDescOptionalWithDefaultValue`: When the Member is optional and has a **default value**.
+    * `Strings.HelpArgDescOptionalWithoutDefaultValue`: When the Member is optional and has no **default value**.
 * **D:** The source of this text comes from the `ActionAtrribute(Name="")` attribute.
 * **E:** Are the same sources of command arguments (properties), because both use the same attribute.
 * **F:** Supplementary text to explain how the help works. The source of this text comes from the `Strings.HelpFooterDesc` class.
@@ -2512,7 +2512,7 @@ It is important to say that you can turn off this feature and implement your own
 
 # <a name="error" />Error handling
 
-Error handling is automatically generated by the system and are categorized as follows:
+Error handling is generated automatically by the system and are categorized as follows:
 
 * Errors in parse process: Are errors that occur in the process of parse and sub-categorizados are as follows:
   * `ArgumentParsedState.ArgumentAlreadyBeenSet`: Indicates that an argument this duplicate on the same input.
@@ -2789,7 +2789,7 @@ Note that to create an instance of `JsonFileManager` the scope of the `App.Items
 
 # <a name="redirectiong-commands" />Command redirection
 
-To redirect your application with a new sequence of commands is very simple, just to your action return an instance of the `RedirectResult` class by passing in your constructor a string containing the new sequence of commands. It is worth mentioning that the instances of the controls will be the same, that is, the State of each command will not return to the start, just the flow of execution. Another important point is that any input then this action will not be called, that is, execution resumes with the new command at a time when there is a return `RedirectResult` type.
+To redirect your application with a new sequence of commands is very simple, just to your action return an instance of the class `RedirectResult` by passing in your constructor a string containing the new sequence of commands. It is worth mentioning that the instances of the controls will be the same, that is, the State of each command will not return to the start, just the flow of execution. Another important point is that any input then this action will not be called, that is, execution resumes with the new command at a time when there is a return `RedirectResult` type.
 
 **Example:**
 

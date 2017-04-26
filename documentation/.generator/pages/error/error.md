@@ -1,6 +1,6 @@
 # Tratamento de erros <header-set anchor-name="error" />
 
-O tratamento de erro é gerado de forma automatica pelo sistema e são categorizados da seguinte forma:
+O tratamento de erro é gerado de forma automática pelo sistema e são categorizados da seguinte forma:
 
 * Erros no processo de parse: São erros que ocorrem no processo de parse e são sub-categorizados da seguinte forma:
   * `ArgumentParsedState.ArgumentAlreadyBeenSet`: Indica que um argumento esta duplicado no mesmo input.

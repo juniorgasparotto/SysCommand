@@ -1,4 +1,4 @@
-## Métodos sem parametros <header-set anchor-name="methods-without-params" />
+## Métodos sem parâmetros <header-set anchor-name="methods-without-params" />
 
 **Exemplo:**
 

@@ -44,8 +44,8 @@ A fonte de cada texto esta em cada elemento `Commands`, `Arguments` e `Actions` 
   * **C3:** A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
   * **C4:** Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
     * `Strings.HelpArgDescRequired`: Quando o membro é obrigatório
-    * `Strings.HelpArgDescOptionalWithDefaultValue`: Quando o membro é opcional e tem default value.
-    * `Strings.HelpArgDescOptionalWithoutDefaultValue`: Quando o membro é opcional e não tem default value.
+    * `Strings.HelpArgDescOptionalWithDefaultValue`: Quando o membro é opcional e tem **valor padrão**.
+    * `Strings.HelpArgDescOptionalWithoutDefaultValue`: Quando o membro é opcional e não tem **valor padrão**.
 * **D:** A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
 * **E:** São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
 * **F:** Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.

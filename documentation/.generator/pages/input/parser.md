@@ -74,13 +74,13 @@ Por fim, uma lista do tipo `IEnumerable<ArgumentRaw>`.
 É a etapa mais longa, onde combina o resultado do mapeamento com o resultado do parser simples. O objetivo é obter as melhores rotas para um mesmo input.
 
 1. A primeira etapa consiste em encontrar os métodos de acordo com o input de entrada. Para isso, será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
-2. A primeira `action` pode ter seu nome omitido, mas para isso ela precisa ser do tipo `Default`. Veja <anchor-get name="methods-default" />. Caso existam, elas só serão utilizadas quando o primeiro `ArgumentRaw` do input não é uma `action`. Nesse cenário todos os métodos `Default` serão escolhidos para a próxima etapa. Daí para frente o processo será o mesmo.
+2. A primeira `action` pode ter seu nome omitido, mas para isso ela precisa ser do tipo **padrão**. Veja <anchor-get name="methods-default" />. Caso existam, elas só serão utilizadas quando o primeiro `ArgumentRaw` do input não é uma `action`. Nesse cenário todos os **métodos padrão** serão escolhidos para a próxima etapa. Daí para frente o processo será o mesmo.
 3. Após encontrar todos os métodos de cada `action` do input, será feito a divisão em níveis. Cada nível será criado da seguinte forma:
-    * Se o input iniciar com argumentos então formaram o primeiro nível. Isso se não existir nenhum método `Default`.
-    * Caso exista mais de uma `action` no input, incluindo `Defaults`, cada uma representará um novo nível.
+    * Se o input iniciar com argumentos então formaram o primeiro nível. Isso se não existir nenhum **método padrão**.
+    * Caso exista mais de uma `action` no input, incluindo os **métodos padrão**, cada uma representará um novo nível.
     * Os argumentos que não fazem parte do mapa da `action` (sobras) formaram outro nível. Esse nível será criado na sequência do nível da `action`.
     * Caso não encontre nenhuma `action` no input e apenas argumentos, então haverá apenas um nível.
-    * Caso não exista nenhum input, mas exista métodos `Default` sem parâmetros, então eles serão escolhidos para a execução.
+    * Caso não exista nenhum input, mas exista **métodos padrão** sem parâmetros, então eles serão escolhidos para a execução.
 4. Todos os níveis que não são de `action` (apenas de argumentos) serão usados para encontrar as proprieades. Quando isso acontece, cada propriedade será representada pela classe `SysCommand.Parsing.ArgumentParsed` assim como os parâmetros dos métodos.
 
 Nota importante: Quando a flag `bool enableMultiAction` estiver desligada o parser aceitará apenas uma `action`.
@@ -138,7 +138,7 @@ namespace Example.Input.Parser
 }
 ```
 
-_A) 2 níveis com o primeiro pertencendo ao método default 'Main(...)':_
+_A) 2 níveis com o primeiro pertencendo ao método padrão 'Main(...)':_
 
 ```
 MyApp.exe --a 1 --b 2 --c 3 action2
@@ -378,17 +378,17 @@ _Explicação:_
 
 * Inputs (`ArgumentRaw`): "W", "Z", "Y", "T"
 * Esse input tem 1 nível:
-  * Command4.Prop1: Propriedade de referência para o input "W"
+  * `Command4.Prop1`: Propriedade de referência para o input "W"
     * AllRaw { "W" }
-  * Command4.Prop2: Propriedade de referência para o input "Z"
+  * `Command4.Prop2`: Propriedade de referência para o input "Z"
     * AllRaw { "Z" }
-  * Command4.Prop3: Propriedade de referência para o input "Y"
+  * `Command4.Prop3`: Propriedade de referência para o input "Y"
     * AllRaw { "Y" }
-  * Command4.Prop4: Propriedade de referência para o input "T"
+  * `Command4.Prop4`: Propriedade de referência para o input "T"
     * AllRaw { "T" }
-  * Command5.Prop1: Propriedade que tem prioridade, mas está inválida, o input "W" não faz parte do Enum.
+  * `Command5.Prop1`: Propriedade que tem prioridade, mas está inválida, o input "W" não faz parte do `Enum`.
     * AllRaw { "W" }
-  * Command6.Prop1: Mesmo caso do `Command5.Prop1`
+  * `Command6.Prop1`: Mesmo caso do `Command5.Prop1`
     * AllRaw { "W" }
 
 _Cenário 2: Propriedade com mais combinações será a referência_
@@ -403,17 +403,17 @@ _Explicação:_
 
 * Inputs (`ArgumentRaw`): "A", "B", "C", "D"
 * Esse input tem 1 nível:
-  * Command5.Prop1: Propriedade de referência de todos os inputs
+  * `Command5.Prop1`: Propriedade de referência de todos os inputs
     * AllRaw { "A", "B", "C", "D" }
-  * Command6.Prop1: Propriedade tem os 3 primeiros inputs, mas ela precisa ser 100% compátivel com a referência.
+  * `Command6.Prop1`: Propriedade tem os 3 primeiros inputs, mas ela precisa ser 100% compátivel com a referência.
     * AllRaw { "A", "B", "C" }
-  * Command4.Prop1: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
+  * `Command4.Prop1`: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
     * AllRaw { "A" }
-  * Command4.Prop2: Mesmo caso do `Command4.Prop1`
+  * `Command4.Prop2`: Mesmo caso do `Command4.Prop1`
     * AllRaw { "B" }
-  * Command4.Prop3: Mesmo caso do `Command4.Prop1`
+  * `Command4.Prop3`: Mesmo caso do `Command4.Prop1`
     * AllRaw { "C" }
-  * Command4.Prop4: Mesmo caso do `Command4.Prop1`
+  * `Command4.Prop4`: Mesmo caso do `Command4.Prop1`
     * AllRaw { "D" }
 
 _Cenário 3: Propriedade com mais combinações será a referência_
@@ -430,17 +430,17 @@ _Explicação:_
 
 * Inputs (`ArgumentRaw`): "A", "B", "C", "W"
 * Esse input tem 1 nível:
-  * Command5.Prop1: Propriedade de referência dos 3 primeiros inputs
+  * `Command5.Prop1`: Propriedade de referência dos 3 primeiros inputs
     * AllRaw { "A", "B", "C" }
-  * Command6.Prop1: Compatível com a referência
+  * `Command6.Prop1`: Compatível com a referência
     * AllRaw { "A", "B", "C" }
-  * Command4.Prop1: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
+  * `Command4.Prop1`: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
     * AllRaw { "A" }
-  * Command4.Prop2: Mesmo caso do `Command4.Prop1`
+  * `Command4.Prop2`: Mesmo caso do `Command4.Prop1`
     * AllRaw { "B" }
-  * Command4.Prop3: Mesmo caso do `Command4.Prop1`
+  * `Command4.Prop3`: Mesmo caso do `Command4.Prop1`
     * AllRaw { "C" }
-  * Command4.Prop4: Propriedade de referência do input "W" que é a 4 posição, posição que essa propriedade aceita.
+  * `Command4.Prop4`: Propriedade de referência do input "W" que é a 4 posição, posição que essa propriedade aceita.
     * AllRaw { "W" }
 
 Todos as propriedades "não escolhidas" foram descartados do processo. Essa regra é primordial para que mais de uma propriedade seja chamada no mesmo nível.

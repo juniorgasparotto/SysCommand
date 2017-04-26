@@ -124,7 +124,7 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que fornece um recurso de simulação de console que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#class-app) e [Inicializando com simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method).
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou atravez do método estático `App.RunApplication` que fornece um recurso de simulação de console que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja [Iniciando](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#class-app) e [Inicializando com o simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method).
 
 **`Command`**
 
@@ -371,7 +371,7 @@ Se você nunca trabalhou com .NET, talvez essa seja uma excelente oportunidade d
 * Na primeira linha do método `public int Program.Main(string[] args)`, adicione o código `return App.RunApplication()`.
 * Criar uma classe, em qualquer lugar, que herde de `SysCommand.ConsoleApp.Command`.
 * Criar suas propriedades com seus tipos `Nullable` e deixe-as como publicas. Elas se tornarão `arguments` no prompt de comando.
-* Crie um método `Main()` sem parametros em sua classe para poder interceptar os inputs de suas propriedades. Utilize `Property != null` para identificar que a propriedade foi inserida.
+* Crie um método `Main()` sem parâmetros em sua classe para poder interceptar os inputs de suas propriedades. Utilize `Property != null` para identificar que a propriedade foi inserida.
 * Crie métodos publicos, com ou sem parâmetros, para que eles se tornem `actions`. Caso tenha parâmetros opcionais, deixe-os configurados como `Nullable` pela mesma razão acima.
 * Digite `help` no prompt de comando que será aberto para poder visualizar suas propriedades e métodos transformados em `arguments` e `actions`.
 * Agora é só usar!

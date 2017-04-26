@@ -1,4 +1,4 @@
-## Customizando as informações de help de actions e seus parametros <header-set anchor-name="methods-customizing-help" />
+## Customizando as informações de help de actions e seus parâmetros <header-set anchor-name="methods-customizing-help" />
 
 Para configurar o texto de help utilize o atributo `ActionAttribute(Help="my help")`. Caso você não informe esse atributo, sua ação ainda será exibido no help, mas sem informações de ajuda.
 
