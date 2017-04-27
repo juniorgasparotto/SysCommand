@@ -2,7 +2,7 @@
 
 O formato do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments` e `Actions`. Ele é gerado de forma automática utilizando os textos de help de cada um desses elementos, por isso é importante manter essas informações preenchidas e atualizadas, isso ajudará você e quem for utilizar sua aplicação.
 
-No formato padrão, existem duas formas de exibir o help: o `help completo` e o `help por action`:
+No formato padrão, existem duas formas de exibir o help: o **help completo** e o **help por action**:
 
 **Exibe o help para uma ação especifica:**
 

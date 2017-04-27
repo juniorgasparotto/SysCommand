@@ -17,7 +17,7 @@ Primeiro, foi criado um pequeno wrapper da classe `System.Console` chamado `SysC
   * "1" : Erro
 * Quebra de linha inteligente durante o uso dós métodos de write e read. A variável `App.Console.BreakLineInNextWrite` controla as quebras e te ajuda a não deixar linhas vazias sem necessidade.
 
-Outro recurso seria a utilização dos `returns` das actions e que serão, caso existam, utilizados como output. Esse recurso se assemelha muito ao "AspNet MVC".
+Outro recurso seria a utilização dos `returns` das ações e que serão, caso existam, utilizados como output. Esse recurso se assemelha muito ao "AspNet MVC".
 
 **Exemplo:**
 

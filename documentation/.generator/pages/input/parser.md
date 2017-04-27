@@ -145,7 +145,7 @@ MyApp.exe --a 1 --b 2 --c 3 action2
           |      L1        |  L2   |
 ```
 
-_B) 2 níveis com duas actions:_
+_B) 2 níveis com duas ações:_
 
 ```
 MyApp.exe action1 action2

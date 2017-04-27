@@ -1,4 +1,4 @@
-## Customizando nomes de actions e arguments <header-set anchor-name="methods-customizing-names" />
+## Customizando nomes de ações e argumentos <header-set anchor-name="methods-customizing-names" />
 
 A regra a seguir descreve como é o comportamento padrão de nomenclatura para que os métodos vire uma `action` e um parâmetro vire um `argument`:
 
@@ -79,7 +79,7 @@ C:\MyApp.exe my-action-without-prefix
 my-action-without-prefix
 ```
 
-A segunda forma é você especificar qual será o prefixo de cada `action` usando a propriedade de commando `Command.PrefixMethods`. Assim o prefixo não será processado usando o nome do comando e sim especificado por você. Vale ressaltar que a flag `Command.UsePrefixInAllMethods` ainda precisa estar ligada.
+A segunda forma é você especificar qual será o prefixo de cada `action` usando a propriedade de comando `Command.PrefixMethods`. Assim o prefixo não será processado usando o nome do comando e sim especificado por você. Vale ressaltar que a flag `Command.UsePrefixInAllMethods` ainda precisa estar ligada.
 
 **Exemplo:**
 

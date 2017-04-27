@@ -2,7 +2,7 @@
 
 O tratamento de erro é gerado de forma automática pelo sistema e são categorizados da seguinte forma:
 
-* Erros no processo de parse: São erros que ocorrem no processo de parse e são sub-categorizados da seguinte forma:
+* Erros no processo de parse: São erros que ocorrem no processo de parse e são sub categorizados da seguinte forma:
   * `ArgumentParsedState.ArgumentAlreadyBeenSet`: Indica que um argumento esta duplicado no mesmo input.
   * `ArgumentParsedState.ArgumentNotExistsByName`: Indica que um argumento nomeado não existe.
   * `ArgumentParsedState.ArgumentNotExistsByValue`: Indica que um argumento posicional não existe

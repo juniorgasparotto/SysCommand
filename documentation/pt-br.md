@@ -48,8 +48,8 @@
   * [Sobrecargas](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-overloads)
   * [Usando inputs posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-positional-inputs)
   * [Ignorar métodos publicos por uma escolha manual usando atributo](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-ignore-public)
-  * [Customizando nomes de actions e arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-names)
-  * [Customizando as informações de help de actions e seus parâmetros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-help)
+  * [Customizando nomes de ações e argumentos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-names)
+  * [Customizando as informações de help nas ações e em seus parâmetros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-help)
   * [Trocando a posição de parâmetros posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-changing-position)
   * [Propriedades do atributos ArgumentAttribute que não são utilizados](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-not-used-attrs)
   * [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-default)
@@ -67,7 +67,7 @@
 
 # <a name="class-app" />Iniciando
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` com suas possíveis customizações ou atravez do método estático `App.RunApplication` que disponibiliza um recurso chamado `console simulator` que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo.
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` com suas possíveis customizações ou atravez do método estático `App.RunApplication` que disponibiliza um recurso chamado **simulador de console** que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo.
 
 A classe `App` esta no topo da hierarquia de classes do sistema, cada instância é responsável por manter um contexto isolado da execução. Nenhum recurso estático é usado aqui e isso é importante para ter a liberdade de criar quantas instâncias quiser em qualquer escopo.
 
@@ -487,7 +487,7 @@ Programaticamente, as `actions` são derivadas dos `methods`.
 
 O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#argument-history-manager) deixará de funcionar caso isso ocorra.
 
-Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de paramentros.
+Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de parâmetros.
 
 **Exemplo:**
 
@@ -872,7 +872,7 @@ MyApp.exe --a 1 --b 2 --c 3 action2
           |      L1        |  L2   |
 ```
 
-_B) 2 níveis com duas actions:_
+_B) 2 níveis com duas ações:_
 
 ```
 MyApp.exe action1 action2
@@ -1105,17 +1105,17 @@ _Explicação:_
 
 * Inputs (`ArgumentRaw`): "W", "Z", "Y", "T"
 * Esse input tem 1 nível:
-  * Command4.Prop1: Propriedade de referência para o input "W"
+  * `Command4.Prop1`: Propriedade de referência para o input "W"
     * AllRaw { "W" }
-  * Command4.Prop2: Propriedade de referência para o input "Z"
+  * `Command4.Prop2`: Propriedade de referência para o input "Z"
     * AllRaw { "Z" }
-  * Command4.Prop3: Propriedade de referência para o input "Y"
+  * `Command4.Prop3`: Propriedade de referência para o input "Y"
     * AllRaw { "Y" }
-  * Command4.Prop4: Propriedade de referência para o input "T"
+  * `Command4.Prop4`: Propriedade de referência para o input "T"
     * AllRaw { "T" }
-  * Command5.Prop1: Propriedade que tem prioridade, mas está inválida, o input "W" não faz parte do Enum.
+  * `Command5.Prop1`: Propriedade que tem prioridade, mas está inválida, o input "W" não faz parte do `Enum`.
     * AllRaw { "W" }
-  * Command6.Prop1: Mesmo caso do `Command5.Prop1`
+  * `Command6.Prop1`: Mesmo caso do `Command5.Prop1`
     * AllRaw { "W" }
 
 _Cenário 2: Propriedade com mais combinações será a referência_
@@ -1130,17 +1130,17 @@ _Explicação:_
 
 * Inputs (`ArgumentRaw`): "A", "B", "C", "D"
 * Esse input tem 1 nível:
-  * Command5.Prop1: Propriedade de referência de todos os inputs
+  * `Command5.Prop1`: Propriedade de referência de todos os inputs
     * AllRaw { "A", "B", "C", "D" }
-  * Command6.Prop1: Propriedade tem os 3 primeiros inputs, mas ela precisa ser 100% compátivel com a referência.
+  * `Command6.Prop1`: Propriedade tem os 3 primeiros inputs, mas ela precisa ser 100% compátivel com a referência.
     * AllRaw { "A", "B", "C" }
-  * Command4.Prop1: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
+  * `Command4.Prop1`: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
     * AllRaw { "A" }
-  * Command4.Prop2: Mesmo caso do `Command4.Prop1`
+  * `Command4.Prop2`: Mesmo caso do `Command4.Prop1`
     * AllRaw { "B" }
-  * Command4.Prop3: Mesmo caso do `Command4.Prop1`
+  * `Command4.Prop3`: Mesmo caso do `Command4.Prop1`
     * AllRaw { "C" }
-  * Command4.Prop4: Mesmo caso do `Command4.Prop1`
+  * `Command4.Prop4`: Mesmo caso do `Command4.Prop1`
     * AllRaw { "D" }
 
 _Cenário 3: Propriedade com mais combinações será a referência_
@@ -1157,17 +1157,17 @@ _Explicação:_
 
 * Inputs (`ArgumentRaw`): "A", "B", "C", "W"
 * Esse input tem 1 nível:
-  * Command5.Prop1: Propriedade de referência dos 3 primeiros inputs
+  * `Command5.Prop1`: Propriedade de referência dos 3 primeiros inputs
     * AllRaw { "A", "B", "C" }
-  * Command6.Prop1: Compatível com a referência
+  * `Command6.Prop1`: Compatível com a referência
     * AllRaw { "A", "B", "C" }
-  * Command4.Prop1: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
+  * `Command4.Prop1`: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
     * AllRaw { "A" }
-  * Command4.Prop2: Mesmo caso do `Command4.Prop1`
+  * `Command4.Prop2`: Mesmo caso do `Command4.Prop1`
     * AllRaw { "B" }
-  * Command4.Prop3: Mesmo caso do `Command4.Prop1`
+  * `Command4.Prop3`: Mesmo caso do `Command4.Prop1`
     * AllRaw { "C" }
-  * Command4.Prop4: Propriedade de referência do input "W" que é a 4 posição, posição que essa propriedade aceita.
+  * `Command4.Prop4`: Propriedade de referência do input "W" que é a 4 posição, posição que essa propriedade aceita.
     * AllRaw { "W" }
 
 Todos as propriedades "não escolhidas" foram descartados do processo. Essa regra é primordial para que mais de uma propriedade seja chamada no mesmo nível.
@@ -1226,7 +1226,7 @@ Primeiro, foi criado um pequeno wrapper da classe `System.Console` chamado `SysC
   * "1" : Erro
 * Quebra de linha inteligente durante o uso dós métodos de write e read. A variável `App.Console.BreakLineInNextWrite` controla as quebras e te ajuda a não deixar linhas vazias sem necessidade.
 
-Outro recurso seria a utilização dos `returns` das actions e que serão, caso existam, utilizados como output. Esse recurso se assemelha muito ao "AspNet MVC".
+Outro recurso seria a utilização dos `returns` das ações e que serão, caso existam, utilizados como output. Esse recurso se assemelha muito ao "AspNet MVC".
 
 **Exemplo:**
 
@@ -1821,7 +1821,7 @@ The argument '--my-property-without-attribute' does not exist
 
 # <a name="methods" />Trabalhando com métodos
 
-O trabalho com métodos também é muito bem simples, todos os métodos definidos como `public`, por padrão, serão habilitados para virarem `input actions` e estarem disponíveis para uso. O fato interessante é que você pode utilizar os recursos nativos do .NET deixando seu código mais limpo, como:
+O trabalho com métodos também é muito bem simples, todos os métodos definidos como `public`, por padrão, serão habilitados para virarem `actions` e estarem disponíveis para uso. O fato interessante é que você pode utilizar os recursos nativos do .NET deixando seu código mais limpo, como:
 
 * Métodos sem parâmetros
 * Métodos com parâmetros opcionais com **valor padrão**
@@ -2041,7 +2041,7 @@ C:\MyApp.exe my-action-ignored
 Could not find any action.
 ```
 
-## <a name="methods-customizing-names" />Customizando nomes de actions e arguments
+## <a name="methods-customizing-names" />Customizando nomes de ações e argumentos
 
 A regra a seguir descreve como é o comportamento padrão de nomenclatura para que os métodos vire uma `action` e um parâmetro vire um `argument`:
 
@@ -2122,7 +2122,7 @@ C:\MyApp.exe my-action-without-prefix
 my-action-without-prefix
 ```
 
-A segunda forma é você especificar qual será o prefixo de cada `action` usando a propriedade de commando `Command.PrefixMethods`. Assim o prefixo não será processado usando o nome do comando e sim especificado por você. Vale ressaltar que a flag `Command.UsePrefixInAllMethods` ainda precisa estar ligada.
+A segunda forma é você especificar qual será o prefixo de cada `action` usando a propriedade de comando `Command.PrefixMethods`. Assim o prefixo não será processado usando o nome do comando e sim especificado por você. Vale ressaltar que a flag `Command.UsePrefixInAllMethods` ainda precisa estar ligada.
 
 **Exemplo:**
 
@@ -2147,11 +2147,11 @@ C:\MyApp.exe custom-prefix-my-action
 custom-prefix-my-action
 ```
 
-## <a name="methods-customizing-help" />Customizando as informações de help de actions e seus parâmetros
+## <a name="methods-customizing-help" />Customizando as informações de help nas ações e em seus parâmetros
 
 Para configurar o texto de help utilize o atributo `ActionAttribute(Help="my help")`. Caso você não informe esse atributo, sua ação ainda será exibido no help, mas sem informações de ajuda.
 
-Para cada paramentro utilizasse o mesmo atributo das propriedades `ArgumentAttribute(Help="")`. O comportamento é exatamente o mesmo. Veja [Customizando as informações de help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-customizing-help).
+Para cada parâmetro utilizasse o mesmo atributo das propriedades `ArgumentAttribute(Help="")`. O comportamento é exatamente o mesmo. Veja [Customizando as informações de help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-customizing-help).
 
 **Exemplo:**
 
@@ -2288,7 +2288,7 @@ ActionWhenNotExistsInput()
 
 O formato do help leva em consideração todos os elementos que compõem o sistema, ou seja, `Commands`, `Arguments` e `Actions`. Ele é gerado de forma automática utilizando os textos de help de cada um desses elementos, por isso é importante manter essas informações preenchidas e atualizadas, isso ajudará você e quem for utilizar sua aplicação.
 
-No formato padrão, existem duas formas de exibir o help: o `help completo` e o `help por action`:
+No formato padrão, existem duas formas de exibir o help: o **help completo** e o **help por action**:
 
 **Exibe o help para uma ação especifica:**
 
@@ -2455,7 +2455,7 @@ public class Program
 
 * O comando de help é o único que não pode ser ignorado pela inicialização, caso ele não exista na lista de tipos, o comando `SysCommand.ConsoleApp.Commands.HelpCommand.cs` será adicionado internamente.
 * Para mais informações sobre customizações do help em propriedades veja o tópido de [Customizando as informações de help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#properties-customizing-help).
-* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help de actions e seus parâmetros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-help).
+* Para mais informações sobre customizações do help em ações veja o tópido de [Customizando as informações de help nas ações e em seus parâmetros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-customizing-help).
 
 # <a name="verbose" />Verbose
 
@@ -2514,7 +2514,7 @@ output of critical
 
 O tratamento de erro é gerado de forma automática pelo sistema e são categorizados da seguinte forma:
 
-* Erros no processo de parse: São erros que ocorrem no processo de parse e são sub-categorizados da seguinte forma:
+* Erros no processo de parse: São erros que ocorrem no processo de parse e são sub categorizados da seguinte forma:
   * `ArgumentParsedState.ArgumentAlreadyBeenSet`: Indica que um argumento esta duplicado no mesmo input.
   * `ArgumentParsedState.ArgumentNotExistsByName`: Indica que um argumento nomeado não existe.
   * `ArgumentParsedState.ArgumentNotExistsByValue`: Indica que um argumento posicional não existe
@@ -2837,7 +2837,7 @@ Redirected: my-value. Count: 2
 
 # <a name="stop-propagation" />Cancelamento da continuidade da execução
 
-Quando existem muitas actions com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.
+Quando existem muitas ações com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.
 
 **Exemplo:**
 
@@ -2900,7 +2900,7 @@ StopPropagationCommand2.StopPropagationAction1
 
 Perceba que ao utilizar o argumento "--cancel" a action "StopPropagationCommand3.StopPropagationAction1" não foi executada. Isso por que ela estava na última posição da pilha de execução e como a action "StopPropagationCommand2.StopPropagationAction1" cancelou a continuidade da execução, qualquer outra action da sequencia sera ignorada.
 
-Outra possibilidade de uso do `StopPropagation` é quando existem multiplas actions no mesmo input. A lógica é a mesma, será cancelado todas as actions da pilha que estão depois da action que disparou o stop.
+Outra possibilidade de uso do `StopPropagation` é quando existem multiplas ações no mesmo input. A lógica é a mesma, será cancelado todas as ações da pilha que estão depois da action que disparou o stop.
 
 ```
 C:\MyApp.exe stop-propagation-action1 stop-propagation-action2
@@ -2965,9 +2965,9 @@ Esse extra foi criado para uma ocasição especifica de parse onde o foco é ser
 
 _Métodos:_
 
-* `void Add<T>(string longName, string helpText, Action<T> action)`: Adiciona uma configuração no formato `longo`
-* `void Add<T>(char shortName, string helpText, Action<T> action)`: Adiciona uma configuração no formato `curto`
-* `Add<T>(string longName, char? shortName, string helpText, Action<T> action)`: Adiciona uma configuração no formato `longo` e `curto`.
+* `void Add<T>(string longName, string helpText, Action<T> action)`: Adiciona uma configuração no formato **longo**
+* `void Add<T>(char shortName, string helpText, Action<T> action)`: Adiciona uma configuração no formato **curto**
+* `Add<T>(string longName, char? shortName, string helpText, Action<T> action)`: Adiciona uma configuração no formato **longo** e **curto**.
 * `Add<T>(Argument<T> argument)`: Adiciona uma configuração completa
 * `void Parse(string[] args, bool enablePositionalArgs = false)`: Executa o parse
 

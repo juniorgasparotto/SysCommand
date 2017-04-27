@@ -4,9 +4,9 @@ Esse extra foi criado para uma ocasição especifica de parse onde o foco é ser
 
 _Métodos:_
 
-* `void Add<T>(string longName, string helpText, Action<T> action)`: Adiciona uma configuração no formato `longo`
-* `void Add<T>(char shortName, string helpText, Action<T> action)`: Adiciona uma configuração no formato `curto`
-* `Add<T>(string longName, char? shortName, string helpText, Action<T> action)`: Adiciona uma configuração no formato `longo` e `curto`.
+* `void Add<T>(string longName, string helpText, Action<T> action)`: Adiciona uma configuração no formato **longo**
+* `void Add<T>(char shortName, string helpText, Action<T> action)`: Adiciona uma configuração no formato **curto**
+* `Add<T>(string longName, char? shortName, string helpText, Action<T> action)`: Adiciona uma configuração no formato **longo** e **curto**.
 * `Add<T>(Argument<T> argument)`: Adiciona uma configuração completa
 * `void Parse(string[] args, bool enablePositionalArgs = false)`: Executa o parse
 

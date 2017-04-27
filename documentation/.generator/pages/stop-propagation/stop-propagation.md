@@ -1,6 +1,6 @@
 # Cancelamento da continuidade da execução <header-set anchor-name="stop-propagation" />
 
-Quando existem muitas actions com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.
+Quando existem muitas ações com o mesmo nome e assinatura, todas elas serão executadas juntas quando solicitada pelo usuário. Porém, você pode impedir isso usando o comando `ExecutionScope.StopPropagation()` dentro da sua action que você deseje que seja a última na pilha de execução.
 
 **Exemplo:**
 
@@ -63,7 +63,7 @@ StopPropagationCommand2.StopPropagationAction1
 
 Perceba que ao utilizar o argumento "--cancel" a action "StopPropagationCommand3.StopPropagationAction1" não foi executada. Isso por que ela estava na última posição da pilha de execução e como a action "StopPropagationCommand2.StopPropagationAction1" cancelou a continuidade da execução, qualquer outra action da sequencia sera ignorada.
 
-Outra possibilidade de uso do `StopPropagation` é quando existem multiplas actions no mesmo input. A lógica é a mesma, será cancelado todas as actions da pilha que estão depois da action que disparou o stop.
+Outra possibilidade de uso do `StopPropagation` é quando existem multiplas ações no mesmo input. A lógica é a mesma, será cancelado todas as ações da pilha que estão depois da action que disparou o stop.
 
 ```
 C:\MyApp.exe stop-propagation-action1 stop-propagation-action2

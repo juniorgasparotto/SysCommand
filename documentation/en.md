@@ -48,8 +48,8 @@
   * [Overloads](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-overloads)
   * [Using positional inputs](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-positional-inputs)
   * [Ignore public methods by a manual choice using attribute](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-ignore-public)
-  * [Customizing the names of actions and arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-names)
-  * [Customizing the help information of actions and their parameters](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-help)
+  * [Customizing actions names and arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-names)
+  * [Customizing the help information on the actions and its parameters](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-help)
   * [Changing the position of positional parameters](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-changing-position)
   * [Properties of ArgumentAttribute attributes which are not used](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-not-used-attrs)
   * [Standard methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-default)
@@ -67,7 +67,7 @@
 
 # <a name="class-app" />Starting
 
-The application context initialization can be done in two ways, by an instance of the class `App` with its possible customizations or through the static method `App.RunApplication` that provides a feature called `console simulator` that helps you test your inputs inside the Visual Studio itself, without the need to perform your ".exe" in an external console.
+The application context initialization can be done in two ways, by an instance of the class `App` with its possible customizations or through the static method `App.RunApplication` that provides a feature called **console Simulator** that helps you test your inputs inside the Visual Studio itself, without the need to perform your ".exe" in an external console.
 
 The class `App` is in the top of the class hierarchy of the system, each instance is responsible for maintaining a context isolated from the implementation. No static resource is used here and it's important to have the freedom to create as many instances you want in any scope.
 
@@ -1105,17 +1105,17 @@ _Explanation:_
 
 * Inputs ( `ArgumentRaw` ): "W", "Z", "Y", "T"
 * This input has 1 level:
-  * Command4. Prop1: reference Property to the input "W"
+  * `Command4.Prop1`: Property for the input "W"
     * AllRaw {"W"}
-  * Command4. Prop2: reference Property to the input "Z"
+  * `Command4.Prop2`: Property for the input "Z"
     * AllRaw {"Z"}
-  * Command4. Prop3: reference Property to the input "Y"
+  * `Command4.Prop3`: Property for the input "Y"
     * AllRaw {Y}
-  * Command4. Prop4: reference Property to the input "T"
+  * `Command4.Prop4`: Property for the input "T"
     * AllRaw {"T"}
-  * Command5. Prop1: property that has priority, but is invalid, the input "W" is not part of the Enum.
+  * `Command5.Prop1`: Property that has priority, but is invalid, the input "W" is not part of the `Enum` .
     * AllRaw {"W"}
-  * Command6. Prop1: even if the`Command5.Prop1`
+  * `Command6.Prop1`: Even if the`Command5.Prop1`
     * AllRaw {"W"}
 
 _Scenario 2: property with more combinations will be the reference_
@@ -1130,17 +1130,17 @@ _Explanation:_
 
 * Inputs ( `ArgumentRaw` ): "A", "B", "C", "D"
 * This input has 1 level:
-  * Command5. Prop1: property of all reference inputs
+  * `Command5.Prop1`: Property of all reference inputs
     * AllRaw {"A", "B", "C", "D"}
-  * Command6. Prop1: property has the first 3 inputs, but it needs to be 100% compatible with the reference.
+  * `Command6.Prop1`: Property has the first 3 inputs, but it needs to be 100% compatible with the reference.
     * AllRaw {"A", "B", "C"}
-  * Command4. Prop1: property is valid, but the input "" already has the reference `Command5.Prop1` that has priority for most.
+  * `Command4.Prop1`: Property is valid, but the input "" already has the reference `Command5.Prop1` that has priority for most.
     * AllRaw {""}
-  * Command4. Prop2: even if the`Command4.Prop1`
+  * `Command4.Prop2`: Even if the`Command4.Prop1`
     * AllRaw {B}
-  * Command4. Prop3: even if the`Command4.Prop1`
+  * `Command4.Prop3`: Even if the`Command4.Prop1`
     * AllRaw {"C"}
-  * Command4. Prop4: even if the`Command4.Prop1`
+  * `Command4.Prop4`: Even if the`Command4.Prop1`
     * AllRaw {"D"}
 
 _Scenario 3: property with more combinations will be the reference_
@@ -1157,17 +1157,17 @@ _Explanation:_
 
 * Inputs ( `ArgumentRaw` ): "A", "B", "C", "W"
 * This input has 1 level:
-  * Command5. Prop1: reference Property of the first 3 inputs
+  * `Command5.Prop1`: 3 first reference property inputs
     * AllRaw {"A", "B", "C"}
-  * Command6. Prop1: compatible with the reference
+  * `Command6.Prop1`: Compatible with the reference
     * AllRaw {"A", "B", "C"}
-  * Command4. Prop1: property is valid, but the input "" already has the reference `Command5.Prop1` that has priority for most.
+  * `Command4.Prop1`: Property is valid, but the input "" already has the reference `Command5.Prop1` that has priority for most.
     * AllRaw {""}
-  * Command4. Prop2: even if the`Command4.Prop1`
+  * `Command4.Prop2`: Even if the`Command4.Prop1`
     * AllRaw {B}
-  * Command4. Prop3: even if the`Command4.Prop1`
+  * `Command4.Prop3`: Even if the`Command4.Prop1`
     * AllRaw {"C"}
-  * Command4. Prop4: Property input reference "W" which is the 4 position, position this property accepts.
+  * `Command4.Prop4`: Input reference Property "W" which is the 4 position, position this property accepts.
     * AllRaw {"W"}
 
 All the properties "not chosen" were discarded in the process. This rule is paramount so that more than one property is called at the same level.
@@ -1226,7 +1226,7 @@ First, it was created a small wrapper `System.Console` class called `SysCommand.
   * "1": error
 * Smart line break while using dós write and read methods. The variable `App.Console.BreakLineInNextWrite` controls the breaks and helps you not leave empty lines.
 
-Another feature would be the use of `returns` the actions and that will be, if any, used as output. This feature resembles "AspNet MVC".
+Another feature would be the use of stock `returns` and that will be, if any, used as output. This feature resembles "AspNet MVC".
 
 **Example:**
 
@@ -1821,7 +1821,7 @@ The argument '--my-property-without-attribute' does not exist
 
 # <a name="methods" />Working with methods
 
-Working with methods is also very simple, all methods defined as `public` , by default, are enabled to become `input actions` and be available for use. The interesting fact is that you can use the native resources making your .NET code cleaner, such as:
+Working with methods is also very simple, all methods defined as `public` , by default, are enabled to become `actions` and be available for use. The interesting fact is that you can use the native resources making your .NET code cleaner, such as:
 
 * Parameterless methods
 * Methods with optional parameters with **default value**
@@ -2041,7 +2041,7 @@ C:\MyApp.exe my-action-ignored
 Could not find any action.
 ```
 
-## <a name="methods-customizing-names" />Customizing the names of actions and arguments
+## <a name="methods-customizing-names" />Customizing actions names and arguments
 
 The following rule describes how the default behavior for the naming methods turn a `action` and a a parameter `argument` :
 
@@ -2122,7 +2122,7 @@ C:\MyApp.exe my-action-without-prefix
 my-action-without-prefix
 ```
 
-The second way is you specify which is the prefix of each `action` using the commando `Command.PrefixMethods` . So the prefix will not be processed using the command name and Yes you specify. It is worth mentioning that the flag `Command.UsePrefixInAllMethods` still needs to be linked.
+The second way is you specify which is the prefix of each `action` using the command property `Command.PrefixMethods` . So the prefix will not be processed using the command name and Yes you specify. It is worth mentioning that the flag `Command.UsePrefixInAllMethods` still needs to be linked.
 
 **Example:**
 
@@ -2147,11 +2147,11 @@ C:\MyApp.exe custom-prefix-my-action
 custom-prefix-my-action
 ```
 
-## <a name="methods-customizing-help" />Customizing the help information of actions and their parameters
+## <a name="methods-customizing-help" />Customizing the help information on the actions and its parameters
 
 To configure the text of help use the `ActionAttribute(Help="my help")` attribute. If you do not notify this attribute, your action will still be displayed in the help, but no help information.
 
-For each paramentro using the same attribute `ArgumentAttribute(Help="")` Properties. The behavior is exactly the same. See [Customizing the help information](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-customizing-help).
+For each parameter using the same attribute `ArgumentAttribute(Help="")` Properties. The behavior is exactly the same. See [Customizing the help information](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-customizing-help).
 
 **Example:**
 
@@ -2288,7 +2288,7 @@ ActionWhenNotExistsInput()
 
 The format of the help takes into account all the elements that compose the system, i.e. `Commands` , `Arguments` and `Actions` . It is generated automatically using the help texts of each of these elements, so it's important to keep those information filled in and updated, this will help you and who is using your application.
 
-In the standard format, there are two ways to display the help: `help completo` and `help por action` :
+In the standard format, there are two ways to display the help: the **complete help** and the **help for action**:
 
 **Displays the help for an action specifies:**
 
@@ -2455,7 +2455,7 @@ public class Program
 
 * The help command is the only one that cannot be ignored by initialization, if it does not exist in the list, the `SysCommand.ConsoleApp.Commands.HelpCommand.cs` command will be added internally.
 * For more information about customization of help on properties see the topic of [Customizing the help information](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-customizing-help).
-* For more information about customization of help on actions see the topic of [Customizing the help information of actions and their parameters](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-help).
+* For more information about customization of help on actions see the topic of [Customizing the help information on the actions and its parameters](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-customizing-help).
 
 # <a name="verbose" />Verbose
 
@@ -2514,7 +2514,7 @@ It is important to say that you can turn off this feature and implement your own
 
 Error handling is generated automatically by the system and are categorized as follows:
 
-* Errors in parse process: Are errors that occur in the process of parse and sub-categorizados are as follows:
+* Errors in parse process: Are errors that occur in the parse and process are sub categorised as follows:
   * `ArgumentParsedState.ArgumentAlreadyBeenSet`: Indicates that an argument this duplicate on the same input.
   * `ArgumentParsedState.ArgumentNotExistsByName`: Indicates that a named argument does not exist.
   * `ArgumentParsedState.ArgumentNotExistsByValue`: Indicates that a positional argument does not exist
@@ -2965,9 +2965,9 @@ This extra is designed for a ocasição specifies the parse where the focus is t
 
 _Methods:_
 
-* `void Add<T>(string longName, string helpText, Action<T> action)`: Adds a setting in the format`longo`
-* `void Add<T>(char shortName, string helpText, Action<T> action)`: Adds a setting in the format`curto`
-* `Add<T>(string longName, char? shortName, string helpText, Action<T> action)`: Adds a setting `longo` and format `curto` .
+* `void Add<T>(string longName, string helpText, Action<T> action)`: Adds a setting in **long** format
+* `void Add<T>(char shortName, string helpText, Action<T> action)`: Adds a configuration in **short** format
+* `Add<T>(string longName, char? shortName, string helpText, Action<T> action)`: Adds a configuration in the form of **long** and **short**.
 * `Add<T>(Argument<T> argument)`: Adds a complete configuration
 * `void Parse(string[] args, bool enablePositionalArgs = false)`: Executes the parse
 
