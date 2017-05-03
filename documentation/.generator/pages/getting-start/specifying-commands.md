@@ -67,7 +67,7 @@ any action. Every action with the symbol "*" can
 have his name omitted.
 ```
 
-Perceba que no help não existe nenhuma ocorrencia da class `SecondCommand`.
+Perceba que ao digitar `help` a classe `SecondCommand` não é exibida.
 
 Perceba também que existe um help para o próprio mecanismo de help, esse `Command` sempre deverá existir, caso não seja especificado na sua lista de tipos o proprio sistema se encarregará de cria-lo utilizando o help padrão `SysCommand.ConsoleApp.Commands.HelpCommand`. Para mais informações sobre customização de help consulte <anchor-get name="help" />.
 
@@ -134,6 +134,6 @@ any action. Every action with the symbol "*" can
 have his name omitted.
 ```
 
-Perceba que no help não existe nenhuma ocorrencia da class `FirstCommand`.
+Perceba que ao digitar `help` a classe `FirstCommand` não é exibida.
 
 Por enquanto, não se atente agora para as classes `VerboseCommand` e `ArgsHistoryCommand` elas são commands internos e serão explicados mais adiante na documentação.

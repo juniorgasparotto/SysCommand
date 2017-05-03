@@ -36,7 +36,7 @@ public class Program
 }
 ```
 
-Ao iniciar esse código no Visual Studio um prompt padrão com um label `cmd>` será exibido. Isso indica que você pode iniciar seus testes quantas vezes for necessário. Para sair você pode usar o atalho padrão "CTRL+C" ou apertar o botão "stop" do Visual Studio.
+Quando você executar esse código no Visual Studio, um prompt com o label `cmd>` será exibido. Isso indica que você pode iniciar seus testes quantas vezes for necessário. Para sair, você pode usar o atalho padrão "CTRL+C" ou apertar o botão "stop" do Visual Studio.
 
 ```
 cmd> --my-property value

@@ -12,7 +12,7 @@ São os comandos que herdam da classe `Command` e implementam a interface `IHelp
 
 **Comandos de debug**
 
-Os comandos de debug são comandos que são carregados apenas durante o debugging do Visual Studio. Um bom exemplo seria o comando interno "ClearCommand", ele disponibiliza a action "clear" para limpar o prompt de comando que o Visual Studio abre durante o processo de debug. Para criar um comando de debug basta habilitar a flag `Command.OnlyInDebug`.
+Os comandos de debug são comandos que são carregados apenas durante o debugging do Visual Studio. Um exemplo desse tipo é o comando interno "ClearCommand", ele disponibiliza a ação chamada `clear` para limpar o prompt aberto pelo Visual Studio durante o debug. Para criar um comando do tipo "debug", é necessário habilitar a flag `Command.OnlyInDebug`.
 
 ```csharp
 public class ClearCommand : Command
