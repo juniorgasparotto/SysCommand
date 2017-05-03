@@ -8,7 +8,7 @@ C:\MyApp.exe -v value                  // Short
 C:\MyApp.exe value                     // Positional
 ```
 
-Programaticamente, os `arguments` podem ser derivados de `properties` ou dos parâmetros dos `methods`.
+Programaticamente, os `arguments` podem ser derivados de propriedades ou dos parâmetros dos métodos.
 
 ### Argumento nomeado <header-set anchor-name="input-named" />
 
@@ -69,5 +69,5 @@ MyApp.exe ValueA ValueB ValueC
 
 _Observações:_
 
-* Para as propriedades, o **input posicional** é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
-* Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de <anchor-get name="methods-positional-inputs" />.
+* Para as propriedades, o **input posicional** é desabilitado por padrão, para habilitar esse recurso, utilize a configuração `Command.EnablePositionalArgs`.
+* Para os métodos, esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de <anchor-get name="methods-positional-inputs" />.

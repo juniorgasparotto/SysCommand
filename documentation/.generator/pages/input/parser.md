@@ -188,7 +188,7 @@ Com a divisão de níveis por `action` concluída, é feito a escolha dos melhor
       * A menor quantidade de argumentos extras
 2. Com o melhor método em mãos para cada nível, a próxima etapa é remover todos os métodos do mesmo nível que não combinam com o melhor método. Isso não significa que tenham que ter a mesma assinatura, ou seja, não é preciso ter o mesmo nome, nem a mesma quantidade de parâmetros e nem os mesmos tipos, nada disso importa, o que vale é a relação do input com o método.
 
-A combinação desejada é que todos os outros métodos tenham as mesmas quantidades de parâmetros parseados (`ArgumentParsed`) e que os inputs de seus parâmetros (`IEnumerable<ArgumentRaw> AllRaw`) combinem com os inputs do melhor método, inclusive, com a mesma sequência. Isso significa que a estratégia de parse do input foi a mesma para os métodos que combinaram, assim garante que não haverá o uso do mesmo input para finalidades diferentes.
+A combinação desejada é que todos os outros métodos tenham as mesmas quantidades de parâmetros analisados (`ArgumentParsed`) e que os inputs de seus parâmetros (`IEnumerable<ArgumentRaw> AllRaw`) combinem com os inputs do melhor método, inclusive, com a mesma sequência. Isso significa que a estratégia de parse do input foi a mesma para os métodos que combinaram, assim garante que não haverá o uso do mesmo input para finalidades diferentes.
 
 **Exemplos:**
 

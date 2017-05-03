@@ -2,11 +2,11 @@
 
 Os eventos são importantes para interceptar cada passo da execução e modificar ou extender o comportamento padrão. Os eventos existentes são os seguintes:
 
-* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: Chamado antes do invoke de cada membro (propriedade ou metodo) que foi parseado.
-* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: Chamado depois do invoke de cada membro (propriedade ou metodo) que foi parseado.
-* `App.OnMethodReturn(ApplicationResult, IMemberResult)`: : Chamado sempre que um metodo retorna valor
-* `App.OnComplete(ApplicationResult)`: Chamado ao fim da execução
-* `App.OnException(ApplicationResult, Exception)`: Chamado em caso de exception.
+* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: É disparado antes do invoke de cada membro (propriedade ou metodo) que foi analisado.
+* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: É disparado depois do invoke de cada membro (propriedade ou metodo) que foi analisado.
+* `App.OnMethodReturn(ApplicationResult, IMemberResult)`: : É disparado sempre que um metodo retorna valor
+* `App.OnComplete(ApplicationResult)`: É disparado ao fim da execução
+* `App.OnException(ApplicationResult, Exception)`: É disparado em caso de exception.
 
 **Exemplo:**
 
@@ -70,9 +70,9 @@ Count: 2
 Some error!!!
 ```
 
-No exemplo acima o controle passou para quem implementou os eventos e cada um dos eventos foram executados em sua respectiva ordem.
+No exemplo acima, note que o controle passou para quem implementou os eventos.
 
-Por padrão nos inserimos um handler chamado `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` que é responsável pelo mecanismo padrão de `outputs` e controles de `erros`. Esse handler foi o responsável imprimir a linha "Return MyAction" do output acima. Para desliga-lo e ter o controle total dos eventos, basta desabilitar a flag `addDefaultAppHandler = false` no construtor.
+Por padrão, nos temos o handler `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` que é adicionado automaticamente. Esse handler é responsável pelo mecanismo padrão de `outputs` e controles de `erros`. Esse foi o responsável imprimir a linha "Return MyAction" do output acima. Para desliga-lo e ter o controle total dos eventos, basta desabilitar a flag `addDefaultAppHandler = false` no construtor.
 
 ```csharp
 new App(addDefaultAppHandler: false).Run(args);

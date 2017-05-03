@@ -41,9 +41,9 @@ There are errors in command: Method1Command
 The argument '--arg1' does not exist
 ```
 
-O último comando mostrou a limitação da sobrecarga com relação aos parâmetros opcionais. O parseador entendeu que os dois métodos com parâmetros `MyAction3` estão inválidos, veja:
+O último comando mostrou a limitação da sobrecarga com relação aos parâmetros opcionais. O analisador entendeu que os dois métodos com parâmetros `MyAction3` estão inválidos, veja:
 
 * MyAction3(int arg0): Não tem o input "--arg1" que foi solicitado, portanto esta inválido.
 * MyAction3(int arg0, int arg1): Tem o input "--arg1", mas não tem o input "--arg0", portanto esta inválido.
 
-Nesse caso o parseador escolhera o unico método valido, ou seja, o método `MyAction3` _sem parâmetros_ e usará o argumento extra "--arg1" para tentar encontra-lo como propriedade em algum `Command`, porém essa propriedade não existe em nenhum lugar, gerando o erro.
+Nesse caso o analisador escolhera o unico método valido, ou seja, o método `MyAction3` _sem parâmetros_ e usará o argumento extra "--arg1" para tentar encontra-lo como propriedade em algum `Command`, porém essa propriedade não existe em nenhum lugar, gerando o erro.
