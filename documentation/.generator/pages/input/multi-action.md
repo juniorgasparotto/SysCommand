@@ -1,8 +1,8 @@
 ### Multi-action <header-set anchor-name="using-the-multi-action-feature" />
 
-O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso <anchor-get name="argument-history-manager" /> deixará de funcionar caso isso ocorra.
+O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão, ele vem habilitado e caso você ache desnecessário então é só desliga-lo. É importante ressaltar que o recurso <anchor-get name="argument-history-manager" /> deixará de funcionar caso isso ocorra.
 
-Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de parâmetros.
+Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Essa regra vale para valores de argumentos de qualquer natureza (propriedades ou parâmetros).
 
 **Exemplo:**
 
@@ -56,4 +56,4 @@ MyApp.exe action1 --value \\action2
 Action1 (value = action2)
 ```
 
-O último exemplo demostra como usar o scape em seus valores que conflitam com nomes de `actions`. Um fato importante é que no exemplo foi usado duas barras invertidas para fazer o scape, mas isso pode variar de console para console, no `bash` o uso de apenas uma barra invertida não tem nenhum efeito, provavelmente ele deve usar para outros scapes antes de chegar na aplicação.
+O último exemplo demostra como usar o scape em seus valores que conflitam com nomes de ações. Um fato importante é que no exemplo foi usado duas barras invertidas para fazer o scape, mas isso pode variar de console para console, no `bash` o uso de apenas uma barra invertida não tem nenhum efeito, provavelmente ele deve usar para outros scapes antes de chegar na aplicação.

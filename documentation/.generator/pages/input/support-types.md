@@ -78,8 +78,8 @@ MyApp.exe --my-number 0,99
 
 **Sintaxe para `Boolean`:**
 
-* Para o valor TRUE use: `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
-* Para o valor FALSE use: `false`, `0`, `-` (separado por espaço ou unido com o nome do argumento).
+* Para o valor `TRUE`: Use `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
+* Para o valor `FALSE`: Use `false`, `0`, `-` (separado por espaço ou unido com o nome do argumento).
 
 ```
 MyApp.exe -a  // true
@@ -109,7 +109,7 @@ MyApp.exe -abc+ // true for a, b and c
 
 **Sintaxe para `DateTime`:**
 
-Assim como os números decimais, o formato de data suportado depende da cultura que estiver configurado em sua aplicação.
+O formato de entrada para os tipos `DateTime` depende da cultura que estiver configurado em sua aplicação.
 
 _EN-US:_
 
@@ -131,7 +131,7 @@ MyApp.exe --my-date "2000-12-13 00:00:00"
 
 **Sintaxe para `Enums`:**
 
-Os valores de entrada podem variar entre o nome do `Enum` no formato case-sensitive ou o seu número interno. Para `Enum Flags` utilize espaços para adicionar ao valor do argumento.
+Os valores de entrada podem variar entre o nome do `Enum`, no formato case-sensitive, ou o seu número interno. Para `Enum Flags`, utilize espaços para adicionar ao valor do argumento.
 
 ```csharp
 [Flags]
@@ -174,7 +174,7 @@ MyApp.exe --my-lst 1.0 1.99 --my-array "string with spaces" "other string" uniqu
 MyApp.exe 1.0 1.99 str1 str2 // positional
 ```
 
-No último exemplo, o valor "str1" quebra a sequencia de números "1.0 1.99", sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
+No último exemplo, o valor "str1" quebra a sequencia de números `1.0 1.99`, sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
 
 **Importante!**
 
