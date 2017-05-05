@@ -61,7 +61,7 @@ StopPropagationCommand1.StopPropagationAction1
 StopPropagationCommand2.StopPropagationAction1
 ```
 
-Perceba que ao utilizar o argumento "--cancel" a action "StopPropagationCommand3.StopPropagationAction1" não foi executada. Isso por que ela estava na última posição da pilha de execução e como a action "StopPropagationCommand2.StopPropagationAction1" cancelou a continuidade da execução, qualquer outra action da sequencia sera ignorada.
+Perceba que ao utilizar o argumento `--cancel` a action "StopPropagationCommand3.StopPropagationAction1" não foi executada. Isso por que ela estava na última posição da pilha de execução e como a action "StopPropagationCommand2.StopPropagationAction1" cancelou a continuidade da execução, qualquer outra action da sequência sera ignorada.
 
 Outra possibilidade de uso do `StopPropagation` é quando existem multiplas ações no mesmo input. A lógica é a mesma, será cancelado todas as ações da pilha que estão depois da action que disparou o stop.
 

@@ -5,4 +5,4 @@ O trabalho com métodos também é muito bem simples, todos os métodos definido
 * Métodos sem parâmetros
 * Métodos com parâmetros opcionais com **valor padrão**
 * Métodos com sobrecargas
-* Métodos com `return` onde o retorno do método, por padrão, será utilizado como output no console usando
+* Métodos com a sintaxe `return`, por padrão, será utilizado como output no console usando

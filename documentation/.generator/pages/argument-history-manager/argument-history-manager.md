@@ -33,7 +33,7 @@ C:\MyApp.exe history-remove "CommonCommand1"
 C:\MyApp.exe history-list
 ```
 
-Os dois últimos comandos não retornam outpus.
+Os dois últimos comandos não retornam outputs.
 
 * Para desativar o comando `ArgsHistoryCommand` veja o tópico <anchor-get name="specifying-commands" />.
 * A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico <anchor-get name="redirectiong-commands" />.

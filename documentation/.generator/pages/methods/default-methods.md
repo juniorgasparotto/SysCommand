@@ -58,5 +58,5 @@ ActionWhenNotExistsInput()
 
 **Observações:**
 
-* É importante ressaltar que o todos os métodos padrão ainda podem ser chamados de forma explicita, ou seja, com o seu nome sendo especifico.
+* É importante ressaltar que o todos os métodos padrão ainda podem ser chamados de maneira explicita, ou seja, com o seu nome sendo especifico.
 * O uso de método padrão sem argumentos só funciona se não existir nenhum argumento required, do contrário esse método nunca será chamado, pois haverá um erro obrigando o uso do argumento.'

@@ -20,7 +20,7 @@ _Métodos:_
 * `Remove(string fileName)`: Remove um objeto na pasta padrão com um nome especifico.
 * `T Get<T>(string fileName = null, bool refresh = false)`: Retorna um objeto da pasta padrão.
   * `fileName`: Indica o nome do arquivo, caso seja `null` o nome do tipo `T` será usado na busca, com exceção de classes que tem o atributo `ObjectFile`.
-  * `refresh`: Se `false` buscará no cache interno caso já tenha sido carregado anteriormente. Do contrário será forçado o carregamento do arquivo.
+  * `refresh`: Se `false`, buscará no cache interno caso já tenha sido carregado anteriormente. Do contrário será forçado o carregamento do arquivo.
 * `T GetOrCreate<T>(string fileName = null, bool refresh = false)`: Mesmo comportamento do método acima, porém cria uma nova instância quando não encontrar o arquivo na pasta padrão. É importância dizer que o arquivo não será criado, apenas a instância do tipo `T`. Para salvar fisicamente é necessário utilizar o método `Save`.
 * `string GetObjectFileName(Type type)`: Retorna o nome do tipo formatado ou se estiver usando o atributo `ObjectFile`, retorna o valor da propriedade `FileName`.
 * `string GetFilePath(string fileName)`: Retorna o caminho do arquivo dentro da pasta padrão.

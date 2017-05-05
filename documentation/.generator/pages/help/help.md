@@ -36,19 +36,19 @@ have his name omitted. (F)
 
 A fonte de cada texto esta em cada elemento `Commands`, `Arguments` e `Actions` e os textos complementares estão na classe estática `SysCommand.ConsoleApp.Strings`. Segue o mapeamento de cada texto conforme o formato exibido acima:
 
-* **A:** O texto `usage` é gerado internamente pela classe `DefaultDescriptor` e sempre será exibido.
-* **B:** O texto do `Command` sempre será exibido e a sua fonte vem da propriedade `Command.HelpText` que deve ser definida no construtor do seu comando. Caso você não atribua nenhum valor para essa propriedade, o padrão será exibir o nome do comando.
-* **C:** Será exibido todas os argumentos (propriedades) do comando, um em baixo do outro.
-  * **C1:** A fonte desse texto vem do atributo `ArgumentAtrribute(LongName="")`.
-  * **C2:** A fonte desse texto vem do atributo `ArgumentAtrribute(ShortName="")`.
-  * **C3:** A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
-  * **C4:** Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
+* **A.** O texto `usage` é gerado internamente pela classe `DefaultDescriptor` e sempre será exibido.
+* **B.** O texto do `Command` sempre será exibido e a sua fonte vem da propriedade `Command.HelpText` que deve ser definida no construtor do seu comando. Caso você não atribua nenhum valor para essa propriedade, o padrão será exibir o nome do comando.
+* **C.** Será exibido todas os argumentos (propriedades) do comando, um em baixo do outro.
+  * **C1.** A fonte desse texto vem do atributo `ArgumentAtrribute(LongName="")`.
+  * **C2.** A fonte desse texto vem do atributo `ArgumentAtrribute(ShortName="")`.
+  * **C3.** A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
+  * **C4.** Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
     * `Strings.HelpArgDescRequired`: Quando o membro é obrigatório
     * `Strings.HelpArgDescOptionalWithDefaultValue`: Quando o membro é opcional e tem **valor padrão**.
     * `Strings.HelpArgDescOptionalWithoutDefaultValue`: Quando o membro é opcional e não tem **valor padrão**.
-* **D:** A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
-* **E:** São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
-* **F:** Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.
+* **D.** A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
+* **E.** São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
+* **F.** Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.
 
 **Exemplo:**
 

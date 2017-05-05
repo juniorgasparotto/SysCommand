@@ -12,7 +12,7 @@ Para utilizar `Razor` deve-se seguir alguns simples passos:
 
 **Exemplo:**
 
-######Commands/ExampleRazorCommand.cs
+###### Commands/ExampleRazorCommand.cs
 
 ```csharp
 public class ExampleRazorCommand : Command
@@ -39,7 +39,7 @@ public class ExampleRazorCommand : Command
 }
 ```
 
-######Views/ExampleRazor/MyAction.razor
+###### Views/ExampleRazor/MyAction.razor
 
 ```
 @if (Model == null)
@@ -51,7 +51,7 @@ else {
 }
 ```
 
-######Tests
+###### Tests
 
 Input1:
 
@@ -72,11 +72,11 @@ Outputs:
     #### HelloWorld {MyName} ####
 ```
 
-######Observação
+###### Observação
 
 * A pesquisa do template via `Arquivo físico` ou via `Embedded Resource` segue a mesma lógica. Ele busca pelo caminho mais especifico usando o nome do "command.action.extensão" e caso ele não encontre ele tentará encontrar pelo nome mais generico, sem o nome do command.
-  * Busca primeiro por: "ExampleRazorCommand.MyAction.razor"
-  * Caso não encontre na primeira tentativa, então busca por: "MyAction.razor"
-* É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automática. como no exemplo da action "MyAction2()".
-* Por questões técnicas, o método View<>() obriga o uso de uma inferencia ou um model. Infira um `object` se você não necessitar de um model `View<object>()`.
+  * Busca primeiro por: `ExampleRazorCommand.MyAction.razor`
+  * Caso não encontre na primeira tentativa, então busca por: `MyAction.razor`
+* É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automática. como no exemplo da action `MyAction2()`.
+* Por questões técnicas, o método `View<>()` obriga o uso de uma inferencia ou um model. Infira um `object` se você não necessitar de um model `View<object>()`.
 * Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.

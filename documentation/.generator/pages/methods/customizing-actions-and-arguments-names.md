@@ -1,6 +1,6 @@
 ## Customizando nomes de ações e argumentos <header-set anchor-name="methods-customizing-names" />
 
-A regra a seguir descreve como é o comportamento padrão de nomenclatura para que os métodos vire uma `action` e um parâmetro vire um `argument`:
+A regra a seguir descreve como é o processo padrão de transformação de um nome de um método em ação e também dos nomes de seus parâmetros em argumentos.
 
 Primeiro se converte o nome do membro (métodos ou parâmetros) em minusculo, depois adiciona um traço "-" antes de cada letra maiuscula que estiver no meio ou no final do nome. No caso de paramentros com apenas uma letra, o padrão será deixar a letra minuscula e o input será aceito apenas na forma curta.
 

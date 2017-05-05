@@ -4,12 +4,12 @@ Outra opção para exibir outputs é a utilização de templates `T4`. Esse meca
 
 * Por organização, criar uma pasta "Views"
 * Criar um arquivo T4 no formato "Runtime Text Template"
-* Se for utilizar model é preciso configurar um parâmetro, que por obrigatoriedade, deve-se chamar "Model" e ter o seu respectivo tipo configurado na tag `type`. Caso não utilize nenhum "Model" então ignore esse passo.
+* Se for utilizar model é preciso configurar um parâmetro, que por obrigatoriedade, deve-se chamar `Model` e ter o seu respectivo tipo configurado na tag `type`. Caso não utilize nenhum `Model` então ignore esse passo.
 * Implementar o seu template
 
 **Exemplo:**
 
-######Commands/ExampleT4Command.cs
+###### Commands/ExampleT4Command.cs
 
 ```csharp
 public class ExampleT4Command : Command
@@ -36,7 +36,7 @@ public class ExampleT4Command : Command
 }
 ```
 
-######Views/ExampleT4/MyActionView.tt
+###### Views/ExampleT4/MyActionView.tt
 
 ```csharp
 <#@ parameter type="Example.T4Command.MyModel" name="Model" #>
@@ -48,7 +48,7 @@ public class ExampleT4Command : Command
 <# } #>
 ```
 
-######Tests
+###### Tests
 
 Input1:
 

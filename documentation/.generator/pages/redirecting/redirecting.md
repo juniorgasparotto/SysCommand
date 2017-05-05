@@ -1,6 +1,6 @@
 # Redirecionamento de comandos <header-set anchor-name="redirectiong-commands" />
 
-Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instância da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instâncias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
+Para redirecionar a sua aplicação com uma nova sequência de comandos é muito simples, basta a sua action retornar uma instância da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequência de comandos. Vale ressaltar que as instâncias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer ação depois da ação que retornou o `RedirectResult` não será mais chamado.
 
 **Exemplo:**
 
@@ -29,7 +29,7 @@ public class RedirectCommand : Command
 }
 ```
 
-No exemplo abaixo a action `Something` será executada, pois esta antes do redirect.
+No exemplo abaixo a ação `Something` será executada porque ela esta definida antes do redirect.
 
 ```
 C:\MyApp.exe something redirect-now my-value
@@ -38,7 +38,7 @@ Redirecting now!!. Count: 1
 Redirected: my-value. Count: 2
 ```
 
-No exemplo abaixo a action `Something` não será executada, pois esta depois do redirect.
+No exemplo abaixo a action `Something` não será executada porque ela esta definida depois do redirect.
 
 ```
 C:\MyApp.exe redirect-now my-value something

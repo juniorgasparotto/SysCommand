@@ -174,7 +174,7 @@ MyApp.exe --my-lst 1.0 1.99 --my-array "string with spaces" "other string" uniqu
 MyApp.exe 1.0 1.99 str1 str2 // positional
 ```
 
-No último exemplo, o valor "str1" quebra a sequencia de números `1.0 1.99`, sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
+No último exemplo, o valor "str1" quebra a sequência de números `1.0 1.99`, sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
 
 **Importante!**
 

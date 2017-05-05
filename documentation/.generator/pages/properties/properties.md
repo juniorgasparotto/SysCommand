@@ -6,7 +6,7 @@ O trabalho com propriedades é muito simples e objetivo, basta criar suas propri
 
 Primeiro, você pode utilizar o método `Main()` sem parâmetro e que, por convensão de nome, será o responsável por ser invocado caso alguma de suas propriedade tenha sido utilizadas no input do usuário. O nome "Main" foi escolhido para manter o padrão de nomenclatura que o .NET utiliza em aplicações de console.
 
-Por segurança, utilize todos os tipos primitivos como `Nullable` para garantir que o usuário fez o input. Ou utilize o método `GetArgument(string name)` para verificar se uma propriedade foi parseada. Vale ressaltar que uma propriedade com **valor padrão** sempre terá resultado de parse e caso necessário, utilize mais uma verificação para saber se o resultado partiu de um input do usuário.
+Por segurança, utilize todos os tipos primitivos como `Nullable` para garantir que o usuário fez o input. Ou utilize o método `GetArgument(string name)` para verificar se uma propriedade foi analisada. Vale ressaltar que uma propriedade com **valor padrão** sempre terá um resultado após o parse e caso necessário, utilize mais uma verificação para saber se o resultado partiu de um input do usuário.
 
 **Exemplo:**
 
