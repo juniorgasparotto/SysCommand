@@ -69,7 +69,7 @@
 
 The application context initialization can be done in two ways, by an instance of the class `App` with its possible customizations or through the static method `App.RunApplication` that provides a feature called **console Simulator** that helps you test your inputs inside the Visual Studio itself, without the need to perform your ".exe" in an external console.
 
-The class `App` is in the top of the class hierarchy of the system, each instance is responsible for maintaining a context isolated from the implementation. No static resource is used here and it's important to have the freedom to create as many instances you want in any scope.
+The class `App` is in the top of the class hierarchy, each instance equates to an isolated context that will contain a tree of other objects that are unique to this context. No static resource is used here and it's important to have the freedom to create as many instances you want in any scope.
 
 In your constructor are the first settings:
 
@@ -81,8 +81,8 @@ public App(
        )
 ```
 
-* `commandsTypes`: Specifies the `Command` types that will be utilidados in the whole process. If it is `null` then the system will try to automatically any class that extend from `Command` . Understand better in [Specifying the types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands).
-* `enableMultiAction`: Turns the `MultiAction` behavior. By default, this behavior will be connected. Understand better in [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#using-the-multi-action-feature).
+* `commandsTypes`: Specifies the `Command` types that will be used throughout the process. If it is `null` then the system will try to automatically any class that extend from `Command` . Understand better in [Specifying the types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands).
+* `enableMultiAction`: Turns the `MultiAction` behavior. By default, this behavior will be habilidado. Understand better in [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#using-the-multi-action-feature).
 * `addDefaultAppHandler`: If `false` so does not create the event handler that is responsible for the `outputs` standard engine and `erros` controls, and among others. The default is `true` . Understand better in [Event control](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events).
 
 ## <a name="initializing-by-static-method" />Booting with the console Simulator
@@ -123,7 +123,7 @@ public class Program
 }
 ```
 
-When you start this code in Visual Studio a standard prompt with a label `cmd>` will be displayed. This indicates that you can start your tests as many times as needed. Out you can use the default shortcut "CTRL + C" or press the "stop" button on the Visual Studio.
+When you run this code in Visual Studio, a prompt with the label `cmd>` will be displayed. This indicates that you can start your tests as many times as needed. To exit, you can use the default shortcut "CTRL + C" or press the "stop" button on the Visual Studio.
 
 ```
 cmd> --my-property value
@@ -201,7 +201,7 @@ any action. Every action with the symbol "*" can
 have his name omitted.
 ```
 
-Note that the help there is no occurrence of class `SecondCommand` .
+Note that when you enter `help` the class `SecondCommand` is not displayed.
 
 Note also that there is a help to the help engine itself, that `Command` should always exist, if it is not specified in the list of types your own system will create it using the help `SysCommand.ConsoleApp.Commands.HelpCommand` standard. For more information about customizing help see [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#help).
 
@@ -268,7 +268,7 @@ any action. Every action with the symbol "*" can
 have his name omitted.
 ```
 
-Note that the help there is no occurrence of class `FirstCommand` .
+Note that when you enter `help` the class `FirstCommand` is not displayed.
 
 For now, don't pay attention now to the classes `VerboseCommand` and `ArgsHistoryCommand` they are internal commands and will be explained further in the documentation.
 
@@ -286,7 +286,7 @@ Are the controls that inherit from the `Command` class and implement the interfa
 
 **Debug commands**
 
-The debug commands are commands that are loaded only when debugging in Visual Studio. A good example would be the command "internal", he offers the ClearCommand action "clear" to clear the command prompt which Visual Studio opens during the debug process. To create a debug command simply enable flag `Command.OnlyInDebug` .
+The debug commands are commands that are loaded only when debugging in Visual Studio. An example of this type is the built-in command "ClearCommand", he makes the `clear` call action to clear the prompt opened by Visual Studio during debug. To create a "debug" command, you must enable the flag `Command.OnlyInDebug` .
 
 ```csharp
 public class ClearCommand : Command
@@ -308,11 +308,11 @@ public class ClearCommand : Command
 
 The events are important to intercept every step of implementation and modify or extend the default behavior. Existing events are as follows:
 
-* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: Called before the invoke of each Member (property or method) that was parseado.
-* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: Named after the invoke of each Member (property or method) that was parseado.
-* `App.OnMethodReturn(ApplicationResult, IMemberResult)`:: Invoked whenever a method return value
-* `App.OnComplete(ApplicationResult)`: Called to order the execution
-* `App.OnException(ApplicationResult, Exception)`: Called in case of exception.
+* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: Is raised before the invoke of each Member (property or method) that was parsed.
+* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: Is raised after the invoke of each Member (property or method) that was parsed.
+* `App.OnMethodReturn(ApplicationResult, IMemberResult)`:: Is raised whenever a method return value
+* `App.OnComplete(ApplicationResult)`: Is raised at the end of the implementation
+* `App.OnException(ApplicationResult, Exception)`: Is raised in case of exception.
 
 **Example:**
 
@@ -376,9 +376,9 @@ Count: 2
 Some error!!!
 ```
 
-In the example above the control passed to who implemented the events and each of the events were run on your order.
+In the above example, note that the control passed to who implemented the events.
 
-By default in insert a handler called `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` which is responsible for the `outputs` standard engine and `erros` controls. This handler is responsible to print the line "Return MyAction" from the output above. To turn it off and have full control of the events, simply disable the flag `addDefaultAppHandler = false` in the constructor.
+By default, we have the handler `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` that is added automatically. This handler is responsible for the `outputs` standard engine and `erros` controls. This was the responsible print the line "Return MyAction" from the output above. To turn it off and have full control of the events, simply disable the flag `addDefaultAppHandler = false` in the constructor.
 
 ```csharp
 new App(addDefaultAppHandler: false).Run(args);
@@ -394,7 +394,7 @@ new App(addDefaultAppHandler: false)
 
 # <a name="input" />Input
 
-We call all lines of input that the user types commands and sends it to the application. Input formats are divided between `arguments` and `actions` .
+We split the input of user on two entities: `arguments` and `actions` .
 
 ## <a name="input-arguments" />`Arguments`
 
@@ -406,7 +406,7 @@ C:\MyApp.exe -v value                  // Short
 C:\MyApp.exe value                     // Positional
 ```
 
-Programmatically, the `arguments` can be derived from `properties` or `methods` parameters.
+Programmatically, the `arguments` can be derived from the parameters of the methods or properties.
 
 ### <a name="input-named" />Named argument
 
@@ -467,27 +467,27 @@ MyApp.exe ValueA ValueB ValueC
 
 _Comments:_
 
-* For properties, the **positional input** is disabled by default, to enable him use the command property `Command.EnablePositionalArgs` .
-* For methods that kind of input is enabled by default, to disable it see in the [Using positional inputs](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-positional-inputs)topic.
+* For properties, the **positional input** is disabled by default, to enable this feature, use the `Command.EnablePositionalArgs` configuration.
+* For the methods, this kind of input is enabled by default, to disable it see in the [Using positional inputs](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-positional-inputs)topic.
 
 ## <a name="input-actions" />`Actions`
 
-`actions`Those are reserved words to perform a particular action on your application. They don't need any suffix as with the `arguments` , just using them directly in your input. A good `action` example are the `git` features as:
+Are reserved words to perform a particular action on your application. They don't need any suffix as with the `arguments` , just using them directly in your input. Its use is similar to the way we use git resources, see:
 
 ```
 git add -A;
 git commit -m "comments"
 ```
 
-Where `add` `commit` would be the name of the and `actions` and `-A` and `-m` their respective `arguments` .
+Where `add` `commit` would be the name and of actions and `-A` `-m` their respective arguments and.
 
-Programmatically, the `actions` are derived from `methods` .
+Programmatically, the actions are derived from the methods.
 
 ### <a name="using-the-multi-action-feature" />Multi-action
 
-The multi-action feature allows you to be able to shoot more than one `action` on the same input. By default it comes enabled and if you find it unnecessary for your context so I just shut it off. It is important to note that the resource [Historical management arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#argument-history-manager) will crash if it does.
+The multi-action feature allows you to be able to shoot more than one `action` on the same input. By default, it comes enabled and if you find it unnecessary then just shut it off. It is important to note that the resource [Historical management arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#argument-history-manager) will crash if it does.
 
-Another important point is the need to "escape" your input if the value that you want to enter conflicts with a name of a `action` . That goes for `arguments` values from properties or `arguments` from parameters.
+Another important point is the need to "escape" your input if the value that you want to enter conflicts with a name of a `action` . This rule holds true for values of arguments of any kind (properties or parameters).
 
 **Example:**
 
@@ -541,7 +541,7 @@ MyApp.exe action1 --value \\action2
 Action1 (value = action2)
 ```
 
-The last example shows how to use the scape in their values that conflict with `actions` names. An important fact is that in the example was used two backslashes to do the scape, but this can vary from console to console, on `bash` the use of only one backslash has no effect, probably he should use for other scapes before they reach the application.
+The last example shows how to use the scape in their values that conflict with names of actions. An important fact is that in the example was used two backslashes to do the scape, but this can vary from console to console, on `bash` the use of only one backslash has no effect, probably he should use for other scapes before they reach the application.
 
 ## <a name="support-types" />Supported types
 
@@ -623,8 +623,8 @@ MyApp.exe --my-number 0,99
 
 **Syntax for `Boolean` :**
 
-* To the value TRUE `true` , use: `1` , `+` (separated by space or attached with the name of the argument) or omit the value.
-* To the value FALSE `false` , `0` , use: `-` (separated by space or attached with the name of the argument).
+* For the value `TRUE` : Use `true` , `1` , `+` (separated by space or attached with the name of the argument) or omit the value.
+* For the value `FALSE` : Use `false` , `0` , `-` (separated by space or attached with the name of the argument).
 
 ```
 MyApp.exe -a  // true
@@ -654,7 +654,7 @@ MyApp.exe -abc+ // true for a, b and c
 
 **Syntax for `DateTime` :**
 
-As well as decimal numbers, the supported date format depends on the culture that is configured in your application.
+The input format for the types `DateTime` depends on the culture that is configured in your application.
 
 _EN-US:_
 
@@ -676,7 +676,7 @@ MyApp.exe --my-date "2000-12-13 00:00:00"
 
 **Syntax for `Enums` :**
 
-The input values may vary between the `Enum` name on the case-sensitive format or your internal number. To `Enum Flags` use spaces to add to the value of the argument.
+The input values may vary between the `Enum` name, case-sensitive format, or your internal number. For `Enum Flags` , use spaces to add to the value of the argument.
 
 ```csharp
 [Flags]
@@ -719,7 +719,7 @@ MyApp.exe --my-lst 1.0 1.99 --my-array "string with spaces" "other string" uniqu
 MyApp.exe 1.0 1.99 str1 str2 // positional
 ```
 
-In the last example, the value "str1" breaks the sequence of numbers "1.99" 1.0, so the next argument will receive this value if your type is compatible.
+In the last example, the value "str1" breaks the sequence of numbers `1.0 1.99` , so the next argument will receive this value if your type is compatible.
 
 **Important!**
 
@@ -775,7 +775,7 @@ This step need to know `actions` , the only reason to escape values that conflic
 Consider that `action1` it is an action with 1 optional argument called `--value` and that accepts positional values:
 
 ```csharp
-public void Action1(string value = null);`
+public void Action1(string value = null);
 ```
 
 _Shoots `action1` twice:_
@@ -784,7 +784,7 @@ _Shoots `action1` twice:_
 MyApp.exe action1 action1
 ```
 
-_Raises the `action1` only 1 time and with the value "action1" `--value` argument. Without this escape "action1" would be called twice:_
+_Runs only 1 time `action1` and action with the value "action1" `--value` argument. Without this escape "action1" would be called twice:_
 
 ```
 MyApp.exe action1 \action1
@@ -800,15 +800,15 @@ Finally, a list of type `IEnumerable<ArgumentRaw>` .
 
 Is the longest step, where the result of the mapping combines with the result of the simple parser. The goal is to obtain the best routes for the same input.
 
-1. The first step is to find the methods according to the input of entrance. For this, it will be used as references all `ArgumentRaw` in the format `Unnamed` , i.e. arguments without names. The search will be inside the map returned by this method `GetMaps` . When a method is found, an instance of the `SysCommand.Parsing.ActionParsed` type is created and each parameter of the method is represented by the class `SysCommand.Parsing.ArgumentParsed` .
+1. The first step is to find the methods according to the input. For this will be used as references, all `ArgumentRaw` in the format `Unnamed` , i.e. arguments without names. The search will be inside the map returned by this method `GetMaps` . When a method is found, an instance of the `SysCommand.Parsing.ActionParsed` type is created and each parameter of the method is represented by the class `SysCommand.Parsing.ArgumentParsed` .
 2. The first `action` may have your name omitted, but for that it must be of type **default**. See [Standard methods](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#methods-default). If they exist, they will only be used when the first `ArgumentRaw` of the input is not a `action` . In this scenario all the **standard methods** will be chosen for the next step. From then on the process will be the same.
 3. After finding all methods of each `action` of the input, will be made in division levels. Each level will be created as follows:
-  * If the input start with arguments then formed the first level. That if there is no **default method**.
+  * If the input start with arguments and there is no **default method**, so the first level will be created with these arguments.
   * If there is more than one `action` in input, including the **standard methods**, each will represent a whole new level.
-  * The arguments that are not part of the `action` map (leftovers) formed another level. This level will be created as a result of the `action` level.
-  * If you cannot find any `action` in input and only arguments, then there will be only one level.
+  * The arguments that are not part of the map of the action (leftovers) formed another level. This level will be created after this action.
+  * If you cannot find any action in input submitted, then there will be only one level with the arguments that may or may not exist.
   * If there is no input, but there is **default methods** without parameters, so they will be chosen for the execution.
-4. All levels that are not of `action` (arguments only) will be used to find the receive. When this happens, each property is represented by the class `SysCommand.Parsing.ArgumentParsed` as well as the parameters of the methods.
+4. All levels that are not of `action` (arguments only) will be used to find the `properties` . When this happens, each property is represented by the class `SysCommand.Parsing.ArgumentParsed` as well as the parameters of the methods.
 
 Important note: When the flag `bool enableMultiAction` is off the parser will accept only one `action` .
 
@@ -865,35 +865,35 @@ namespace Example.Input.Parser
 }
 ```
 
-_The) 2 levels with the first belonging to the default method ' Main (...) ':_
+_A. 2 levels with the first belonging to the default method ' Main (...) ':_
 
 ```
 MyApp.exe --a 1 --b 2 --c 3 action2
           |      L1        |  L2   |
 ```
 
-_B) 2 levels with two actions:_
+_B. 2 levels with two actions:_
 
 ```
 MyApp.exe action1 action2
           |  L1  |   L2 |
 ```
 
-_C) 3 levels, starting with 1 arguments:_
+_C. 3 levels, starting with 1 arguments:_
 
 ```
 MyApp.exe --property1 value action1 action2
           |        L1      |   L2  |  L3  |
 ```
 
-_D) 3 levels, starting with 2 arguments:_
+_D. 3 levels, starting with 2 arguments:_
 
 ```
 MyApp.exe --property1 value --property2 value2 action1 action2
           |                L1                 |   L2  |   L3 |
 ```
 
-_E) 4 levels with leftover arguments in ' action2 ':_
+_E. 4 levels with leftover arguments in ' action2 ':_
 
 ```
 MyApp.exe --property1 value action1 action2 --property2 value2
@@ -901,11 +901,11 @@ MyApp.exe --property1 value action1 action2 --property2 value2
 
 ```
 
-In the example, and the `--property2` argument was derived from the extra arguments to the action `action2` . Note that this action does not had your `--value` argument specified in input and the `--property2` argument isn't part of your map, so this argument goes as extra and input to the next level of arguments. These extras can be anywhere after the `action` name, after your name, in the middle or at the end.
+In the example `E` the `--property2` argument was derived from the extra arguments to the action `action2` . Note that this action does not had your `--value` argument specified in input and the `--property2` argument isn't part of your map, so this argument goes as extra and input to the next level of arguments. These extras can be anywhere after the `action` name, after your name, in the middle or at the end.
 
 #### <a name="input-parser-complex-methods" />Choosing the best methods
 
-With the Division of levels for `action` complete, is made the choice of best methods within each level.
+With the Division of levels for "actions" completed, is chosen the best methods within each level.
 
 1. That choice works as follows:
   * Select the methods that have all valid parameters
@@ -915,7 +915,7 @@ With the Division of levels for `action` complete, is made the choice of best me
     * The least amount of extra arguments
 2. With the best method at hand for each level, the next step is to remove all methods of the same level which does not combine with the best method. That doesn't mean you have to have the same signature, that is, you don't have to have the same name or the same amount of parameters and not the same kind, none of it matters, what counts is the relationship of the input with the method.
 
-The desired combination is that all other methods have the same amounts of parseados parameters ( `ArgumentParsed` ) and that the inputs of its parameters ( `IEnumerable<ArgumentRaw> AllRaw` ) combine with the inputs of the best method, even with the same sequence. This means that the strategy of parse the input was the same for methods that matched, thus ensures that there will not be using the same input for different purposes.
+The desired combination is that all other methods have the same amounts of evaluated parameters ( `ArgumentParsed` ) and that the inputs of its parameters ( `IEnumerable<ArgumentRaw> AllRaw` ) combine with the inputs of the best method, even with the same sequence. This means that the strategy of parse the input was the same for methods that matched, thus ensures that there will not be using the same input for different purposes.
 
 **Examples:**
 
@@ -980,35 +980,35 @@ _Explanation:_
 * This input has 3 level:
   * Level 1:`action3 123 456`
     * `Action3(int? value = null, string value2 = null)`: Best method everyone must have this model
-      * 1 ArgumentParsed: AllRaw {"123"}
-      * 2 ArgumentParsed: AllRaw {"456"}
+      * `ArgumentParsed`1:`AllRaw { "123" }`
+      * `ArgumentParsed`2:`AllRaw { "456" }`
     * `Action3(string value = null)`: Was not chosen
-      * 1 ArgumentParsed: AllRaw {"123"}
+      * `ArgumentParsed`1:`AllRaw { "123" }`
     * `Action3(List<string> value)`: Was not chosen
-      * 1 ArgumentParsed: AllRaw {"", "123 456"}
+      * `ArgumentParsed`1:`AllRaw { "123", "456" }`
   * Level 2:`action3 123 456 678`
     * `Action3(List<string> value)`: Best method everyone must have this model
-      * 1 ArgumentParsed: AllRaw {"123", "456", "678"}
+      * `ArgumentParsed`1:`AllRaw { "123", "456", "678" }`
     * `Action3(string value = null)`:: Was not chosen
-      * 1 ArgumentParsed: AllRaw {"123"}
+      * `ArgumentParsed`1:`AllRaw { "123" }`
     * `Action3(int? value = null, string value2 = null)`: Was not chosen
-      * 1 ArgumentParsed: AllRaw {"123"}
-      * 2 ArgumentParsed: AllRaw {"456"}
+      * `ArgumentParsed`1:`AllRaw { "123" }`
+      * `ArgumentParsed`2:`AllRaw { "456" }`
   * Level 3:`action3 999`
     * `Action3(string value = null)`: Best method
-      * 1 ArgumentParsed: AllRaw {"999"}
-    * `Action3(int? value = null, string value2 = null)`: The sequel combined
-      * 1 ArgumentParsed: AllRaw {"999"}
-    * `Action3(List<string> value)`: The sequel combined
-      * 1 ArgumentParsed: AllRaw {"999"}
+      * `ArgumentParsed`1:`AllRaw { "999" }`
+    * `Action3(int? value = null, string value2 = null)`: Expected sequence was combined
+      * `ArgumentParsed`1:`AllRaw { "999" }`
+    * `Action3(List<string> value)`: Expected sequence was combined
+      * `ArgumentParsed`1:`AllRaw { "999" }`
 
-All methods "not chosen" were discarded in the process. This rule is paramount so that more than one `action` is called on the same level.
+All methods "not chosen" were discarded in the process. This rule is paramount so that more than one `action` with the same signature, is called at the same level.
 
 #### <a name="input-parser-complex-properties" />Choosing the best properties
 
 That choice works as follows:
 
-1. Is the reference for each input ( `ArgumentRaw` ) at the same level. To do this, select the first valid property that has the first input, then the second valid property that has the second input and so on until all the inputs are completely combined. It is possible that only a reference property has more than one input, is the case of lists or `Enums Flags` . These guys will have preference to be references, because they combine more than one input. This rule does not exist for the methods by which the parameters of the best methods are references to the other.
+1. Finds the "property" of reference for each input ( `ArgumentRaw` ) at the same level. To do this, select the first valid property that has the first input, then the second valid property that has the second input and so on until all the inputs are completely combined. It is possible that only a reference property has more than one input, is the case of lists or `Enums Flags` . These types of classes will have preference to be references, because they combine more than one input. This rule does not exist for the methods because the parameters of the best methods are references to the other.
 2. After locating the references, the second step is to delete the other valid properties that do not match the references. Here is the same rule of the parameters of the methods, that is, to combine the properties should have the same inputs ( `ArgumentRaw` ) and with the same sequences. So ensures that there will not be using the same input for different purposes.
 3. If any `ArgumentRaw` is not combined, so all the valid arguments will be eliminated.
 
@@ -1090,7 +1090,7 @@ namespace Example.Input.Parser
 
 **Note**: the values of the arguments of all scenarios are in positional format
 
-_Scenario 1: bulk priority Property that is disposed to be invalid_
+_Scenario 1: "Properties" with priority, but that are discarded because they are invalid._
 
 ```
 MyApp.exe W Z Y T
@@ -1106,17 +1106,17 @@ _Explanation:_
 * Inputs ( `ArgumentRaw` ): "W", "Z", "Y", "T"
 * This input has 1 level:
   * `Command4.Prop1`: Property for the input "W"
-    * AllRaw {"W"}
+    * `AllRaw { "W" }`
   * `Command4.Prop2`: Property for the input "Z"
-    * AllRaw {"Z"}
+    * `AllRaw { "Z" }`
   * `Command4.Prop3`: Property for the input "Y"
-    * AllRaw {Y}
+    * `AllRaw { "Y" }`
   * `Command4.Prop4`: Property for the input "T"
-    * AllRaw {"T"}
+    * `AllRaw { "T" }`
   * `Command5.Prop1`: Property that has priority, but is invalid, the input "W" is not part of the `Enum` .
-    * AllRaw {"W"}
-  * `Command6.Prop1`: Even if the`Command5.Prop1`
-    * AllRaw {"W"}
+    * `AllRaw { "W" }`
+  * `Command6.Prop1`: The same situation of`Command5.Prop1`
+    * `AllRaw { "W" }`
 
 _Scenario 2: property with more combinations will be the reference_
 
@@ -1131,17 +1131,17 @@ _Explanation:_
 * Inputs ( `ArgumentRaw` ): "A", "B", "C", "D"
 * This input has 1 level:
   * `Command5.Prop1`: Property of all reference inputs
-    * AllRaw {"A", "B", "C", "D"}
+    * `AllRaw { "A", "B", "C", "D" }`
   * `Command6.Prop1`: Property has the first 3 inputs, but it needs to be 100% compatible with the reference.
-    * AllRaw {"A", "B", "C"}
+    * `AllRaw { "A", "B", "C" }`
   * `Command4.Prop1`: Property is valid, but the input "" already has the reference `Command5.Prop1` that has priority for most.
-    * AllRaw {""}
-  * `Command4.Prop2`: Even if the`Command4.Prop1`
-    * AllRaw {B}
-  * `Command4.Prop3`: Even if the`Command4.Prop1`
-    * AllRaw {"C"}
-  * `Command4.Prop4`: Even if the`Command4.Prop1`
-    * AllRaw {"D"}
+    * `AllRaw { "A" }`
+  * `Command4.Prop2`: The same situation of`Command4.Prop1`
+    * `AllRaw { "B" }`
+  * `Command4.Prop3`: The same situation of`Command4.Prop1`
+    * `AllRaw { "C" }`
+  * `Command4.Prop4`: The same situation of`Command4.Prop1`
+    * `AllRaw { "D" }`
 
 _Scenario 3: property with more combinations will be the reference_
 
@@ -1158,17 +1158,17 @@ _Explanation:_
 * Inputs ( `ArgumentRaw` ): "A", "B", "C", "W"
 * This input has 1 level:
   * `Command5.Prop1`: 3 first reference property inputs
-    * AllRaw {"A", "B", "C"}
+    * `AllRaw { "A", "B", "C" }`
   * `Command6.Prop1`: Compatible with the reference
-    * AllRaw {"A", "B", "C"}
-  * `Command4.Prop1`: Property is valid, but the input "" already has the reference `Command5.Prop1` that has priority for most.
-    * AllRaw {""}
-  * `Command4.Prop2`: Even if the`Command4.Prop1`
-    * AllRaw {B}
-  * `Command4.Prop3`: Even if the`Command4.Prop1`
-    * AllRaw {"C"}
+    * `AllRaw { "A", "B", "C" }`
+  * `Command4.Prop1`: Property is valid, but the input `A` already has the reference `Command5.Prop1` that has priority for most.
+    * `AllRaw { "A" }`
+  * `Command4.Prop2`: The same situation of`Command4.Prop1`
+    * `AllRaw { "B" }`
+  * `Command4.Prop3`: The same situation of`Command4.Prop1`
+    * `AllRaw { "C" }`
   * `Command4.Prop4`: Input reference Property "W" which is the 4 position, position this property accepts.
-    * AllRaw {"W"}
+    * `AllRaw { "W" }`
 
 All the properties "not chosen" were discarded in the process. This rule is paramount so that more than one property is called at the same level.
 
@@ -1185,9 +1185,9 @@ Finally, an instance of the `SysCommand.Parsing.ParseResult` type is returned co
 
 The execution occurs only if all the levels have at least one `Command` valid.
 
-A `Command` is considered valid when he has at least one valid member (method or property) and any invalid member.
+A `Command` is considered valid when he has at least one valid member (method or property) and there is no invalid members.
 
-If this rule fails, the `Execute()` method will indicate on `ExecutionResult.State` the type property of the error and all errors will be displayed in the property `ExecutionResult.Errors` :
+If this rule fails, the `Execute()` method will indicate in `ExecutionResult.State` which the type property of the error and all errors will be displayed in the property `ExecutionResult.Errors` :
 
 * `ExecutionState.NotFound`: When there is no valid or invalid in any level. Or when there are only properties and all are with in the State `NotMapped` .
 * `ExecutionState.HasError`: Indicates that there is one or more invalid members in any of the levels.
@@ -1226,7 +1226,7 @@ First, it was created a small wrapper `System.Console` class called `SysCommand.
   * "1": error
 * Smart line break while using dós write and read methods. The variable `App.Console.BreakLineInNextWrite` controls the breaks and helps you not leave empty lines.
 
-Another feature would be the use of stock `returns` and that will be, if any, used as output. This feature resembles "AspNet MVC".
+Another feature would be the use of `returns` syntax in the actions and that will be, if any, used as output. This feature resembles "AspNet MVC".
 
 **Example:**
 
@@ -1283,7 +1283,7 @@ To use `Razor` should follow some simple steps:
 
 **Example:**
 
-##### #Commands/ExampleRazorCommand.cs
+###### Commands/ExampleRazorCommand. cs
 
 ```csharp
 public class ExampleRazorCommand : Command
@@ -1310,7 +1310,7 @@ public class ExampleRazorCommand : Command
 }
 ```
 
-##### #Views/ExampleRazor/MyAction.razor
+###### Views/ExampleRazor/MyAction. razor
 
 ```
 @if (Model == null)
@@ -1322,7 +1322,7 @@ else {
 }
 ```
 
-##### #Tests
+###### Tests
 
 Input1:
 
@@ -1343,13 +1343,13 @@ Outputs:
     #### HelloWorld {MyName} ####
 ```
 
-##### #Observação
+###### Note
 
 * The research of template via `Arquivo físico` or via `Embedded Resource` follows the same logic. He seeks for way more specific by using the name of "command. action." and if he doesn't find him will try to find by generic name, without the name of the command.
-  * Search first: "ExampleRazorCommand. MyAction. razor"
-  * If you cannot find on the first try, then search for: "MyAction. razor"
-* You can pass the name of the view directly, without the need to use the automatic search. as in the example of the action "MyAction2 ()".
-* For technical questions, the method View <> () requires the use of a inferencia or a model. Implies that a `object` If you don't need a model `View<object>()` .
+  * Search first by:`ExampleRazorCommand.MyAction.razor`
+  * If you cannot find on the first try, then search for:`MyAction.razor`
+* You can pass the name of the view directly, without the need to use the automatic search. as in the example of the action `MyAction2()` .
+* For technical questions, the method `View<>()` requires the use of a inferencia or a model. Implies that a `object` If you don't need a model `View<object>()` .
 * Due to the use of the `Razor` feature, your project will have a `System.Web.Razor` dll dependency.
 
 ## <a name="output-t4" />Using template T4
@@ -1358,12 +1358,12 @@ Another option to display outputs is to use templates `T4` . This mechanism, unl
 
 * By organization, create a folder "Views"
 * Create a file T4 in the format "Runtime Text Template"
-* If you use model is necessary to set a parameter, which for compulsory, you must call "Model" and have your respective type configured on the tag `type` . If you do not use any "Model" then skip this step.
+* If you use model is necessary to set a parameter, which for compulsory, you must call `Model` and have your respective type configured on the tag `type` . If you do not use any `Model` then ignore this step.
 * Implement your template
 
 **Example:**
 
-##### #Commands/ExampleT4Command.cs
+###### Commands/ExampleT4Command. cs
 
 ```csharp
 public class ExampleT4Command : Command
@@ -1390,7 +1390,7 @@ public class ExampleT4Command : Command
 }
 ```
 
-##### #Views/ExampleT4/MyActionView.tt
+###### Views/ExampleT4/MyActionView.tt
 
 ```csharp
 <#@ parameter type="Example.T4Command.MyModel" name="Model" #>
@@ -1402,7 +1402,7 @@ public class ExampleT4Command : Command
 <# } #>
 ```
 
-##### #Tests
+###### Tests
 
 Input1:
 
@@ -1429,7 +1429,7 @@ The class `SysCommand.ConsoleApp.View.TableView` brings the `output tabelado` fe
 
 **Example:**
 
-##### #Commands/TableCommand.cs
+###### Commands/TableCommand. cs
 
 ```csharp
 public class TableCommand : Command
@@ -1456,7 +1456,7 @@ public class TableCommand : Command
 }
 ```
 
-##### #Tests
+###### Tests
 
 Input1:
 
@@ -1485,7 +1485,7 @@ Working with properties is very simple and objective, simply create their proper
 
 First, you can use the method `Main()` with no parameter, name Convention, will be in charge of be invoked if any of your property has been used in input from the user. The name "Main" was chosen to keep the naming pattern that the .NET uses in the console applications.
 
-For safety, use all the primitive types such as `Nullable` to ensure that the user did input. Or use the method `GetArgument(string name)` to check whether a property has parseada. It is worth mentioning that a property with **default value** will always have the result of parse and if necessary, use a check to see if the result came from user input.
+For safety, use all the primitive types such as `Nullable` to ensure that the user did input. Or use the method `GetArgument(string name)` to check whether a property has been analyzed. It is worth mentioning that a property with **default value** will always have a result after the parse and if necessary, use a check to see if the result came from user input.
 
 **Example:**
 
@@ -1826,7 +1826,7 @@ Working with methods is also very simple, all methods defined as `public` , by d
 * Parameterless methods
 * Methods with optional parameters with **default value**
 * Methods with overloads
-* `return`Where the methods return the method, by default, will be used as output in the console using
+* Methods with the syntax `return` , by default, will be used as output in the console using
 
 ## <a name="methods-without-params" />Parameterless methods
 
@@ -1937,10 +1937,10 @@ The argument '--arg1' does not exist
 
 The last command showed the limitation of overload with regard to optional parameters. The parser understood that both methods with `MyAction3` parameters are invalid, see:
 
-* MyAction3 (int arg0): does not have the input "arg1" that was requested, so this invalid.
-* MyAction3 (int arg0, int arg1): Has the input "arg1", but does not have the input "--", so this invalid arg0.
+* `MyAction3(int arg0)`: Does not have the input `--arg1` that was requested, so this invalid.
+* `MyAction3(int arg0, int arg1)`: Has the input `--arg1` , but does not have the input `--arg0` , so this invalid.
 
-In this case the parser had chosen the only valid method, i.e. the method `MyAction3` _without parameters_ and will use the extra argument "arg1" to try to find him as property on some `Command` , however this property does not exist in any place, generating the error.
+In this case the parser had chosen the only valid method, i.e. the method `MyAction3` _without parameters_ and will use the extra argument `--arg1` to try to find him as property on some `Command` , however this property does not exist in any place, generating the error.
 
 ## <a name="methods-positional-inputs" />Using positional inputs
 
@@ -2043,7 +2043,7 @@ Could not find any action.
 
 ## <a name="methods-customizing-names" />Customizing actions names and arguments
 
-The following rule describes how the default behavior for the naming methods turn a `action` and a a parameter `argument` :
+The following rule describes how the standard process of transformation of a name of a method in action and also the names of its parameters in arguments.
 
 First converts the member name (methods or parameters) in small, then add a dash "-" before each letter upper case that are in the middle or at the end of the name. In the case of parameters with only one letter, the default is to leave the tiny font and input will be accepted only in short form.
 
@@ -2281,7 +2281,7 @@ ActionWhenNotExistsInput()
 
 **Comments:**
 
-* It is important to note that all standard methods can still be called explicit, i.e. with your name being specific.
+* It is important to note that all standard methods can still be called explicit way, that is, with your name being specific.
 * The use of default method without arguments only works if there is no argument required, otherwise this method will never be called because there will be an error requiring the use of the argument. '
 
 # <a name="help" />Help
@@ -2322,19 +2322,19 @@ have his name omitted. (F)
 
 The source of each text in each element `Commands` , `Arguments` and `Actions` complementary texts and are on static class `SysCommand.ConsoleApp.Strings` . Follows the mapping from each text as the format shown above:
 
-* **A:** The text `usage` is generated internally by the class `DefaultDescriptor` and will always be displayed.
-* **B:** The `Command` text always appears and your source comes from the `Command.HelpText` property that must be set in the constructor of your command. If you do not assign any value to this property, the default is to display the command name.
-* **C:** Will be displayed all the arguments (properties) of the command, one under the other.
-  * **C1:** The source of this text comes from the `ArgumentAtrribute(LongName="")` attribute.
-  * **C2:** The source of this text comes from the `ArgumentAtrribute(ShortName="")` attribute.
-  * **C3:** The source of this text comes from the `ArgumentAtrribute(Help="")` attribute.
-  * **C4:** This text will only appear if the flag `ArgumentAtrribute(ShowHelpComplement=true)` is turned on. The text that will be displayed will depend on the configuration of the Member:
+* **A.** the text `usage` is generated internally by the class `DefaultDescriptor` and will always be displayed.
+* **B.** the `Command` text always appears and your source comes from the `Command.HelpText` property that must be set in the constructor of your command. If you do not assign any value to this property, the default is to display the command name.
+* **C.** will be displayed all the arguments (properties) of the command, one under the other.
+  * **C1.** The source of this text comes from the `ArgumentAtrribute(LongName="")` attribute.
+  * **C2.** The source of this text comes from the `ArgumentAtrribute(ShortName="")` attribute.
+  * **C3.** The source of this text comes from the `ArgumentAtrribute(Help="")` attribute.
+  * **C4.** This text will only appear if the flag `ArgumentAtrribute(ShowHelpComplement=true)` is turned on. The text that will be displayed will depend on the configuration of the Member:
     * `Strings.HelpArgDescRequired`: When the Member is required
     * `Strings.HelpArgDescOptionalWithDefaultValue`: When the Member is optional and has a **default value**.
     * `Strings.HelpArgDescOptionalWithoutDefaultValue`: When the Member is optional and has no **default value**.
-* **D:** The source of this text comes from the `ActionAtrribute(Name="")` attribute.
-* **E:** Are the same sources of command arguments (properties), because both use the same attribute.
-* **F:** Supplementary text to explain how the help works. The source of this text comes from the `Strings.HelpFooterDesc` class.
+* **D.** the source of this text comes from the `ActionAtrribute(Name="")` attribute.
+* **E.** Are the same sources of command arguments (properties), because both use the same attribute.
+* **F.** supplementary Text to explain how the help works. The source of this text comes from the `Strings.HelpFooterDesc` class.
 
 **Example:**
 
@@ -2524,7 +2524,7 @@ Error handling is generated automatically by the system and are categorized as f
 * Not Found: no route found to the input requested.
 * Exception génerica: there is no standard treatment, but it is possible to intercept any exception inside the event `App.OnException` .
 
-Responsible for format and print errors is the default handler `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` that traps the end result of running and if you have errors `ShowErrors(ApplicationResult appResult)` or method `ShowNotFound(ApplicationResult appResult)` of the class `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor` .
+Responsible for format and print errors is the default handler `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` . It intercepts the execution and if you have mistakes calls one of the `ShowErrors(ApplicationResult appResult)` method, `ShowNotFound(ApplicationResult appResult)` and that are in the class `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor` .
 
 If you want to customize the error messages, you can change the handler `DefaultApplicationHandler` completely (not recommended) or create a class that inherits from `DefaultDescriptor` overriding only the methods of errors.
 
@@ -2669,7 +2669,7 @@ _Methods:_
 * `Remove(string fileName)`: Removes an object in the default folder with a specific name.
 * `T Get<T>(string fileName = null, bool refresh = false)`: Returns a default folder object.
   * `fileName`: Indicates the file name, if `null` the name of the type `T` is used in the search, with exception to classes that have the attribute `ObjectFile` .
-  * `refresh`: If you `false` seek in the internal cache if you have already been loaded previously. Otherwise be forced file loading.
+  * `refresh`: If `false` , will seek in the internal cache if you have already been loaded previously. Otherwise be forced file loading.
 * `T GetOrCreate<T>(string fileName = null, bool refresh = false)`: Same behavior of the method above, but creates a new instance when you can't find the file in the default folder. It is important to say that the file will not be created, only the instance of the type `T` . To save physically it is necessary to use the method `Save` .
 * `string GetObjectFileName(Type type)`: Returns the formatted type name or if you are using the `ObjectFile` attribute, returns the value of the `FileName` property.
 * `string GetFilePath(string fileName)`: Returns the file path into the default folder.
@@ -2789,7 +2789,7 @@ Note that to create an instance of `JsonFileManager` the scope of the `App.Items
 
 # <a name="redirectiong-commands" />Command redirection
 
-To redirect your application with a new sequence of commands is very simple, just to your action return an instance of the class `RedirectResult` by passing in your constructor a string containing the new sequence of commands. It is worth mentioning that the instances of the controls will be the same, that is, the State of each command will not return to the start, just the flow of execution. Another important point is that any input then this action will not be called, that is, execution resumes with the new command at a time when there is a return `RedirectResult` type.
+To redirect your application with a new sequence of commands is very simple, just to your action return an instance of the class `RedirectResult` by passing in your constructor a string containing the new string of commands. It is worth mentioning that the instances of the controls will be the same, that is, the State of each command will not return to the start, just the flow of execution. Another important point is that any action after action that returned the `RedirectResult` will no longer be called.
 
 **Example:**
 
@@ -2818,7 +2818,7 @@ public class RedirectCommand : Command
 }
 ```
 
-In the example below the action `Something` will be performed, since this before the redirect.
+In the example below, the action `Something` to be executed because she is set before the redirect.
 
 ```
 C:\MyApp.exe something redirect-now my-value
@@ -2827,7 +2827,7 @@ Redirecting now!!. Count: 1
 Redirected: my-value. Count: 2
 ```
 
-In the example below the action `Something` is not performed, since this after the redirect.
+In the example below the action `Something` will not be executed because she is set after the redirect.
 
 ```
 C:\MyApp.exe redirect-now my-value something
@@ -2898,7 +2898,7 @@ StopPropagationCommand1.StopPropagationAction1
 StopPropagationCommand2.StopPropagationAction1
 ```
 
-Note that when using the argument "-cancel" action "StopPropagationCommand3. StopPropagationAction1" was not performed. That's why she was in last position of the execution stack and how the action "StopPropagationCommand2. StopPropagationAction1" cancelled the continuity of implementation, any other action sequence will be ignored.
+Note that when using the script `--cancel` action "StopPropagationCommand3. StopPropagationAction1" was not performed. That's why she was in last position of the execution stack and how the action "StopPropagationCommand2. StopPropagationAction1" cancelled the continuity of implementation, any other action of the string will be ignored.
 
 Another possibility `StopPropagation` is to use when there are multiple actions in the same input. The logic is the same, will be cancelled all actions of the stack that are after the action that triggered the stop.
 
@@ -2953,7 +2953,7 @@ C:\MyApp.exe history-remove "CommonCommand1"
 C:\MyApp.exe history-list
 ```
 
-The last two commands do not return outpus.
+The last two commands do not return outputs.
 
 * To disable the command `ArgsHistoryCommand` see topic [Specifying the types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands).
 * The action `history-load` returns an object of type `RedirectResult` that forces redirection to a new command. Any input from this action will be despised. See the topic [Command redirection](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#redirectiong-commands).
@@ -2961,7 +2961,7 @@ The last two commands do not return outpus.
 
 # <a name="extras" />Extras-OptionSet
 
-This extra is designed for a ocasição specifies the parse where the focus is to be simple. With the class `SysCommand.Extras.OptionSet` it is possible to parse arguments in the traditional way.
+This extra is designed for a specific occasion parse where the focus is to be simple. With the class `SysCommand.Extras.OptionSet` it is possible to parse arguments in the traditional way.
 
 _Methods:_
 
@@ -2975,7 +2975,7 @@ _Properties:_
 
 * `ArgumentsValid`: After the parse that information contains all the valid arguments
 * `ArgumentsInvalid`: After the parse that information contains all the invalid arguments
-* `HasError`: Indicates if there is no parse errors
+* `HasError`: Checks whether there is parse errors
 
 **Example:**
 

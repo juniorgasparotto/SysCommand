@@ -67,9 +67,9 @@
 
 # <a name="class-app" />Iniciando
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` com suas possíveis customizações ou atravez do método estático `App.RunApplication` que disponibiliza um recurso chamado **simulador de console** que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo.
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` com suas possíveis customizações ou através do método estático `App.RunApplication` que disponibiliza um recurso chamado **simulador de console** que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo.
 
-A classe `App` esta no topo da hierarquia de classes do sistema, cada instância é responsável por manter um contexto isolado da execução. Nenhum recurso estático é usado aqui e isso é importante para ter a liberdade de criar quantas instâncias quiser em qualquer escopo.
+A classe `App` esta no topo da hierarquia de classes, cada instância equivale a um contexto isolado que vai conter uma arvore de outros objetos que são exclusivos desse contexto. Nenhum recurso estático é usado aqui e isso é importante para ter a liberdade de criar quantas instâncias quiser em qualquer escopo.
 
 Em seu construtor estão as primeiras configurações:
 
@@ -81,8 +81,8 @@ public App(
        )
 ```
 
-* `commandsTypes`: Especifica os tipos dos `Command` que serão utilidados em todo o processo. Caso seja `null` então o sistema buscará automáticamente qualquer classe que extenda de `Command`. Entenda melhor em [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#specifying-commands).
-* `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará ligado. Entenda melhor em [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#using-the-multi-action-feature).
+* `commandsTypes`: Especifica os tipos dos `Command` que serão utilizados em todo o processo. Caso seja `null` então o sistema buscará automáticamente qualquer classe que extenda de `Command`. Entenda melhor em [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#specifying-commands).
+* `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará habilidado. Entenda melhor em [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#using-the-multi-action-feature).
 * `addDefaultAppHandler`: Caso seja `false` então NÃO cria o handler de eventos que é responsável pelo mecanismo padrão de `outputs` e controles de `erros` e dentre outros. O padrão é `true`. Entenda melhor em [Controle de eventos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#events).
 
 ## <a name="initializing-by-static-method" />Inicializando com o simulador de console
@@ -123,7 +123,7 @@ public class Program
 }
 ```
 
-Ao iniciar esse código no Visual Studio um prompt padrão com um label `cmd>` será exibido. Isso indica que você pode iniciar seus testes quantas vezes for necessário. Para sair você pode usar o atalho padrão "CTRL+C" ou apertar o botão "stop" do Visual Studio.
+Quando você executar esse código no Visual Studio, um prompt com o label `cmd>` será exibido. Isso indica que você pode iniciar seus testes quantas vezes for necessário. Para sair, você pode usar o atalho padrão "CTRL+C" ou apertar o botão "stop" do Visual Studio.
 
 ```
 cmd> --my-property value
@@ -201,7 +201,7 @@ any action. Every action with the symbol "*" can
 have his name omitted.
 ```
 
-Perceba que no help não existe nenhuma ocorrencia da class `SecondCommand`.
+Perceba que ao digitar `help` a classe `SecondCommand` não é exibida.
 
 Perceba também que existe um help para o próprio mecanismo de help, esse `Command` sempre deverá existir, caso não seja especificado na sua lista de tipos o proprio sistema se encarregará de cria-lo utilizando o help padrão `SysCommand.ConsoleApp.Commands.HelpCommand`. Para mais informações sobre customização de help consulte [Help](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#help).
 
@@ -268,7 +268,7 @@ any action. Every action with the symbol "*" can
 have his name omitted.
 ```
 
-Perceba que no help não existe nenhuma ocorrencia da class `FirstCommand`.
+Perceba que ao digitar `help` a classe `FirstCommand` não é exibida.
 
 Por enquanto, não se atente agora para as classes `VerboseCommand` e `ArgsHistoryCommand` elas são commands internos e serão explicados mais adiante na documentação.
 
@@ -286,7 +286,7 @@ São os comandos que herdam da classe `Command` e implementam a interface `IHelp
 
 **Comandos de debug**
 
-Os comandos de debug são comandos que são carregados apenas durante o debugging do Visual Studio. Um bom exemplo seria o comando interno "ClearCommand", ele disponibiliza a action "clear" para limpar o prompt de comando que o Visual Studio abre durante o processo de debug. Para criar um comando de debug basta habilitar a flag `Command.OnlyInDebug`.
+Os comandos de debug são comandos que são carregados apenas durante o debugging do Visual Studio. Um exemplo desse tipo é o comando interno "ClearCommand", ele disponibiliza a ação chamada `clear` para limpar o prompt aberto pelo Visual Studio durante o debug. Para criar um comando do tipo "debug", é necessário habilitar a flag `Command.OnlyInDebug`.
 
 ```csharp
 public class ClearCommand : Command
@@ -308,11 +308,11 @@ public class ClearCommand : Command
 
 Os eventos são importantes para interceptar cada passo da execução e modificar ou extender o comportamento padrão. Os eventos existentes são os seguintes:
 
-* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: Chamado antes do invoke de cada membro (propriedade ou metodo) que foi parseado.
-* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: Chamado depois do invoke de cada membro (propriedade ou metodo) que foi parseado.
-* `App.OnMethodReturn(ApplicationResult, IMemberResult)`: : Chamado sempre que um metodo retorna valor
-* `App.OnComplete(ApplicationResult)`: Chamado ao fim da execução
-* `App.OnException(ApplicationResult, Exception)`: Chamado em caso de exception.
+* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: É disparado antes do invoke de cada membro (propriedade ou metodo) que foi analisado.
+* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: É disparado depois do invoke de cada membro (propriedade ou metodo) que foi analisado.
+* `App.OnMethodReturn(ApplicationResult, IMemberResult)`: : É disparado sempre que um metodo retorna valor
+* `App.OnComplete(ApplicationResult)`: É disparado ao fim da execução
+* `App.OnException(ApplicationResult, Exception)`: É disparado em caso de exception.
 
 **Exemplo:**
 
@@ -376,9 +376,9 @@ Count: 2
 Some error!!!
 ```
 
-No exemplo acima o controle passou para quem implementou os eventos e cada um dos eventos foram executados em sua respectiva ordem.
+No exemplo acima, note que o controle passou para quem implementou os eventos.
 
-Por padrão nos inserimos um handler chamado `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` que é responsável pelo mecanismo padrão de `outputs` e controles de `erros`. Esse handler foi o responsável imprimir a linha "Return MyAction" do output acima. Para desliga-lo e ter o controle total dos eventos, basta desabilitar a flag `addDefaultAppHandler = false` no construtor.
+Por padrão, nos temos o handler `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` que é adicionado automaticamente. Esse handler é responsável pelo mecanismo padrão de `outputs` e controles de `erros`. Esse foi o responsável imprimir a linha "Return MyAction" do output acima. Para desliga-lo e ter o controle total dos eventos, basta desabilitar a flag `addDefaultAppHandler = false` no construtor.
 
 ```csharp
 new App(addDefaultAppHandler: false).Run(args);
@@ -394,7 +394,7 @@ new App(addDefaultAppHandler: false)
 
 # <a name="input" />Input
 
-Chamamos de input todas as linhas de comandos que o usuário digita e envia para o aplicativo. Os formatos de input se dividem entre `arguments` e `actions`.
+Dividimos o input de usuário em duas entidades: `arguments` e `actions`.
 
 ## <a name="input-arguments" />`Arguments`
 
@@ -406,7 +406,7 @@ C:\MyApp.exe -v value                  // Short
 C:\MyApp.exe value                     // Positional
 ```
 
-Programaticamente, os `arguments` podem ser derivados de `properties` ou dos parâmetros dos `methods`.
+Programaticamente, os `arguments` podem ser derivados de propriedades ou dos parâmetros dos métodos.
 
 ### <a name="input-named" />Argumento nomeado
 
@@ -467,27 +467,27 @@ MyApp.exe ValueA ValueB ValueC
 
 _Observações:_
 
-* Para as propriedades, o **input posicional** é desabilitado por padrão, para habilita-lo utilize a propriedade de comando `Command.EnablePositionalArgs`.
-* Para os métodos esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-positional-inputs).
+* Para as propriedades, o **input posicional** é desabilitado por padrão, para habilitar esse recurso, utilize a configuração `Command.EnablePositionalArgs`.
+* Para os métodos, esse tipo de input é habilitado por padrão, para desabilita-lo veja no tópico de [Usando inputs posicionais](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-positional-inputs).
 
 ## <a name="input-actions" />`Actions`
 
-Já as `actions` são palavras reservadas para executar uma determinada ação em seu aplicativo. Elas não precisam de nenhum sufixo como ocorre com os `arguments`,basta usa-las diretamente em seu input. Um bom exemplo de `action` são os recursos do `git` como:
+São palavras reservadas para executar uma determinada ação em seu aplicativo. Elas não precisam de nenhum sufixo como ocorre com os `arguments`,basta usa-las diretamente em seu input. Seu uso é similar ao modo como usamos os recursos do git, veja:
 
 ```
 git add -A;
 git commit -m "comments"
 ```
 
-Onde `add` e `commit` seriam o nome das `actions` e `-A` e `-m` seus respectivos `arguments`.
+Onde `add` e `commit` seriam o nome das ações e `-A` e `-m` seus respectivos argumentos.
 
-Programaticamente, as `actions` são derivadas dos `methods`.
+Programaticamente, as ações são derivadas dos métodos.
 
 ### <a name="using-the-multi-action-feature" />Multi-action
 
-O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão ele vem habilitado e caso você ache desnecessário para o seu contexto então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#argument-history-manager) deixará de funcionar caso isso ocorra.
+O recurso de multi-action permite que você consiga disparar mais de uma `action` em um mesmo input. Por padrão, ele vem habilitado e caso você ache desnecessário então é só desliga-lo. É importante ressaltar que o recurso [Gerenciamento de históricos de argumentos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#argument-history-manager) deixará de funcionar caso isso ocorra.
 
-Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Isso vale para valores de `arguments` provenientes de propriedades ou de `arguments` provenientes de parâmetros.
+Outro ponto importante é a necessidade de "escapar" seu input caso o valor que você deseje inserir conflite com um nome de uma `action`. Essa regra vale para valores de argumentos de qualquer natureza (propriedades ou parâmetros).
 
 **Exemplo:**
 
@@ -541,7 +541,7 @@ MyApp.exe action1 --value \\action2
 Action1 (value = action2)
 ```
 
-O último exemplo demostra como usar o scape em seus valores que conflitam com nomes de `actions`. Um fato importante é que no exemplo foi usado duas barras invertidas para fazer o scape, mas isso pode variar de console para console, no `bash` o uso de apenas uma barra invertida não tem nenhum efeito, provavelmente ele deve usar para outros scapes antes de chegar na aplicação.
+O último exemplo demostra como usar o scape em seus valores que conflitam com nomes de ações. Um fato importante é que no exemplo foi usado duas barras invertidas para fazer o scape, mas isso pode variar de console para console, no `bash` o uso de apenas uma barra invertida não tem nenhum efeito, provavelmente ele deve usar para outros scapes antes de chegar na aplicação.
 
 ## <a name="support-types" />Tipos suportados
 
@@ -623,8 +623,8 @@ MyApp.exe --my-number 0,99
 
 **Sintaxe para `Boolean`:**
 
-* Para o valor TRUE use: `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
-* Para o valor FALSE use: `false`, `0`, `-` (separado por espaço ou unido com o nome do argumento).
+* Para o valor `TRUE`: Use `true`, `1`, `+` (separado por espaço ou unido com o nome do argumento) ou omita o valor.
+* Para o valor `FALSE`: Use `false`, `0`, `-` (separado por espaço ou unido com o nome do argumento).
 
 ```
 MyApp.exe -a  // true
@@ -654,7 +654,7 @@ MyApp.exe -abc+ // true for a, b and c
 
 **Sintaxe para `DateTime`:**
 
-Assim como os números decimais, o formato de data suportado depende da cultura que estiver configurado em sua aplicação.
+O formato de entrada para os tipos `DateTime` depende da cultura que estiver configurado em sua aplicação.
 
 _EN-US:_
 
@@ -676,7 +676,7 @@ MyApp.exe --my-date "2000-12-13 00:00:00"
 
 **Sintaxe para `Enums`:**
 
-Os valores de entrada podem variar entre o nome do `Enum` no formato case-sensitive ou o seu número interno. Para `Enum Flags` utilize espaços para adicionar ao valor do argumento.
+Os valores de entrada podem variar entre o nome do `Enum`, no formato case-sensitive, ou o seu número interno. Para `Enum Flags`, utilize espaços para adicionar ao valor do argumento.
 
 ```csharp
 [Flags]
@@ -719,7 +719,7 @@ MyApp.exe --my-lst 1.0 1.99 --my-array "string with spaces" "other string" uniqu
 MyApp.exe 1.0 1.99 str1 str2 // positional
 ```
 
-No último exemplo, o valor "str1" quebra a sequencia de números "1.0 1.99", sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
+No último exemplo, o valor "str1" quebra a sequência de números `1.0 1.99`, sendo assim o próximo argumento receberá esse valor caso seu tipo seja compativél.
 
 **Importante!**
 
@@ -775,7 +775,7 @@ Essa etapa precisa conhecer as `actions`, pelo único motivo de escapar valores 
 Considere que `action1` é uma ação com 1 argumento opcional chamado `--value` e que aceita valores posicionais:
 
 ```csharp
-public void Action1(string value = null);`
+public void Action1(string value = null);
 ```
 
 _Dispara a `action1` duas vezes:_
@@ -784,7 +784,7 @@ _Dispara a `action1` duas vezes:_
 MyApp.exe action1 action1
 ```
 
-_Dispara a `action1` apenas 1 vez e com o valor "action1" no argumento `--value`. Sem essa escape a "action1" seria chamada duas vezes:_
+_Executa apenas 1 vez a ação `action1` e com o valor "action1" no argumento `--value`. Sem essa escape a "action1" seria chamada duas vezes:_
 
 ```
 MyApp.exe action1 \action1
@@ -800,15 +800,15 @@ Por fim, uma lista do tipo `IEnumerable<ArgumentRaw>`.
 
 É a etapa mais longa, onde combina o resultado do mapeamento com o resultado do parser simples. O objetivo é obter as melhores rotas para um mesmo input.
 
-1. A primeira etapa consiste em encontrar os métodos de acordo com o input de entrada. Para isso, será usado como referencia todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
+1. A primeira etapa consiste em encontrar os métodos de acordo com o input. Para isso será usado, como referencia, todos os `ArgumentRaw` no formato `Unnamed`, ou seja, argumentos sem nomes. A busca será dentro do mapa retornado pelo método `GetMaps`. Quando um método é encontrado, uma instância do tipo `SysCommand.Parsing.ActionParsed` é criada e cada parâmetro do método será representado pela classe `SysCommand.Parsing.ArgumentParsed`.
 2. A primeira `action` pode ter seu nome omitido, mas para isso ela precisa ser do tipo **padrão**. Veja [Métodos padrão](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#methods-default). Caso existam, elas só serão utilizadas quando o primeiro `ArgumentRaw` do input não é uma `action`. Nesse cenário todos os **métodos padrão** serão escolhidos para a próxima etapa. Daí para frente o processo será o mesmo.
 3. Após encontrar todos os métodos de cada `action` do input, será feito a divisão em níveis. Cada nível será criado da seguinte forma:
-  * Se o input iniciar com argumentos então formaram o primeiro nível. Isso se não existir nenhum **método padrão**.
+  * Se o input iniciar com argumentos e não existir **método padrão**, então o primeiro nível será criado com estes argumentos.
   * Caso exista mais de uma `action` no input, incluindo os **métodos padrão**, cada uma representará um novo nível.
-  * Os argumentos que não fazem parte do mapa da `action` (sobras) formaram outro nível. Esse nível será criado na sequência do nível da `action`.
-  * Caso não encontre nenhuma `action` no input e apenas argumentos, então haverá apenas um nível.
+  * Os argumentos que não fazem parte do mapa da ação (sobras) formaram outro nível. Esse nível será criado após essa ação.
+  * Caso não encontre nenhuma ação no input enviado, então haverá apenas um nível com os argumentos que podem ou não existir.
   * Caso não exista nenhum input, mas exista **métodos padrão** sem parâmetros, então eles serão escolhidos para a execução.
-4. Todos os níveis que não são de `action` (apenas de argumentos) serão usados para encontrar as proprieades. Quando isso acontece, cada propriedade será representada pela classe `SysCommand.Parsing.ArgumentParsed` assim como os parâmetros dos métodos.
+4. Todos os níveis que não são de `action` (apenas de argumentos) serão usados para encontrar as `properties`. Quando isso acontece, cada propriedade será representada pela classe `SysCommand.Parsing.ArgumentParsed` assim como os parâmetros dos métodos.
 
 Nota importante: Quando a flag `bool enableMultiAction` estiver desligada o parser aceitará apenas uma `action`.
 
@@ -865,35 +865,35 @@ namespace Example.Input.Parser
 }
 ```
 
-_A) 2 níveis com o primeiro pertencendo ao método padrão 'Main(...)':_
+_A. 2 níveis com o primeiro pertencendo ao método padrão 'Main(...)':_
 
 ```
 MyApp.exe --a 1 --b 2 --c 3 action2
           |      L1        |  L2   |
 ```
 
-_B) 2 níveis com duas ações:_
+_B. 2 níveis com duas ações:_
 
 ```
 MyApp.exe action1 action2
           |  L1  |   L2 |
 ```
 
-_C) 3 níveis, iniciando com 1 argumentos:_
+_C. 3 níveis, iniciando com 1 argumentos:_
 
 ```
 MyApp.exe --property1 value action1 action2
           |        L1      |   L2  |  L3  |
 ```
 
-_D) 3 níveis, iniciando com 2 argumentos:_
+_D. 3 níveis, iniciando com 2 argumentos:_
 
 ```
 MyApp.exe --property1 value --property2 value2 action1 action2
           |                L1                 |   L2  |   L3 |
 ```
 
-_E) 4 níveis, com sobras de argumentos na 'action2':_
+_E. 4 níveis, com sobras de argumentos na 'action2':_
 
 ```
 MyApp.exe --property1 value action1 action2 --property2 value2
@@ -901,11 +901,11 @@ MyApp.exe --property1 value action1 action2 --property2 value2
 
 ```
 
-No exemplo E o argumento `--property2` foi derivado dos argumentos extras da ação `action2`. Observe que essa ação não teve seu argumento `--value` especificado no input e o argumento `--property2` não faz parte de seu mapa, sendo assim esse argumento entra como extra e insumo para o próximo nível de argumentos. Esses extras podem estar em qualquer lugar depois do nome da `action`, após seu nome, no meio ou no final.
+No exemplo `E` o argumento `--property2` foi derivado dos argumentos extras da ação `action2`. Observe que essa ação não teve seu argumento `--value` especificado no input e o argumento `--property2` não faz parte de seu mapa, sendo assim esse argumento entra como extra e insumo para o próximo nível de argumentos. Esses extras podem estar em qualquer lugar depois do nome da `action`, após seu nome, no meio ou no final.
 
 #### <a name="input-parser-complex-methods" />Escolhendo os melhores métodos
 
-Com a divisão de níveis por `action` concluída, é feito a escolha dos melhores métodos dentro de cada nível.
+Com a divisão de níveis por "ações" concluída, é escolhido os melhores métodos dentro de cada nível.
 
 1. Essa escolha trabalha da seguinte forma:
   * Seleciona os métodos que tem todos os parâmetros válidos
@@ -915,7 +915,7 @@ Com a divisão de níveis por `action` concluída, é feito a escolha dos melhor
     * A menor quantidade de argumentos extras
 2. Com o melhor método em mãos para cada nível, a próxima etapa é remover todos os métodos do mesmo nível que não combinam com o melhor método. Isso não significa que tenham que ter a mesma assinatura, ou seja, não é preciso ter o mesmo nome, nem a mesma quantidade de parâmetros e nem os mesmos tipos, nada disso importa, o que vale é a relação do input com o método.
 
-A combinação desejada é que todos os outros métodos tenham as mesmas quantidades de parâmetros parseados (`ArgumentParsed`) e que os inputs de seus parâmetros (`IEnumerable<ArgumentRaw> AllRaw`) combinem com os inputs do melhor método, inclusive, com a mesma sequência. Isso significa que a estratégia de parse do input foi a mesma para os métodos que combinaram, assim garante que não haverá o uso do mesmo input para finalidades diferentes.
+A combinação desejada é que todos os outros métodos tenham as mesmas quantidades de parâmetros analisados (`ArgumentParsed`) e que os inputs de seus parâmetros (`IEnumerable<ArgumentRaw> AllRaw`) combinem com os inputs do melhor método, inclusive, com a mesma sequência. Isso significa que a estratégia de parse do input foi a mesma para os métodos que combinaram, assim garante que não haverá o uso do mesmo input para finalidades diferentes.
 
 **Exemplos:**
 
@@ -980,35 +980,35 @@ _Explicação:_
 * Esse input tem 3 nível:
   * Nível 1: `action3 123 456`
     * `Action3(int? value = null, string value2 = null)`: Melhor método, todos devem ter esse modelo
-      * ArgumentParsed 1: AllRaw { "123" }
-      * ArgumentParsed 2: AllRaw { "456" }
+      * `ArgumentParsed` 1: `AllRaw { "123" }`
+      * `ArgumentParsed` 2: `AllRaw { "456" }`
     * `Action3(string value = null)`: Não foi escolhido
-      * ArgumentParsed 1: AllRaw { "123" }
+      * `ArgumentParsed` 1: `AllRaw { "123" }`
     * `Action3(List<string> value)`: Não foi escolhido
-      * ArgumentParsed 1: AllRaw { "123", "456" }
+      * `ArgumentParsed` 1: `AllRaw { "123", "456" }`
   * Nível 2: `action3 123 456 678`
     * `Action3(List<string> value)`: Melhor método, todos devem ter esse modelo
-      * ArgumentParsed 1: AllRaw { "123", "456", "678" }
+      * `ArgumentParsed` 1: `AllRaw { "123", "456", "678" }`
     * `Action3(string value = null)`: : Não foi escolhido
-      * ArgumentParsed 1: AllRaw { "123" }
+      * `ArgumentParsed` 1: `AllRaw { "123" }`
     * `Action3(int? value = null, string value2 = null)`: Não foi escolhido
-      * ArgumentParsed 1: AllRaw { "123" }
-      * ArgumentParsed 2: AllRaw { "456" }
+      * `ArgumentParsed` 1: `AllRaw { "123" }`
+      * `ArgumentParsed` 2: `AllRaw { "456" }`
   * Nível 3: `action3 999`
     * `Action3(string value = null)`: Melhor método
-      * ArgumentParsed 1: AllRaw { "999" }
-    * `Action3(int? value = null, string value2 = null)`: A sequencia combinou
-      * ArgumentParsed 1: AllRaw { "999" }
-    * `Action3(List<string> value)`: A sequencia combinou
-      * ArgumentParsed 1: AllRaw { "999" }
+      * `ArgumentParsed` 1: `AllRaw { "999" }`
+    * `Action3(int? value = null, string value2 = null)`: A sequência esperada foi combinada
+      * `ArgumentParsed` 1: `AllRaw { "999" }`
+    * `Action3(List<string> value)`: A sequência esperada foi combinada
+      * `ArgumentParsed` 1: `AllRaw { "999" }`
 
-Todos os métodos "não escolhidos" foram descartados do processo. Essa regra é primordial para que mais de uma `action` seja chamada no mesmo nível.
+Todos os métodos "não escolhidos" foram descartados do processo. Essa regra é primordial para que mais de uma `action`, com a mesma assinatura, seja chamada no mesmo nível.
 
 #### <a name="input-parser-complex-properties" />Escolhendo as melhores propriedades
 
 Essa escolha trabalha da seguinte forma:
 
-1. Encontra a propriedade de referência para cada input (`ArgumentRaw`) do mesmo nível. Para isso, seleciona a primeira propriedade válida que tem o primeiro input, depois a segunda propriedade válida que tem o segundo input e assim sucessivamente até que todos os inputs sejam completamente combinados. É possível que apenas uma propriedade de referência tenha mais de um input, é o caso de listas ou `Enums Flags`. Esses tipos terão preferência para serem referências, pois combinam mais de um input. Essa regra não existe para os métodos por que os parâmetros dos melhores métodos já são referências para os demais.
+1. Localiza a "propriedade" de referência para cada input (`ArgumentRaw`) do mesmo nível. Para isso, seleciona a primeira propriedade válida que tem o primeiro input, depois a segunda propriedade válida que tem o segundo input e assim sucessivamente até que todos os inputs sejam completamente combinados. É possível que apenas uma propriedade de referência tenha mais de um input, é o caso de listas ou `Enums Flags`. Esses tipos de classes terão preferência para serem referências, pois combinam mais de um input. Essa regra não existe para os métodos porque os parâmetros dos melhores métodos já são referências para os demais.
 2. Depois de localizar as referências, a segunda etapa é excluir as outras propriedades válidas que não combinam com as referências. Aqui é a mesma regra dos parâmetros dos métodos, ou seja, para combinar as propriedades devem ter os mesmos inputs (`ArgumentRaw`) e com as mesmas sequências. Assim garante que não haverá o uso do mesmo input para finalidades diferentes.
 3. Se algum `ArgumentRaw` não for combinado, então todos os argumentos válidos serão eliminados.
 
@@ -1090,7 +1090,7 @@ namespace Example.Input.Parser
 
 **Nota**: Os valores dos argumentos de todos os cenários estão no formato posicional
 
-_Cenário 1: Propriedade com prioridade de maioria que é descartada por estar inválida_
+_Cenário 1: Existe "propriedades" com prioridade, mas que são descartadas por estarem inválidas._
 
 ```
 MyApp.exe W Z Y T
@@ -1106,17 +1106,17 @@ _Explicação:_
 * Inputs (`ArgumentRaw`): "W", "Z", "Y", "T"
 * Esse input tem 1 nível:
   * `Command4.Prop1`: Propriedade de referência para o input "W"
-    * AllRaw { "W" }
+    * `AllRaw { "W" }`
   * `Command4.Prop2`: Propriedade de referência para o input "Z"
-    * AllRaw { "Z" }
+    * `AllRaw { "Z" }`
   * `Command4.Prop3`: Propriedade de referência para o input "Y"
-    * AllRaw { "Y" }
+    * `AllRaw { "Y" }`
   * `Command4.Prop4`: Propriedade de referência para o input "T"
-    * AllRaw { "T" }
+    * `AllRaw { "T" }`
   * `Command5.Prop1`: Propriedade que tem prioridade, mas está inválida, o input "W" não faz parte do `Enum`.
-    * AllRaw { "W" }
-  * `Command6.Prop1`: Mesmo caso do `Command5.Prop1`
-    * AllRaw { "W" }
+    * `AllRaw { "W" }`
+  * `Command6.Prop1`: Mesma situação de `Command5.Prop1`
+    * `AllRaw { "W" }`
 
 _Cenário 2: Propriedade com mais combinações será a referência_
 
@@ -1131,17 +1131,17 @@ _Explicação:_
 * Inputs (`ArgumentRaw`): "A", "B", "C", "D"
 * Esse input tem 1 nível:
   * `Command5.Prop1`: Propriedade de referência de todos os inputs
-    * AllRaw { "A", "B", "C", "D" }
+    * `AllRaw { "A", "B", "C", "D" }`
   * `Command6.Prop1`: Propriedade tem os 3 primeiros inputs, mas ela precisa ser 100% compátivel com a referência.
-    * AllRaw { "A", "B", "C" }
+    * `AllRaw { "A", "B", "C" }`
   * `Command4.Prop1`: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
-    * AllRaw { "A" }
-  * `Command4.Prop2`: Mesmo caso do `Command4.Prop1`
-    * AllRaw { "B" }
-  * `Command4.Prop3`: Mesmo caso do `Command4.Prop1`
-    * AllRaw { "C" }
-  * `Command4.Prop4`: Mesmo caso do `Command4.Prop1`
-    * AllRaw { "D" }
+    * `AllRaw { "A" }`
+  * `Command4.Prop2`: Mesma situação de `Command4.Prop1`
+    * `AllRaw { "B" }`
+  * `Command4.Prop3`: Mesma situação de `Command4.Prop1`
+    * `AllRaw { "C" }`
+  * `Command4.Prop4`: Mesma situação de `Command4.Prop1`
+    * `AllRaw { "D" }`
 
 _Cenário 3: Propriedade com mais combinações será a referência_
 
@@ -1158,17 +1158,17 @@ _Explicação:_
 * Inputs (`ArgumentRaw`): "A", "B", "C", "W"
 * Esse input tem 1 nível:
   * `Command5.Prop1`: Propriedade de referência dos 3 primeiros inputs
-    * AllRaw { "A", "B", "C" }
+    * `AllRaw { "A", "B", "C" }`
   * `Command6.Prop1`: Compatível com a referência
-    * AllRaw { "A", "B", "C" }
-  * `Command4.Prop1`: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
-    * AllRaw { "A" }
-  * `Command4.Prop2`: Mesmo caso do `Command4.Prop1`
-    * AllRaw { "B" }
-  * `Command4.Prop3`: Mesmo caso do `Command4.Prop1`
-    * AllRaw { "C" }
+    * `AllRaw { "A", "B", "C" }`
+  * `Command4.Prop1`: Propriedade está válida, mas o input `A` já tem a referência `Command5.Prop1` que tem prioridade por maioria.
+    * `AllRaw { "A" }`
+  * `Command4.Prop2`: Mesma situação de `Command4.Prop1`
+    * `AllRaw { "B" }`
+  * `Command4.Prop3`: Mesma situação de `Command4.Prop1`
+    * `AllRaw { "C" }`
   * `Command4.Prop4`: Propriedade de referência do input "W" que é a 4 posição, posição que essa propriedade aceita.
-    * AllRaw { "W" }
+    * `AllRaw { "W" }`
 
 Todos as propriedades "não escolhidas" foram descartados do processo. Essa regra é primordial para que mais de uma propriedade seja chamada no mesmo nível.
 
@@ -1185,9 +1185,9 @@ Por fim, uma instância do tipo `SysCommand.Parsing.ParseResult` é retornada co
 
 A execução só ocorre se todos os níveis tiverem ao menos um `Command` válido.
 
-Um `Command` é considerado válido quando ele tem ao menos um membro válido (método ou propriedade) e nenhum membro inválido.
+Um `Command` é considerado válido quando ele tem ao menos um membro válido (método ou propriedade) e não exista membros inválidos.
 
-Se essa regra falhar, o retorno do método `Execute()` vai indicar na propriedade `ExecutionResult.State` o tipo do erro e todos os erros serão indicados na propriedade `ExecutionResult.Errors`:
+Se essa regra falhar, o retorno do método `Execute()` vai indicar na propriedade `ExecutionResult.State` qual o tipo do erro e todos os erros serão indicados na propriedade `ExecutionResult.Errors`:
 
 * `ExecutionState.NotFound`: Quando não encontra nenhum membro válido ou inválido em nenhum nível. Ou quando só existem propriedades e todas estão com no estado `NotMapped`.
 * `ExecutionState.HasError`: Indica que existe um ou mais membros inválidos em algum dos níveis.
@@ -1226,7 +1226,7 @@ Primeiro, foi criado um pequeno wrapper da classe `System.Console` chamado `SysC
   * "1" : Erro
 * Quebra de linha inteligente durante o uso dós métodos de write e read. A variável `App.Console.BreakLineInNextWrite` controla as quebras e te ajuda a não deixar linhas vazias sem necessidade.
 
-Outro recurso seria a utilização dos `returns` das ações e que serão, caso existam, utilizados como output. Esse recurso se assemelha muito ao "AspNet MVC".
+Outro recurso seria a utilização da sintaxe `returns` dentro das ações e que serão, caso existam, utilizados como output. Esse recurso se assemelha muito ao "AspNet MVC".
 
 **Exemplo:**
 
@@ -1283,7 +1283,7 @@ Para utilizar `Razor` deve-se seguir alguns simples passos:
 
 **Exemplo:**
 
-######Commands/ExampleRazorCommand.cs
+###### Commands/ExampleRazorCommand.cs
 
 ```csharp
 public class ExampleRazorCommand : Command
@@ -1310,7 +1310,7 @@ public class ExampleRazorCommand : Command
 }
 ```
 
-######Views/ExampleRazor/MyAction.razor
+###### Views/ExampleRazor/MyAction.razor
 
 ```
 @if (Model == null)
@@ -1322,7 +1322,7 @@ else {
 }
 ```
 
-######Tests
+###### Tests
 
 Input1:
 
@@ -1343,13 +1343,13 @@ Outputs:
     #### HelloWorld {MyName} ####
 ```
 
-######Observação
+###### Observação
 
 * A pesquisa do template via `Arquivo físico` ou via `Embedded Resource` segue a mesma lógica. Ele busca pelo caminho mais especifico usando o nome do "command.action.extensão" e caso ele não encontre ele tentará encontrar pelo nome mais generico, sem o nome do command.
-  * Busca primeiro por: "ExampleRazorCommand.MyAction.razor"
-  * Caso não encontre na primeira tentativa, então busca por: "MyAction.razor"
-* É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automática. como no exemplo da action "MyAction2()".
-* Por questões técnicas, o método View<>() obriga o uso de uma inferencia ou um model. Infira um `object` se você não necessitar de um model `View<object>()`.
+  * Busca primeiro por: `ExampleRazorCommand.MyAction.razor`
+  * Caso não encontre na primeira tentativa, então busca por: `MyAction.razor`
+* É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automática. como no exemplo da action `MyAction2()`.
+* Por questões técnicas, o método `View<>()` obriga o uso de uma inferencia ou um model. Infira um `object` se você não necessitar de um model `View<object>()`.
 * Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.
 
 ## <a name="output-t4" />Usando template T4
@@ -1358,12 +1358,12 @@ Outra opção para exibir outputs é a utilização de templates `T4`. Esse meca
 
 * Por organização, criar uma pasta "Views"
 * Criar um arquivo T4 no formato "Runtime Text Template"
-* Se for utilizar model é preciso configurar um parâmetro, que por obrigatoriedade, deve-se chamar "Model" e ter o seu respectivo tipo configurado na tag `type`. Caso não utilize nenhum "Model" então ignore esse passo.
+* Se for utilizar model é preciso configurar um parâmetro, que por obrigatoriedade, deve-se chamar `Model` e ter o seu respectivo tipo configurado na tag `type`. Caso não utilize nenhum `Model` então ignore esse passo.
 * Implementar o seu template
 
 **Exemplo:**
 
-######Commands/ExampleT4Command.cs
+###### Commands/ExampleT4Command.cs
 
 ```csharp
 public class ExampleT4Command : Command
@@ -1390,7 +1390,7 @@ public class ExampleT4Command : Command
 }
 ```
 
-######Views/ExampleT4/MyActionView.tt
+###### Views/ExampleT4/MyActionView.tt
 
 ```csharp
 <#@ parameter type="Example.T4Command.MyModel" name="Model" #>
@@ -1402,7 +1402,7 @@ public class ExampleT4Command : Command
 <# } #>
 ```
 
-######Tests
+###### Tests
 
 Input1:
 
@@ -1429,7 +1429,7 @@ A classe `SysCommand.ConsoleApp.View.TableView` tras o recurso de `output tabela
 
 **Exemplo:**
 
-######Commands/TableCommand.cs
+###### Commands/TableCommand.cs
 
 ```csharp
 public class TableCommand : Command
@@ -1456,7 +1456,7 @@ public class TableCommand : Command
 }
 ```
 
-######Tests
+###### Tests
 
 Input1:
 
@@ -1485,7 +1485,7 @@ O trabalho com propriedades é muito simples e objetivo, basta criar suas propri
 
 Primeiro, você pode utilizar o método `Main()` sem parâmetro e que, por convensão de nome, será o responsável por ser invocado caso alguma de suas propriedade tenha sido utilizadas no input do usuário. O nome "Main" foi escolhido para manter o padrão de nomenclatura que o .NET utiliza em aplicações de console.
 
-Por segurança, utilize todos os tipos primitivos como `Nullable` para garantir que o usuário fez o input. Ou utilize o método `GetArgument(string name)` para verificar se uma propriedade foi parseada. Vale ressaltar que uma propriedade com **valor padrão** sempre terá resultado de parse e caso necessário, utilize mais uma verificação para saber se o resultado partiu de um input do usuário.
+Por segurança, utilize todos os tipos primitivos como `Nullable` para garantir que o usuário fez o input. Ou utilize o método `GetArgument(string name)` para verificar se uma propriedade foi analisada. Vale ressaltar que uma propriedade com **valor padrão** sempre terá um resultado após o parse e caso necessário, utilize mais uma verificação para saber se o resultado partiu de um input do usuário.
 
 **Exemplo:**
 
@@ -1785,7 +1785,7 @@ MyPosicionalProperty2=1
 
 ## <a name="properties-ignore-public" />Escolha manual de propriedades via atributo
 
-Para mudar o comportamente padrão de propriedades publicas, você precisa apenas desligar a flag `OnlyPropertiesWithAttribute` do `Command`. Com ela desligada o parseador deixará de olhar para as propriedades publicas e usará apenas as propriedades publicas e que tiverem o atributo `ArgumentAtrribute`.
+Para mudar o comportamente padrão de propriedades publicas, você precisa apenas desligar a flag `OnlyPropertiesWithAttribute` do `Command`. Com ela desligada o analisador deixará de olhar para as propriedades publicas e usará apenas as propriedades publicas e que tiverem o atributo `ArgumentAtrribute`.
 
 **Exemplo:**
 
@@ -1826,7 +1826,7 @@ O trabalho com métodos também é muito bem simples, todos os métodos definido
 * Métodos sem parâmetros
 * Métodos com parâmetros opcionais com **valor padrão**
 * Métodos com sobrecargas
-* Métodos com `return` onde o retorno do método, por padrão, será utilizado como output no console usando
+* Métodos com a sintaxe `return`, por padrão, será utilizado como output no console usando
 
 ## <a name="methods-without-params" />Métodos sem parâmetros
 
@@ -1935,12 +1935,12 @@ There are errors in command: Method1Command
 The argument '--arg1' does not exist
 ```
 
-O último comando mostrou a limitação da sobrecarga com relação aos parâmetros opcionais. O parseador entendeu que os dois métodos com parâmetros `MyAction3` estão inválidos, veja:
+O último comando mostrou a limitação da sobrecarga com relação aos parâmetros opcionais. O analisador entendeu que os dois métodos com parâmetros `MyAction3` estão inválidos, veja:
 
-* MyAction3(int arg0): Não tem o input "--arg1" que foi solicitado, portanto esta inválido.
-* MyAction3(int arg0, int arg1): Tem o input "--arg1", mas não tem o input "--arg0", portanto esta inválido.
+* `MyAction3(int arg0)`: Não tem o input `--arg1` que foi solicitado, portanto esta inválido.
+* `MyAction3(int arg0, int arg1)`: Tem o input `--arg1`, mas não tem o input `--arg0`, portanto esta inválido.
 
-Nesse caso o parseador escolhera o unico método valido, ou seja, o método `MyAction3` _sem parâmetros_ e usará o argumento extra "--arg1" para tentar encontra-lo como propriedade em algum `Command`, porém essa propriedade não existe em nenhum lugar, gerando o erro.
+Nesse caso o analisador escolhera o unico método valido, ou seja, o método `MyAction3` _sem parâmetros_ e usará o argumento extra `--arg1` para tentar encontra-lo como propriedade em algum `Command`, porém essa propriedade não existe em nenhum lugar, gerando o erro.
 
 ## <a name="methods-positional-inputs" />Usando inputs posicionais
 
@@ -1980,7 +1980,7 @@ The argument '--arg1' is required
 
 ## <a name="methods-ignore-public" />Ignorar métodos publicos por uma escolha manual usando atributo
 
-Para mudar o comportamente padrão de métodos publicos, você precisa apenas desligar a flag `OnlyMethodsWithAttribute` do `Command`. Com ela desligada o parseador deixará de olhar para as métodos publicos e usará apenas os métodos publicos e que tiverem o atributo `ActionAtrribute`.
+Para mudar o comportamente padrão de métodos publicos, você precisa apenas desligar a flag `OnlyMethodsWithAttribute` do `Command`. Com ela desligada o analisador deixará de olhar para as métodos publicos e usará apenas os métodos publicos e que tiverem o atributo `ActionAtrribute`.
 
 **Exemplo:**
 
@@ -2043,7 +2043,7 @@ Could not find any action.
 
 ## <a name="methods-customizing-names" />Customizando nomes de ações e argumentos
 
-A regra a seguir descreve como é o comportamento padrão de nomenclatura para que os métodos vire uma `action` e um parâmetro vire um `argument`:
+A regra a seguir descreve como é o processo padrão de transformação de um nome de um método em ação e também dos nomes de seus parâmetros em argumentos.
 
 Primeiro se converte o nome do membro (métodos ou parâmetros) em minusculo, depois adiciona um traço "-" antes de cada letra maiuscula que estiver no meio ou no final do nome. No caso de paramentros com apenas uma letra, o padrão será deixar a letra minuscula e o input será aceito apenas na forma curta.
 
@@ -2281,7 +2281,7 @@ ActionWhenNotExistsInput()
 
 **Observações:**
 
-* É importante ressaltar que o todos os métodos padrão ainda podem ser chamados de forma explicita, ou seja, com o seu nome sendo especifico.
+* É importante ressaltar que o todos os métodos padrão ainda podem ser chamados de maneira explicita, ou seja, com o seu nome sendo especifico.
 * O uso de método padrão sem argumentos só funciona se não existir nenhum argumento required, do contrário esse método nunca será chamado, pois haverá um erro obrigando o uso do argumento.'
 
 # <a name="help" />Help
@@ -2322,19 +2322,19 @@ have his name omitted. (F)
 
 A fonte de cada texto esta em cada elemento `Commands`, `Arguments` e `Actions` e os textos complementares estão na classe estática `SysCommand.ConsoleApp.Strings`. Segue o mapeamento de cada texto conforme o formato exibido acima:
 
-* **A:** O texto `usage` é gerado internamente pela classe `DefaultDescriptor` e sempre será exibido.
-* **B:** O texto do `Command` sempre será exibido e a sua fonte vem da propriedade `Command.HelpText` que deve ser definida no construtor do seu comando. Caso você não atribua nenhum valor para essa propriedade, o padrão será exibir o nome do comando.
-* **C:** Será exibido todas os argumentos (propriedades) do comando, um em baixo do outro.
-  * **C1:** A fonte desse texto vem do atributo `ArgumentAtrribute(LongName="")`.
-  * **C2:** A fonte desse texto vem do atributo `ArgumentAtrribute(ShortName="")`.
-  * **C3:** A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
-  * **C4:** Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
+* **A.** O texto `usage` é gerado internamente pela classe `DefaultDescriptor` e sempre será exibido.
+* **B.** O texto do `Command` sempre será exibido e a sua fonte vem da propriedade `Command.HelpText` que deve ser definida no construtor do seu comando. Caso você não atribua nenhum valor para essa propriedade, o padrão será exibir o nome do comando.
+* **C.** Será exibido todas os argumentos (propriedades) do comando, um em baixo do outro.
+  * **C1.** A fonte desse texto vem do atributo `ArgumentAtrribute(LongName="")`.
+  * **C2.** A fonte desse texto vem do atributo `ArgumentAtrribute(ShortName="")`.
+  * **C3.** A fonte desse texto vem do atributo `ArgumentAtrribute(Help="")`.
+  * **C4.** Esse texto só vai aparecer se a flag `ArgumentAtrribute(ShowHelpComplement=true)` estiver ligada. O texto que será exibido vai depender da configuração do membro:
     * `Strings.HelpArgDescRequired`: Quando o membro é obrigatório
     * `Strings.HelpArgDescOptionalWithDefaultValue`: Quando o membro é opcional e tem **valor padrão**.
     * `Strings.HelpArgDescOptionalWithoutDefaultValue`: Quando o membro é opcional e não tem **valor padrão**.
-* **D:** A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
-* **E:** São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
-* **F:** Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.
+* **D.** A fonte desse texto vem do atributo `ActionAtrribute(Name="")`.
+* **E.** São as mesmas fontes dos argumentos de comando (propriedades), pois ambos os membros utilizam o mesmo atributo.
+* **F.** Texto complementar para explicar como o help funciona. A fonte desse texto vem da classe `Strings.HelpFooterDesc`.
 
 **Exemplo:**
 
@@ -2524,7 +2524,7 @@ O tratamento de erro é gerado de forma automática pelo sistema e são categori
 * Not Found: Nenhuma rota encontrada para o input solicitado.
 * Exception génerica: Não existe nenhum tipo de tratamento padrão, mas é possível interceptar qualquer exception dentro do evento `App.OnException`.
 
-O responsável por formatar e imprimir os erros é o handler padrão `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler` que intercepta o resultado final da execução e caso tenha erros chama o método `ShowErrors(ApplicationResult appResult)` ou `ShowNotFound(ApplicationResult appResult)` da classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor`.
+O responsável por formatar e imprimir os erros é o handler padrão `SysCommand.ConsoleApp.Handlers.DefaultApplicationHandler`. Ele intercepta o resultado final da execução e caso tenha erros chama um dos método `ShowErrors(ApplicationResult appResult)`, `ShowNotFound(ApplicationResult appResult)` e que estão na classe `SysCommand.ConsoleApp.Descriptor.DefaultDescriptor`.
 
 Caso queira customizar as mensagens de erro, você pode trocar o handler `DefaultApplicationHandler` por completo (não recomendado) ou criar uma classe que herde de `DefaultDescriptor` subrescrevendo apenas os métodos de erros.
 
@@ -2669,7 +2669,7 @@ _Métodos:_
 * `Remove(string fileName)`: Remove um objeto na pasta padrão com um nome especifico.
 * `T Get<T>(string fileName = null, bool refresh = false)`: Retorna um objeto da pasta padrão.
   * `fileName`: Indica o nome do arquivo, caso seja `null` o nome do tipo `T` será usado na busca, com exceção de classes que tem o atributo `ObjectFile`.
-  * `refresh`: Se `false` buscará no cache interno caso já tenha sido carregado anteriormente. Do contrário será forçado o carregamento do arquivo.
+  * `refresh`: Se `false`, buscará no cache interno caso já tenha sido carregado anteriormente. Do contrário será forçado o carregamento do arquivo.
 * `T GetOrCreate<T>(string fileName = null, bool refresh = false)`: Mesmo comportamento do método acima, porém cria uma nova instância quando não encontrar o arquivo na pasta padrão. É importância dizer que o arquivo não será criado, apenas a instância do tipo `T`. Para salvar fisicamente é necessário utilizar o método `Save`.
 * `string GetObjectFileName(Type type)`: Retorna o nome do tipo formatado ou se estiver usando o atributo `ObjectFile`, retorna o valor da propriedade `FileName`.
 * `string GetFilePath(string fileName)`: Retorna o caminho do arquivo dentro da pasta padrão.
@@ -2789,7 +2789,7 @@ Note que para criar uma instância de `JsonFileManager` foi utilizado o escopo d
 
 # <a name="redirectiong-commands" />Redirecionamento de comandos
 
-Para redirecionar a sua aplicação com uma nova sequencia de comandos é muito simples, basta a sua action retornar uma instância da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequencia de comandos. Vale ressaltar que as instâncias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer input depois dessa action não será chamado, ou seja, a execução reinicia com o novo comando no momento em que existe um retorno do tipo `RedirectResult`.
+Para redirecionar a sua aplicação com uma nova sequência de comandos é muito simples, basta a sua action retornar uma instância da classe `RedirectResult` passando em seu construtor uma string contendo a nova sequência de comandos. Vale ressaltar que as instâncias dos comandos serão as mesmas, ou seja, o estado de cada comando não voltará ao inicio, apenas o fluxo de execução. Outro ponto importante é que qualquer ação depois da ação que retornou o `RedirectResult` não será mais chamado.
 
 **Exemplo:**
 
@@ -2818,7 +2818,7 @@ public class RedirectCommand : Command
 }
 ```
 
-No exemplo abaixo a action `Something` será executada, pois esta antes do redirect.
+No exemplo abaixo a ação `Something` será executada porque ela esta definida antes do redirect.
 
 ```
 C:\MyApp.exe something redirect-now my-value
@@ -2827,7 +2827,7 @@ Redirecting now!!. Count: 1
 Redirected: my-value. Count: 2
 ```
 
-No exemplo abaixo a action `Something` não será executada, pois esta depois do redirect.
+No exemplo abaixo a action `Something` não será executada porque ela esta definida depois do redirect.
 
 ```
 C:\MyApp.exe redirect-now my-value something
@@ -2898,7 +2898,7 @@ StopPropagationCommand1.StopPropagationAction1
 StopPropagationCommand2.StopPropagationAction1
 ```
 
-Perceba que ao utilizar o argumento "--cancel" a action "StopPropagationCommand3.StopPropagationAction1" não foi executada. Isso por que ela estava na última posição da pilha de execução e como a action "StopPropagationCommand2.StopPropagationAction1" cancelou a continuidade da execução, qualquer outra action da sequencia sera ignorada.
+Perceba que ao utilizar o argumento `--cancel` a action "StopPropagationCommand3.StopPropagationAction1" não foi executada. Isso por que ela estava na última posição da pilha de execução e como a action "StopPropagationCommand2.StopPropagationAction1" cancelou a continuidade da execução, qualquer outra action da sequência sera ignorada.
 
 Outra possibilidade de uso do `StopPropagation` é quando existem multiplas ações no mesmo input. A lógica é a mesma, será cancelado todas as ações da pilha que estão depois da action que disparou o stop.
 
@@ -2953,7 +2953,7 @@ C:\MyApp.exe history-remove "CommonCommand1"
 C:\MyApp.exe history-list
 ```
 
-Os dois últimos comandos não retornam outpus.
+Os dois últimos comandos não retornam outputs.
 
 * Para desativar o comando `ArgsHistoryCommand` veja o tópico [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#specifying-commands).
 * A action `history-load` retorna um objeto do tipo `RedirectResult` que força o redirecionamento para um novo comando. Qualquer input depois dessa action será desprezado. Veja o tópico [Redirecionamento de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#redirectiong-commands).
@@ -2961,7 +2961,7 @@ Os dois últimos comandos não retornam outpus.
 
 # <a name="extras" />Extras - OptionSet
 
-Esse extra foi criado para uma ocasição especifica de parse onde o foco é ser simples. Com a classe `SysCommand.Extras.OptionSet` é possível fazer o parse de argumentos da forma tradicional.
+Esse extra foi criado para uma ocasião especifica de parse onde o foco é ser simples. Com a classe `SysCommand.Extras.OptionSet` é possível fazer o parse de argumentos da forma tradicional.
 
 _Métodos:_
 
@@ -2975,7 +2975,7 @@ _Propriedades:_
 
 * `ArgumentsValid`: Depois do parse essa informação contém todos os argumentos válidos
 * `ArgumentsInvalid`: Depois do parse essa informação contém todos os argumentos inválidos
-* `HasError`: Indica se existe erros no parse
+* `HasError`: Verifica se existe erros no parse
 
 **Exemplo:**
 
