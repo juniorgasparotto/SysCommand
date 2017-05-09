@@ -7,6 +7,6 @@ git add -A;
 git commit -m "comments"
 ```
 
-Onde `add` e `commit` seriam o nome das ações e `-A` e `-m` seus respectivos argumentos.
+Onde `add` e` commit` seria o nome das ações e `-A` e` -m` seus respectivos argumentos.
 
 Programaticamente, as ações são derivadas dos métodos.

@@ -308,11 +308,11 @@ public class ClearCommand : Command
 
 The events are important to intercept every step of implementation and modify or extend the default behavior. Existing events are as follows:
 
-* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: Is raised before the invoke of each Member (property or method) that was parsed.
-* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: Is raised after the invoke of each Member (property or method) that was parsed.
-* `App.OnMethodReturn(ApplicationResult, IMemberResult)`:: Is raised whenever a method return value
-* `App.OnComplete(ApplicationResult)`: Is raised at the end of the implementation
-* `App.OnException(ApplicationResult, Exception)`: Is raised in case of exception.
+* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: Fires before invoking each Member (property or method) that was parsed.
+* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: Fires after invoking each Member (property or method) that was parsed.
+* `App.OnMethodReturn(ApplicationResult, IMemberResult)`:: Fires when a method returns value
+* `App.OnComplete(ApplicationResult)`: Fires at the end of the implementation
+* `App.OnException(ApplicationResult, Exception)`: Fires in case of exception.
 
 **Example:**
 
@@ -479,7 +479,7 @@ git add -A;
 git commit -m "comments"
 ```
 
-Where `add` `commit` would be the name and of actions and `-A` `-m` their respective arguments and.
+Where `add` and `commit` would be the name of the stock and `-A` `-m` their respective arguments and.
 
 Programmatically, the actions are derived from the methods.
 
@@ -784,7 +784,7 @@ _Shoots `action1` twice:_
 MyApp.exe action1 action1
 ```
 
-_Runs only 1 time `action1` and action with the value "action1" `--value` argument. Without this escape "action1" would be called twice:_
+_Runs only once the action "action1" with the value "action1" `--value` argument. Without this escape "action1" would be called twice:_
 
 ```
 MyApp.exe action1 \action1
@@ -1134,7 +1134,7 @@ _Explanation:_
     * `AllRaw { "A", "B", "C", "D" }`
   * `Command6.Prop1`: Property has the first 3 inputs, but it needs to be 100% compatible with the reference.
     * `AllRaw { "A", "B", "C" }`
-  * `Command4.Prop1`: Property is valid, but the input "" already has the reference `Command5.Prop1` that has priority for most.
+  * `Command4.Prop1`: Property is valid, but the input `A` already has the reference `Command5.Prop1` that has priority for most.
     * `AllRaw { "A" }`
   * `Command4.Prop2`: The same situation of`Command4.Prop1`
     * `AllRaw { "B" }`
@@ -1358,7 +1358,7 @@ Another option to display outputs is to use templates `T4` . This mechanism, unl
 
 * By organization, create a folder "Views"
 * Create a file T4 in the format "Runtime Text Template"
-* If you use model is necessary to set a parameter, which for compulsory, you must call `Model` and have your respective type configured on the tag `type` . If you do not use any `Model` then ignore this step.
+* If you use the template you need to configure a parameter, which for compulsory, you must call `Model` and have the respective type configured on your tag `type` . If you don't use no template then ignore this step.
 * Implement your template
 
 **Example:**

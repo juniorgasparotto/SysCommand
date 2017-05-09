@@ -308,11 +308,11 @@ public class ClearCommand : Command
 
 Os eventos são importantes para interceptar cada passo da execução e modificar ou extender o comportamento padrão. Os eventos existentes são os seguintes:
 
-* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: É disparado antes do invoke de cada membro (propriedade ou metodo) que foi analisado.
-* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: É disparado depois do invoke de cada membro (propriedade ou metodo) que foi analisado.
-* `App.OnMethodReturn(ApplicationResult, IMemberResult)`: : É disparado sempre que um metodo retorna valor
-* `App.OnComplete(ApplicationResult)`: É disparado ao fim da execução
-* `App.OnException(ApplicationResult, Exception)`: É disparado em caso de exception.
+* `App.OnBeforeMemberInvoke(ApplicationResult, IMemberResult)`: É acionado antes de invocar cada membro (propriedade ou método) que foi analisado.
+* `App.OnAfterMemberInvoke(ApplicationResult, IMemberResult)`: É acionado depois de invocar cada membro (propriedade ou método) que foi analisado.
+* `App.OnMethodReturn(ApplicationResult, IMemberResult)`: : É acionado sempre que um método retorna valor
+* `App.OnComplete(ApplicationResult)`: É acionado ao fim da execução
+* `App.OnException(ApplicationResult, Exception)`: É acionado em caso de exceção.
 
 **Exemplo:**
 
@@ -479,7 +479,7 @@ git add -A;
 git commit -m "comments"
 ```
 
-Onde `add` e `commit` seriam o nome das ações e `-A` e `-m` seus respectivos argumentos.
+Onde `add` e`commit` seria o nome das ações e `-A` e`-m` seus respectivos argumentos.
 
 Programaticamente, as ações são derivadas dos métodos.
 
@@ -784,7 +784,7 @@ _Dispara a `action1` duas vezes:_
 MyApp.exe action1 action1
 ```
 
-_Executa apenas 1 vez a ação `action1` e com o valor "action1" no argumento `--value`. Sem essa escape a "action1" seria chamada duas vezes:_
+_Executa apenas uma vez a ação "action1" com o valor "action1" no argumento `--value`. Sem essa escape a "action1" seria chamada duas vezes:_
 
 ```
 MyApp.exe action1 \action1
@@ -1134,7 +1134,7 @@ _Explicação:_
     * `AllRaw { "A", "B", "C", "D" }`
   * `Command6.Prop1`: Propriedade tem os 3 primeiros inputs, mas ela precisa ser 100% compátivel com a referência.
     * `AllRaw { "A", "B", "C" }`
-  * `Command4.Prop1`: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
+  * `Command4.Prop1`: Propriedade está válida, mas o input `A` já tem a referência `Command5.Prop1` que tem prioridade por maioria.
     * `AllRaw { "A" }`
   * `Command4.Prop2`: Mesma situação de `Command4.Prop1`
     * `AllRaw { "B" }`
@@ -1358,7 +1358,7 @@ Outra opção para exibir outputs é a utilização de templates `T4`. Esse meca
 
 * Por organização, criar uma pasta "Views"
 * Criar um arquivo T4 no formato "Runtime Text Template"
-* Se for utilizar model é preciso configurar um parâmetro, que por obrigatoriedade, deve-se chamar `Model` e ter o seu respectivo tipo configurado na tag `type`. Caso não utilize nenhum `Model` então ignore esse passo.
+* Se for utilizar o modelo é preciso configurar um parâmetro, que por obrigatoriedade, deve-se chamar `Model` e ter o seu respetivo tipo configurado na tag`type`. Caso não utilize nenhum modelo então ignore esse passo.
 * Implementar o seu template
 
 **Exemplo:**

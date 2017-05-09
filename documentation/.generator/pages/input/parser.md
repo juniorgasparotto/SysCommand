@@ -57,7 +57,7 @@ _Dispara a `action1` duas vezes:_
 MyApp.exe action1 action1
 ```
 
-_Executa apenas 1 vez a ação `action1` e com o valor "action1" no argumento `--value`. Sem essa escape a "action1" seria chamada duas vezes:_
+_Executa apenas uma vez a ação "action1" com o valor "action1" no argumento `--value`. Sem essa escape a "action1" seria chamada duas vezes:_
 
 ```
 MyApp.exe action1 \action1
@@ -407,7 +407,7 @@ _Explicação:_
     * `AllRaw { "A", "B", "C", "D" }`
   * `Command6.Prop1`: Propriedade tem os 3 primeiros inputs, mas ela precisa ser 100% compátivel com a referência.
     * `AllRaw { "A", "B", "C" }`
-  * `Command4.Prop1`: Propriedade está válida, mas o input "A" já tem a referência `Command5.Prop1` que tem prioridade por maioria.
+  * `Command4.Prop1`: Propriedade está válida, mas o input `A` já tem a referência `Command5.Prop1` que tem prioridade por maioria.
     * `AllRaw { "A" }`
   * `Command4.Prop2`: Mesma situação de `Command4.Prop1`
     * `AllRaw { "B" }`

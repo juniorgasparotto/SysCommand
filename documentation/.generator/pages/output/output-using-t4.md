@@ -4,7 +4,7 @@ Outra opção para exibir outputs é a utilização de templates `T4`. Esse meca
 
 * Por organização, criar uma pasta "Views"
 * Criar um arquivo T4 no formato "Runtime Text Template"
-* Se for utilizar model é preciso configurar um parâmetro, que por obrigatoriedade, deve-se chamar `Model` e ter o seu respectivo tipo configurado na tag `type`. Caso não utilize nenhum `Model` então ignore esse passo.
+* Se for utilizar o modelo é preciso configurar um parâmetro, que por obrigatoriedade, deve-se chamar `Model` e ter o seu respetivo tipo configurado na tag` type`. Caso não utilize nenhum modelo então ignore esse passo.
 * Implementar o seu template
 
 **Exemplo:**
