@@ -1358,7 +1358,7 @@ Another option to display outputs is to use templates `T4` . This mechanism, unl
 
 * By organization, create a folder "Views"
 * Create a file T4 in the format "Runtime Text Template"
-* If you use the template you need to configure a parameter, which for compulsory, you must call `Model` and have the respective type configured on your tag `type` . If you don't use no template then ignore this step.
+* If you use the template you need to configure a parameter, which is mandatory, must have the name `Model` and have the respective type configured on your tag `type` . If you don't use no template then ignore this step.
 * Implement your template
 
 **Example:**
