@@ -115,6 +115,7 @@
       "Raw": "value1",
       "AllRaw": [
         {
+          "Index": 1,
           "Name": "prop1",
           "Value": "value1",
           "Format": "LongNameAndHasValue",
@@ -122,8 +123,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value1",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 1
+          "IsLongName": true
         }
       ],
       "IsMapped": true,
@@ -161,6 +161,7 @@
       "Raw": "value2",
       "AllRaw": [
         {
+          "Index": 3,
           "Name": "prop2",
           "Value": "value2",
           "Format": "LongNameAndHasValue",
@@ -168,8 +169,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value2",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 3
+          "IsLongName": true
         }
       ],
       "IsMapped": true,
@@ -207,6 +207,7 @@
       "Raw": "value3",
       "AllRaw": [
         {
+          "Index": 5,
           "Name": "p",
           "Value": "value3",
           "Format": "LongNameAndHasValue",
@@ -214,8 +215,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value3",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 5
+          "IsLongName": true
         }
       ],
       "IsMapped": true,
@@ -234,6 +234,7 @@
       "Raw": "value4",
       "AllRaw": [
         {
+          "Index": 7,
           "Name": "prop4",
           "Value": "value4",
           "Format": "LongNameAndHasValue",
@@ -241,8 +242,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value4",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 7
+          "IsLongName": true
         }
       ],
       "IsMapped": false,
@@ -280,6 +280,7 @@
       "Raw": "value5",
       "AllRaw": [
         {
+          "Index": 9,
           "Name": "prop5",
           "Value": "value5",
           "Format": "LongNameAndHasValue",
@@ -287,8 +288,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "value5",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 9
+          "IsLongName": true
         }
       ],
       "IsMapped": true,

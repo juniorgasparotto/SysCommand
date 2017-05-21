@@ -10,8 +10,18 @@ using System.Reflection;
 
 namespace SysCommand.DefaultExecutor
 {
+    /// <summary>
+    /// Represent a parser of list of arguments
+    /// </summary>
     public class ArgumentParser
     {
+        /// <summary>
+        /// Create a list of argument parsed from the specific target object
+        /// </summary>
+        /// <param name="argumentsRaw">List of arguments raw</param>
+        /// <param name="enablePositionalArgs">Determine whether the parser will consider the position</param>
+        /// <param name="maps">Map of arguments</param>
+        /// <returns>List of ArgumentParsed</returns>
         public IEnumerable<ArgumentParsed> Parse(IEnumerable<ArgumentRaw> argumentsRaw, bool enablePositionalArgs, IEnumerable<ArgumentMap> maps)
         {
             if (argumentsRaw == null)
@@ -78,6 +88,11 @@ namespace SysCommand.DefaultExecutor
             return argumentsMappeds;
         }
 
+        /// <summary>
+        /// Create a list of argument that are required or have default value
+        /// </summary>
+        /// <param name="argsMaps">List of ArgumentMap</param>
+        /// <returns>List of ArgumentParsed</returns>
         public IEnumerable<ArgumentParsed> CreateArgumentsDefaultValueOrRequired(IEnumerable<ArgumentMap> argsMaps)
         {
             var list = new List<ArgumentParsed>();
@@ -101,13 +116,17 @@ namespace SysCommand.DefaultExecutor
             return list;
         }
 
+        /// <summary>
+        /// Set ParsingStates from arguments
+        /// </summary>
+        /// <param name="arguments">List of ArgumentParsed</param>
         public void SetState(IEnumerable<ArgumentParsed> arguments)
         {
             foreach (var arg in arguments)
                 arg.ParsingStates = GetState(arg, arguments);
         } 
 
-        public ArgumentParsedState GetState(ArgumentParsed arg, IEnumerable<ArgumentParsed> argumentsMapped)
+        private ArgumentParsedState GetState(ArgumentParsed arg, IEnumerable<ArgumentParsed> argumentsMapped)
         {
             if (arg.ParsingType == ArgumentParsedType.NotMapped)
             {
@@ -199,7 +218,7 @@ namespace SysCommand.DefaultExecutor
             }
         }
 
-        public IEnumerable<string> GetUnamedValues(IEnumerable<ArgumentRaw> argumentsRaw, int iStart)
+        private IEnumerable<string> GetUnamedValues(IEnumerable<ArgumentRaw> argumentsRaw, int iStart)
         {
             // get nexts orphans values
             var count = argumentsRaw.Count();

@@ -3,15 +3,45 @@ using System.Reflection;
 
 namespace SysCommand.Execution
 {
+    /// <summary>
+    /// Result of properties that represent arguments.
+    /// </summary>
     public class PropertyResult : IMemberResult
     {
+        /// <summary>
+        /// ArgumentParsed of this method
+        /// </summary>
         public ArgumentParsed ArgumentParsed { get; private set; }
+
+        /// <summary>
+        /// PropertyInfo for this result
+        /// </summary>
         public PropertyInfo PropertyInfo { get; private set; }
+
+        /// <summary>
+        /// Member value
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Member Target  (owner class)
+        /// </summary>
         public object Target { get; private set; }
+
+        /// <summary>
+        /// Member value
+        /// </summary>
         public object Value { get; set; }
+
+        /// <summary>
+        /// Invoke member
+        /// </summary>
         public bool IsInvoked { get; set; }
 
+        /// <summary>
+        /// Initialize
+        /// </summary>
+        /// <param name="argumentParsed">ArgumentParsed of this method</param>
         public PropertyResult(ArgumentParsed argumentParsed)
         {
             this.ArgumentParsed = argumentParsed;
@@ -25,14 +55,9 @@ namespace SysCommand.Execution
             }
         }
 
-        public PropertyResult(string name, string alias, object target, PropertyInfo property, object value, int invokePriority)
-        {
-            this.PropertyInfo = property;
-            this.Value = value;
-            this.Target = target;
-            this.Name = name;
-        }
-
+        /// <summary>
+        /// Invoke member
+        /// </summary>
         public void Invoke()
         {
             this.PropertyInfo.SetValue(Target, this.Value);

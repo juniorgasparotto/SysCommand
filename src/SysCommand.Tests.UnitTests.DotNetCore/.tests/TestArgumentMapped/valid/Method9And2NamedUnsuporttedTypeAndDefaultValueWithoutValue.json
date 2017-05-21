@@ -75,6 +75,7 @@
       "Raw": "abc",
       "AllRaw": [
         {
+          "Index": 1,
           "Name": "unsuportted-type",
           "Value": "abc",
           "Format": "LongNameAndHasValue",
@@ -82,8 +83,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "abc",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 1
+          "IsLongName": true
         }
       ],
       "IsMapped": true,
@@ -121,6 +121,7 @@
       "Raw": null,
       "AllRaw": [
         {
+          "Index": 3,
           "Name": "default-value",
           "Value": null,
           "Format": "LongNameAndHasValue",
@@ -128,8 +129,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": null,
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 3
+          "IsLongName": true
         }
       ],
       "IsMapped": true,

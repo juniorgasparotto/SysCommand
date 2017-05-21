@@ -3,18 +3,35 @@ using System.Reflection;
 
 namespace SysCommand.ConsoleApp.Helpers
 {
+    /// <summary>
+    /// Helper to working with files
+    /// </summary>
     public static class FileHelper
     {
+        /// <summary>
+        /// Get current directory
+        /// </summary>
+        /// <returns>Current directory</returns>
         public static string GetCurrentDirectory()
         {
             return Directory.GetCurrentDirectory();
         }
 
+        /// <summary>
+        /// Check if file exists
+        /// </summary>
+        /// <param name="fileName">File path</param>
+        /// <returns>True if exists</returns>
         public static bool FileExists(string fileName)
         {
             return File.Exists(fileName);
         }
 
+        /// <summary>
+        /// Get content from file
+        /// </summary>
+        /// <param name="fileName">File path</param>
+        /// <returns>File content</returns>
         public static string GetContentFromFile(string fileName)
         {
             if (!File.Exists(fileName))
@@ -23,12 +40,21 @@ namespace SysCommand.ConsoleApp.Helpers
             return File.ReadAllText(fileName);
         }
         
+        /// <summary>
+        /// Remove file if exists
+        /// </summary>
+        /// <param name="fileName">File path</param>
         public static void RemoveFile(string fileName)
         {
             if (File.Exists(fileName))
                 File.Delete(fileName);
         }
 
+        /// <summary>
+        /// Save content in file
+        /// </summary>
+        /// <param name="content">Content to save</param>
+        /// <param name="fileName">File location</param>
         public static void SaveContentToFile(string content, string fileName)
         {
             CreateFolderIfNeeded(fileName);

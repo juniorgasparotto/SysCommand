@@ -7,8 +7,17 @@ using SysCommand.Parsing;
 
 namespace SysCommand.DefaultExecutor
 {
+    /// <summary>
+    /// Represent a parser of list of arguments raw
+    /// </summary>
     public class ArgumentRawParser
     {
+        /// <summary>
+        /// Create a list of argument raw from the list of string
+        /// </summary>
+        /// <param name="args">List of string that represents each argument</param>
+        /// <param name="actionsMaps">List of ActionMap</param>
+        /// <returns>List of ArgumentRaw</returns>
         public IEnumerable<ArgumentRaw> Parse(string[] args, IEnumerable<ActionMap> actionsMaps = null)
         {
             var argsItems = new List<ArgumentRaw>();
@@ -137,18 +146,18 @@ namespace SysCommand.DefaultExecutor
             return argsItems;
         }
 
-        public bool IsArgument(string value)
+        private bool IsArgument(string value)
         {
             return GetDelimiterIfValidArgument(value) != null;
         }
 
-        public bool IsArgument(string value, out string argDelimiter)
+        private bool IsArgument(string value, out string argDelimiter)
         {
             argDelimiter = GetDelimiterIfValidArgument(value);
             return argDelimiter != null;
         }
 
-        public string GetDelimiterIfValidArgument(string value)
+        private string GetDelimiterIfValidArgument(string value)
         {
             string argDelimiter = null;
             if (value != null && !value.In("-", "--", "/"))
@@ -180,7 +189,7 @@ namespace SysCommand.DefaultExecutor
             return argDelimiter;
         }
 
-        public string GetValueScaped(string value, IEnumerable<ActionMap> actionMaps)
+        private string GetValueScaped(string value, IEnumerable<ActionMap> actionMaps)
         {
             if (StringHelper.IsScaped(value))
             {
@@ -196,7 +205,7 @@ namespace SysCommand.DefaultExecutor
             return value;
         }
 
-        public string GetValueScaped(string value, string[] reservedWordsToStartValue, string[] reservedFullWords)
+        private string GetValueScaped(string value, string[] reservedWordsToStartValue, string[] reservedFullWords)
         {
             // "-"       = "-"
             // "/"       = "/"

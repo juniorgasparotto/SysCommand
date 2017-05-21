@@ -95,6 +95,7 @@
       "Raw": "-1.10",
       "AllRaw": [
         {
+          "Index": 0,
           "Name": null,
           "Value": "-1.10",
           "Format": "Unnamed",
@@ -102,8 +103,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "-1.10",
           "IsShortName": false,
-          "IsLongName": false,
-          "Index": 0
+          "IsLongName": false
         }
       ],
       "IsMapped": true,
@@ -141,6 +141,7 @@
       "Raw": "+100",
       "AllRaw": [
         {
+          "Index": 1,
           "Name": null,
           "Value": "+100",
           "Format": "Unnamed",
@@ -148,8 +149,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "+100",
           "IsShortName": false,
-          "IsLongName": false,
-          "Index": 1
+          "IsLongName": false
         }
       ],
       "IsMapped": true,
@@ -187,6 +187,7 @@
       "Raw": "true",
       "AllRaw": [
         {
+          "Index": 2,
           "Name": null,
           "Value": "true",
           "Format": "Unnamed",
@@ -194,8 +195,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "true",
           "IsShortName": false,
-          "IsLongName": false,
-          "Index": 2
+          "IsLongName": false
         }
       ],
       "IsMapped": true,

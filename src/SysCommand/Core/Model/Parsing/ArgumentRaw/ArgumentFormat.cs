@@ -1,6 +1,7 @@
 ﻿namespace SysCommand.Parsing
 {
     /// <summary>
+    /// Argument format: 
     /// Input: 1 -a -b value1 -c+ --long --long2 value2 /long3:+
     /// Result expected:
     ///  1: Unnamed

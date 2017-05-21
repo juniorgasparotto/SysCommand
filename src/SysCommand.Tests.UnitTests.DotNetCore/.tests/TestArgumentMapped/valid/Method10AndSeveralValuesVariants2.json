@@ -75,6 +75,7 @@
       "Raw": "100000",
       "AllRaw": [
         {
+          "Index": 1,
           "Name": "v2",
           "Value": "100000",
           "Format": "LongNameAndHasValue",
@@ -82,8 +83,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "100000",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 1
+          "IsLongName": true
         }
       ],
       "IsMapped": true,
@@ -124,6 +124,7 @@
       "Raw": "lst1 lst2",
       "AllRaw": [
         {
+          "Index": 2,
           "Name": null,
           "Value": "lst1",
           "Format": "Unnamed",
@@ -131,10 +132,10 @@
           "DelimiterValueInName": null,
           "ValueRaw": "lst1",
           "IsShortName": false,
-          "IsLongName": false,
-          "Index": 2
+          "IsLongName": false
         },
         {
+          "Index": 3,
           "Name": null,
           "Value": "lst2",
           "Format": "Unnamed",
@@ -142,8 +143,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "lst2",
           "IsShortName": false,
-          "IsLongName": false,
-          "Index": 3
+          "IsLongName": false
         }
       ],
       "IsMapped": true,
@@ -162,6 +162,7 @@
       "Raw": "0",
       "AllRaw": [
         {
+          "Index": 4,
           "Name": "value1",
           "Value": "0",
           "Format": "LongNameAndHasValueInName",
@@ -169,8 +170,7 @@
           "DelimiterValueInName": ":",
           "ValueRaw": "0",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 4
+          "IsLongName": true
         }
       ],
       "IsMapped": false,
@@ -189,6 +189,7 @@
       "Raw": "0",
       "AllRaw": [
         {
+          "Index": 5,
           "Name": "value2",
           "Value": "0",
           "Format": "LongNameAndHasValueInName",
@@ -196,8 +197,7 @@
           "DelimiterValueInName": "=",
           "ValueRaw": "0",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 5
+          "IsLongName": true
         }
       ],
       "IsMapped": false,

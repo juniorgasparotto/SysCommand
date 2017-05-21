@@ -337,6 +337,7 @@
         ]
       },
       "ArgumentRawOfAction": {
+        "Index": 0,
         "Name": null,
         "Value": "main",
         "Format": "Unnamed",
@@ -344,8 +345,7 @@
         "DelimiterValueInName": null,
         "ValueRaw": "main",
         "IsShortName": false,
-        "IsLongName": false,
-        "Index": 0
+        "IsLongName": false
       },
       "Arguments": [
         {

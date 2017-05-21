@@ -95,6 +95,7 @@
       "Raw": "10.1223",
       "AllRaw": [
         {
+          "Index": 1,
           "Name": "value1",
           "Value": "10.1223",
           "Format": "LongNameAndHasValue",
@@ -102,8 +103,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "10.1223",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 1
+          "IsLongName": true
         }
       ],
       "IsMapped": true,
@@ -141,6 +141,7 @@
       "Raw": "10.2344",
       "AllRaw": [
         {
+          "Index": 3,
           "Name": "value2",
           "Value": "10.2344",
           "Format": "LongNameAndHasValue",
@@ -148,8 +149,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "10.2344",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 3
+          "IsLongName": true
         }
       ],
       "IsMapped": true,
@@ -187,6 +187,7 @@
       "Raw": "\"12-22/1879 12:10:10.111\"",
       "AllRaw": [
         {
+          "Index": 5,
           "Name": "date",
           "Value": "12-22/1879 12:10:10.111",
           "Format": "LongNameAndHasValue",
@@ -194,8 +195,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": "12-22/1879 12:10:10.111",
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 5
+          "IsLongName": true
         }
       ],
       "IsMapped": true,

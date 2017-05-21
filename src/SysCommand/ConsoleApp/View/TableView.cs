@@ -8,21 +8,72 @@ using System.Text.RegularExpressions;
 
 namespace SysCommand.ConsoleApp.View
 {
+    /// <summary>
+    /// This class brings the output tabled feature that can be very useful to present]
+    /// information quickly and more visually organized. Of course everything depends on 
+    /// the amount of information you want to display, the higher, the worse the view.
+    /// </summary>
     public class TableView
     {
+        /// <summary>
+        /// Columns definitions
+        /// </summary>
         public List<ColumnDefinition> ColumnsDefinition { get; private set; }
+
+        /// <summary>
+        /// List of rows
+        /// </summary>
         public List<IRow> Rows { get; private set; }
+
+        /// <summary>
+        /// Simulate padding left
+        /// </summary>
         public int PaddingLeft { get; set; }
+
+        /// <summary>
+        /// Simulate padding top
+        /// </summary>
         public int PaddingTop { get; set; }
+
+        /// <summary>
+        /// Simulate a padding bottom
+        /// </summary>
         public int PaddingBottom { get; set; }
+
+        /// <summary>
+        /// Determines whether include header
+        /// </summary>
         public bool IncludeHeader { get; set; }
+
+        /// <summary>
+        /// Determines the char that represents the line separator
+        /// </summary>
         public char LineSeparator { get; set; }
+
+        /// <summary>
+        /// Determines the string that represents the column separator
+        /// </summary>
         public string ColumnSeparator { get; set; }
 
+        /// <summary>
+        /// StringBuilder reference
+        /// </summary>
         public StringBuilder StrBuilder { get; set; }
+
+        /// <summary>
+        /// Determines whether add line separator in output
+        /// </summary>
         public bool AddLineSeparator { get; set; }
+
+        /// <summary>
+        /// Determines whether add column separator in output
+        /// </summary>
         public bool AddColumnSeparator { get; set; }
 
+        /// <summary>
+        /// Initialize
+        /// </summary>
+        /// <param name="strBuilder">StringBuilder reference</param>
         public TableView(StringBuilder strBuilder = null)
         {
             this.ColumnsDefinition = new List<ColumnDefinition>();
@@ -35,6 +86,14 @@ namespace SysCommand.ConsoleApp.View
             this.IncludeHeader = false;
         }
 
+        /// <summary>
+        /// Add column definition
+        /// </summary>
+        /// <param name="name">Name of column</param>
+        /// <param name="width">Column width</param>
+        /// <param name="paddingLeft">Simulate padding left</param>
+        /// <param name="paddingRight">Simulate padding right</param>
+        /// <returns>Return the column definition</returns>
         public ColumnDefinition AddColumnDefinition(string name, int width = 0, int paddingLeft = 0, int paddingRight = 0)
         {
             var column = new ColumnDefinition()
@@ -48,6 +107,13 @@ namespace SysCommand.ConsoleApp.View
             return column;
         }
 
+        /// <summary>
+        /// Add a row summary. It's a row without columns
+        /// </summary>
+        /// <param name="text">Row text</param>
+        /// <param name="width">Row width</param>
+        /// <param name="paddingLeft">Simulate a padding left</param>
+        /// <returns>Return a row summary</returns>
         public RowSummary AddRowSummary(string text, int width = 0, int paddingLeft = 0)
         {
             var row = new RowSummary()
@@ -60,6 +126,10 @@ namespace SysCommand.ConsoleApp.View
             return row;
         }
 
+        /// <summary>
+        /// Add a new row
+        /// </summary>
+        /// <returns>Return a row</returns>
         public Row AddRow()
         {
             var row = new Row();
@@ -240,6 +310,10 @@ namespace SysCommand.ConsoleApp.View
             }
         }
 
+        /// <summary>
+        /// Build all information and create the TableView. Use ToString() to get the result
+        /// </summary>
+        /// <returns></returns>
         public TableView Build()
         {
             this.Validate();
@@ -375,7 +449,14 @@ namespace SysCommand.ConsoleApp.View
         {
             return this.StrBuilder.ToString();
         }
-
+        
+        /// <summary>
+        /// Helper to create a table view for a specificy type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="colWidth"></param>
+        /// <returns></returns>
         public static TableView ToTableView<T>(IEnumerable<T> list, int colWidth = 0)
         {
             var table = new TableView();
@@ -402,22 +483,39 @@ namespace SysCommand.ConsoleApp.View
 
         #region Classes
 
+        /// <summary>
+        /// Represent the base row
+        /// </summary>
         public interface IRow
         {
 
         }
 
+        /// <summary>
+        /// Represent the row with columns
+        /// </summary>
         public class Row : IRow
         {
+            /// <summary>
+            /// List of columns
+            /// </summary>
             public List<Column> Columns { get; private set; }
             internal bool IsMainRow { get; set; }
 
+            /// <summary>
+            /// Initialize
+            /// </summary>
             public Row()
             {
                 this.Columns = new List<Column>();
                 this.IsMainRow = true;
             }
 
+            /// <summary>
+            /// Add a column in row
+            /// </summary>
+            /// <param name="text">Column text</param>
+            /// <returns>The same row</returns>
             public Row AddColumnInRow(string text)
             {
                 var column = new Column() { Text = text };
@@ -431,8 +529,14 @@ namespace SysCommand.ConsoleApp.View
             }
         }
 
+        /// <summary>
+        /// Represent the single row line
+        /// </summary>
         public class RowLine : IRow
         {
+            /// <summary>
+            /// Row line text
+            /// </summary>
             public string Text { get; set; }
             public override string ToString()
             {
@@ -440,10 +544,24 @@ namespace SysCommand.ConsoleApp.View
             }
         }
 
+        /// <summary>
+        /// Represent the row summary. Row without columns.
+        /// </summary>
         public class RowSummary : IRow
         {
+            /// <summary>
+            /// Row text
+            /// </summary>
             public string Text { get; set; }
+
+            /// <summary>
+            /// Simulate the padding left
+            /// </summary>
             public int PaddingLeft { get; set; }
+
+            /// <summary>
+            /// Row width
+            /// </summary>
             public int Width { get; set; }
 
             public override string ToString()
@@ -452,8 +570,14 @@ namespace SysCommand.ConsoleApp.View
             }
         }
 
+        /// <summary>
+        /// Represent columns of rows
+        /// </summary>
         public class Column
         {
+            /// <summary>
+            /// Column text
+            /// </summary>
             public string Text { get; set; }
 
             public override string ToString()
@@ -462,11 +586,29 @@ namespace SysCommand.ConsoleApp.View
             }
         }
 
+        /// <summary>
+        /// Represent the colum definition
+        /// </summary>
         public class ColumnDefinition
         {
+            /// <summary>
+            /// Column name
+            /// </summary>
             public string Name { get; set; }
+
+            /// <summary>
+            /// Simulate padding left
+            /// </summary>
             public int PaddingLeft { get; set; }
+
+            /// <summary>
+            /// Simulate padding right
+            /// </summary>
             public int PaddingRight { get; set; }
+
+            /// <summary>
+            /// Column width
+            /// </summary>
             public int Width { get; set; }
         }
 

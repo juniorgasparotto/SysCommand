@@ -15,10 +15,23 @@ using System;
 
 namespace SysCommand.ConsoleApp
 {
+    /// <summary>
+    /// The commands represent a grouping of features the same business context, similar to MVC Controllers. 
+    /// Programmatically they are represented by classes that inherit from SysCommand.ConsoleApp.Command . 
+    /// Each Command instance will have access to the current context by the property this.App .
+    /// </summary>
     public abstract class Command : CommandBase
     {
+        /// <summary>
+        /// App reference
+        /// </summary>
         public App App { get; internal set; }
 
+        /// <summary>
+        /// Get the argument parsed (property) by name
+        /// </summary>
+        /// <param name="name">Property name</param>
+        /// <returns>Instance of ArgumentParsed</returns>
         public ArgumentParsed GetArgument(string name)
         {
             // return all properties results for this instance
@@ -27,34 +40,68 @@ namespace SysCommand.ConsoleApp
 
             return thisMethodForEachLevel.LastOrDefault(f => f.Name == name)?.ArgumentParsed;
         }
-        
+
+        /// <summary>
+        /// Get a view result by T4 template
+        /// </summary>
+        /// <typeparam name="TTemplate">Type of template</typeparam>
+        /// <returns>Text for view</returns>
         public string ViewT4<TTemplate>()
         {
             return T4Helper.Execute<TTemplate, object>(null);
         }
 
+        /// <summary>
+        /// Get a view result by T4 template
+        /// </summary>
+        /// <typeparam name="TTemplate">Type of template</typeparam>
+        /// <typeparam name="TModel">Type of model</typeparam>
+        /// <param name="model">Instance of model</param>
+        /// <returns>Text for view</returns>
         public string ViewT4<TTemplate, TModel>(TModel model = default(TModel))
         {
             return T4Helper.Execute<TTemplate, TModel>(model);
         }
-        
+
+        /// <summary>
+        /// Get the ActionMap by parameters type
+        /// </summary>
+        /// <param name="paramTypes">List of parameter type</param>
+        /// <param name="memberName">Method name</param>
+        /// <returns>Instance of ActionMap</returns>
         public ActionMap GetActionMap(Type[] paramTypes, [CallerMemberName] string memberName = "")
         {
             var currentMethod = GetMethod(memberName, paramTypes);
             return GetActionMap(currentMethod);
         }
 
+        /// <summary>
+        ///  Get the ActionMap by MethodInfo
+        /// </summary>
+        /// <param name="method">MethodInfo reference</param>
+        /// <returns>Instance of ActionMap</returns>
         public ActionMap GetActionMap(MethodInfo method)
         {
             return this.ExecutionScope.ParseResult.Maps.GetCommandMap(this.GetType()).Methods.FirstOrDefault(m => ReflectionHelper.MethodsAreEquals(m.Method, method));
         }
 
+        /// <summary>
+        /// Get the ActionParsed by parameters type
+        /// </summary>
+        /// <param name="paramTypes">List of parameter type</param>
+        /// <param name="memberName">Method name</param>
+        /// <returns>Instance of ActionParsed</returns>
         public ActionParsed GetAction(Type[] paramTypes, [CallerMemberName] string memberName = "")
         {
             var currentMethod = GetMethod(memberName, paramTypes);
             return GetAction(currentMethod);
         }
 
+        /// <summary>
+        /// Get the ActionParsed by MethodInfo
+        /// </summary>
+        /// <param name="method">MethodInfo reference</param>
+        /// <returns>Instance of ActionParsed</returns>
         public ActionParsed GetAction(MethodInfo method)
         {
             // return this method (eg: save) in all levels
@@ -75,6 +122,14 @@ namespace SysCommand.ConsoleApp
         }
 
 #if !NETCORE
+        /// <summary>
+        /// Get a view result by RazorEngine from the current method
+        /// </summary>
+        /// <typeparam name="T">Type of model</typeparam>
+        /// <param name="model">Model object</param>
+        /// <param name="viewName">View name. If null get the method name as reference</param>
+        /// <param name="searchOnlyInResources">If false, the search will occur in the file structure and in the "Embedded Resource".</param>
+        /// <returns>Text for view</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public string View<T>(T model = default(T), string viewName = null, bool searchOnlyInResources = false)
         {
@@ -98,6 +153,13 @@ namespace SysCommand.ConsoleApp
             }
         }
 
+        /// <summary>
+        /// Get a view result by RazorEngine from the content
+        /// </summary>
+        /// <typeparam name="T">Type of model</typeparam>
+        /// <param name="model">Model object</param>
+        /// <param name="content">Razor content</param>
+        /// <returns>Text for view</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public string ViewContent<T>(T model = default(T), string content = null)
         {
@@ -105,6 +167,10 @@ namespace SysCommand.ConsoleApp
             return view.ProcessByContent<T>(model, content);
         }
 
+        /// <summary>
+        /// Get ActionMap from the current method
+        /// </summary>
+        /// <returns>Instance of ActionMap</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public ActionMap GetActionMap()
         {
@@ -114,6 +180,10 @@ namespace SysCommand.ConsoleApp
             return GetActionMap(currentMethod);
         }
 
+        /// <summary>
+        /// Get ActionParsed from the current method
+        /// </summary>
+        /// <returns>Instance of ActionParsed</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public ActionParsed GetAction()
         {

@@ -3,8 +3,16 @@ using System.Linq;
 
 namespace SysCommand
 {
+    /// <summary>
+    /// Class that simule the console parser
+    /// </summary>
     public static class ConsoleInputParser
     {
+        /// <summary>
+        /// Parse string line to array of argument
+        /// </summary>
+        /// <param name="commandLine"></param>
+        /// <returns>Array from string that represent arguments</returns>
         public static string[] Parse(string commandLine)
         {
             var args = new Arguments();
@@ -98,7 +106,7 @@ namespace SysCommand
             return false;
         }
 
-        public class Arguments
+        private class Arguments
         {
             private List<string> arguments = new List<string>();
             private List<char> chars = new List<char>();

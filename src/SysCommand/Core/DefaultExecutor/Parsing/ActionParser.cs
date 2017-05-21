@@ -5,15 +5,30 @@ using SysCommand.Parsing;
 
 namespace SysCommand.DefaultExecutor
 {
+    /// <summary>
+    /// Represent a parser of list of actions
+    /// </summary>
     public class ActionParser
     {
         private ArgumentParser argumentParser;
 
+        /// <summary>
+        /// Initialize the mapper
+        /// </summary>
+        /// <param name="argumentParser">Parser of arguments</param>
         public ActionParser(ArgumentParser argumentParser)
         {
             this.argumentParser = argumentParser;
         }
 
+        /// <summary>
+        /// Create a list of actions parsed from the specific target object
+        /// </summary>
+        /// <param name="argumentsRaw">List of arguments raw</param>
+        /// <param name="enableMultiAction">Determine whether the parse can have more than one action per line</param>
+        /// <param name="maps">Map of actions</param>
+        /// <param name="initialExtraArguments">Return all arguments that are in init, that is, before any action</param>
+        /// <returns>List of ActionParsed</returns>
         public IEnumerable<ActionParsed> Parse(IEnumerable<ArgumentRaw> argumentsRaw, bool enableMultiAction, IEnumerable<ActionMap> maps, out IEnumerable<ArgumentRaw> initialExtraArguments)
         {
             var actionsMapped = new List<ActionParsed>();
@@ -121,7 +136,7 @@ namespace SysCommand.DefaultExecutor
             return actionsMapped;
         }
 
-        public ActionParsedState GetState(ActionParsed actionParsed)
+        private ActionParsedState GetState(ActionParsed actionParsed)
         {
             ActionParsedState state = ActionParsedState.None;
 

@@ -373,6 +373,7 @@
           "Raw": "a b c d",
           "AllRaw": [
             {
+              "Index": 1,
               "Name": "args",
               "Value": "a",
               "Format": "LongNameAndHasValue",
@@ -380,10 +381,10 @@
               "DelimiterValueInName": null,
               "ValueRaw": "a",
               "IsShortName": false,
-              "IsLongName": true,
-              "Index": 1
+              "IsLongName": true
             },
             {
+              "Index": 2,
               "Name": null,
               "Value": "b",
               "Format": "Unnamed",
@@ -391,10 +392,10 @@
               "DelimiterValueInName": null,
               "ValueRaw": "b",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 2
+              "IsLongName": false
             },
             {
+              "Index": 3,
               "Name": null,
               "Value": "c",
               "Format": "Unnamed",
@@ -402,10 +403,10 @@
               "DelimiterValueInName": null,
               "ValueRaw": "c",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 3
+              "IsLongName": false
             },
             {
+              "Index": 4,
               "Name": null,
               "Value": "d",
               "Format": "Unnamed",
@@ -413,8 +414,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "d",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 4
+              "IsLongName": false
             }
           ],
           "IsMapped": true,
@@ -514,6 +514,7 @@
           "Raw": "b",
           "AllRaw": [
             {
+              "Index": 2,
               "Name": null,
               "Value": "b",
               "Format": "Unnamed",
@@ -521,8 +522,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "b",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 2
+              "IsLongName": false
             }
           ],
           "IsMapped": true,
@@ -558,6 +558,7 @@
           "Raw": "c",
           "AllRaw": [
             {
+              "Index": 3,
               "Name": null,
               "Value": "c",
               "Format": "Unnamed",
@@ -565,8 +566,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "c",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 3
+              "IsLongName": false
             }
           ],
           "IsMapped": true,
@@ -587,6 +587,7 @@
           "Raw": "a",
           "AllRaw": [
             {
+              "Index": 1,
               "Name": "args",
               "Value": "a",
               "Format": "LongNameAndHasValue",
@@ -594,8 +595,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "a",
               "IsShortName": false,
-              "IsLongName": true,
-              "Index": 1
+              "IsLongName": true
             }
           ],
           "IsMapped": false,
@@ -614,6 +614,7 @@
           "Raw": "d",
           "AllRaw": [
             {
+              "Index": 4,
               "Name": null,
               "Value": "d",
               "Format": "Unnamed",
@@ -621,8 +622,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "d",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 4
+              "IsLongName": false
             }
           ],
           "IsMapped": false,
@@ -703,6 +703,7 @@
           "Raw": "b",
           "AllRaw": [
             {
+              "Index": 2,
               "Name": null,
               "Value": "b",
               "Format": "Unnamed",
@@ -710,8 +711,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "b",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 2
+              "IsLongName": false
             }
           ],
           "IsMapped": true,
@@ -732,6 +732,7 @@
           "Raw": "a",
           "AllRaw": [
             {
+              "Index": 1,
               "Name": "args",
               "Value": "a",
               "Format": "LongNameAndHasValue",
@@ -739,8 +740,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "a",
               "IsShortName": false,
-              "IsLongName": true,
-              "Index": 1
+              "IsLongName": true
             }
           ],
           "IsMapped": false,
@@ -759,6 +759,7 @@
           "Raw": "c",
           "AllRaw": [
             {
+              "Index": 3,
               "Name": null,
               "Value": "c",
               "Format": "Unnamed",
@@ -766,8 +767,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "c",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 3
+              "IsLongName": false
             }
           ],
           "IsMapped": false,
@@ -786,6 +786,7 @@
           "Raw": "d",
           "AllRaw": [
             {
+              "Index": 4,
               "Name": null,
               "Value": "d",
               "Format": "Unnamed",
@@ -793,8 +794,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "d",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 4
+              "IsLongName": false
             }
           ],
           "IsMapped": false,
@@ -862,6 +862,7 @@
         ]
       },
       "ArgumentRawOfAction": {
+        "Index": 5,
         "Name": null,
         "Value": "clean",
         "Format": "Unnamed",
@@ -869,8 +870,7 @@
         "DelimiterValueInName": null,
         "ValueRaw": "clean",
         "IsShortName": false,
-        "IsLongName": false,
-        "Index": 5
+        "IsLongName": false
       },
       "Arguments": [
         {
@@ -903,6 +903,7 @@
           "Raw": "1",
           "AllRaw": [
             {
+              "Index": 6,
               "Name": null,
               "Value": "1",
               "Format": "Unnamed",
@@ -910,8 +911,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "1",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 6
+              "IsLongName": false
             }
           ],
           "IsMapped": true,
@@ -947,6 +947,7 @@
           "Raw": "2",
           "AllRaw": [
             {
+              "Index": 7,
               "Name": null,
               "Value": "2",
               "Format": "Unnamed",
@@ -954,8 +955,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "2",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 7
+              "IsLongName": false
             }
           ],
           "IsMapped": true,
@@ -1024,6 +1024,7 @@
         ]
       },
       "ArgumentRawOfAction": {
+        "Index": 8,
         "Name": null,
         "Value": "clean",
         "Format": "Unnamed",
@@ -1031,8 +1032,7 @@
         "DelimiterValueInName": null,
         "ValueRaw": "clean",
         "IsShortName": false,
-        "IsLongName": false,
-        "Index": 8
+        "IsLongName": false
       },
       "Arguments": [
         {
@@ -1065,6 +1065,7 @@
           "Raw": "1",
           "AllRaw": [
             {
+              "Index": 9,
               "Name": null,
               "Value": "1",
               "Format": "Unnamed",
@@ -1072,8 +1073,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "1",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 9
+              "IsLongName": false
             }
           ],
           "IsMapped": true,
@@ -1109,6 +1109,7 @@
           "Raw": "2",
           "AllRaw": [
             {
+              "Index": 10,
               "Name": null,
               "Value": "2",
               "Format": "Unnamed",
@@ -1116,8 +1117,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "2",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 10
+              "IsLongName": false
             }
           ],
           "IsMapped": true,

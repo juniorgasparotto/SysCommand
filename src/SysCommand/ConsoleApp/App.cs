@@ -24,10 +24,29 @@ namespace SysCommand.ConsoleApp
 {
     public class App
     {
+        /// <summary>
+        /// Fires at the end of the implementation
+        /// </summary>
         public Action<ApplicationResult> OnComplete { get; set; }
+
+        /// <summary>
+        /// Fires in case of exception.
+        /// </summary>
         public Action<ApplicationResult, Exception> OnException { get; set; }
+
+        /// <summary>
+        /// Fires before invoking each Member (property or method) that was parsed.
+        /// </summary>
         public Action<ApplicationResult, IMemberResult> OnBeforeMemberInvoke { get; set; }
+
+        /// <summary>
+        /// Fires after invoking each Member (property or method) that was parsed.
+        /// </summary>
         public Action<ApplicationResult, IMemberResult> OnAfterMemberInvoke { get; set; }
+
+        /// <summary>
+        /// Fires when a method returns value
+        /// </summary>
         public Action<ApplicationResult, IMemberResult> OnMethodReturn { get; set; }
 
         private readonly bool _enableMultiAction;
@@ -37,10 +56,19 @@ namespace SysCommand.ConsoleApp
         private ConsoleWrapper _console;
         private ItemCollection _items;
 
-        //public bool ReadArgsWhenIsDebug { get; set; }
+        /// <summary>
+        /// Get all command maps
+        /// </summary>
         public IEnumerable<CommandMap> Maps { get; private set; }
+
+        /// <summary>
+        /// Get all commands
+        /// </summary>
         public IEnumerable<Command> Commands { get; private set; }
 
+        /// <summary>
+        /// Set ou Get the console wrapper
+        /// </summary>
         public ConsoleWrapper Console
         {
             get
@@ -56,6 +84,9 @@ namespace SysCommand.ConsoleApp
             }
         }
 
+        /// <summary>
+        /// Set or Get the descriptor.
+        /// </summary>
         public IDescriptor Descriptor
         {
             get
@@ -71,6 +102,9 @@ namespace SysCommand.ConsoleApp
             }
         }
 
+        /// <summary>
+        /// Scope of variables for this App
+        /// </summary>
         public ItemCollection Items
         {
             get
@@ -78,7 +112,13 @@ namespace SysCommand.ConsoleApp
                 return this._items ?? (this._items = new ItemCollection());
             }
         }
-        
+
+        /// <summary>
+        /// Initialize
+        /// </summary>
+        /// <param name="commandsTypes">Specifies the Command types that will be used throughout the process. If it is null then the system will try to automatically any class that extend from Command</param>
+        /// <param name="enableMultiAction">Turns the MultiAction behavior. By default, this behavior will be enabled</param>
+        /// <param name="addDefaultAppHandler">If false so does not create the event handler that is responsible for the outputs standard engine and erros controls, and among others. The default is true</param>
         public App(
             IEnumerable<Type> commandsTypes = null,
             bool enableMultiAction = true,
@@ -134,6 +174,11 @@ namespace SysCommand.ConsoleApp
             this.Commands = commands;
         }
 
+        /// <summary>
+        /// Add a new handler to intercept all events
+        /// </summary>
+        /// <param name="handler">Instance of handler</param>
+        /// <returns>The same App instance</returns>
         public App AddApplicationHandler(IApplicationHandler handler)
         {
             this.OnComplete += handler.OnComplete;
@@ -144,11 +189,21 @@ namespace SysCommand.ConsoleApp
             return this;
         }
 
+        /// <summary>
+        /// Run the application
+        /// </summary>
+        /// <param name="arg">Command line as string</param>
+        /// <returns>Return the application result</returns>
         public ApplicationResult Run(string arg)
         {
             return this.Run(ConsoleAppHelper.StringToArgs(arg));
         }
 
+        /// <summary>
+        /// Run the application
+        /// </summary>
+        /// <param name="args">Command line as array of string (arguments)</param>
+        /// <returns>Return the application result</returns>
         public ApplicationResult Run(string[] args)
         {
             var appResult = new ApplicationResult
@@ -276,6 +331,14 @@ namespace SysCommand.ConsoleApp
 #endif
         }
 
+        /// <summary>
+        /// Run application with console simulator. This feature helps you test your inputs inside 
+        /// the Visual Studio without having to run your ".exe" in an external console. 
+        /// It is important to note that this Simulator will only be displayed within Visual Studio.
+        /// </summary>
+        /// <param name="appFactory"></param>
+        /// <param name="breakEndLine"></param>
+        /// <returns></returns>
         public static int RunApplication(Func<App> appFactory = null, bool breakEndLine = true)
         {
             var lastBreakLineInNextWrite = false;

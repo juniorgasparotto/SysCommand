@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SysCommand.Helpers
 {
-    public static class StringHelper
+    internal static class StringHelper
     {
         public static string ToLowerSeparate(string str, char separate)
         {

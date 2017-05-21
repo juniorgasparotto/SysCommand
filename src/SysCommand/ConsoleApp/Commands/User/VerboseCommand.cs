@@ -2,6 +2,9 @@
 
 namespace SysCommand.ConsoleApp.Commands
 {
+    /// <summary>
+    /// Command to enable a "verbose" functionality
+    /// </summary>
     public class VerboseCommand : Command
     {
         [Argument(ShortName = 'v', LongName = "verbose")]

@@ -6,26 +6,72 @@ using System.Text;
 
 namespace SysCommand.ConsoleApp
 {
+    /// <summary>
+    /// Small wrapper of System.Console
+    /// </summary>
     public class ConsoleWrapper
     {
+        /// <summary>
+        /// Smart line break while using dós write and read methods. The variable App.Console.BreakLineInNextWrite controls the breaks and helps you not leave empty lines.
+        /// </summary>
         public bool BreakLineInNextWrite { get; set; }
 
         private int exitCode;
         private string input;
 
+        /// <summary>
+        /// Current verbose level
+        /// </summary>
         public Verbose Verbose { get; set; }
+
+        /// <summary>
+        /// Color for verbose info
+        /// </summary>
         public ConsoleColor ColorInfo { get; set; }
+
+        /// <summary>
+        /// Color for verbose critical
+        /// </summary>
         public ConsoleColor ColorCritical { get; set; }
+
+        /// <summary>
+        /// Color for verbose error
+        /// </summary>
         public ConsoleColor ColorError { get; set; }
+
+        /// <summary>
+        /// Color for verbose success
+        /// </summary>
         public ConsoleColor ColorSuccess { get; set; }
+
+        /// <summary>
+        /// Color for verbose warning
+        /// </summary>
         public ConsoleColor ColorWarning { get; set; }
+
+        /// <summary>
+        /// Color for verbose read
+        /// </summary>
         public ConsoleColor ColorRead { get; set; }
+
+        /// <summary>
+        /// Wrapper to Console.Out
+        /// </summary>
         public TextWriter Out { get; set; }
+
+        /// <summary>
+        /// Wrapper to Console.In
+        /// </summary>
         public TextReader In { get; set; }
 
+        /// <summary>
+        /// Check if exit code was filled
+        /// </summary>
         public bool ExitCodeHasValue { get; private set; }
-        //public bool Quiet { get; set; }
 
+        /// <summary>
+        /// Exit code value
+        /// </summary>
         public int ExitCode
         {
             get
@@ -39,6 +85,9 @@ namespace SysCommand.ConsoleApp
             }
         }
 
+        /// <summary>
+        /// Initialize
+        /// </summary>
         public ConsoleWrapper()
         {
             this.ColorInfo = Console.ForegroundColor;
@@ -52,6 +101,12 @@ namespace SysCommand.ConsoleApp
             this.Verbose = Verbose.Info;
         }
 
+        /// <summary>
+        /// Check if can write the text
+        /// </summary>
+        /// <param name="verb">Verbose test</param>
+        /// <param name="forceWrite">Flag to force write</param>
+        /// <returns>Return if can write</returns>
         public virtual bool CheckIfWrite(Verbose verb, bool forceWrite)
         {
             if (this.Verbose.HasFlag(Verbose.All) || this.Verbose.HasFlag(verb) || forceWrite)
@@ -59,6 +114,10 @@ namespace SysCommand.ConsoleApp
             return false;
         }
 
+        /// <summary>
+        /// Read information from user
+        /// </summary>
+        /// <returns>The user input</returns>
         public virtual string Read()
         {
             // https://referencesource.microsoft.com/#mscorlib/system/io/textreader.cs,91b2c7adbdc4b165
@@ -84,12 +143,22 @@ namespace SysCommand.ConsoleApp
             return null;
         }
 
+        /// <summary>
+        /// Read information from user with a label
+        /// </summary>
+        /// <param name="label">Label text</param>
+        /// <param name="breakLine">Break line if true</param>
+        /// <returns>The user input</returns>
         public virtual string Read(string label, bool breakLine = false)
         {
             WriteInternal(label, breakLine, this.ColorRead);
             return Read();
         }
 
+        /// <summary>
+        /// Get the redirect input value
+        /// </summary>
+        /// <returns>Redirect input value</returns>
         public virtual string Input()
         {
             if (Console.IsInputRedirected && Console.In != null)
@@ -97,31 +166,61 @@ namespace SysCommand.ConsoleApp
 
             return this.input;
         }
-        
+
+        /// <summary>
+        /// Write in console
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="breakLine">Break line if true</param>
+        /// <param name="forceWrite">Flag to force write</param>
         public virtual void Write(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Info, forceWrite))
                 WriteInternal(msg, breakLine, this.ColorInfo);
         }
 
+        /// <summary>
+        /// Write in console as a critical
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="breakLine">Break line if true</param>
+        /// <param name="forceWrite">Flag to force write</param>
         public virtual void Critical(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Critical, forceWrite))
                 WriteInternal(msg, breakLine, this.ColorCritical);
         }
 
+        /// <summary>
+        /// Write in console as a error
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="breakLine">Break line if true</param>
+        /// <param name="forceWrite">Flag to force write</param>
         public virtual void Error(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Error, forceWrite))
                 WriteInternal(msg, breakLine, this.ColorError);
         }
 
+        /// <summary>
+        /// Write in console as a success
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="breakLine">Break line if true</param>
+        /// <param name="forceWrite">Flag to force write</param>
         public virtual void Success(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Success, forceWrite))
                 WriteInternal(msg, breakLine, this.ColorSuccess);
         }
 
+        /// <summary>
+        /// Write in console as a warning
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="breakLine">Break line if true</param>
+        /// <param name="forceWrite">Flag to force write</param>
         public void Warning(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Warning, forceWrite))

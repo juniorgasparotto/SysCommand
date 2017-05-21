@@ -4,7 +4,7 @@ using System;
 
 namespace SysCommand.Helpers
 {
-    public static class IEnumerableHelper
+    internal static class IEnumerableHelper
     {
         public static bool Empty<TSource>(this IEnumerable<TSource> source)
         {

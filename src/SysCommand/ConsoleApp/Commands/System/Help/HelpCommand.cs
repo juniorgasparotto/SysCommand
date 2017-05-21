@@ -1,5 +1,8 @@
 ﻿namespace SysCommand.ConsoleApp.Commands
 {
+    /// <summary>
+    /// The help command (user: > help)
+    /// </summary>
     public class HelpCommand : Command, IHelpCommand
     {
         public HelpCommand()

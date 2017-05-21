@@ -10,6 +10,9 @@ using static SysCommand.Helpers.ReflectionHelper;
 
 namespace SysCommand.ConsoleApp.Commands
 {
+    /// <summary>
+    /// Use this command to save inputs
+    /// </summary>
     public class ArgsHistoryCommand : Command
     {
         public const string FILE_NAME = "history";

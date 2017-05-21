@@ -12,24 +12,46 @@ using System.Reflection;
 
 namespace SysCommand.ConsoleApp.Descriptor
 {
+    /// <summary>
+    /// This class is responsible for displaying the texts to the end user.
+    /// </summary>
     public class DefaultDescriptor : IDescriptor
     {
+        /// <summary>
+        /// Format and display all errors
+        /// </summary>
+        /// <param name="appResult">Result base</param>
         public virtual void ShowErrors(ApplicationResult appResult)
         {
             var strBuilder = this.GetErrors(appResult.ExecutionResult.Errors);
             appResult.App.Console.Error(strBuilder, forceWrite: true);
         }
 
+        /// <summary>
+        /// Format and display a not found message
+        /// </summary>
+        /// <param name="appResult">Result base</param>
         public virtual void ShowNotFound(ApplicationResult appResult)
         {
             appResult.App.Console.Error(Strings.NotFoundMessage, forceWrite: true);
         }
 
+        /// <summary>
+        /// Display a value for a return method
+        /// </summary>
+        /// <param name="appResult">Return base</param>
+        /// <param name="method">MethodResult reference</param>
+        /// <param name="value">Value to display</param>
         public virtual void ShowMethodReturn(ApplicationResult appResult, IMemberResult method, object value)
         {
             appResult.App.Console.Write(method.Value);
         }
 
+        /// <summary>
+        /// Get a formatted help text
+        /// </summary>
+        /// <param name="commandMaps">List of commands maps</param>
+        /// <returns>Help text</returns>
         public string GetHelpText(IEnumerable<CommandMap> commandMaps)
         {
             const int widthUsageLeft = 10;
@@ -139,6 +161,12 @@ namespace SysCommand.ConsoleApp.Descriptor
                 return output;
         }
 
+        /// <summary>
+        /// Get a formatted help text to a specific action
+        /// </summary>
+        /// <param name="commandMaps">List of commands maps</param>
+        /// <param name="actionName">Action name</param>
+        /// <returns>Help text</returns>
         public string GetHelpText(IEnumerable<CommandMap> commandMaps, string actionName)
         {
             const int widthUsageLeft = 0;

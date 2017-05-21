@@ -6,17 +6,50 @@ using System.Reflection;
 
 namespace SysCommand.Execution
 {
+    /// <summary>
+    /// Result of methods that represent actions.
+    /// </summary>
     public class MethodResult : IMemberResult
     {
+        /// <summary>
+        /// ActionParsed of this method
+        /// </summary>
         public ActionParsed ActionParsed { get; private set; }
+
+        /// <summary>
+        /// MethodInfo for this result
+        /// </summary>
         public MethodInfo MethodInfo { get; private set; }
+
+        /// <summary>
+        /// All parameters of this method
+        /// </summary>
         public Dictionary<string, object> Parameters { get; private set; }
 
+        /// <summary>
+        /// Member value
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Member Target  (owner class)
+        /// </summary>
         public object Target { get; private set; }
+
+        /// <summary>
+        /// Member value
+        /// </summary>
         public object Value { get; set; }
+
+        /// <summary>
+        /// Checks if member was invoked
+        /// </summary>
         public bool IsInvoked { get; set; }
 
+        /// <summary>
+        /// Initialize
+        /// </summary>
+        /// <param name="actionParsed">ActionParsed of this method</param>
         public MethodResult(ActionParsed actionParsed)
         {
             this.ActionParsed = actionParsed;
@@ -26,14 +59,9 @@ namespace SysCommand.Execution
             this.Name = this.ActionParsed.Name;
         }
 
-        public MethodResult(string name, string alias, object target, MethodInfo method, Dictionary<string, object> parameters)
-        {
-            this.MethodInfo = method;
-            this.Parameters = parameters;
-            this.Target = target;
-            this.Name = name;
-        }
-
+        /// <summary>
+        /// Invoke member
+        /// </summary>
         public void Invoke()
         {
             this.Value = this.MethodInfo.InvokeWithNamedParameters(Target, this.Parameters);

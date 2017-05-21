@@ -7,15 +7,30 @@ using SysCommand.Compatibility;
 
 namespace SysCommand.DefaultExecutor
 {
+    /// <summary>
+    /// Represent a mapper of list of ActionMap
+    /// </summary>
     public class ActionMapper
     {
         private ArgumentMapper argumentMapper;
 
+        /// <summary>
+        /// Initialize the mapper
+        /// </summary>
+        /// <param name="argumentMapper">Mapper of arguments</param>
         public ActionMapper(ArgumentMapper argumentMapper)
         {
             this.argumentMapper = argumentMapper;
         }
         
+        /// <summary>
+        /// Create a map of actions from the specific target object
+        /// </summary>
+        /// <param name="target">Object to be mapped</param>
+        /// <param name="onlyWithAttribute">Ignore all methods that do not have the ActionAttribute</param>
+        /// <param name="usePrefixInAllMethods">Determine whether the methods are prefixed</param>
+        /// <param name="prefix">Prefix text is enabled</param>
+        /// <returns>List of ActionMap</returns>
         public IEnumerable<ActionMap> Map(object target, bool onlyWithAttribute = false, bool usePrefixInAllMethods = false, string prefix = null)
         {
             var maps = new List<ActionMap>();
@@ -23,6 +38,15 @@ namespace SysCommand.DefaultExecutor
             return Map(target, methods, onlyWithAttribute, usePrefixInAllMethods, prefix);
         }
 
+        /// <summary>
+        /// Create a map of actions from the specific target object
+        /// </summary>
+        /// <param name="target">Object to be mapped</param>
+        /// <param name="methods">Methods to be mapped</param>
+        /// <param name="onlyWithAttribute">Ignore all methods that do not have the ActionAttribute</param>
+        /// <param name="usePrefixInAllMethods">Determine whether the methods are prefixed</param>
+        /// <param name="prefix">Prefix text is enabled</param>
+        /// <returns>List of ActionMap</returns>
         public IEnumerable<ActionMap> Map(object target, MethodInfo[] methods, bool onlyWithAttribute = false, bool usePrefixInAllMethods = false, string prefix = null)
         {
             var maps = new List<ActionMap>();
@@ -59,7 +83,7 @@ namespace SysCommand.DefaultExecutor
                 if (usePrefixFinal)
                 {
                     if (string.IsNullOrWhiteSpace(prefix))
-                        prefix = argumentMapper.GetLongNameByType(target.GetType());
+                        prefix = argumentMapper.GetPrefixByType(target.GetType());
 
                     actionName = prefix + "-" + actionNameRaw;
                 }

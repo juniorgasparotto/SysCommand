@@ -8,14 +8,30 @@ using SysCommand.Compatibility;
 
 namespace SysCommand.DefaultExecutor
 {
+    /// <summary>
+    /// Represent a mapper of list of ArgumentMapper
+    /// </summary>
     public class ArgumentMapper
     {
+        /// <summary>
+        /// Create a map of arguments from the specific target object
+        /// </summary>
+        /// <param name="target">Object to be mapped</param>
+        /// <param name="onlyWithAttribute">Ignore all properties that do not have the ArgumentAttribute</param>
+        /// <returns>List of ArgumentMap</returns>
         public IEnumerable<ArgumentMap> Map(object target, bool onlyWithAttribute = false)
         {
             var properties = target.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             return Map(target, properties, onlyWithAttribute);
         }
 
+        /// <summary>
+        /// Create a map of arguments from the specific target object
+        /// </summary>
+        /// <param name="target">Object to be mapped</param>
+        /// <param name="properties">Properties to be mapped</param>
+        /// <param name="onlyWithAttribute">Ignore all properties that do not have the ArgumentAttribute</param>
+        /// <returns>List of ArgumentMap</returns>
         public IEnumerable<ArgumentMap> Map(object target, PropertyInfo[] properties, bool onlyWithAttribute = false)
         {
             var maps = new List<ArgumentMap>();
@@ -35,7 +51,7 @@ namespace SysCommand.DefaultExecutor
             return SortByPosition(maps);
         }
 
-        public ArgumentMap Map(object target, PropertyInfo property)
+        private ArgumentMap Map(object target, PropertyInfo property)
         {
             var attribute = ReflectionCompatibility.GetCustomAttribute<ArgumentAttribute>(property);
             string longName = null;
@@ -64,7 +80,7 @@ namespace SysCommand.DefaultExecutor
             return Map(target, property, property.Name, property.PropertyType, longName, shortName, hasPosition, position, helpText, showHelpComplement, isOptional, hasDefaultValue, defaultValue);
         }
 
-        public ArgumentMap Map(object target, object targetMember, string mapName, Type mapType, string longName, char? shortName, bool hasPosition, int? position, string helpText, bool showHelpComplement, bool isOptional, bool hasDefaultValue, object defaultValue)
+        private ArgumentMap Map(object target, object targetMember, string mapName, Type mapType, string longName, char? shortName, bool hasPosition, int? position, string helpText, bool showHelpComplement, bool isOptional, bool hasDefaultValue, object defaultValue)
         {
             shortName = shortName == default(char) ? null : shortName;
             position = hasPosition ? position : null;
@@ -84,7 +100,7 @@ namespace SysCommand.DefaultExecutor
             return new ArgumentMap(target, targetMember, mapName, longName, shortName, mapType, isOptional, hasDefaultValue, defaultValue, helpText, showHelpComplement, position);
         }
 
-        public ArgumentMap Map(object target, ParameterInfo parameter)
+        private ArgumentMap Map(object target, ParameterInfo parameter)
         {
             var attribute = ReflectionCompatibility.GetCustomAttribute<ArgumentAttribute>(parameter);
 
@@ -111,7 +127,7 @@ namespace SysCommand.DefaultExecutor
             return this.Map(target, parameter, parameter.Name, parameter.ParameterType, longName, shortName, hasPosition, position, helpText, showHelpComplement, isOptional, hasDefaultValue, defaultValue);
         }
 
-        public IEnumerable<ArgumentMap> SortByPosition(IEnumerable<ArgumentMap> maps)
+        private IEnumerable<ArgumentMap> SortByPosition(IEnumerable<ArgumentMap> maps)
         {
             var mapsWithOrder = maps.Where(f => f.Position != null).OrderBy(f => f.Position).ToList();
             if (mapsWithOrder.Count > 0)
@@ -125,12 +141,22 @@ namespace SysCommand.DefaultExecutor
             return maps;
         }
 
+        /// <summary>
+        /// Create a formatted long name argument
+        /// </summary>
+        /// <param name="name">Argument name unformatted</param>
+        /// <returns>The formatted long name</returns>
         public string GetLongName(string name)
         {
             return StringHelper.ToLowerSeparate(name, '-');
         }
 
-        public string GetLongNameByType(Type type)
+        /// <summary>
+        /// Create a prefix by type. This method ignore the suffix "Command"
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>Prefix based in type name</returns>
+        public string GetPrefixByType(Type type)
         {
             var prefix = StringHelper.ToLowerSeparate(type.Name, '-');
             var split = prefix.Split('-').ToList();
@@ -142,7 +168,13 @@ namespace SysCommand.DefaultExecutor
 
             return prefix;
         }
-        
+
+        /// <summary>
+        /// Create a map of arguments from the specific method
+        /// </summary>
+        /// <param name="target">Object owner of method</param>
+        /// <param name="method">Method to be mapped</param>
+        /// <returns>List of ArgumentMap</returns>
         public IEnumerable<ArgumentMap> GetFromMethod(object target, MethodInfo method)
         {
             var maps = new List<ArgumentMap>();
@@ -158,8 +190,7 @@ namespace SysCommand.DefaultExecutor
             return this.SortByPosition(maps);
         }
 
-
-        public void Validate(IEnumerable<ArgumentMap> maps, string contextName)
+        private void Validate(IEnumerable<ArgumentMap> maps, string contextName)
         {
             foreach (var map in maps)
             {

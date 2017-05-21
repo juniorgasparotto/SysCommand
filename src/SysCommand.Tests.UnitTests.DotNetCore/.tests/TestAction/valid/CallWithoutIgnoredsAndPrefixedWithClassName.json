@@ -355,6 +355,7 @@
         ]
       },
       "ArgumentRawOfAction": {
+        "Index": 0,
         "Name": null,
         "Value": "git-clean",
         "Format": "Unnamed",
@@ -362,8 +363,7 @@
         "DelimiterValueInName": null,
         "ValueRaw": "git-clean",
         "IsShortName": false,
-        "IsLongName": false,
-        "Index": 0
+        "IsLongName": false
       },
       "Arguments": [
         {

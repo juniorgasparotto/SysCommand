@@ -7,20 +7,61 @@ using SysCommand.Helpers;
 
 namespace SysCommand.Parsing
 {
+    /// <summary>
+    /// Represents a parsed argument
+    /// </summary>
     public class ArgumentParsed
     {
         private List<ArgumentRaw> allRaw;
 
+        /// <summary>
+        /// Argument name
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Original value
+        /// </summary>
         public object ValueParsed { get; set; }
+
+        /// <summary>
+        /// Value final
+        /// </summary>
         public object Value { get; set; }
+
+        /// <summary>
+        /// Check if this value is unsuportted
+        /// </summary>
         public bool HasUnsuporttedType { get; set; }
+
+        /// <summary>
+        /// Check if value is invalid for type
+        /// </summary>
         public bool HasInvalidInput { get; set; }
+
+        /// <summary>
+        /// Argument type
+        /// </summary>
         public Type Type { get; set; }
+
+        /// <summary>
+        /// Parsing type
+        /// </summary>
         public ArgumentParsedType ParsingType { get; set; }
+
+        /// <summary>
+        /// Argument state
+        /// </summary>
         public ArgumentParsedState ParsingStates { get; set; }
+
+        /// <summary>
+        /// Argument map
+        /// </summary>
         public ArgumentMap Map { get; set; }
 
+        /// <summary>
+        /// Original value (string)
+        /// </summary>
         public string Raw
         {
             get
@@ -29,6 +70,9 @@ namespace SysCommand.Parsing
             }
         }
 
+        /// <summary>
+        /// All raw that composes the final value
+        /// </summary>
         public IEnumerable<ArgumentRaw> AllRaw
         {
             get
@@ -37,6 +81,9 @@ namespace SysCommand.Parsing
             }
         }
 
+        /// <summary>
+        /// Check if argument was mapped
+        /// </summary>
         public bool IsMapped
         {
             get
@@ -47,6 +94,9 @@ namespace SysCommand.Parsing
             }
         }
 
+        /// <summary>
+        /// Check if argument was mapped or has default value
+        /// </summary>
         public bool IsMappedOrHasDefaultValue
         {
             get
@@ -57,6 +107,14 @@ namespace SysCommand.Parsing
             }
         }
 
+        /// <summary>
+        /// Initialize
+        /// </summary>
+        /// <param name="name">Argument name</param>
+        /// <param name="valueParsed">Original value</param>
+        /// <param name="value">Final value</param>
+        /// <param name="type">Argument type</param>
+        /// <param name="map">Argument map</param>
         public ArgumentParsed(string name, string valueParsed, string value, Type type, ArgumentMap map)
         {
             this.Name = name;
@@ -67,11 +125,19 @@ namespace SysCommand.Parsing
             this.allRaw = new List<ArgumentRaw>();
         }
 
+        /// <summary>
+        /// Add raw for this argument value
+        /// </summary>
+        /// <param name="raw">ArgumentRaw value</param>
         public void AddRaw(ArgumentRaw raw)
         {
             this.allRaw.Add(raw);
         }
 
+        /// <summary>
+        /// Returns the format of the argument name in the input.
+        /// </summary>
+        /// <returns></returns>
         public string GetArgumentNameInputted()
         {
             string argumentNameInputted = null;
@@ -91,6 +157,11 @@ namespace SysCommand.Parsing
             return "[" + this.Name + ", " + this.Value + "]";
         }
 
+        /// <summary>
+        /// Get all values as string
+        /// </summary>
+        /// <param name="values">List of values</param>
+        /// <returns>Value as string</returns>
         public static string GetValueRaw(params string[] values)
         {
             var hasString = false;

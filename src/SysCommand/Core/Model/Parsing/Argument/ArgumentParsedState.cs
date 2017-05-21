@@ -2,6 +2,9 @@
 
 namespace SysCommand.Parsing
 {
+    /// <summary>
+    /// Determines the state for a parsed argument
+    /// </summary>
     [Flags]
     public enum ArgumentParsedState
     {

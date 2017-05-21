@@ -3,11 +3,17 @@ using System.IO;
 
 namespace SysCommand.ConsoleApp.Helpers
 {
+    /// <summary>
+    /// Helper class to working in debug mode
+    /// </summary>
     public static class Development
     {
         private static string projectDirectory;
         private static object thisLock = new object();
 
+        /// <summary>
+        /// Check if is in debug mode
+        /// </summary>
         public static bool IsAttached
         {
             get
@@ -16,6 +22,11 @@ namespace SysCommand.ConsoleApp.Helpers
             }
         }
 
+        /// <summary>
+        /// Get the project base path
+        /// </summary>
+        /// <param name="baseDir">Current directory, if null get from de system</param>
+        /// <returns>Project base path</returns>
         public static string GetProjectDirectory(string baseDir = null)
         {
             lock (thisLock)

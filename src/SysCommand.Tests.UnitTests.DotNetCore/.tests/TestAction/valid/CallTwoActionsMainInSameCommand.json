@@ -337,6 +337,7 @@
         ]
       },
       "ArgumentRawOfAction": {
+        "Index": 0,
         "Name": null,
         "Value": "main",
         "Format": "Unnamed",
@@ -344,8 +345,7 @@
         "DelimiterValueInName": null,
         "ValueRaw": "main",
         "IsShortName": false,
-        "IsLongName": false,
-        "Index": 0
+        "IsLongName": false
       },
       "Arguments": [
         {
@@ -383,6 +383,7 @@
           "Raw": "a b c d",
           "AllRaw": [
             {
+              "Index": 2,
               "Name": "args",
               "Value": "a",
               "Format": "LongNameAndHasValue",
@@ -390,10 +391,10 @@
               "DelimiterValueInName": null,
               "ValueRaw": "a",
               "IsShortName": false,
-              "IsLongName": true,
-              "Index": 2
+              "IsLongName": true
             },
             {
+              "Index": 3,
               "Name": null,
               "Value": "b",
               "Format": "Unnamed",
@@ -401,10 +402,10 @@
               "DelimiterValueInName": null,
               "ValueRaw": "b",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 3
+              "IsLongName": false
             },
             {
+              "Index": 4,
               "Name": null,
               "Value": "c",
               "Format": "Unnamed",
@@ -412,10 +413,10 @@
               "DelimiterValueInName": null,
               "ValueRaw": "c",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 4
+              "IsLongName": false
             },
             {
+              "Index": 5,
               "Name": null,
               "Value": "d",
               "Format": "Unnamed",
@@ -423,8 +424,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "d",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 5
+              "IsLongName": false
             }
           ],
           "IsMapped": true,
@@ -475,6 +475,7 @@
         ]
       },
       "ArgumentRawOfAction": {
+        "Index": 6,
         "Name": null,
         "Value": "main",
         "Format": "Unnamed",
@@ -482,8 +483,7 @@
         "DelimiterValueInName": null,
         "ValueRaw": "main",
         "IsShortName": false,
-        "IsLongName": false,
-        "Index": 6
+        "IsLongName": false
       },
       "Arguments": [
         {
@@ -518,6 +518,7 @@
           "Raw": "123",
           "AllRaw": [
             {
+              "Index": 7,
               "Name": null,
               "Value": "123",
               "Format": "Unnamed",
@@ -525,8 +526,7 @@
               "DelimiterValueInName": null,
               "ValueRaw": "123",
               "IsShortName": false,
-              "IsLongName": false,
-              "Index": 7
+              "IsLongName": false
             }
           ],
           "IsMapped": true,

@@ -82,7 +82,7 @@ public App(
 ```
 
 * `commandsTypes`: Specifies the `Command` types that will be used throughout the process. If it is `null` then the system will try to automatically any class that extend from `Command` . Understand better in [Specifying the types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands).
-* `enableMultiAction`: Turns the `MultiAction` behavior. By default, this behavior will be habilidado. Understand better in [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#using-the-multi-action-feature).
+* `enableMultiAction`: Turns the `MultiAction` behavior. By default, this behavior will be enabled. Understand better in [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#using-the-multi-action-feature).
 * `addDefaultAppHandler`: If `false` so does not create the event handler that is responsible for the `outputs` standard engine and `erros` controls, and among others. The default is `true` . Understand better in [Event control](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events).
 
 ## <a name="initializing-by-static-method" />Booting with the console Simulator

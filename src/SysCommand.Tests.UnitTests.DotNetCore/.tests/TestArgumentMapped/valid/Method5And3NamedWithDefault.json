@@ -135,6 +135,7 @@
       "Raw": null,
       "AllRaw": [
         {
+          "Index": 0,
           "Name": "enum1",
           "Value": null,
           "Format": "LongNameAndNoValue",
@@ -142,8 +143,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": null,
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 0
+          "IsLongName": true
         }
       ],
       "IsMapped": true,
@@ -181,6 +181,7 @@
       "Raw": null,
       "AllRaw": [
         {
+          "Index": 1,
           "Name": "enum3",
           "Value": null,
           "Format": "LongNameAndNoValue",
@@ -188,8 +189,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": null,
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 1
+          "IsLongName": true
         }
       ],
       "IsMapped": true,
@@ -227,6 +227,7 @@
       "Raw": null,
       "AllRaw": [
         {
+          "Index": 3,
           "Name": "enum4",
           "Value": null,
           "Format": "LongNameAndHasValue",
@@ -234,8 +235,7 @@
           "DelimiterValueInName": null,
           "ValueRaw": null,
           "IsShortName": false,
-          "IsLongName": true,
-          "Index": 3
+          "IsLongName": true
         }
       ],
       "IsMapped": true,
