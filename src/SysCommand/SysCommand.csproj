@@ -15,7 +15,7 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <RootNamespace>SysCommand</RootNamespace>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Authors>Glauber Donizeti Gasparotto Junior</Authors>
     <PackageProjectUrl>https://github.com/juniorgasparotto/SysCommand</PackageProjectUrl>
