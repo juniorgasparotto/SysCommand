@@ -4,9 +4,9 @@ Ele funciona como um analisador automatizado de linha de comando, permitindo que
 
 Para isso, você pode escolher 3 maneiras de trabalho:
 
-* Método **Main tipado**: Equivale ao modelo tradicional `Main(string[] args)`, mas de forma tipada.
-* Propriedades: Cada propriedade será transformada em argumentos.
-* Métodos: Cada método será transformado em um sub-comando: Ação
+* **Main tipado**: Equivale ao modelo tradicional `Main(string[] args)`, mas de forma tipada.
+* **Propriedades**: Cada propriedade será transformada em argumentos.
+* **Métodos**: Cada método será transformado em um sub-comando: Ação
 
 Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento.
 

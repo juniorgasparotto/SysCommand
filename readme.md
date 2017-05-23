@@ -47,9 +47,9 @@ It works like an automated command-line parser, allowing the programmer to focus
 
 To do this, you can choose 3 ways of working:
 
-* **Main-typed**method: this is equivalent to the traditional model `Main(string[] args)` , but typed.
-* Properties: each property will be transformed into arguments.
-* Methods: each method will be transformed into a sub-command: action
+* **Main type**: equivalent to traditional model `Main(string[] args)` , but typed.
+* **Properties**: each property will be transformed into arguments.
+* **Methods**: each method will be transformed into a sub-command: action
 
 In addition, he has a feature to simulate a command prompt within the own Visual Studio, eliminating the need to test your application outside of the development environment.
 
