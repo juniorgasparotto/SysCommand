@@ -47,7 +47,7 @@ Ele funciona como um analisador automatizado de linha de comando, permitindo que
 
 Para isso, você pode escolher 3 maneiras de trabalho:
 
-* **Main tipado**: Equivale ao modelo tradicional `Main(string[] args)`, mas de forma tipada.
+* Método **Main tipado**: Equivale ao modelo tradicional `Main(string[] args)`, mas de forma tipada.
 * **Propriedades**: Cada propriedade será transformada em argumentos.
 * **Métodos**: Cada método será transformado em um sub-comando: Ação
 

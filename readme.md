@@ -47,7 +47,7 @@ It works like an automated command-line parser, allowing the programmer to focus
 
 To do this, you can choose 3 ways of working:
 
-* **Main type**: equivalent to traditional model `Main(string[] args)` , but typed.
+* **Main-typed**method: this is equivalent to the traditional model `Main(string[] args)` , but typed.
 * **Properties**: each property will be transformed into arguments.
 * **Methods**: each method will be transformed into a sub-command: action
 
