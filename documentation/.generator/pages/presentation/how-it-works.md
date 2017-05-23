@@ -2,11 +2,17 @@
 
 Ele funciona como um analisador automatizado de linha de comando, permitindo que o programador se concentre nas regras de negócios de sua aplicação.
 
+Para isso, você pode escolher 3 maneiras de trabalho:
+
+* Método `Main` tipado
+* Propriedades
+* Ações em forma de métodos `c#`
+
 Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento.
 
 Outros recursos essênciais como `help`, `verbose`, `error handling` e outros também são suportados.
 
-**Exemplo simples:**
+**Exemplo do método tipado: `Main`**
 
 ```csharp
 namespace Example.Initialization.Simple
@@ -25,18 +31,99 @@ namespace Example.Initialization.Simple
     // and its public properties and methods will be available for use.
     public class MyCommand : Command
     {
-        public string MyProperty { get; set; }
+        // This signature "Main(...)" is reserved to process arguments fastly.
+        public void Main(string myArgument, int? myArgument2 = null)
+        {
+            // this arg is obrigatory
+            this.App.Console.Write(string.Format("myArgument='{0}'", myArgument));
 
-        // This signature "Main()" is reserved to process arguments/properties.
+            // verify if property was inputed by user.
+            if (myArgument2 != null)
+                this.App.Console.Write(string.Format("myArgument2='{0}'", myArgument2));
+        }
+    }
+}
+```
+
+_Testes em um prompt externo:_
+
+```
+C:\Users\MyUser> MyApp.exe help
+... the automatic help text will be shown ...
+
+C:\Users\MyUser> MyApp.exe --my-argument "value"
+myArgument='value'
+
+C:\Users\MyUser> MyApp.exe --my-argument "value" --my-argument2 1000
+myArgument='value'
+myArgument2='1000'
+```
+
+_Testes no Visual Studio usando o simulador de console:_
+
+```
+cmd> help
+... the automatic help text will be shown ...
+
+cmd> --my-argument "value"
+myArgument='value'
+
+cmd> --my-argument "value" --my-argument2 1000
+myArgument='value'
+myArgument2='1000'
+```
+
+**Exemplo de uso com propriedades:**
+
+```csharp
+namespace Example.Initialization.Simple
+{
+    using SysCommand.ConsoleApp;
+
+    public class Program
+    {
+        public static int Main(string[] args)
+        {
+            return App.RunApplication();
+        }
+    }
+
+    public class MyCommand : Command
+    {
+        public string MyArgument { get; set; }
+
+        // This signature "Main()" is reserved to process properties.
         public void Main()
         {
-            // verify if property was inputed by user.
-            if (MyProperty != null)
-            {
-                this.App.Console.Write(string.Format("Main MyProperty='{0}'", MyProperty));
-            }
+            if (MyArgument != null)
+                this.App.Console.Write(string.Format("Main MyArgument='{0}'", MyArgument));
         }
+    }
+}
+```
 
+```
+cmd> --my-argument value
+Main MyArgument='value'
+```
+
+**Exemplo de ações:**
+
+```csharp
+namespace Example.Initialization.Simple
+{
+    using SysCommand.ConsoleApp;
+
+    public class Program
+    {
+        public static int Main(string[] args)
+        {
+            return App.RunApplication();
+        }
+    }
+
+    public class MyCommand : Command
+    {
         public void MyAction(bool a)
         {
             this.App.Console.Write(string.Format("MyAction a='{0}'", a));
@@ -45,33 +132,12 @@ namespace Example.Initialization.Simple
 }
 ```
 
-**Testes no prompt de comando:**
-
 ```
-C:\Users\MyUser> MyApp.exe help
-... the automatic help text will be shown ...
-
-C:\Users\MyUser> MyApp.exe --my-property value
-Main MyProperty='value'
-
-C:\Users\MyUser> MyApp.exe my-action -a
-MyAction a='True'
-```
-
-**Testes no Visual Studio usando o simulador de console:**
-
-```
-cmd> help
-... the automatic help text will be shown ...
-
-cmd> --my-property value
-Main MyProperty='value'
-
 cmd> my-action -a
 MyAction a='True'
 ```
 
-**_Note que não existe nenhum código de parse, seu código está limpo e pronto para receber comandos._**
+**_Note que não existe nenhum código de analise em nenhum exemplo, seu código está limpo e pronto para receber comandos._**
 
 ### Entenda melhor...
 
@@ -81,13 +147,13 @@ Tecnicamente, existem quatro entidades de domínio que são a base do framework:
 
 É o contexto da aplicação, onde uma `App` contém diversos `Commands`. É representada pela classe `SysCommand.ConsoleApp.App` e deve ser a primeira entidade a ser configurada em seu método `Main(string[] args)`.
 
-A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou através do método estático `App.RunApplication` que fornece um recurso de simulação de console que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja <anchor-get name="class-app" /> e <anchor-get name="initializing-by-static-method" />.
+A inicialização do contexto da aplicação pode ser feita de duas formas, por uma instância da class `App` ou através do método estático `App.RunApplication` que fornece um recurso de simulação de console que ajuda você a testar seus inputs dentro do próprio Visual Studio, sem a necessidade de executar seu ".exe" em um console externo, basta apertar o _Play_. Veja: <anchor-get name="class-app" /> , <anchor-get name="initializing-by-static-method" />.
 
 **`Command`**
 
 Os comandos representam um agrupamento de funcionalidades do mesmo contexto de negócio, similar aos _Controllers do MVC_. Programaticamente eles são representadas por classes que herdam de `SysCommand.ConsoleApp.Command`. Cada instância de `Command` terá acesso ao contexto corrente pela propriedade `this.App`.
 
-Por padrão, o sistema tenta encontrar, de forma automática, qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao, embora isso seja possível. Veja <anchor-get name="kind-of-commands" /> e <anchor-get name="specifying-commands" />.
+Por padrão, o sistema tenta encontrar, de forma automática, qualquer classe que extenda de `Command`, sendo assim não é necessário especifica-los na inicializaçao, embora isso seja possível. Veja: <anchor-get name="kind-of-commands" /> , <anchor-get name="specifying-commands" />.
 
 **`Argument`**
 
@@ -95,7 +161,7 @@ Os argumentos representam o meio mais básico de uma aplicação console, são o
 
 Do lado do usuário, nenhuma sintaxe especial foi criada, os padrões mais conhecidos foram implementados. Os argumentos longos são acessados com o prefixo `--` e são acompanhados do nome do argumento. Os argumentos curtos são acessados com um traço `-` ou uma barra `/` e são acompanhados de apenas um caracter. Os valores dos argumentos devem estar na frente do nome do argumento separados por um espaço ` ` ou `:` ou `=`. Inputs posicionais também são suportados, possibilitando a omissão do nome do argumento.
 
-Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja <anchor-get name="properties" />, <anchor-get name="properties-ignore-public" />, <anchor-get name="input" /> e <anchor-get name="support-types" />.
+Por padrão, todas as propriedades publicas de seu `Command` serão habilitadas para serem `arguments`. Veja: <anchor-get name="properties" />, <anchor-get name="properties-ignore-public" />, <anchor-get name="input" />, <anchor-get name="support-types" />.
 
 **`Action`**
 
@@ -103,9 +169,9 @@ Representam ações iguais as _Actions dos Controllers do MVC_. Programaticament
 
 Seu uso é similar ao modo como usamos os recursos do `git` como: `git add -A`; `git commit -m "comments"`, onde `add` e `commit` seriam o nome das ações e `-A`, `-m` seus respectivos argumentos.
 
-Ainda é possível omitir o nome da ação no input do usuário. Esse recurso é chamado de `Método Padrão` e se assemelha muito com o uso de propriedades.
+Ainda é possível omitir o nome da ação no input do usuário. Esse recurso é chamado de **Método Padrão** e se assemelha muito com o uso de propriedades.
 
-Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja <anchor-get name="methods" />, <anchor-get name="methods-ignore-public" /> e <anchor-get name="methods-default" />.
+Por padrão, todos os métodos publicos de seu `Command` serão habilitadas para serem `actions`. Veja: <anchor-get name="methods" />, <anchor-get name="methods-ignore-public" />, <anchor-get name="methods-default" />.
 
 **Exemplo avançado:**
 
@@ -299,13 +365,13 @@ Commit
 
 **Saiba mais...**
 
-* Note que os tipos primitivos de cada propriedade estão configurados como `Nullable`. Isso é importante para ter condições de identificar que o usuário inseriu uma determinada propriedade. Veja <anchor-get name="properties" />.
+* Note que os tipos primitivos de cada propriedade estão configurados como `Nullable`. Isso é importante para ter condições de identificar que o usuário inseriu uma determinada propriedade. Veja: <anchor-get name="properties" />.
 * Todos os tipos primitivos do .NET, Enums, Enums Flags e Collections são suportados. Veja o tópico de <anchor-get name="support-types" />.
-* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja <anchor-get name="verbose" />.
-* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja <anchor-get name="output" />.
-* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda e dentro outros. Veja <anchor-get name="properties-customizing-name" /> e <anchor-get name="methods-customizing-names" />.
-* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em `c#`. Veja <anchor-get name="methods-overloads" />
+* Use `App.Console.Write()`, `App.Console.Error()` (entre outros) para imprimir seus outputs e usufruir de recursos como o `verbose`. Veja: <anchor-get name="verbose" />.
+* Você pode utilizar o retorno dos métodos como `output`, inclusive o método reservado `Main()`. Ou use `void` se não quiser usar esse recurso. Veja: <anchor-get name="output" />.
+* Se desejar, customize seus `arguments` ou `actions` usando os atributos `ArgumentAttribute` e `ActionAttribute`. Você pode customizar diversos atributos como nomes, texto de ajuda e dentro outros. Veja: <anchor-get name="properties-customizing-name" /> e <anchor-get name="methods-customizing-names" />.
+* Você pode usar métodos com o mesmo nome (sobrecargas) para definir diferentes `actions`. Elas podem ser chamadas no prompt de comando com o mesmo nome, mas os argumentos definirão qual o método a ser chamado, igual ocorre em `c#`. Veja: <anchor-get name="methods-overloads" />
 * Opte por usar o método `int Program.Main(string[] args)` com retorno, assim você pode retornar o status code para o console. (ERROR=1 ou SUCCESS=0).
-* Existe também o suporte nativo para gerar o texto de ajuda. Veja <anchor-get name="help" />.
+* Existe também o suporte nativo para gerar o texto de ajuda. Veja: <anchor-get name="help" />.
 
 Esse foi apenas um resumo, para conhecer mais sobre esse projeto veja a nossa <anchor-get name="documentation" />.
