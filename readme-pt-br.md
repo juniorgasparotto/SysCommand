@@ -49,13 +49,13 @@ Para isso, você pode escolher 3 maneiras de trabalho:
 
 * Método **Main tipado**: Equivale ao modelo tradicional `Main(string[] args)`, mas de forma tipada.
 * **Propriedades**: Cada propriedade será transformada em argumentos.
-* **Métodos**: Cada método será transformado em um sub-comando: Ação
+* **Métodos**: Cada método será transformado em um sub-comando: **Ação**
 
 Além disso, ele dispõe de um recurso para simular um prompt de comando dentro do proprio Visual Studio, eliminando a necessidade de testar sua aplicação fora do ambiente de desenvolvimento.
 
 Outros recursos essênciais como `help`, `verbose`, `error handling` e outros também são suportados.
 
-**Exemplo do método tipado: `Main`**
+**Exemplo de _Main tipado_:**
 
 ```csharp
 namespace Example.Initialization.Simple

@@ -12,7 +12,7 @@ Além disso, ele dispõe de um recurso para simular um prompt de comando dentro 
 
 Outros recursos essênciais como `help`, `verbose`, `error handling` e outros também são suportados.
 
-**Exemplo do método tipado: `Main`**
+**Exemplo de _Main tipado_:**
 
 ```csharp
 namespace Example.Initialization.Simple

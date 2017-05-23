@@ -49,13 +49,13 @@ To do this, you can choose 3 ways of working:
 
 * **Main-typed**method: this is equivalent to the traditional model `Main(string[] args)` , but typed.
 * **Properties**: each property will be transformed into arguments.
-* **Methods**: each method will be transformed into a sub-command: action
+* **Methods**: each method will be transformed into a sub-command: **Action**
 
 In addition, he has a feature to simulate a command prompt within the own Visual Studio, eliminating the need to test your application outside of the development environment.
 
 Other essential resources as `help` , `verbose` , `error handling` and others are also supported.
 
-**Typed method example:`Main`**
+**Example of _Main type_:**
 
 ```csharp
 namespace Example.Initialization.Simple
