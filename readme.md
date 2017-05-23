@@ -47,9 +47,9 @@ It works like an automated command-line parser, allowing the programmer to focus
 
 To do this, you can choose 3 ways of working:
 
-* `Main`Typed method
-* Properties
-* Shares in the form of methods`c#`
+* **Main-typed** method
+* Properties: in the form of arguments
+* Methods: in the form of shares
 
 In addition, he has a feature to simulate a command prompt within the own Visual Studio, eliminating the need to test your application outside of the development environment.
 
