@@ -55,7 +55,7 @@ In addition, he has a feature to simulate a command prompt within the own Visual
 
 Other essential resources as `help` , `verbose` , `error handling` and others are also supported.
 
-**Example of _Main type_:**
+**`Main-typed`Example:**
 
 ```csharp
 namespace Example.Initialization.Simple
