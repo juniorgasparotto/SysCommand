@@ -15,7 +15,7 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <RootNamespace>SysCommand</RootNamespace>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Authors>Glauber Donizeti Gasparotto Junior</Authors>
     <PackageProjectUrl>https://github.com/juniorgasparotto/SysCommand</PackageProjectUrl>
@@ -44,10 +44,6 @@
     <PackageReference Include="Microsoft.AspNet.Razor" Version="3.0.0" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Program.cs.txt" />
   </ItemGroup>
 
 </Project>

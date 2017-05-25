@@ -39,8 +39,6 @@ Via [NuGet](https://www.nuget.org/packages/SysCommand/):
 Install-Package SysCommand
 ```
 
-_Note: the package brings the `Program.cs.txt` file that contains a basic template. To use it, replace the contents of the `Program.cs` file with the contents of this file._
-
 ## <a name="presentation-how-it-works" />How does it work?
 
 It works like an automated command-line parser, allowing the programmer to focus on the business rules of your application.

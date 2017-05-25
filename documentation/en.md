@@ -3060,7 +3060,6 @@ names.Count: 3
 * We don't have the `this.App` available property in the constructor of the `Command` due to lack of API`FormatterServices.GetUninitializedObject`
 * The methods `Command.GetActionMap()` and `Command.GetAction()` are only available with the overloads `Command.GetActionMap(Type[] paramTypes)` and `Command.GetAction(Type[] paramTypes)` . Use the method `SysCommand.Helpers.Reflection.T<...>()` for ease of use, it supports up to 10 inferences.
 * We don't have the functionality of template using Razor. Will be done soon.
-* The nuget package does not yet support the file "Program.cs.txt"
 
 **We're going to stay tuned with the upcoming releases of netstandard, so these APIs stay available these resources will also be covered.**
 
