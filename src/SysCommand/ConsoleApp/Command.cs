@@ -1,7 +1,7 @@
-﻿#if !NETCORE
+﻿//#if !NETCORE1_6
 using SysCommand.ConsoleApp.View.TemplatesGenerator.Razor;
 using System.Diagnostics;
-#endif
+//#endif
 
 using SysCommand.Execution;
 using System.Linq;
@@ -12,6 +12,11 @@ using SysCommand.Mapping;
 using SysCommand.Helpers;
 using System.Reflection;
 using System;
+using SysCommand.ConsoleApp.Files;
+using Newtonsoft.Json;
+using SysCommand.ConsoleApp.View;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SysCommand.ConsoleApp
 {
@@ -27,6 +32,186 @@ namespace SysCommand.ConsoleApp
         /// </summary>
         public App App { get; internal set; }
 
+
+        #region View - Razor
+        
+        /// <summary>
+        /// Parse a razor view from the current method or "viewName" with model
+        /// </summary>
+        /// <typeparam name="T">Type of model</typeparam>
+        /// <param name="model">Model object</param>
+        /// <param name="viewName">View name. If null get the method name as reference</param>
+        /// <param name="searchOnlyInResources">If false, the search will occur in the file structure and in the "Embedded Resource".</param>
+        /// <returns>Text for view</returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public virtual async Task<string> ViewAsync<T>(T model = default(T), string viewName = null, bool searchOnlyInResources = false, [CallerMemberName] string methodCaller = "")
+        {
+            return await ViewAsyncInternal(true, model, methodCaller, viewName, searchOnlyInResources);
+        }
+
+        /// <summary>
+        /// Parse a razor view from the current method or "viewName" without Model
+        /// </summary>
+        /// <param name="viewName">View name. If null get the method name as reference</param>
+        /// <param name="searchOnlyInResources">If false, the search will occur in the file structure and in the "Embedded Resource".</param>
+        /// <returns>Text for view</returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public virtual async Task<string> ViewAsync(string viewName = null, bool searchOnlyInResources = false, [CallerMemberName] string methodCaller = "")
+        {
+            return await ViewAsyncInternal(false, default(object), methodCaller, viewName, searchOnlyInResources);
+        }
+
+        /// <summary>
+        /// Parse a razor view from the current method or "viewName" with model
+        /// </summary>
+        /// <typeparam name="T">Type of model</typeparam>
+        /// <param name="model">Model object</param>
+        /// <param name="viewName">View name. If null get the method name as reference</param>
+        /// <param name="searchOnlyInResources">If false, the search will occur in the file structure and in the "Embedded Resource".</param>
+        /// <returns>Text for view</returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public virtual string View<T>(T model = default(T), string viewName = null, bool searchOnlyInResources = false, [CallerMemberName] string methodCaller = "")
+        {
+            return ViewAsyncInternal(true, model, methodCaller, viewName, searchOnlyInResources).Result;
+        }
+
+        /// <summary>
+        /// Parse a razor view from the current method without model
+        /// </summary>
+        /// <param name="viewName">View name. If null get the method name as reference</param>
+        /// <param name="searchOnlyInResources">If false, the search will occur in the file structure and in the "Embedded Resource".</param>
+        /// <returns>Text for view</returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public virtual string View(string viewName = null, bool searchOnlyInResources = false, [CallerMemberName] string methodCaller = "")
+        {
+            return ViewAsyncInternal(false, default(object), methodCaller, viewName, searchOnlyInResources).Result;
+        }
+
+        private async Task<string> ViewAsyncInternal<T>(bool useModel, T model = default(T), string methodCaller = null, string viewName = null, bool searchOnlyInResources = false)
+        {
+            var template = new RazorTemplateHelper();
+
+            if (viewName != null)
+            {
+                return await template.ProcessByViewNameAsync<T>(model, viewName, useModel, searchOnlyInResources);
+            }
+            else
+            {
+                var executeInfo = new RazorTemplateHelper.ExecuteInfo
+                {
+                    Method = methodCaller,
+                    Type = this.GetType()
+                };
+
+                return await template.ProcessByViewNameAsync<T>(model, executeInfo, useModel, searchOnlyInResources);
+            }
+        }
+
+        /// <summary>
+        /// Parse a razor view from the content string with model
+        /// </summary>
+        /// <typeparam name = "T" > Type of model</typeparam>
+        /// <param name = "content" > Razor content</param>
+        /// <param name = "model" > Model object</param>
+        /// <returns>Text for view</returns>
+        public virtual async Task<string> ViewContentAsync<T>(string content, T model = default(T))
+        {
+            var template = new RazorTemplateHelper();
+            return await template.ProcessByContentAsync(content, model, true);
+        }
+
+        /// <summary>
+        /// Parse a razor view from the content string without model
+        /// </summary>
+        /// <param name = "content" > Razor content</param>
+        /// <param name = "model" > Model object</param>
+        /// <returns>Text for view</returns>
+        public virtual async Task<string> ViewContentAsync(string content)
+        {
+            var template = new RazorTemplateHelper();
+            return await template.ProcessByContentAsync(content, default(object), false);
+        }
+
+        /// <summary>
+        /// Parse a razor view from the content string with model
+        /// </summary>
+        /// <typeparam name = "T" > Type of model</typeparam>
+        /// <param name = "content" > Razor content</param>
+        /// <param name = "model" > Model object</param>
+        /// <returns>Text for view</returns>
+        public virtual string ViewContent<T>(string content, T model = default(T))
+        {
+            return ViewContentAsync(content, model).Result;
+        }
+
+        /// <summary>
+        /// Parse a razor view from the content string without model
+        /// </summary>
+        /// <param name = "content" > Razor content</param>
+        /// <param name = "model" > Model object</param>
+        /// <returns>Text for view</returns>
+        public virtual string ViewContent(string content)
+        {
+            return ViewContentAsync(content).Result;
+        }
+
+        #endregion
+
+        #region Views - T4/Json/Table
+        
+        /// <summary>
+        /// Get a view result by T4 template
+        /// </summary>
+        /// <typeparam name="TTemplate">Type of template</typeparam>
+        /// <returns>Text for view</returns>
+        public virtual string ViewT4<TTemplate>()
+        {
+            return T4Helper.Execute<TTemplate, object>(null);
+        }
+
+        /// <summary>
+        /// Get a view result by T4 template
+        /// </summary>
+        /// <typeparam name="TTemplate">Type of template</typeparam>
+        /// <typeparam name="TModel">Type of model</typeparam>
+        /// <param name="model">Instance of model</param>
+        /// <returns>Text for view</returns>
+        public virtual string ViewT4<TTemplate, TModel>(TModel model = default(TModel))
+        {
+            return T4Helper.Execute<TTemplate, TModel>(model);
+        }
+
+        /// <summary>
+        /// View model as Json
+        /// </summary>
+        /// <param name="model">Model instance</param>
+        /// <param name="config">JsonSerializerSettings instance</param>
+        /// <returns>Object to JSON string</returns>
+        public virtual string ViewJson(object model, JsonSerializerSettings config = null)
+        {
+            return JsonFileManager.GetContentJsonFromObject(model, config);
+        }
+
+        /// <summary>
+        /// View list of object like table
+        /// </summary>
+        /// <typeparam name="T">Type of list</typeparam>
+        /// <param name="list">List of T</param>
+        /// <param name="colWidth">Column width</param>
+        /// <param name="config">Config callback</param>
+        /// <returns></returns>
+        public virtual string ViewTable<T>(IEnumerable<T> list, int colWidth = 0, Action<TableView> config = null)
+        {
+            var tableView = TableView.ToTableView(list, colWidth)
+                        .Build();
+            config?.Invoke(tableView);
+            return tableView.ToString();
+        }
+
+        #endregion
+
+        #region Get current arguments/actions at runtime
+
         /// <summary>
         /// Get the argument parsed (property) by name
         /// </summary>
@@ -39,28 +224,6 @@ namespace SysCommand.ConsoleApp
             var thisMethodForEachLevel = allPropertiesResult.Where(m => m.Target == this).ToList();
 
             return thisMethodForEachLevel.LastOrDefault(f => f.Name == name)?.ArgumentParsed;
-        }
-
-        /// <summary>
-        /// Get a view result by T4 template
-        /// </summary>
-        /// <typeparam name="TTemplate">Type of template</typeparam>
-        /// <returns>Text for view</returns>
-        public string ViewT4<TTemplate>()
-        {
-            return T4Helper.Execute<TTemplate, object>(null);
-        }
-
-        /// <summary>
-        /// Get a view result by T4 template
-        /// </summary>
-        /// <typeparam name="TTemplate">Type of template</typeparam>
-        /// <typeparam name="TModel">Type of model</typeparam>
-        /// <param name="model">Instance of model</param>
-        /// <returns>Text for view</returns>
-        public string ViewT4<TTemplate, TModel>(TModel model = default(TModel))
-        {
-            return T4Helper.Execute<TTemplate, TModel>(model);
         }
 
         /// <summary>
@@ -121,52 +284,6 @@ namespace SysCommand.ConsoleApp
             return thisMethodForEachLevel.First(f => !f.IsInvoked).ActionParsed;
         }
 
-#if !NETCORE
-        /// <summary>
-        /// Get a view result by RazorEngine from the current method
-        /// </summary>
-        /// <typeparam name="T">Type of model</typeparam>
-        /// <param name="model">Model object</param>
-        /// <param name="viewName">View name. If null get the method name as reference</param>
-        /// <param name="searchOnlyInResources">If false, the search will occur in the file structure and in the "Embedded Resource".</param>
-        /// <returns>Text for view</returns>
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public string View<T>(T model = default(T), string viewName = null, bool searchOnlyInResources = false)
-        {
-            var view = new RazorView();
-
-            if (viewName != null)
-            {
-                return view.ProcessByViewName<T>(model, viewName, searchOnlyInResources);
-            }
-            else
-            {
-                StackTrace st = new StackTrace();
-                StackFrame sf = st.GetFrame(1);
-                var executeInfo = new RazorView.ExecuteInfo
-                {
-                    Method = (MethodInfo)sf.GetMethod(),
-                    Type = this.GetType()
-                };
-
-                return view.ProcessByViewName<T>(model, executeInfo, searchOnlyInResources);
-            }
-        }
-
-        /// <summary>
-        /// Get a view result by RazorEngine from the content
-        /// </summary>
-        /// <typeparam name="T">Type of model</typeparam>
-        /// <param name="model">Model object</param>
-        /// <param name="content">Razor content</param>
-        /// <returns>Text for view</returns>
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public string ViewContent<T>(T model = default(T), string content = null)
-        {
-            var view = new RazorView();
-            return view.ProcessByContent<T>(model, content);
-        }
-
         /// <summary>
         /// Get ActionMap from the current method
         /// </summary>
@@ -192,8 +309,6 @@ namespace SysCommand.ConsoleApp
             var currentMethod = (MethodInfo)sf.GetMethod();
             return GetAction(currentMethod);
         }
-
-#endif
 
         private MethodInfo GetMethod(string memberName, Type[] types)
         {
@@ -228,5 +343,6 @@ namespace SysCommand.ConsoleApp
             return currentMethod;
         }
 
+        #endregion
     }
 }

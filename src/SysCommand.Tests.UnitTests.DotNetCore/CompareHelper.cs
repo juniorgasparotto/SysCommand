@@ -15,10 +15,11 @@ namespace SysCommand.Tests.UnitTests
         public static TestData GetTestData(string args, Command[] commands, StringWriter strBuilder = null)
         {
             var app = new App(
-                    commandsTypes: commands.Select(f=>f.GetType())
+                    commandsTypes: commands.Select(f=>f.GetType()),
+                    output: strBuilder ?? new StringWriter()
                 );
 
-            app.Console.Out = strBuilder ?? new StringWriter();
+            //app.Console.Out = strBuilder ?? new StringWriter();
 
             var appResult = app.Run(args);
             var output = app.Console.Out.ToString();

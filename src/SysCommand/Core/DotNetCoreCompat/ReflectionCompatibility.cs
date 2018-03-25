@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SysCommand.Compatibility
 {
     public static class ReflectionCompatibility
     {
-#if NETCORE
+#if NETCORE1_6
         public static bool IsDefined(this Type type, Type attributeType, bool inherit)
         {
             return type.GetTypeInfo().CustomAttributes.Any(a => a.AttributeType == attributeType);
@@ -28,7 +26,7 @@ namespace SysCommand.Compatibility
         {
             Type typeAttr = typeof(T);
 
-#if NETCORE
+#if NETCORE1_6
             var attr = method.GetCustomAttributes(typeAttr).FirstOrDefault();
             if (attr != null)
                 return attr as T;
@@ -42,7 +40,7 @@ namespace SysCommand.Compatibility
         {
             Type typeAttr = typeof(T);
 
-#if NETCORE
+#if NETCORE1_6
             var attr = property.GetCustomAttributes(typeAttr).FirstOrDefault();
             if (attr != null)
                 return attr as T;
@@ -56,7 +54,7 @@ namespace SysCommand.Compatibility
         {
             Type typeAttr = typeof(T);
 
-#if NETCORE
+#if NETCORE1_6
             var attr = parameter.GetCustomAttributes(typeAttr).FirstOrDefault();
             if (attr != null)
                 return attr as T;
@@ -68,7 +66,7 @@ namespace SysCommand.Compatibility
 
         public static bool IsGenericType(this Type type)
         {
-#if NETCORE
+#if NETCORE1_6
             return type.GetTypeInfo().IsGenericType;
 #else
             return type.IsGenericType;
@@ -77,7 +75,7 @@ namespace SysCommand.Compatibility
 
         public static bool IsEnum(this Type type)
         {
-#if NETCORE
+#if NETCORE1_6
             return type.GetTypeInfo().IsEnum;
 #else
             return type.IsEnum;
@@ -86,7 +84,7 @@ namespace SysCommand.Compatibility
 
         public static bool IsValueType(this Type type)
         {
-#if NETCORE
+#if NETCORE1_6
             return type.GetTypeInfo().IsValueType;
 #else
             return type.IsValueType;
@@ -95,7 +93,7 @@ namespace SysCommand.Compatibility
 
         public static MethodInfo Method(this Delegate d)
         {
-#if NETCORE
+#if NETCORE1_6
             return d.GetMethodInfo();
 #else
             return d.Method;
@@ -104,7 +102,7 @@ namespace SysCommand.Compatibility
 
         public static Assembly Assembly(this Type type)
         {
-#if NETCORE
+#if NETCORE1_6
             return type.GetTypeInfo().Assembly;
 #else
             return type.Assembly;
@@ -113,7 +111,7 @@ namespace SysCommand.Compatibility
 
         public static Assembly[] GetAssemblies()
         {
-#if NETCORE
+#if NETCORE1_6
             var curAssembly = System.Reflection.Assembly.GetEntryAssembly();
             List<Assembly> assemblies = new List<Assembly>
             {
@@ -127,7 +125,7 @@ namespace SysCommand.Compatibility
 
         public static bool IsInterface(this Type type)
         {
-#if NETCORE
+#if NETCORE1_6
             return type.GetTypeInfo().IsInterface;
 #else
             return type.IsInterface;
@@ -136,7 +134,7 @@ namespace SysCommand.Compatibility
 
         public static bool IsAbstract(this Type type)
         {
-#if NETCORE
+#if NETCORE1_6
             return type.GetTypeInfo().IsAbstract;
 #else
             return type.IsAbstract;

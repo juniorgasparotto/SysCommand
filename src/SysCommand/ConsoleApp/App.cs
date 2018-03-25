@@ -11,14 +11,13 @@ using SysCommand.ConsoleApp.Handlers;
 using SysCommand.ConsoleApp.Descriptor;
 using SysCommand.ConsoleApp.Loader;
 using SysCommand.Helpers;
-using System.IO;
 
-#if NETCORE
-using SysCommand.Compatibility;
-#else
-using System.Runtime.CompilerServices;
+//#if NETCORE1_6
+//using SysCommand.Compatibility;
+//#else
 using System.Runtime.Serialization;
-#endif
+using System.IO;
+//#endif
 
 namespace SysCommand.ConsoleApp
 {
@@ -54,6 +53,7 @@ namespace SysCommand.ConsoleApp
 
         private IDescriptor _descriptor;
         private ConsoleWrapper _console;
+        private TextWriter _output;
         private ItemCollection _items;
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace SysCommand.ConsoleApp
         {
             get
             {
-                return this._console ?? (this._console = new ConsoleWrapper());
+                return this._console ?? (this._console = new ConsoleWrapper(_output));
             }
             set
             {
@@ -122,10 +122,12 @@ namespace SysCommand.ConsoleApp
         public App(
             IEnumerable<Type> commandsTypes = null,
             bool enableMultiAction = true,
-            bool addDefaultAppHandler = true
+            bool addDefaultAppHandler = true,
+            TextWriter output = null
         )
         {
             this._enableMultiAction = enableMultiAction;
+            this._output = output;
 
             // default executor
             this._executor = new DefaultExecutor.Executor();
@@ -318,17 +320,11 @@ namespace SysCommand.ConsoleApp
 
         private Command CreateCommandInstance(Type type, string propertyAppName)
         {
-#if !NETCORE
             var obj = FormatterServices.GetUninitializedObject(type);
 
             obj.GetType().GetProperty(propertyAppName).SetValue(obj, this);
             obj.GetType().GetConstructor(Type.EmptyTypes)?.Invoke(obj, null);
             return (Command) obj;
-#else
-            var cmd = (Command)Activator.CreateInstance(type);
-            cmd.App = this;
-            return cmd;
-#endif
         }
 
         /// <summary>

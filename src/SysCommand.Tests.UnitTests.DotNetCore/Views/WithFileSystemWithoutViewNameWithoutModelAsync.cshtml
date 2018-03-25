@@ -1,0 +1,33 @@
+﻿@using SysCommand.Tests.UnitTests.Common.Commands.ViewModels
+
+@inherits RazorCommand.CustomRazorPage<TModel>
+Inherits method: @GetMethodValue()
+Inherits property: @CustomText
+@if (@Model != null)
+{
+    @:Scaped Value: @@Model.Name
+}
+Datetime: @DateTime.IsLeapYear(2016)
+Explicit: @(1 - 3)
+WriteHtmlInString: @("<span>Hello World</span>")
+From method: @GetHello()
+
+@{
+    /* C# comment */
+    // Another C# comment
+}
+
+@*
+    @{
+        /* C# comment */
+        // Another C# comment
+    }
+    <!-- HTML comment -->
+*@
+
+@functions {
+public string GetHello()
+{
+    return "Hello";
+}
+}

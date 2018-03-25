@@ -1,0 +1,30 @@
+{
+  "Args": "test-action-map 1",
+  "Members": [
+    "Command1.System.String Prop1 [--prop1 = ? (NOT accept positional)]",
+    "Command1.test-action-map(Int32 -a)",
+    "Command1.test-action(Int32 -a)"
+  ],
+  "Values": [
+    "Command1.TestActionMap=test-action-map"
+  ],
+  "ExpectedResult": [
+    "Constructor",
+    "test-action-map"
+  ],
+  "Levels": [
+    {
+      "LevelNumber": 0,
+      "CommandsValid": [
+        "Command1"
+      ],
+      "PropertiesValid": [],
+      "MethodsValid": [
+        "Command1.test-action-map(Int32)"
+      ],
+      "CommandsWithError": [],
+      "PropertiesInvalid": [],
+      "MethodsInvalid": []
+    }
+  ]
+}

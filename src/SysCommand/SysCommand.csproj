@@ -1,49 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
-    <AssemblyName>SysCommand</AssemblyName>
-    <PackageId>SysCommand</PackageId>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
-    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <RootNamespace>SysCommand</RootNamespace>
-    <Version>1.0.9</Version>
-    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Authors>Glauber Donizeti Gasparotto Junior</Authors>
-    <PackageProjectUrl>https://github.com/juniorgasparotto/SysCommand</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/juniorgasparotto/SysCommand/blob/master/licence.md</PackageLicenseUrl>
-    <PackageTags>command-line-parser mvc console</PackageTags>
-    <Description>The SysCommand is a powerful framework, cross-platform, for development Console Application using .NET. It is simple, strongly typed and with great influences of the MVC standard. It working as an automatic command line parser where all parse tasks are left over by the framework, leaving the programmer to focus on the business rules.</Description>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <RepositoryUrl>https://github.com/juniorgasparotto/SysCommand</RepositoryUrl>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
-    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0-preview1-26216-02" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.Extensions" Version="2.1.0-preview1-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.1.0-preview1-final" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.1.0-preview1-26216-03" />  
   </ItemGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <DefineConstants>TRACE;DEBUG;NETCORE;</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.6|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNet.Razor" Version="3.0.0" />
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
 </Project>

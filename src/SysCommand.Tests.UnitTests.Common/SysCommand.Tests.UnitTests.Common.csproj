@@ -1,14 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
+    <AssemblyName>SysCommand.Tests.UnitTests.Common</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Views\EmbeddedView.cshtml" />
+    <None Remove="Views\WithEmbeddedWithoutViewNameWithoutModel.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EmbeddedView.cshtml" />
+    <EmbeddedResource Include="Views\WithEmbeddedWithoutViewNameWithoutModel.cshtml" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SysCommand\SysCommand.csproj" />
   </ItemGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>NETCORE</DefineConstants>
-  </PropertyGroup>
 </Project>

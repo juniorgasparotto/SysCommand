@@ -26,7 +26,7 @@ namespace SysCommand.Tests.UnitTests.Common
         
         public static string GetContentFromFile(string fileName)
         {
-            fileName = GetUniversalFileName(fileName);
+            fileName = Path.Combine(Directory.GetCurrentDirectory(), fileName);
             if (!File.Exists(fileName))
                 return null;
 

@@ -1,0 +1,12 @@
+{
+  "App": null,
+  "MyProperty": null,
+  "ExecutionScope": null,
+  "OnlyInDebug": false,
+  "UsePrefixInAllMethods": false,
+  "PrefixMethods": null,
+  "OnlyMethodsWithAttribute": false,
+  "OnlyPropertiesWithAttribute": false,
+  "EnablePositionalArgs": false,
+  "HelpText": null
+}

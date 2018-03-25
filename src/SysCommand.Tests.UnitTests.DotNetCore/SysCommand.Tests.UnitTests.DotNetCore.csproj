@@ -1,7 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>    
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    
+    <!-- Required, otherwise multiple 2.0.x frameworks lead to xUnit not discovering the framework to run in -->
+    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">2.0.0</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +30,6 @@
     <Content Include=".tests\TestAction\valid\CallWithoutIgnoredsAndCustomPrefix.json" />
     <Content Include=".tests\TestAction\valid\CallWithoutIgnoredsAndOnlyMethodsWithAttributes.json" />
     <Content Include=".tests\TestAction\valid\CallWithoutIgnoredsAndPrefixedWithClassName.json" />
-    <Content Include=".tests\TestAppHistory\invalid\Test_HistorySave_WithArgsAndNameWithActionName_NotSave.json" />
     <Content Include=".tests\TestAppHistory\valid\Test_HistorySave_InvalidArgs_NotSave.json" />
     <Content Include=".tests\TestAppHistory\valid\Test_HistorySave_NamedAndHaveNextAction_Save.json" />
     <Content Include=".tests\TestAppHistory\valid\Test_HistorySave_NamedAtTheEnd_Save.json" />
@@ -168,72 +170,6 @@
     <Content Include=".tests\TestApp\valid\Test30_HelpWithOneMethod.json" />
     <Content Include=".tests\TestApp\valid\Test30_HelpWithOneMethodWithActionName.json" />
     <Content Include=".tests\TestApp\valid\Test38_PropertyRequiredAndWithDefaultValue.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\InstanceAllProperties.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\InstanceAllPropertiesOnlyWithAttributes.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\InstanceOrdered.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\InstanceOrdered2.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method10And1Named1ListOfStringAnd1PositionedInt.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method10And1Positioned1ListOfStringAnd1NamedInt.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method10And2Named1ListOfStringAnd1Int.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method10And2Positioned1ListOfStringAnd1Int.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method10AndSeveralValuesVariants.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method10AndSeveralValuesVariants2.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method10AndSeveralValuesVariants3.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method10AndSeveralValuesVariants4.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And1Named2Positioned.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And1NamedInFirstAnd2Named.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And1NamedInMiddleAnd2Positioned.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And1Positioned3Named.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And2Named1PositionedAndAllArgsHasFormatAsValue.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And2Named1PositionedInLast.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And2Named1PositionedInLast2.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And2Named1PositionedInMiddle.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And2Positioned1NamedInLast.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And2PositionedWithout1Arg.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And2PositionedWithQuoteInContent.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And3ArgsIn1.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And3Named1WithoutValue.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1And3NamedWithScapes.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1AndAllPositioned.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1AndAllPositionedAndArgsFormatAsValue.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1AndAllPositionedAndArgsFormatScapeds.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1AndAllPositionedAndScapeArgsAsValue.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method1AndBackslashAsValues.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method2AndBooleanAs0.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method2AndBooleanAsFLAG.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method2AndBooleanAsPLUS.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method2AndBooleanAsTrue.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method2AndDecimalAndIntAsNegativeAndBooleanInvalid.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method2AndFirstNegativeAndTheMiddleArgsWithPLUS.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method2AndLastArgPositionedAndInvalidAndOthersAsDefault.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method2AndPositionedAndFirstNegative.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method3AndPositionedTestIncludeNegativeValueAndDatetime.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method3AndSimpleTestIncludeDatetime.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method4And2ArgsAsFLAGAnd1ArgsBooleanWithNEGATIVEFormat.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method4AndPositionedAllAsTrueValue.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method5And2NamedWithDefaultsAnd1PositionedAndInvalid.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method5And3NamedWithDefault.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method5AndAllPositioned.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method5AndAllPositioned2.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method5AndAllPositionedExceptTheLast.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method5AndInvalidEnumValueInMiddleAndShiftedTheRestByPosition.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method5AndInvalidEnumValueInMiddleButThePositionedFeaturedIsOFF.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method6And3ListIntsDecimalsAndStrings.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method6And3ListIntsDecimalsAndStringsPositioned.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method7And2ListIntsAndChars.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method7And2ListIntsAndCharsPositioned.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method8And2NamedAnd3Missing.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method8And5NamedNullableWithoutValuesSettingAsNull.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method8And5NamedNullableWithValues.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method8AndAllPositionedIncludeArrayOfBytesAndListOfChars.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method9And1NamedUnsuporttedTypeAnd1Missing.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method9And2NamedUnsuporttedTypeAndDefaultValueWithoutValue.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method9And2NamedUnsuporttedTypeAndDefaultValueWithValue.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\Method9And2PositionedUnsuporttedTypeAndDefaultValueWithValue.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\MethodLongNameWith1Char1.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\MethodLongNameWith1Char2.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\MethodOrdered.json" />
-    <Content Include=".tests\TestArgumentMapped\invalid\MethodOrdered2.json" />
     <Content Include=".tests\TestArgumentMapped\valid\InstanceAllProperties.json" />
     <Content Include=".tests\TestArgumentMapped\valid\InstanceAllPropertiesOnlyWithAttributes.json" />
     <Content Include=".tests\TestArgumentMapped\valid\InstanceOrdered.json" />
@@ -300,24 +236,27 @@
     <Content Include=".tests\TestArgumentMapped\valid\MethodLongNameWith1Char2.json" />
     <Content Include=".tests\TestArgumentMapped\valid\MethodOrdered.json" />
     <Content Include=".tests\TestArgumentMapped\valid\MethodOrdered2.json" />
+    <Content Include=".tests\TestMagicMethods\valid\CallMethodWithGetAction.json" />
+    <Content Include=".tests\TestMagicMethods\valid\CallMethodWithGetActionMap.json" />
+    <Content Include=".tests\TestMagicMethods\valid\CallPropertyWithGetArgumentMethod.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include=".app\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SysCommand.Tests.UnitTests.Common\SysCommand.Tests.UnitTests.Common.csproj" />
     <ProjectReference Include="..\SysCommand\SysCommand.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>NETCORE</DefineConstants>
-  </PropertyGroup>
 </Project>

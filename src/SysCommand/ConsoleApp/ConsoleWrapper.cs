@@ -88,7 +88,7 @@ namespace SysCommand.ConsoleApp
         /// <summary>
         /// Initialize
         /// </summary>
-        public ConsoleWrapper()
+        public ConsoleWrapper(TextWriter output = null)
         {
             this.ColorInfo = Console.ForegroundColor;
             this.ColorCritical = ConsoleColor.Red;
@@ -97,7 +97,7 @@ namespace SysCommand.ConsoleApp
             this.ColorWarning = ConsoleColor.Yellow;
             this.ColorRead = Console.ForegroundColor;
             this.In = Console.In;
-            this.Out = Console.Out;
+            this.Out = output ?? Console.Out;
             this.Verbose = Verbose.Info;
         }
 
@@ -151,7 +151,7 @@ namespace SysCommand.ConsoleApp
         /// <returns>The user input</returns>
         public virtual string Read(string label, bool breakLine = false)
         {
-            WriteInternal(label, breakLine, this.ColorRead);
+            WriteWithColor(label, breakLine, this.ColorRead);
             return Read();
         }
 
@@ -176,7 +176,7 @@ namespace SysCommand.ConsoleApp
         public virtual void Write(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Info, forceWrite))
-                WriteInternal(msg, breakLine, this.ColorInfo);
+                WriteWithColor(msg, breakLine, this.ColorInfo);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace SysCommand.ConsoleApp
         public virtual void Critical(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Critical, forceWrite))
-                WriteInternal(msg, breakLine, this.ColorCritical);
+                WriteWithColor(msg, breakLine, this.ColorCritical);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace SysCommand.ConsoleApp
         public virtual void Error(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Error, forceWrite))
-                WriteInternal(msg, breakLine, this.ColorError);
+                WriteWithColor(msg, breakLine, this.ColorError);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace SysCommand.ConsoleApp
         public virtual void Success(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Success, forceWrite))
-                WriteInternal(msg, breakLine, this.ColorSuccess);
+                WriteWithColor(msg, breakLine, this.ColorSuccess);
         }
 
         /// <summary>
@@ -224,15 +224,10 @@ namespace SysCommand.ConsoleApp
         public void Warning(object msg, bool breakLine = false, bool forceWrite = false)
         {
             if (CheckIfWrite(Verbose.Warning, forceWrite))
-                WriteInternal(msg, breakLine, this.ColorWarning);
+                WriteWithColor(msg, breakLine, this.ColorWarning);
         }
 
-        protected virtual void WriteInternal(object msg, bool breakLine = false)
-        {
-            WriteInternal(msg, breakLine, Console.ForegroundColor);
-        }
-
-        protected virtual void WriteInternal(object obj, bool breakLine, ConsoleColor fontColor)
+        public virtual void WriteWithColor(object obj, bool breakLine, ConsoleColor fontColor)
         {
             //if (this.Quiet)
             //    return;

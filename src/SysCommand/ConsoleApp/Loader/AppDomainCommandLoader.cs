@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace SysCommand.ConsoleApp.Loader
 {
@@ -44,9 +43,6 @@ namespace SysCommand.ConsoleApp.Loader
         public IEnumerable<Type> GetFromAppDomain()
         {
             var assemblies = ReflectionCompatibility.GetAssemblies().ToList();
-#if NETCORE
-            assemblies.Add(this.GetType().GetTypeInfo().Assembly);
-#endif
             var listOfCommands = (from domainAssembly in assemblies.Distinct()
                                   from assemblyType in domainAssembly.GetTypes()
                                   where

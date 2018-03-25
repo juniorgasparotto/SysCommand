@@ -1,10 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
-using System.IO;
 using System;
-using System.Globalization;
-using SysCommand.ConsoleApp.Helpers;
-using System.Reflection;
 using SysCommand.Compatibility;
 using System.Linq;
 using System.Collections.Generic;
@@ -39,19 +35,8 @@ namespace SysCommand.Tests.UnitTests.Common
 
         public static void Setup()
         {
-            SetCurrentDirectoryToRootProjectFolder();
             SetCultureInfoToInvariant();
             RunInitializeClasses();
-        }
-
-        private static void SetCurrentDirectoryToRootProjectFolder()
-        {
-#if NET452
-            Directory.SetCurrentDirectory(Development.GetProjectDirectory());
-#else //  when is NETCORE and use xunit in visual studio, the current directory is wrong when use Directory.GetCurrentDirectory()
-            var baseDir =  Path.GetDirectoryName(typeof(TestHelper).GetTypeInfo().Assembly.Location);
-            Directory.SetCurrentDirectory(Development.GetProjectDirectory(baseDir));
-#endif
         }
 
         private static void RunInitializeClasses()
@@ -65,11 +50,7 @@ namespace SysCommand.Tests.UnitTests.Common
 
         public static void SetCultureInfoToInvariant()
         {
-#if NETCORE
-            CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
-#else
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
-#endif
         }
 
         public static JsonSerializerSettings GetJsonConfig()
@@ -164,7 +145,7 @@ namespace SysCommand.Tests.UnitTests.Common
 
         public static bool CompareString(string a, string b) {
             string compareA = a.Replace("\r\n", "\n");
-            string compareB = b.Replace("\r\n", "\n");
+            string compareB = b?.Replace("\r\n", "\n");
             return compareA == compareB;
         }
     }
