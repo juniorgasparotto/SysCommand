@@ -1,0 +1,56 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".ps1" #>
+<#@ parameter name="vars" type="System.Collections.Generic.Dictionary<string, string>" #>
+
+$packageName = '<#= vars["packageName"] #>'
+$title = '<#= vars["title"] #>'
+$exeName = '<#= vars["exeName"] #>'
+$url = '<#= vars["url"] #>'
+$binRoot = Get-ToolsLocation
+$installPath = Join-Path $binRoot $packageName
+$oldVersionPath = Join-Path $installPath ".old"
+$checksum = '<#= vars["checksum"] #>'
+$checksumType = '<#= vars["checksumType"] #>'
+
+# Create backup of old version
+if (Test-Path $installPath) {
+    Write-Host "Create backup old version"
+    if (!(Test-Path $oldVersionPath)) {
+        New-Item $oldVersionPath -type directory
+        Get-ChildItem $installPath |
+        Foreach-Object {
+            if ($_.Name -ne ".old") {            
+                Move-Item $_.FullName $oldVersionPath
+            }        
+        }
+    }
+}
+
+# Download and unzip file
+Install-ChocolateyZipPackage -PackageName $packageName `
+                             -Url $url `
+                             -UnzipLocation $installPath `
+							 -Checksum $checksum `
+                             -ChecksumType $checksumType
+
+#Create shortcut in desktop
+Write-Host "Create Desktop ShortCurt..."
+$desktop = $([System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::DesktopDirectory))
+$desktop = Join-Path $desktop "$title.lnk"
+Write-Host $desktop
+Install-ChocolateyShortcut  -shortcutFilePath $desktop `
+                            -targetPath "$installPath/$exeName" `
+                            -workingDirectory $installPath
+
+#Create shortcut in start menu
+Write-Host "Create StartMenu ShortCurt..."
+$programs = [environment]::GetFolderPath([environment+specialfolder]::Programs)
+$programs = Join-Path $programs "$title.lnk"
+Write-Host $programs
+Install-ChocolateyShortcut -shortcutFilePath $programs `
+                           -targetPath "$installPath/$exeName" `
+                           -workingDirectory $installPath
