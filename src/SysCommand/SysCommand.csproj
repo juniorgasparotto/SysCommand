@@ -2,7 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Version>2.0.0-preview</Version>
+    <Authors>Glauber Donizeti Gasparotto Junior</Authors>
+    <Company>SysCommand</Company>
+    <Description>The SysCommand is a powerful framework, cross-platform, for development of Console Application using .NET. It is simple, strongly typed and with great influences of the MVC standard (Include Razor template). It works as an automatic command line parser where all parse tasks are left over by the framework, leaving the programmer to focus on the business rules.</Description>
+    <Copyright>Copyright ©  2018</Copyright>
+    <PackageLicenseUrl>https://github.com/juniorgasparotto/SysCommand/blob/master/licence.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/juniorgasparotto/SysCommand</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/juniorgasparotto/SysCommand/master/documentation/img/icon.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/juniorgasparotto/SysCommand</RepositoryUrl>
+    <PackageTags>console-application parser command sys command-line-parser mvc console razor</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
