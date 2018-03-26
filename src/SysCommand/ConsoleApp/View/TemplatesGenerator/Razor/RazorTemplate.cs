@@ -87,13 +87,12 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
                 throw new FileNotFoundException(viewPath);
 
             var razorEngine = GetRazorEngine();
-            var razorProject = RazorProject.Create(BasePath);
+            //var razorProject = RazorProject.Create(BasePath);
+            var razorProject = new FileSystemRazorProject(BasePath);
             var cshtmlFile = razorProject.GetItem(viewPath);
-            var projectItem = new FileSystemRazorProjectItem(cshtmlFile);
-
             var templateEngine = GetTemplateEngine(razorEngine, razorProject);
 
-            return GetCompilerResult(templateEngine, projectItem);
+            return GetCompilerResult(templateEngine, cshtmlFile);
         }
 
         internal RazorCompilerResult ToCSharpByContent(string content)

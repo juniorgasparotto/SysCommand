@@ -6,30 +6,29 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
 {
     internal class FileSystemRazorProjectItem : RazorProjectItem
     {
-        private readonly RazorProjectItem _source;
-
-        public override string BasePath => _source.BasePath;
-        public override string FilePath => _source.FilePath;
-        public override bool Exists => _source.Exists;
-
-        // Mask the full name since we don't want a developer's local file paths to be commited.
-        public override string PhysicalPath => _source.FileName;
-
-        public FileSystemRazorProjectItem(RazorProjectItem item)
+        /// <summary>
+        /// Initializes a new instance of <see cref="FileSystemRazorProjectItem"/>.
+        /// </summary>
+        /// <param name="basePath">The base path.</param>
+        /// <param name="path">The path.</param>
+        /// <param name="file">The <see cref="FileInfo"/>.</param>
+        public FileSystemRazorProjectItem(string basePath, string path, FileInfo file)
         {
-            _source = item;
+            BasePath = basePath;
+            FilePath = path;
+            File = file;
         }
 
-        public override Stream Read()
-        {
-            var processedContent = ReadFile();
-            return new MemoryStream(Encoding.UTF8.GetBytes(processedContent));
-        }
+        public FileInfo File { get; }
 
-        private string ReadFile()
-        {
-            var cshtmlContent = File.ReadAllText(_source.PhysicalPath);
-            return cshtmlContent;
-        }
+        public override string BasePath { get; }
+
+        public override string FilePath { get; }
+
+        public override bool Exists => File.Exists;
+
+        public override string PhysicalPath => File.FullName;
+
+        public override Stream Read() => new FileStream(PhysicalPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
     }
 }
