@@ -11,6 +11,7 @@
   * [Inicializando com o simulador de console](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#initializing-by-static-method)
   * [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#specifying-commands)
   * [Tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#kind-of-commands)
+  * [Orquestrando comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#orchestrating-commands)
   * [Controle de eventos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#events)
 * [Input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#input)
   * [`Arguments`](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#input-arguments)
@@ -58,12 +59,11 @@
 * [Verbose](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#verbose)
 * [Tratamento de erros](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#error)
 * [Variáveis de contexto](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#variable)
-* [Gerênciador de objetos em forma de arquivos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#file-manager)
+* [Gerenciador de objetos em forma de arquivos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#file-manager)
 * [Redirecionamento de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#redirectiong-commands)
 * [Cancelamento da continuidade da execução](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#stop-propagation)
 * [Gerenciamento de históricos de argumentos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#argument-history-manager)
 * [Extras - OptionSet](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#extras)
-* [Limitações do NETSTANDARD](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#netstandard)
 
 # <a name="class-app" />Iniciando
 
@@ -77,13 +77,15 @@ Em seu construtor estão as primeiras configurações:
 public App(
            IEnumerable<Type> commandsTypes = null,
            bool enableMultiAction = true,
-           bool addDefaultAppHandler = true
+           bool addDefaultAppHandler = true,
+           TextWriter output = null
        )
 ```
 
 * `commandsTypes`: Especifica os tipos dos `Command` que serão utilizados em todo o processo. Caso seja `null` então o sistema buscará automáticamente qualquer classe que extenda de `Command`. Entenda melhor em [Especificando os tipos de comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#specifying-commands).
 * `enableMultiAction`: Liga ou desliga o comportamento de `MultiAction`. Por padrão, esse comportamento estará habilitado. Entenda melhor em [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#using-the-multi-action-feature).
 * `addDefaultAppHandler`: Caso seja `false` então NÃO cria o handler de eventos que é responsável pelo mecanismo padrão de `outputs` e controles de `erros` e dentre outros. O padrão é `true`. Entenda melhor em [Controle de eventos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#events).
+* `output`: Redireciona a saída para o `TextWriter` especificado. Do contrário será usado por padrão o `Console.Out`.
 
 ## <a name="initializing-by-static-method" />Inicializando com o simulador de console
 
@@ -300,6 +302,81 @@ public class ClearCommand : Command
     public void Clear()
     {
         Console.Clear();
+    }
+}
+```
+
+## <a name="orchestrating-commands" />Orquestrando comandos
+
+Uma forma interessante de usar o SysCommand é fazendo o uso de diversos comandos em uma ação orquestradora. É importante lembrar que os comandos devem ser criados para funcionarem de forma independente, se isso não for possível, não torne-o um comando, crie uma classe que não herde de `Command` e utilize em sua ação.
+
+O exemplo abaixo mostra um cenário onde seria interessante o uso de diversos comandos em uma ação. A ideia é criar uma aplicação que possa fazer a montagem de um `csproj` e também o ZIP de uma pasta qualquer. Porém, teremos uma ação `Publish` que fará a publicação da aplicação usando os dois comandos.
+
+```csharp
+using SysCommand.ConsoleApp;
+using SysCommand.Mapping;
+using System;
+using System.Diagnostics;
+using System.IO;
+
+namespace Publisher
+{
+    public class OrchestratorCommand : Command
+    {
+        public void Publish(string csproj, string dirOutput)
+        {
+            var build = App.Commands.Get<MSBuildCommand>();
+            var zip = App.Commands.Get<ZipCommand>();
+
+            build.Build(csproj, dirOutput);
+            pack.Zip(dirOutput);
+        }
+    }
+
+    public class ZipCommand : Command
+    {
+        private void Zip(string dirToZip)
+        {
+            System.IO.Compression.ZipFile.CreateFromDirectory(dirToZip, $"{dirToZip}/package.zip"});
+        }
+    }
+
+    public class MSBuildCommand : Command
+    {
+        public BuildCommand()
+        {
+            this.UsePrefixInAllMethods = true;
+        }
+
+        public void Clear()
+        {
+            // Clear
+        }
+
+        [Action(UsePrefix = false)]
+        public void Build(string csproj, string dirOutput)
+        {
+            try
+            {
+                var startInfo = new ProcessStartInfo
+                {
+                    CreateNoWindow = false,
+                    UseShellExecute = false,
+                    FileName = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe",
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    Arguments = string.Format("{0} /t:Build /m /property:Configuration={1} /p:OutDir={2}", csproj, "Debug", dirOutput)
+                };
+
+                using (Process exeProcess = Process.Start(startInfo))
+                {
+                    exeProcess.WaitForExit();
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Console.Error(ex.Message);
+            }
+        }
     }
 }
 ```
@@ -1271,15 +1348,15 @@ Por último, vale lembrar que nada disso impede você de usar os mecanismos comu
 
 ## <a name="output-razor" />Usando template Razor
 
-Outra opção para exibir outputs é a utilização de templates `Razor`. Esse mecanismo foi projetado para coisas simples, é muito importante dizer que ele não dispõe de diversos recursos como: debug, intellisense, highlight e analise de erros.
+Outra opção para exibir outputs é a utilização de templates `Razor`. Esse mecanismo foi projetado para coisas simples, é muito importante dizer que ele não dispõe de diversos recursos como: debug e analise de erros.
 
 Para utilizar `Razor` deve-se seguir alguns simples passos:
 
 * Por organização, criar uma pasta chamada "Views".
 * Caso ainda queira mais organização, crie uma sub-pasta dentro da pasta "Views" com o nome do `Command`.
-* Criar um arquivo de template com a extensão ".razor" dentro da pasta "Views". Esse arquivo deve ter o mesmo nome da action (método)
+* Criar um arquivo de template com a extensão ".cshtml" dentro da pasta "Views". Esse arquivo deve ter o mesmo nome da action (método)
 * Implementar o seu template podendo ou não usar a variável "@Model"
-* Exibir as propriedades do arquivo ".razor" e configura-lo com a **Build Action = Embedded Resource** ou com a propriedade **Copy to Output = Copy aways**. Isso é necessário para o gerenciador de template encontre o arquivo na basta "bin/" em caso do uso do **Copy to Output** ou dentro do Assembly do domínio de aplicativo padrão com o uso do **Build Action**.
+* Exibir as propriedades do arquivo ".cshtml" e configura-lo com a **Build Action = Embedded Resource** ou com a propriedade **Copy to Output = Copy aways**. Isso é necessário para o gerenciador de template encontre o arquivo na basta "bin/" em caso do uso do **Copy to Output** ou dentro do Assembly do domínio de aplicativo padrão com o uso do **Build Action**.
 
 **Exemplo:**
 
@@ -1300,7 +1377,12 @@ public class ExampleRazorCommand : Command
             Name = "MyName"
         };
 
-        return View(model, "MyAction.razor");
+        return View(model, "MyAction.cshtml");
+    }
+
+    public string MyAction3()
+    {
+        return ViewContent("My name: @Model.Name", new { Name = "John" });
     }
 
     public class MyModel
@@ -1310,9 +1392,10 @@ public class ExampleRazorCommand : Command
 }
 ```
 
-###### Views/ExampleRazor/MyAction.razor
+###### Views/ExampleRazor/MyAction.cshtml
 
 ```
+@model ExampleRazorCommand.MyModel
 @if (Model == null)
 {
     <text>#### HelloWorld {NONE} ####</text>
@@ -1328,29 +1411,24 @@ Input1:
 
 ```
 MyApp.exe my-action
-```
-
-Input2:
-
-```
 MyApp.exe my-action2
+MyApp.exe my-action3
 ```
 
 Outputs:
 
 ```
-    #### HelloWorld {NONE} ####
-    #### HelloWorld {MyName} ####
+#### HelloWorld {NONE} ####
+#### HelloWorld {MyName} ####
+My name: John
 ```
 
 ###### Observação
 
 * A pesquisa do template via `Arquivo físico` ou via `Embedded Resource` segue a mesma lógica. Ele busca pelo caminho mais especifico usando o nome do "command.action.extensão" e caso ele não encontre ele tentará encontrar pelo nome mais generico, sem o nome do command.
-  * Busca primeiro por: `ExampleRazorCommand.MyAction.razor`
-  * Caso não encontre na primeira tentativa, então busca por: `MyAction.razor`
+  * Busca primeiro por: `ExampleRazorCommand.MyAction.cshtml`
+  * Caso não encontre na primeira tentativa, então busca por: `MyAction.cshtml`
 * É possível passar o nome da view diretamente, sem a necessidade de usar a pesquisa automática. como no exemplo da action `MyAction2()`.
-* Por questões técnicas, o método `View<>()` obriga o uso de uma inferencia ou um model. Infira um `object` se você não necessitar de um model `View<object>()`.
-* Devido ao uso do recurso de `Razor`, o seu projeto terá uma dependencia da dll `System.Web.Razor`.
 
 ## <a name="output-t4" />Usando template T4
 
@@ -1425,7 +1503,7 @@ Outputs:
 
 ## <a name="output-tabulated" />Dados tabelado
 
-A classe `SysCommand.ConsoleApp.View.TableView` tras o recurso de `output tabelado` que pode ser muito útil para apresentar informações de forma rápida e visualmente mais organizada. É claro que tudo depende da quantidade de informação que você quer exibir, quanto maior, pior a visualização.
+A classe `SysCommand.ConsoleApp.View.TableView` traz o recurso de `output tabelado` que pode ser muito útil para apresentar informações de forma rápida e visualmente mais organizada. É claro que tudo depende da quantidade de informação que você quer exibir, quanto maior, pior a visualização.
 
 **Exemplo:**
 
@@ -1434,7 +1512,20 @@ A classe `SysCommand.ConsoleApp.View.TableView` tras o recurso de `output tabela
 ```csharp
 public class TableCommand : Command
 {
+
     public string MyTable()
+    {
+        var list = new List<MyModel>
+        {
+            new MyModel() {Id = "1", Column2 = "Line 1 Line 1"},
+            new MyModel() {Id = "2 " , Column2 = "Line 2 Line 2"},
+            new MyModel() {Id = "3", Column2 = "Line 3 Line 3"}
+        };
+
+        return ViewTable(list);
+    }
+
+    public string MyTableCustomized()
     {
         var list = new List<MyModel>
         {
@@ -2647,7 +2738,7 @@ MyApp.exe action action2
 
 Note que a variável `variable1` foi atribuída na criação do contexto `App` e foi incrementada quando passou na action `action2`.
 
-# <a name="file-manager" />Gerênciador de objetos em forma de arquivos
+# <a name="file-manager" />Gerenciador de objetos em forma de arquivos
 
 Esse recurso é muito útil para persistir informações em arquivo no formato `Json`. Ele utiliza a dependência do framework `NewtonSoft.Json` para fazer todo o trabalho de serialização e deserialização.
 
@@ -3053,12 +3144,3 @@ verbosity: True
 shouldShowHelp: True
 names.Count: 3
 ```
-
-# <a name="netstandard" />Limitações do NETSTANDARD
-
-* No netstandard temos a limitação de carregar apenas o assembly da execução e o proprio `SysCommand.dll`. Isso devido a falta da API `AppDomain`.
-* Não temos a propriedade `this.App` disponível no construtor do `Command` devido a falta da API `FormatterServices.GetUninitializedObject`
-* Os métodos `Command.GetActionMap()` e `Command.GetAction()` só estão disponíveis com as sobrecargas `Command.GetActionMap(Type[] paramTypes)` e `Command.GetAction(Type[] paramTypes)`. Use o método `SysCommand.Helpers.Reflection.T<...>()` para facilitar o uso, ele suporta até 10 inferências.
-* Não temos a funcionalidade de template usando Razor. Será feito em breve.
-
-**Ficaremos atento com as próximas versões do netstandard, assim que essas APIs ficarem disponíves esses recursos também serão contemplados.**
