@@ -1,4 +1,4 @@
-# Gerênciador de objetos em forma de arquivos <header-set anchor-name="file-manager" />
+# Gerenciador de objetos em forma de arquivos <header-set anchor-name="file-manager" />
 
 Esse recurso é muito útil para persistir informações em arquivo no formato `Json`. Ele utiliza a dependência do framework `NewtonSoft.Json` para fazer todo o trabalho de serialização e deserialização.
 

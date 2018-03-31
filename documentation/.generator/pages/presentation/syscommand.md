@@ -7,7 +7,7 @@ O `SysCommand` é um poderoso framework, multiplataforma, para desenvolver `Cons
  
 
 <table>
-    <tr><th>netstandard1.6</th><th>net45+</th></tr>
+    <tr><th>netstandard2.0+</th><th>net461+</th></tr>
     <tr>
         <td>
 
@@ -16,6 +16,44 @@ O `SysCommand` é um poderoso framework, multiplataforma, para desenvolver `Cons
         <td>
         
 [![Build status](https://ci.appveyor.com/api/projects/status/36vajwj2n93f4u21/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoSanches/syscommand/branch/master)
+        </td>
+    </tr>
+</table>
+
+A partir da versão 2.0.0, apenas os novos frameworks serão suportados, veja abaixo a tabela de suporte:
+
+<table>
+    <tr>
+        <th>
+            Frameworks
+        </th>
+        <th>
+            Versão compatível
+        </th>
+        <th>
+            Release notes
+        </th>
+    </tr>
+    <tr>
+        <td>
+            netstandard2.0+, net461+
+        </td>
+        <td>
+            <a href="https://www.nuget.org/packages/SysCommand/2.0.0-preview2">2.0.0-preview2</a>
+        </td>
+        <td>
+            <a href="https://github.com/juniorgasparotto/SysCommand/releases/tag/2.0.0">notes</a>
+        </td>
+    </tr>  
+    <tr>
+        <td>
+            netstandard1.6+, net452+
+        </td>
+        <td>
+            <a href="https://www.nuget.org/packages/SysCommand/1.0.9">1.0.9</a>
+        </td>
+        <td>
+            <a href="https://github.com/juniorgasparotto/SysCommand/releases/tag/1.0.9">notes</a>
         </td>
     </tr>
 </table>

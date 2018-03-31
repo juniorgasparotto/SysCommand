@@ -11,13 +11,8 @@ using SysCommand.ConsoleApp.Handlers;
 using SysCommand.ConsoleApp.Descriptor;
 using SysCommand.ConsoleApp.Loader;
 using SysCommand.Helpers;
-
-//#if NETCORE1_6
-//using SysCommand.Compatibility;
-//#else
 using System.Runtime.Serialization;
 using System.IO;
-//#endif
 
 namespace SysCommand.ConsoleApp
 {

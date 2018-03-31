@@ -58,6 +58,7 @@
       <include href="documentation/.generator/pages/getting-start/initializing-by-static-method.md" />
       <include href="documentation/.generator/pages/getting-start/specifying-commands.md" />
       <include href="documentation/.generator/pages/getting-start/kind-of-commands.md" />
+      <include href="documentation/.generator/pages/getting-start/orchestrating-commands.md" />
       <include href="documentation/.generator/pages/getting-start/events.md" />
       <include href="documentation/.generator/pages/input/input.md" />
       <include href="documentation/.generator/pages/input/arguments.md" />
@@ -96,7 +97,6 @@
       <include href="documentation/.generator/pages/stop-propagation/stop-propagation.md" />
       <include href="documentation/.generator/pages/argument-history-manager/argument-history-manager.md" />
       <include href="documentation/.generator/pages/extras/extras.md" />
-      <include href="documentation/.generator/pages/netstandard/netstandard.md" />
 
       <custom-translation>
         <default>

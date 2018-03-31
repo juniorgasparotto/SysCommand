@@ -1,7 +1,12 @@
 # DLLs do pacote <header-set anchor-name="install-dlls" />
 
 * `SysCommand.dll`: Contém toda a lógica de parse e execução de linhas de comandos. Tudo foi pensado para tornar o padrão MVC tão natural quanto possível.
-* `NewtonSoft.Json` e `System.Web.Razor`: São dependências necessárias em alguns recursos que serão explicados na documentação.
+* `NewtonSoft.Json`: Necessário para os recursos que fazem uso de JSON.
+* São dependências necessárias para o uso da sintaxe "Razor":
+    * `Microsoft.CSharp`: 
+    * `Microsoft.AspNetCore.Mvc.Razor.Extensions`: 
+    * `Microsoft.AspNetCore.Razor.Runtime`: 
+    * `Microsoft.Extensions.DependencyModel`: 
 
 ## Passo a passo de como usar <header-set anchor-name="install-step-a-step" />
 

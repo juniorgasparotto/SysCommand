@@ -5,7 +5,7 @@ using SysCommand.ConsoleApp;
 
 namespace SysCommand
 {
-    public static class CommandExtensions
+    public static class Extensions
     {
         public static T Get<T>(this IEnumerable<Command> collection) where T : Command
         {
