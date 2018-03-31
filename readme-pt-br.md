@@ -44,32 +44,33 @@ A partir da versão 2.0.0, apenas os novos frameworks serão suportados, veja ab
         <td>
             netstandard2.0+, net461+
         </td>
+<td>
+
+[2.0.0-preview2](https://www.nuget.org/packages/SysCommand/2.0.0-preview2)
+
+</td>
+<td>
+
+[notes](https://github.com/juniorgasparotto/SysCommand/releases/tag/2.0.0)
+
+</td>
+    </tr>  
+    <tr>
         <td>
+            netstandard1.6+, net452+
+        </td>
+<td>
 
-```
-        [2.0.0-preview2](https://www.nuget.org/packages/SysCommand/2.0.0-preview2)
-    </td>
-    <td>
+[1.0.9](https://www.nuget.org/packages/SysCommand/1.0.9)
 
-        [notes](https://github.com/juniorgasparotto/SysCommand/releases/tag/2.0.0)
-    </td>
-</tr>  
-<tr>
-    <td>
-        netstandard1.6+, net452+
-    </td>
-    <td>
+</td>
+<td>
 
-        [1.0.9](https://www.nuget.org/packages/SysCommand/1.0.9)
-    </td>
-    <td>
+[notes](https://github.com/juniorgasparotto/SysCommand/releases/tag/1.0.9)
 
-        [notes](https://github.com/juniorgasparotto/SysCommand/releases/tag/1.0.9)
-    </td>
+</td>
 </tr>
-```
-
-</td></tr></table>
+</table>
 
 ## Canais
 
