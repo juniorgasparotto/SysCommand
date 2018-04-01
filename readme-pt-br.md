@@ -76,6 +76,7 @@ A partir da versão 2.0.0, apenas os novos frameworks serão suportados, veja ab
 
 * [Reportar um erro](https://github.com/juniorgasparotto/SysCommand/issues/new)
 * [Mandar uma mensagem](https://syscommand.slack.com/)
+* Doações [Orquestrando comandos](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md#orchestrating-commands)
 
 # <a name="install" />Instalação
 
@@ -507,7 +508,7 @@ De qualquer forma, agradeçemos você por ter chego até aqui ;)
 
 _19DmxWBNcaUGjm2PQAuMBD4Y8ZbrGyMLzK_
 
-![bitcoinkey](https://github.com/juniorgasparotto/SysCommand/blob/master/doc/img/bitcoinkey.png)
+![bitcoinkey](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/bitcoinkey.png)
 
 # <a name="license" />Licença
 
