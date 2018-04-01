@@ -507,7 +507,7 @@ De qualquer forma, agradeçemos você por ter chego até aqui ;)
 
 _19DmxWBNcaUGjm2PQAuMBD4Y8ZbrGyMLzK_
 
-![](https://github.com/juniorgasparotto/SysCommand/blob/master/doc/img/bitcoinkey.png)
+![bitcoinkey](https://github.com/juniorgasparotto/SysCommand/blob/master/doc/img/bitcoinkey.png)
 
 # <a name="license" />Licença
 
