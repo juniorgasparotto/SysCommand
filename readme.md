@@ -29,12 +29,12 @@ The `SysCommand` is a powerful cross-platform framework, to develop `Console App
 As of version 2.0.0, just the new frameworks will be supported, below is the table of media:
 
 <table>
-    <tr>
-        <th>Frameworks</th> <th>compatible version</th> <th>release notes</th>
+<tr>
+<th>Frameworks</th> <th>Compatible version</th> <th>Release notes</th>
 
-    </tr>
-    <tr>
-        <td>netstandard 2.0 +, net461 +</td>
+</tr>
+<tr>
+<td>netstandard 2.0 +/net461 +</td>
 <td>
 
 [2.0.0-preview2](https://www.nuget.org/packages/SysCommand/2.0.0-preview2)
@@ -45,9 +45,9 @@ As of version 2.0.0, just the new frameworks will be supported, below is the tab
 [notes](https://github.com/juniorgasparotto/SysCommand/releases/tag/2.0.0)
 
 </td>
-    </tr>  
-    <tr>
-        <td>netstandard 1.6 +, net452 +</td>
+</tr>  
+<tr>
+<td>netstandard 1.6 +/net452 +</td>
 <td>
 
 [1.0.9](https://www.nuget.org/packages/SysCommand/1.0.9)
@@ -65,7 +65,7 @@ As of version 2.0.0, just the new frameworks will be supported, below is the tab
 
 * [Report an error](https://github.com/juniorgasparotto/SysCommand/issues/new)
 * [Send a message](https://syscommand.slack.com/)
-* [Donations](https://github.com/juniorgasparotto/SysCommand/readme.md#donate)
+* [Donations](https://github.com/juniorgasparotto/SysCommand#donate)
 
 # <a name="install" />Installation
 
