@@ -76,7 +76,7 @@ A partir da versão 2.0.0, apenas os novos frameworks serão suportados, veja ab
 
 * [Reportar um erro](https://github.com/juniorgasparotto/SysCommand/issues/new)
 * [Mandar uma mensagem](https://syscommand.slack.com/)
-* [Doações](https://github.com/juniorgasparotto/SysCommand/readme-pt-br.md#donate)
+* [Doações](https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md#donate)
 
 # <a name="install" />Instalação
 

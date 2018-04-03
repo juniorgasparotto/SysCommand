@@ -11,7 +11,7 @@
   * [Booting with the console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method)
   * [Specifying the types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands)
   * [Types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#kind-of-commands)
-  * [Scripting commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#orchestrating-commands)
+  * [Command Orchestrator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#orchestrating-commands)
   * [Event control](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events)
 * [Input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input)
   * [`Arguments`](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-arguments)
@@ -306,9 +306,9 @@ public class ClearCommand : Command
 }
 ```
 
-## <a name="orchestrating-commands" />Scripting commands
+## <a name="orchestrating-commands" />Command Orchestrator
 
-An interesting way of using the SysCommand is making use of several commands in a orquestradora action. It is important to remember that commands must be designed to work independently, if this is not possible, don't make it a command, create a class that does not inherit from `Command` and use in your action.
+An interesting way of using the SysCommand is making use of several commands in an action that orchestrate the executions. It is important to remember that commands must be designed to work independently, if this is not possible, don't make it a command, create a class that does not inherit from `Command` and use in your action.
 
 The example below shows a scenario where it would be interesting using several commands in an action. The idea is to create an application that can do the Assembly of a `csproj` and also the ZIP to a folder. However, we have an action `Publish` that will make the publication of the application using the two commands.
 

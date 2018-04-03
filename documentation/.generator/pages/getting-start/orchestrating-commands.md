@@ -1,6 +1,6 @@
-## Orquestrando comandos <header-set anchor-name="orchestrating-commands" />
+## Orquestrador de comandos <header-set anchor-name="orchestrating-commands" />
 
-Uma forma interessante de usar o SysCommand é fazendo o uso de diversos comandos em uma ação orquestradora. É importante lembrar que os comandos devem ser criados para funcionarem de forma independente, se isso não for possível, não torne-o um comando, crie uma classe que não herde de `Command` e utilize em sua ação.
+Uma forma interessante de usar o SysCommand é fazendo o uso de diversos comandos em uma ação que orquestre as execuções. É importante lembrar que os comandos devem ser criados para funcionarem de forma independente, se isso não for possível, não torne-o um comando, crie uma classe que não herde de `Command` e utilize em sua ação.
 
 O exemplo abaixo mostra um cenário onde seria interessante o uso de diversos comandos em uma ação. A ideia é criar uma aplicação que possa fazer a montagem de um `csproj` e também o ZIP de uma pasta qualquer. Porém, teremos uma ação `Publish` que fará a publicação da aplicação usando os dois comandos.
 

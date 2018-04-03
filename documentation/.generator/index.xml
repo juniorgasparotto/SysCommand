@@ -1,8 +1,8 @@
 ﻿<documentation>
-  <page url-base="https://github.com/juniorgasparotto/SysCommand">
+  <page>
     <languages>
-      <language name="pt-br" output="readme-pt-br.md" default="true" />
-      <language name="en-us" output="readme.md" />
+      <language name="pt-br" output="readme-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/SysCommand/blob/master/" />
+      <language name="en-us" output="readme.md" url-base="https://github.com/juniorgasparotto/SysCommand" />
     </languages>
     <content>
       <a href="https://github.com/juniorgasparotto/SysCommand" rel="Inglês">
@@ -37,10 +37,10 @@
     </content>
   </page>
 
-  <page url-base="https://github.com/juniorgasparotto/SysCommand/blob/master">
+  <page>
     <languages>
-      <language name="pt-br" output="documentation/pt-br.md" default="true" />
-      <language name="en-us" output="documentation/en.md" />
+      <language name="pt-br" output="documentation/pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/SysCommand/blob/master" />
+      <language name="en-us" output="documentation/en.md" url-base="https://github.com/juniorgasparotto/SysCommand/blob/master" />
     </languages>
     <content>
       <a href="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md" rel="Inglês">
