@@ -19,6 +19,7 @@
       <include href="documentation/.generator/pages/presentation/what-is-the-purpose.md" />
       <include href="documentation/.generator/pages/presentation/dlls.md" />
       <include href="documentation/.generator/pages/presentation/footer.md" />
+      <include href="documentation/.generator/pages/donate.md" />
       <include href="documentation/.generator/pages/license.md" />
       
       <custom-translation>

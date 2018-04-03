@@ -12,7 +12,7 @@ The `SysCommand` is a powerful cross-platform framework, to develop `Console App
 ## Build Status
 
 <table>
-    <tr><th>netstandard 1.6</th> <th>net45 +</th></tr>
+    <tr><th>netstandard 2.0 +</th> <th>net461 +</th></tr>
     <tr>
         <td>
 
@@ -26,10 +26,46 @@ The `SysCommand` is a powerful cross-platform framework, to develop `Console App
 
 </table>
 
+As of version 2.0.0, just the new frameworks will be supported, below is the table of media:
+
+<table>
+    <tr>
+        <th>Frameworks</th> <th>compatible version</th> <th>release notes</th>
+
+    </tr>
+    <tr>
+        <td>netstandard 2.0 +, net461 +</td>
+<td>
+
+[2.0.0-preview2](https://www.nuget.org/packages/SysCommand/2.0.0-preview2)
+
+</td>
+<td>
+
+[notes](https://github.com/juniorgasparotto/SysCommand/releases/tag/2.0.0)
+
+</td>
+    </tr>  
+    <tr>
+        <td>netstandard 1.6 +, net452 +</td>
+<td>
+
+[1.0.9](https://www.nuget.org/packages/SysCommand/1.0.9)
+
+</td>
+<td>
+
+[notes](https://github.com/juniorgasparotto/SysCommand/releases/tag/1.0.9)
+
+</td>
+</tr>
+</table>
+
 ## Channels
 
 * [Report an error](https://github.com/juniorgasparotto/SysCommand/issues/new)
 * [Send a message](https://syscommand.slack.com/)
+* [Donations](https://github.com/juniorgasparotto/SysCommand/readme.md#donate)
 
 # <a name="install" />Installation
 
@@ -188,7 +224,7 @@ Technically, there are four entities that are the basis of the framework:
 
 Is the application context, where a `App` contains several `Commands` . Is represented by the class `SysCommand.ConsoleApp.App` and must be the first entity to be configured in your `Main(string[] args)` method.
 
-The application context initialization can be done in two ways, by an instance of the class `App` or static method `App.RunApplication` that provides a console simulation feature that helps you test your inputs inside the Visual Studio itself, without the need to perform your ".exe" in an external console, just press the _Play_. Learn more: [Starting](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app) , [Booting with the console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method).
+The application context initialization can be done in two ways, by an instance of the class `App` or static method `App.RunApplication` that provides a console simulation feature that helps you test your inputs inside the Visual Studio, without the need to run your ".exe" in an external console, just press the _Play_. Learn more: [Starting](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#class-app) , [Booting with the console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method).
 
 **`Command`**
 
@@ -202,7 +238,7 @@ The arguments represent the most basic of a console application, are known `--ar
 
 User-side, no special syntax was created, known standards were implemented. The long arguments are accessed with the prefix `--` and are accompanied by the name of the argument. The short arguments are accessed with a dash `-` or a `/` bar and are accompanied by only one character. The values of the arguments must be in front of the argument name separated by a space ` ` or `:` or `=` . Positional inputs are also supported, allowing the omission of the name of the argument.
 
-By default, all public properties of your `Command` are enabled to be `arguments` . Saiba mais: [Working with properties](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties), [Manual choice of properties via attribute](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-ignore-public), [Input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input), [Supported types](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#support-types).
+By default, all public properties of your `Command` are enabled to be `arguments` . Learn more: [Working with properties](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties), [Manual choice of properties via attribute](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#properties-ignore-public), [Input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input), [Supported types](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#support-types).
 
 **`Action`**
 
@@ -426,7 +462,12 @@ If you have never worked with .NET, maybe this is an excellent opportunity to me
 # <a name="install-dlls" />Package DLLs
 
 * `SysCommand.dll`: Contains all the logic to parse and execute command lines. Everything was thought to make the MVC pattern as natural as possible.
-* `NewtonSoft.Json`and `System.Web.Razor` : Are required dependencies in some features that are explained in the documentation.
+* `NewtonSoft.Json`: Required for the features that make use of JSON.
+* Are required dependencies for the use of the syntax "Razor":
+  * `Microsoft.CSharp`:
+  * `Microsoft.AspNetCore.Mvc.Razor.Extensions`:
+  * `Microsoft.AspNetCore.Razor.Runtime`:
+  * `Microsoft.Extensions.DependencyModel`:
 
 ## <a name="install-step-a-step" />Step by step how to use
 
@@ -444,13 +485,27 @@ If you have never worked with .NET, maybe this is an excellent opportunity to me
 
 See the full documentation by clicking [here](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#documentation)
 
+# <a name="donate" />Donations
+
+SysCommand is an open source project. Starting in 2017, many hours have been invested in the creation and evolution of this project.
+
+And all with only one goal: make it a good tool for creating console type application.. If the SysCommand was useful for you, or if you want to see it evolve increasingly, consider making a small donation (any amount). Help us also with ideas and possible problems.
+
+Anyway, we appreciate you for have come up here;)
+
+**Bitcoin:**
+
+_19DmxWBNcaUGjm2PQAuMBD4Y8ZbrGyMLzK_
+
+![bitcoinkey](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/bitcoinkey.png)
+
 # <a name="license" />License
 
 The MIT License (MIT)
 
 Copyright (c) 2017 Glauber Donizeti Gasparotto Junior
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so , subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 

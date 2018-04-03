@@ -11,6 +11,7 @@
   * [Booting with the console Simulator](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#initializing-by-static-method)
   * [Specifying the types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands)
   * [Types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#kind-of-commands)
+  * [Scripting commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#orchestrating-commands)
   * [Event control](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events)
 * [Input](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input)
   * [`Arguments`](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#input-arguments)
@@ -58,16 +59,15 @@
 * [Verbose](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#verbose)
 * [Error handling](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#error)
 * [Context variables](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#variable)
-* [Gerênciador objects in the form of files](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#file-manager)
+* [Manager objects in the form of files](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#file-manager)
 * [Command redirection](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#redirectiong-commands)
 * [Cancellation of the continuity of the implementation](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#stop-propagation)
 * [Historical management arguments](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#argument-history-manager)
 * [Extras-OptionSet](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#extras)
-* [NETSTANDARD limitations](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#netstandard)
 
 # <a name="class-app" />Starting
 
-The application context initialization can be done in two ways, by an instance of the class `App` with its possible customizations or through the static method `App.RunApplication` that provides a feature called **console Simulator** that helps you test your inputs inside the Visual Studio itself, without the need to perform your ".exe" in an external console.
+The application context initialization can be done in two ways, by an instance of the class `App` with its possible customizations or through the static method `App.RunApplication` that provides a feature called **console Simulator** that helps you test inputs within the Visual Studio itself, without the need to perform your ".exe" in an external console.
 
 The class `App` is in the top of the class hierarchy, each instance equates to an isolated context that will contain a tree of other objects that are unique to this context. No static resource is used here and it's important to have the freedom to create as many instances you want in any scope.
 
@@ -77,13 +77,15 @@ In your constructor are the first settings:
 public App(
            IEnumerable<Type> commandsTypes = null,
            bool enableMultiAction = true,
-           bool addDefaultAppHandler = true
+           bool addDefaultAppHandler = true,
+           TextWriter output = null
        )
 ```
 
 * `commandsTypes`: Specifies the `Command` types that will be used throughout the process. If it is `null` then the system will try to automatically any class that extend from `Command` . Understand better in [Specifying the types of commands](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#specifying-commands).
 * `enableMultiAction`: Turns the `MultiAction` behavior. By default, this behavior is enabled. Understand better in [Multi-action](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#using-the-multi-action-feature).
 * `addDefaultAppHandler`: If `false` so does not create the event handler that is responsible for the `outputs` standard engine and `erros` controls, and among others. The default is `true` . Understand better in [Event control](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md#events).
+* `output`: Redirects the output to the `TextWriter` specified. Otherwise will be used by default `Console.Out` .
 
 ## <a name="initializing-by-static-method" />Booting with the console Simulator
 
@@ -300,6 +302,81 @@ public class ClearCommand : Command
     public void Clear()
     {
         Console.Clear();
+    }
+}
+```
+
+## <a name="orchestrating-commands" />Scripting commands
+
+An interesting way of using the SysCommand is making use of several commands in a orquestradora action. It is important to remember that commands must be designed to work independently, if this is not possible, don't make it a command, create a class that does not inherit from `Command` and use in your action.
+
+The example below shows a scenario where it would be interesting using several commands in an action. The idea is to create an application that can do the Assembly of a `csproj` and also the ZIP to a folder. However, we have an action `Publish` that will make the publication of the application using the two commands.
+
+```csharp
+using SysCommand.ConsoleApp;
+using SysCommand.Mapping;
+using System;
+using System.Diagnostics;
+using System.IO;
+
+namespace Publisher
+{
+    public class OrchestratorCommand : Command
+    {
+        public void Publish(string csproj, string dirOutput)
+        {
+            var build = App.Commands.Get<MSBuildCommand>();
+            var zip = App.Commands.Get<ZipCommand>();
+
+            build.Build(csproj, dirOutput);
+            pack.Zip(dirOutput);
+        }
+    }
+
+    public class ZipCommand : Command
+    {
+        private void Zip(string dirToZip)
+        {
+            System.IO.Compression.ZipFile.CreateFromDirectory(dirToZip, $"{dirToZip}/package.zip"});
+        }
+    }
+
+    public class MSBuildCommand : Command
+    {
+        public BuildCommand()
+        {
+            this.UsePrefixInAllMethods = true;
+        }
+
+        public void Clear()
+        {
+            // Clear
+        }
+
+        [Action(UsePrefix = false)]
+        public void Build(string csproj, string dirOutput)
+        {
+            try
+            {
+                var startInfo = new ProcessStartInfo
+                {
+                    CreateNoWindow = false,
+                    UseShellExecute = false,
+                    FileName = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe",
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    Arguments = string.Format("{0} /t:Build /m /property:Configuration={1} /p:OutDir={2}", csproj, "Debug", dirOutput)
+                };
+
+                using (Process exeProcess = Process.Start(startInfo))
+                {
+                    exeProcess.WaitForExit();
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Console.Error(ex.Message);
+            }
+        }
     }
 }
 ```
@@ -541,7 +618,7 @@ MyApp.exe action1 --value \\action2
 Action1 (value = action2)
 ```
 
-The last example shows how to use the scape in their values that conflict with names of actions. An important fact is that in the example was used two backslashes to do the scape, but this can vary from console to console, on `bash` the use of only one backslash has no effect, probably he should use for other scapes before they reach the application.
+The last example shows how to use the scape in their values that conflict with names of actions. An important fact is that in the example was used two backslashes to do the scape, but this can vary from console to console, on `bash` the use of only one backslash has no effect, probably he should use for other scapes before arriving in application.
 
 ## <a name="support-types" />Supported types
 
@@ -561,7 +638,7 @@ All primitive types of .NET are supported, including nullable versions: `Nullabl
 * `ulong`or`ulong?`
 * `float`or`float?`
 * `char`or`char?`
-* `Enum`/`Enum Flags` ou`Enum?`
+* `Enum`/ `Enum Flags` or`Enum?`
 * `Generic collections`(`IEnumerable`, `IList`, `ICollection`)
 * `Arrays`
 
@@ -1271,15 +1348,15 @@ Finally, it is worth remembering that none of this prevents you from using the c
 
 ## <a name="output-razor" />Using template Razor
 
-Another option to display outputs is to use templates `Razor` . This mechanism is designed for simple things, it's very important to say that it lacks several features such as: debug, intellisense, highlight and analyze errors.
+Another option to display outputs is to use templates `Razor` . This mechanism is designed for simple things, it's very important to say that it lacks several features such as: debug and error analysis.
 
 To use `Razor` should follow some simple steps:
 
 * By organization, create a folder named "Views".
 * If you want more organization, create a subfolder within the folder "Views" with the `Command` name.
-* Create a template file with the extension "razor" inside the folder "Views". This file must have the same name as the action (method)
+* Create a template file with the extension ".cshtml" inside the folder "Views". This file must have the same name as the action (method)
 * Implement your template and can use the variable "@Model"
-* Display the properties of the file. "razor" and configures it with the **Build Action = Embedded Resource** or with the **Copy to Output = Copy aways**. This is required for the template manager find the file in the "bin/" just in case the use of the **Copy to Output** or within the Assembly from the default application domain by using the **Build Action**.
+* Display the properties of the file ".cshtml" and configures it with the **Build Action = Embedded Resource** or with the **Copy to Output = Copy aways**. This is required for the template manager find the file in the "bin/" just in case the use of the **Copy to Output** or within the Assembly from the default application domain by using the **Build Action**.
 
 **Example:**
 
@@ -1300,7 +1377,12 @@ public class ExampleRazorCommand : Command
             Name = "MyName"
         };
 
-        return View(model, "MyAction.razor");
+        return View(model, "MyAction.cshtml");
+    }
+
+    public string MyAction3()
+    {
+        return ViewContent("My name: @Model.Name", new { Name = "John" });
     }
 
     public class MyModel
@@ -1310,9 +1392,10 @@ public class ExampleRazorCommand : Command
 }
 ```
 
-###### Views/ExampleRazor/MyAction. razor
+###### Views/ExampleRazor/cshtml MyAction.
 
 ```
+@model ExampleRazorCommand.MyModel
 @if (Model == null)
 {
     <text>#### HelloWorld {NONE} ####</text>
@@ -1328,29 +1411,24 @@ Input1:
 
 ```
 MyApp.exe my-action
-```
-
-Input2:
-
-```
 MyApp.exe my-action2
+MyApp.exe my-action3
 ```
 
 Outputs:
 
 ```
-    #### HelloWorld {NONE} ####
-    #### HelloWorld {MyName} ####
+#### HelloWorld {NONE} ####
+#### HelloWorld {MyName} ####
+My name: John
 ```
 
 ###### Note
 
 * The research of template via `Arquivo físico` or via `Embedded Resource` follows the same logic. He seeks for way more specific by using the name of "command. action." and if he doesn't find him will try to find by generic name, without the name of the command.
-  * Search first by:`ExampleRazorCommand.MyAction.razor`
-  * If you cannot find on the first try, then search for:`MyAction.razor`
+  * Search first by:`ExampleRazorCommand.MyAction.cshtml`
+  * If you cannot find on the first try, then search for:`MyAction.cshtml`
 * You can pass the name of the view directly, without the need to use the automatic search. as in the example of the action `MyAction2()` .
-* For technical questions, the method `View<>()` requires the use of a inferencia or a model. Implies that a `object` If you don't need a model `View<object>()` .
-* Due to the use of the `Razor` feature, your project will have a `System.Web.Razor` dll dependency.
 
 ## <a name="output-t4" />Using template T4
 
@@ -1434,7 +1512,20 @@ The class `SysCommand.ConsoleApp.View.TableView` brings the `output tabelado` fe
 ```csharp
 public class TableCommand : Command
 {
+
     public string MyTable()
+    {
+        var list = new List<MyModel>
+        {
+            new MyModel() {Id = "1", Column2 = "Line 1 Line 1"},
+            new MyModel() {Id = "2 " , Column2 = "Line 2 Line 2"},
+            new MyModel() {Id = "3", Column2 = "Line 3 Line 3"}
+        };
+
+        return ViewTable(list);
+    }
+
+    public string MyTableCustomized()
     {
         var list = new List<MyModel>
         {
@@ -2647,7 +2738,7 @@ MyApp.exe action action2
 
 Note that the variable `variable1` has been assigned in the creation of the `App` context and was incremented when spent in action `action2` .
 
-# <a name="file-manager" />Gerênciador objects in the form of files
+# <a name="file-manager" />Manager objects in the form of files
 
 This feature is very useful to persist information in file `Json` format. He uses the dependence `NewtonSoft.Json` framework to do all the work of serialization and deserialização.
 
@@ -3053,15 +3144,6 @@ verbosity: True
 shouldShowHelp: True
 names.Count: 3
 ```
-
-# <a name="netstandard" />NETSTANDARD limitations
-
-* On the netstandard have the limitation of only load the assembly and his own `SysCommand.dll` . This due to lack of `AppDomain` API.
-* We don't have the `this.App` available property in the constructor of the `Command` due to lack of API`FormatterServices.GetUninitializedObject`
-* The methods `Command.GetActionMap()` and `Command.GetAction()` are only available with the overloads `Command.GetActionMap(Type[] paramTypes)` and `Command.GetAction(Type[] paramTypes)` . Use the method `SysCommand.Helpers.Reflection.T<...>()` for ease of use, it supports up to 10 inferences.
-* We don't have the functionality of template using Razor. Will be done soon.
-
-**We're going to stay tuned with the upcoming releases of netstandard, so these APIs stay available these resources will also be covered.**
 
 * * *
 

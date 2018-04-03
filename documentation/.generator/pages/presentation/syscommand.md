@@ -31,34 +31,39 @@ A partir da versão 2.0.0, apenas os novos frameworks serão suportados, veja ab
             Versão compatível
         </th>
         <th>
-            Release notes
+            Notas da versão
         </th>
     </tr>
     <tr>
         <td>
             netstandard2.0+, net461+
         </td>
-        <td>
-            <a href="https://www.nuget.org/packages/SysCommand/2.0.0-preview2">2.0.0-preview2</a>
-        </td>
-        <td>
-            <a href="https://github.com/juniorgasparotto/SysCommand/releases/tag/2.0.0">notes</a>
-        </td>
+<td>
+
+[2.0.0-preview2](https://www.nuget.org/packages/SysCommand/2.0.0-preview2)
+</td>
+<td>
+
+[notes](https://github.com/juniorgasparotto/SysCommand/releases/tag/2.0.0)
+</td>
     </tr>  
     <tr>
         <td>
             netstandard1.6+, net452+
         </td>
-        <td>
-            <a href="https://www.nuget.org/packages/SysCommand/1.0.9">1.0.9</a>
-        </td>
-        <td>
-            <a href="https://github.com/juniorgasparotto/SysCommand/releases/tag/1.0.9">notes</a>
-        </td>
-    </tr>
+<td>
+
+[1.0.9](https://www.nuget.org/packages/SysCommand/1.0.9)
+</td>
+<td>
+
+[notes](https://github.com/juniorgasparotto/SysCommand/releases/tag/1.0.9)
+</td>
+</tr>
 </table>
 
 ## Canais
 
 * [Reportar um erro](https://github.com/juniorgasparotto/SysCommand/issues/new)
 * [Mandar uma mensagem](https://syscommand.slack.com/)
+* <anchor-get name="donate" />
