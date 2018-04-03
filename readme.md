@@ -34,7 +34,7 @@ As of version 2.0.0, just the new frameworks will be supported, below is the tab
 
 </tr>
 <tr>
-<td>netstandard 2.0 +/net461 +</td>
+<td>netstandard 2.0, net461</td>
 <td>
 
 [2.0.0-preview2](https://www.nuget.org/packages/SysCommand/2.0.0-preview2)
@@ -47,7 +47,7 @@ As of version 2.0.0, just the new frameworks will be supported, below is the tab
 </td>
 </tr>  
 <tr>
-<td>netstandard 1.6 +/net452 +</td>
+<td>netstandard 1.6, net452</td>
 <td>
 
 [1.0.9](https://www.nuget.org/packages/SysCommand/1.0.9)
