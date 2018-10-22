@@ -1,11 +1,11 @@
-[
+﻿[
 ![Inglês](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/en-us.png)
 ](https://github.com/juniorgasparotto/SysCommand)
 [
 ![Português](https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png)
 ](https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md)
 
-# <a name="presentation" />SysCommand
+# <a name="presentation" />SysCommand 
 
 O `SysCommand` é um poderoso framework, multiplataforma, para desenvolver `Console Applications` em .NET. É simples, fortemente tipado e com grandes influências do padrão MVC.
 
