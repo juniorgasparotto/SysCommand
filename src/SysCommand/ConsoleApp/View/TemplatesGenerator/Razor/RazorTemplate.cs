@@ -89,6 +89,7 @@ namespace SysCommand.ConsoleApp.View.TemplatesGenerator.Razor
             var razorEngine = GetRazorEngine();
             //var razorProject = RazorProject.Create(BasePath);
             var razorProject = new FileSystemRazorProject(BasePath);
+
             var cshtmlFile = razorProject.GetItem(viewPath);
             var templateEngine = GetTemplateEngine(razorEngine, razorProject);
 
